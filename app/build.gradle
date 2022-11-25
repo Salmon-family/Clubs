@@ -1,7 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "kotlin-kapt"
+    id 'dagger.hilt.android.plugin'
 }
+
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 
 android {
     namespace 'com.thechance.clubs'
@@ -13,6 +19,9 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "API_KEY", localProperties['apiKey']
+        buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -60,4 +69,14 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.42"
+    kapt "com.google.dagger:hilt-compiler:2.42"
+
 }
