@@ -1,15 +1,17 @@
 package com.thechance.clubs.data
 
 import com.thechance.clubs.data.response.*
-import com.thechance.clubs.data.response.album.AlbumResponse
-import com.thechance.clubs.data.response.album.PhotoDetailResponse
-import com.thechance.clubs.data.response.album.PhotoDetailsWithUserResponse
-import com.thechance.clubs.data.response.album.UserPicture
+import com.thechance.clubs.data.response.album.*
 import com.thechance.clubs.data.response.group.GroupDTO
 import com.thechance.clubs.data.response.group.GroupDetailResponse
+import com.thechance.clubs.data.response.group.GroupRequestsResponse
 import com.thechance.clubs.data.response.group.GroupResponse
+import com.thechance.clubs.data.response.message.ConversationDTO
+import com.thechance.clubs.data.response.message.MessagesDTO
+import com.thechance.clubs.data.response.message.UnreadMessagesResponse
 import com.thechance.clubs.data.response.notification.NotificationCountDTO
 import com.thechance.clubs.data.response.notification.NotificationResponse
+import com.thechance.clubs.data.response.notification.NotificationsDTO
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -30,12 +32,6 @@ interface ClubService {
     @POST("user_details")
     suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
 
-
-    //////////////////////////////
-    @FormUrlEncoded
-    @POST("/user_add")
-    suspend fun addUser()
-//////////////////////
 
     @FormUrlEncoded
     @POST("user_edit")
@@ -162,7 +158,6 @@ interface ClubService {
         @Field("membership") groupPrivacy: Int? = null
     ): Response<BaseResponse<Boolean>>
 
-
     @GET("groups_user_memberof")
     suspend fun getAllUserGroups(
         @Query("guid") userID: Int
@@ -172,7 +167,12 @@ interface ClubService {
     suspend fun getGroupDetails(
         @Query("guid") userID: Int,
         @Query("group_guid") groupID: Int
-    ):Response<BaseResponse<GroupDetailResponse>>
+    ): Response<BaseResponse<GroupDetailResponse>>
+
+    @GET("groups_requests")
+    suspend fun getMemberRequestsToGroup(
+        @Query("group_guid") groupID: Int
+    ): Response<BaseResponse<GroupRequestsResponse>>
 
     /**
      * notification
@@ -190,18 +190,51 @@ interface ClubService {
         @Query("types") types: String? = null
     ): Response<BaseResponse<NotificationCountDTO>>
 
+    @FormUrlEncoded
+    @POST("notifications_mark_viewed")
+    suspend fun markNotificationsAsViewed(
+        @Field("notification_guid") notificationID: Int
+    ):Response<BaseResponse<NotificationsDTO>>
 
     /**
      * message
      * */
 
-    @GET("message_new")
-    suspend fun getUnreadMessages()
+    @GET("message_list")
+    suspend fun getConversationWithFriend(
+        @Query("to") userID: Int,
+        @Query("guid") friendID: Int,
+        @Query("markallread") markAsRead: Int = 0,
+        @Query("offset") page: Int? = null
+    ): Response<BaseResponse<ConversationDTO>>
 
+
+    // 1 to mark as read , 0 if not.
+    @GET("message_new")
+    suspend fun getUnreadMessages(
+        @Query("to") userID: Int,
+        @Query("from") friendID: Int,
+        @Query("markallread") markAsRead: Int = 0
+    ): Response<BaseResponse<UnreadMessagesResponse>>
+
+    @FormUrlEncoded
+    @POST("message_add")
+    suspend fun sendMessage(
+        @Field("from") userID: Int,
+        @Field("to") friendID: Int,
+        @Field("message") message: String
+    ): Response<BaseResponse<MessagesDTO>>
 
     /**
      * Album
      * */
+
+    @GET("photos_list_albums")
+    suspend fun getAlbums(
+        @Query("guid") userID: Int,
+        @Query("uguid") albumGuid: Int
+    ): Response<BaseResponse<AlbumsResponse>>
+
 
     @GET("photos_list_profile_cover")
     suspend fun getUserProfileAlbum(
@@ -255,4 +288,38 @@ interface ClubService {
     ): Response<BaseResponse<Any>>
 
 
+    @FormUrlEncoded
+    @POST("photos_album_create")
+    suspend fun createAlbum(
+        @Field("guid") userID: Int,
+        @Field("title") albumTitle: String,
+        // 3 for Friends only, 2 for public
+        @Field("privacy") albumPrivacy: Int
+    ): Response<BaseResponse<AlbumDetailsDTO>>
+
+
+    /**
+     * Wall
+     * */
+
+    @FormUrlEncoded
+    @POST("wall_delete")
+    suspend fun deletePost(
+        @Field("guid") userID: Int,
+        @Field("post_guid") postID: Int
+    ): Response<BaseResponse<Boolean>>
+
+    @FormUrlEncoded
+    @POST("wall_add")
+    suspend fun addPostOnWallFriendOrGroup(
+        @Field("poster_guid") userId: Int,
+        @Field("owner_guid") friendOrGroupID: Int,
+        @Field("type") type: PostType,
+        @Field("post") post: String?,
+        @Field("friends") taggedFriends: List<Int>,
+        @Field("location") location: String,
+        //3 for Friends only, 2 for public.
+        @Field("privacy") privacy: Int = 2,
+        @Field("ossn_photo") photo: String? = null
+    )
 }

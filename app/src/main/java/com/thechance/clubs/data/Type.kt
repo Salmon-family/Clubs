@@ -15,3 +15,8 @@ enum class UserPictureType{
     profile,
     cover
 }
+
+enum class PostType{
+    user,
+    group
+}

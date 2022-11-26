@@ -40,7 +40,14 @@ class MainViewModel @Inject constructor(private val service: ClubService) : View
 //            val test = service.deletePhoto(6, 2017).body()
 //            val test = service.deleteSpecificCoverPhoto(6, 2024).body()
 //            val test = service.getAllUserGroups(6).body()
-            val test = service.getGroupDetails(6,9).body()
+//            val test = service.getGroupDetails(6,9).body()
+//            val test = service.getAlbums(31, 31).body()
+//            val test = service.getConversationWithFriend(31, 11).body()
+//            val test = service.getUnreadMessages(3, 6).body()
+//            val test = service.sendMessage(3,6,"test 123456 ").body()
+//            val test = service.createAlbum(6, "Test1234", 3).body()
+//            val test = service.deletePost(31,269).body()
+            val test= service.markNotificationsAsViewed(6).body()
             Log.e("TESTLogin", test.toString())
         }
     }
