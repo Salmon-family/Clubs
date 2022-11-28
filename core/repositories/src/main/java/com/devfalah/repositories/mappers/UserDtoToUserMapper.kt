@@ -5,7 +5,7 @@ import com.devfalah.entities.User
 import com.devfalah.repositories.models.IconDto
 import com.devfalah.repositories.models.UserDTO
 
-fun UserDTO.toUser():User{
+fun UserDTO.toEntity():User{
     return User(
         birthdate = this.birthdate?: "",
         coverUrl = this.coverUrl?: false,
@@ -17,11 +17,11 @@ fun UserDTO.toUser():User{
         gender = this.gender?: "",
         guid = this.guid?: 0,
         language = this.language?: "",
-        icon = this.icon?.toIcon() ?: Icon()
+        icon = this.icon?.toEntity() ?: Icon()
     )
 }
 
-fun IconDto.toIcon() : Icon{
+fun IconDto.toEntity() : Icon{
     return Icon(
         small = this.small?: "",
         smaller = this.smaller?: "",
