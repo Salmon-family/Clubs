@@ -15,20 +15,6 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
-
-    @Singleton
-    @Binds
-    abstract fun bindAppRepository(repositoryImp: RepositoryImp): Repository
-
-    @Singleton
-    @Binds
-    abstract fun bindAppRemote(clubDataSource: ClubDataSource): RemoteDataSource
-
-}
-
-@Module
 @InstallIn(ViewModelComponent::class)
 object UseCaseModule {
 

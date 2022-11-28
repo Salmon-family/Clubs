@@ -9,7 +9,6 @@ class ClubDataSource @Inject constructor(private val service: ClubService) : Rem
 
     override suspend fun getUserDetails(): UserDTO? {
         val x = service.getUserDetails(6).body()
-        Log.e("TEST", x.toString())
         return x?.payload
     }
 }
