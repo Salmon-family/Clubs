@@ -4,7 +4,7 @@ import com.thechance.entity.User
 
 class GetUserDetailsUseCase(private val repository: Repository) {
 
-    suspend operator fun invoke(): User {
-        return repository.getUserDetails() ?: throw Throwable("Error")
+    suspend operator fun invoke(userID: Int): User {
+        return repository.getUserDetails(userID) ?: throw Throwable("Error")
     }
 }

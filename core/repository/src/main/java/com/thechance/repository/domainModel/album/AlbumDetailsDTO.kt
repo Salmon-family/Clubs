@@ -1,4 +1,4 @@
-package com.thechance.remote.response.album
+package com.thechance.repository.domainModel.album
 
 
 import com.google.gson.annotations.SerializedName

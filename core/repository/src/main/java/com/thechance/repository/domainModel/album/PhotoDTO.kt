@@ -1,4 +1,4 @@
-package com.thechance.repository.domainModel
+package com.thechance.repository.domainModel.album
 
 
 import com.google.gson.annotations.SerializedName

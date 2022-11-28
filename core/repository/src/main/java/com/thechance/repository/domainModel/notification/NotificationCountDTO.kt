@@ -1,4 +1,4 @@
-package com.thechance.remote.response.notification
+package com.thechance.repository.domainModel.notification
 
 
 import com.google.gson.annotations.SerializedName

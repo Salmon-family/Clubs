@@ -4,6 +4,6 @@ import com.thechance.entity.User
 
 interface Repository {
 
-    suspend fun getUserDetails(): User?
+    suspend fun getUserDetails(userID: Int): User?
 
 }

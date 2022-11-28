@@ -2,7 +2,8 @@ package com.thechance.remote.response.album
 
 
 import com.google.gson.annotations.SerializedName
-import com.thechance.repository.domainModel.PhotoDTO
+import com.thechance.repository.domainModel.album.PhotoDTO
+import com.thechance.repository.domainModel.album.AlbumDetailsDTO
 
 data class AlbumResponse(
     @SerializedName("album")

@@ -6,8 +6,8 @@ import com.thechance.usecase.Repository
 
 class RepositoryImp(private val dataSource: RemoteDataSource) : Repository {
 
-    override suspend fun getUserDetails(): User? {
-        return dataSource.getUserDetails()?.map()
+    override suspend fun getUserDetails(userID: Int): User? {
+        return dataSource.getUserDetails(userID)?.map()
     }
 
 }

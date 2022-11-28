@@ -1,4 +1,4 @@
-package com.thechance.remote.response
+package com.thechance.repository.domainModel
 
 
 import com.google.gson.annotations.SerializedName

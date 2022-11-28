@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(val useCaseImp: GetUserDetailsUseCase) :
 
     fun test() {
         viewModelScope.launch {
-            val user = useCaseImp()
+            val user = useCaseImp(6)
             _uiState.update { "${user.fullName}\n ${user.birthdate}\n ${user.email} \n ${user.userID}" }
         }
     }

@@ -9,10 +9,10 @@ import com.thechance.remote.response.group.GroupResponse
 import com.thechance.remote.response.message.ConversationDTO
 import com.thechance.remote.response.message.MessagesDTO
 import com.thechance.remote.response.message.UnreadMessagesResponse
-import com.thechance.remote.response.notification.NotificationCountDTO
-import com.thechance.remote.response.notification.NotificationResponse
-import com.thechance.remote.response.notification.NotificationsDTO
-import com.thechance.repository.domainModel.UserDTO
+import com.thechance.repository.domainModel.*
+import com.thechance.repository.domainModel.album.AlbumDetailsDTO
+import com.thechance.repository.domainModel.notification.NotificationCountDTO
+import com.thechance.repository.domainModel.notification.NotificationsDTO
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -44,6 +44,19 @@ interface ClubService {
         @Field("new_last_name") lastName: String,
         @Field("current_password") currentPassword: String,
         @Field("new_password") newPassword: String = ""
+    ): Response<BaseResponse<UserDTO>>
+
+    @FormUrlEncoded
+    @POST("user_add")
+    suspend fun addUser(
+        @Field("firstname") firstname: String,
+        @Field("lastname") lastname: String,
+        @Field("email") email: String,
+        @Field("reemail") reEmail: String,
+        @Field("gender") gender: String,
+        @Field("birthdate") birthdate: String,
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Response<BaseResponse<UserDTO>>
 
     /**
@@ -195,11 +208,16 @@ interface ClubService {
     @POST("notifications_mark_viewed")
     suspend fun markNotificationsAsViewed(
         @Field("notification_guid") notificationID: Int
-    ):Response<BaseResponse<NotificationsDTO>>
+    ): Response<BaseResponse<NotificationsDTO>>
 
     /**
      * message
      * */
+
+    @GET("message_recent")
+    suspend fun getRecentMessages(
+        @Query("guid")userID:Int
+    ):Response<BaseResponse<ConversationDTO>>
 
     @GET("message_list")
     suspend fun getConversationWithFriend(
@@ -323,4 +341,18 @@ interface ClubService {
         @Field("privacy") privacy: Int = 2,
         @Field("ossn_photo") photo: String? = null
     )
+
+    @GET("wall_view")
+    suspend fun getWallPost(
+        @Query("guid") userID: Int,
+        @Query("post_guid") postID: Int
+    ): Response<BaseResponse<WallPostDTO>>
+
+    @GET("wall_list_user")
+    suspend fun getAllWallPosts(
+        @Query("guid") userID: Int,
+        @Query("uguid") friendID: Int,
+        @Query("offset") page: Int? = null,
+        @Query("count") pageSize: Int? = null
+    ): Response<BaseResponse<FriendWallDTO>>
 }
