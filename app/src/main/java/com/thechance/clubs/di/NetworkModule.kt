@@ -1,10 +1,10 @@
 package com.thechance.clubs.di
 
+import com.devfalah.remote.AuthInterceptor
+import com.devfalah.remote.ClubService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.thechance.clubs.BuildConfig
-import com.thechance.clubs.data.AuthInterceptor
-import com.thechance.clubs.data.ClubService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

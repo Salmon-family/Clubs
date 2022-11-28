@@ -3,7 +3,7 @@ package com.thechance.clubs.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thechance.clubs.data.ClubService
+import com.devfalah.remote.ClubService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,8 +47,8 @@ class MainViewModel @Inject constructor(private val service: ClubService) : View
 //            val test = service.sendMessage(3,6,"test 123456 ").body()
 //            val test = service.createAlbum(6, "Test1234", 3).body()
 //            val test = service.deletePost(31,269).body()
-            val test= service.markNotificationsAsViewed(6).body()
-            Log.e("TESTLogin", test.toString())
+//            val test= service.markNotificationsAsViewed(6).body()
+//            Log.e("TESTLogin", test.toString())
         }
     }
 

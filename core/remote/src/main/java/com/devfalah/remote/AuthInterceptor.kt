@@ -1,6 +1,5 @@
-package com.thechance.clubs.data
+package com.devfalah.remote
 
-import com.thechance.clubs.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
