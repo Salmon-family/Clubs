@@ -1,6 +1,5 @@
 package com.devfalah.repositories.models
 
-import com.devfalah.repositories.models.Icon
 import com.google.gson.annotations.SerializedName
 
 
@@ -20,7 +19,7 @@ data class UserDTO(
     @SerializedName("guid")
     val guid: Int?,
     @SerializedName("icon")
-    val icon: Icon?,
+    val icon: IconDto?,
     @SerializedName("language")
     val language: String?,
     @SerializedName("last_name")

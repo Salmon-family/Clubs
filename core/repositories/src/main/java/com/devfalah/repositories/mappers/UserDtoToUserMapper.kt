@@ -1,6 +1,8 @@
 package com.devfalah.repositories.mappers
 
+import com.devfalah.entities.Icon
 import com.devfalah.entities.User
+import com.devfalah.repositories.models.IconDto
 import com.devfalah.repositories.models.UserDTO
 
 fun UserDTO.toUser():User{
@@ -15,5 +17,16 @@ fun UserDTO.toUser():User{
         gender = this.gender?: "",
         guid = this.guid?: 0,
         language = this.language?: "",
+        icon = this.icon?.toIcon() ?: Icon()
+    )
+}
+
+fun IconDto.toIcon() : Icon{
+    return Icon(
+        small = this.small?: "",
+        smaller = this.smaller?: "",
+        large = this.large?: "",
+        larger = this.larger?: "",
+        topBar = this.topbar?:"",
     )
 }

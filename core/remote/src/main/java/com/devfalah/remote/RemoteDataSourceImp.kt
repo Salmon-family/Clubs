@@ -1,6 +1,5 @@
 package com.devfalah.remote
 
-import android.util.Log
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.UserDTO
 import javax.inject.Inject

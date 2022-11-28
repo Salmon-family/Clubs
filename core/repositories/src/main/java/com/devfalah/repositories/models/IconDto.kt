@@ -2,7 +2,7 @@ package com.devfalah.repositories.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Icon(
+data class IconDto(
     @SerializedName("large")
     val large: String?,
     @SerializedName("larger")
