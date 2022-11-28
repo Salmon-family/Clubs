@@ -1,5 +1,6 @@
-package com.devfalah.repository.models
+package com.devfalah.repositories.models
 
+import com.devfalah.repositories.models.Icon
 import com.google.gson.annotations.SerializedName
 
 

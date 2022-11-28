@@ -1,6 +1,6 @@
-package com.devfalah.repository
+package com.devfalah.repositories
 
-import com.devfalah.repository.models.UserDTO
+import com.devfalah.repositories.models.UserDTO
 
 interface RemoteDataSource {
     suspend fun login(

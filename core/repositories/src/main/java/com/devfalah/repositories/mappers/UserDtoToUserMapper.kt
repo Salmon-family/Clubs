@@ -1,7 +1,7 @@
 package com.devfalah.repositories.mappers
 
 import com.devfalah.entities.User
-import com.devfalah.repository.models.UserDTO
+import com.devfalah.repositories.models.UserDTO
 
 fun UserDTO.toUser():User{
     return User(

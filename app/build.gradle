@@ -58,7 +58,7 @@ android {
 dependencies {
 
     api(project(":core:remote"))
-    api(project(":core:repository"))
+    api(project(":core:repositories"))
     api(project(":core:useCases"))
     api(project(":core:viewModels"))
     implementation 'androidx.core:core-ktx:1.7.0'

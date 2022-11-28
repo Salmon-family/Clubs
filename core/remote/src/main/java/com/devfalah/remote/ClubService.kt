@@ -1,7 +1,7 @@
 package com.devfalah.remote
 
 import com.devfalah.remote.response.BaseResponse
-import com.devfalah.repository.models.UserDTO
+import com.devfalah.repositories.models.UserDTO
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
