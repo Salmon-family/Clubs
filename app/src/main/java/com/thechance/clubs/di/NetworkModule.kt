@@ -1,10 +1,9 @@
 package com.thechance.clubs.di
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.thechance.clubs.BuildConfig
-import com.thechance.clubs.data.AuthInterceptor
-import com.thechance.clubs.data.ClubService
+import com.thechance.remote.ClubService
+import com.thechance.repository.RepositoryImp
+import com.thechance.usecase.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,7 +38,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+    fun provideOkHttpClient(authInterceptor: com.thechance.remote.AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .build()

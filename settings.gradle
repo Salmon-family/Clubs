@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Clubs"
 include ':app'
+include ':core:entity'
+include ':core:usecase'
+include ':core:viewModel'
+include ':core:ui'
+include ':core:repository'
+include ':core:remote'
