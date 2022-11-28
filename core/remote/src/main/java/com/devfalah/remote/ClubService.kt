@@ -1,10 +1,7 @@
 package com.devfalah.remote
 
 import com.devfalah.remote.response.*
-import com.devfalah.repositories.models.CheckFriendshipDTO
-import com.devfalah.repositories.models.ReactionDTO
-import com.devfalah.repositories.models.SuccessDTO
-import com.devfalah.repositories.models.UserDTO
+import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDetailsDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.message.ConversationDTO
@@ -339,5 +336,17 @@ interface ClubService {
         @Field("ossn_photo") photo: String? = null
     )
 
+    @GET("wall_view")
+    suspend fun getWallPost(
+        @Query("guid") userID: Int,
+        @Query("post_guid") postID: Int
+    ): Response<BaseResponse<WallPostDTO>>
 
+    @GET("wall_list_user")
+    suspend fun getAllWallPosts(
+        @Query("guid") userID: Int,
+        @Query("uguid") friendID: Int,
+        @Query("offset") page: Int? = null,
+        @Query("count") pageSize: Int? = null
+    ): Response<BaseResponse<FriendWallDTO>>
 }
