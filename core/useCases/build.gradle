@@ -9,4 +9,5 @@ java {
 }
 dependencies {
     api(project(":core:entities"))
+    implementation 'com.google.dagger:dagger-android:2.35.1'
 }

@@ -1,8 +1,9 @@
 package com.devfalah.usecases
 
 import com.devfalah.entities.User
+import javax.inject.Inject
 
-class LoginUseCase (
+class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
 
