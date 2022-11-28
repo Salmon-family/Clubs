@@ -1,4 +1,4 @@
-package com.thechance.clubs.ui.theme
+package com.devfalah.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

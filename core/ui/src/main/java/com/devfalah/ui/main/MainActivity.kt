@@ -1,4 +1,4 @@
-package com.thechance.clubs.main
+package com.devfalah.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,21 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import com.devfalah.ui.theme.ClubsTheme
 import com.devfalah.viewmodels.login.LoginViewModel
-import com.thechance.clubs.ui.theme.ClubsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-lifecycleScope.launch {
-    viewModel.login()
-}
-
+        lifecycleScope.launch {
+            viewModel.login()
+        }
         setContent {
             ClubsTheme {
                 // A surface container using the 'background' color from the theme
