@@ -1,8 +1,8 @@
-package com.devfalah.viewmodels.login
+package com.thechance.identity.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.LoginUseCase
+import com.thechance.identity.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,12 +18,11 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow("")
     val uiState = _uiState.asStateFlow()
 
-    fun login() {
+    init {
         viewModelScope.launch {
             val user = loginUseCase("devfalah", "20012001")
             _uiState.update { user.toString() }
         }
-
     }
 
 }

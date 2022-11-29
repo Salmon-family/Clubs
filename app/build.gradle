@@ -73,6 +73,14 @@ dependencies {
     api(project(":chat:remote"))
     //endregion
 
+    //region identity
+    api(project(":identity:ui"))
+    api(project(":identity:viewModel"))
+    api(project(":identity:useCases"))
+    api(project(":identity:repositories"))
+    api(project(":identity:remote"))
+    //endregion
+
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
