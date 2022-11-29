@@ -4,10 +4,8 @@ plugins {
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
 }
-
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
+def secretProperties = new Properties()
+secretProperties.load(new FileInputStream(rootProject.file("secret.properties")))
 
 android {
     namespace 'com.thechance.clubs'
@@ -20,9 +18,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "API_KEY", localProperties['apiKey']
-        buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -31,25 +26,30 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
     }
 
-    flavorDimensions "version"
+    flavorDimensions "dev", "prod"
     productFlavors {
         development {
-            dimension "version"
+            dimension "dev"
             applicationIdSuffix ".development"
-            versionNameSuffix "-development"
+            buildConfigField "String", "API_KEY", secretProperties['apiKey']
+            buildConfigField "String", "BASE_URL", secretProperties['baseUrl']
         }
         production {
-            dimension "version"
+            dimension "prod"
             applicationIdSuffix ".production"
-            versionNameSuffix "-production"
+            buildConfigField "String", "API_KEY", secretProperties['apiKey']
+            buildConfigField "String", "BASE_URL", secretProperties['baseUrl']
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
