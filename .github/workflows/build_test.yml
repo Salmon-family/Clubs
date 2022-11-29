@@ -1,0 +1,49 @@
+name: Build Test
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - feature/core
+      - feature/chat
+      - feature/identity
+
+env:
+  GRADLE_USER_HOME: ./.gradle
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - run: git fetch --prune --unshallow
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.GRADLE_USER_HOME }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: build debug
+        run: gradle assembleDebug
+
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - name: set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      # Execute unit tests
+      - name: Unit Test
+        run: gradle test
