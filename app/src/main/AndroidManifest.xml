@@ -15,8 +15,43 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clubs"
         tools:targetApi="31">
+
+        <activity android:name="com.devfalah.ui.main.MainActivity" />
+        <!--        <activity-->
+        <!--            android:name="com.devfalah.ui.main.MainActivity"-->
+        <!--            android:exported="true"-->
+        <!--            android:label="@string/app_name"-->
+        <!--            android:theme="@style/Theme.Clubs">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+
+        <!--            <meta-data-->
+        <!--                android:name="android.app.lib_name"-->
+        <!--                android:value="" />-->
+        <!--        </activity>-->
+
+        <activity android:name="com.thechance.ui.ChatActivity" />
+        <!--        <activity-->
+        <!--            android:name="com.thechance.ui.ChatActivity"-->
+        <!--            android:label="@string/app_name"-->
+        <!--            android:theme="@style/Theme.Clubs"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+
+        <!--            <meta-data-->
+        <!--                android:name="android.app.lib_name"-->
+        <!--                android:value="" />-->
+        <!--        </activity>-->
+
         <activity
-            android:name="com.devfalah.ui.main.MainActivity"
+            android:name="com.thechance.identity.ui.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Clubs">

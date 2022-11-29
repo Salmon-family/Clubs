@@ -3,6 +3,8 @@ package com.thechance.clubs.di
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.thechance.clubs.BuildConfig
+import com.thechance.identity.remote.IdentityService
+import com.thechance.remote.ChatService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +22,18 @@ object NetworkModule {
     @Provides
     fun provideClubsService(retrofit: Retrofit): ClubService {
         return retrofit.create(ClubService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideChatService(retrofit: Retrofit): ChatService {
+        return retrofit.create(ChatService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideIdentityService(retrofit: Retrofit): IdentityService {
+        return retrofit.create(IdentityService::class.java)
     }
 
     @Singleton

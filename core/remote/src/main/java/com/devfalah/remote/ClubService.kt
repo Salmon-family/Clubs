@@ -4,55 +4,12 @@ import com.devfalah.remote.response.*
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDetailsDTO
 import com.devfalah.repositories.models.group.GroupDTO
-import com.devfalah.repositories.models.message.ConversationDTO
-import com.devfalah.repositories.models.message.MessagesDTO
 import com.devfalah.repositories.models.notification.NotificationCountDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ClubService {
-
-    /**
-     * User
-     * */
-
-    @POST("user_authenticate")
-    suspend fun login(
-        @Query("username") username: String,
-        @Query("password") password: String
-    ): Response<BaseResponse<UserDTO>>
-
-    @FormUrlEncoded
-    @POST("user_details")
-    suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
-
-
-    @FormUrlEncoded
-    @POST("user_edit")
-    suspend fun editUser(
-        @Field("guid") userID: Int,
-        @Field("new_email") email: String,
-        @Field("new_gender") gender: String,
-        @Field("new_first_name") firstName: String,
-        @Field("new_last_name") lastName: String,
-        @Field("current_password") currentPassword: String,
-        @Field("new_password") newPassword: String = ""
-    ): Response<BaseResponse<UserDTO>>
-
-    @FormUrlEncoded
-    @POST("user_add")
-    suspend fun addUser(
-        @Field("firstname") firstname: String,
-        @Field("lastname") lastname: String,
-        @Field("email") email: String,
-        @Field("reemail") reEmail: String,
-        @Field("gender") gender: String,
-        @Field("birthdate") birthdate: String,
-        @Field("username") username: String,
-        @Field("password") password: String
-    ): Response<BaseResponse<UserDTO>>
-
     /**
      * Friends
      * */
@@ -204,39 +161,6 @@ interface ClubService {
         @Field("notification_guid") notificationID: Int
     ): Response<BaseResponse<NotificationsDTO>>
 
-    /**
-     * message
-     * */
-
-    @GET("message_recent")
-    suspend fun getRecentMessages(
-        @Query("guid")userID:Int
-    ):Response<BaseResponse<ConversationDTO>>
-
-    @GET("message_list")
-    suspend fun getConversationWithFriend(
-        @Query("to") userID: Int,
-        @Query("guid") friendID: Int,
-        @Query("markallread") markAsRead: Int = 0,
-        @Query("offset") page: Int? = null
-    ): Response<BaseResponse<ConversationDTO>>
-
-
-    // 1 to mark as read , 0 if not.
-    @GET("message_new")
-    suspend fun getUnreadMessages(
-        @Query("to") userID: Int,
-        @Query("from") friendID: Int,
-        @Query("markallread") markAsRead: Int = 0
-    ): Response<BaseResponse<UnreadMessagesResponse>>
-
-    @FormUrlEncoded
-    @POST("message_add")
-    suspend fun sendMessage(
-        @Field("from") userID: Int,
-        @Field("to") friendID: Int,
-        @Field("message") message: String
-    ): Response<BaseResponse<MessagesDTO>>
 
     /**
      * Album

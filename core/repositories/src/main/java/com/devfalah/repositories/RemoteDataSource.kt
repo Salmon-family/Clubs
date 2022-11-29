@@ -1,10 +1,9 @@
 package com.devfalah.repositories
 
-import com.devfalah.repositories.models.UserDTO
+import com.devfalah.repositories.models.FriendDTO
 
 interface RemoteDataSource {
-    suspend fun login(
-        userName: String,
-        password: String,
-    ) : UserDTO
+
+    suspend fun getUserFriends(userID: Int): List<FriendDTO>
+
 }
