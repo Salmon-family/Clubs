@@ -35,16 +35,16 @@ android {
         }
     }
 
-    flavorDimensions "dev", "prod"
+    flavorDimensions "version"
     productFlavors {
         development {
-            dimension "dev"
+            dimension "version"
             applicationIdSuffix ".development"
             buildConfigField "String", "API_KEY", secretProperties['apiKey']
             buildConfigField "String", "BASE_URL", secretProperties['baseUrl']
         }
         production {
-            dimension "prod"
+            dimension "version"
             applicationIdSuffix ".production"
             buildConfigField "String", "API_KEY", secretProperties['apiKey']
             buildConfigField "String", "BASE_URL", secretProperties['baseUrl']
