@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.devfalah.ui.screen.HomeScreen
 import com.devfalah.ui.theme.ClubsTheme
 import com.devfalah.viewmodels.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             ClubsTheme {
-//                HomeScreen()
+                HomeScreen()
             }
         }
     }
