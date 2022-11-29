@@ -1,7 +1,6 @@
-package com.devfalah.repositories.models.message
+package com.thechance.repositories.models
 
 
-import com.devfalah.repositories.models.UserDTO
 import com.google.gson.annotations.SerializedName
 
 data class ConversationDTO(

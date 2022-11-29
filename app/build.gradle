@@ -57,14 +57,22 @@ android {
 
 dependencies {
 
-    // core
+    //region core
     api(project(":core:ui"))
     api(project(":core:remote"))
     api(project(":core:repositories"))
     api(project(":core:useCases"))
     api(project(":core:viewModels"))
-    implementation("androidx.compose.runtime:runtime:$compose_ui_version")
-    //
+    //endregion
+
+    //region chat
+    api(project(":chat:ui"))
+    api(project(":chat:viewModels"))
+    api(project(":chat:useCases"))
+    api(project(":chat:repositories"))
+    api(project(":chat:remote"))
+    //endregion
+
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -74,5 +82,7 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    implementation("androidx.compose.runtime:runtime:$compose_ui_version")
 
 }

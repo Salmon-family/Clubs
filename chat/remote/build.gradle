@@ -5,12 +5,11 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
-    namespace 'com.devfalah.remote'
+    namespace 'com.thechance.remote'
     compileSdk 33
 
     defaultConfig {
@@ -19,6 +18,7 @@ android {
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
         buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -39,8 +39,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:repositories"))
-
+    implementation(project(":chat:repositories"))
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -50,5 +49,5 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
+    
 }

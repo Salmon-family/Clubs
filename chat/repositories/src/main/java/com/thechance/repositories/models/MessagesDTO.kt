@@ -1,4 +1,4 @@
-package com.devfalah.repositories.models.message
+package com.thechance.repositories.models
 
 
 import com.google.gson.annotations.SerializedName

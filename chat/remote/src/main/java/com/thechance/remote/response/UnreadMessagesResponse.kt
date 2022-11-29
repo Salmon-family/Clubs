@@ -1,9 +1,8 @@
-package com.devfalah.remote.response
+package com.thechance.remote.response
 
-
-import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.message.MessagesDTO
 import com.google.gson.annotations.SerializedName
+import com.thechance.repositories.models.MessagesDTO
+import com.thechance.repositories.models.UserDTO
 
 data class UnreadMessagesResponse(
     @SerializedName("list")
