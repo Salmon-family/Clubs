@@ -1,32 +1,26 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
 }
 
+
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
-
 android {
-    namespace 'com.thechance.clubs'
+    namespace 'com.devfalah.remote'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.thechance.clubs"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
         buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -42,29 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion "1.3.1"
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
 }
 
 dependencies {
+    implementation(project(":core:repositories"))
 
-    // core
-    api(project(":core:ui"))
-    api(project(":core:remote"))
-    api(project(":core:repositories"))
-    api(project(":core:useCases"))
-    api(project(":core:viewModels"))
-    implementation("androidx.compose.runtime:runtime:$compose_ui_version")
-    //
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -74,5 +50,6 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
 
 }
