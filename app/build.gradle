@@ -5,8 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+def secretProperties = new Properties()
+secretProperties.load(new FileInputStream(rootProject.file("secret.properties")))
 
 
 android {
@@ -20,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "API_KEY", localProperties['apiKey']
+        buildConfigField "String", "API_KEY", secretProperties['apiKey']
         buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

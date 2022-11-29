@@ -5,8 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+def secretProperties = new Properties()
+secretProperties.load(new FileInputStream(rootProject.file("secret.properties")))
 
 
 android {
@@ -17,7 +17,7 @@ android {
         minSdk 21
         targetSdk 33
 
-        buildConfigField "String", "API_KEY", localProperties['apiKey']
+        buildConfigField "String", "API_KEY", secretProperties['apiKey']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
