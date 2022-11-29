@@ -30,22 +30,8 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val test = viewModel.uiState.collectAsState()
-                    Greeting(test.value)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    IdentityTheme {
-        Greeting("Android")
     }
 }
