@@ -79,3 +79,13 @@ get() {
         fontSize = 12.sp
     )
 }
+
+val Typography.Title: TextStyle
+@Composable
+get() {
+    return TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 30.sp
+    )
+}
