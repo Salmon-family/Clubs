@@ -27,7 +27,7 @@ object DataBaseModule {
 
     @Singleton
     @Provides
-    fun provideChatDao(movieDataBase: ChatDataBase): ChatDao {
-        return movieDataBase.chatDao()
+    fun provideChatDao(chatDataBase: ChatDataBase): ChatDao {
+        return chatDataBase.chatDao()
     }
 }
