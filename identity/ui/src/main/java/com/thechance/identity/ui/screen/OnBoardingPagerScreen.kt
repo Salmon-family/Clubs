@@ -1,7 +1,7 @@
 package com.thechance.identity.ui.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,11 +20,10 @@ import com.thechance.identity.ui.theme.LightTernaryBlackColor
 @Preview(showSystemUi = true)
 @Composable
 fun OnBoardingPagerScreen() {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        SpacerVertical16()
-        ViewPagerSlider()
+    Column {
+        Box(Modifier.weight(1f)) {
+            ViewPagerSlider()
+        }
         SpacerVertical16()
         ButtonComposable(
             onClick = {},
@@ -44,5 +43,6 @@ fun OnBoardingPagerScreen() {
             text2 = stringResource(id = R.string.footer_second_text),
             color2 = LightPrimaryBrandColor
         )
+        SpacerVertical16()
     }
 }

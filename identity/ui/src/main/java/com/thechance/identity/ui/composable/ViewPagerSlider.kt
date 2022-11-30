@@ -1,13 +1,10 @@
 package com.thechance.identity.ui.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -36,24 +33,18 @@ fun ViewPagerSlider() {
     }
 
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        modifier = Modifier.fillMaxSize()
             .padding(16.dp)
     ) {
         HorizontalPager(
-            state = pageState
+            state = pageState,
+            verticalAlignment = Alignment.Bottom
         ) { page ->
             Column{
                 val sliderData = sliderDataList[page]
-                Image(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp),
-                    contentScale = ContentScale.Fit,
-                    painter = painterResource(id = sliderData.image),
-                    contentDescription = null
-                )
+                OnBoardingImage(sliderData = sliderData)
                 OnBoardingText(
                     sliderData = sliderData.title ?: "",
                     style = Typography.h1,
