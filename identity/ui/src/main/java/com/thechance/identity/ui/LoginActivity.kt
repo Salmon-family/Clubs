@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.thechance.identity.ui.screen.OnBoardingPagerScreen
 import com.thechance.identity.viewmodel.LoginViewModel
 import com.thechance.identity.ui.theme.IdentityTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,8 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val test = viewModel.uiState.collectAsState()
+
+                    OnBoardingPagerScreen()
                 }
             }
         }
