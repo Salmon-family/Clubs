@@ -1,7 +1,7 @@
 package com.thechance.remote
 
-import com.thechance.repositories.ChatDataSource
-import com.thechance.repositories.models.ConversationDTO
+import com.devfalah.repository.ChatDataSource
+import com.devfalah.repository.models.ConversationDTO
 import javax.inject.Inject
 
 class ChatDataSourceImp @Inject constructor(

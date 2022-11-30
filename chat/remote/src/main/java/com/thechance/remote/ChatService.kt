@@ -2,8 +2,8 @@ package com.thechance.remote
 
 import com.thechance.remote.response.BaseResponse
 import com.thechance.remote.response.UnreadMessagesResponse
-import com.thechance.repositories.models.ConversationDTO
-import com.thechance.repositories.models.MessagesDTO
+import com.devfalah.repository.models.ConversationDTO
+import com.devfalah.repository.models.MessagesDTO
 import retrofit2.Response
 import retrofit2.http.*
 

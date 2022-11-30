@@ -1,11 +1,13 @@
 package com.thechance.clubs.di
 
+import com.devfalah.local.LocalDataSourceImp
 import com.devfalah.remote.RemoteDataSourceImp
 import com.devfalah.repositories.RemoteDataSource
 import com.thechance.identity.remote.IdentityDataSourceImp
 import com.thechance.identity.repositories.IdentityDataSource
 import com.thechance.remote.ChatDataSourceImp
-import com.thechance.repositories.ChatDataSource
+import com.devfalah.repository.ChatDataSource
+import com.devfalah.repository.LocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,4 +31,9 @@ abstract class DataSourceModule {
     abstract fun bindIdentityDataSource(
         identityDataSourceImp: IdentityDataSourceImp
     ): IdentityDataSource
+
+    @Binds
+    abstract fun bindLocalDataSource(
+        localDataSourceImp: LocalDataSourceImp
+    ): LocalDataSource
 }
