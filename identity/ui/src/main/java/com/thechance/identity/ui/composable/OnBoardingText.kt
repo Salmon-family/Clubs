@@ -8,12 +8,12 @@ import androidx.compose.ui.text.TextStyle
 
 @Composable
 fun OnBoardingText(
-    onBoardingData: String,
+    sliderData: String,
     style: TextStyle,
     color: Color
 ){
     Text(
-        text = onBoardingData,
+        text = sliderData,
         style = style,
         color = color
     )
