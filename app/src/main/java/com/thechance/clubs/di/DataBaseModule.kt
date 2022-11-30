@@ -17,7 +17,7 @@ object DataBaseModule {
 
     @Singleton
     @Provides
-    fun providesRoomDatabase(
+    fun providesChatDataBase(
         @ApplicationContext context: Context,
     ): ChatDataBase {
         return Room.databaseBuilder(context, ChatDataBase::class.java, "ChatDatabase")
@@ -27,7 +27,7 @@ object DataBaseModule {
 
     @Singleton
     @Provides
-    fun provideMovieDao(movieDataBase: ChatDataBase): ChatDao {
-        return movieDataBase.chatDao()
+    fun provideChatDao(chatDataBase: ChatDataBase): ChatDao {
+        return chatDataBase.chatDao()
     }
 }
