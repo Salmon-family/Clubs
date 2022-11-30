@@ -69,8 +69,9 @@ dependencies {
     api(project(":chat:ui"))
     api(project(":chat:viewModels"))
     api(project(":chat:useCases"))
-    api(project(":chat:repositories"))
+    api(project(":chat:repository"))
     api(project(":chat:remote"))
+    api(project(":chat:local"))
     //endregion
 
     //region identity
@@ -90,6 +91,11 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     implementation("androidx.compose.runtime:runtime:$compose_ui_version")
 

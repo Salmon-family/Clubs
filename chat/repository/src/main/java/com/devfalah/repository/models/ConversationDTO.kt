@@ -1,12 +1,15 @@
-package com.thechance.remote.response
+package com.devfalah.repository.models
+
 
 import com.google.gson.annotations.SerializedName
-import com.devfalah.repository.models.MessagesDTO
-import com.devfalah.repository.models.UserDTO
 
-data class UnreadMessagesResponse(
+data class ConversationDTO(
+    @SerializedName("count")
+    val count: Int?,
     @SerializedName("list")
     val list: List<MessagesDTO>?,
+    @SerializedName("offset")
+    val offset: Boolean?,
     @SerializedName("withuser")
     val withuser: UserDTO?
 )
