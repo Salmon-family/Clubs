@@ -49,7 +49,7 @@ fun ViewPagerSlider() {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp),
+                        .height(300.dp),
                     contentScale = ContentScale.Fit,
                     painter = painterResource(id = sliderData.image),
                     contentDescription = null

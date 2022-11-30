@@ -22,6 +22,7 @@ fun OnBoardingPagerScreen() {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+        SpacerVertical16()
         ViewPagerSlider()
         SpacerVertical16()
         ButtonComposable(
