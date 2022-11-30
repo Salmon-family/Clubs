@@ -22,13 +22,12 @@ import com.thechance.identity.ui.theme.WhiteColor
 fun ButtonComposable(
     onClick: () -> Unit,
     text: String,
-    buttonColor: Color,
-    textColor: Color
+    buttonColor: Color = LightPrimaryBrandColor,
+    textColor: Color = WhiteColor,
+    modifier: Modifier = Modifier.fillMaxWidth().padding(horizontal = 23.dp)
 ) {
     Button(
-        modifier = Modifier
-            .padding(horizontal = 23.dp)
-            .fillMaxWidth()
+        modifier = modifier
             .clip(RoundedCornerShape(20.dp)),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(

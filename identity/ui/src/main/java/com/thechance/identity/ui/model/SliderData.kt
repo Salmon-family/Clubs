@@ -10,20 +10,21 @@ data class SliderData(
 
 val sliderDataList = listOf(
     SliderData(
-        image = R.drawable.pc_man_one,
-        title = "",
+        image = R.drawable.pc_first_man,
+        title = "Meet\n" +
+                "new people",
         description = "Meet new people close to your interests and have fun"
     ),
     SliderData(
-        image = R.drawable.pc_man_two,
-        title = "Keep track of the latest posts",
+        image = R.drawable.pc_second_man,
+        title = "Keep track \nof the latest posts",
         description = "Keep track of the latest and most enthusiastic" +
                 " publications in your clubs"
     ),
     SliderData(
-        image = R.drawable.pc_man_three,
-        title = "Connect" +
-                "with your friends",
-        description = "Meet new people close to your interests and have fun"
+        image = R.drawable.pc_third_man,
+        title = "Connect \nwith your friends",
+        description = "Connect with your friends and share all the" +
+                " stories and fun"
     )
 )

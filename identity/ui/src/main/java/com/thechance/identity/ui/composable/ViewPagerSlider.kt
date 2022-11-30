@@ -44,7 +44,7 @@ fun ViewPagerSlider() {
         HorizontalPager(
             state = pageState
         ) { page ->
-            Column() {
+            Column{
                 val sliderData = sliderDataList[page]
                 Image(
                     modifier = Modifier
@@ -54,12 +54,12 @@ fun ViewPagerSlider() {
                     painter = painterResource(id = sliderData.image),
                     contentDescription = null
                 )
-
                 OnBoardingText(
                     sliderData = sliderData.title ?: "",
                     style = Typography.h1,
                     color = LightPrimaryBlackColor
                 )
+                SpacerVertical16()
                 OnBoardingText(
                     sliderData = sliderData.description,
                     style = Typography.body1,

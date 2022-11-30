@@ -2,4 +2,6 @@
     <string name="app_name">Clubs</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="footer_first_text">By continuing you argree Habeet’s</string>
+    <string name="footer_second_text">Terms of \nServices &amp; Privacy Policy</string>
 </resources>
