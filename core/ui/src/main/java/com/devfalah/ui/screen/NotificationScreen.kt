@@ -20,59 +20,57 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.*
-import com.devfalah.viewmodels.NotificationsViewModel
+import com.devfalah.viewmodels.notifications.NotificationState
+import com.devfalah.viewmodels.notifications.NotificationsUIState
+import com.devfalah.viewmodels.notifications.NotificationsViewModel
 
 
 @Composable
 fun NotificationScreen(
     viewModel: NotificationsViewModel = hiltViewModel()
 ) {
-//    val state by viewModel.uiState.collectAsState()
-    NotificationContent()
+    val state by viewModel.uiState.collectAsState()
+    NotificationContent(state)
 }
 
 @Composable
-fun NotificationContent() {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(LightBackgroundColor),
+fun NotificationContent(state: NotificationsUIState) {
+    NotificationItem(notification = state.Notifications[0])
+}
+
+@Composable
+fun NotificationItem(notification: NotificationState){
+    Card(modifier = Modifier.fillMaxWidth(),
+        backgroundColor = LightCardBackgroundColor,
     ) {
-        item {
-            Card(modifier = Modifier.fillMaxWidth(),
-            backgroundColor = LightCardBackgroundColor,
+        Row(modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(modifier = Modifier
+                .size(56.dp)
+                .clip(CircleShape),
+                painter = painterResource(id = R.drawable.user_image),
+                contentDescription = "user",
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                   ) {
-                    Image(modifier = Modifier
-                        .size(56.dp)
-                        .clip(CircleShape),
-                        painter = painterResource(id = R.drawable.user_image),
-                        contentDescription = "user",
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Column(modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(text = "Mustafa Ahmed commented on your post: " + "“This is just a testing text”."
-                        , color = LightPrimaryBlackColor, lineHeight = 20.sp
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "state", Modifier.height(20.dp)
-                            , color = LightTernaryBlackColor,  lineHeight = 20.sp)
-                    }
-                }
+                Text(text = "notification.poster"+"commented on your post: " + "“This is just a testing text”."
+                    , color = LightPrimaryBlackColor, lineHeight = 20.sp
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "state", Modifier.height(20.dp)
+                    , color = LightTernaryBlackColor,  lineHeight = 20.sp)
             }
-
-
         }
     }
 }
 
-@Preview(showSystemUi = true)
+
+@Preview()
 @Composable
 fun DefaultPreview() {
     NotificationScreen()

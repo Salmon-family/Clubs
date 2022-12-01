@@ -19,7 +19,7 @@ data class Notification(
 )
 
 data class Poster(
-        val fullName: String= "",
         val guid: Int= 0,
+        val fullName: String= "",
         val icon: String = ""
 )
