@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.thechance.identity.ui.screen.login.EmailAddress
 import com.thechance.identity.ui.screen.signup.SignUpScreen
 import com.thechance.identity.viewmodel.LoginViewModel
 import com.thechance.identity.ui.theme.IdentityTheme
@@ -28,9 +29,10 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val test = viewModel.uiState.collectAsState()
-                    SignUpScreen()
+//                    SignUpScreen()
 //                    WelcomeOnboard()
 //                    OnBoardingPagerScreen()
+                    EmailAddress()
                 }
             }
         }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,6 +14,7 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.BackButtonComposable
 import com.thechance.identity.ui.composable.ButtonComposable
 import com.thechance.identity.ui.composable.InputTextComposable
+import com.thechance.identity.ui.composable.TextComposable
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -23,10 +23,11 @@ import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
-fun EmailAddress(){
+fun EmailAddress() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
     ) {
         SpacerVertical12()
         BackButtonComposable {
@@ -34,19 +35,19 @@ fun EmailAddress(){
         }
 
         SpacerVertical(52.dp)
-        Text(
+        TextComposable(
             text = stringResource(id = R.string.email_address_question),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
-            modifier = Modifier.padding(horizontal = 24.dp)
+            modifier = Modifier.padding(horizontal = 8.dp)
         )
 
         SpacerVertical24()
-        Text(
+        TextComposable(
             text = stringResource(id = R.string.email_label),
             style = Typography.subtitle2,
             color = LightSecondaryBlackColor,
-            modifier = Modifier.padding(horizontal = 24.dp)
+            modifier = Modifier.padding(horizontal = 8.dp)
         )
 
         SpacerVertical(height = 14.dp)
@@ -60,13 +61,15 @@ fun EmailAddress(){
         ButtonComposable(
             onClick = {},
             text = stringResource(id = R.string.continue_label),
-            buttonModifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+            buttonModifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewEmailAddress(){
+fun PreviewEmailAddress() {
     EmailAddress()
 }

@@ -30,12 +30,12 @@ import com.thechance.identity.ui.theme.Typography
 fun InputTextComposable(
     type: KeyboardType,
     onClick: () -> Unit,
-){
+) {
     var text by rememberSaveable { mutableStateOf("") }
     TextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 8.dp),
         value = text,
         onValueChange = { newText ->
             text = newText
@@ -56,10 +56,11 @@ fun InputTextComposable(
             unfocusedIndicatorColor = Color.Transparent
         ),
         placeholder = {
-            Text(
+            TextComposable(
                 text = stringResource(id = R.string.email_place_holder),
                 style = Typography.InputText,
-                color = LightPrimaryGrayColor
+                color = LightPrimaryGrayColor,
+                modifier = Modifier.fillMaxWidth()
             )
         },
         keyboardOptions = KeyboardOptions(

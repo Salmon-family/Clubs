@@ -7,13 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.BackButtonComposable
 import com.thechance.identity.ui.composable.ButtonComposable
+import com.thechance.identity.ui.composable.InputTextComposable
 import com.thechance.identity.ui.composable.TextComposable
-import com.thechance.identity.ui.composable.TextFieldComposable
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.Typography
@@ -26,7 +27,7 @@ fun SignUpScreen() {
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable(backButton = R.drawable.ic_arrow_back)
+        BackButtonComposable() {}
 
         SpacerVertical(height = 36.dp)
         TextComposable(
@@ -37,7 +38,11 @@ fun SignUpScreen() {
         )
 
         SpacerVertical(height = 24.dp)
-        TextFieldComposable("Motu.uiux@gmail.com") {}
+        InputTextComposable(
+            type = KeyboardType.Email
+        ) {
+
+        }
 
         SpacerVertical(height = 24.dp)
         ButtonComposable(
@@ -45,7 +50,7 @@ fun SignUpScreen() {
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
             onClick = {},
-            text = stringResource(id = R.string.continue_text)
+            text = stringResource(id = R.string.continue_label)
         )
     }
 }
