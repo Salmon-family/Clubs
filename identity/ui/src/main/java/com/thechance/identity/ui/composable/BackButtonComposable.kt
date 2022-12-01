@@ -5,11 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 
 @Composable
-fun BackButton(
+fun BackButtonComposable(
     backButton: Int
 ) {
     Image(
         painter = painterResource(id = backButton),
-        contentDescription = "back button"
+        contentDescription = null
     )
 }

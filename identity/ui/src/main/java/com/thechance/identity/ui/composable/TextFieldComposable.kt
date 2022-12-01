@@ -20,10 +20,11 @@ fun TextFieldComposable(
     onValueChange: (String) -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(24.dp)
+        modifier = Modifier.padding(8.dp)
     ) {
         TextComposable(
-            text = "Email", style = Typography.body2, color = LightSecondaryBlackColor
+            text = "Email", style = Typography.body2, color = LightSecondaryBlackColor,
+            Modifier.padding(start = 8.dp)
         )
         SpacerVertical(height = 14.dp)
         Card(

@@ -48,13 +48,15 @@ fun ViewPagerSlider() {
                 TextComposable(
                     text = sliderData.title ?: "",
                     style = Typography.h1,
-                    color = LightPrimaryBlackColor
+                    color = LightPrimaryBlackColor,
+                    Modifier.padding(start = 24.dp)
                 )
                 SpacerVertical16()
                 TextComposable(
                     text = sliderData.description,
                     style = Typography.body1,
-                    color = LightTernaryBlackColor
+                    color = LightTernaryBlackColor,
+                    Modifier.padding(start = 24.dp)
                 )
 
             }

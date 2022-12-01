@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen
+package com.thechance.identity.ui.screen.onboarding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -38,7 +38,8 @@ fun WelcomeOnboard() {
         TextComposable(
             text = stringResource(id = R.string.have_fun),
             style = Typography.h1,
-            color = LightPrimaryBlackColor
+            color = LightPrimaryBlackColor,
+            Modifier.padding(start = 24.dp)
         )
 
         SpacerVertical8()
@@ -46,6 +47,7 @@ fun WelcomeOnboard() {
             text = stringResource(id = R.string.onboard_body),
             style = Typography.body1,
             color = LightTernaryBlackColor,
+            Modifier.padding(start = 24.dp)
         )
 
         SpacerVertical(height = 20.dp)

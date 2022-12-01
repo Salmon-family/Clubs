@@ -1,22 +1,21 @@
 package com.thechance.identity.ui.composable
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
 
 
 @Composable
 fun TextComposable(
     text: String,
     style: TextStyle,
-    color: Color
+    color: Color,
+    modifier: Modifier
 ){
     Text(
-        modifier = Modifier.padding(start = 24.dp),
+        modifier = modifier,
         text = text,
         style = style,
         color = color

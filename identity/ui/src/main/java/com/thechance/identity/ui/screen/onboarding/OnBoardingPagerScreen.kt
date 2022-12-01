@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen
+package com.thechance.identity.ui.screen.onboarding
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,11 +24,13 @@ fun OnBoardingPagerScreen() {
         Box(Modifier.weight(1f)) {
             ViewPagerSlider()
         }
+
         SpacerVertical16()
         ButtonComposable(
             onClick = {},
             text = stringResource(id = R.string.login),
         )
+
         SpacerVertical16()
         ButtonComposable(
             onClick = {},
@@ -36,6 +38,7 @@ fun OnBoardingPagerScreen() {
             buttonColor = LightCardColor,
             textColor = LightPrimaryBlackColor
         )
+
         SpacerVertical16()
         FooterOnBoarding(
             text1 = stringResource(R.string.footer_first_text),
@@ -43,6 +46,7 @@ fun OnBoardingPagerScreen() {
             text2 = stringResource(id = R.string.footer_second_text),
             color2 = LightPrimaryBrandColor
         )
+
         SpacerVertical16()
     }
 }
