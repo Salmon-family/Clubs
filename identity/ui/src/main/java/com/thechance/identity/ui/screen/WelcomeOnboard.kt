@@ -2,7 +2,6 @@ package com.thechance.identity.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,10 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.thechance.identity.ui.ParallelogramShape
+import com.thechance.identity.ui.shape.ParallelogramShape
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.OnBoardImage
-import com.thechance.identity.ui.composable.OnboardButton
+import com.thechance.identity.ui.composable.ButtonComposable
+import com.thechance.identity.ui.composable.WelcomeOnBoardImage
+import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.*
 
 @Composable
@@ -32,50 +33,59 @@ fun WelcomeOnboard(){
             modifier = Modifier
                 .height(292.dp)
                 .background(
-                    shape = ParallelogramShape(),
+                    shape = ParallelogramShape(72f),
                     color = Color.White
                 ),
             contentAlignment = Alignment.Center
         ){
-            OnBoardImage(
+            WelcomeOnBoardImage(
                 painter = painterResource(id = R.drawable.welcome),
                 description = stringResource(id = R.string.welcome)
             )
         }
-        Spacer(modifier = Modifier.height(50.dp))
+
+        SpacerVertical(height = 60.dp)
         Row(
             modifier = Modifier.padding(start = 24.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.club),
-                style = MaterialTheme.typography.subtitle1,
+                style = Typography.subtitle1,
                 color = LightPrimaryBrandColor
             )
             Text(
                 text = "\uD83D\uDE4C",
-                fontFamily = Inter,
+                fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(start = 8.dp)
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+
+        SpacerVertical8()
         Text(
             text = stringResource(id = R.string.have_fun),
-            style = MaterialTheme.typography.Title,
+            style = Typography.h1,
             color = LightPrimaryBlackColor,
             modifier = Modifier.padding(start = 24.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+
+        SpacerVertical8()
         Text(
             text = stringResource(id = R.string.onboard_body),
-            style = MaterialTheme.typography.body1,
+            style = Typography.body1,
             color = LightTernaryBlackColor,
-            modifier = Modifier.padding(start = 24.dp)
+            modifier = Modifier.padding(horizontal = 24.dp)
         )
-        Spacer(modifier = Modifier.height(20.dp))
-        OnboardButton(
-            text = stringResource(id = R.string.lets_do)
+
+        SpacerVertical(height = 20.dp)
+        ButtonComposable(
+            onClick = {},
+            text = stringResource(id = R.string.lets_do),
+            buttonModifier = Modifier
+                .wrapContentSize().padding(start = 24.dp),
+            textModifier = Modifier
+                .padding(vertical = 12.dp, horizontal = 32.dp)
         )
         Spacer(modifier = Modifier.weight(1f))
     }

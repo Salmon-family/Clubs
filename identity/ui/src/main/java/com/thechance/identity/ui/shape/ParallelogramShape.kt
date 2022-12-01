@@ -1,4 +1,4 @@
-package com.thechance.identity.ui
+package com.thechance.identity.ui.shape
 
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline
@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 
-class ParallelogramShape : Shape {
+class ParallelogramShape(private val yValue: Float) : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
@@ -15,16 +15,11 @@ class ParallelogramShape : Shape {
     ): Outline {
         return Outline.Generic(
             Path().apply {
-                lineTo(size.width, 72f)
-                lineTo(size.width, size.height + 72f)
-                lineTo(0f, size.height - 36f)
+                lineTo(size.width, yValue)
+                lineTo(size.width, size.height + yValue)
+                lineTo(0f, size.height - (0.5 * yValue).toFloat())
                 close()
             }
         )
     }
 }
-//moveTo(0f, 103f)
-//lineTo(size.width, 176f)
-//lineTo(size.width, 467f)
-//lineTo(0f, 407f)
-//lineTo(0f, 103f)

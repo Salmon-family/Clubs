@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun OnBoardImage(painter: Painter, description:String = ""){
+fun WelcomeOnBoardImage(painter: Painter, description: String? = null){
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally

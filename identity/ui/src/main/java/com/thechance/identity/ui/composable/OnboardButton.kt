@@ -11,9 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.thechance.identity.ui.R
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 
 @Composable
@@ -30,7 +28,7 @@ fun OnboardButton(text: String){
             text = text,
             style = MaterialTheme.typography.button,
             color = Color.White,
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 35.dp)
+            modifier = Modifier.padding(vertical = 12.dp, horizontal = 32.dp)
         )
     }
 }
