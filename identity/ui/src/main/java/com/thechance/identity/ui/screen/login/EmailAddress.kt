@@ -12,9 +12,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.BackButtonComposable
 import com.thechance.identity.ui.composable.ButtonComposable
-import com.thechance.identity.ui.composable.InputText
+import com.thechance.identity.ui.composable.InputTextComposable
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -29,39 +29,39 @@ fun EmailAddress(){
             .fillMaxSize()
     ) {
         SpacerVertical12()
-        BackButton {
+        BackButtonComposable {
 
         }
 
         SpacerVertical(52.dp)
-        Column(modifier = Modifier.padding(21.dp)) {
-            Text(
-                text = stringResource(id = R.string.email_address_question),
-                style = Typography.h1,
-                color = LightPrimaryBlackColor
-            )
+        Text(
+            text = stringResource(id = R.string.email_address_question),
+            style = Typography.h1,
+            color = LightPrimaryBlackColor,
+            modifier = Modifier.padding(horizontal = 24.dp)
+        )
 
-            SpacerVertical24()
-            Text(
-                text = stringResource(id = R.string.email_label),
-                style = Typography.subtitle2,
-                color = LightSecondaryBlackColor
-            )
+        SpacerVertical24()
+        Text(
+            text = stringResource(id = R.string.email_label),
+            style = Typography.subtitle2,
+            color = LightSecondaryBlackColor,
+            modifier = Modifier.padding(horizontal = 24.dp)
+        )
 
-            SpacerVertical(height = 14.dp)
-            InputText(
-                type = KeyboardType.Email
-            ) {
+        SpacerVertical(height = 14.dp)
+        InputTextComposable(
+            type = KeyboardType.Email
+        ) {
 
-            }
-
-            SpacerVertical24()
-            ButtonComposable(
-                onClick = {},
-                text = stringResource(id = R.string.continue_label),
-                buttonModifier = Modifier.fillMaxWidth()
-            )
         }
+
+        SpacerVertical24()
+        ButtonComposable(
+            onClick = {},
+            text = stringResource(id = R.string.continue_label),
+            buttonModifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+        )
     }
 }
 

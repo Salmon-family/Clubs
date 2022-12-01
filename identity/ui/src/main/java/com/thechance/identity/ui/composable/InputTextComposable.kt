@@ -27,7 +27,7 @@ import com.thechance.identity.ui.theme.LightPrimaryGrayColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
-fun InputText(
+fun InputTextComposable(
     type: KeyboardType,
     onClick: () -> Unit,
 ){
@@ -35,7 +35,7 @@ fun InputText(
     TextField(
         modifier = Modifier
             .fillMaxWidth()
-            ,
+            .padding(horizontal = 24.dp),
         value = text,
         onValueChange = { newText ->
             text = newText
