@@ -37,50 +37,45 @@ val Typography = Typography(
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp
-    ),
-    caption = TextStyle(
-        fontFamily = PlusJakartaSans,
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp
     )
 )
 
 val Typography.MediumCaption: TextStyle
-    @Composable
-    get() {
-        return TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Medium,
-            fontSize = 12.sp
-        )
-    }
+@Composable
+get() {
+    return TextStyle(
+        fontFamily = PlusJakartaSans,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp
+    )
+}
 
 val Typography.BoldCaption: TextStyle
-    @Composable
-    get() {
-        return TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Bold,
-            fontSize = 12.sp
-        )
-    }
+@Composable
+get() {
+    return TextStyle(
+        fontFamily = PlusJakartaSans,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp
+    )
+}
 
 val Typography.InputText: TextStyle
-    @Composable
-    get() {
-        return TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp
-        )
-    }
+@Composable
+get() {
+    return TextStyle(
+        fontFamily = PlusJakartaSans,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    )
+}
 
 val Typography.CardTitle: TextStyle
-    @Composable
-    get() {
-        return TextStyle(
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp
-        )
-    }
+@Composable
+get() {
+    return TextStyle(
+        fontFamily = PlusJakartaSans,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp
+    )
+}
