@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.thechance.identity.ui.screen.OnBoardingPagerScreen
+import com.thechance.identity.ui.screen.SignUpScreen
 import com.thechance.identity.ui.screen.WelcomeOnboard
 import com.thechance.identity.viewmodel.LoginViewModel
 import com.thechance.identity.ui.theme.IdentityTheme
@@ -32,6 +33,7 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val test = viewModel.uiState.collectAsState()
+                    SignUpScreen()
                 }
             }
         }

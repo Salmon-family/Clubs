@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.ButtonComposable
 import com.thechance.identity.ui.composable.ClubText
-import com.thechance.identity.ui.composable.OnBoardingText
+import com.thechance.identity.ui.composable.TextComposable
 import com.thechance.identity.ui.composable.WelcomeOnBoardingBoxOfParallelogramShape
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical16
@@ -35,15 +35,15 @@ fun WelcomeOnboard() {
         ClubText()
 
         SpacerVertical8()
-        OnBoardingText(
-            sliderData = stringResource(id = R.string.have_fun),
+        TextComposable(
+            text = stringResource(id = R.string.have_fun),
             style = Typography.h1,
             color = LightPrimaryBlackColor
         )
 
         SpacerVertical8()
-        OnBoardingText(
-            sliderData = stringResource(id = R.string.onboard_body),
+        TextComposable(
+            text = stringResource(id = R.string.onboard_body),
             style = Typography.body1,
             color = LightTernaryBlackColor,
         )

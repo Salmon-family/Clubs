@@ -10,14 +10,14 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun OnBoardingText(
-    sliderData: String,
+fun TextComposable(
+    text: String,
     style: TextStyle,
     color: Color
 ){
     Text(
         modifier = Modifier.padding(start = 24.dp),
-        text = sliderData,
+        text = text,
         style = style,
         color = color
     )
