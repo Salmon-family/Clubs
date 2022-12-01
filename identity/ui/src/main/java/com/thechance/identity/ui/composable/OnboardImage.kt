@@ -18,9 +18,8 @@ fun OnBoardImage(painter: Painter, description:String = ""){
             painter = painter,
             contentDescription = description,
             modifier = Modifier
-                .width(220.dp)
-                .aspectRatio(3f / 4f)
-                .padding(top = 140.dp)
+                .height(292.dp)
+                .aspectRatio(1f / 1f)
         )
     }
 }

@@ -22,7 +22,7 @@ fun OnboardButton(text: String){
         onClick = { },
         modifier = Modifier
             .wrapContentSize(Alignment.Center)
-            .padding(top = 20.dp),
+            .padding(start = 24.dp),
         shape = RoundedCornerShape(size = 20.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = LightPrimaryBrandColor),
     ) {
