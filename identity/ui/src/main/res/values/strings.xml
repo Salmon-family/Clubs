@@ -14,4 +14,7 @@
     <string name="email_label">Your Email</string>
     <string name="email_place_holder">Motu.uiux@gmail.com</string>
     <string name="continue_label">Continue</string>
+    <string name="email">Email</string>
+    <string name="your_password">Your Password</string>
+    <string name="confirm_password">Re-enter Password</string>
 </resources>

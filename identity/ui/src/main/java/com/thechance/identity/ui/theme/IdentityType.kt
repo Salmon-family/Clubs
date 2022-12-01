@@ -26,7 +26,7 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.Medium,
-        fontSize = 14.sp
+        fontSize = 16.sp
     ),
     body2 = TextStyle(
         fontFamily = PlusJakartaSans,

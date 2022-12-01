@@ -23,7 +23,7 @@ import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
-fun EmailAddress() {
+fun EmailAddressScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,5 +71,5 @@ fun EmailAddress() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewEmailAddress() {
-    EmailAddress()
+    EmailAddressScreen()
 }
