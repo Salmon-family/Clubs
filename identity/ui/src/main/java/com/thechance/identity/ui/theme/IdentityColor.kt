@@ -10,6 +10,7 @@ val Teal200 = Color(0xFF03DAC5)
 //for light theme
 val LightPrimaryBrandColor = Color(0xFF6C56D6)
 val LightSecondaryBrandColor = Color(0xFFE7E4F8)
+val LightTernaryBrandColor = Color(0x33E7E4F8)
 val LightPrimaryBlackColor = Color(0xFF04030A)
 val LightSecondaryBlackColor = Color(0x9904030A)
 val LightTernaryBlackColor = Color(0x6104030A)

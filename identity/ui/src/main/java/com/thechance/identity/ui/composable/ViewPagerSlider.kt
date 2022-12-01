@@ -36,7 +36,7 @@ fun ViewPagerSlider() {
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
-            .padding(16.dp)
+
     ) {
         HorizontalPager(
             state = pageState,
@@ -63,7 +63,8 @@ fun ViewPagerSlider() {
         HorizontalPagerIndicator(
             pagerState = pageState,
             modifier = Modifier
-                .align(Alignment.Start),
+                .align(Alignment.Start)
+                .padding(24.dp),
             activeColor = LightPrimaryBrandColor,
             inactiveColor = LightSecondaryBrandColor
         )
