@@ -21,4 +21,8 @@
     <string name="user_name">User Name</string>
     <string name="birth_date">Birthdate</string>
     <string name="gender">Gender</string>
+    <string name="log_in">Log In</string>
+    <string name="password_place_holder">********</string>
+    <string name="using">Using</string>
+    <string name="to_login">to login</string>
 </resources>
