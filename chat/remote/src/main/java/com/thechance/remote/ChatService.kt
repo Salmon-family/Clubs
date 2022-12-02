@@ -14,7 +14,7 @@ interface ChatService {
 
     @GET("message_recent")
     suspend fun getRecentMessages(
-        @Query("guid")userID:Int
+        @Query("guid") userID: Int
     ): Response<BaseResponse<ConversationDTO>>
 
     @GET("message_list")
