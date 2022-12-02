@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.thechance.ui.composables.FriendChat
 import com.thechance.viewmodels.chatWithFriend.ChatsViewModel
+import com.thechance.viewmodels.chatWithFriend.uistates.ChatUiState
 
 
 @Composable
@@ -20,12 +21,19 @@ fun ChatsScreen(
     viewModel: ChatsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+    ChatsContent(chats = state.chats)
+}
+
+@Composable
+private fun ChatsContent(
+    chats: List<ChatUiState>
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
         contentPadding = PaddingValues(16.dp)
     ) {
-        items(state.chats) {
+        items(chats) {
             FriendChat(chatUiState = it)
         }
     }
