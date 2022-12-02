@@ -15,7 +15,7 @@ data class NotificationDTO(
     @SerializedName("subject_guid")
     val subjectGuid: Int?,
     @SerializedName("time_created")
-    val timeCreated: Int?,
+    val timeCreated: Long?,
     @SerializedName("type")
     val type: String?,
     @SerializedName("viewed")

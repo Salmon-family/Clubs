@@ -23,8 +23,12 @@ class NotificationsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val notifications = getNotifications(6)
-            _uiState.update { it.copy(Notifications = notifications.map { it.notification.toUIState()}) }
+            _uiState.update { it.copy(notifications = notifications.map { it.notification.toUIState() }) }
         }
+    }
+
+    fun onNotificationClick(notification: NotificationState) {
+        Log.e("TEST", "Open notification ${notification.posterName}")
     }
 
 }
