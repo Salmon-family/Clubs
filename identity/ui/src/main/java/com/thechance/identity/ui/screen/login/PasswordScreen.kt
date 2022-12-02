@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.signup
+package com.thechance.identity.ui.screen.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,79 +14,73 @@ import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.spacer.SpacerVertical12
+import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 
-@Preview(showSystemUi = true)
 @Composable
-fun SignUpConfirmPassword() {
+fun PasswordScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
     ) {
-        BackButtonComposable() {}
+        SpacerVertical12()
+        BackButtonComposable {
 
-        SpacerVertical(height = 36.dp)
+        }
+
+        SpacerVertical(52.dp)
         TextComposable(
-            text = stringResource(id = R.string.sign_up),
+            text = stringResource(id = R.string.log_in),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
-            Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp)
         )
 
-        SpacerVertical(height = 8.dp)
-        EmailTextComposable(
-            text1 = "Using ",
+        SpacerVertical8()
+        EmailLoginText(
+            text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
-            text2 = "motu.uiux@gmail.com",
+            text2 = stringResource(id = R.string.email_place_holder),
             color2 = LightPrimaryBrandColor,
-            text3 = " to login"
+            text3 = stringResource(id = R.string.to_login)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical(height = 32.dp)
         TextComposable(
             text = stringResource(id = R.string.your_password),
-            style = Typography.body2,
+            style = Typography.subtitle2,
             color = LightSecondaryBlackColor,
-            Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp)
         )
 
         SpacerVertical(height = 14.dp)
         InputTextComposable(
             type = KeyboardType.Password,
-            painter = painterResource(id = R.drawable.ic_close),
+            painter = painterResource(id = R.drawable.ic_hide),
             placeHolder = stringResource(id = R.string.password_place_holder)
         ) {
 
         }
 
-        SpacerVertical(height = 24.dp)
-        TextComposable(
-            text = stringResource(id = R.string.confirm_password),
-            style = Typography.body2,
-            color = LightSecondaryBlackColor,
-            Modifier.padding(start = 8.dp)
-        )
-
-        SpacerVertical(height = 14.dp)
-        InputTextComposable(
-            type = KeyboardType.Password,
-            painter = painterResource(id = R.drawable.ic_close),
-            placeHolder = stringResource(id = R.string.password_place_holder)
-        ) {
-
-        }
-
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         ButtonComposable(
-            buttonModifier = Modifier
-                .padding(horizontal = 8.dp)
-                .fillMaxWidth(),
             onClick = {},
-            text = stringResource(id = R.string.continue_label)
+            text = stringResource(id = R.string.log_in),
+            buttonModifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewPasswordScreen() {
+    PasswordScreen()
 }

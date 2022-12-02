@@ -17,4 +17,8 @@
     <string name="email">Email</string>
     <string name="your_password">Your Password</string>
     <string name="confirm_password">Re-enter Password</string>
+    <string name="log_in">Log In</string>
+    <string name="password_place_holder">********</string>
+    <string name="using">Using</string>
+    <string name="to_login">to login</string>
 </resources>

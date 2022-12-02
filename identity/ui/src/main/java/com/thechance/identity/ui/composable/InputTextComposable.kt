@@ -16,6 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,6 +30,8 @@ import com.thechance.identity.ui.theme.Typography
 @Composable
 fun InputTextComposable(
     type: KeyboardType,
+    painter: Painter,
+    placeHolder: String,
     onClick: () -> Unit,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -43,7 +46,7 @@ fun InputTextComposable(
         shape = RoundedCornerShape(size = 20.dp),
         trailingIcon = {
             Image(
-                painter = painterResource(id = R.drawable.ic_close),
+                painter = painter,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(18.dp)
@@ -57,7 +60,7 @@ fun InputTextComposable(
         ),
         placeholder = {
             TextComposable(
-                text = stringResource(id = R.string.email_place_holder),
+                text = placeHolder,
                 style = Typography.InputText,
                 color = LightPrimaryGrayColor,
                 modifier = Modifier.fillMaxWidth()
