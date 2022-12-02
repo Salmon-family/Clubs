@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_friend">Add Friend</string>
+    <string name="message">Message</string>
+    <string name="photo">Photo</string>
+    <string name="tag">Tag</string>
+    <string name="location">Location</string>
+    <string name="color">Color</string>
+    <string name="what_are_you_thinking_about">What are you thinking about?</string>
+    <string name="friends">Friends</string>
+    <string name="more">More</string>
+</resources>
