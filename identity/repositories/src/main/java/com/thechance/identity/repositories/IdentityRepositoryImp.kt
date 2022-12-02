@@ -12,4 +12,26 @@ class IdentityRepositoryImp @Inject constructor(
     override suspend fun login(userName: String, password: String): User {
         return remoteDataSource.login(userName, password).toEntity()
     }
+
+    override suspend fun signup(
+        firstname: String,
+        lastname: String,
+        email: String,
+        reEmail: String,
+        gender: String,
+        birthdate: String,
+        username: String,
+        password: String
+    ): User {
+        return remoteDataSource.signup(
+            firstname = firstname,
+            lastname = lastname,
+            email = email,
+            reEmail = reEmail,
+            gender = gender,
+            birthdate = birthdate,
+            username = username,
+            password = password
+        ).toEntity()
+    }
 }
