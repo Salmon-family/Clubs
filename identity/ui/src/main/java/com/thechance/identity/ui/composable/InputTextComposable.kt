@@ -21,14 +21,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.theme.InputText
-import com.thechance.identity.ui.theme.LightCardColor
-import com.thechance.identity.ui.theme.LightPrimaryGrayColor
-import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.theme.*
 
 @Composable
 fun InputTextComposable(
     type: KeyboardType,
+    image:Int = 0,
     onClick: () -> Unit,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -42,18 +40,21 @@ fun InputTextComposable(
         },
         shape = RoundedCornerShape(size = 20.dp),
         trailingIcon = {
-            Image(
-                painter = painterResource(id = R.drawable.ic_close),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(18.dp)
-                    .clickable { onClick }
-            )
+            if (image != 0){
+                Image(
+                    painter = painterResource(id = image),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(18.dp)
+                        .clickable { onClick }
+                )
+            }
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = LightCardColor,
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            unfocusedIndicatorColor = Color.Transparent,
+            textColor = LightPrimaryBlackColor
         ),
         placeholder = {
             TextComposable(

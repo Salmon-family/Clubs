@@ -20,7 +20,7 @@ import com.thechance.identity.ui.theme.Typography
 
 @Preview(showSystemUi = true)
 @Composable
-fun SignUpConfirmPassword() {
+fun SignUpConfirmPasswordScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
