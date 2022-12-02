@@ -17,9 +17,7 @@ fun FriendChat(
 ) {
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (image, user, recentMessage, time, messagesCount) = createRefs()
-        PhotoFriendChat(chatUiState = chatUiState, Modifier
-            .clip(CircleShape)
-            .size(56.dp)
+        PhotoFriendChat(url = chatUiState.icon, Modifier
             .constrainAs(image) {
                 top.linkTo(parent.top, 12.dp)
                 start.linkTo(parent.start, 12.dp)
