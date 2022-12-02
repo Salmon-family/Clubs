@@ -57,7 +57,9 @@ fun SignUpConfirmPasswordScreen() {
         InputTextComposable(
             type = KeyboardType.Password,
             image = R.drawable.ic_close,
-            placeHolder = stringResource(id = R.string.password_place_holder)
+            placeHolder = stringResource(id = R.string.password_place_holder),
+            text = "",
+            onTextChange = {}
         ) {
 
         }
@@ -74,7 +76,9 @@ fun SignUpConfirmPasswordScreen() {
         InputTextComposable(
             type = KeyboardType.Password,
             image = R.drawable.ic_close,
-            placeHolder = stringResource(id = R.string.password_place_holder)
+            placeHolder = stringResource(id = R.string.password_place_holder),
+            text = "",
+            onTextChange = {}
         ) {
 
         }

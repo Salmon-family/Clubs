@@ -15,23 +15,33 @@ class SignupViewModel @Inject constructor(
     private val signupUseCase: SignupUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow("")
+    private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        makeSignupRequest()
+    }
     fun makeSignupRequest() {
-        viewModelScope.launch {
-            val user = signupUseCase(
-                firstName = "firstName",
-                lastName = "lastName",
-                email = "email",
-                reEmail = "reEmail",
-                gender = "gender",
-                birthdate = "birthdate",
-                username = "username",
-                password = "password"
-            )
-            _uiState.update { user.toString() }
-        }
+            viewModelScope.launch {
+                signupUseCase(
+                    firstName = "amnah",
+                    lastName = "aliaa",
+                    email = "povayi4188@cnogs.com",
+                    reEmail = "povayi4188@cnogs.com",
+                    gender = "female",
+                    birthdate = "22/01/2001",
+                    username = "amnah.ali44",
+                    password = "0987654321"
+                )
+            }
+    }
+
+    fun onChangeFullName(fullName: String) {
+        _uiState.update { it.copy(firstName = fullName) }
+    }
+
+    fun onChangeUserName(userName: String) {
+        _uiState.update { it.copy(username = userName) }
     }
 
 }

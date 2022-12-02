@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.BackButtonComposable
 import com.thechance.identity.ui.composable.ButtonComposable
@@ -19,10 +22,21 @@ import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.viewmodel.signup.SignupViewModel
+
+@Composable
+fun SignUpEmailScreen(
+    viewModel: SignupViewModel = hiltViewModel()
+){
+    val state by viewModel.uiState.collectAsState()
+    SignUpEmailContent()
+}
 
 @Preview(showSystemUi = true)
 @Composable
-fun SignUpEmailScreen() {
+private fun SignUpEmailContent(
+
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +64,9 @@ fun SignUpEmailScreen() {
         InputTextComposable(
             type = KeyboardType.Email,
             image = R.drawable.ic_close,
-            placeHolder = stringResource(id = R.string.email_place_holder)
+            placeHolder = stringResource(id = R.string.email_place_holder),
+            text = "",
+            onTextChange = {}
         ) {
 
         }

@@ -63,7 +63,9 @@ fun PasswordScreen() {
         InputTextComposable(
             type = KeyboardType.Password,
             image =  R.drawable.ic_hide,
-            placeHolder = stringResource(id = R.string.password_place_holder)
+            placeHolder = stringResource(id = R.string.password_place_holder),
+            text = "",
+            onTextChange = {}
         ) {
 
         }

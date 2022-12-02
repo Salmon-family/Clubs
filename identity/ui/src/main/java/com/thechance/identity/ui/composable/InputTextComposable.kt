@@ -9,13 +9,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -23,23 +18,23 @@ import com.thechance.identity.ui.theme.*
 
 @Composable
 fun InputTextComposable(
+    text: String,
     type: KeyboardType,
     placeHolder: String,
-    image:Int = 0,
+    image: Int = 0,
+    onTextChange: (String) -> Unit,
     onClick: () -> Unit,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+//    var text by rememberSaveable { mutableStateOf("") }
     TextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
         value = text,
-        onValueChange = { newText ->
-            text = newText
-        },
+        onValueChange = onTextChange,
         shape = RoundedCornerShape(size = 20.dp),
         trailingIcon = {
-            if (image != 0){
+            if (image != 0) {
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = null,

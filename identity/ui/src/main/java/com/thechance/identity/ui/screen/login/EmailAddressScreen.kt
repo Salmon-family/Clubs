@@ -55,7 +55,9 @@ fun EmailAddressScreen() {
         InputTextComposable(
             type = KeyboardType.Email,
             image = R.drawable.ic_close,
-            placeHolder = stringResource(id = R.string.email_place_holder)
+            placeHolder = stringResource(id = R.string.email_place_holder),
+            text = "",
+            onTextChange = {}
         ) {
 
         }

@@ -6,7 +6,7 @@ buildscript {
         retrofit_version ='2.9.0'
         gson_version = '2.9.0'
 
-        okhttp_version = '4.10.0'
+        okhttp_version = '5.0.0-alpha.3'
         core_kotlin_version ='1.9.0'
         activity_compose_version ='1.6.1'
         lifecycle_version ='2.5.1'

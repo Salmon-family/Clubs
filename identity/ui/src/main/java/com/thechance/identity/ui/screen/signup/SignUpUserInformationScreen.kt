@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
@@ -17,10 +20,33 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.viewmodel.signup.SignupViewModel
+import com.thechance.identity.viewmodel.signup.UserUIState
 
 @Composable
 fun SignUpUserInformationScreen(
+    viewModel: SignupViewModel = hiltViewModel(),
     context: Context
+) {
+    val state by viewModel.uiState.collectAsState()
+    SignUpUserInformationContent(
+        context,
+        state,
+        onChangeFullName = viewModel::onChangeFullName,
+        onChangeUserName = viewModel::onChangeUserName,
+        createAccount = viewModel::makeSignupRequest
+    )
+}
+
+@Composable
+private fun SignUpUserInformationContent(
+    context: Context,
+    state: UserUIState,
+    onChangeFullName: (String) -> Unit,
+    onChangeUserName: (String) -> Unit,
+    createAccount: () -> Unit
+//    onChangeBirthdate: (String) -> Unit,
+//    onChangeGender: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -29,7 +55,6 @@ fun SignUpUserInformationScreen(
     ) {
         item {
             BackButtonComposable() {}
-
 
             SpacerVertical(height = 36.dp)
             TextComposable(
@@ -59,7 +84,9 @@ fun SignUpUserInformationScreen(
             SpacerVertical(height = 14.dp)
             InputTextComposable(
                 type = KeyboardType.Text,
-                placeHolder = stringResource(id = R.string.password_place_holder)
+                placeHolder = stringResource(id = R.string.password_place_holder),
+                text = state.firstName,
+                onTextChange = onChangeFullName
             ) {
 
             }
@@ -75,7 +102,9 @@ fun SignUpUserInformationScreen(
             SpacerVertical(height = 14.dp)
             InputTextComposable(
                 type = KeyboardType.Text,
-                placeHolder = stringResource(id = R.string.password_place_holder)
+                placeHolder = stringResource(id = R.string.password_place_holder),
+                text = state.username,
+                onTextChange = onChangeUserName
             ) {
 
             }
@@ -91,7 +120,7 @@ fun SignUpUserInformationScreen(
             SpacerVertical(height = 14.dp)
             DatePickerComposable(
                 image = R.drawable.ic_arrow_down_circle,
-                context = context
+                context = context,
             )
 
             SpacerVertical(height = 24.dp)
@@ -111,11 +140,11 @@ fun SignUpUserInformationScreen(
 
             SpacerVertical(height = 24.dp)
             ButtonComposable(
+                onClick = createAccount,
                 buttonModifier = Modifier
                     .padding(horizontal = 8.dp)
                     .fillMaxWidth(),
-                onClick = {},
-                text = stringResource(id = R.string.continue_label)
+                text = stringResource(id = R.string.continue_label),
             )
         }
     }

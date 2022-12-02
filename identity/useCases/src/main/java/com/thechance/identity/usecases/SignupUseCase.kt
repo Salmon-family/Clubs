@@ -17,6 +17,7 @@ class SignupUseCase @Inject constructor(
         username: String,
         password: String
     ): User {
+        println("lllllllllllllllll$firstName")
         return identityRepository.signup(
             firstname = firstName,
             lastname = lastName,
