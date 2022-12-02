@@ -102,9 +102,10 @@ fun NotificationItem(
                 HorizontalSpacer(height = 8)
                 Text(
                     text = notification.timeCreated,
-                    Modifier.height(20.dp),
+                    fontSize = 12.sp,
                     color = LightTernaryBlackColor,
-                    lineHeight = 20.sp
+                    lineHeight = 20.sp,
+                    fontFamily = PlusJakartaSans
                 )
             }
             if (!notification.viewed) {
@@ -133,12 +134,9 @@ private fun NotificationTitle(type: Int, posterName: String) {
                 append(posterName)
             }
             withStyle(
-                style = SpanStyle(
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = PlusJakartaSans
-                )
+                style = SpanStyle(fontWeight = FontWeight.Normal, fontFamily = PlusJakartaSans)
             ) {
-                append(notificationType)
+                append(" $notificationType")
             }
         },
         modifier = Modifier.fillMaxWidth(), lineHeight = 20.sp, color = LightPrimaryBlackColor
