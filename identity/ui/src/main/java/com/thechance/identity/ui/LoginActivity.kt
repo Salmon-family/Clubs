@@ -9,12 +9,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.thechance.identity.ui.screen.login.EmailAddressScreen
-import com.thechance.identity.ui.screen.onboarding.OnBoardingPagerScreen
-import com.thechance.identity.ui.screen.onboarding.WelcomeOnboard
-import com.thechance.identity.ui.screen.signup.SignUpEmailScreen
 import com.thechance.identity.ui.screen.signup.SignUpUserInformationScreen
-import com.thechance.identity.viewmodel.LoginViewModel
+import com.thechance.identity.viewmodel.login.LoginViewModel
 import com.thechance.identity.ui.theme.IdentityTheme
 import dagger.hilt.android.AndroidEntryPoint
 

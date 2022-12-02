@@ -1,4 +1,4 @@
-package com.thechance.identity.viewmodel
+package com.thechance.identity.viewmodel.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
