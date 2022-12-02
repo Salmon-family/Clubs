@@ -54,7 +54,7 @@ fun EmailAddressScreen() {
         SpacerVertical(height = 14.dp)
         InputTextComposable(
             type = KeyboardType.Email,
-            painter = painterResource(id = R.drawable.ic_close),
+            image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.email_place_holder)
         ) {
 

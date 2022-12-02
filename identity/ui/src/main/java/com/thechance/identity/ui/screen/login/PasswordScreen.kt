@@ -62,7 +62,7 @@ fun PasswordScreen() {
         SpacerVertical(height = 14.dp)
         InputTextComposable(
             type = KeyboardType.Password,
-            painter = painterResource(id = R.drawable.ic_hide),
+            image =  R.drawable.ic_hide,
             placeHolder = stringResource(id = R.string.password_place_holder)
         ) {
 

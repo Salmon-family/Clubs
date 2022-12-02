@@ -9,7 +9,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.thechance.identity.ui.screen.signup.SignUpUserInformationScreen
+import com.thechance.identity.ui.screen.login.EmailAddressScreen
+import com.thechance.identity.ui.screen.onboarding.OnBoardingPagerScreen
+import com.thechance.identity.ui.screen.signup.SignUpConfirmPasswordScreen
 import com.thechance.identity.viewmodel.login.LoginViewModel
 import com.thechance.identity.ui.theme.IdentityTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,10 +32,10 @@ class LoginActivity : ComponentActivity() {
                     val test = viewModel.uiState.collectAsState()
 //                    SignUpEmailScreen()
 //                    WelcomeOnboard()
-//                    OnBoardingPagerScreen()
+                    OnBoardingPagerScreen()
 //                    EmailAddressScreen()
-//                    SignUpConfirmPassword()
-                    SignUpUserInformationScreen(this)
+//                    SignUpConfirmPasswordScreen()
+//                    SignUpUserInformationScreen(this)
                 }
             }
         }

@@ -24,7 +24,6 @@ import com.thechance.identity.ui.theme.*
 @Composable
 fun InputTextComposable(
     type: KeyboardType,
-    painter: Painter,
     placeHolder: String,
     image:Int = 0,
     onClick: () -> Unit,

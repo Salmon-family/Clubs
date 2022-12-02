@@ -59,6 +59,7 @@ fun SignUpUserInformationScreen(
             SpacerVertical(height = 14.dp)
             InputTextComposable(
                 type = KeyboardType.Text,
+                placeHolder = stringResource(id = R.string.password_place_holder)
             ) {
 
             }
@@ -74,6 +75,7 @@ fun SignUpUserInformationScreen(
             SpacerVertical(height = 14.dp)
             InputTextComposable(
                 type = KeyboardType.Text,
+                placeHolder = stringResource(id = R.string.password_place_holder)
             ) {
 
             }

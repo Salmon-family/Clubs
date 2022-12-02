@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,7 +49,7 @@ fun SignUpEmailScreen() {
         SpacerVertical(height = 14.dp)
         InputTextComposable(
             type = KeyboardType.Email,
-            painter = painterResource(id = R.drawable.ic_close),
+            image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.email_place_holder)
         ) {
 
