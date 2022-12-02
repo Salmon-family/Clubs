@@ -10,9 +10,9 @@ fun ConversationDTO.toEntity(userId: Int): Conversation {
     )
 }
 
-fun MessagesDTO.toChatTable(userId: Int): ChatTable {
-    if (messageFrom?.let { checkSender(it, userId) } == Sender.ME) {
-        return ChatTable(
+fun MessagesDTO.toLocalModel(userId: Int): ChatEntity {
+    if (messageFrom?.guid == userId) {
+        return ChatEntity(
             fullName = messageTo?.fullname ?: "",
             guid = messageTo?.guid ?: 0,
             icon = messageTo?.icon?.small ?: "",
@@ -20,7 +20,7 @@ fun MessagesDTO.toChatTable(userId: Int): ChatTable {
             recentMessage = message ?: ""
         )
     } else {
-        return ChatTable(
+        return ChatEntity(
             fullName = messageFrom?.fullname ?: "",
             guid = messageFrom?.guid ?: 0,
             icon = messageFrom?.icon?.small ?: "",
@@ -31,7 +31,7 @@ fun MessagesDTO.toChatTable(userId: Int): ChatTable {
 }
 
 fun MessagesDTO.toEntity(userId: Int): Chat {
-    if (messageFrom?.let { checkSender(it, userId) } == Sender.ME) {
+    if (messageFrom?.guid == userId) {
         return Chat(
             fullName = messageTo?.fullname ?: "",
             guid = messageTo?.guid ?: 0,
@@ -50,7 +50,7 @@ fun MessagesDTO.toEntity(userId: Int): Chat {
     }
 }
 
-fun ChatTable.toChat(): Chat {
+fun ChatEntity.toEntity(): Chat {
     return Chat(
         fullName = fullName,
         guid = guid,
@@ -58,16 +58,4 @@ fun ChatTable.toChat(): Chat {
         time = time,
         recentMessage = recentMessage
     )
-}
-
-private fun checkSender(messageFrom: MessageDTO, userId: Int) : Sender {
-    return if (messageFrom.guid == userId) {
-        Sender.ME
-    } else {
-        Sender.FRIEND
-    }
-}
-enum class Sender {
-    ME,
-    FRIEND
 }

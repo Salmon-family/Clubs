@@ -18,10 +18,10 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override suspend fun insertChatsLocally(userID: Int) {
-        dataSource.getChats(userID).list?.let { it -> localDataSource.insertChats(it.map { it.toChatTable(userID) }) }
+        dataSource.getChats(userID).list?.let { it -> localDataSource.insertChats(it.map { it.toLocalModel(userID) }) }
     }
 
     override fun getChatsFromLocal(): Flow<List<Chat>> {
-        return localDataSource.getChats().map { list -> list.map { it.toChat() } }
+        return localDataSource.getChats().map { list -> list.map { it.toEntity() } }
     }
 }
