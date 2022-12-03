@@ -30,9 +30,9 @@ fun CustomTextField(
     empty: Boolean,
 ) {
     Card(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.fillMaxWidth(),
         backgroundColor = WhiteColor,
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp),
         elevation = 0.dp,
     ) {
         Row(
@@ -46,6 +46,7 @@ fun CustomTextField(
                 onValueChange = onTextChange,
                 textStyle = Typography.body1,
                 modifier = Modifier.weight(1f),
+                maxLines = 4,
                 decorationBox = { innerTextField ->
                     if(empty){
                         Text(text = "Enter your message",
@@ -82,5 +83,5 @@ fun ButtonSend(onClickAction: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultTextFieldPreview() {
-//    CustomTextField()
+    CustomTextField("", {}, {}, false)
 }
