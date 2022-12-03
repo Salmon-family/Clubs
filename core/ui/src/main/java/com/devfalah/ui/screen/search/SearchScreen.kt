@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen
+package com.devfalah.ui.screen.search
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

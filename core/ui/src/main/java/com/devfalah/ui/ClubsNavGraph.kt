@@ -3,7 +3,11 @@ package com.devfalah.ui
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.devfalah.ui.screen.*
+import com.devfalah.ui.screen.clubs.clubsRoute
+import com.devfalah.ui.screen.friendrequest.friendRequestRoute
+import com.devfalah.ui.screen.home.homeRoute
+import com.devfalah.ui.screen.menu.menuRoute
+import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.search.searchRoute
 
 
@@ -16,9 +20,9 @@ fun ClubsNavGraph(navController: NavHostController) {
 
         homeRoute(navController = navController)
         searchRoute(navController = navController)
-        clubsRoute(navController= navController)
+        clubsRoute(navController = navController)
         notificationRoute(navController = navController)
         menuRoute(navController = navController)
-
+        friendRequestRoute(navController = navController)
     }
 }
