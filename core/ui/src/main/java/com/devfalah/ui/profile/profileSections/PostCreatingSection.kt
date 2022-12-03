@@ -29,10 +29,11 @@ import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 @Composable
 fun PostCreatingSection(
-    user: UserDetailsUIState
+    user: UserDetailsUIState,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(LightCardBackgroundColor)

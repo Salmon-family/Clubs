@@ -3,6 +3,7 @@ package com.devfalah.ui.profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -28,14 +29,14 @@ fun ProfileScreen(
 fun ProfileContent(state: UserUIState) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item { ProfileDetailsSection(state.userDetails) }
-        item { FriendOptionsSection() }
-        item { AlbumSection(state.albums) }
-        item { FriendsSection(state.friends) }
-        item { PostCreatingSection(state.userDetails) }
+        item { ProfileDetailsSection(state.userDetails, modifier = Modifier.padding(horizontal = 16.dp)) }
+        item { FriendOptionsSection(modifier = Modifier.padding(horizontal = 16.dp)) }
+        item { AlbumSection(state.albums, modifier = Modifier.padding(horizontal = 16.dp)) }
+        item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
+        item { PostCreatingSection(state.userDetails, modifier = Modifier.padding(horizontal = 16.dp)) }
         items(state.posts) { ProfilePostItem(it) }
     }
 }

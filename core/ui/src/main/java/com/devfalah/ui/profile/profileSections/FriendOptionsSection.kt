@@ -20,9 +20,11 @@ import com.devfalah.ui.R
 import com.devfalah.ui.theme.*
 
 @Composable
-fun FriendOptionsSection() {
+fun FriendOptionsSection(
+    modifier: Modifier= Modifier
+) {
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .height(36.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)

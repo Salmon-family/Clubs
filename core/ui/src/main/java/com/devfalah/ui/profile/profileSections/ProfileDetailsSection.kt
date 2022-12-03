@@ -15,13 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
-import com.devfalah.ui.R
 import com.devfalah.ui.profile.VerticalSpacer4
 import com.devfalah.ui.profile.VerticalSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
@@ -32,11 +30,12 @@ import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 @Composable
 fun ProfileDetailsSection(
-    userDetails: UserDetailsUIState
+    userDetails: UserDetailsUIState,
+    modifier: Modifier = Modifier
 ) {
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -45,7 +44,6 @@ fun ProfileDetailsSection(
         ) {
 
             val (imageCover, imageProfile) = createRefs()
-
             Image(
                 painter = rememberAsyncImagePainter(model = userDetails.coverUrl),
                 contentDescription = null,
@@ -63,7 +61,7 @@ fun ProfileDetailsSection(
             )
 
             Image(
-                painter =  rememberAsyncImagePainter(model = userDetails.profilePicture),
+                painter = rememberAsyncImagePainter(model = userDetails.profilePicture),
                 contentDescription = null,
                 modifier = Modifier
                     .constrainAs(imageProfile) {

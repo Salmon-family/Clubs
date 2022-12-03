@@ -10,7 +10,7 @@ fun WallPostDTO.toEntity(): Post {
         privacy = post?.access == "3",
         createdTime = post?.timeCreated?.let { ConvertDate().convertTime(it) } ?: "",
         content = text ?: "",
-        image = image ?: "",
+        image = image?.substringBefore("?") ?: "",
         totalLikes = post?.totalLikes ?: 0,
         totalComments = post?.totalComments ?: 0,
         posterName = postedUser?.firstName ?: "",

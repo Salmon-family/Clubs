@@ -26,9 +26,10 @@ import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 @Composable
 fun FriendsSection(
-    friends: List<UserDetailsUIState>
+    friends: List<UserDetailsUIState>,
+    modifier: Modifier = Modifier
 ) {
-    Column(Modifier.fillMaxWidth()) {
+    Column(modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,

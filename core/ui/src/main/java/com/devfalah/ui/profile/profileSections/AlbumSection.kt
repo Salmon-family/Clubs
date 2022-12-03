@@ -26,10 +26,11 @@ import com.devfalah.viewmodels.userProfile.AlbumUIState
 
 @Composable
 fun AlbumSection(
-    albums: List<AlbumUIState>
+    albums: List<AlbumUIState>,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFF6F6F7))

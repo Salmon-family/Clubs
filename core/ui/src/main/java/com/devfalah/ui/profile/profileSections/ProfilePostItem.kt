@@ -9,8 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +29,8 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun ProfilePostItem(
     post: PostUIState
 ) {
+
+
     Column(modifier = Modifier.fillMaxWidth()) {
 
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -49,7 +53,7 @@ fun ProfilePostItem(
                 )
                 Row {
                     Text(
-                        text = "Friends",
+                        text = getPrivacyText(post.privacy),
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.SemiBold,
@@ -58,13 +62,13 @@ fun ProfilePostItem(
                     HorizontalSpacer8()
 
                     Image(
-                        painter = painterResource(id = R.drawable.private_icon),
+                        painter = getPrivacyIcon(post.privacy),
                         contentDescription = null,
                         modifier = Modifier.alignByBaseline()
                     )
                     HorizontalSpacer8()
                     Text(
-                        text = " |  5 minutes ago",
+                        text = " |  ${post.createdData}",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.SemiBold,
@@ -147,6 +151,24 @@ fun PostEnterAction(
             colorFilter = ColorFilter.tint(LightTernaryBlackColor)
         )
         HorizontalSpacer16()
+    }
+}
+
+@Composable
+private fun getPrivacyText(privacy: Boolean): String {
+    return if (privacy) {
+        stringResource(id = R.string.friends_privacy)
+    } else {
+        stringResource(id = R.string.public_privacy)
+    }
+}
+
+@Composable
+private fun getPrivacyIcon(privacy: Boolean): Painter {
+    return if (privacy) {
+        painterResource(id = R.drawable.private_icon)
+    } else {
+        painterResource(id = R.drawable.public_icon)
     }
 }
 
