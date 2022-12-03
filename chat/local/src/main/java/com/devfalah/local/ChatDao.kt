@@ -13,7 +13,7 @@ interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMessages(chats: List<MessageEntityLocalDTO>)
 
-    @Query("SELECT * FROM MESSAGES_TABLE WHERE friendId = :friendId ORDER BY time ASC")
+    @Query("SELECT * FROM MESSAGES_TABLE WHERE friendId = :friendId ORDER BY time DESC")
     fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
 }

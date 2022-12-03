@@ -1,4 +1,4 @@
-package com.thechance.ui.components
+package com.thechance.ui.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,21 +22,21 @@ import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.ui.theme.LightQuaternaryBlackColor
 import com.thechance.ui.theme.Typography
 import com.thechance.ui.theme.WhiteColor
-import com.thechance.ui.utilities.convertIntToTime
 
 @Composable
 private fun TextMessage(text: String, date: String, color: Color, textColor: Color) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .padding(end = 16.dp)
-        .padding(top = 8.dp), contentAlignment = Alignment.TopEnd) {
+        .padding(horizontal = 16.dp)
+        .padding(top = 8.dp),
+        contentAlignment = Alignment.TopEnd) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = date,
+            Text(
+                text = date,
                 style = Typography.subtitle2,
-                color = LightQuaternaryBlackColor)
+                color = LightQuaternaryBlackColor.copy(alpha = 0.38f))
             SpaceHorizontal(width = 8)
-            Text(modifier = Modifier
-                .background(
+            Text(modifier = Modifier.background(
                     color = color,
                     shape = RoundedCornerShape(8.dp))
                 .padding(16.dp),
@@ -67,5 +67,5 @@ fun ReceiverMessage(text: String, dateMessage: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultMessagesPreview() {
-//    ReceiverMessage("Default Text Message Preview")
+    ReceiverMessage("Default Text Message Preview", "12:00")
 }

@@ -6,11 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.thechance.ui.components.ReceiverMessage
-import com.thechance.ui.components.SenderMessage
 import com.thechance.ui.spacer.SpaceVertical
-import com.thechance.ui.utilities.convertIntToTime
-import com.thechance.viewmodels.chatWithFriend.states.ChatUIState
 import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
 
 @Composable
@@ -23,20 +19,23 @@ fun ListOfChat(
             top.linkTo(parent.top)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
-        }, reverseLayout = false) {
+        }, reverseLayout = true) {
+            item {
+                SpaceVertical(height = 64)
+            }
+            
+
             items(state) {
 
                 // TODO: when get user id from navigation component
 
 //                if (it.friendId) {
-                    SenderMessage(it.message, it.messageDate.convertIntToTime())
+                    SenderMessage(it.message, it.messageDate)
 //                } else {
 //                    ReceiverMessage(it.message, it.messageDate.convertIntToTime())
 //                }
             }
-            item {
-                SpaceVertical(height = 100)
-            }
+
         }
     }
 }

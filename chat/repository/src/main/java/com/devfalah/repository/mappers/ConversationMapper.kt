@@ -1,5 +1,6 @@
 package com.devfalah.repository.mappers
 
+import com.devfalah.repository.ConvertDate
 import com.devfalah.repository.entities.MessageEntityLocalDTO
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
@@ -21,14 +22,14 @@ fun MessagesDTO.toEntity(userId: Int): Message {
             messageId = id ?: 0,
             friendId = messageTo?.guid ?: 0,
             message = message ?: "",
-            time = time ?: 0
+            time = time?.let { ConvertDate().convertTime(it) } ?: ""
         )
     }else{
         return Message(
             messageId = id ?: 0,
             friendId = messageFrom?.guid ?: 0,
             message = message ?: "",
-            time = time ?: 0
+            time = time?.let { ConvertDate().convertTime(it) } ?: ""
         )
     }
 
@@ -39,15 +40,6 @@ fun UserDTO.toEntity(): User{
         userId = guid ?: 0,
         fullName = fullName ?: "",
         icon = icon?.small ?: "",
-    )
-}
-
-fun MessagesDTO.toMessagesTable(friendId: Int): MessageEntityLocalDTO {
-    return MessageEntityLocalDTO(
-        id = id ?: 0,
-        friendId = friendId,
-        message = message ?: "",
-        time = time ?: 0,
     )
 }
 

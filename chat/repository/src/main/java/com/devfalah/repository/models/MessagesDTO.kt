@@ -17,7 +17,7 @@ data class MessagesDTO(
     @SerializedName("message_to")
     val messageTo: MessageDTO?,
     @SerializedName("time")
-    val time: Int?,
+    val time: Long?,
     @SerializedName("viewed")
     val viewed: String?
 )
