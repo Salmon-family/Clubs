@@ -6,7 +6,6 @@ import com.devfalah.repositories.models.FriendDTO
 import com.devfalah.repositories.models.IconDto
 import com.devfalah.repositories.models.UserDTO
 
-
 fun FriendDTO.toEntity(): User {
     return User(
         birthdate = this.birthdate ?: "",

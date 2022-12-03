@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="friends_request">Friends request</string>
+    <string name="accept">Accept</string>
+    <string name="delete">Delete</string>
+</resources>

@@ -12,26 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.devfalah.ui.screens.friendrequest.FriendRequestScreen
 import com.devfalah.ui.theme.ClubsTheme
 import com.devfalah.viewmodels.UserFriendsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: UserFriendsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             ClubsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background,
                 ) {
-                    val test = viewModel.uiState.collectAsState()
-                    Greeting(test.value)
+                    FriendRequestScreen()
                 }
             }
         }
