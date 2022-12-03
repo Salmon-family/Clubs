@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chats">Chats</string>
+    <string name="arrow_back">Arrow Back</string>
+    <string name="edit">Add</string>
+    <string name="search">Search</string>
+</resources>

@@ -5,6 +5,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.thechance.ui.screens.ChatsScreen
 import com.thechance.ui.theme.BlackColor
 
@@ -15,8 +16,9 @@ fun ChatApp() {
         TopAppBar(
             backgroundColor = Color.White,
             contentColor = BlackColor,
+            elevation = 0.dp
         ) {
-            TopBarTitle()
+            TopBarChats()
         }
     }) {
         ChatsScreen()
