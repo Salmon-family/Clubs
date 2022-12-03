@@ -45,7 +45,12 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
-    fun onValueChange(searchQuery: String) {
+    fun onSearchTextChange(text: String) {
+        _uiState.update { it.copy(searchText = text) }
+        onSearch(text)
+    }
+
+    private fun onSearch(searchQuery: String){
         viewModelScope.launch {
             searchChats(searchQuery).collect { chats ->
                 _uiState.update { chatsUiState ->
@@ -56,6 +61,9 @@ class ChatsViewModel @Inject constructor(
             }
         }
     }
+
+
+
 }
 
 fun Chat.toUiState(): ChatUiState {

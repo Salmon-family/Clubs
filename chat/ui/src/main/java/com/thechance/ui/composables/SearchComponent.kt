@@ -1,5 +1,6 @@
 package com.thechance.ui.composables
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -20,23 +21,20 @@ import com.thechance.ui.theme.lightSilver
 @Composable
 fun SearchTextField(
     modifier: Modifier = Modifier,
-    state: MutableState<String>,
+    text: String,
     onValueChanged: (String) -> Unit
 ) {
     TextField(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = White,
             focusedIndicatorColor = White,
             unfocusedIndicatorColor = White,
         ),
-        value = state.value,
+        value = text,
         shape = RoundedCornerShape(32.dp),
         singleLine = true,
-        onValueChange = {
-            state.value = it
-            onValueChanged(it)
-        },
+        onValueChange = onValueChanged,
         placeholder = {
             Text(
                 text = "Search for a friend",

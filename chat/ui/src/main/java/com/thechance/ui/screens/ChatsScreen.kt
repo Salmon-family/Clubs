@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,24 +21,29 @@ fun ChatsScreen(
     viewModel: ChatsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
-    ChatsContent(chats = state.chats, viewModel::onValueChange)
+    ChatsContent(
+        chats = state.chats,
+        searchText = state.searchText,
+        onValueChanged = viewModel::onSearchTextChange
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChatsContent(
     chats: List<ChatUiState>,
+    searchText:String,
     onValueChanged: (String) -> Unit,
 ) {
-    val textState = rememberSaveable { mutableStateOf("") }
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(28.dp))
 
-        SearchTextField(modifier = Modifier
-            .fillMaxWidth()
+        SearchTextField(
+            modifier = Modifier
             .padding(horizontal = 16.dp),
-            state = textState,
-            onValueChanged = onValueChanged)
+            text = searchText,
+            onValueChanged = onValueChanged
+        )
         LazyColumn(
             contentPadding = PaddingValues(16.dp)
         ) {
