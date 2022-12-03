@@ -13,6 +13,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.BackButtonComposable
 import com.thechance.identity.ui.composable.ButtonComposable
@@ -24,25 +25,35 @@ import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 
-@Composable
-fun SignUpEmailScreen(
-    viewModel: SignupViewModel = hiltViewModel()
-){
-    val state by viewModel.uiState.collectAsState()
-    SignUpEmailContent()
-}
-
 @Preview(showSystemUi = true)
 @Composable
-private fun SignUpEmailContent(
+fun SignUpEmailContent() {
+    SignUpEmailContent({}, {})
+}
 
+@Composable
+fun SignUpEmailScreen(
+    navController: NavController,
+    viewModel: SignupViewModel = hiltViewModel()
+) {
+    val state by viewModel.uiState.collectAsState()
+    SignUpEmailContent(
+        onClickPasswordScreen = { navController.navigate("signupConfirmPasswordScreen") },
+        onClickBack = { navController.navigateUp() }
+    )
+}
+
+@Composable
+private fun SignUpEmailContent(
+    onClickPasswordScreen: () -> Unit,
+    onClickBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable() {}
+        BackButtonComposable { onClickBack }
 
         SpacerVertical(height = 36.dp)
         TextComposable(
@@ -76,7 +87,7 @@ private fun SignUpEmailContent(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            onClick = {},
+            onClick = onClickPasswordScreen,
             text = stringResource(id = R.string.continue_label)
         )
     }

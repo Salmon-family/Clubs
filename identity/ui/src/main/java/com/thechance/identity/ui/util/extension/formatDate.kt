@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.extension
+package com.thechance.identity.ui.util.extension
 
 import java.text.SimpleDateFormat
 import java.util.*

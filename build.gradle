@@ -13,6 +13,8 @@ buildscript {
 
         data_store_version = '1.0.0'
 
+        nav_version = "2.5.3"
+
     }
 
     dependencies {

@@ -20,24 +20,22 @@ class SignupViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        makeSignupRequest()
+//        makeSignupRequest()
     }
 
     fun makeSignupRequest() {
         try {
             viewModelScope.launch {
                 val signup = signupUseCase(
-                    firstName = "amnah",
-                    lastName = "ali",
-                    email = "yoyey48486@cnogs.com",
-                    reEmail = "yoyey48486@cnogs.com",
+                    firstName = "amnahaa",
+                    lastName = "amkmx",
+                    email = "yo748486@cnmogs.com",
+                    reEmail = "yo748486@cnmogs.com",
                     gender = "male",
                     birthdate = "01/10/2001",
-                    username = "a4mmm",
+                    username = "mahmoudr44444",
                     password = "0987654321"
                 )
-
-                Log.i("SIGNUP_PAYLOAD", signup.toString())
             }
         } catch (e: Exception) {
             Log.i("SIGNUP_ERROR", e.message.toString())

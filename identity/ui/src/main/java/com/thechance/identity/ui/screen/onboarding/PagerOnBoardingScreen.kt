@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.ButtonComposable
 import com.thechance.identity.ui.composable.FooterOnBoarding
@@ -16,10 +18,19 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
 
-
-@Preview(showSystemUi = true)
 @Composable
-fun OnBoardingPagerScreen() {
+fun OnBoardingPagerScreen(
+    navController: NavController
+) {
+    OnBoardingPagerContent {
+        navController.navigate("signupEmailScreen")
+    }
+}
+
+@Composable
+fun OnBoardingPagerContent(
+    onClickSignUpScreen: () -> Unit
+) {
     Column {
         Box(Modifier.weight(1f)) {
             ViewPagerSlider()
@@ -33,7 +44,7 @@ fun OnBoardingPagerScreen() {
 
         SpacerVertical16()
         ButtonComposable(
-            onClick = {},
+            onClick = onClickSignUpScreen,
             text = stringResource(id = R.string.register),
             buttonColor = LightCardColor,
             textColor = LightPrimaryBlackColor
@@ -49,4 +60,11 @@ fun OnBoardingPagerScreen() {
 
         SpacerVertical16()
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun OnBoardingPagerPreview() {
+    val navController = rememberNavController()
+    OnBoardingPagerScreen(navController)
 }

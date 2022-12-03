@@ -79,7 +79,7 @@ fun LogInPasswordContent(
         SpacerVertical(height = 14.dp)
         InputTextComposable(
             type = KeyboardType.Password,
-            image =  R.drawable.ic_hide,
+            image = R.drawable.ic_hide,
             placeHolder = stringResource(id = R.string.password_place_holder),
             text = uiState.password,
             onTextChange = onChangePassword
