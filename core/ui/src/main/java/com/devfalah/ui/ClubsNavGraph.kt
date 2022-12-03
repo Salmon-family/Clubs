@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.devfalah.ui.screen.*
+import com.devfalah.ui.screen.search.searchRoute
 
 
 @Composable
