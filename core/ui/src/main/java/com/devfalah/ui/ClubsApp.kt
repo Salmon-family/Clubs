@@ -1,15 +1,14 @@
 package com.devfalah.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -21,14 +20,15 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ClubsApp() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
-    ) {
-        ClubsNavGraph(navController = navController)
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            ClubsNavGraph(navController = navController)
+        }
     }
 }
 
@@ -44,7 +44,9 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     
-    BottomNavigation {
+    BottomNavigation(
+        backgroundColor = LightCardBackgroundColor
+    ) {
         items.forEach { screen ->
             AddItem(screen = screen, currentDestination = currentRoute, navController = navController)
         }
@@ -60,8 +62,7 @@ fun RowScope.AddItem(
 ){
     val selected = currentDestination?.hierarchy?.any { it.route == screen.screen_route } == true
     BottomNavigationItem(
-        modifier = Modifier.background(LightCardBackgroundColor).align(alignment = Alignment.CenterVertically),
-        label = {Text(text = screen.title, overflow = TextOverflow.Ellipsis, maxLines = 1,) },
+        label = {Text(text = screen.title,softWrap = false) },
         alwaysShowLabel = false,
         icon = { Icon(
                 painterResource(id =
@@ -83,7 +84,6 @@ fun RowScope.AddItem(
                 restoreState = true
             }
         }
-
     )
 
 }
