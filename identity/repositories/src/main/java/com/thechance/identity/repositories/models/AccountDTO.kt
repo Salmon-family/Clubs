@@ -1,10 +1,9 @@
 package com.thechance.identity.repositories.models
 
 import com.google.gson.annotations.SerializedName
-import com.thechance.identity.repositories.models.IconDto
 
 
-data class accountDTO(
+data class AccountDTO(
     @SerializedName("fullname")
     val fullName: String?,
     @SerializedName("guid")

@@ -1,7 +1,6 @@
-package com.thechance.identity.ui
+package com.thechance.identity.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -13,10 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.thechance.identity.ui.screen.signup.SignUpUserInformationScreen
 import com.thechance.identity.ui.theme.IdentityTheme
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
-import com.thechance.identity.viewmodel.login.LoginViewModel
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +31,12 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val test = viewModel.uiState.collectAsState()
-                    Greeting(test.value.firstName)
+                    if (test.value.isError) {
+                        Greeting(test.value.isError.toString())
+                    } else {
+                        Greeting(test.value.firstName)
+                    }
+
 //                    SignUpEmailScreen()
 //                    WelcomeOnboard()
 //                    OnBoardingPagerScreen()

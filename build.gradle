@@ -11,6 +11,8 @@ buildscript {
         activity_compose_version ='1.6.1'
         lifecycle_version ='2.5.1'
 
+        data_store_version = '1.0.0'
+
     }
 
     dependencies {

@@ -14,6 +14,13 @@ data class User(
     val username: String,
 )
 
+data class Account(
+    val fullName: String,
+    val username: String,
+    val icon: Icon,
+    val guid: Int,
+)
+
 data class Icon(
     val large: String? = "",
     val larger: String? = "",

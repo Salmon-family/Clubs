@@ -1,5 +1,6 @@
 package com.thechance.identity.viewmodel.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.SignupUseCase
@@ -21,19 +22,27 @@ class SignupViewModel @Inject constructor(
     init {
         makeSignupRequest()
     }
+
     fun makeSignupRequest() {
+        try {
             viewModelScope.launch {
-                signupUseCase(
+                val signup = signupUseCase(
                     firstName = "amnah",
-                    lastName = "aliaa",
-                    email = "povayi4188@cnogs.com",
-                    reEmail = "povayi4188@cnogs.com",
-                    gender = "female",
-                    birthdate = "22/01/2001",
-                    username = "amnah.ali44",
+                    lastName = "ali",
+                    email = "yoyey48486@cnogs.com",
+                    reEmail = "yoyey48486@cnogs.com",
+                    gender = "male",
+                    birthdate = "01/10/2001",
+                    username = "a4mmm",
                     password = "0987654321"
                 )
+
+                Log.i("SIGNUP_PAYLOAD", signup.toString())
             }
+        } catch (e: Exception) {
+            Log.i("SIGNUP_ERROR", e.message.toString())
+            _uiState.update { it.copy(isError = true) }
+        }
     }
 
     fun onChangeFullName(fullName: String) {

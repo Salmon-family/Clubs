@@ -1,12 +1,10 @@
 package com.thechance.identity.remote
 
 import com.thechance.identity.remote.response.IdentityBaseResponse
+import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface IdentityService {
 
@@ -19,7 +17,6 @@ interface IdentityService {
     @FormUrlEncoded
     @POST("user_details")
     suspend fun getUserDetails(@Field("guid") userID: Int): Response<IdentityBaseResponse<UserDTO>>
-
 
     @FormUrlEncoded
     @POST("user_edit")
@@ -44,6 +41,6 @@ interface IdentityService {
         @Field("birthdate") birthdate: String,
         @Field("username") username: String,
         @Field("password") password: String
-    ): Response<IdentityBaseResponse<UserDTO>>
+    ): Response<IdentityBaseResponse<Any>>
 
 }

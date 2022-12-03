@@ -22,8 +22,7 @@ class IdentityRepositoryImp @Inject constructor(
         birthdate: String,
         username: String,
         password: String
-    ): User {
-        println("lllllllllllllllll$lastname")
+    ): Boolean {
         return remoteDataSource.signup(
             firstname = firstname,
             lastname = lastname,
@@ -33,6 +32,6 @@ class IdentityRepositoryImp @Inject constructor(
             birthdate = birthdate,
             username = username,
             password = password
-        ).toEntity()
+        )
     }
 }
