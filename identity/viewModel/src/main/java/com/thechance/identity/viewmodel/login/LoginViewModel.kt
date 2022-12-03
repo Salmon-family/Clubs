@@ -15,14 +15,21 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow("")
+    private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            val user = loginUseCase("devfalah", "20012001")
-            _uiState.update { user.toString() }
-        }
+//        viewModelScope.launch {
+//            val user = loginUseCase("devfalah", "20012001")
+//            //_uiState.update { user.toString() }
+//        }
     }
 
+    fun onChangeUserName(userName: String){
+        _uiState.update { it.copy(userName = userName) }
+    }
+
+    fun onChangePassword(password: String){
+        _uiState.update { it.copy(password = password) }
+    }
 }

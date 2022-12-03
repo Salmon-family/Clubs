@@ -25,7 +25,6 @@ fun InputTextComposable(
     onTextChange: (String) -> Unit,
     onClick: () -> Unit,
 ) {
-//    var text by rememberSaveable { mutableStateOf("") }
     TextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,4 +62,5 @@ fun InputTextComposable(
         )
     )
 }
+
 

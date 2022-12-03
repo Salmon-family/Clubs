@@ -10,7 +10,7 @@
     <string name="footer_first_text">By continuing you argree Habeet’s</string>
     <string name="footer_second_text">Terms of \nServices &amp; Privacy Policy</string>
     <string name="sign_up">Sign Up</string>
-    <string name="email_address_question">What’s your \n email address?</string>
+    <string name="user_name_question">What’s your \n user name?</string>
     <string name="email_label">Your Email</string>
     <string name="email_place_holder">Motu.uiux@gmail.com</string>
     <string name="continue_label">Continue</string>
@@ -25,4 +25,5 @@
     <string name="password_place_holder">********</string>
     <string name="using">Using</string>
     <string name="to_login">to login</string>
+    <string name="user_name_place_holder">Thao Lee</string>
 </resources>
