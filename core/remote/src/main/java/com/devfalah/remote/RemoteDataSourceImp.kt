@@ -2,6 +2,7 @@ package com.devfalah.remote
 
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.FriendDTO
+import com.devfalah.repositories.models.ReactionDTO
 import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
@@ -31,9 +32,17 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<WallPostDTO> {
         return apiService.getAllWallPosts(userID, profileUserID).body()?.payload?.posts
-            ?: throw Throwable(
-                "Error"
-            )
+            ?: throw Throwable("Error")
+    }
+
+    override suspend fun setLike(userID: Int, postId: Int, type: String): ReactionDTO {
+        return apiService.addLike(userID = userID, postID = postId, type = type).body()?.payload
+            ?: throw Throwable("Error")
+    }
+
+    override suspend fun removeLike(userID: Int, postId: Int, type: String): ReactionDTO {
+        return apiService.removeLike(userID = userID, postID = postId, type = type).body()?.payload
+            ?: throw Throwable("Error")
     }
 
 }

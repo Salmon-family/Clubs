@@ -51,7 +51,7 @@ interface ClubService {
     suspend fun addLike(
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
-        @Field("type") type: LikeType
+        @Field("type") type: String
     ): Response<BaseResponse<ReactionDTO>>
 
     @FormUrlEncoded
@@ -59,7 +59,7 @@ interface ClubService {
     suspend fun removeLike(
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
-        @Field("type") type: LikeType
+        @Field("type") type: String
     ): Response<BaseResponse<ReactionDTO>>
 
 

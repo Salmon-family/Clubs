@@ -1,11 +1,9 @@
 package com.devfalah.viewmodels.userProfile
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetProfilePostsUseCase
-import com.devfalah.usecases.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.GetUserAlbumsUseCase
-import com.devfalah.usecases.GetUserFriendsUseCase
+import com.devfalah.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,15 +16,16 @@ class UserProfileViewModel @Inject constructor(
     val getUserAccountDetails: GetUserAccountDetailsUseCase,
     val getUserAlbumsUseCase: GetUserAlbumsUseCase,
     val getUserFriendsUseCase: GetUserFriendsUseCase,
-    val getProfilePostUseCase: GetProfilePostsUseCase
-) :
-    ViewModel() {
+    val getProfilePostUseCase: GetProfilePostsUseCase,
+    val likeUseCase: SetLikeUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
+    private val userId = 6
+
     init {
-        val userId = 6
         getUserDetails(userId)
         getUserAlbums(userId)
         getUserFriends(userId)
@@ -65,5 +64,39 @@ class UserProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(posts = getProfilePostUseCase(userID).map { it.toUIState() }) }
         }
+    }
+
+    fun onClickLike(post: PostUIState) {
+        viewModelScope.launch {
+            try {
+                val updatedPost = post.copy(
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = likeUseCase(
+                        postID = post.postId,
+                        userId = userId,
+                        isLiked = post.isLikedByUser
+                    )
+                )
+                _uiState.update {
+                    it.copy(posts = uiState.value.posts.map {
+                        if (it.postId == post.postId) {
+                            updatedPost
+                        } else {
+                            it
+                        }
+                    })
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString()) }
+            }
+        }
+    }
+
+    fun onClickSave(post: PostUIState) {
+        Log.e("Test", "Save $post")
+    }
+
+    fun onClickComment(post: PostUIState) {
+        Log.e("Test", "Comment $post")
     }
 }

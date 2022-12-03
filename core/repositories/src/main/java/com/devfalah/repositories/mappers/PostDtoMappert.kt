@@ -9,7 +9,7 @@ fun WallPostDTO.toEntity(): Post {
         postID = post?.guid ?: 0,
         privacy = post?.access == "3",
         createdTime = post?.timeCreated?.let { ConvertDate().convertTime(it) } ?: "",
-        content = text ?: "",
+        content = text?.let { if (it != "false") { it } else { "" } } ?: "",
         image = image?.substringBefore("?") ?: "",
         totalLikes = post?.totalLikes ?: 0,
         totalComments = post?.totalComments ?: 0,
@@ -19,3 +19,4 @@ fun WallPostDTO.toEntity(): Post {
         isLikedByUser = post?.isLikedByUser ?: false
     )
 }
+

@@ -32,4 +32,12 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getProfilePosts(userID, profileUserID).map { it.toEntity() }
     }
 
+    override suspend fun setLike(userID: Int, postId: Int, type: String): Int {
+        return remoteDataSource.setLike(userID = userID, postId = postId, type = type).toEntity()
+    }
+
+    override suspend fun removeLike(userID: Int, postId: Int, type: String): Int {
+        return remoteDataSource.removeLike(userID = userID, postId = postId, type = type).toEntity()
+    }
+
 }

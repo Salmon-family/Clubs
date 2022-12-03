@@ -1,6 +1,7 @@
 package com.devfalah.ui.profile.profileSections
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -18,7 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.profile.*
+import com.devfalah.ui.profile.HorizontalSpacer16
+import com.devfalah.ui.profile.HorizontalSpacer24
+import com.devfalah.ui.profile.HorizontalSpacer8
+import com.devfalah.ui.profile.VerticalSpacer16
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -27,94 +31,113 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 
 @Composable
 fun ProfilePostItem(
-    post: PostUIState
+    post: PostUIState,
+    onClickLike: (PostUIState) -> Unit,
+    onClickComment: (PostUIState) -> Unit,
+    onClickSave: (PostUIState) -> Unit
 ) {
-
-
     Column(modifier = Modifier.fillMaxWidth()) {
+        PostHeader(post)
+        PostContent(post)
+        PostEnterAction(post, onClickLike, onClickComment, onClickSave)
+    }
+}
 
-        Row(modifier = Modifier.fillMaxWidth()) {
-            HorizontalSpacer16()
-            Image(
-                painter = rememberAsyncImagePainter(model = post.posterImage),
-                contentDescription = null,
-                Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
+@Composable
+fun PostHeader(post: PostUIState) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        HorizontalSpacer16()
+        Image(
+            painter = rememberAsyncImagePainter(model = post.posterImage),
+            contentDescription = null,
+            Modifier
+                .size(40.dp)
+                .clip(CircleShape),
+        )
+        HorizontalSpacer8()
+        Column {
+            Text(
+                text = post.posterName,
+                fontSize = 14.sp,
+                fontFamily = PlusJakartaSans,
+                fontWeight = FontWeight.SemiBold,
+                color = LightPrimaryBlackColor
             )
-            HorizontalSpacer8()
-            Column {
+            Row {
                 Text(
-                    text = post.posterName,
-                    fontSize = 14.sp,
+                    text = getPrivacyText(post.privacy),
+                    fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,
-                    color = LightPrimaryBlackColor
+                    color = LightTernaryBlackColor
                 )
-                Row {
-                    Text(
-                        text = getPrivacyText(post.privacy),
-                        fontSize = 12.sp,
-                        fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.SemiBold,
-                        color = LightTernaryBlackColor
-                    )
-                    HorizontalSpacer8()
+                HorizontalSpacer8()
 
-                    Image(
-                        painter = getPrivacyIcon(post.privacy),
-                        contentDescription = null,
-                        modifier = Modifier.alignByBaseline()
-                    )
-                    HorizontalSpacer8()
-                    Text(
-                        text = " |  ${post.createdData}",
-                        fontSize = 12.sp,
-                        fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.SemiBold,
-                        color = LightTernaryBlackColor
-                    )
-                }
+                Image(
+                    painter = getPrivacyIcon(post.privacy),
+                    contentDescription = null,
+                    modifier = Modifier.alignByBaseline()
+                )
+                HorizontalSpacer8()
+                Text(
+                    text = " |  ${post.createdData}",
+                    fontSize = 12.sp,
+                    fontFamily = PlusJakartaSans,
+                    fontWeight = FontWeight.SemiBold,
+                    color = LightTernaryBlackColor
+                )
             }
         }
+    }
+}
 
-        VerticalSpacer8()
+@Composable
+fun PostContent(post: PostUIState) {
+    Text(
+        text = post.postContent,
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .padding(top = 8.dp),
+        fontSize = 14.sp,
+        fontFamily = PlusJakartaSans,
+        fontWeight = FontWeight.Normal,
+        color = LightSecondaryBlackColor
+    )
 
-        Text(
-            text = post.postContent,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            fontSize = 14.sp,
-            fontFamily = PlusJakartaSans,
-            fontWeight = FontWeight.Normal,
-            color = LightSecondaryBlackColor
+    if (post.postImage.isNotBlank()) {
+        VerticalSpacer16()
+        Image(
+            painter = rememberAsyncImagePainter(model = post.postImage),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(260.dp),
+            contentScale = ContentScale.Crop
         )
-        if (post.postImage.isNotBlank()) {
-            VerticalSpacer16()
-            Image(
-                painter = rememberAsyncImagePainter(model = post.postImage),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(260.dp),
-                contentScale = ContentScale.Crop
-            )
-        }
-        PostEnterAction(post)
     }
 }
 
 @Composable
 fun PostEnterAction(
-    post: PostUIState
+    post: PostUIState,
+    onClickLike: (PostUIState) -> Unit,
+    onClickComment: (PostUIState) -> Unit,
+    onClickSave: (PostUIState) -> Unit
 ) {
     VerticalSpacer16()
 
     Row(modifier = Modifier.fillMaxWidth()) {
         HorizontalSpacer16()
         Image(
-            painter = painterResource(id = R.drawable.like_icon),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(LightTernaryBlackColor)
+            modifier = Modifier.clickable { onClickLike(post) },
+            painter = painterResource(
+                id = if (post.isLikedByUser) {
+                    R.drawable.heart_full
+                } else {
+                    R.drawable.like_icon
+                }
+            ),
+            contentDescription = null
         )
         HorizontalSpacer8()
         if (post.totalLikes > 0) {
@@ -129,6 +152,7 @@ fun PostEnterAction(
         HorizontalSpacer24()
 
         Image(
+            modifier = Modifier.clickable { onClickComment(post) },
             painter = painterResource(id = R.drawable.comment_icon),
             contentDescription = null,
             colorFilter = ColorFilter.tint(LightTernaryBlackColor)
@@ -143,13 +167,24 @@ fun PostEnterAction(
                 color = LightTernaryBlackColor
             )
         }
-        Image(
+        Box(
             modifier = Modifier.weight(1f),
-            alignment = Alignment.CenterEnd,
-            painter = painterResource(id = R.drawable.save_icon),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(LightTernaryBlackColor)
-        )
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            Image(
+                modifier = Modifier
+                    .clickable { onClickSave(post) },
+                alignment = Alignment.CenterEnd,
+                painter = painterResource(
+                    id = if (post.isSaved) {
+                        R.drawable.save_full
+                    } else {
+                        R.drawable.save_icon
+                    }
+                ),
+                contentDescription = null,
+            )
+        }
         HorizontalSpacer16()
     }
 }

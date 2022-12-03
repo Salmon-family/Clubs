@@ -17,4 +17,8 @@ interface ClubRepository {
 
     suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<Post>
 
+    suspend fun setLike(userID: Int, postId: Int, type: String): Int
+
+    suspend fun removeLike(userID: Int, postId: Int, type: String): Int
+
 }
