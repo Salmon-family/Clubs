@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen
+package com.devfalah.ui.screen.notification
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

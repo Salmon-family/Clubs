@@ -1,4 +1,4 @@
-package com.devfalah.ui.screens.composables
+package com.devfalah.ui.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size

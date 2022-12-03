@@ -1,4 +1,4 @@
-package com.devfalah.ui.screens.friendrequest
+package com.devfalah.ui.screen.friendrequest
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -19,10 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.screens.composables.CircleImage
-import com.devfalah.ui.screens.composables.HeightSpacer
-import com.devfalah.ui.screens.composables.WidthSpacer
+import com.devfalah.ui.composable.CircleImage
+import com.devfalah.ui.spacer.HeightSpacer
+import com.devfalah.ui.spacer.WidthSpacer
 import com.devfalah.ui.theme.GrayColor
 import com.devfalah.ui.theme.PrimaryColor
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
@@ -32,14 +33,15 @@ import com.devfalah.viewmodels.friendRequest.UserState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FriendRequestScreen(
+    navController: NavController,
     friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
 ) {
     val friendRequest by friendRequestViewModel.friendRequests.collectAsState()
-        FriendRequests(
-            friendRequestUiState = friendRequest,
-            onAcceptButtonClick = friendRequestViewModel::acceptFriendRequest,
-            onDeleteButtonClick = friendRequestViewModel::deniedFriendRequest
-        )
+    FriendRequests(
+        friendRequestUiState = friendRequest,
+        onAcceptButtonClick = friendRequestViewModel::acceptFriendRequest,
+        onDeleteButtonClick = friendRequestViewModel::deniedFriendRequest
+    )
 }
 
 @ExperimentalFoundationApi
@@ -56,12 +58,12 @@ fun FriendRequests(
     ) {
         items(
             items = friendRequestUiState.friendRequests,
-            key = { currentRequest-> currentRequest.userID }
+            key = { currentRequest -> currentRequest.userID }
         ) { userState ->
             FriendRequestItem(
                 userState = userState,
-                onAcceptButtonClick =  onAcceptButtonClick ,
-                onDeleteButtonClick =  onDeleteButtonClick,
+                onAcceptButtonClick = onAcceptButtonClick,
+                onDeleteButtonClick = onDeleteButtonClick,
                 modifier = Modifier.animateItemPlacement()
             )
         }
@@ -118,7 +120,8 @@ fun FriendRequestItem(
 
 @Composable
 @Preview
-fun FriendRequestScreenPreview() {}
+fun FriendRequestScreenPreview() {
+}
 
 @Composable
 fun FriendRequestAcceptButton(

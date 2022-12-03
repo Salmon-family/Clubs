@@ -1,4 +1,4 @@
-package com.devfalah.ui.screens.composables
+package com.devfalah.ui.spacer
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

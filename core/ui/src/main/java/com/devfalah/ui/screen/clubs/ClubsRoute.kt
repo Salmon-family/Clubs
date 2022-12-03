@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen
+package com.devfalah.ui.screen.clubs
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
