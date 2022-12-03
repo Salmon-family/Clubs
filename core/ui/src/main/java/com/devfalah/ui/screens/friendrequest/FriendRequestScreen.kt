@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.devfalah.ui.R
-import com.devfalah.ui.screens.composables.BackButton
 import com.devfalah.ui.screens.composables.CircleImage
 import com.devfalah.ui.screens.composables.HeightSpacer
 import com.devfalah.ui.screens.composables.WidthSpacer
@@ -37,17 +35,11 @@ fun FriendRequestScreen(
     friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
 ) {
     val friendRequest by friendRequestViewModel.friendRequests.collectAsState()
-    Column(
-        Modifier.fillMaxSize()
-    ) {
-        FriendRequestAppBar(backButtonClick = {})
-
         FriendRequests(
             friendRequestUiState = friendRequest,
             onAcceptButtonClick = friendRequestViewModel::acceptFriendRequest,
             onDeleteButtonClick = friendRequestViewModel::deniedFriendRequest
         )
-    }
 }
 
 @ExperimentalFoundationApi
@@ -59,7 +51,8 @@ fun FriendRequests(
 ) {
     LazyColumn(
         contentPadding = PaddingValues(10.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        modifier = Modifier.fillMaxSize()
     ) {
         items(
             items = friendRequestUiState.friendRequests,
@@ -126,27 +119,6 @@ fun FriendRequestItem(
 @Composable
 @Preview
 fun FriendRequestScreenPreview() {}
-
-@Composable
-fun FriendRequestAppBar(
-    backButtonClick : () -> Unit
-){
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(56.dp)
-        .background(Color.White)
-        .padding(start = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        BackButton(backButtonClick = backButtonClick)
-        WidthSpacer(width = 16)
-        Text(
-            text = stringResource(id = R.string.friends_request),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-    }
-}
 
 @Composable
 fun FriendRequestAcceptButton(

@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.PrimaryColor
-import com.devfalah.ui.theme.Purple50
+import com.devfalah.ui.theme.LightPurpleColor
 
 @Composable
 fun BackButton(
@@ -21,7 +21,7 @@ fun BackButton(
         modifier = Modifier
             .size(32.dp),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = Purple50,
+        backgroundColor = LightPurpleColor,
         elevation = 0.dp
     ){
         IconButton(onClick = backButtonClick,) {
