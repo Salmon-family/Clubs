@@ -15,4 +15,8 @@ class LocalDataSourceImp @Inject constructor (
     override fun getChats(): Flow<List<ChatEntity>> {
         return chatDao.getChats()
     }
+
+    override fun getChats(query: String): Flow<List<ChatEntity>> {
+        return chatDao.getChats(query)
+    }
 }

@@ -8,4 +8,6 @@ interface LocalDataSource {
     suspend fun insertChats(chats: List<ChatEntity>)
 
     fun getChats(): Flow<List<ChatEntity>>
+
+    fun getChats(query: String): Flow<List<ChatEntity>>
 }

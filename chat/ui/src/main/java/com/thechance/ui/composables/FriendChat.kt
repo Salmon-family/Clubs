@@ -13,30 +13,31 @@ import com.thechance.viewmodels.chatWithFriend.uistates.ChatUiState
 
 @Composable
 fun FriendChat(
-    chatUiState: ChatUiState
+    chatUiState: ChatUiState,
+    modifier: Modifier = Modifier
 ) {
-    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-        val (image, user, recentMessage, time, messagesCount) = createRefs()
+    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
+        val (image, user, recentMessage, time) = createRefs()
         PhotoFriendChat(chatUiState = chatUiState, Modifier
             .clip(CircleShape)
             .size(56.dp)
             .constrainAs(image) {
-                top.linkTo(parent.top, 12.dp)
+                top.linkTo(parent.top,12.dp)
                 start.linkTo(parent.start, 12.dp)
                 bottom.linkTo(parent.bottom, 12.dp)
             })
 
-        UserChatTitle(chatUiState = chatUiState, modifier = Modifier.constrainAs(user) {
+        UserChatTitle(chatUiState.fullName, modifier = Modifier.constrainAs(user) {
             top.linkTo(image.top, 3.dp)
             start.linkTo(image.end, 16.dp)
         })
 
-        RecentMessage(chatUiState, Modifier.constrainAs(recentMessage) {
+        RecentMessage(chatUiState.recentMessage, Modifier.constrainAs(recentMessage) {
             bottom.linkTo(image.bottom, 3.dp)
             start.linkTo(image.end, 16.dp)
         })
 
-        TimeRecentMessage(chatUiState = chatUiState, Modifier.constrainAs(time) {
+        TimeRecentMessage(chatUiState.time, Modifier.constrainAs(time) {
             top.linkTo(parent.top, 16.dp)
             end.linkTo(parent.end, 21.dp)
         })

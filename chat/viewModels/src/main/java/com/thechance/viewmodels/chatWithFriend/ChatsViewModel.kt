@@ -3,8 +3,9 @@ package com.thechance.viewmodels.chatWithFriend
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
-import com.nadafeteiha.usecases.InsertChatsLocallyUseCase
+import com.nadafeteiha.usecases.SearchChatsUseCase
 import com.thechance.entities.Chat
+import com.thechance.viewmodels.chatWithFriend.extensions.convertLongToTime
 import com.thechance.viewmodels.chatWithFriend.uistates.ChatUiState
 import com.thechance.viewmodels.chatWithFriend.uistates.ChatsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatsViewModel @Inject constructor(
     private val getChats: GetChatsUseCase,
-    private val insertChats: InsertChatsLocallyUseCase,
+    private val searchChats: SearchChatsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatsUiState())
@@ -29,7 +30,6 @@ class ChatsViewModel @Inject constructor(
                 it.copy(isLoading = true)
             }
             try {
-                insertChats(userID = 10)
                 getChats().collect { chats ->
                     _uiState.update { chatsUiState ->
                         chatsUiState.copy(
@@ -38,12 +38,20 @@ class ChatsViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                getChats().collect { chats ->
-                    _uiState.update { chatsUiState ->
-                        chatsUiState.copy(
-                            chats = chats.map { it.toUiState() }, isLoading = false
-                        )
-                    }
+                _uiState.update {
+                    it.copy(isLoading = false, error = e.message.toString())
+                }
+            }
+        }
+    }
+
+    fun onValueChange(searchQuery: String) {
+        viewModelScope.launch {
+            searchChats(searchQuery).collect { chats ->
+                _uiState.update { chatsUiState ->
+                    chatsUiState.copy(
+                        chats = chats.map { it.toUiState() }
+                    )
                 }
             }
         }
@@ -55,7 +63,7 @@ fun Chat.toUiState(): ChatUiState {
         fullName,
         guid,
         icon,
-        time = time,
+        time.convertLongToTime(),
         recentMessage
     )
 }

@@ -8,7 +8,11 @@ interface ChatRepository {
 
     suspend fun getMessagesWithFriend(userID: Int, friendID: Int): Conversation
 
-    suspend fun insertChatsLocally(userID: Int)
+    suspend fun insertChatsLocally(list: List<Chat>)
 
     fun getChatsFromLocal(): Flow<List<Chat>>
+
+    suspend fun getChats(userID: Int): Conversation
+
+    fun getChats(query: String): Flow<List<Chat>>
 }

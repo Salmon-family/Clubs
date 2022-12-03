@@ -59,3 +59,13 @@ fun ChatEntity.toEntity(): Chat {
         recentMessage = recentMessage
     )
 }
+
+fun Chat.toLocalModel(): ChatEntity {
+    return ChatEntity(
+        fullName = fullName,
+        guid = guid,
+        icon = icon,
+        time = time,
+        recentMessage = recentMessage
+    )
+}
