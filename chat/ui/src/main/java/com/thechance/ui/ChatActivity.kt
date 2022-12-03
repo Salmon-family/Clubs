@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.thechance.ui.screen.ChatScreen
 import com.thechance.ui.theme.ClubsTheme
 import com.thechance.viewmodels.chatWithFriend.ChatWithFriendViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,23 +30,9 @@ class ChatActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val test = viewModel.uiState.collectAsState()
-                    Greeting(test.value)
+                    ChatScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ClubsTheme {
-        Greeting("Android")
     }
 }
