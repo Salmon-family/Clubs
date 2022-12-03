@@ -1,4 +1,4 @@
-package com.devfalah.ui.profile
+package com.devfalah.ui.spacer
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -25,6 +25,16 @@ fun HorizontalSpacer24() {
 @Composable
 fun VerticalSpacer16() {
     Spacer(modifier = Modifier.height(16.dp))
+}
+
+@Composable
+fun VerticalSpacer14() {
+    Spacer(modifier = Modifier.height(14.dp))
+}
+
+@Composable
+fun VerticalSpacer5() {
+    Spacer(modifier = Modifier.height(5.dp))
 }
 
 @Composable

@@ -22,8 +22,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleImage
-import com.devfalah.ui.spacer.HeightSpacer
-import com.devfalah.ui.spacer.WidthSpacer
+import com.devfalah.ui.spacer.HorizontalSpacer16
+import com.devfalah.ui.spacer.VerticalSpacer14
+import com.devfalah.ui.spacer.VerticalSpacer16
+import com.devfalah.ui.spacer.VerticalSpacer5
 import com.devfalah.ui.theme.GrayColor
 import com.devfalah.ui.theme.PrimaryColor
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
@@ -85,12 +87,13 @@ fun FriendRequestItem(
             .padding(start = 16.dp, end = 16.dp)
     ) {
         CircleImage(userState.profileImage)
-        WidthSpacer(16)
+        HorizontalSpacer16()
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            HeightSpacer(5)
+            VerticalSpacer5()
+
             Text(
                 text = userState.name,
                 textAlign = TextAlign.Start,
@@ -99,7 +102,7 @@ fun FriendRequestItem(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.wrapContentSize()
             )
-            HeightSpacer(14)
+            VerticalSpacer14()
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -107,7 +110,7 @@ fun FriendRequestItem(
                     userState,
                     onAcceptButtonClick = onAcceptButtonClick
                 )
-                WidthSpacer(width = 16)
+                VerticalSpacer16()
                 FriendRequestDeleteButton(
                     userState,
                     onDeleteButtonClick = onDeleteButtonClick

@@ -1,4 +1,4 @@
-package com.devfalah.ui.profile.profileSections
+package com.devfalah.ui.screen.profile.profileSections
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.profile.HorizontalSpacer8
-import com.devfalah.ui.profile.VerticalSpacer8
+import com.devfalah.ui.spacer.HorizontalSpacer8
+import com.devfalah.ui.spacer.VerticalSpacer8
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans

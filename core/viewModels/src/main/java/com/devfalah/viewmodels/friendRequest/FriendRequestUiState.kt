@@ -16,9 +16,9 @@ data class UserState(
 
 fun User.toUIState(): UserState {
     return UserState(
-        userID = guid,
-        name = fullName,
-        title = lastName,
+        userID = userID,
+        name = name,
+        title = title,
         profileImage = icon.large
     )
 }

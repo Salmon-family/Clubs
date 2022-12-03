@@ -1,4 +1,4 @@
-package com.devfalah.ui.profile
+package com.devfalah.ui.screen.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,16 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.devfalah.ui.profile.profileSections.*
+import androidx.navigation.NavController
+import com.devfalah.ui.screen.profile.profileSections.*
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.UserProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
 
 @Composable
 fun ProfileScreen(
+    navController: NavController,
     viewModel: UserProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -67,10 +68,4 @@ fun ProfileContent(
             )
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewProfile() {
-    ProfileScreen()
 }
