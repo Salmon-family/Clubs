@@ -1,10 +1,9 @@
 package com.devfalah.repository.mappers
 
-import com.devfalah.repository.entities.MessageEntity
+import com.devfalah.repository.entities.MessageEntityLocalDTO
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
 import com.devfalah.repository.models.ConversationDTO
-import com.devfalah.repository.models.MessageDTO
 import com.devfalah.repository.models.MessagesDTO
 import com.devfalah.repository.models.UserDTO
 import com.thechance.entities.User
@@ -12,7 +11,6 @@ import com.thechance.entities.User
 fun ConversationDTO.toEntity(): Conversation {
     return Conversation(
         messages = list?.map { it.toEntity() } ?: emptyList(),
-        users = withuser?.toEntity() ?: User()
     )
 }
 
@@ -20,7 +18,7 @@ fun ConversationDTO.toEntity(): Conversation {
 fun MessagesDTO.toEntity(): Message {
     return Message(
         messageId = id ?: 0,
-        userId = messageFrom?.guid ?: 0,
+        friendId = messageFrom?.guid ?: 0,
         message = message ?: "",
         time = time ?: 0
     )
@@ -34,25 +32,28 @@ fun UserDTO.toEntity(): User{
     )
 }
 
-fun MessagesDTO.toMessagesTable(userId: Int, friendId: Int): MessageEntity {
-        return MessageEntity(
-            id = id ?: 0,
-            message = message ?: "",
-            time = time ?: 0,
-        )
+fun MessagesDTO.toMessagesTable(friendId: Int): MessageEntityLocalDTO {
+    return MessageEntityLocalDTO(
+        id = id ?: 0,
+        friendId = friendId,
+        message = message ?: "",
+        time = time ?: 0,
+    )
 }
 
-fun MessageEntity.toMessage(): Message {
+fun MessageEntityLocalDTO.toMessage(): Message {
     return Message(
         messageId = id,
+        friendId = friendId,
         message = message,
         time = time,
     )
 }
 
-fun Message.toMessage(): MessageEntity {
-    return MessageEntity(
+fun Message.toMessage(): MessageEntityLocalDTO {
+    return MessageEntityLocalDTO(
         id = messageId,
+        friendId = friendId,
         message = message,
         time = time,
     )

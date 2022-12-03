@@ -24,7 +24,7 @@ fun ListOfChat(
             end.linkTo(parent.end)
         }, reverseLayout = false) {
             items(state.messages) {
-                if (it.userId == state.appBar.id) {
+                if (it.friendId == state.appBar.id) {
                     SenderMessage(it.message, it.messageDate.convertIntToTime())
                 } else {
                     ReceiverMessage(it.message, it.messageDate.convertIntToTime())

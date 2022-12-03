@@ -1,9 +1,7 @@
 package com.devfalah.repository
 
-import com.devfalah.repository.entities.MessageEntity
 import com.devfalah.repository.mappers.toEntity
 import com.devfalah.repository.mappers.toMessage
-import com.devfalah.repository.mappers.toMessagesTable
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
@@ -16,7 +14,7 @@ class ChatRepositoryImp @Inject constructor(
     private val localDataSource: LocalDataSource,
 ) : ChatRepository {
 
-    override suspend fun getMessagesWithFriend(userID: Int, friendID: Int): Conversation {
+    override suspend fun getMessages(userID: Int, friendID: Int): Conversation {
         return dataSource.getMessagesWithFriend(userID, friendID).toEntity()
     }
 
@@ -24,12 +22,12 @@ class ChatRepositoryImp @Inject constructor(
         return dataSource.setSendMessage(from, to, message).toEntity()
     }
 
-    override suspend fun insertMessagesLocally(message: List<Message>) {
+    override suspend fun insertMessages(message: List<Message>) {
         localDataSource.insertMessages(message.map { it.toMessage() })
     }
 
-    override fun getMessagesFromLocal(): Flow<List<Message>> {
-        return localDataSource.getMessages().map { list -> list.map { it.toMessage() } }
+    override fun getMessages(friendId: Int): Flow<List<Message>> {
+        return localDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
     }
 
 }

@@ -4,16 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.devfalah.repository.entities.MessageEntity
+import com.devfalah.repository.entities.MessageEntityLocalDTO
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChatDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMessages(chats: List<MessageEntity>)
+    suspend fun insertMessages(chats: List<MessageEntityLocalDTO>)
 
-    @Query("SELECT * FROM MESSAGES_TABLE")
-    fun getMessages(): Flow<List<MessageEntity>>
+    @Query("SELECT * FROM MESSAGES_TABLE WHERE friendId = :friendId ORDER BY time ASC")
+    fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
 }

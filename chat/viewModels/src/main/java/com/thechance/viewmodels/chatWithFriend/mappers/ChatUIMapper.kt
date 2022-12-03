@@ -10,7 +10,6 @@ import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
 fun Conversation.toState(): ChatUIState {
     return ChatUIState(
         messages = messages.map { it.toState() },
-        appBar = users.toState()
     )
 }
 
@@ -24,7 +23,16 @@ fun User.toState(): AppBarUIState {
 
 fun Message.toState(): MessageUIState {
     return MessageUIState(
-        userId = userId,
+        friendId = friendId,
+        message = message,
+        messageDate = time,
+    )
+}
+
+fun Message.toMessage(): MessageUIState {
+    return MessageUIState(
+        messageId = messageId,
+        friendId = friendId,
         message = message,
         messageDate = time,
     )

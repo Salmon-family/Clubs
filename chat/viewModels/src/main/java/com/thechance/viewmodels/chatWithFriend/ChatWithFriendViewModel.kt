@@ -3,15 +3,13 @@ package com.thechance.viewmodels.chatWithFriend
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
-import com.nadafeteiha.usecases.GetMessagesFromLocalUseCase
 import com.nadafeteiha.usecases.SetSendMessageUseCase
-import com.thechance.viewmodels.chatWithFriend.mappers.toState
+import com.thechance.viewmodels.chatWithFriend.mappers.toMessage
 import com.thechance.viewmodels.chatWithFriend.states.ChatUIState
 import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,13 +31,8 @@ class ChatWithFriendViewModel @Inject constructor(
     private fun getListMessages(userId: Int, friendId: Int) {
         viewModelScope.launch {
             try {
-                getListMessagesUseCase.refreshMessages(userId, friendId)
-                getListMessagesUseCase.getMessagesFromLocal().collect { list ->
-                    _uiState.update {
-                        it.copy(
-                            messages = list.map { it.toState() }
-                        )
-                    }
+                getListMessagesUseCase(userId, friendId).collect {
+                    _uiState.update { it.copy(messages = it.messages, isLoading = false) }
                 }
             } catch (e: Exception) {
                 _uiState.update {
@@ -54,7 +47,7 @@ class ChatWithFriendViewModel @Inject constructor(
             try {
                 _uiState.update {
                     it.copy(
-                        message = setSendMessageUseCase(7, 10, message).toState(),
+                        message = setSendMessageUseCase(7, 10, message).toMessage(),
                     )
                 }
             } catch (e: Exception) {

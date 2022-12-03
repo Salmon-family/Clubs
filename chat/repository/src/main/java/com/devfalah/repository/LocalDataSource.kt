@@ -1,16 +1,12 @@
 package com.devfalah.repository
 
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.devfalah.repository.entities.MessageEntity
-import com.thechance.entities.Message
+import com.devfalah.repository.entities.MessageEntityLocalDTO
 import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    suspend fun insertMessages(messages: List<MessageEntity>)
+    suspend fun insertMessages(messages: List<MessageEntityLocalDTO>)
 
-    fun getMessages(): Flow<List<MessageEntity>>
+    fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
 }

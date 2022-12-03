@@ -42,7 +42,7 @@ fun ChatContent(
     sendMessage: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppBar(state.appBar.userName, state.appBar.icon)
+        AppBar("omar ezzdeen", "")
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
