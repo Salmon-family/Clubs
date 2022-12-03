@@ -9,20 +9,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.profile.VerticalSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 @Composable
-fun FriendsSection() {
+fun FriendsSection(
+    friends: List<UserDetailsUIState>
+) {
     Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -36,7 +41,7 @@ fun FriendsSection() {
                 fontSize = 14.sp
             )
             Text(
-                text = "40 friends",
+                text = "${friends.size} ${stringResource(id = R.string.friends)}",
                 fontFamily = PlusJakartaSans,
                 color = LightTernaryBlackColor,
                 fontSize = 12.sp
@@ -50,16 +55,15 @@ fun FriendsSection() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val friends = listOf("Ali", "Tariq", "Noor", "Alex", "Muhammed", "Hadi")
             friends.take(4).forEach {
                 Friend(
-                    imagePainter = R.drawable.test_image,
-                    text = it,
+                    painter = rememberAsyncImagePainter(model = it.profilePicture),
+                    text = it.name,
                 )
             }
 
             Friend(
-                imagePainter = R.drawable.ic_more,
+                painter = painterResource(id = R.drawable.ic_more),
                 text = stringResource(R.string.more),
                 textColor = LightPrimaryBrandColor
             )
@@ -71,7 +75,7 @@ fun FriendsSection() {
 @Composable
 fun Friend(
     modifier: Modifier = Modifier,
-    imagePainter: Int,
+    painter: Painter,
     text: String,
     textColor: Color = LightPrimaryBlackColor
 ) {
@@ -80,7 +84,8 @@ fun Friend(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = imagePainter),
+            painter = painter,
+            contentScale = ContentScale.Crop,
             contentDescription = null,
             modifier = modifier
                 .size(56.dp)
@@ -96,11 +101,4 @@ fun Friend(
             fontSize = 12.sp
         )
     }
-}
-
-
-@Preview
-@Composable
-fun PreviewFriends() {
-    FriendsSection()
 }

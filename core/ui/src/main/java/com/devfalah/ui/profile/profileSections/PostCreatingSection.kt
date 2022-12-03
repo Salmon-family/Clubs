@@ -14,9 +14,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.profile.HorizontalSpacer16
 import com.devfalah.ui.profile.HorizontalSpacer8
@@ -25,9 +25,12 @@ import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 @Composable
-fun PostCreatingSection() {
+fun PostCreatingSection(
+    user: UserDetailsUIState
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -37,7 +40,7 @@ fun PostCreatingSection() {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painter = painterResource(id = R.drawable.test_image),
+                painter = rememberAsyncImagePainter(model = user.profilePicture),
                 contentDescription = null,
                 Modifier
                     .size(40.dp)
@@ -62,7 +65,10 @@ fun PostCreatingSection() {
 
             PostOption(imagePainter = R.drawable.ic_photo, text = stringResource(R.string.photo))
             PostOption(imagePainter = R.drawable.ic_tag, text = stringResource(R.string.tag))
-            PostOption(imagePainter = R.drawable.ic_location, text = stringResource(R.string.location))
+            PostOption(
+                imagePainter = R.drawable.ic_location,
+                text = stringResource(R.string.location)
+            )
             PostOption(imagePainter = R.drawable.ic_color, text = stringResource(R.string.color))
         }
 
@@ -92,10 +98,4 @@ fun PostOption(
             fontSize = 12.sp
         )
     }
-}
-
-@Preview
-@Composable
-fun PreviewPostCreating() {
-    PostCreatingSection()
 }

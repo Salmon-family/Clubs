@@ -7,7 +7,7 @@ data class UserDTO(
     @SerializedName("birthdate")
     val birthdate: String?,
     @SerializedName("cover_url")
-    val coverUrl: Boolean?,
+    val coverUrl: String?,
     @SerializedName("email")
     val email: String?,
     @SerializedName("first_name")

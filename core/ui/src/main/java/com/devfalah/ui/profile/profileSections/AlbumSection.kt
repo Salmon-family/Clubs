@@ -10,19 +10,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.profile.HorizontalSpacer8
 import com.devfalah.ui.profile.VerticalSpacer8
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.viewmodels.userProfile.AlbumUIState
 
 @Composable
-fun AlbumSection() {
+fun AlbumSection(
+    albums: List<AlbumUIState>
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -35,14 +40,14 @@ fun AlbumSection() {
         ) {
             Text(
                 modifier = Modifier.weight(1f),
-                text = "Photo Album",
+                text = stringResource(id = R.string.albums),
                 color = LightSecondaryBlackColor,
                 fontFamily = PlusJakartaSans,
                 fontSize = 14.sp
             )
 
             Text(
-                text = "See All",
+                text = stringResource(id = R.string.see_all),
                 color = LightTernaryBlackColor,
                 fontFamily = PlusJakartaSans,
                 fontSize = 12.sp
@@ -61,13 +66,13 @@ fun AlbumSection() {
 
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
-            val images = mutableListOf<Int>()
-            for (i in 0..5) images.add(R.drawable.test_image)
-            images.take(3).forEach {
+            albums.take(3).forEach {
                 Image(
-                    painter = painterResource(id = it),
+                    painter = rememberAsyncImagePainter(model = it.albumCover),
                     contentDescription = null,
-                    Modifier
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .fillMaxSize()
                         .weight(1f)
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(20.dp))
@@ -77,8 +82,3 @@ fun AlbumSection() {
     }
 }
 
-@Preview
-@Composable
-fun PreviewAlbum() {
-    AlbumSection()
-}

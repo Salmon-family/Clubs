@@ -6,4 +6,6 @@
     <string name="like_photo">liked your photo</string>
     <string name="like_post">liked your post</string>
     <string name="request_group">request to join your group</string>
+    <string name="see_all">"See All"</string>
+    <string name="albums">Albums</string>
 </resources>

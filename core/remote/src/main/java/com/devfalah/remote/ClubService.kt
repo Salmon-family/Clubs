@@ -10,6 +10,11 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ClubService {
+
+    @FormUrlEncoded
+    @POST("user_details")
+    suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
+
     /**
      * Friends
      * */
