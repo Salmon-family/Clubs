@@ -5,10 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
-
 @Composable
-fun HomeScreen(
+fun SearchScreen(
     navController: NavController,
-    ) {
-    Text(text = "Home", fontSize = 24.sp)
+) {
+    Text(text = "SearchScreen", fontSize = 24.sp)
 }
+
+

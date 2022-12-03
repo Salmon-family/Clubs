@@ -20,6 +20,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleProfileImage
@@ -39,6 +40,7 @@ import com.devfalah.viewmodels.notifications.NotificationsViewModel
 
 @Composable
 fun NotificationScreen(
+    navController: NavController,
     viewModel: NotificationsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()

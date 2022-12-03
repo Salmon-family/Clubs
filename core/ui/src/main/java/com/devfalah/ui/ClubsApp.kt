@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -17,32 +19,34 @@ import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
-import kotlinx.coroutines.selects.select
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
+fun ClubsApp() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {
-        NavigationGraph(navController = navController)
+        ClubsNavGraph(navController = navController)
     }
 }
 
 @Composable
 fun BottomBar(navController: NavHostController) {
     val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Notification,
-    )
+        Screen.Home,
+        Screen.Search,
+        Screen.Clubs,
+        Screen.Notification,
+        Screen.Menu
+        )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
     
     BottomNavigation {
-        items.forEach { items ->
-            AddItem(screen = items, currentDestination = currentRoute, navController = navController)
+        items.forEach { screen ->
+            AddItem(screen = screen, currentDestination = currentRoute, navController = navController)
         }
     }
 
@@ -50,15 +54,22 @@ fun BottomBar(navController: NavHostController) {
 
 @Composable
 fun RowScope.AddItem(
-    screen: BottomNavItem,
+    screen: Screen,
     currentDestination: NavDestination?,
     navController: NavHostController
 ){
+    val selected = currentDestination?.hierarchy?.any { it.route == screen.screen_route } == true
     BottomNavigationItem(
-        modifier = Modifier.background(LightCardBackgroundColor),
-        label = { Text(text = screen.title) },
-        icon = { Icon(painterResource(id = screen.icon), contentDescription = screen.title) },
-        selected = currentDestination?.hierarchy?.any { it.route == screen.screen_route }  == true,
+        modifier = Modifier.background(LightCardBackgroundColor).align(alignment = Alignment.CenterVertically),
+        label = {Text(text = screen.title, overflow = TextOverflow.Ellipsis, maxLines = 1,) },
+        alwaysShowLabel = false,
+        icon = { Icon(
+                painterResource(id =
+                if (selected) screen.iconSelected else screen.iconUnselected),
+                    contentDescription = screen.title
+            )
+        },
+        selected = selected,
         selectedContentColor = LightPrimaryBrandColor,
         unselectedContentColor = LightTernaryBlackColor,
         onClick = {
