@@ -16,5 +16,5 @@ data class WallPostDTO(
     @SerializedName("text")
     val text: String?,
     @SerializedName("user")
-    val user: UserDTO?
+    val user: UserDTO?,
 )

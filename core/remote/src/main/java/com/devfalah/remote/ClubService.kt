@@ -277,5 +277,5 @@ interface ClubService {
         @Query("uguid") friendID: Int,
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null
-    ): Response<BaseResponse<FriendWallDTO>>
+    ): Response<BaseResponse<ProfilePostResponse>>
 }

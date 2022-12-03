@@ -2,6 +2,7 @@ package com.devfalah.viewmodels.userProfile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.GetProfilePostsUseCase
 import com.devfalah.usecases.GetUserAccountDetailsUseCase
 import com.devfalah.usecases.GetUserAlbumsUseCase
 import com.devfalah.usecases.GetUserFriendsUseCase
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class UserProfileViewModel @Inject constructor(
     val getUserAccountDetails: GetUserAccountDetailsUseCase,
     val getUserAlbumsUseCase: GetUserAlbumsUseCase,
-    val getUserFriendsUseCase: GetUserFriendsUseCase
+    val getUserFriendsUseCase: GetUserFriendsUseCase,
+    val getProfilePostUseCase: GetProfilePostsUseCase
 ) :
     ViewModel() {
 
@@ -28,6 +30,7 @@ class UserProfileViewModel @Inject constructor(
         getUserDetails(userId)
         getUserAlbums(userId)
         getUserFriends(userId)
+        getProfilePost(userId)
     }
 
     private fun getUserDetails(userID: Int) {
@@ -55,6 +58,12 @@ class UserProfileViewModel @Inject constructor(
     private fun getUserFriends(userID: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(friends = getUserFriendsUseCase(userID).map { it.toUIState() }) }
+        }
+    }
+
+    private fun getProfilePost(userID: Int) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(posts = getProfilePostUseCase(userID).map { it.toUIState() }) }
         }
     }
 }

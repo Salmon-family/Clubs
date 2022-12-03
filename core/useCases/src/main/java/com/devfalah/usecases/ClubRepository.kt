@@ -2,6 +2,7 @@ package com.devfalah.usecases
 
 import com.devfalah.entities.Album
 import com.devfalah.entities.Notifications
+import com.devfalah.entities.Post
 import com.devfalah.entities.User
 
 interface ClubRepository {
@@ -13,5 +14,7 @@ interface ClubRepository {
     suspend fun getUserAccountDetails(userID: Int): User
 
     suspend fun getUserAlbums(userID: Int, albumID: Int): List<Album>
+
+    suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<Post>
 
 }
