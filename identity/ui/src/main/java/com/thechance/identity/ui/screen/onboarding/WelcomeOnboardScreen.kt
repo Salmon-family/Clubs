@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.ButtonComposable
 import com.thechance.identity.ui.composable.ClubText
@@ -21,7 +23,18 @@ import com.thechance.identity.ui.theme.LightTernaryBrandColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
-fun WelcomeOnboard() {
+fun WelcomeOnboardScreen(
+    navController: NavController,
+) {
+    WelcomeOnboardContent {
+        navController.navigate("onBoardingPagerScreen")
+    }
+}
+
+@Composable
+fun WelcomeOnboardContent(
+    onClickNextScreen: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +65,7 @@ fun WelcomeOnboard() {
 
         SpacerVertical(height = 20.dp)
         ButtonComposable(
-            onClick = {},
+            onClick = onClickNextScreen,
             text = stringResource(id = R.string.lets_do),
             buttonModifier = Modifier
                 .wrapContentSize()
@@ -67,5 +80,6 @@ fun WelcomeOnboard() {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewWelcomeOnboard() {
-    WelcomeOnboard()
+    val navController = rememberNavController()
+    WelcomeOnboardContent({})
 }

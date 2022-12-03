@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.signup
 
-import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
@@ -25,23 +27,23 @@ import com.thechance.identity.viewmodel.signup.UserUIState
 
 @Composable
 fun SignUpUserInformationScreen(
+    navController: NavController,
     viewModel: SignupViewModel = hiltViewModel(),
-    context: Context
 ) {
     val state by viewModel.uiState.collectAsState()
     SignUpUserInformationContent(
-        context,
         state,
         onChangeFullName = viewModel::onChangeFullName,
         onChangeUserName = viewModel::onChangeUserName,
-        createAccount = viewModel::makeSignupRequest
+        createAccount = viewModel::makeSignupRequest,
+        onClickBack = { navController.navigateUp() }
     )
 }
 
 @Composable
 private fun SignUpUserInformationContent(
-    context: Context,
     state: UserUIState,
+    onClickBack: () -> Unit,
     onChangeFullName: (String) -> Unit,
     onChangeUserName: (String) -> Unit,
     createAccount: () -> Unit
@@ -54,7 +56,7 @@ private fun SignUpUserInformationContent(
             .padding(16.dp),
     ) {
         item {
-            BackButtonComposable() {}
+            BackButtonComposable { onClickBack }
 
             SpacerVertical(height = 36.dp)
             TextComposable(
@@ -118,10 +120,11 @@ private fun SignUpUserInformationContent(
             )
 
             SpacerVertical(height = 14.dp)
-            DatePickerComposable(
-                image = R.drawable.ic_arrow_down_circle,
-                context = context,
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                DatePickerComposable(
+                    image = R.drawable.ic_arrow_down_circle,
+                )
+            }
 
             SpacerVertical(height = 24.dp)
             TextComposable(
@@ -140,7 +143,7 @@ private fun SignUpUserInformationContent(
 
             SpacerVertical(height = 24.dp)
             ButtonComposable(
-                onClick = createAccount,
+                onClick = {},
                 buttonModifier = Modifier
                     .padding(horizontal = 8.dp)
                     .fillMaxWidth(),

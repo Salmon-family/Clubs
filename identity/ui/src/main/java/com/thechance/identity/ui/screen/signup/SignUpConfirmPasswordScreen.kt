@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
@@ -18,15 +18,30 @@ import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun SignUpConfirmPasswordScreen() {
+fun SignUpConfirmPasswordScreen(
+    navController: NavController
+) {
+    SignUpConfirmPasswordContent(
+        onClickSignupInformationScreen = {
+            navController.navigate("signupUserInformationScreen")
+        },
+        onClickBack = { navController.navigateUp() }
+    )
+}
+
+@Composable
+fun SignUpConfirmPasswordContent(
+    onClickSignupInformationScreen: () -> Unit,
+    onClickBack: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable() {}
+        BackButtonComposable { onClickBack }
 
         SpacerVertical(height = 36.dp)
         TextComposable(
@@ -88,7 +103,7 @@ fun SignUpConfirmPasswordScreen() {
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            onClick = {},
+            onClick = onClickSignupInformationScreen,
             text = stringResource(id = R.string.continue_label)
         )
     }

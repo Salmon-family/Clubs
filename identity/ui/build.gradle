@@ -75,4 +75,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
 
+    //navigation
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+
 }

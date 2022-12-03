@@ -1,8 +1,9 @@
 package com.thechance.identity.ui.composable
 
 import android.app.DatePickerDialog
-import android.content.Context
+import android.os.Build
 import android.widget.DatePicker
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,18 +17,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.thechance.identity.ui.extension.convertToDayMonthYearFormat
+import com.thechance.identity.ui.util.extension.convertToDayMonthYearFormat
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import java.util.*
 
-
 @Composable
 fun DatePickerComposable(
-    context: Context,
     image: Int = 0,
 ) {
 
@@ -39,7 +39,7 @@ fun DatePickerComposable(
     val date = remember { mutableStateOf("28/01/2002") }
 
     val datePickerDialog = DatePickerDialog(
-        context,
+        LocalContext.current,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
             val cal = Calendar.getInstance()
             cal.set(year, month, dayOfMonth)
