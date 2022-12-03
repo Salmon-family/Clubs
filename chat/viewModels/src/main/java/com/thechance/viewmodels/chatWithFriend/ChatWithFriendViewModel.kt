@@ -31,8 +31,9 @@ class ChatWithFriendViewModel @Inject constructor(
     private fun getListMessages(userId: Int, friendId: Int) {
         viewModelScope.launch {
             try {
-                getListMessagesUseCase(userId, friendId).collect {
-                    _uiState.update { it.copy(messages = it.messages, isLoading = false) }
+                getListMessagesUseCase(userId, friendId).collect { item ->
+                    val message = item.map { it.toMessage() }
+                    _uiState.update { it.copy(messages = message, isLoading = false) }
                 }
             } catch (e: Exception) {
                 _uiState.update {
@@ -47,7 +48,7 @@ class ChatWithFriendViewModel @Inject constructor(
             try {
                 _uiState.update {
                     it.copy(
-                        message = setSendMessageUseCase(7, 10, message).toMessage(),
+                        message = setSendMessageUseCase(7, 10, message).message,
                     )
                 }
             } catch (e: Exception) {
@@ -61,12 +62,12 @@ class ChatWithFriendViewModel @Inject constructor(
 
     fun onChanceMessage(newValue: String) {
         _uiState.update {
-            it.copy(message = MessageUIState(message = newValue))
+            it.copy(message = newValue)
         }
     }
 
     fun sendMessage() {
-        setSendMessage(uiState.value.message.message)
-        _uiState.update { it.copy(message = MessageUIState(message = "")) }
+        setSendMessage(uiState.value.message)
+        _uiState.update { it.copy(message = "") }
     }
 }

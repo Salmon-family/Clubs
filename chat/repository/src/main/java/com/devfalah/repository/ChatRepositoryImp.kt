@@ -15,11 +15,11 @@ class ChatRepositoryImp @Inject constructor(
 ) : ChatRepository {
 
     override suspend fun getMessages(userID: Int, friendID: Int): Conversation {
-        return dataSource.getMessagesWithFriend(userID, friendID).toEntity()
+        return dataSource.getMessagesWithFriend(userID, friendID).toEntity(userID)
     }
 
-    override suspend fun setSendMessage(from: Int, to: Int, message: String): Message {
-        return dataSource.setSendMessage(from, to, message).toEntity()
+    override suspend fun setSendMessage(userID: Int, friendId: Int, message: String): Message {
+        return dataSource.setSendMessage(userID, friendId, message).toEntity(userID)
     }
 
     override suspend fun insertMessages(message: List<Message>) {

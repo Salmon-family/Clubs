@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,10 +24,8 @@ internal fun ChatScreen(
     viewModel: ChatWithFriendViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
-    val textEmpty: Boolean by derivedStateOf { state.message.message.isEmpty() }
     ChatContent(
         state = state,
-        textEmpty = textEmpty,
         onWriteMessage = viewModel::onChanceMessage,
         sendMessage = viewModel::sendMessage,
     )
@@ -37,7 +34,6 @@ internal fun ChatScreen(
 @Composable
 fun ChatContent(
     state: ChatUIState,
-    textEmpty: Boolean ,
     onWriteMessage: (String) -> Unit,
     sendMessage: () -> Unit,
 ) {
@@ -47,17 +43,12 @@ fun ChatContent(
             contentAlignment = Alignment.BottomCenter
         ) {
             BackgroundChatScreen()
-            ListOfChat(state)
+            ListOfChat(state.messages)
             CustomTextField(
-                information = state.message.message,
+                information = state.message,
                 onTextChange = onWriteMessage,
-                empty = textEmpty,
-                onClickAction = {
-                    if (!textEmpty) {
-                        sendMessage()
-                    }
-                }
-            )
+                onClickAction = sendMessage,
+                )
         }
     }
 }

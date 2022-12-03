@@ -8,20 +8,30 @@ import com.devfalah.repository.models.MessagesDTO
 import com.devfalah.repository.models.UserDTO
 import com.thechance.entities.User
 
-fun ConversationDTO.toEntity(): Conversation {
+fun ConversationDTO.toEntity(userId: Int): Conversation {
     return Conversation(
-        messages = list?.map { it.toEntity() } ?: emptyList(),
+        messages = list?.map { it.toEntity(userId) } ?: emptyList(),
     )
 }
 
 
-fun MessagesDTO.toEntity(): Message {
-    return Message(
-        messageId = id ?: 0,
-        friendId = messageFrom?.guid ?: 0,
-        message = message ?: "",
-        time = time ?: 0
-    )
+fun MessagesDTO.toEntity(userId: Int): Message {
+    if(messageFrom?.guid == userId) {
+        return Message(
+            messageId = id ?: 0,
+            friendId = messageTo?.guid ?: 0,
+            message = message ?: "",
+            time = time ?: 0
+        )
+    }else{
+        return Message(
+            messageId = id ?: 0,
+            friendId = messageFrom?.guid ?: 0,
+            message = message ?: "",
+            time = time ?: 0
+        )
+    }
+
 }
 
 fun UserDTO.toEntity(): User{

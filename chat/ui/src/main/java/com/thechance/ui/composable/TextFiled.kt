@@ -27,7 +27,6 @@ fun CustomTextField(
     information: String,
     onTextChange: (String) -> Unit,
     onClickAction: () -> Unit,
-    empty: Boolean,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -48,7 +47,7 @@ fun CustomTextField(
                 modifier = Modifier.weight(1f),
                 maxLines = 4,
                 decorationBox = { innerTextField ->
-                    if(empty){
+                    if(information.isEmpty()){
                         Text(text = "Enter your message",
                             style = Typography.body1,
                             color = Color.Black)
@@ -83,5 +82,5 @@ fun ButtonSend(onClickAction: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultTextFieldPreview() {
-    CustomTextField("", {}, {}, false)
+    CustomTextField("", {}, {}, )
 }

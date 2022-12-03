@@ -11,10 +11,11 @@ import com.thechance.ui.components.SenderMessage
 import com.thechance.ui.spacer.SpaceVertical
 import com.thechance.ui.utilities.convertIntToTime
 import com.thechance.viewmodels.chatWithFriend.states.ChatUIState
+import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
 
 @Composable
 fun ListOfChat(
-    state: ChatUIState,
+    state: List<MessageUIState>,
 ) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (listOfChat) = createRefs()
@@ -23,12 +24,15 @@ fun ListOfChat(
             start.linkTo(parent.start)
             end.linkTo(parent.end)
         }, reverseLayout = false) {
-            items(state.messages) {
-                if (it.friendId == state.appBar.id) {
+            items(state) {
+
+                // TODO: when get user id from navigation component
+
+//                if (it.friendId) {
                     SenderMessage(it.message, it.messageDate.convertIntToTime())
-                } else {
-                    ReceiverMessage(it.message, it.messageDate.convertIntToTime())
-                }
+//                } else {
+//                    ReceiverMessage(it.message, it.messageDate.convertIntToTime())
+//                }
             }
             item {
                 SpaceVertical(height = 100)
