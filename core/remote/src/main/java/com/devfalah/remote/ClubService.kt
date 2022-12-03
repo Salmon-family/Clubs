@@ -42,6 +42,12 @@ interface ClubService {
         @Field("user_b") otherUserID: Int
     ): Response<BaseResponse<CheckFriendshipDTO>>
 
+    @FormUrlEncoded
+    @POST("user_add_friend")
+    suspend fun addFriendRequest(
+        @Field("user_a") userID: Int,
+        @Field("user_b") otherUserID: Int
+    ): Response<BaseResponse<CheckFriendshipDTO>>
 
     /**
      * posts

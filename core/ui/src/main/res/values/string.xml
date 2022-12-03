@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="friends_request">Friends request</string>
+    <string name="accept">Accept</string>
+    <string name="delete">Delete</string>
 
     <string name="notification_icon">Notification Icon</string>
     <!--   notification -->
@@ -10,5 +13,8 @@
     <string name="albums">Albums</string>
     <string name="friends_privacy">Friends</string>
     <string name="public_privacy">Public</string>
+
+
+    <string name="home">Home</string>
 
 </resources>

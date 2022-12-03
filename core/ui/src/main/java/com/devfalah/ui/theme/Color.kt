@@ -17,3 +17,7 @@ val LightSecondaryGrayColor = Color(0xFFBDBDBF)
 val LightTernaryGrayColor = Color(0xFFD2D2D3)
 val WhiteColor = Color(0xFFFFFFFF)
 val LightCardColor = Color(0xFFF6F6F7)
+
+val PrimaryColor = Color(0xFF6C56D6)
+val LightPurpleColor = Color(0xFFDAD4F3)
+val GrayColor = Color(0xFFF6F6F7)
