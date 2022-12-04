@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightCardBackgroundColor
@@ -43,7 +44,7 @@ fun SearchTextField(
         ),
 
         placeholder = {
-            Text(text = "Search for a club",
+            Text(text = stringResource(R.string.search_for_club),
                 style = Typography.body2,
                 color = LightTernaryBlackColor
             )
