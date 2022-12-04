@@ -31,7 +31,7 @@ fun InputText(
             .padding(horizontal = 8.dp),
         value = text,
         onValueChange = onTextChange,
-        shape = RoundedCornerShape(size = 20.dp),
+        shape = RoundedCornerShape(size = 100.dp),
         trailingIcon = {
             if (image != 0) {
                 Image(

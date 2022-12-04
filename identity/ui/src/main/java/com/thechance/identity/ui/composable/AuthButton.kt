@@ -27,7 +27,7 @@ fun AuthButton(
 ) {
     Button(
         modifier = buttonModifier
-            .clip(RoundedCornerShape(20.dp)),
+            .clip(RoundedCornerShape(100.dp)),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = buttonColor
