@@ -1,6 +1,5 @@
 package com.thechance.viewmodels.chatWithFriend
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
@@ -29,10 +28,8 @@ class ChatsViewModel @Inject constructor(
 
    private fun initChats(userID: Int){
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(isLoading = true)
-            }
             try {
+                _uiState.update { it.copy(isLoading = true) }
                 getChats(userID).collect { chats ->
                     _uiState.update { chatsUiState ->
                         chatsUiState.copy(
@@ -41,7 +38,6 @@ class ChatsViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(isLoading = false, error = e.message.toString())
                 }
