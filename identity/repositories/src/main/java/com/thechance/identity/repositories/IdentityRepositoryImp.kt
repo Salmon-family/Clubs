@@ -9,8 +9,8 @@ class IdentityRepositoryImp @Inject constructor(
     private val remoteDataSource: IdentityDataSource
 ) : IdentityRepository {
 
-    override suspend fun login(userName: String, password: String): User {
-        return remoteDataSource.login(userName, password).toEntity()
+    override suspend fun login(userName: String, password: String): Boolean {
+        return remoteDataSource.login(userName, password)//.toEntity()
     }
 
     override suspend fun signup(

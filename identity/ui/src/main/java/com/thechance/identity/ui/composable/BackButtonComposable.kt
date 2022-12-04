@@ -10,7 +10,7 @@ import com.thechance.identity.ui.R
 @Composable
 fun BackButtonComposable(
     onClick: () -> Unit
-) {
+){
     Image(
         painter = painterResource(id = R.drawable.ic_back_arrow),
         contentDescription = null,

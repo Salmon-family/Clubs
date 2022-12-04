@@ -10,9 +10,12 @@ class IdentityDataSourceImp @Inject constructor(
     private val service: IdentityService
 ) : IdentityDataSource {
 
-    override suspend fun login(userName: String, password: String): UserDTO {
-        return service.login(userName, password).body()?.payload
-            ?: throw Throwable("failure request")
+    override suspend fun login(userName: String, password: String): Boolean {
+//        return service.login(userName, password).body()?.payload
+//            ?: throw Throwable("failure request")
+        return wrap {
+            service.login(userName, password)
+        } != null
     }
 
     override suspend fun signup(

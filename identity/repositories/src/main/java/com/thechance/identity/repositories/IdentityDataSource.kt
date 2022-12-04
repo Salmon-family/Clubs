@@ -4,7 +4,7 @@ import com.thechance.identity.repositories.models.UserDTO
 
 interface IdentityDataSource {
 
-    suspend fun login(userName: String, password: String): UserDTO
+    suspend fun login(userName: String, password: String): Boolean //UserDTO
 
     suspend fun signup(
         firstname: String,

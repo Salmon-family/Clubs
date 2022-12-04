@@ -12,7 +12,7 @@ interface IdentityService {
     suspend fun login(
         @Query("username") username: String,
         @Query("password") password: String
-    ): Response<IdentityBaseResponse<UserDTO>>
+    ): Response<IdentityBaseResponse<Any>>
 
     @FormUrlEncoded
     @POST("user_details")

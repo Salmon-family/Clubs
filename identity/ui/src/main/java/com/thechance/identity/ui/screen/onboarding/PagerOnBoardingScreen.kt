@@ -23,14 +23,17 @@ import com.thechance.identity.ui.util.extension.navigateToSignupEmail
 fun OnBoardingPagerScreen(
     navController: NavController
 ) {
-    OnBoardingPagerContent {
+    OnBoardingPagerContent({
         navController.navigateToSignupEmail()
-    }
+    },{
+        navController.navigate("LogInUserNameScreen")
+    })
 }
 
 @Composable
 fun OnBoardingPagerContent(
-    onClickSignUpScreen: () -> Unit
+    onClickSignUpScreen: () -> Unit,
+    onClickLogInScreen: () -> Unit
 ) {
     Column {
         Box(Modifier.weight(1f)) {
@@ -39,7 +42,7 @@ fun OnBoardingPagerContent(
 
         SpacerVertical16()
         ButtonComposable(
-            onClick = {},
+            onClick = onClickLogInScreen,
             text = stringResource(id = R.string.login),
         )
 
