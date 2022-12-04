@@ -24,6 +24,7 @@ import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.util.extension.navigateToLogInPassword
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -36,7 +37,7 @@ fun LogInUserNameScreen(
     LogInUserNameContent(
         uiState = uiState,
         onChangeUserName = viewModel::onChangeUserName,
-        onClickContinue = { navController.navigate("LogInPasswordScreen") },
+        onClickContinue = { navController.navigateToLogInPassword() },
         onClickBack = {navController.navigateUp()}
     )
 }

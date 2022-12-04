@@ -23,6 +23,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.util.extension.navigateToHome
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -30,17 +31,17 @@ import com.thechance.identity.viewmodel.login.LoginViewModel
 fun LogInPasswordScreen(
     navController: NavController,
     viewModel: LoginViewModel = hiltViewModel()
-){
+) {
     val uiState by viewModel.uiState.collectAsState()
     LogInPasswordContent(
         uiState = uiState,
         onChangePassword = viewModel::onChangePassword,
         onLogin = {
             viewModel.onLogin()
-            if(uiState.isSuccess)
-                navController.navigate("HomeScreen")
+            if (uiState.isSuccess)
+                navController.navigateToHome()
         },
-        onClickBack = {navController.navigateUp()}
+        onClickBack = { navController.navigateUp() }
     )
 }
 
@@ -56,10 +57,9 @@ fun LogInPasswordContent(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
         SpacerVertical12()
-        BackButtonComposable {
-            onClickBack
-        }
+        BackButtonComposable(onClick = onClickBack)
 
         SpacerVertical(52.dp)
         TextComposable(

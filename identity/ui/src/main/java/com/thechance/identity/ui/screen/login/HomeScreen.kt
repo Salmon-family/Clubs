@@ -1,6 +1,9 @@
 package com.thechance.identity.ui.screen.login
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,9 +18,9 @@ import com.thechance.identity.ui.theme.Typography
 @Composable
 fun HomeScreen(
     navController: NavController,
-){
+) {
     HomeContent(
-        onClickBack = {navController.navigateUp()}
+        onClickBack = { navController.navigateUp() }
     )
 }
 

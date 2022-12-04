@@ -96,7 +96,7 @@ private fun SignUpBirthdateAndGanderContent(
 
         SpacerVertical(height = 24.dp)
         ButtonComposable(
-            onClick = onCreateAccount,
+            onClick = {},
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
