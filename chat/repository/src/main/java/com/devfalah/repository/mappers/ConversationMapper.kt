@@ -17,15 +17,17 @@ fun ConversationDTO.toEntity(userId: Int): Conversation {
 fun ChatDTO.toEntity(userId: Int): Message {
     if(messageFrom?.guid == userId) {
         return Message(
-            messageId = id ?: 0,
+            id = id ?: 0,
             friendId = messageTo?.guid ?: 0,
+            fromMe = true,
             message = message ?: "",
             time = time?.let { ConvertDate().convertTime(it) } ?: ""
         )
     }else{
         return Message(
-            messageId = id ?: 0,
+            id = id ?: 0,
             friendId = messageFrom?.guid ?: 0,
+            fromMe = false,
             message = message ?: "",
             time = time?.let { ConvertDate().convertTime(it) } ?: ""
         )
@@ -35,8 +37,9 @@ fun ChatDTO.toEntity(userId: Int): Message {
 
 fun MessageEntityLocalDTO.toMessage(): Message {
     return Message(
-        messageId = id,
+        id = id,
         friendId = friendId,
+        fromMe = fromMe,
         message = message,
         time = time,
     )
@@ -44,8 +47,9 @@ fun MessageEntityLocalDTO.toMessage(): Message {
 
 fun Message.toMessage(): MessageEntityLocalDTO {
     return MessageEntityLocalDTO(
-        id = messageId,
+        id = id,
         friendId = friendId,
+        fromMe = fromMe,
         message = message,
         time = time,
     )

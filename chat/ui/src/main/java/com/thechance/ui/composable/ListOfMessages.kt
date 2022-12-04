@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.thechance.ui.spacer.SpaceVertical
+import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.ChatUIState
 import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.MessageUIState
 
 @Composable
@@ -23,17 +24,13 @@ fun ListOfChat(
             item {
                 SpaceVertical(height = 64)
             }
-            
-
             items(state) {
-
-                // TODO: when get user id from navigation component
-
-//                if (it.friendId) {
+                if (it.isFromUser) {
                     SenderMessage(it.message, it.messageDate)
-//                } else {
-//                    ReceiverMessage(it.message, it.messageDate.convertIntToTime())
-//                }
+                } else {
+                    ReceiverMessage(it.message, it.messageDate)
+                }
+
             }
 
         }

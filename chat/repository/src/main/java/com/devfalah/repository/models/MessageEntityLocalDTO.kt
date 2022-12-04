@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class MessageEntityLocalDTO (
     @PrimaryKey val id:Int,
     val friendId: Int,
+    val fromMe: Boolean,
     val message: String,
     val time: String,
 )

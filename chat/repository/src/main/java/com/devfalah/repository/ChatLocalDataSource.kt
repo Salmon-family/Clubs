@@ -4,7 +4,7 @@ import com.devfalah.repository.models.MessageEntityLocalDTO
 import com.devfalah.repository.models.ChatLocalDto
 import kotlinx.coroutines.flow.Flow
 
-interface LocalDataSource {
+interface ChatLocalDataSource {
 
     suspend fun insertChats(chats: List<ChatLocalDto>)
 

@@ -21,7 +21,7 @@ class ChatWithFriendViewModel @Inject constructor(
     ViewModel() {
 
     private val userId = 7
-    private val friendId = 3
+    private val friendId = 2
 
     private val friendName = "Falah Hassan"
     private val friendImage =
@@ -34,8 +34,9 @@ class ChatWithFriendViewModel @Inject constructor(
     init {
         getListMessages(userId, friendId)
         _uiState.update {
-            it.copy(appBar = it.appBar.copy(userName = friendName,
-                icon = friendImage))
+            it.copy(
+                appBar = it.appBar.copy(userName = friendName, icon = friendImage),
+            )
         }
     }
 
@@ -59,7 +60,7 @@ class ChatWithFriendViewModel @Inject constructor(
             try {
                 _uiState.update {
                     it.copy(
-                        message = setSendMessageUseCase(7, 10, message).message,
+                        message = setSendMessageUseCase(userId, friendId, message).message,
                     )
                 }
             } catch (e: Exception) {

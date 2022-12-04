@@ -28,7 +28,7 @@ fun TopBarChats() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(painter = painterResource(id = R.drawable.arrow_icon), contentDescription =null)
+            BackButton()
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = stringResource(id = R.string.chats),

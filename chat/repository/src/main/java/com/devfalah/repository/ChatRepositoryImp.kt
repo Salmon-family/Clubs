@@ -12,40 +12,40 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ChatRepositoryImp @Inject constructor(
-    private val dataSource: ChatDataSource,
-    private val localDataSource: LocalDataSource,
+    private val ChatDataSource: ChatDataSource,
+    private val ChatLocalDataSource: ChatLocalDataSource,
 ) : ChatRepository {
 
     override suspend fun insertChatsLocally(list: List<Chat>) {
-        localDataSource.insertChats(list.map { it.toLocalDto() })
+        ChatLocalDataSource.insertChats(list.map { it.toLocalDto() })
     }
 
     override fun getChatsFromLocal(): Flow<List<Chat>> {
-        return localDataSource.getChats().map { list -> list.map { it.toEntity() } }
+        return ChatLocalDataSource.getChats().map { list -> list.map { it.toEntity() } }
     }
 
     override suspend fun getChats(userID: Int): List<Chat> {
-        return dataSource.getChats(userID).map { it.toLocalDto(userID) }
+        return ChatDataSource.getChats(userID).map { it.toLocalDto(userID) }
     }
 
     override fun getChats(query: String): Flow<List<Chat>> {
-        return localDataSource.getChats(query).map { list -> list.map { it.toEntity() } }
+        return ChatLocalDataSource.getChats(query).map { list -> list.map { it.toEntity() } }
     }
 
     override suspend fun getMessages(userID: Int, friendID: Int): Conversation {
-        return dataSource.getMessagesWithFriend(userID, friendID).toEntity(userID)
+        return ChatDataSource.getMessagesWithFriend(userID, friendID).toEntity(userID)
     }
 
     override suspend fun setSendMessage(userID: Int, friendId: Int, message: String): Message {
-        return dataSource.setSendMessage(userID, friendId, message).toEntity(userID)
+        return ChatDataSource.setSendMessage(userID, friendId, message).toEntity(userID)
     }
 
     override suspend fun insertMessages(message: List<Message>) {
-        localDataSource.insertMessages(message.map { it.toMessage() })
+        ChatLocalDataSource.insertMessages(message.map { it.toMessage() })
     }
 
     override fun getMessages(friendId: Int): Flow<List<Message>> {
-        return localDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
+        return ChatLocalDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
     }
 
 }

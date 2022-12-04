@@ -1,5 +1,6 @@
 package com.thechance.viewmodels.chatWithFriend.conversation.uiMappers
 
+import android.util.Log
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
 import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.ChatUIState
@@ -20,9 +21,11 @@ fun Message.toState(): MessageUIState {
 }
 
 fun Message.toMessage(): MessageUIState {
+    Log.i("TAG", "toMessage: $fromMe")
     return MessageUIState(
-        messageId = messageId,
+        messageId = id,
         friendId = friendId,
+        isFromUser = fromMe,
         message = message,
         messageDate = time,
     )

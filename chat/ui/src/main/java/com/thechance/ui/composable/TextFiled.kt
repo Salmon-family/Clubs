@@ -45,7 +45,7 @@ fun SendTextField(
         leadingIcon = {
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.paperclip),
-                contentDescription = stringResource(R.string.app_name),
+                contentDescription = stringResource(R.string.chats),
             )
         },
         trailingIcon = {

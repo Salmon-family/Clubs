@@ -24,7 +24,7 @@ class ChatsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        initChats(10)
+        initChats(7)
     }
 
     private fun initChats(userID: Int){
