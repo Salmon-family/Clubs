@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.spacer.HorizontalSpacer8
-import com.devfalah.ui.spacer.VerticalSpacer8
+import com.devfalah.ui.spacer.WidthSpacer8
+import com.devfalah.ui.spacer.HeightSpacer8
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -54,7 +54,7 @@ fun AlbumSection(
                 fontSize = 12.sp
             )
 
-            HorizontalSpacer8()
+            WidthSpacer8()
 
             Image(
                 painter = painterResource(id = R.drawable.ic_arrow_right),
@@ -63,7 +63,7 @@ fun AlbumSection(
             )
         }
 
-        VerticalSpacer8()
+        HeightSpacer8()
 
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 

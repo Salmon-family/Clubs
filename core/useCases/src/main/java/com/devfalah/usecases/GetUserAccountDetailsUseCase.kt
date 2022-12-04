@@ -7,7 +7,7 @@ class GetUserAccountDetailsUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
 
-    suspend operator fun invoke(userId: Int): User {
-        return clubRepository.getUserAccountDetails(userId)
+    suspend operator fun invoke( userId: Int): User {
+        return clubRepository.getUserAccountDetails(userID = userId)
     }
 }

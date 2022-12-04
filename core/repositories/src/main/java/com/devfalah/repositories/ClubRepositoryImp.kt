@@ -52,4 +52,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.removeLike(userID = userID, postId = postId, type = type).toEntity()
     }
 
+    override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
+        return remoteDataSource.checkFriendShip(userID,friendID)
+    }
+
 }

@@ -7,7 +7,7 @@ class GetProfilePostsUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
 
-    suspend operator fun invoke(userId: Int): List<Post> {
-        return clubRepository.getProfilePosts(userId, userId)
+    suspend operator fun invoke(userId: Int, profileUserID:Int): List<Post> {
+        return clubRepository.getProfilePosts(userId, profileUserID)
     }
 }

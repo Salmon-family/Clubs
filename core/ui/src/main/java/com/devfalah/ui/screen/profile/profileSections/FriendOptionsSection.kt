@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
@@ -21,7 +20,10 @@ import com.devfalah.ui.theme.*
 
 @Composable
 fun FriendOptionsSection(
-    modifier: Modifier= Modifier
+    modifier: Modifier = Modifier,
+    areFriends: Boolean,
+    onClickAddFriend: () -> Unit,
+    onClickSendMessage: () -> Unit
 ) {
     Row(
         modifier
@@ -30,17 +32,18 @@ fun FriendOptionsSection(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 
+        if (!areFriends) {
+            FriendSectionButton(
+                modifier = Modifier.weight(1f),
+                onCLick = { onClickAddFriend() },
+                buttonColors = ButtonDefaults.textButtonColors(backgroundColor = LightPrimaryBrandColor),
+                text = stringResource(R.string.add_friend),
+                textColor = WhiteColor
+            )
+        }
         FriendSectionButton(
             modifier = Modifier.weight(1f),
-            onCLick = {},
-            buttonColors = ButtonDefaults.textButtonColors(backgroundColor = LightPrimaryBrandColor),
-            text = stringResource(R.string.add_friend),
-            textColor = WhiteColor
-        )
-
-        FriendSectionButton(
-            modifier = Modifier.weight(1f),
-            onCLick = {},
+            onCLick = { onClickSendMessage() },
             buttonColors = ButtonDefaults.textButtonColors(backgroundColor = LightCardBackgroundColor),
             text = stringResource(R.string.message),
             textColor = LightPrimaryBlackColor
@@ -76,10 +79,4 @@ fun FriendSectionButton(
             fontSize = 12.sp
         )
     }
-}
-
-@Preview
-@Composable
-fun PreviewFriendOptions() {
-    FriendOptionsSection()
 }

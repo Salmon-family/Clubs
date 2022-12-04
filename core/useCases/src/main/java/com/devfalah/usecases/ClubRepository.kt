@@ -27,4 +27,5 @@ interface ClubRepository {
 
     suspend fun removeLike(userID: Int, postId: Int, type: String): Int
 
+    suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
 }

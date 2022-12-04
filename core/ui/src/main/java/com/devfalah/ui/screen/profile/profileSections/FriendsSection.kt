@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.spacer.VerticalSpacer8
+import com.devfalah.ui.spacer.HeightSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -49,7 +49,7 @@ fun FriendsSection(
             )
         }
 
-        VerticalSpacer8()
+        HeightSpacer8()
 
         Row(
             Modifier.fillMaxWidth(),
@@ -93,7 +93,7 @@ fun Friend(
                 .clip(RoundedCornerShape(16.dp))
         )
 
-        VerticalSpacer8()
+        HeightSpacer8()
 
         Text(
             text = text,

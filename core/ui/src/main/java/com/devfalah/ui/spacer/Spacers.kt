@@ -8,41 +8,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HorizontalSpacer8() {
+fun WidthSpacer8() {
     Spacer(modifier = Modifier.width(8.dp))
 }
 
 @Composable
-fun HorizontalSpacer16() {
+fun WidthSpacer16() {
     Spacer(modifier = Modifier.width(16.dp))
 }
 
 @Composable
-fun HorizontalSpacer24() {
+fun WidthSpacer24() {
     Spacer(modifier = Modifier.width(24.dp))
 }
 
 @Composable
-fun VerticalSpacer16() {
+fun HeightSpacer16() {
     Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
-fun VerticalSpacer14() {
-    Spacer(modifier = Modifier.height(14.dp))
-}
-
-@Composable
-fun VerticalSpacer5() {
+fun HeightSpacer5() {
     Spacer(modifier = Modifier.height(5.dp))
 }
 
 @Composable
-fun VerticalSpacer8() {
+fun HeightSpacer8() {
     Spacer(modifier = Modifier.height(8.dp))
 }
 
 @Composable
-fun VerticalSpacer4() {
+fun HeightSpacer4() {
     Spacer(modifier = Modifier.height(4.dp))
 }

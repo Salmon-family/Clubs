@@ -15,11 +15,13 @@ class RemoteDataSourceImp @Inject constructor(
 ) : RemoteDataSource {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
-        return apiService.removeFriend(userID, friendRequestID).body()?.payload?.success ?: throw Throwable("Error")
+        return apiService.removeFriend(userID, friendRequestID).body()?.payload?.success
+            ?: throw Throwable("Error")
     }
 
     override suspend fun addFriendRequest(userID: Int, friendRequestID: Int): Boolean {
-        return apiService.addFriendRequest(userID, friendRequestID).body()?.payload?.success ?: throw Throwable("Error")
+        return apiService.addFriendRequest(userID, friendRequestID).body()?.payload?.success
+            ?: throw Throwable("Error")
     }
 
     override suspend fun getUserFriendRequests(userID: Int): List<FriendDTO> {
@@ -56,6 +58,12 @@ class RemoteDataSourceImp @Inject constructor(
     override suspend fun removeLike(userID: Int, postId: Int, type: String): ReactionDTO {
         return apiService.removeLike(userID = userID, postID = postId, type = type).body()?.payload
             ?: throw Throwable("Error")
+    }
+
+    override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
+        return apiService.isFriendWith(userID = userID, otherUserID = friendID)
+            .body()?.payload?.isFriend
+            ?: throw Throwable("error")
     }
 
 }

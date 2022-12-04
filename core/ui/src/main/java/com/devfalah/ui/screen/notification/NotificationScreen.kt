@@ -25,8 +25,9 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleProfileImage
 import com.devfalah.ui.composable.NotificationIcon
-import com.devfalah.ui.spacer.VerticalSpacer16
-import com.devfalah.ui.spacer.VerticalSpacer8
+import com.devfalah.ui.spacer.HeightSpacer16
+import com.devfalah.ui.spacer.HeightSpacer8
+import com.devfalah.ui.spacer.WidthSpacer16
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -91,7 +92,7 @@ fun NotificationItem(
                 painter = rememberAsyncImagePainter(model = notification.posterPhoto),
                 size = 56
             )
-            VerticalSpacer16()
+            WidthSpacer16()
 
             Column(
                 modifier = Modifier
@@ -101,7 +102,7 @@ fun NotificationItem(
             ) {
 
                 NotificationTitle(notification.type, notification.posterName)
-                VerticalSpacer8()
+                HeightSpacer8()
                 Text(
                     text = notification.timeCreated,
                     fontSize = 12.sp,
@@ -112,7 +113,7 @@ fun NotificationItem(
             }
             if (!notification.viewed) {
                 NotificationIcon()
-                VerticalSpacer16()
+                HeightSpacer16()
             }
         }
     }

@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -19,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.spacer.HorizontalSpacer16
-import com.devfalah.ui.spacer.HorizontalSpacer24
-import com.devfalah.ui.spacer.HorizontalSpacer8
-import com.devfalah.ui.spacer.VerticalSpacer16
+import com.devfalah.ui.spacer.HeightSpacer16
+import com.devfalah.ui.spacer.WidthSpacer16
+import com.devfalah.ui.spacer.WidthSpacer24
+import com.devfalah.ui.spacer.WidthSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -46,7 +45,7 @@ fun ProfilePostItem(
 @Composable
 fun PostHeader(post: PostUIState) {
     Row(modifier = Modifier.fillMaxWidth()) {
-        HorizontalSpacer16()
+        WidthSpacer16()
         Image(
             painter = rememberAsyncImagePainter(model = post.posterImage),
             contentDescription = null,
@@ -54,7 +53,7 @@ fun PostHeader(post: PostUIState) {
                 .size(40.dp)
                 .clip(CircleShape),
         )
-        HorizontalSpacer8()
+        WidthSpacer8()
         Column {
             Text(
                 text = post.posterName,
@@ -71,14 +70,14 @@ fun PostHeader(post: PostUIState) {
                     fontWeight = FontWeight.SemiBold,
                     color = LightTernaryBlackColor
                 )
-                HorizontalSpacer8()
+                WidthSpacer8()
 
                 Image(
                     painter = getPrivacyIcon(post.privacy),
                     contentDescription = null,
                     modifier = Modifier.alignByBaseline()
                 )
-                HorizontalSpacer8()
+                WidthSpacer8()
                 Text(
                     text = " |  ${post.createdData}",
                     fontSize = 12.sp,
@@ -105,7 +104,7 @@ fun PostContent(post: PostUIState) {
     )
 
     if (post.postImage.isNotBlank()) {
-        VerticalSpacer16()
+        HeightSpacer16()
         Image(
             painter = rememberAsyncImagePainter(model = post.postImage),
             contentDescription = null,
@@ -124,10 +123,10 @@ fun PostEnterAction(
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit
 ) {
-    VerticalSpacer16()
+    HeightSpacer16()
 
     Row(modifier = Modifier.fillMaxWidth()) {
-        HorizontalSpacer16()
+        WidthSpacer16()
         Image(
             modifier = Modifier.clickable { onClickLike(post) },
             painter = painterResource(
@@ -139,32 +138,32 @@ fun PostEnterAction(
             ),
             contentDescription = null
         )
-        HorizontalSpacer8()
+        WidthSpacer8()
         if (post.totalLikes > 0) {
             Text(
                 text = "${post.totalLikes}",
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = LightTernaryBlackColor
+                color = LightSecondaryBlackColor
             )
         }
-        HorizontalSpacer24()
+        WidthSpacer24()
 
         Image(
             modifier = Modifier.clickable { onClickComment(post) },
             painter = painterResource(id = R.drawable.comment_icon),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(LightTernaryBlackColor)
+            contentDescription = null
         )
-        HorizontalSpacer8()
+
+        WidthSpacer8()
         if (post.totalComments > 0) {
             Text(
                 text = "${post.totalComments}",
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = LightTernaryBlackColor
+                color = LightSecondaryBlackColor
             )
         }
         Box(
@@ -185,7 +184,7 @@ fun PostEnterAction(
                 contentDescription = null,
             )
         }
-        HorizontalSpacer16()
+        WidthSpacer16()
     }
 }
 

@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
-import com.devfalah.ui.spacer.VerticalSpacer4
-import com.devfalah.ui.spacer.VerticalSpacer8
+import com.devfalah.ui.spacer.HeightSpacer4
+import com.devfalah.ui.spacer.HeightSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -76,7 +76,7 @@ fun ProfileDetailsSection(
             )
         }
 
-        VerticalSpacer8()
+        HeightSpacer8()
 
         Text(
             text = userDetails.name,
@@ -91,7 +91,7 @@ fun ProfileDetailsSection(
             fontSize = 14.sp
         )
 
-        VerticalSpacer8()
+        HeightSpacer8()
 
         Text(
             text = userDetails.title,
@@ -100,7 +100,7 @@ fun ProfileDetailsSection(
             fontSize = 14.sp
         )
 
-        VerticalSpacer4()
+        HeightSpacer4()
 
         Text(
             text = userDetails.description,

@@ -9,8 +9,11 @@ data class UserUIState(
     val albums: List<AlbumUIState> = emptyList(),
     val friends: List<UserDetailsUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
+    val isMyProfile: Boolean = false,
+    val areFriends: Boolean = false,
     val loading: Boolean = false,
-    val error: String = ""
+    val majorError: String = "",
+    val minorError: String = ""
 )
 
 data class UserDetailsUIState(

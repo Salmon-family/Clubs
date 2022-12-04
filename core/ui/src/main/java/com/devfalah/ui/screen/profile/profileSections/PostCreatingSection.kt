@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.spacer.HorizontalSpacer16
-import com.devfalah.ui.spacer.HorizontalSpacer8
-import com.devfalah.ui.spacer.VerticalSpacer16
+import com.devfalah.ui.spacer.WidthSpacer16
+import com.devfalah.ui.spacer.WidthSpacer8
+import com.devfalah.ui.spacer.HeightSpacer16
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -47,7 +47,7 @@ fun PostCreatingSection(
                     .size(40.dp)
                     .clip(CircleShape),
             )
-            HorizontalSpacer16()
+            WidthSpacer16()
             Text(
                 text = stringResource(R.string.what_are_you_thinking_about),
                 fontFamily = PlusJakartaSans,
@@ -55,9 +55,9 @@ fun PostCreatingSection(
             )
         }
 
-        VerticalSpacer16()
+        HeightSpacer16()
         Divider(color = Color.White, thickness = 1.dp)
-        VerticalSpacer16()
+        HeightSpacer16()
 
         Row(
             Modifier.fillMaxWidth(),
@@ -91,7 +91,7 @@ fun PostOption(
             contentDescription = null,
             Modifier.size(24.dp)
         )
-        HorizontalSpacer8()
+        WidthSpacer8()
         Text(
             text = text,
             fontFamily = PlusJakartaSans,
