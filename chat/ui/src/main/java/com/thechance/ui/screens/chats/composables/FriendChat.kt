@@ -32,7 +32,7 @@ fun FriendChat(
         UserChatTitle(
             chatUiState.fullName,
             modifier = Modifier
-                .width((screenWidth*.5).dp)
+                .width((screenWidth*.45).dp)
                 .constrainAs(user) {
             top.linkTo(image.top, 3.dp)
             start.linkTo(image.end, 16.dp)
@@ -41,7 +41,7 @@ fun FriendChat(
         RecentMessage(
             message = chatUiState.recentMessage,
             modifier = Modifier
-                .width((screenWidth*.7).dp)
+                .width((screenWidth*.6).dp)
                 .constrainAs(recentMessage) {
             bottom.linkTo(image.bottom, 3.dp)
             start.linkTo(image.end, 16.dp)
