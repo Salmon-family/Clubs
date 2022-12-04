@@ -13,5 +13,8 @@ fun ClubsNavGraph(navController: NavHostController) {
         signupEmailRoute(navController)
         signupConfirmPasswordRoute(navController)
         signupUserInformationRoute(navController)
+        logInUserNameRoute(navController)
+        logInPasswordRoute(navController)
+        homeRoute(navController)
     }
 }

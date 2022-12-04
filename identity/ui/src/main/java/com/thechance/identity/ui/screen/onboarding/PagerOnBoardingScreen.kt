@@ -22,14 +22,17 @@ import com.thechance.identity.ui.theme.LightTernaryBlackColor
 fun OnBoardingPagerScreen(
     navController: NavController
 ) {
-    OnBoardingPagerContent {
+    OnBoardingPagerContent({
         navController.navigate("signupEmailScreen")
-    }
+    },{
+        navController.navigate("LogInUserNameScreen")
+    })
 }
 
 @Composable
 fun OnBoardingPagerContent(
-    onClickSignUpScreen: () -> Unit
+    onClickSignUpScreen: () -> Unit,
+    onClickLogInScreen: () -> Unit
 ) {
     Column {
         Box(Modifier.weight(1f)) {
@@ -38,7 +41,7 @@ fun OnBoardingPagerContent(
 
         SpacerVertical16()
         ButtonComposable(
-            onClick = {},
+            onClick = onClickLogInScreen,
             text = stringResource(id = R.string.login),
         )
 

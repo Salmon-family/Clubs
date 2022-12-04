@@ -14,6 +14,9 @@ fun BackButtonComposable(
     Image(
         painter = painterResource(id = R.drawable.ic_back_arrow),
         contentDescription = null,
-        modifier = Modifier.clickable { onClick }
+        modifier = Modifier.clickable(
+            enabled = true,
+            onClick = onClick
+        )
     )
 }

@@ -1,5 +1,6 @@
 package com.thechance.identity.viewmodel.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.LoginUseCase
@@ -18,18 +19,22 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-//        viewModelScope.launch {
-//            val user = loginUseCase("devfalah", "20012001")
-//            //_uiState.update { user.toString() }
-//        }
-    }
-
     fun onChangeUserName(userName: String){
         _uiState.update { it.copy(userName = userName) }
     }
 
     fun onChangePassword(password: String){
         _uiState.update { it.copy(password = password) }
+    }
+
+    fun onLogin(){
+        try {
+            viewModelScope.launch {
+                val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
+                _uiState.update { it.copy(isSuccess = true) }
+            }
+        }catch (e: Exception){
+            Log.i("error", e.message.toString())
+        }
     }
 }

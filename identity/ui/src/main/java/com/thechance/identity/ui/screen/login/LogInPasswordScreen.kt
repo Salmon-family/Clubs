@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
@@ -27,19 +28,28 @@ import com.thechance.identity.viewmodel.login.LoginViewModel
 
 @Composable
 fun LogInPasswordScreen(
+    navController: NavController,
     viewModel: LoginViewModel = hiltViewModel()
 ){
     val uiState by viewModel.uiState.collectAsState()
     LogInPasswordContent(
         uiState = uiState,
-        onChangePassword = viewModel::onChangePassword
+        onChangePassword = viewModel::onChangePassword,
+        onLogin = {
+            viewModel.onLogin()
+            if(uiState.isSuccess)
+                navController.navigate("HomeScreen")
+        },
+        onClickBack = {navController.navigateUp()}
     )
 }
 
 @Composable
 fun LogInPasswordContent(
     uiState: LoginUIState,
-    onChangePassword: (String) -> Unit
+    onChangePassword: (String) -> Unit,
+    onLogin: () -> Unit,
+    onClickBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -48,7 +58,7 @@ fun LogInPasswordContent(
     ) {
         SpacerVertical12()
         BackButtonComposable {
-
+            onClickBack
         }
 
         SpacerVertical(52.dp)
@@ -89,7 +99,7 @@ fun LogInPasswordContent(
 
         SpacerVertical24()
         ButtonComposable(
-            onClick = {},
+            onClick = onLogin,
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier
                 .fillMaxWidth()
