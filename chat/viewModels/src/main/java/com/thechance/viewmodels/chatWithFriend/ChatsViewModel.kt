@@ -1,12 +1,11 @@
 package com.thechance.viewmodels.chatWithFriend
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
-import com.nadafeteiha.usecases.SearchChatsUseCase
-import com.thechance.entities.Chat
-import com.thechance.viewmodels.chatWithFriend.extensions.convertLongToTime
-import com.thechance.viewmodels.chatWithFriend.uistates.ChatUiState
+import com.nadafeteiha.usecases.SearchForChatsUseCase
+import com.thechance.viewmodels.chatWithFriend.uistates.toUiState
 import com.thechance.viewmodels.chatWithFriend.uistates.ChatsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,19 +17,23 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatsViewModel @Inject constructor(
     private val getChats: GetChatsUseCase,
-    private val searchChats: SearchChatsUseCase
+    private val searchForChats: SearchForChatsUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatsUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
+        initChats(10)
+    }
+
+   private fun initChats(userID: Int){
         viewModelScope.launch {
             _uiState.update {
                 it.copy(isLoading = true)
             }
             try {
-                getChats().collect { chats ->
+                getChats(userID).collect { chats ->
                     _uiState.update { chatsUiState ->
                         chatsUiState.copy(
                             chats = chats.map { it.toUiState() }, isLoading = false
@@ -38,6 +41,7 @@ class ChatsViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
+                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(isLoading = false, error = e.message.toString())
                 }
@@ -50,28 +54,15 @@ class ChatsViewModel @Inject constructor(
         onSearch(text)
     }
 
-    private fun onSearch(searchQuery: String){
+    private fun onSearch(searchQuery: String) {
         viewModelScope.launch {
-            searchChats(searchQuery).collect { chats ->
+            searchForChats(searchQuery).collect { chats ->
                 _uiState.update { chatsUiState ->
-                    chatsUiState.copy(
-                        chats = chats.map { it.toUiState() }
-                    )
+                    chatsUiState.copy(chats = chats.map { it.toUiState() })
                 }
             }
         }
     }
 
-
-
 }
 
-fun Chat.toUiState(): ChatUiState {
-    return ChatUiState(
-        fullName,
-        guid,
-        icon,
-        time.convertLongToTime(),
-        recentMessage
-    )
-}

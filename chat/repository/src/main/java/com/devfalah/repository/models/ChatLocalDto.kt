@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "CHATS_TABLE")
-data class ChatEntity (
+data class ChatLocalDto (
     @PrimaryKey(autoGenerate = false) val guid: Int,
     val fullName: String,
     val icon: String,

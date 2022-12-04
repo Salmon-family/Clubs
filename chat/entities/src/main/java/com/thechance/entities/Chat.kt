@@ -5,5 +5,5 @@ data class Chat(
     val guid: Int,
     val icon: String,
     val time: Long,
-    val recentMessage: String
+    val recentMessage: String,
 )

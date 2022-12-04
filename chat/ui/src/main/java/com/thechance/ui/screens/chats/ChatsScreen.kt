@@ -1,20 +1,26 @@
-package com.thechance.ui.screens
+package com.thechance.ui.screens.chats
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.thechance.ui.composables.FriendChat
-import com.thechance.ui.composables.SearchTextField
+import com.thechance.ui.screens.chats.composables.FriendChat
+import com.thechance.ui.screens.chats.composables.SearchTextField
+import com.thechance.ui.screens.chats.composables.TopBarChats
+import com.thechance.ui.theme.BlackColor
 import com.thechance.viewmodels.chatWithFriend.ChatsViewModel
 import com.thechance.viewmodels.chatWithFriend.uistates.ChatUiState
+import com.thechance.viewmodels.chatWithFriend.uistates.ChatsUiState
 
 @Composable
 fun ChatsScreen(
@@ -22,8 +28,7 @@ fun ChatsScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     ChatsContent(
-        chats = state.chats,
-        searchText = state.searchText,
+        state = state,
         onValueChanged = viewModel::onSearchTextChange
     )
 }
@@ -31,24 +36,31 @@ fun ChatsScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChatsContent(
-    chats: List<ChatUiState>,
-    searchText:String,
+    state: ChatsUiState,
     onValueChanged: (String) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.height(28.dp))
-
-        SearchTextField(
-            modifier = Modifier
-            .padding(horizontal = 16.dp),
-            text = searchText,
-            onValueChanged = onValueChanged
-        )
+    Column(
+        modifier = Modifier.fillMaxSize().background(Color.White),
+    ) {
+        TopAppBar(
+            backgroundColor = Color.White,
+            contentColor = BlackColor,
+            elevation = 0.dp
+        ) {
+            TopBarChats()
+        }
         LazyColumn(
             contentPadding = PaddingValues(16.dp)
         ) {
+            item {
+                SearchTextField(
+                    text = state.searchText,
+                    onValueChanged = onValueChanged
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
             items(
-                items = chats,
+                items = state.chats,
                 key = { chatUiState ->
                     chatUiState.guid
                 }

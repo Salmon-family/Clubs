@@ -1,4 +1,4 @@
-package com.thechance.ui.composables
+package com.thechance.ui.screens.chats.composables
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
