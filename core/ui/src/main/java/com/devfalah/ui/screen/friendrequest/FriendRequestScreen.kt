@@ -10,22 +10,21 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.CircleImage
-import com.devfalah.ui.spacer.HeightSpacer
-import com.devfalah.ui.spacer.WidthSpacer
-import com.devfalah.ui.theme.GrayColor
-import com.devfalah.ui.theme.PrimaryColor
+import com.devfalah.ui.composable.CircleProfileImage
+import com.devfalah.ui.spacer.*
+import com.devfalah.ui.theme.*
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
 import com.devfalah.viewmodels.friendRequest.FriendRequestViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
@@ -52,7 +51,7 @@ fun FriendRequests(
     onDeleteButtonClick: (Int) -> Unit
 ) {
     LazyColumn(
-        contentPadding = PaddingValues(10.dp),
+        contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         modifier = Modifier.fillMaxSize()
     ) {
@@ -80,37 +79,47 @@ fun FriendRequestItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(72.dp)
-            .background(Color.White)
-            .padding(start = 16.dp, end = 16.dp)
+            .background(Color.White),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        CircleImage(userState.profileImage)
-        WidthSpacer(16)
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            HeightSpacer(5)
+        CircleProfileImage(
+            painter = rememberAsyncImagePainter(model = userState.profileImage),
+            size = 72
+        )
+        WidthSpacer16()
+        Column(modifier = Modifier.fillMaxSize()) {
             Text(
                 text = userState.name,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = Color.Black,
+                color = LightPrimaryBlackColor,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.wrapContentSize()
+                maxLines = 1
             )
-            HeightSpacer(14)
+            HeightSpacer8()
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                FriendRequestAcceptButton(
-                    userState,
-                    onAcceptButtonClick = onAcceptButtonClick
+                RoundButton(
+                    modifier = Modifier.weight(1f),
+                    userState = userState,
+                    onButtonClick = onAcceptButtonClick,
+                    buttonColor = LightPrimaryBrandColor,
+                    text = stringResource(id = R.string.accept),
+                    textColor = Color.White,
+                    fontWeight = FontWeight.SemiBold
                 )
-                WidthSpacer(width = 16)
-                FriendRequestDeleteButton(
-                    userState,
-                    onDeleteButtonClick = onDeleteButtonClick
+
+                WidthSpacer16()
+
+                RoundButton(
+                    modifier = Modifier.weight(1f),
+                    userState = userState,
+                    onButtonClick = onDeleteButtonClick,
+                    buttonColor = LightCardBackgroundColor,
+                    text = stringResource(id = R.string.delete),
+                    textColor = Color.Black
                 )
             }
         }
@@ -118,56 +127,33 @@ fun FriendRequestItem(
 
 }
 
-@Composable
-@Preview
-fun FriendRequestScreenPreview() {
-}
 
 @Composable
-fun FriendRequestAcceptButton(
+fun RoundButton(
+    modifier: Modifier = Modifier,
     userState: UserState,
-    onAcceptButtonClick: (Int) -> Unit
+    onButtonClick: (Int) -> Unit,
+    buttonColor: Color = LightPrimaryBrandColor,
+    text: String,
+    textColor: Color,
+    roundCorner: Int = 16,
+    fontWeight: FontWeight = FontWeight.Normal
 ) {
     Button(
-        onClick = { onAcceptButtonClick(userState.userID) },
-        modifier = Modifier
-            .width(114.dp)
-            .height(30.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.buttonColors(PrimaryColor)
+        onClick = { onButtonClick(userState.userID) },
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        shape = RoundedCornerShape(roundCorner.dp),
+        colors = ButtonDefaults.buttonColors(buttonColor),
+        elevation = ButtonDefaults.elevation(0.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.accept),
-            color = Color.White,
+            text = text,
+            color = textColor,
             fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.wrapContentSize()
+            textAlign = TextAlign.Center,
+            fontWeight = fontWeight
         )
     }
 }
-
-@Composable
-fun FriendRequestDeleteButton(
-    userState: UserState,
-    onDeleteButtonClick: (Int) -> Unit
-) {
-    Button(
-        onClick = { onDeleteButtonClick(userState.userID) },
-        modifier = Modifier
-            .width(114.dp)
-            .height(30.dp),
-        shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.buttonColors(GrayColor)
-    ) {
-        Text(
-            text = stringResource(id = R.string.delete),
-            color = Color.Black,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.wrapContentSize()
-        )
-    }
-}
-
-
-

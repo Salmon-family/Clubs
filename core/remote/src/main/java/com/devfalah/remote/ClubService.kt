@@ -10,6 +10,11 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ClubService {
+
+    @FormUrlEncoded
+    @POST("user_details")
+    suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
+
     /**
      * Friends
      * */
@@ -52,7 +57,7 @@ interface ClubService {
     suspend fun addLike(
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
-        @Field("type") type: LikeType
+        @Field("type") type: String
     ): Response<BaseResponse<ReactionDTO>>
 
     @FormUrlEncoded
@@ -60,7 +65,7 @@ interface ClubService {
     suspend fun removeLike(
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
-        @Field("type") type: LikeType
+        @Field("type") type: String
     ): Response<BaseResponse<ReactionDTO>>
 
 
@@ -278,5 +283,5 @@ interface ClubService {
         @Query("uguid") friendID: Int,
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null
-    ): Response<BaseResponse<FriendWallDTO>>
+    ): Response<BaseResponse<ProfilePostResponse>>
 }

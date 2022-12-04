@@ -8,7 +8,11 @@ import com.devfalah.ui.screen.friendrequest.friendRequestRoute
 import com.devfalah.ui.screen.home.homeRoute
 import com.devfalah.ui.screen.menu.menuRoute
 import com.devfalah.ui.screen.notification.notificationRoute
+import com.devfalah.ui.screen.profile.profileRoute
 import com.devfalah.ui.screen.search.searchRoute
+
+const val Profile = "ProfileScreen"
+const val FriendRequestRoute = "FriendRequest"
 
 
 @Composable
@@ -24,5 +28,6 @@ fun ClubsNavGraph(navController: NavHostController) {
         notificationRoute(navController = navController)
         menuRoute(navController = navController)
         friendRequestRoute(navController = navController)
+        profileRoute(navController= navController)
     }
 }

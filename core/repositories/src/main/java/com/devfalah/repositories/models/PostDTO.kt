@@ -15,8 +15,6 @@ data class PostDTO(
     val itemGuid: String?,
     @SerializedName("item_type")
     val itemType: String?,
-    @SerializedName("last_three_reactions")
-    val lastThreeReactions: String?,
     @SerializedName("owner_guid")
     val ownerGuid: Int?,
     @SerializedName("poster_guid")
@@ -24,7 +22,7 @@ data class PostDTO(
     @SerializedName("subtype")
     val subtype: String?,
     @SerializedName("time_created")
-    val timeCreated: Int?,
+    val timeCreated: Long?,
     @SerializedName("time_updated")
     val timeUpdated: String?,
     @SerializedName("title")
