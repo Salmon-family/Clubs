@@ -3,7 +3,7 @@ package com.devfalah.repository.models
 
 import com.google.gson.annotations.SerializedName
 
-data class MessagesDTO(
+data class ChatDTO(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("is_deleted_from")

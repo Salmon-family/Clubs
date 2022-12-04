@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.thechance.ui.spacer.SpaceVertical
-import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
+import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.MessageUIState
 
 @Composable
 fun ListOfChat(

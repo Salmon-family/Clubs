@@ -7,7 +7,7 @@ data class ConversationDTO(
     @SerializedName("count")
     val count: Int?,
     @SerializedName("list")
-    val list: List<MessagesDTO>?,
+    val list: List<ChatDTO>?,
     @SerializedName("offset")
     val offset: Boolean?,
     @SerializedName("withuser")

@@ -7,14 +7,11 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.thechance.ui.screen.ChatScreen
+import com.thechance.ui.screens.ChatsScreen
+import com.thechance.ui.screens.ConversationScreen
 import com.thechance.ui.theme.ClubsTheme
-import com.thechance.viewmodels.chatWithFriend.ChatWithFriendViewModel
+import com.thechance.viewmodels.chatWithFriend.conversation.ChatWithFriendViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +27,7 @@ class ChatActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ChatScreen()
+                ConversationScreen()
                 }
             }
         }

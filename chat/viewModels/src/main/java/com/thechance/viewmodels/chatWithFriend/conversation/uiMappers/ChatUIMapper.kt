@@ -1,23 +1,13 @@
-package com.thechance.viewmodels.chatWithFriend.mappers
+package com.thechance.viewmodels.chatWithFriend.conversation.uiMappers
 
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
-import com.thechance.entities.User
-import com.thechance.viewmodels.chatWithFriend.states.AppBarUIState
-import com.thechance.viewmodels.chatWithFriend.states.ChatUIState
-import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
+import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.ChatUIState
+import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.MessageUIState
 
 fun Conversation.toState(): ChatUIState {
     return ChatUIState(
         messages = messages.map { it.toState() },
-    )
-}
-
-fun User.toState(): AppBarUIState {
-    return AppBarUIState(
-        id = userId,
-        userName = fullName,
-        icon = icon
     )
 }
 

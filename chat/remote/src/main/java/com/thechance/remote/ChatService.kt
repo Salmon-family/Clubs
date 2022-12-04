@@ -3,14 +3,11 @@ package com.thechance.remote
 import com.thechance.remote.response.BaseResponse
 import com.thechance.remote.response.UnreadMessagesResponse
 import com.devfalah.repository.models.ConversationDTO
-import com.devfalah.repository.models.MessagesDTO
+import com.devfalah.repository.models.ChatDTO
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ChatService {
-    /**
-     * message
-     * */
 
     @GET("message_recent")
     suspend fun getRecentMessages(
@@ -40,6 +37,6 @@ interface ChatService {
         @Field("from") userID: Int,
         @Field("to") friendID: Int,
         @Field("message") message: String
-    ): Response<BaseResponse<MessagesDTO>>
+    ): Response<BaseResponse<ChatDTO>>
 
 }

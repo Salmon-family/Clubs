@@ -1,4 +1,4 @@
-package com.devfalah.repository.entities
+package com.devfalah.repository.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

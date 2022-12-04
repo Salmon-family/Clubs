@@ -1,12 +1,11 @@
-package com.thechance.viewmodels.chatWithFriend
+package com.thechance.viewmodels.chatWithFriend.conversation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
 import com.nadafeteiha.usecases.SetSendMessageUseCase
-import com.thechance.viewmodels.chatWithFriend.mappers.toMessage
-import com.thechance.viewmodels.chatWithFriend.states.ChatUIState
-import com.thechance.viewmodels.chatWithFriend.states.MessageUIState
+import com.thechance.viewmodels.chatWithFriend.conversation.uiMappers.toMessage
+import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.ChatUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,11 +20,23 @@ class ChatWithFriendViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+    private val userId = 7
+    private val friendId = 3
+
+    private val friendName = "Falah Hassan"
+    private val friendImage =
+        "https://media-exp1.licdn.com/dms/image/C4E03AQFyNk3KWF8e5g/profile-displayphoto-shrink_100_100/0/1654340458023?e=1675900800&v=beta&t=hyvVy73bGr7139fPhKdLwfcC0af3zfAskWiq2KlyL_M"
+
+
     private val _uiState = MutableStateFlow(ChatUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        getListMessages(7, 10)
+        getListMessages(userId, friendId)
+        _uiState.update {
+            it.copy(appBar = it.appBar.copy(userName = friendName,
+                icon = friendImage))
+        }
     }
 
     private fun getListMessages(userId: Int, friendId: Int) {
