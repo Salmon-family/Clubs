@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.theme.*
 
 @Composable
-fun InputTextComposable(
+fun InputText(
     text: String,
     type: KeyboardType,
     placeHolder: String,
@@ -50,7 +50,7 @@ fun InputTextComposable(
             textColor = LightPrimaryBlackColor
         ),
         placeholder = {
-            TextComposable(
+            AuthText(
                 text = placeHolder,
                 style = Typography.InputText,
                 color = LightPrimaryGrayColor,

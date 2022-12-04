@@ -14,15 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.BackButtonComposable
-import com.thechance.identity.ui.composable.ButtonComposable
-import com.thechance.identity.ui.composable.InputTextComposable
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.AuthText
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.InputText
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToSignupConfirmPassword
+import com.thechance.identity.ui.extension.navigateToSignupConfirmPassword
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -36,7 +36,7 @@ fun SignUpEmailScreen(
     SignUpEmailContent(
         state = state,
         onChangeEmail = viewModel::onChangeEmail,
-        onClickPasswordScreen = { navController.navigateToSignupConfirmPassword()},
+        onClickPasswordScreen = { navController.navigateToSignupConfirmPassword() },
         onClickBack = { navController.navigateUp() }
     )
 }
@@ -53,10 +53,10 @@ private fun SignUpEmailContent(
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable (onClick =  onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -64,7 +64,7 @@ private fun SignUpEmailContent(
         )
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.email),
             style = Typography.subtitle2,
             color = LightSecondaryBlackColor,
@@ -72,7 +72,7 @@ private fun SignUpEmailContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Email,
             image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.email_place_holder),
@@ -82,7 +82,7 @@ private fun SignUpEmailContent(
 
         }
         SpacerVertical(height = 24.dp)
-        ButtonComposable(
+        AuthButton(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),

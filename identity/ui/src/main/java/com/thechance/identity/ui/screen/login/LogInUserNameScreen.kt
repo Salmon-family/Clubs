@@ -14,17 +14,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.BackButtonComposable
-import com.thechance.identity.ui.composable.ButtonComposable
-import com.thechance.identity.ui.composable.InputTextComposable
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.AuthText
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.InputText
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToLogInPassword
+import com.thechance.identity.ui.extension.navigateToLogInPassword
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -55,10 +55,10 @@ private fun LogInUserNameContent(
             .padding(16.dp)
     ) {
         SpacerVertical12()
-        BackButtonComposable(onClick = onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(52.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.user_name_question),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -66,7 +66,7 @@ private fun LogInUserNameContent(
         )
 
         SpacerVertical24()
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.user_name),
             style = Typography.subtitle2,
             color = LightSecondaryBlackColor,
@@ -74,7 +74,7 @@ private fun LogInUserNameContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Text,
             image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.user_name_place_holder),
@@ -85,7 +85,7 @@ private fun LogInUserNameContent(
         }
 
         SpacerVertical24()
-        ButtonComposable(
+        AuthButton(
             onClick = onClickContinue,
             text = stringResource(id = R.string.continue_label),
             buttonModifier = Modifier

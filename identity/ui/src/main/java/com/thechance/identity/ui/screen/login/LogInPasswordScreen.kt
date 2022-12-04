@@ -23,7 +23,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToHome
+import com.thechance.identity.ui.extension.navigateToHome
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -38,8 +38,7 @@ fun LogInPasswordScreen(
         onChangePassword = viewModel::onChangePassword,
         onLogin = {
             viewModel.onLogin()
-            if (uiState.isSuccess)
-                navController.navigateToHome()
+            navController.navigateToHome()
         },
         onClickBack = { navController.navigateUp() }
     )
@@ -59,10 +58,10 @@ fun LogInPasswordContent(
     ) {
 
         SpacerVertical12()
-        BackButtonComposable(onClick = onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(52.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.log_in),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -70,7 +69,7 @@ fun LogInPasswordContent(
         )
 
         SpacerVertical8()
-        EmailLoginText(
+        EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
             text2 = stringResource(id = R.string.email_place_holder),
@@ -79,7 +78,7 @@ fun LogInPasswordContent(
         )
 
         SpacerVertical(height = 32.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.your_password),
             style = Typography.subtitle2,
             color = LightSecondaryBlackColor,
@@ -87,7 +86,7 @@ fun LogInPasswordContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Password,
             image = R.drawable.ic_hide,
             placeHolder = stringResource(id = R.string.password_place_holder),
@@ -98,7 +97,7 @@ fun LogInPasswordContent(
         }
 
         SpacerVertical24()
-        ButtonComposable(
+        AuthButton(
             onClick = onLogin,
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier

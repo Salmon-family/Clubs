@@ -20,7 +20,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToUserName
+import com.thechance.identity.ui.extension.navigateToUserName
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -34,7 +34,7 @@ fun SignUpFirstNameScreen(
         state,
         onChangeFullName = viewModel::onChangeFullName,
         onClickBack = { navController.navigateUp() },
-        onClickUserNameScreen = { navController.navigateToUserName()}
+        onClickUserNameScreen = { navController.navigateToUserName() }
     )
 }
 
@@ -51,10 +51,10 @@ private fun SignUpNameContent(
             .padding(16.dp),
     ) {
 
-        BackButtonComposable (onClick =  onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -62,16 +62,16 @@ private fun SignUpNameContent(
         )
 
         SpacerVertical(height = 8.dp)
-        EmailTextComposable(
-            text1 = "Using ",
+        EmailDescriptionText(
+            text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
-            text2 = "motu.uiux@gmail.com",
+            text2 = stringResource(id = R.string.email_place_holder),
             color2 = LightPrimaryBrandColor,
-            text3 = " to login"
+            text3 = stringResource(id = R.string.to_login)
         )
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.full_naame),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
@@ -79,7 +79,7 @@ private fun SignUpNameContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Text,
             placeHolder = "ali",
             text = state.firstName,
@@ -89,7 +89,7 @@ private fun SignUpNameContent(
         }
 
         SpacerVertical(height = 24.dp)
-        ButtonComposable(
+        AuthButton(
             onClick = onClickUserNameScreen,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)

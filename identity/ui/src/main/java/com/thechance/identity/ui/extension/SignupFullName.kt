@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.util.extension
+package com.thechance.identity.ui.extension
 
 import android.os.Build
 import androidx.navigation.NavController

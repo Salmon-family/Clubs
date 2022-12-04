@@ -8,7 +8,7 @@ import androidx.compose.ui.text.TextStyle
 
 
 @Composable
-fun TextComposable(
+fun AuthText(
     text: String,
     style: TextStyle,
     color: Color,

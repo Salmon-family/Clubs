@@ -14,15 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.BackButtonComposable
-import com.thechance.identity.ui.composable.ButtonComposable
-import com.thechance.identity.ui.composable.InputTextComposable
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.AuthText
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.InputText
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToBirthdateAndGander
+import com.thechance.identity.ui.extension.navigateToBirthdateAndGander
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -53,10 +53,10 @@ private fun SignUpBirthdateAndGanderContent(
             .padding(16.dp),
     ) {
 
-        BackButtonComposable(onClick = onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.pick_user_name),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -64,7 +64,7 @@ private fun SignUpBirthdateAndGanderContent(
         )
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.user_name),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
@@ -72,16 +72,16 @@ private fun SignUpBirthdateAndGanderContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Text,
-            placeHolder = "ali44",
+            placeHolder = stringResource(id = R.string.user_name_hint),
             text = state.username,
             onTextChange = onChangeUserName
         ) {
         }
 
         SpacerVertical(height = 24.dp)
-        ButtonComposable(
+        AuthButton(
             onClick = onClickBirthdateAndGenderScreen,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)

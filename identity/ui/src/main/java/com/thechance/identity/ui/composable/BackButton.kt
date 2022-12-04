@@ -8,7 +8,7 @@ import androidx.compose.ui.res.painterResource
 import com.thechance.identity.ui.R
 
 @Composable
-fun BackButtonComposable(
+fun BackButton(
     onClick: () -> Unit
 ){
     Image(

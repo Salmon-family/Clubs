@@ -17,7 +17,7 @@ import com.thechance.identity.ui.theme.WhiteColor
 
 
 @Composable
-fun ButtonComposable(
+fun AuthButton(
     onClick: () -> Unit,
     text: String,
     buttonColor: Color = LightPrimaryBrandColor,

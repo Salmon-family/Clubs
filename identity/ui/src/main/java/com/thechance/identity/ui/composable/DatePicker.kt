@@ -1,14 +1,11 @@
 package com.thechance.identity.ui.composable
 
 import android.app.DatePickerDialog
-import android.os.Build
 import android.widget.DatePicker
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.thechance.identity.ui.util.extension.convertToDayMonthYearFormat
+import com.thechance.identity.ui.extension.convertToDayMonthYearFormat
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import java.util.*
 
 @Composable
-fun DatePickerComposable(
+fun DatePicker(
     image: Int = 0,
 ) {
 
@@ -56,7 +53,7 @@ fun DatePickerComposable(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TextComposable(
+        AuthText(
             text = date.value,
             style = Typography.subtitle2,
             color = LightPrimaryBlackColor,

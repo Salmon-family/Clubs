@@ -52,10 +52,10 @@ private fun SignUpBirthdateAndGanderContent(
             .padding(16.dp),
     ) {
 
-        BackButtonComposable(onClick = onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -63,16 +63,16 @@ private fun SignUpBirthdateAndGanderContent(
         )
 
         SpacerVertical(height = 8.dp)
-        EmailTextComposable(
-            text1 = "Using ",
+        EmailDescriptionText(
+            text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
-            text2 = "motu.uiux@gmail.com",
+            text2 = stringResource(id = R.string.email_place_holder),
             color2 = LightPrimaryBrandColor,
-            text3 = " to login"
+            text3 = stringResource(id = R.string.to_login)
         )
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.birth_date),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
@@ -81,13 +81,13 @@ private fun SignUpBirthdateAndGanderContent(
 
         SpacerVertical(height = 14.dp)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            DatePickerComposable(
+            DatePicker(
                 image = R.drawable.ic_arrow_down_circle,
             )
         }
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.gender),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
@@ -95,7 +95,7 @@ private fun SignUpBirthdateAndGanderContent(
         )
 
         SpacerVertical(height = 24.dp)
-        ButtonComposable(
+        AuthButton(
             onClick = {},
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)

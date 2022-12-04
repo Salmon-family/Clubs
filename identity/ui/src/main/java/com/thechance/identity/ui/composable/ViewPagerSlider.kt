@@ -45,14 +45,14 @@ fun ViewPagerSlider() {
             Column{
                 val sliderData = sliderDataList[page]
                 OnBoardingImage(sliderData = sliderData)
-                TextComposable(
+                AuthText(
                     text = sliderData.title ?: "",
                     style = Typography.h1,
                     color = LightPrimaryBlackColor,
                     Modifier.padding(horizontal = 24.dp)
                 )
                 SpacerVertical16()
-                TextComposable(
+                AuthText(
                     text = sliderData.description,
                     style = Typography.body1,
                     color = LightTernaryBlackColor,

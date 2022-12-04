@@ -27,4 +27,6 @@
     <string name="to_login">to login</string>
     <string name="user_name_place_holder">Thao Lee</string>
     <string name="pick_user_name">Pick your \nusername</string>
+    <string name="user_name_hint">ali44</string>
+
 </resources>

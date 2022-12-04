@@ -20,7 +20,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToSignupFullName
+import com.thechance.identity.ui.extension.navigateToSignupFullName
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -55,10 +55,10 @@ fun SignUpConfirmPasswordContent(
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable (onClick =  onClickBack)
+        BackButton(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -66,16 +66,16 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical(height = 8.dp)
-        EmailTextComposable(
-            text1 = "Using ",
+        EmailDescriptionText(
+            text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
-            text2 = state.email,
+            text2 = stringResource(id = R.string.email_place_holder),
             color2 = LightPrimaryBrandColor,
-            text3 = " to login"
+            text3 = stringResource(id = R.string.to_login)
         )
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.your_password),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
@@ -83,7 +83,7 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Password,
             image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.password_place_holder),
@@ -94,7 +94,7 @@ fun SignUpConfirmPasswordContent(
         }
 
         SpacerVertical(height = 24.dp)
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.confirm_password),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
@@ -102,7 +102,7 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
+        InputText(
             type = KeyboardType.Password,
             image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.password_place_holder),
@@ -113,7 +113,7 @@ fun SignUpConfirmPasswordContent(
         }
 
         SpacerVertical(height = 24.dp)
-        ButtonComposable(
+        AuthButton(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),

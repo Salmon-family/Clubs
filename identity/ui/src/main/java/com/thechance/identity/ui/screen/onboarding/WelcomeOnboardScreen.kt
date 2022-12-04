@@ -8,11 +8,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.ButtonComposable
+import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.composable.WelcomeOnBoardingBoxOfParallelogramShape
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical16
@@ -21,7 +20,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBrandColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToOnBoardingPager
+import com.thechance.identity.ui.extension.navigateToOnBoardingPager
 
 @Composable
 fun WelcomeOnboardScreen(
@@ -49,7 +48,7 @@ fun WelcomeOnboardContent(
         ClubText()
 
         SpacerVertical8()
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.have_fun),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -57,7 +56,7 @@ fun WelcomeOnboardContent(
         )
 
         SpacerVertical8()
-        TextComposable(
+        AuthText(
             text = stringResource(id = R.string.onboard_body),
             style = Typography.body1,
             color = LightTernaryBlackColor,
@@ -65,7 +64,7 @@ fun WelcomeOnboardContent(
         )
 
         SpacerVertical(height = 20.dp)
-        ButtonComposable(
+        AuthButton(
             onClick = onClickNextScreen,
             text = stringResource(id = R.string.lets_do),
             buttonModifier = Modifier
@@ -81,6 +80,5 @@ fun WelcomeOnboardContent(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewWelcomeOnboard() {
-    val navController = rememberNavController()
     WelcomeOnboardContent({})
 }

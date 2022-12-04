@@ -1,6 +1,5 @@
 package com.thechance.identity.viewmodel.signup
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.SignupUseCase
@@ -39,7 +38,6 @@ class SignupViewModel @Inject constructor(
 
     fun onChangeEmail(email: String) {
         _uiState.update { it.copy(email = email) }
-        Log.i("llllllllll", _uiState.value.email)
     }
 
     fun onChangePassword(password: String) {

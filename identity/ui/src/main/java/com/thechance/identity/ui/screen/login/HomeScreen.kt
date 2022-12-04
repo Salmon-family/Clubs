@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.thechance.identity.ui.composable.BackButtonComposable
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.Typography
@@ -35,10 +35,7 @@ private fun HomeContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        SpacerVertical12()
-        BackButtonComposable(onClick = onClickBack)
-
-        TextComposable(
+        AuthText(
             text = "Done",
             style = Typography.h1,
             color = LightPrimaryBlackColor,

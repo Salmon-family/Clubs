@@ -1,11 +1,10 @@
-package com.thechance.identity.ui.util.extension
+package com.thechance.identity.ui.extension
 
 import android.os.Build
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.thechance.identity.ui.screen.signup.SignUpFirstNameScreen
 import com.thechance.identity.ui.screen.signup.SignUpUserNameScreen
 
 

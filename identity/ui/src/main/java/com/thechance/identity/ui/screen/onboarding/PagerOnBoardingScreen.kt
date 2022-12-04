@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.ButtonComposable
+import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.FooterOnBoarding
 import com.thechance.identity.ui.composable.ViewPagerSlider
 import com.thechance.identity.ui.spacer.SpacerVertical16
@@ -17,7 +17,7 @@ import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
-import com.thechance.identity.ui.util.extension.navigateToSignupEmail
+import com.thechance.identity.ui.extension.navigateToSignupEmail
 
 @Composable
 fun OnBoardingPagerScreen(
@@ -41,13 +41,13 @@ fun OnBoardingPagerContent(
         }
 
         SpacerVertical16()
-        ButtonComposable(
+        AuthButton(
             onClick = onClickLogInScreen,
             text = stringResource(id = R.string.login),
         )
 
         SpacerVertical16()
-        ButtonComposable(
+        AuthButton(
             onClick = onClickSignUpScreen,
             text = stringResource(id = R.string.register),
             buttonColor = LightCardColor,
