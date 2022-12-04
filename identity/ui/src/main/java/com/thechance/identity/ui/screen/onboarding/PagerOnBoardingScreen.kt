@@ -17,13 +17,14 @@ import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
+import com.thechance.identity.ui.util.extension.navigateToSignupEmail
 
 @Composable
 fun OnBoardingPagerScreen(
     navController: NavController
 ) {
     OnBoardingPagerContent {
-        navController.navigate("signupEmailScreen")
+        navController.navigateToSignupEmail()
     }
 }
 

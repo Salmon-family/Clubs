@@ -21,13 +21,14 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBrandColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.util.extension.navigateToOnBoardingPager
 
 @Composable
 fun WelcomeOnboardScreen(
     navController: NavController,
 ) {
     WelcomeOnboardContent {
-        navController.navigate("onBoardingPagerScreen")
+        navController.navigateToOnBoardingPager()
     }
 }
 

@@ -19,28 +19,35 @@ class SignupViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-//        makeSignupRequest()
-    }
 
     fun makeSignupRequest() {
-        try {
-            viewModelScope.launch {
-                val signup = signupUseCase(
-                    firstName = "amnahaa",
-                    lastName = "amkmx",
-                    email = "yo748486@cnmogs.com",
-                    reEmail = "yo748486@cnmogs.com",
-                    gender = "male",
-                    birthdate = "01/10/2001",
-                    username = "mahmoudr44444",
-                    password = "0987654321"
-                )
-            }
-        } catch (e: Exception) {
-            Log.i("SIGNUP_ERROR", e.message.toString())
-            _uiState.update { it.copy(isError = true) }
+        viewModelScope.launch {
+            val state = _uiState.value
+            signupUseCase(
+                firstName = state.firstName,
+                lastName = "",
+                email = state.email,
+                reEmail = state.email,
+                gender = "female",
+                birthdate = "01/10/2001",
+                username = state.username,
+                password = state.password
+            )
         }
+
+    }
+
+    fun onChangeEmail(email: String) {
+        _uiState.update { it.copy(email = email) }
+        Log.i("llllllllll", _uiState.value.email)
+    }
+
+    fun onChangePassword(password: String) {
+        _uiState.update { it.copy(password = password) }
+    }
+
+    fun onChangeConfirmPassword(password: String) {
+        _uiState.update { it.copy(confirmPassword = password) }
     }
 
     fun onChangeFullName(fullName: String) {
@@ -51,4 +58,11 @@ class SignupViewModel @Inject constructor(
         _uiState.update { it.copy(username = userName) }
     }
 
+    fun onChangeBirthdate(birthdate: String) {
+        _uiState.update { it.copy(birthdate = birthdate) }
+    }
+
+    fun onChangeGender(gender: String) {
+        _uiState.update { it.copy(gender = gender) }
+    }
 }

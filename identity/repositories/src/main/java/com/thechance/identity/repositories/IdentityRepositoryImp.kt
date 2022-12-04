@@ -22,7 +22,7 @@ class IdentityRepositoryImp @Inject constructor(
         birthdate: String,
         username: String,
         password: String
-    ): Boolean {
+    ): Any {
         return remoteDataSource.signup(
             firstname = firstname,
             lastname = lastname,

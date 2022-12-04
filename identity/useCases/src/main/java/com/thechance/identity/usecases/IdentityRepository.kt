@@ -15,5 +15,5 @@ interface IdentityRepository {
         birthdate: String,
         username: String,
         password: String
-    ): Boolean
+    ): Any
 }

@@ -12,6 +12,8 @@ fun ClubsNavGraph(navController: NavHostController) {
         onBoardingPagerRoute(navController)
         signupEmailRoute(navController)
         signupConfirmPasswordRoute(navController)
-        signupUserInformationRoute(navController)
+        signupFullNameRoute(navController)
+        signupUserNameRoute(navController)
+        signupBirthDateAndGanderRoute(navController)
     }
 }

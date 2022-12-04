@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
@@ -17,15 +20,23 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.util.extension.navigateToSignupFullName
+import com.thechance.identity.viewmodel.signup.SignupViewModel
+import com.thechance.identity.viewmodel.signup.UserUIState
 
 
 @Composable
 fun SignUpConfirmPasswordScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: SignupViewModel = hiltViewModel()
 ) {
+    val state by viewModel.uiState.collectAsState()
     SignUpConfirmPasswordContent(
-        onClickSignupInformationScreen = {
-            navController.navigate("signupUserInformationScreen")
+        state = state,
+        onChangePassword = viewModel::onChangePassword,
+        onChangeConfirmPassword = viewModel::onChangeConfirmPassword,
+        onClickSignupFirstNameScreen = {
+            navController.navigateToSignupFullName()
         },
         onClickBack = { navController.navigateUp() }
     )
@@ -33,7 +44,10 @@ fun SignUpConfirmPasswordScreen(
 
 @Composable
 fun SignUpConfirmPasswordContent(
-    onClickSignupInformationScreen: () -> Unit,
+    state: UserUIState,
+    onChangePassword: (String) -> Unit,
+    onChangeConfirmPassword: (String) -> Unit,
+    onClickSignupFirstNameScreen: () -> Unit,
     onClickBack: () -> Unit
 ) {
     Column(
@@ -41,7 +55,7 @@ fun SignUpConfirmPasswordContent(
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable { onClickBack }
+        BackButtonComposable (onClick =  onClickBack)
 
         SpacerVertical(height = 36.dp)
         TextComposable(
@@ -55,7 +69,7 @@ fun SignUpConfirmPasswordContent(
         EmailTextComposable(
             text1 = "Using ",
             color1 = LightSecondaryBlackColor,
-            text2 = "motu.uiux@gmail.com",
+            text2 = state.email,
             color2 = LightPrimaryBrandColor,
             text3 = " to login"
         )
@@ -73,8 +87,8 @@ fun SignUpConfirmPasswordContent(
             type = KeyboardType.Password,
             image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.password_place_holder),
-            text = "",
-            onTextChange = {}
+            text = state.password,
+            onTextChange = onChangePassword
         ) {
 
         }
@@ -92,8 +106,8 @@ fun SignUpConfirmPasswordContent(
             type = KeyboardType.Password,
             image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.password_place_holder),
-            text = "",
-            onTextChange = {}
+            text = state.confirmPassword,
+            onTextChange = onChangeConfirmPassword
         ) {
 
         }
@@ -103,7 +117,7 @@ fun SignUpConfirmPasswordContent(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            onClick = onClickSignupInformationScreen,
+            onClick = onClickSignupFirstNameScreen,
             text = stringResource(id = R.string.continue_label)
         )
     }

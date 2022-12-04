@@ -25,4 +25,5 @@
     <string name="password_place_holder">********</string>
     <string name="using">Using</string>
     <string name="to_login">to login</string>
+    <string name="pick_user_name">Pick your \nusername</string>
 </resources>

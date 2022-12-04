@@ -1,6 +1,5 @@
 package com.thechance.identity.repositories
 
-import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
 
 interface IdentityDataSource {
@@ -16,5 +15,5 @@ interface IdentityDataSource {
         birthdate: String,
         username: String,
         password: String
-    ): Boolean
+    ): Any
 }

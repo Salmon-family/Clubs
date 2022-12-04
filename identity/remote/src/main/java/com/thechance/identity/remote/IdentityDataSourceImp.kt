@@ -44,15 +44,12 @@ class IdentityDataSourceImp @Inject constructor(
         function: suspend () -> Response<IdentityBaseResponse<I>>
     ): Any? {
         val response = function()
-        return if (response.isSuccessful
-            && response.body() != null
-        ) {
+        return if (response.isSuccessful) {
             when (response.body()!!.code) {
                 "100" -> response.body()!!.payload
-                "103" -> response.body()?.message.toString()
+                "103" -> response.body()!!.message.toString()
                 else -> throw Throwable("One or more component required for this request can not be found on remote server")
             }
-
         } else {
             throw Throwable(" Not Success Request ")
         }

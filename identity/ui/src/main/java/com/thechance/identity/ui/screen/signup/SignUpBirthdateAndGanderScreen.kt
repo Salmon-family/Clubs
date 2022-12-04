@@ -1,5 +1,6 @@
 package com.thechance.identity.ui.screen.signup
 
+import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,51 +10,49 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.BackButtonComposable
-import com.thechance.identity.ui.composable.ButtonComposable
-import com.thechance.identity.ui.composable.InputTextComposable
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
+import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToSignupConfirmPassword
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
-
 @Composable
-fun SignUpEmailScreen(
+fun SignUpBirthdateAndGenderScreen(
     navController: NavController,
-    viewModel: SignupViewModel = hiltViewModel()
+    viewModel: SignupViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
-    SignUpEmailContent(
-        state = state,
-        onChangeEmail = viewModel::onChangeEmail,
-        onClickPasswordScreen = { navController.navigateToSignupConfirmPassword()},
-        onClickBack = { navController.navigateUp() }
+    SignUpBirthdateAndGanderContent(
+        state,
+        onChangeGender = viewModel::onChangeGender,
+        onChangeBirthdate = viewModel::onChangeBirthdate,
+        onClickBack = { navController.navigateUp() },
+        onCreateAccount = viewModel::makeSignupRequest
     )
 }
 
 @Composable
-private fun SignUpEmailContent(
+private fun SignUpBirthdateAndGanderContent(
     state: UserUIState,
-    onChangeEmail: (String) -> Unit,
-    onClickPasswordScreen: () -> Unit,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onChangeBirthdate: (String) -> Unit,
+    onChangeGender: (String) -> Unit,
+    onCreateAccount: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        BackButtonComposable (onClick =  onClickBack)
+
+        BackButtonComposable(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
         TextComposable(
@@ -63,31 +62,46 @@ private fun SignUpEmailContent(
             Modifier.padding(start = 8.dp)
         )
 
+        SpacerVertical(height = 8.dp)
+        EmailTextComposable(
+            text1 = "Using ",
+            color1 = LightSecondaryBlackColor,
+            text2 = "motu.uiux@gmail.com",
+            color2 = LightPrimaryBrandColor,
+            text3 = " to login"
+        )
+
         SpacerVertical(height = 24.dp)
         TextComposable(
-            text = stringResource(id = R.string.email),
-            style = Typography.subtitle2,
+            text = stringResource(id = R.string.birth_date),
+            style = Typography.body2,
             color = LightSecondaryBlackColor,
             Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical(height = 14.dp)
-        InputTextComposable(
-            type = KeyboardType.Email,
-            image = R.drawable.ic_close,
-            placeHolder = stringResource(id = R.string.email_place_holder),
-            text = state.email,
-            onTextChange = onChangeEmail
-        ) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            DatePickerComposable(
+                image = R.drawable.ic_arrow_down_circle,
+            )
         }
+
+        SpacerVertical(height = 24.dp)
+        TextComposable(
+            text = stringResource(id = R.string.gender),
+            style = Typography.body2,
+            color = LightSecondaryBlackColor,
+            Modifier.padding(start = 8.dp)
+        )
+
         SpacerVertical(height = 24.dp)
         ButtonComposable(
+            onClick = onCreateAccount,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            onClick = onClickPasswordScreen,
-            text = stringResource(id = R.string.continue_label)
+            text = stringResource(id = R.string.continue_label),
         )
     }
+
 }

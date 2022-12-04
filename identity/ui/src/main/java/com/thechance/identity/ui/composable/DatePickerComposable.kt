@@ -49,7 +49,6 @@ fun DatePickerComposable(
 
     Row(
         Modifier
-            .fillMaxWidth()
             .padding(8.dp)
             .background(
                 color = LightCardColor,
@@ -63,7 +62,7 @@ fun DatePickerComposable(
             color = LightPrimaryBlackColor,
             modifier = Modifier
                 .padding(start = 16.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
                 .weight(1f)
         )
         Image(

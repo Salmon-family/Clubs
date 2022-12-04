@@ -14,45 +14,43 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.BackButtonComposable
-import com.thechance.identity.ui.composable.ButtonComposable
-import com.thechance.identity.ui.composable.InputTextComposable
-import com.thechance.identity.ui.composable.TextComposable
+import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
+import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToSignupConfirmPassword
+import com.thechance.identity.ui.util.extension.navigateToUserName
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
-
 @Composable
-fun SignUpEmailScreen(
+fun SignUpFirstNameScreen(
     navController: NavController,
-    viewModel: SignupViewModel = hiltViewModel()
+    viewModel: SignupViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
-    SignUpEmailContent(
-        state = state,
-        onChangeEmail = viewModel::onChangeEmail,
-        onClickPasswordScreen = { navController.navigateToSignupConfirmPassword()},
-        onClickBack = { navController.navigateUp() }
+    SignUpNameContent(
+        state,
+        onChangeFullName = viewModel::onChangeFullName,
+        onClickBack = { navController.navigateUp() },
+        onClickUserNameScreen = { navController.navigateToUserName()}
     )
 }
 
 @Composable
-private fun SignUpEmailContent(
+private fun SignUpNameContent(
     state: UserUIState,
-    onChangeEmail: (String) -> Unit,
-    onClickPasswordScreen: () -> Unit,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onClickUserNameScreen: () -> Unit,
+    onChangeFullName: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
+
         BackButtonComposable (onClick =  onClickBack)
 
         SpacerVertical(height = 36.dp)
@@ -63,31 +61,41 @@ private fun SignUpEmailContent(
             Modifier.padding(start = 8.dp)
         )
 
+        SpacerVertical(height = 8.dp)
+        EmailTextComposable(
+            text1 = "Using ",
+            color1 = LightSecondaryBlackColor,
+            text2 = "motu.uiux@gmail.com",
+            color2 = LightPrimaryBrandColor,
+            text3 = " to login"
+        )
+
         SpacerVertical(height = 24.dp)
         TextComposable(
-            text = stringResource(id = R.string.email),
-            style = Typography.subtitle2,
+            text = stringResource(id = R.string.full_naame),
+            style = Typography.body2,
             color = LightSecondaryBlackColor,
             Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical(height = 14.dp)
         InputTextComposable(
-            type = KeyboardType.Email,
-            image = R.drawable.ic_close,
-            placeHolder = stringResource(id = R.string.email_place_holder),
-            text = state.email,
-            onTextChange = onChangeEmail
+            type = KeyboardType.Text,
+            placeHolder = "ali",
+            text = state.firstName,
+            onTextChange = onChangeFullName
         ) {
 
         }
+
         SpacerVertical(height = 24.dp)
         ButtonComposable(
+            onClick = onClickUserNameScreen,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            onClick = onClickPasswordScreen,
-            text = stringResource(id = R.string.continue_label)
+            text = stringResource(id = R.string.continue_label),
         )
     }
+
 }
