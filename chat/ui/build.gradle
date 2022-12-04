@@ -72,4 +72,12 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //view model
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    implementation("io.coil-kt:coil-compose:$coil_version")
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constarint_version"
 }
