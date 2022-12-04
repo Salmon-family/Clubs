@@ -24,6 +24,8 @@
     <string name="friends_privacy">Friends</string>
     <string name="public_privacy">Public</string>
 
+    <!-- Search -->
+    <string name="search_for_a_clubs">Search for a clubs..</string>
 
     <string name="home">Home</string>
 </resources>
