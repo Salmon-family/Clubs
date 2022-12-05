@@ -1,7 +1,5 @@
 package com.thechance.identity.repositories
 
-import com.thechance.identity.entities.User
-import com.thechance.identity.repositories.mappers.toEntity
 import com.thechance.identity.usecases.IdentityRepository
 import javax.inject.Inject
 
@@ -22,7 +20,7 @@ class IdentityRepositoryImp @Inject constructor(
         birthdate: String,
         username: String,
         password: String
-    ): Any {
+    ): Int {
         return remoteDataSource.signup(
             firstname = firstname,
             lastname = lastname,
@@ -32,6 +30,6 @@ class IdentityRepositoryImp @Inject constructor(
             birthdate = birthdate,
             username = username,
             password = password
-        )
+        ).guid ?: -1
     }
 }

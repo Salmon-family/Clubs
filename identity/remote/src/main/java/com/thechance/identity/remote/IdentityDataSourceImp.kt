@@ -1,8 +1,9 @@
 package com.thechance.identity.remote
 
+import com.google.gson.Gson
 import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.IdentityDataSource
-import com.thechance.identity.repositories.models.UserDTO
+import com.thechance.identity.repositories.models.AccountDTO
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -11,23 +12,15 @@ class IdentityDataSourceImp @Inject constructor(
 ) : IdentityDataSource {
 
     override suspend fun login(userName: String, password: String): Boolean {
-//        return service.login(userName, password).body()?.payload
-//            ?: throw Throwable("failure request")
         return wrap {
             service.login(userName, password)
         } != null
     }
 
     override suspend fun signup(
-        firstname: String,
-        lastname: String,
-        email: String,
-        reEmail: String,
-        gender: String,
-        birthdate: String,
-        username: String,
-        password: String
-    ): Boolean {
+        firstname: String, lastname: String, email: String, reEmail: String,
+        gender: String, birthdate: String, username: String, password: String
+    ): AccountDTO {
         return wrap {
             service.addUser(
                 firstname = firstname,
@@ -39,20 +32,21 @@ class IdentityDataSourceImp @Inject constructor(
                 username = username,
                 password = password
             )
-        } != null
+        } as AccountDTO
     }
 
 
-    private suspend fun <I : Any> wrap(
+    private suspend inline fun <reified I> wrap(
         function: suspend () -> Response<IdentityBaseResponse<I>>
-    ): Any? {
+    ): I {
         val response = function()
         return if (response.isSuccessful) {
             when (response.body()!!.code) {
-                "100" -> response.body()!!.payload
-                "103" -> response.body()!!.message.toString()
-                else -> throw Throwable("One or more component required for this request can not be found on remote server")
-            }
+                "100" -> {
+                    Gson().fromJson(response.body()!!.payload.toString(), I::class.java)
+                }
+                else -> throw Throwable(response.body()!!.message)
+            } ?: throw Throwable(response.message().toString())
         } else {
             throw Throwable(" Not Success Request ")
         }

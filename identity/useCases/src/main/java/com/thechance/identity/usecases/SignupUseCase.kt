@@ -15,16 +15,10 @@ class SignupUseCase @Inject constructor(
         birthdate: String,
         username: String,
         password: String
-    ): Any {
+    ): Boolean {
         return identityRepository.signup(
-            firstname = firstName,
-            lastname = lastName,
-            email = email,
-            reEmail = reEmail,
-            gender = gender,
-            birthdate = birthdate,
-            username = username,
-            password = password
-        )
+            firstname = firstName, lastname = lastName, email = email, reEmail = reEmail,
+            gender = gender, birthdate = birthdate, username = username, password = password
+        ) != -1
     }
 }

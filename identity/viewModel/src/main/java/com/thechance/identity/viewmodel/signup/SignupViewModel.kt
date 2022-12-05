@@ -22,16 +22,21 @@ class SignupViewModel @Inject constructor(
     fun makeSignupRequest() {
         viewModelScope.launch {
             val state = _uiState.value
-            signupUseCase(
-                firstName = state.firstName,
-                lastName = "",
-                email = state.email,
-                reEmail = state.email,
-                gender = "female",
-                birthdate = "01/10/2001",
-                username = state.username,
-                password = state.password
-            )
+            try {
+                signupUseCase(
+                    firstName = state.firstName,
+                    lastName = "",
+                    email = "test.test9876@gmail.com",
+                    reEmail = "test.test9876@gmail.com",
+                    gender = "female",
+                    birthdate = "01/10/2001",
+                    username = "test.test9876",
+                    password = "123456"
+                )
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString()) }
+                Log.e("Test", t.message.toString())
+            }
         }
 
     }
