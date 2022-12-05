@@ -8,5 +8,5 @@ data class UnreadMessagesResponse(
     @SerializedName("list")
     val list: List<ChatDTO>?,
     @SerializedName("withuser")
-    val withuser: UserDTO?
+    val withUser: UserDTO?
 )
