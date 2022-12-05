@@ -1,5 +1,6 @@
 package com.thechance.ui.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -13,10 +14,16 @@ import com.thechance.viewmodels.chatWithFriend.uiStates.ChatUiState
 @Composable
 fun FriendChat(
     chatUiState: ChatUiState,
-    modifier: Modifier = Modifier
-) {
+    onClick: (ChatUiState) -> Unit,
+    modifier: Modifier = Modifier,
+
+    ) {
     ConstraintLayout(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick(chatUiState)
+            },
     ) {
         val configuration = LocalConfiguration.current
         val screenWidth = configuration.screenWidthDp
@@ -24,7 +31,7 @@ fun FriendChat(
         PhotoFriendChat(
             url = chatUiState.icon,
             modifier = Modifier.constrainAs(image) {
-                top.linkTo(parent.top,12.dp)
+                top.linkTo(parent.top, 12.dp)
                 start.linkTo(parent.start, 12.dp)
                 bottom.linkTo(parent.bottom, 12.dp)
             },
@@ -32,7 +39,7 @@ fun FriendChat(
         UserChatTitle(
             chatUiState.fullName,
             modifier = Modifier
-                .width((screenWidth*.45).dp)
+                .width((screenWidth * .45).dp)
                 .constrainAs(user) {
                     top.linkTo(image.top, 3.dp)
                     start.linkTo(image.end, 16.dp)
@@ -41,7 +48,7 @@ fun FriendChat(
         RecentMessage(
             message = chatUiState.recentMessage,
             modifier = Modifier
-                .width((screenWidth*.6).dp)
+                .width((screenWidth * .6).dp)
                 .constrainAs(recentMessage) {
                     bottom.linkTo(image.bottom, 3.dp)
                     start.linkTo(image.end, 16.dp)
@@ -63,6 +70,7 @@ fun PreviewUserChat() {
     FriendChat(
         chatUiState = ChatUiState(
             fullName = "Ahmed",
-        )
+        ),
+        onClick = {}
     )
 }
