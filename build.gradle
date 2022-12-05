@@ -11,11 +11,8 @@ buildscript {
         activity_compose_version ='1.6.1'
         lifecycle_version ='2.5.1'
         room_version = "2.4.3"
+        coil_version = "2.2.2"
 
-        coil_version = '2.2.2'
-        constarint_version = '1.0.1'
-
-        lifecycle_version = '2.5.1'
     }
 
     dependencies {

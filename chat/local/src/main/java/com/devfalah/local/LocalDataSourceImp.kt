@@ -1,13 +1,15 @@
 package com.devfalah.local
 
-import com.devfalah.repository.LocalDataSource
+import com.devfalah.repository.ChatLocalDataSource
+import com.devfalah.repository.models.MessageEntityLocalDTO
 import com.devfalah.repository.models.ChatLocalDto
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSourceImp @Inject constructor(
-    private val chatDao: ChatDao,
-) : LocalDataSource {
+    private val chatDao: ChatDao
+) : ChatLocalDataSource {
+
     override suspend fun insertChats(chats: List<ChatLocalDto>) {
         return chatDao.insertChats(chats)
     }
@@ -18,5 +20,17 @@ class LocalDataSourceImp @Inject constructor(
 
     override fun getChats(query: String): Flow<List<ChatLocalDto>> {
         return chatDao.getChats(query)
+    }
+
+    override suspend fun insertMessages(messages: List<MessageEntityLocalDTO>) {
+        return chatDao.insertMessages(messages)
+    }
+
+    override suspend fun insertMessage(message: MessageEntityLocalDTO) {
+        chatDao.insertMessage(message)
+    }
+
+    override fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>> {
+        return chatDao.getMessages(friendId)
     }
 }
