@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.signup
+package com.thechance.identity.ui.screen.signup.firstname
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,12 +15,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.screen.signup.birthdate.navigateToBirthdateAndGander
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.screen.signup.username.navigateToUserName
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -30,20 +30,24 @@ fun SignUpFullNameScreen(
     viewModel: SignupViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
-    SignUpNameContent(
+    SignUpFullNameContent(
         state,
         onChangeFullName = viewModel::onChangeFullName,
+        onChangeUserName = viewModel::onChangeUserName,
+        onValidate = viewModel::onValidateName,
         onClickBack = { navController.navigateUp() },
-        onClickUserNameScreen = { navController.navigateToUserName() }
+        onClickUserNameScreen = { navController.navigateToBirthdateAndGander() },
     )
 }
 
 @Composable
-private fun SignUpNameContent(
+private fun SignUpFullNameContent(
     state: UserUIState,
     onClickBack: () -> Unit,
     onClickUserNameScreen: () -> Unit,
     onChangeFullName: (String) -> Unit,
+    onChangeUserName: (String) -> Unit,
+    onValidate: () -> Boolean
 ) {
     Column(
         modifier = Modifier
@@ -87,11 +91,28 @@ private fun SignUpNameContent(
         )
 
         SpacerVertical(height = 24.dp)
+        AuthText(
+            text = stringResource(id = R.string.user_name),
+            style = Typography.body2,
+            color = LightSecondaryBlackColor,
+            Modifier.padding(start = 8.dp)
+        )
+
+        SpacerVertical(height = 14.dp)
+        InputText(
+            type = KeyboardType.Text,
+            placeHolder = stringResource(id = R.string.user_name_hint),
+            text = state.username,
+            onTextChange = onChangeUserName
+        )
+
+        SpacerVertical(height = 24.dp)
         AuthButton(
             onClick = onClickUserNameScreen,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
+            isEnabled = onValidate.invoke(),
             text = stringResource(id = R.string.continue_label),
         )
     }
