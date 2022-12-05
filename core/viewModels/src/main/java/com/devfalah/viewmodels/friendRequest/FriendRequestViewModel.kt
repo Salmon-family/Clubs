@@ -19,8 +19,8 @@ class FriendRequestViewModel @Inject constructor(
     private val removeFriendRequestUseCase: RemoveFriendRequestUseCase
 ) : ViewModel() {
 
-    private val _friendRequests = MutableStateFlow(FriendRequestUiState(emptyList()))
-    val friendRequests = _friendRequests.asStateFlow()
+    private val _uiStateFriendRequests = MutableStateFlow(FriendRequestUiState(emptyList()))
+    val uiStateFriendRequests = _uiStateFriendRequests.asStateFlow()
 
     private val userID = 6
 
@@ -30,11 +30,18 @@ class FriendRequestViewModel @Inject constructor(
 
     private fun fetchFriendsRequest() {
         viewModelScope.launch {
-            _friendRequests.update {
-                it.copy(
-                    isLoading = false,
-                    friendRequests = friendRequestsUseCase(userID = userID).map { friendRequest -> friendRequest.toUIState() }
-                )
+            _uiStateFriendRequests.update { it.copy(isLoading = true, error = "") }
+            try {
+                _uiStateFriendRequests.update {
+                    it.copy(
+                        isLoading = false,
+                        friendRequests = friendRequestsUseCase(userID = userID).listToUserUiState()
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiStateFriendRequests.update {
+                    it.copy(isLoading = false, error = t.message.toString())
+                }
             }
         }
     }
