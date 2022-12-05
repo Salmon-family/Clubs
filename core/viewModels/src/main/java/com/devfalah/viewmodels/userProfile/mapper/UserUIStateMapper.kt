@@ -1,7 +1,6 @@
 package com.devfalah.viewmodels.userProfile.mapper
 
 import com.devfalah.entities.User
-import com.devfalah.viewmodels.friendRequest.toUIState
 import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 fun List<User>.toUIState() = map { it.toUIState() }

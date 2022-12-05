@@ -14,9 +14,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleProfileImage
+import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.RoundButton
-import com.devfalah.ui.spacer.HeightSpacer8
-import com.devfalah.ui.spacer.WidthSpacer16
+import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
