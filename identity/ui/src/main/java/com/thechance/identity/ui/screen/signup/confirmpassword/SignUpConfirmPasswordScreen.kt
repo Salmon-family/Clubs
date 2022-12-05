@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
-import com.thechance.identity.ui.screen.signup.firstname.navigateToSignupFullName
+import com.thechance.identity.ui.screen.signup.name.navigateToSignupNames
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
@@ -33,10 +33,11 @@ fun SignUpConfirmPasswordScreen(
     SignUpConfirmPasswordContent(
         state = state,
         onConfirmCorrect = viewModel::onConfirmPassword,
+        onValidate = viewModel::onValidatePassword,
         onChangePassword = viewModel::onChangePassword,
         onChangeConfirmPassword = viewModel::onChangeConfirmPassword,
         onClickSignupFirstNameScreen = {
-            navController.navigateToSignupFullName()
+            navController.navigateToSignupNames()
         },
         onClickBack = { navController.navigateUp() }
     )
@@ -46,6 +47,7 @@ fun SignUpConfirmPasswordScreen(
 fun SignUpConfirmPasswordContent(
     state: UserUIState,
     onConfirmCorrect: () -> Boolean,
+    onValidate: () -> Boolean,
     onChangePassword: (String) -> Unit,
     onChangeConfirmPassword: (String) -> Unit,
     onClickSignupFirstNameScreen: () -> Unit,
@@ -113,6 +115,7 @@ fun SignUpConfirmPasswordContent(
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
             onClick = onClickSignupFirstNameScreen,
+            isEnabled = onValidate.invoke(),
             text = stringResource(id = R.string.continue_label)
         )
     }

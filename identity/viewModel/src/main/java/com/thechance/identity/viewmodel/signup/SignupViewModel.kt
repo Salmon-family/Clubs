@@ -50,7 +50,12 @@ class SignupViewModel @Inject constructor(
 
     fun onConfirmPassword(): Boolean {
         return (_uiState.value.password == _uiState.value.confirmPassword) &&
-        (_uiState.value.password != "") && (_uiState.value.confirmPassword != "")
+                (_uiState.value.password != "") && (_uiState.value.confirmPassword != "")
+    }
+
+    fun onValidatePassword(): Boolean {
+        val state = _uiState.value
+        return state.password.isNotEmpty() && state.confirmPassword.isNotEmpty()
     }
 
     fun onChangeFullName(fullName: String) {
@@ -59,6 +64,11 @@ class SignupViewModel @Inject constructor(
 
     fun onChangeUserName(userName: String) {
         _uiState.update { it.copy(username = userName) }
+    }
+
+    fun onValidateName(): Boolean {
+        val state = _uiState.value
+        return state.firstName.isNotEmpty() && state.username.isNotEmpty()
     }
 
     fun onChangeBirthdate(birthdate: String) {

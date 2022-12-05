@@ -12,8 +12,7 @@ import com.thechance.identity.ui.screen.onboarding.welcome.welcomeOnBoardRoute
 import com.thechance.identity.ui.screen.signup.birthdate.signupBirthDateAndGanderRoute
 import com.thechance.identity.ui.screen.signup.confirmpassword.signupConfirmPasswordRoute
 import com.thechance.identity.ui.screen.signup.email.signupEmailRoute
-import com.thechance.identity.ui.screen.signup.firstname.signupFullNameRoute
-import com.thechance.identity.ui.screen.signup.username.signupUserNameRoute
+import com.thechance.identity.ui.screen.signup.name.signupNamesRoute
 
 @Composable
 fun ClubsNavGraph(navController: NavHostController) {
@@ -22,8 +21,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         onBoardingPagerRoute(navController)
         signupEmailRoute(navController)
         signupConfirmPasswordRoute(navController)
-        signupFullNameRoute(navController)
-        signupUserNameRoute(navController)
+        signupNamesRoute(navController)
         signupBirthDateAndGanderRoute(navController)
         logInUserNameRoute(navController)
         logInPasswordRoute(navController)

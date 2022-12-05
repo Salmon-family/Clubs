@@ -44,7 +44,7 @@ fun InputText(
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = type
-        )
+        ),
     )
 }
 

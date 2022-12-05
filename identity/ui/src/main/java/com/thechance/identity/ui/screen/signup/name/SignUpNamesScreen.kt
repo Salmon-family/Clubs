@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.signup.firstname
+package com.thechance.identity.ui.screen.signup.name
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

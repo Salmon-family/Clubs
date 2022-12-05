@@ -32,7 +32,7 @@ fun LogInPasswordScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     LogInPasswordContent(
-        uiState = uiState,
+        state = uiState,
         onChangePassword = viewModel::onChangePassword,
         onLogin = {
             viewModel.onLogin()
@@ -44,7 +44,7 @@ fun LogInPasswordScreen(
 
 @Composable
 fun LogInPasswordContent(
-    uiState: LoginUIState,
+    state: LoginUIState,
     onChangePassword: (String) -> Unit,
     onLogin: () -> Unit,
     onClickBack: () -> Unit
@@ -77,13 +77,14 @@ fun LogInPasswordContent(
         SpacerVertical(height = 14.dp)
         PasswordInputText(
             placeHolder = stringResource(id = R.string.password_place_holder),
-            text = uiState.password,
+            text = state.password,
             onTextChange = onChangePassword
         )
 
         SpacerVertical24()
         AuthButton(
             onClick = onLogin,
+            isEnabled = state.password.isNotEmpty(),
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier
                 .fillMaxWidth()

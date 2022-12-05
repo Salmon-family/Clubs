@@ -19,6 +19,7 @@ import com.thechance.identity.ui.theme.WhiteColor
 @Composable
 fun AuthButton(
     onClick: () -> Unit,
+    isEnabled:Boolean = true,
     text: String,
     buttonColor: Color = LightPrimaryBrandColor,
     textColor: Color = WhiteColor,
@@ -31,7 +32,8 @@ fun AuthButton(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = buttonColor
-        )
+        ),
+        enabled = isEnabled,
     ) {
         Text(
             modifier = textModifier,

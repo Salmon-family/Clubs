@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_EXPRESSION")
+
 package com.thechance.identity.ui.screen.login.username
 
 import androidx.compose.foundation.layout.Column
@@ -18,13 +20,13 @@ import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.InputText
+import com.thechance.identity.ui.screen.login.password.navigateToLogInPassword
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.screen.login.password.navigateToLogInPassword
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -32,19 +34,19 @@ import com.thechance.identity.viewmodel.login.LoginViewModel
 fun LogInUserNameScreen(
     navController: NavController,
     viewModel: LoginViewModel = hiltViewModel(),
-){
+) {
     val uiState by viewModel.uiState.collectAsState()
     LogInUserNameContent(
-        uiState = uiState,
+        state = uiState,
         onChangeUserName = viewModel::onChangeUserName,
         onClickContinue = { navController.navigateToLogInPassword() },
-        onClickBack = {navController.navigateUp()}
+        onClickBack = { navController.navigateUp() }
     )
 }
 
 @Composable
 private fun LogInUserNameContent(
-    uiState: LoginUIState,
+    state: LoginUIState,
     onChangeUserName: (String) -> Unit,
     onClickContinue: () -> Unit,
     onClickBack: () -> Unit
@@ -77,13 +79,14 @@ private fun LogInUserNameContent(
         InputText(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.user_name_place_holder),
-            text = uiState.userName,
+            text = state.userName,
             onTextChange = onChangeUserName
         )
 
         SpacerVertical24()
         AuthButton(
             onClick = onClickContinue,
+            isEnabled = state.userName.isNotEmpty(),
             text = stringResource(id = R.string.continue_label),
             buttonModifier = Modifier
                 .fillMaxWidth()

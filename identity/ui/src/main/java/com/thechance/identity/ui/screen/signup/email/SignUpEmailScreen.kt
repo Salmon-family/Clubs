@@ -83,6 +83,7 @@ private fun SignUpEmailContent(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
+            isEnabled = state.email.isNotEmpty(),
             onClick = onClickPasswordScreen,
             text = stringResource(id = R.string.continue_label)
         )
