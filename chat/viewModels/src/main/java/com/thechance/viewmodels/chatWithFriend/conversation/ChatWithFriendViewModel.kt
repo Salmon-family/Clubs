@@ -49,6 +49,7 @@ class ChatWithFriendViewModel @Inject constructor(
                     _uiState.update { it.copy(messages = message, isLoading = false) }
                 }
             } catch (e: Exception) {
+                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
