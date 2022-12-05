@@ -1,4 +1,4 @@
-package com.thechance.viewmodels.chatWithFriend.conversation.uiStates
+package com.thechance.viewmodels.conversation.uiStates
 
 data class ChatUIState(
     val appBar: AppBarUIState = AppBarUIState(),

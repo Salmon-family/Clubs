@@ -1,12 +1,12 @@
-package com.thechance.viewmodels.chatWithFriend.conversation
+package com.thechance.viewmodels.conversation
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
 import com.nadafeteiha.usecases.SetSendMessageUseCase
-import com.thechance.viewmodels.chatWithFriend.conversation.uiMappers.toMessage
-import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.ChatUIState
+import com.thechance.viewmodels.conversation.uiMappers.toMessage
+import com.thechance.viewmodels.conversation.uiStates.ChatUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

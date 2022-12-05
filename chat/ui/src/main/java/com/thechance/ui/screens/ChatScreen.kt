@@ -20,8 +20,8 @@ import com.thechance.ui.composable.Loading
 import com.thechance.ui.composable.SearchTextField
 import com.thechance.ui.composable.TopBarChats
 import com.thechance.ui.theme.BlackColor
-import com.thechance.viewmodels.chatWithFriend.chatWithFriend.ChatsViewModel
-import com.thechance.viewmodels.chatWithFriend.chatWithFriend.uiState.ChatsUiState
+import com.thechance.viewmodels.chatWithFriend.ChatsViewModel
+import com.thechance.viewmodels.chatWithFriend.uiStates.ChatsUiState
 
 @Composable
 fun ChatsScreen(

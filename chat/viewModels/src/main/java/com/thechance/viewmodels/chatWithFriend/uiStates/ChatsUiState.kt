@@ -1,4 +1,4 @@
-package com.thechance.viewmodels.chatWithFriend.uistates
+package com.thechance.viewmodels.chatWithFriend.uiStates
 
 data class ChatsUiState(
     val isLoading: Boolean = false,

@@ -15,8 +15,8 @@ import com.thechance.ui.composable.SendTextField
 import com.thechance.ui.composable.AppBar
 import com.thechance.ui.composable.BackgroundChatScreen
 import com.thechance.ui.composable.ListOfChat
-import com.thechance.viewmodels.chatWithFriend.conversation.ChatWithFriendViewModel
-import com.thechance.viewmodels.chatWithFriend.conversation.uiStates.ChatUIState
+import com.thechance.viewmodels.conversation.ChatWithFriendViewModel
+import com.thechance.viewmodels.conversation.uiStates.ChatUIState
 
 
 @SuppressLint("UnrememberedMutableState")

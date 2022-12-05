@@ -1,8 +1,7 @@
-package com.thechance.viewmodels.chatWithFriend.uistates
+package com.thechance.viewmodels.chatWithFriend.uiStates
 
 import com.thechance.entities.Chat
 import com.thechance.viewmodels.extensions.convertLongToTime
-import com.thechance.viewmodels.chatWithFriend.uistates.ChatUiState
 
 fun Chat.toUiState(): ChatUiState {
     return ChatUiState(

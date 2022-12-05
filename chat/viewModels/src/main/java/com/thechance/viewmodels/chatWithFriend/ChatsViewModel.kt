@@ -1,11 +1,12 @@
 package com.thechance.viewmodels.chatWithFriend
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
-import com.thechance.viewmodels.chatWithFriend.uistates.toUiState
-import com.thechance.viewmodels.chatWithFriend.uistates.ChatsUiState
+import com.thechance.viewmodels.chatWithFriend.uiStates.toUiState
+import com.thechance.viewmodels.chatWithFriend.uiStates.ChatsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,6 +39,7 @@ class ChatsViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
+                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(isLoading = false, error = e.message.toString())
                 }
