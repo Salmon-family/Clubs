@@ -2,8 +2,15 @@ package com.devfalah.repository.mappers
 
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ChatLocalDto
+import com.devfalah.repository.models.ConversationDTO
 import com.thechance.entities.Chat
+import com.thechance.entities.Friends
 
+fun ConversationDTO.toEntities(userId: Int): Friends {
+    return Friends(
+        friends = list?.map { it.toLocalDto(userId) } ?: emptyList(),
+    )
+}
 
 fun ChatDTO.toLocalDto(userId: Int): Chat {
     if (messageFrom?.guid == userId) {

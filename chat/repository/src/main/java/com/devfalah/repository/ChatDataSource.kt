@@ -5,7 +5,7 @@ import com.devfalah.repository.models.ChatDTO
 
 interface ChatDataSource {
 
-    suspend fun getChats(userID: Int): List<ChatDTO>
+    suspend fun getChats(userID: Int): ConversationDTO
 
     suspend fun getMessagesWithFriend(userID: Int, friendID: Int): ConversationDTO
 
