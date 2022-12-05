@@ -1,4 +1,4 @@
-package com.thechance.ui.screens
+package com.thechance.ui.screens.conversation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.thechance.ui.composable.SendTextField
 import com.thechance.ui.composable.AppBar
 import com.thechance.ui.composable.BackgroundChatScreen
@@ -22,6 +23,7 @@ import com.thechance.viewmodels.conversation.uiStates.ChatUIState
 @SuppressLint("UnrememberedMutableState")
 @Composable
 internal fun ConversationScreen(
+    navController: NavHostController,
     viewModel: ChatWithFriendViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -57,8 +59,3 @@ fun ChatContent(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultChatScreenPreview() {
-    ConversationScreen()
-}
