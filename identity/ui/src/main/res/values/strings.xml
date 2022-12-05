@@ -31,4 +31,5 @@
     <string name="account_activation_title">Account Activation</string>
     <string name="account_activation_body">We just sent you an activation email. Please check \n it out before you trying to log in.</string>
     <string name="open_gmail">Open Gmail</string>
+    <string name="create_account_label">Create Account</string>
 </resources>

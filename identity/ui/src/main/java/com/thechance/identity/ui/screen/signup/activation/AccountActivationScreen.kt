@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
@@ -17,14 +18,25 @@ import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.theme.*
 
 @Composable
-fun AccountActivationScreen(){
+fun AccountActivationScreen(
+    navController: NavController
+){
+  AccountActivationContent(
+      onclickBack = {navController.navigateUp()}
+  )
+}
+
+@Composable
+private fun AccountActivationContent(
+    onclickBack: () -> Unit
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        BackButton(onClick = {})
+        BackButton(onClick = onclickBack)
         Spacer(modifier = Modifier.weight(0.25f))
         Text(
             text = stringResource(id = R.string.account_activation_title),
@@ -60,8 +72,8 @@ fun AccountActivationScreen(){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewAccountActivationScreen(){
-    AccountActivationScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewAccountActivationScreen(){
+//    AccountActivationContent()
+//}
