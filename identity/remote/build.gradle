@@ -49,4 +49,7 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+
 }

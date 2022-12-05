@@ -1,5 +1,7 @@
 package com.thechance.identity.ui.screen.signup
 
+import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -20,21 +23,27 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.util.extension.navigateToUserName
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun SignUpFirstNameScreen(
     navController: NavController,
     viewModel: SignupViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    //Just for test
+    val context = LocalContext.current
+    if (state.error.isNotEmpty()) {
+        Toast.makeText(context, state.error, Toast.LENGTH_LONG).show()
+    }
+    //////
     SignUpNameContent(
         state,
         onChangeFullName = viewModel::onChangeFullName,
         onClickBack = { navController.navigateUp() },
-        onClickUserNameScreen = { navController.navigateToUserName()}
+        onClickUserNameScreen = viewModel::makeSignupRequest
     )
 }
 
@@ -51,7 +60,7 @@ private fun SignUpNameContent(
             .padding(16.dp),
     ) {
 
-        BackButtonComposable (onClick =  onClickBack)
+        BackButtonComposable(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
         TextComposable(

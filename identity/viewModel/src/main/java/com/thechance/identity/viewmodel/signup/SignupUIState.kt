@@ -3,7 +3,7 @@ package com.thechance.identity.viewmodel.signup
 data class SignupUIState(
     val userUIState: UserUIState = UserUIState(),
     val isLoading: Boolean = true,
-    val isError: Boolean = false
+    val isError: Boolean = false,
 )
 
 data class UserUIState(
@@ -17,5 +17,6 @@ data class UserUIState(
     val password: String = "",
     val confirmPassword: String = "",
     val isLoading: Boolean = true,
-    val isError: Boolean = false
+    val isError: Boolean = false,
+    val error: String = ""
 )
