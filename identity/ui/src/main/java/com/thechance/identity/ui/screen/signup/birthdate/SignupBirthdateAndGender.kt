@@ -1,11 +1,10 @@
-package com.thechance.identity.ui.extension
+package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.thechance.identity.ui.screen.signup.SignUpBirthdateAndGenderScreen
 
 
 fun NavController.navigateToBirthdateAndGander() {

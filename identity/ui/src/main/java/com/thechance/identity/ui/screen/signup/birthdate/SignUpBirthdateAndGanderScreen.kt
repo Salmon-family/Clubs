@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.signup
+package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
 import androidx.compose.foundation.layout.Column

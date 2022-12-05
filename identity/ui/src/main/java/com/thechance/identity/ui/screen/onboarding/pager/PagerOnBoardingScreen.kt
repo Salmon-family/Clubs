@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.onboarding
+package com.thechance.identity.ui.screen.onboarding.pager
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +12,13 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.FooterOnBoarding
 import com.thechance.identity.ui.composable.ViewPagerSlider
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
-import com.thechance.identity.ui.extension.navigateToSignupEmail
+import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 
 @Composable
 fun OnBoardingPagerScreen(
@@ -26,7 +27,7 @@ fun OnBoardingPagerScreen(
     OnBoardingPagerContent({
         navController.navigateToSignupEmail()
     },{
-        navController.navigate("LogInUserNameScreen")
+        navController.navigateToLogInUserName()
     })
 }
 

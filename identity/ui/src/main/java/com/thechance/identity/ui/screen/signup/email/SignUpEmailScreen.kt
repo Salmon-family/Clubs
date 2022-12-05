@@ -14,43 +14,45 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.AuthText
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.InputText
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
-import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.extension.navigateToUserName
+import com.thechance.identity.ui.screen.signup.confirmpassword.navigateToSignupConfirmPassword
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
+
 @Composable
-fun SignUpFirstNameScreen(
+fun SignUpEmailScreen(
     navController: NavController,
-    viewModel: SignupViewModel = hiltViewModel(),
+    viewModel: SignupViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    SignUpNameContent(
-        state,
-        onChangeFullName = viewModel::onChangeFullName,
-        onClickBack = { navController.navigateUp() },
-        onClickUserNameScreen = { navController.navigateToUserName() }
+    SignUpEmailContent(
+        state = state,
+        onChangeEmail = viewModel::onChangeEmail,
+        onClickPasswordScreen = { navController.navigateToSignupConfirmPassword() },
+        onClickBack = { navController.navigateUp() }
     )
 }
 
 @Composable
-private fun SignUpNameContent(
+private fun SignUpEmailContent(
     state: UserUIState,
-    onClickBack: () -> Unit,
-    onClickUserNameScreen: () -> Unit,
-    onChangeFullName: (String) -> Unit,
+    onChangeEmail: (String) -> Unit,
+    onClickPasswordScreen: () -> Unit,
+    onClickBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-
         BackButton(onClick = onClickBack)
 
         SpacerVertical(height = 36.dp)
@@ -61,41 +63,31 @@ private fun SignUpNameContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 8.dp)
-        EmailDescriptionText(
-            text1 = stringResource(id = R.string.using),
-            color1 = LightSecondaryBlackColor,
-            text2 = stringResource(id = R.string.email_place_holder),
-            color2 = LightPrimaryBrandColor,
-            text3 = stringResource(id = R.string.to_login)
-        )
-
         SpacerVertical(height = 24.dp)
         AuthText(
-            text = stringResource(id = R.string.full_naame),
-            style = Typography.body2,
+            text = stringResource(id = R.string.email),
+            style = Typography.subtitle2,
             color = LightSecondaryBlackColor,
             Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical(height = 14.dp)
         InputText(
-            type = KeyboardType.Text,
-            placeHolder = "ali",
-            text = state.firstName,
-            onTextChange = onChangeFullName
+            type = KeyboardType.Email,
+            image = R.drawable.ic_close,
+            placeHolder = stringResource(id = R.string.email_place_holder),
+            text = state.email,
+            onTextChange = onChangeEmail
         ) {
 
         }
-
         SpacerVertical(height = 24.dp)
         AuthButton(
-            onClick = onClickUserNameScreen,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            text = stringResource(id = R.string.continue_label),
+            onClick = onClickPasswordScreen,
+            text = stringResource(id = R.string.continue_label)
         )
     }
-
 }

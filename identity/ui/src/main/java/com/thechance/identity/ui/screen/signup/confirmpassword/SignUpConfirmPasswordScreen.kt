@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.login
+package com.thechance.identity.ui.screen.signup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,59 +16,56 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
-import com.thechance.identity.ui.spacer.SpacerVertical12
-import com.thechance.identity.ui.spacer.SpacerVertical24
-import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.extension.navigateToHome
-import com.thechance.identity.viewmodel.login.LoginUIState
-import com.thechance.identity.viewmodel.login.LoginViewModel
+import com.thechance.identity.ui.screen.signup.firstname.navigateToSignupFullName
+import com.thechance.identity.viewmodel.signup.SignupViewModel
+import com.thechance.identity.viewmodel.signup.UserUIState
+
 
 @Composable
-fun LogInPasswordScreen(
+fun SignUpConfirmPasswordScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: SignupViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    LogInPasswordContent(
-        uiState = uiState,
+    val state by viewModel.uiState.collectAsState()
+    SignUpConfirmPasswordContent(
+        state = state,
         onChangePassword = viewModel::onChangePassword,
-        onLogin = {
-            viewModel.onLogin()
-            navController.navigateToHome()
+        onChangeConfirmPassword = viewModel::onChangeConfirmPassword,
+        onClickSignupFirstNameScreen = {
+            navController.navigateToSignupFullName()
         },
         onClickBack = { navController.navigateUp() }
     )
 }
 
 @Composable
-fun LogInPasswordContent(
-    uiState: LoginUIState,
+fun SignUpConfirmPasswordContent(
+    state: UserUIState,
     onChangePassword: (String) -> Unit,
-    onLogin: () -> Unit,
+    onChangeConfirmPassword: (String) -> Unit,
+    onClickSignupFirstNameScreen: () -> Unit,
     onClickBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
-
-        SpacerVertical12()
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(52.dp)
+        SpacerVertical(height = 36.dp)
         AuthText(
-            text = stringResource(id = R.string.log_in),
+            text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical8()
+        SpacerVertical(height = 8.dp)
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
@@ -77,32 +74,51 @@ fun LogInPasswordContent(
             text3 = stringResource(id = R.string.to_login)
         )
 
-        SpacerVertical(height = 32.dp)
+        SpacerVertical(height = 24.dp)
         AuthText(
             text = stringResource(id = R.string.your_password),
-            style = Typography.subtitle2,
+            style = Typography.body2,
             color = LightSecondaryBlackColor,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical(height = 14.dp)
         InputText(
             type = KeyboardType.Password,
-            image = R.drawable.ic_hide,
+            image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.password_place_holder),
-            text = uiState.password,
+            text = state.password,
             onTextChange = onChangePassword
         ) {
 
         }
 
-        SpacerVertical24()
+        SpacerVertical(height = 24.dp)
+        AuthText(
+            text = stringResource(id = R.string.confirm_password),
+            style = Typography.body2,
+            color = LightSecondaryBlackColor,
+            Modifier.padding(start = 8.dp)
+        )
+
+        SpacerVertical(height = 14.dp)
+        InputText(
+            type = KeyboardType.Password,
+            image = R.drawable.ic_close,
+            placeHolder = stringResource(id = R.string.password_place_holder),
+            text = state.confirmPassword,
+            onTextChange = onChangeConfirmPassword
+        ) {
+
+        }
+
+        SpacerVertical(height = 24.dp)
         AuthButton(
-            onClick = onLogin,
-            text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier
-                .fillMaxWidth()
                 .padding(horizontal = 8.dp)
+                .fillMaxWidth(),
+            onClick = onClickSignupFirstNameScreen,
+            text = stringResource(id = R.string.continue_label)
         )
     }
 }

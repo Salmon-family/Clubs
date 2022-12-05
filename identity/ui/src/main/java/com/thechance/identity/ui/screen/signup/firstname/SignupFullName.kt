@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.extension
+package com.thechance.identity.ui.screen.signup.firstname
 
 import android.os.Build
 import androidx.navigation.NavController

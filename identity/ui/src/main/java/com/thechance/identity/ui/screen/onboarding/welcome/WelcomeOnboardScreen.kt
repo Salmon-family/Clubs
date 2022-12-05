@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.onboarding
+package com.thechance.identity.ui.screen.onboarding.welcome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,7 +20,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBrandColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.extension.navigateToOnBoardingPager
+import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 
 @Composable
 fun WelcomeOnboardScreen(
