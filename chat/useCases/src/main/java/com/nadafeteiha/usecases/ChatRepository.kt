@@ -21,6 +21,8 @@ interface ChatRepository {
 
     suspend fun insertMessages(message: List<Message>)
 
+    suspend fun insertMessage(message: Message)
+
     fun getMessages(friendId: Int): Flow<List<Message>>
 
 }

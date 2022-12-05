@@ -15,8 +15,8 @@ fun ConversationDTO.toEntity(userId: Int): Conversation {
 
 
 fun ChatDTO.toEntity(userId: Int): Message {
-    if(messageFrom?.guid == userId) {
-        return Message(
+    return if(messageFrom?.guid == userId) {
+        Message(
             id = id ?: 0,
             friendId = messageTo?.guid ?: 0,
             fromMe = true,
@@ -24,7 +24,7 @@ fun ChatDTO.toEntity(userId: Int): Message {
             time = time?.let { ConvertDate().convertTime(it) } ?: ""
         )
     }else{
-        return Message(
+        Message(
             id = id ?: 0,
             friendId = messageFrom?.guid ?: 0,
             fromMe = false,

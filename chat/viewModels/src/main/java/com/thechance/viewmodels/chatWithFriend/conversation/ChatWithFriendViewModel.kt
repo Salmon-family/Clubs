@@ -1,5 +1,6 @@
 package com.thechance.viewmodels.chatWithFriend.conversation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
@@ -58,11 +59,7 @@ class ChatWithFriendViewModel @Inject constructor(
     private fun setSendMessage(message: String) {
         viewModelScope.launch {
             try {
-                _uiState.update {
-                    it.copy(
-                        message = setSendMessageUseCase(userId, friendId, message).message,
-                    )
-                }
+                setSendMessageUseCase(userId, friendId, message)
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
@@ -73,9 +70,7 @@ class ChatWithFriendViewModel @Inject constructor(
     }
 
     fun onChanceMessage(newValue: String) {
-        _uiState.update {
-            it.copy(message = newValue)
-        }
+        _uiState.update { it.copy(message = newValue) }
     }
 
     fun sendMessage() {

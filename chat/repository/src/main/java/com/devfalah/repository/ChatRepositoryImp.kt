@@ -13,15 +13,15 @@ import javax.inject.Inject
 
 class ChatRepositoryImp @Inject constructor(
     private val ChatDataSource: ChatDataSource,
-    private val ChatLocalDataSource: ChatLocalDataSource,
+    private val chatLocalDataSource: ChatLocalDataSource,
 ) : ChatRepository {
 
     override suspend fun insertChatsLocally(list: List<Chat>) {
-        ChatLocalDataSource.insertChats(list.map { it.toLocalDto() })
+        chatLocalDataSource.insertChats(list.map { it.toLocalDto() })
     }
 
     override fun getChatsFromLocal(): Flow<List<Chat>> {
-        return ChatLocalDataSource.getChats().map { list -> list.map { it.toEntity() } }
+        return chatLocalDataSource.getChats().map { list -> list.map { it.toEntity() } }
     }
 
     override suspend fun getChats(userID: Int): List<Chat> {
@@ -29,7 +29,7 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override fun getChats(query: String): Flow<List<Chat>> {
-        return ChatLocalDataSource.getChats(query).map { list -> list.map { it.toEntity() } }
+        return chatLocalDataSource.getChats(query).map { list -> list.map { it.toEntity() } }
     }
 
     override suspend fun getMessages(userID: Int, friendID: Int): Conversation {
@@ -41,11 +41,15 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override suspend fun insertMessages(message: List<Message>) {
-        ChatLocalDataSource.insertMessages(message.map { it.toMessage() })
+        chatLocalDataSource.insertMessages(message.map { it.toMessage() })
+    }
+
+    override suspend fun insertMessage(message: Message) {
+        chatLocalDataSource.insertMessage(message.toMessage())
     }
 
     override fun getMessages(friendId: Int): Flow<List<Message>> {
-        return ChatLocalDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
+        return chatLocalDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
     }
 
 }

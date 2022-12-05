@@ -11,5 +11,5 @@ data class ConversationDTO(
     @SerializedName("offset")
     val offset: Boolean?,
     @SerializedName("withuser")
-    val withuser: UserDTO?
+    val withUser: UserDTO?
 )

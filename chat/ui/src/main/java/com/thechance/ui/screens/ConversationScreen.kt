@@ -50,10 +50,7 @@ fun ChatContent(
             SendTextField(
                 text = messageText,
                 onValueChanged = onValueChanged,
-                sendMessage = {
-                    sendMessage()
-                    onValueChanged("")
-                }
+                sendMessage = sendMessage,
             )
         }
     }

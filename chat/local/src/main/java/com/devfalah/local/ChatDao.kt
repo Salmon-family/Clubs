@@ -23,6 +23,9 @@ interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMessages(chats: List<MessageEntityLocalDTO>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMessage(message: MessageEntityLocalDTO)
+
     @Query("SELECT * FROM MESSAGES_TABLE WHERE friendId = :friendId ORDER BY id DESC")
     fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
