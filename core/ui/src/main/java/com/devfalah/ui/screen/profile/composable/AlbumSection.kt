@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.composable.HeightSpacer8
+import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -69,7 +69,10 @@ fun AlbumSection(
 
             albums.take(3).forEach {
                 Image(
-                    painter = rememberAsyncImagePainter(model = it.albumCover),
+                    painter = rememberAsyncImagePainter(
+                        model = it.albumCover,
+                        error = painterResource(id = R.drawable.test_image)
+                    ),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
