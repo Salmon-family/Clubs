@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.profile
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.screen.profile.profileSections.*
+import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
@@ -38,9 +37,6 @@ fun ProfileScreen(
             Toast.makeText(context, "not done yet.. ", Toast.LENGTH_LONG).show()
         }
     )
-    if (state.minorError.isNotEmpty()) {
-        ShowErrorMessage(state.minorError, context)
-    }
 }
 
 @Composable
@@ -67,7 +63,7 @@ fun ProfileContent(
             item {
                 FriendOptionsSection(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    areFriends = state.areFriends,
+                    areFriends = state.userDetails.areFriends,
                     onClickAddFriend = onClickAddFriend,
                     onClickSendMessage = onClickSendMessage
                 )
@@ -90,10 +86,4 @@ fun ProfileContent(
             )
         }
     }
-}
-
-
-@Composable
-fun ShowErrorMessage(error: String, context: Context) {
-    Toast.makeText(context, error, Toast.LENGTH_LONG).show()
 }

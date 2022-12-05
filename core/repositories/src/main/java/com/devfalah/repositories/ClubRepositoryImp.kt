@@ -1,11 +1,11 @@
 package com.devfalah.repositories
 
 import com.devfalah.entities.Album
-import com.devfalah.entities.Notifications
+import com.devfalah.entities.Notification
 import com.devfalah.entities.Post
 import com.devfalah.entities.User
 import com.devfalah.repositories.mappers.toEntity
-import com.devfalah.usecases.ClubRepository
+import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
@@ -28,7 +28,7 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getUserFriends(userID).map { it.toEntity() }
     }
 
-    override suspend fun getNotifications(userID: Int): List<Notifications> {
+    override suspend fun getNotifications(userID: Int): List<Notification> {
         return remoteDataSource.getNotifications(userID).map { it.toEntity() }
     }
 
@@ -44,12 +44,12 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getProfilePosts(userID, profileUserID).map { it.toEntity() }
     }
 
-    override suspend fun setLike(userID: Int, postId: Int, type: String): Int {
-        return remoteDataSource.setLike(userID = userID, postId = postId, type = type).toEntity()
+    override suspend fun setLikeOnPost(userID: Int, postId: Int): Int {
+        return remoteDataSource.setLikeOnPost(userID = userID, postId = postId).toEntity()
     }
 
-    override suspend fun removeLike(userID: Int, postId: Int, type: String): Int {
-        return remoteDataSource.removeLike(userID = userID, postId = postId, type = type).toEntity()
+    override suspend fun removeLikeOnPost(userID: Int, postId: Int): Int {
+        return remoteDataSource.removeLikeOnPost(userID = userID, postId = postId).toEntity()
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {

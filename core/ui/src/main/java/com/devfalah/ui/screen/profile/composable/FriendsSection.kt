@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.profile.profileSections
+package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -17,16 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.spacer.HeightSpacer8
+import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.viewmodels.userProfile.UserDetailsUIState
+import com.devfalah.viewmodels.userProfile.FriendUIState
 
 @Composable
 fun FriendsSection(
-    friends: List<UserDetailsUIState>,
+    friends: List<FriendUIState>,
     modifier: Modifier = Modifier
 ) {
     Column(modifier.fillMaxWidth()) {
@@ -58,7 +58,7 @@ fun FriendsSection(
         ) {
             friends.take(4).forEach {
                 Friend(
-                    painter = rememberAsyncImagePainter(model = it.profilePicture),
+                    painter = rememberAsyncImagePainter(model = it.profileImageUrl),
                     text = it.name,
                 )
             }

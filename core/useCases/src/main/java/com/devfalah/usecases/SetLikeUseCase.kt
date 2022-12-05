@@ -1,6 +1,6 @@
 package com.devfalah.usecases
 
-import com.devfalah.usecases.utilities.Constants.POST
+import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class SetLikeUseCase @Inject constructor(
@@ -9,9 +9,9 @@ class SetLikeUseCase @Inject constructor(
 
     suspend operator fun invoke(userId: Int, postID: Int, isLiked: Boolean): Int {
         return if (isLiked) {
-            clubRepository.removeLike(userID = userId, postId = postID, type = POST)
+            clubRepository.removeLikeOnPost(userID = userId, postId = postID)
         } else {
-            clubRepository.setLike(userID = userId, postId = postID, type = POST)
+            clubRepository.setLikeOnPost(userID = userId, postId = postID)
         }
     }
 

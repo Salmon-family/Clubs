@@ -1,14 +1,14 @@
 package com.devfalah.usecases
 
-import com.devfalah.entities.Notifications
-import com.devfalah.entities.User
+import com.devfalah.entities.Notification
+import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class GetNotificationsUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
 
-    suspend operator fun invoke(userId: Int): List<Notifications> {
+    suspend operator fun invoke(userId: Int): List<Notification> {
         return clubRepository.getNotifications(userId)
     }
 
