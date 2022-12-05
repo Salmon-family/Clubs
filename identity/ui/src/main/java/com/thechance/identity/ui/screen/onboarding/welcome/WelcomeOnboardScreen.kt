@@ -12,7 +12,7 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
 import com.thechance.identity.ui.composable.AuthText
-import com.thechance.identity.ui.composable.WelcomeOnBoardingBoxOfParallelogramShape
+import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardingBoxOfParallelogramShape
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical8

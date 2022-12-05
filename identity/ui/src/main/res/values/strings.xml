@@ -22,7 +22,7 @@
     <string name="birth_date">Birthdate</string>
     <string name="gender">Gender</string>
     <string name="log_in">Log In</string>
-    <string name="password_place_holder">********</string>
+    <string name="password_place_holder">More than 6 character</string>
     <string name="using">Using</string>
     <string name="to_login">to login</string>
     <string name="user_name_place_holder">Thao Lee</string>

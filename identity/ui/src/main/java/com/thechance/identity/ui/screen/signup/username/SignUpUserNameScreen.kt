@@ -77,8 +77,7 @@ private fun SignUpBirthdateAndGanderContent(
             placeHolder = stringResource(id = R.string.user_name_hint),
             text = state.username,
             onTextChange = onChangeUserName
-        ) {
-        }
+        )
 
         SpacerVertical(height = 24.dp)
         AuthButton(

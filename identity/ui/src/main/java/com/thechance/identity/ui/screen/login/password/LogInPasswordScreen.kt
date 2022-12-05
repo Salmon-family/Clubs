@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -18,12 +17,11 @@ import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
-import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
-import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.ui.screen.home.navigateToHome
+import com.thechance.identity.ui.composable.PasswordInputText
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -68,15 +66,6 @@ fun LogInPasswordContent(
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
-        SpacerVertical8()
-        EmailDescriptionText(
-            text1 = stringResource(id = R.string.using),
-            color1 = LightSecondaryBlackColor,
-            text2 = stringResource(id = R.string.email_place_holder),
-            color2 = LightPrimaryBrandColor,
-            text3 = stringResource(id = R.string.to_login)
-        )
-
         SpacerVertical(height = 32.dp)
         AuthText(
             text = stringResource(id = R.string.your_password),
@@ -86,15 +75,11 @@ fun LogInPasswordContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputText(
-            type = KeyboardType.Password,
-            image = R.drawable.ic_hide,
+        PasswordInputText(
             placeHolder = stringResource(id = R.string.password_place_holder),
             text = uiState.password,
             onTextChange = onChangePassword
-        ) {
-
-        }
+        )
 
         SpacerVertical24()
         AuthButton(

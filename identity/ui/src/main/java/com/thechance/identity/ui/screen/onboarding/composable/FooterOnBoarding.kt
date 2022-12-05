@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.composable
+package com.thechance.identity.ui.screen.onboarding.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text

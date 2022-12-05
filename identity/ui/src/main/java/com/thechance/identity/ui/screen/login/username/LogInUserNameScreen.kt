@@ -76,13 +76,10 @@ private fun LogInUserNameContent(
         SpacerVertical(height = 14.dp)
         InputText(
             type = KeyboardType.Text,
-            image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.user_name_place_holder),
             text = uiState.userName,
             onTextChange = onChangeUserName
-        ) {
-
-        }
+        )
 
         SpacerVertical24()
         AuthButton(

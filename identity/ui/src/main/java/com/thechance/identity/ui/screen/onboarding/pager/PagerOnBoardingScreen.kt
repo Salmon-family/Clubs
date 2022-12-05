@@ -10,8 +10,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.composable.FooterOnBoarding
-import com.thechance.identity.ui.composable.ViewPagerSlider
+import com.thechance.identity.ui.screen.onboarding.composable.FooterOnBoarding
+import com.thechance.identity.ui.screen.onboarding.composable.ViewPagerSlider
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.theme.LightCardColor

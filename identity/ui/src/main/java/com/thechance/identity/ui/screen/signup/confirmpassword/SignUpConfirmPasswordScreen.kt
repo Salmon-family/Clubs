@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.signup
+package com.thechance.identity.ui.screen.signup.confirmpassword
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,18 +9,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.screen.signup.firstname.navigateToSignupFullName
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.screen.signup.firstname.navigateToSignupFullName
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -33,6 +32,7 @@ fun SignUpConfirmPasswordScreen(
     val state by viewModel.uiState.collectAsState()
     SignUpConfirmPasswordContent(
         state = state,
+        onConfirmCorrect = viewModel::onConfirmPassword,
         onChangePassword = viewModel::onChangePassword,
         onChangeConfirmPassword = viewModel::onChangeConfirmPassword,
         onClickSignupFirstNameScreen = {
@@ -45,6 +45,7 @@ fun SignUpConfirmPasswordScreen(
 @Composable
 fun SignUpConfirmPasswordContent(
     state: UserUIState,
+    onConfirmCorrect: () -> Boolean,
     onChangePassword: (String) -> Unit,
     onChangeConfirmPassword: (String) -> Unit,
     onClickSignupFirstNameScreen: () -> Unit,
@@ -83,15 +84,12 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputText(
-            type = KeyboardType.Password,
-            image = R.drawable.ic_close,
+        PasswordInputText(
             placeHolder = stringResource(id = R.string.password_place_holder),
             text = state.password,
-            onTextChange = onChangePassword
-        ) {
-
-        }
+            onTextChange = onChangePassword,
+            match = onConfirmCorrect.invoke()
+        )
 
         SpacerVertical(height = 24.dp)
         AuthText(
@@ -102,15 +100,12 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical(height = 14.dp)
-        InputText(
-            type = KeyboardType.Password,
-            image = R.drawable.ic_close,
+        PasswordInputText(
             placeHolder = stringResource(id = R.string.password_place_holder),
             text = state.confirmPassword,
-            onTextChange = onChangeConfirmPassword
-        ) {
-
-        }
+            onTextChange = onChangeConfirmPassword,
+            match = onConfirmCorrect.invoke()
+        )
 
         SpacerVertical(height = 24.dp)
         AuthButton(

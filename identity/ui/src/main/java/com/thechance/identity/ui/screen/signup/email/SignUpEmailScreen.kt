@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.signup
+package com.thechance.identity.ui.screen.signup.email
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -74,13 +74,10 @@ private fun SignUpEmailContent(
         SpacerVertical(height = 14.dp)
         InputText(
             type = KeyboardType.Email,
-            image = R.drawable.ic_close,
             placeHolder = stringResource(id = R.string.email_place_holder),
             text = state.email,
             onTextChange = onChangeEmail
-        ) {
-
-        }
+        )
         SpacerVertical(height = 24.dp)
         AuthButton(
             buttonModifier = Modifier

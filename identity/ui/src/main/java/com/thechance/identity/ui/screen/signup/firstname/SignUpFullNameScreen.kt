@@ -25,7 +25,7 @@ import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
 @Composable
-fun SignUpFirstNameScreen(
+fun SignUpFullNameScreen(
     navController: NavController,
     viewModel: SignupViewModel = hiltViewModel(),
 ) {
@@ -84,9 +84,7 @@ private fun SignUpNameContent(
             placeHolder = "ali",
             text = state.firstName,
             onTextChange = onChangeFullName
-        ) {
-
-        }
+        )
 
         SpacerVertical(height = 24.dp)
         AuthButton(

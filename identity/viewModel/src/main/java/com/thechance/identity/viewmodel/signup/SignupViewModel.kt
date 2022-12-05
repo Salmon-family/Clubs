@@ -48,6 +48,11 @@ class SignupViewModel @Inject constructor(
         _uiState.update { it.copy(confirmPassword = password) }
     }
 
+    fun onConfirmPassword(): Boolean {
+        return (_uiState.value.password == _uiState.value.confirmPassword) &&
+        (_uiState.value.password != "") && (_uiState.value.confirmPassword != "")
+    }
+
     fun onChangeFullName(fullName: String) {
         _uiState.update { it.copy(firstName = fullName) }
     }
