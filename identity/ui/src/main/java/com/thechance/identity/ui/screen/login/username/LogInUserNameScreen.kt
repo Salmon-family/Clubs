@@ -56,10 +56,9 @@ private fun LogInUserNameContent(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        SpacerVertical12()
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(52.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.user_name_question),
             style = Typography.h1,

@@ -16,6 +16,8 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.screen.signup.name.navigateToSignupNames
 import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -60,7 +62,7 @@ fun SignUpConfirmPasswordContent(
     ) {
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(height = 36.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
@@ -68,7 +70,7 @@ fun SignUpConfirmPasswordContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 8.dp)
+        SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
@@ -77,7 +79,7 @@ fun SignUpConfirmPasswordContent(
             text3 = stringResource(id = R.string.to_login)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.your_password),
             style = Typography.body2,
@@ -93,7 +95,7 @@ fun SignUpConfirmPasswordContent(
             match = onConfirmCorrect.invoke()
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.confirm_password),
             style = Typography.body2,
@@ -109,7 +111,7 @@ fun SignUpConfirmPasswordContent(
             match = onConfirmCorrect.invoke()
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthButton(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)

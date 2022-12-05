@@ -23,6 +23,7 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.ui.screen.signup.confirmpassword.navigateToSignupConfirmPassword
+import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -55,7 +56,7 @@ private fun SignUpEmailContent(
     ) {
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(height = 36.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,

@@ -55,10 +55,9 @@ fun LogInPasswordContent(
             .padding(16.dp)
     ) {
 
-        SpacerVertical12()
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(52.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.log_in),
             style = Typography.h1,
@@ -66,7 +65,7 @@ fun LogInPasswordContent(
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
-        SpacerVertical(height = 32.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.your_password),
             style = Typography.subtitle2,

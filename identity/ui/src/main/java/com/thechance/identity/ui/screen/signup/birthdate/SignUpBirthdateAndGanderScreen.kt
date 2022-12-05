@@ -16,6 +16,8 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -54,7 +56,7 @@ private fun SignUpBirthdateAndGanderContent(
 
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(height = 36.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
@@ -62,7 +64,7 @@ private fun SignUpBirthdateAndGanderContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 8.dp)
+        SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
@@ -71,7 +73,7 @@ private fun SignUpBirthdateAndGanderContent(
             text3 = stringResource(id = R.string.to_login)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.birth_date),
             style = Typography.body2,
@@ -86,7 +88,7 @@ private fun SignUpBirthdateAndGanderContent(
             )
         }
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.gender),
             style = Typography.body2,
@@ -94,7 +96,7 @@ private fun SignUpBirthdateAndGanderContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthButton(
             onClick = {},
             buttonModifier = Modifier
