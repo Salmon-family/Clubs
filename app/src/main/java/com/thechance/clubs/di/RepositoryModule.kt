@@ -1,7 +1,7 @@
 package com.thechance.clubs.di
 
 import com.devfalah.repositories.ClubRepositoryImp
-import com.devfalah.usecases.ClubRepository
+import com.devfalah.usecases.repository.ClubRepository
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.identity.repositories.IdentityRepositoryImp
 import com.thechance.identity.usecases.IdentityRepository

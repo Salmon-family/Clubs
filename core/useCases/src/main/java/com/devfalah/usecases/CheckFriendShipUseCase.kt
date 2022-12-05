@@ -1,5 +1,6 @@
 package com.devfalah.usecases
 
+import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class CheckFriendShipUseCase @Inject constructor(

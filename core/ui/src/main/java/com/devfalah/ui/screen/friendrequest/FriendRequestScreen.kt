@@ -23,7 +23,8 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleProfileImage
-import com.devfalah.ui.spacer.*
+import com.devfalah.ui.composable.HeightSpacer8
+import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.theme.*
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
 import com.devfalah.viewmodels.friendRequest.FriendRequestViewModel

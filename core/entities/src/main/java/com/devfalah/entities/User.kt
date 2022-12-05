@@ -1,16 +1,17 @@
 package com.devfalah.entities
 
 data class User(
-    val birthdate: String,
-    val coverUrl: String,
-    val email: String,
+    val id: Int,
     val name: String,
-    val title: String,
-    val gender: String,
-    val userID: Int,
-    val icon: Icon,
-    val language: String,
-    val description: String,
     val username: String,
+    val birthdate: String,
+    val email: String,
+    val title: String,
+    val bio: String,
+    val gender: String,
+    val profileUrl: String,
+    val coverUrl: String,
+    val language: String,
+    val isFriend: Boolean
 )
 

@@ -1,7 +1,7 @@
-package com.devfalah.usecases
+package com.devfalah.usecases.repository
 
 import com.devfalah.entities.Album
-import com.devfalah.entities.Notifications
+import com.devfalah.entities.Notification
 import com.devfalah.entities.Post
 import com.devfalah.entities.User
 
@@ -15,7 +15,7 @@ interface ClubRepository {
 
     suspend fun getUserFriends(userID: Int): List<User>
 
-    suspend fun getNotifications(userID: Int): List<Notifications>
+    suspend fun getNotifications(userID: Int): List<Notification>
 
     suspend fun getUserAccountDetails(userID: Int): User
 
@@ -23,9 +23,9 @@ interface ClubRepository {
 
     suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<Post>
 
-    suspend fun setLike(userID: Int, postId: Int, type: String): Int
+    suspend fun setLikeOnPost(userID: Int, postId: Int): Int
 
-    suspend fun removeLike(userID: Int, postId: Int, type: String): Int
+    suspend fun removeLikeOnPost(userID: Int, postId: Int): Int
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
 }

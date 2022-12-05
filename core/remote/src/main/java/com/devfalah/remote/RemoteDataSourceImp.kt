@@ -50,20 +50,19 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Error")
     }
 
-    override suspend fun setLike(userID: Int, postId: Int, type: String): ReactionDTO {
-        return apiService.addLike(userID = userID, postID = postId, type = type).body()?.payload
-            ?: throw Throwable("Error")
+    override suspend fun setLikeOnPost(userID: Int, postId: Int): ReactionDTO {
+        return apiService.addLike(userID = userID, postID = postId, type = LikeType.post.name)
+            .body()?.payload ?: throw Throwable("Error")
     }
 
-    override suspend fun removeLike(userID: Int, postId: Int, type: String): ReactionDTO {
-        return apiService.removeLike(userID = userID, postID = postId, type = type).body()?.payload
-            ?: throw Throwable("Error")
+    override suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO {
+        return apiService.removeLike(userID = userID, postID = postId, type = LikeType.post.name)
+            .body()?.payload ?: throw Throwable("Error")
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
         return apiService.isFriendWith(userID = userID, otherUserID = friendID)
-            .body()?.payload?.isFriend
-            ?: throw Throwable("error")
+            .body()?.payload?.isFriend ?: throw Throwable("error")
     }
 
 }

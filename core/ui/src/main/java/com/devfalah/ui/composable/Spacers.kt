@@ -1,4 +1,4 @@
-package com.devfalah.ui.spacer
+package com.devfalah.ui.composable
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

@@ -16,10 +16,10 @@ data class UserState(
 
 fun User.toUIState(): UserState {
     return UserState(
-        userID = userID,
+        userID = id,
         name = name,
         title = title,
-        profileImage = icon.large
+        profileImage = profileUrl
     )
 }
 

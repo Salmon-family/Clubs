@@ -1,10 +1,6 @@
 package com.devfalah.viewmodels.notifications
 
 import com.devfalah.entities.Notification
-import com.devfalah.viewmodels.Constants.LIKE_PHOTO
-import com.devfalah.viewmodels.Constants.LIKE_POST
-import com.devfalah.viewmodels.Constants.NOTHING
-import com.devfalah.viewmodels.Constants.REQUEST_GROUP
 
 
 data class NotificationsUIState(
@@ -18,7 +14,7 @@ data class NotificationState(
     val posterName: String = "",
     val posterPhoto: String,
     val timeCreated: String = "",
-    val type: Int = NOTHING,
+    val type: Int = 0,
     val viewed: Boolean = false,
 )
 
@@ -27,7 +23,7 @@ fun Notification.toUIState(): NotificationState {
     return NotificationState(
         id = guid,
         timeCreated = timeCreated,
-        type = mapType(type),
+        type = type,
         viewed = viewed,
         posterID = posterID,
         posterName = posterName,
@@ -35,11 +31,5 @@ fun Notification.toUIState(): NotificationState {
     )
 }
 
-private fun mapType(type: String): Int {
-    return when (type) {
-        "like:entity:file:ossn:aphoto" -> LIKE_PHOTO
-        "like:post" -> LIKE_POST
-        "group:joinrequest" -> REQUEST_GROUP
-        else -> NOTHING
-    }
-}
+
+fun List<Notification>.toUIState() = map { it.toUIState() }

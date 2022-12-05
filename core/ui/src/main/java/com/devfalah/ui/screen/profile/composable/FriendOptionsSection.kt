@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.profile.profileSections
+package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
+import com.devfalah.viewmodels.userProfile.mapper.toFriendsUIState
+import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,7 +41,6 @@ class ProfileViewModel @Inject constructor(
     val getUserAlbumsUseCase: GetUserAlbumsUseCase,
     val getUserFriendsUseCase: GetUserFriendsUseCase,
     val getProfilePostUseCase: GetProfilePostsUseCase,
-    val checkFriendShipUseCase: CheckFriendShipUseCase,
     val addFriendUseCase: AddFriendUseCase,
     val likeUseCase: SetLikeUseCase
 ) : ViewModel() {
@@ -55,16 +56,16 @@ class ProfileViewModel @Inject constructor(
         getUserAlbums(ownerID)
         getUserFriends(ownerID)
         getProfilePost(userId, ownerID)
-        if (userId != ownerID) {
-            checkFriendShip(userId, ownerID)
-        }
     }
 
     private fun getUserDetails(userID: Int, profileOwnerID: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true, majorError = "") }
             try {
-                val userDetails = getUserAccountDetails(profileOwnerID).toUIState()
+                val userDetails = getUserAccountDetails(
+                    userId = userID,
+                    profileOwnerId = profileOwnerID
+                ).toUIState()
                 _uiState.update {
                     it.copy(
                         loading = false,
@@ -81,7 +82,7 @@ class ProfileViewModel @Inject constructor(
     private fun getUserAlbums(profileOwnerID: Int) {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(albums = getUserAlbumsUseCase(profileOwnerID).map { it.toUIState() }) }
+                _uiState.update { it.copy(albums = getUserAlbumsUseCase(profileOwnerID).toUIState()) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
@@ -91,7 +92,7 @@ class ProfileViewModel @Inject constructor(
     private fun getUserFriends(profileOwnerID: Int) {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(friends = getUserFriendsUseCase(profileOwnerID).map { it.toUIState() }) }
+                _uiState.update { it.copy(friends = getUserFriendsUseCase(profileOwnerID).toFriendsUIState()) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
             }
@@ -102,20 +103,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update {
-                    it.copy(posts = getProfilePostUseCase(userID, profileOwnerID)
-                        .map { it.toUIState() })
-                }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
-            }
-        }
-    }
-
-    private fun checkFriendShip(userId: Int, profileOwnerID: Int) {
-        viewModelScope.launch {
-            try {
-                _uiState.update {
-                    it.copy(areFriends = checkFriendShipUseCase(userId, profileOwnerID))
+                    it.copy(posts = getProfilePostUseCase(userID, profileOwnerID).toUIState())
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
@@ -161,11 +149,11 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val success = addFriendUseCase(userId, ownerID)
-                if (success){
-                    _uiState.update { it.copy(areFriends = true) }
+                if (success) {
+                    _uiState.update { it.copy(userDetails = it.userDetails.copy(areFriends = true)) }
                 }
             } catch (t: Throwable) {
-
+                _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }
