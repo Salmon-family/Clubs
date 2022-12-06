@@ -3,12 +3,9 @@ package com.thechance.identity.ui.screen.signup.birthdate
 import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
@@ -19,30 +16,28 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.viewmodel.signup.SignupViewModel
-import com.thechance.identity.viewmodel.signup.UserUIState
 
 @Composable
-fun SignUpBirthdateAndGenderScreen(
+fun SignupBirthdateAndGenderScreen(
     navController: NavController,
-    viewModel: SignupViewModel = hiltViewModel(),
+//    viewModel: SignupViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.uiState.collectAsState()
-    SignUpBirthdateAndGanderContent(
-        state,
-        onChangeGender = viewModel::onChangeGender,
-        onChangeBirthdate = viewModel::onChangeBirthdate,
+//    val state by viewModel.uiState.collectAsState()
+    SignupBirthdateAndGanderContent(
+//        state,
+//        onChangeGender = viewModel::onChangeGender,
+//        onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
         onCreateAccount = {navController.navigateToAccountActivation()}
     )
 }
 
 @Composable
-private fun SignUpBirthdateAndGanderContent(
-    state: UserUIState,
+private fun SignupBirthdateAndGanderContent(
+//    state: UserUIState,
     onClickBack: () -> Unit,
-    onChangeBirthdate: (String) -> Unit,
-    onChangeGender: (String) -> Unit,
+//    onChangeBirthdate: (String) -> Unit,
+//    onChangeGender: (String) -> Unit,
     onCreateAccount: () -> Unit
 ) {
     Column(

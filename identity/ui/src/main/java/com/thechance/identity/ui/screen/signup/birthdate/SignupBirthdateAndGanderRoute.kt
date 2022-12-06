@@ -16,7 +16,7 @@ const val SIGNUP_BIRTHDATE_AND_GANDER_Route = "signupBirthdateAndGanderScreen"
 fun NavGraphBuilder.signupBirthDateAndGanderRoute(navHostController: NavHostController) {
     composable(SIGNUP_BIRTHDATE_AND_GANDER_Route) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            SignUpBirthdateAndGenderScreen(
+            SignupBirthdateAndGenderScreen(
                 navController = navHostController,
             )
         }

@@ -83,7 +83,7 @@ private fun SignUpFullNameContent(
         Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
-            placeHolder = "ali",
+            placeHolder = stringResource(id = R.string.name_hint),
             text = state.firstName,
             onTextChange = onChangeFullName
         )
