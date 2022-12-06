@@ -1,5 +1,6 @@
 package com.devfalah.repository
 
+import com.devfalah.repository.mappers.toEntities
 import com.devfalah.repository.mappers.toEntity
 import com.devfalah.repository.mappers.toLocalDto
 import com.devfalah.repository.mappers.toMessage
@@ -25,7 +26,7 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override suspend fun getChats(userID: Int): List<Chat> {
-        return ChatDataSource.getChats(userID).map { it.toLocalDto(userID) }
+        return ChatDataSource.getChats(userID).toEntities(userID).friends
     }
 
     override fun getChats(query: String): Flow<List<Chat>> {
