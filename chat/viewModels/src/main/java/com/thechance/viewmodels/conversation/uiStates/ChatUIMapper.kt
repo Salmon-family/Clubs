@@ -2,7 +2,9 @@ package com.thechance.viewmodels.conversation.uiMappers
 
 import android.util.Log
 import com.thechance.entities.Conversation
+import com.thechance.entities.Friend
 import com.thechance.entities.Message
+import com.thechance.viewmodels.conversation.uiStates.AppBarUIState
 import com.thechance.viewmodels.conversation.uiStates.ChatUIState
 import com.thechance.viewmodels.conversation.uiStates.MessageUIState
 
@@ -27,5 +29,12 @@ fun Message.toMessage(): MessageUIState {
         isFromUser = fromMe,
         message = message,
         messageDate = time,
+    )
+}
+
+fun Friend.toUiState(): AppBarUIState {
+    return AppBarUIState(
+        userName = fullName,
+        icon = photoUrl,
     )
 }

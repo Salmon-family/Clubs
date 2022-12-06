@@ -3,6 +3,7 @@ package com.devfalah.repository.mappers
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ChatLocalDto
 import com.thechance.entities.Chat
+import com.thechance.entities.Friend
 
 
 fun ChatDTO.toLocalDto(userId: Int): Chat {
@@ -10,7 +11,7 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
         return Chat(
             fullName = messageTo?.fullname ?: "",
             guid = messageTo?.guid ?: 0,
-            icon = messageTo?.icon?.small ?: "",
+            icon = messageTo?.icon?.larger ?: "",
             time = time ?: 0,
             recentMessage = message ?: ""
         )
@@ -18,7 +19,7 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
         return Chat(
             fullName = messageFrom?.fullname ?: "",
             guid = messageFrom?.guid ?: 0,
-            icon = messageFrom?.icon?.small ?: "",
+            icon = messageFrom?.icon?.larger ?: "",
             time = time ?: 0,
             recentMessage = message ?: ""
         )
@@ -42,5 +43,12 @@ fun Chat.toLocalDto(): ChatLocalDto {
         icon = icon,
         time = time,
         recentMessage = recentMessage
+    )
+}
+
+fun ChatLocalDto.toFriend(): Friend {
+    return Friend(
+        fullName = fullName,
+        photoUrl = icon
     )
 }

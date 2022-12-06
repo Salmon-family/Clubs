@@ -2,6 +2,7 @@ package com.nadafeteiha.usecases
 
 import com.thechance.entities.Chat
 import com.thechance.entities.Conversation
+import com.thechance.entities.Friend
 import com.thechance.entities.Message
 import kotlinx.coroutines.flow.Flow
 
@@ -25,4 +26,5 @@ interface ChatRepository {
 
     fun getMessages(friendId: Int): Flow<List<Message>>
 
+    suspend fun getFriendDetails(friendID: Int): Friend
 }

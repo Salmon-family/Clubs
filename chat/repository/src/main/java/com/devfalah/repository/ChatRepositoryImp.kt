@@ -1,11 +1,13 @@
 package com.devfalah.repository
 
 import com.devfalah.repository.mappers.toEntity
+import com.devfalah.repository.mappers.toFriend
 import com.devfalah.repository.mappers.toLocalDto
 import com.devfalah.repository.mappers.toMessage
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.Chat
 import com.thechance.entities.Conversation
+import com.thechance.entities.Friend
 import com.thechance.entities.Message
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -46,6 +48,10 @@ class ChatRepositoryImp @Inject constructor(
 
     override suspend fun insertMessage(message: Message) {
         chatLocalDataSource.insertMessage(message.toMessage())
+    }
+
+    override suspend fun getFriendDetails(friendID: Int): Friend {
+        return chatLocalDataSource.getFriendDetails(friendID).toFriend()
     }
 
     override fun getMessages(friendId: Int): Flow<List<Message>> {
