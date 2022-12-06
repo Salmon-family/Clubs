@@ -16,7 +16,9 @@ import com.thechance.ui.R
 import com.thechance.ui.theme.BlackColor
 
 @Composable
-fun TopBarChats() {
+fun TopBarChats(
+    onCLickBack: ()->Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,7 +30,7 @@ fun TopBarChats() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            BackButton()
+            BackButton(onCLickBack)
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = stringResource(id = R.string.chats),
@@ -44,5 +46,5 @@ fun TopBarChats() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewTopBarChats() {
-    TopBarChats()
+    TopBarChats({})
 }

@@ -35,8 +35,9 @@ fun ChatsScreen(
         state = state,
         onValueChanged = viewModel::onSearchTextChange,
         onClickChat = {
-            navController.navigateToConversation(it.guid)
-        }
+            navController.navigateToConversation(id = viewModel.id, friendId = it.guid)
+        },
+        onCLickBack = {}
     )
 }
 
@@ -46,6 +47,7 @@ private fun ChatsContent(
     state: ChatsUiState,
     onValueChanged: (String) -> Unit,
     onClickChat :(ChatUiState) -> Unit,
+    onCLickBack: ()->Unit,
 ) {
     Column(
         modifier = Modifier
@@ -57,7 +59,7 @@ private fun ChatsContent(
             contentColor = BlackColor,
             elevation = 0.dp
         ) {
-            TopBarChats()
+            TopBarChats(onCLickBack)
         }
         if (state.isLoading) {
             Loading(modifier = Modifier.align(Alignment.CenterHorizontally))

@@ -1,6 +1,7 @@
 package com.thechance.ui.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,9 +12,12 @@ import com.thechance.ui.R
 import com.thechance.ui.theme.ClubsTheme
 
 @Composable
-fun BackButton() {
+fun BackButton(
+    onClick: ()-> Unit,
+    modifier: Modifier = Modifier,
+) {
     Image(
-        modifier = Modifier.padding(4.dp),
+        modifier = modifier.padding(4.dp).clickable { onClick() },
         painter = painterResource(id = R.drawable.arrow_icon),
         contentDescription = "back button")
 
@@ -23,6 +27,6 @@ fun BackButton() {
 @Composable
 fun DefaultBackButtonPreview() {
     ClubsTheme {
-        BackButton()
+        BackButton({})
     }
 }

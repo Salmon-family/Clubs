@@ -15,12 +15,12 @@ import com.thechance.ui.spacer.SpaceHorizontal
 import com.thechance.ui.theme.Typography
 
 @Composable
-fun AppBar(userName: String, imageUser: String) {
+fun AppBar(userName: String, imageUser: String,onCLickBack: ()->Unit,) {
     Row (modifier = Modifier.fillMaxWidth()
         .padding(horizontal = 16.dp).size(56.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        BackButton()
+        BackButton(onCLickBack)
         SpaceHorizontal(width = 16)
         ImageUserAvatar(imageUser)
         SpaceHorizontal(width = 8)
@@ -43,5 +43,5 @@ fun ImageUserAvatar(imageUser: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultAppBarPreview() {
-    AppBar("Chris Evans","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV3uRw6RO8vGPqf4MLmHgXTqyV74h7VBY5ow&usqp=CAU")
+    AppBar("Chris Evans","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV3uRw6RO8vGPqf4MLmHgXTqyV74h7VBY5ow&usqp=CAU",{})
 }

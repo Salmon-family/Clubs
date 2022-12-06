@@ -1,6 +1,7 @@
 package com.thechance.viewmodels.conversation
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
@@ -16,13 +17,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatWithFriendViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getListMessagesUseCase: GetChatWithFriendUseCase,
     private val setSendMessageUseCase: SetSendMessageUseCase,
 ) :
     ViewModel() {
 
-    private val userId = 7
-    private val friendId = 2
+    private val args = ConversationArgs(savedStateHandle)
+    private val userId = args.id
+    private val friendId = args.friendId
 
     private val friendName = "Falah Hassan"
     private val friendImage =

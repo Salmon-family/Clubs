@@ -32,6 +32,9 @@ internal fun ConversationScreen(
         messageText = state.message,
         onValueChanged = viewModel::onChanceMessage,
         sendMessage = viewModel::sendMessage,
+        onCLickBack = {
+            navController.popBackStack()
+        }
     )
 }
 
@@ -41,9 +44,10 @@ fun ChatContent(
     messageText: String,
     onValueChanged: (String) -> Unit,
     sendMessage: () -> Unit,
+    onCLickBack: ()->Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        AppBar(state.appBar.userName, state.appBar.icon)
+        AppBar(state.appBar.userName, state.appBar.icon,onCLickBack)
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
