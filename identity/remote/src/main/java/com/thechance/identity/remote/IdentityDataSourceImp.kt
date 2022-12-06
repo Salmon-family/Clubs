@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.IdentityDataSource
 import com.thechance.identity.repositories.models.AccountDTO
+import com.thechance.identity.repositories.models.UserDTO
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -11,10 +12,10 @@ class IdentityDataSourceImp @Inject constructor(
     private val service: IdentityService
 ) : IdentityDataSource {
 
-    override suspend fun login(userName: String, password: String): Boolean {
+    override suspend fun login(userName: String, password: String): UserDTO {
         return wrap {
             service.login(userName, password)
-        } != null
+        }
     }
 
     override suspend fun signup(
@@ -43,7 +44,8 @@ class IdentityDataSourceImp @Inject constructor(
         return if (response.isSuccessful) {
             when (response.body()!!.code) {
                 "100" -> {
-                    Gson().fromJson(response.body()!!.payload.toString(), I::class.java)
+                    //Gson().fromJson(response.body()!!.payload.toString(), I::class.java)
+                    response.body()!!.payload
                 }
                 else -> throw Throwable(response.body()!!.message)
             } ?: throw Throwable(response.message().toString())
