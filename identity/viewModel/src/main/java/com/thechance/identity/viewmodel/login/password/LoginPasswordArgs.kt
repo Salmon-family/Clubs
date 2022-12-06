@@ -1,4 +1,4 @@
-package com.thechance.identity.viewmodel.login
+package com.thechance.identity.viewmodel.login.password
 
 import androidx.lifecycle.SavedStateHandle
 

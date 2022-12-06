@@ -1,10 +1,11 @@
-package com.thechance.identity.viewmodel.login
+package com.thechance.identity.viewmodel.login.password
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.LoginUseCase
+import com.thechance.identity.viewmodel.login.LoginUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,7 @@ class LoginPasswordViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(LoginPasswordUIState())
+    private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
 
     private val args = LoginPasswordArgs(savedStateHandle)

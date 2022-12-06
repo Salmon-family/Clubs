@@ -2,7 +2,7 @@ package com.thechance.identity.ui.screen.login.password
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.thechance.identity.viewmodel.login.LoginPasswordArgs
+import com.thechance.identity.viewmodel.login.password.LoginPasswordArgs
 
 fun NavController.navigateToLogInPassword(userName: String){
     navigate("$LOGIN_PASSWORD_ROUTE/$userName")

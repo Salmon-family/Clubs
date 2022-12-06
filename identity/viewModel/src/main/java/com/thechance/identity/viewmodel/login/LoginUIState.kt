@@ -1,5 +1,6 @@
 package com.thechance.identity.viewmodel.login
 
-data class LoginPasswordUIState(
+data class LoginUIState(
+    val userName: String = "",
     val password: String = "",
 )

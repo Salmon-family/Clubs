@@ -16,29 +16,26 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.ui.composable.PasswordInputText
-import com.thechance.identity.viewmodel.login.LoginPasswordUIState
-import com.thechance.identity.viewmodel.login.LoginPasswordViewModel
+import com.thechance.identity.viewmodel.login.LoginUIState
+import com.thechance.identity.viewmodel.login.password.LoginPasswordViewModel
 
 @Composable
 fun LogInPasswordScreen(
     navController: NavController,
     viewModel: LoginPasswordViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
     LogInPasswordContent(
-        state = uiState,
+        state = state,
         onChangePassword = viewModel::onChangePassword,
-        onLogin = {
-            viewModel.onLogin()
-            //navController.navigateToHome()
-        },
+        onLogin = viewModel::onLogin,
         onClickBack = { navController.navigateUp() }
     )
 }
 
 @Composable
 fun LogInPasswordContent(
-    state: LoginPasswordUIState,
+    state: LoginUIState,
     onChangePassword: (String) -> Unit,
     onLogin: () -> Unit,
     onClickBack: () -> Unit
