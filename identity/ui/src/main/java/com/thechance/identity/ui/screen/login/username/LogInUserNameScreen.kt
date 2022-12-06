@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.InputText
@@ -22,28 +21,30 @@ import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.viewmodel.login.LoginUIState
-import com.thechance.identity.viewmodel.login.LoginViewModel
+import com.thechance.identity.viewmodel.login.LoginUserNameUIState
+import com.thechance.identity.viewmodel.login.LoginUserNameViewModel
 
 @Composable
 fun LogInUserNameScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel(),
+    viewModel: LoginUserNameViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     LogInUserNameContent(
         state = uiState,
         onChangeUserName = viewModel::onChangeUserName,
-        onClickContinue = { navController.navigateToLogInPassword() },
+        onClickContinue = { userName ->
+            navController.navigateToLogInPassword(userName)
+        },
         onClickBack = { navController.navigateUp() }
     )
 }
 
 @Composable
 private fun LogInUserNameContent(
-    state: LoginUIState,
+    state: LoginUserNameUIState,
     onChangeUserName: (String) -> Unit,
-    onClickContinue: () -> Unit,
+    onClickContinue: (String) -> Unit,
     onClickBack: () -> Unit
 ) {
     Column(
@@ -78,7 +79,8 @@ private fun LogInUserNameContent(
         )
 
         SpacerVertical24()
-        AuthButton(
+        ContinueButton(
+            state = state.userName,
             onClick = onClickContinue,
             isEnabled = state.userName.isNotEmpty(),
             text = stringResource(id = R.string.continue_label),

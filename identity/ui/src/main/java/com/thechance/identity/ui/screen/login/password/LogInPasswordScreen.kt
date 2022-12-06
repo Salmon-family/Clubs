@@ -15,15 +15,14 @@ import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.screen.home.navigateToHome
 import com.thechance.identity.ui.composable.PasswordInputText
-import com.thechance.identity.viewmodel.login.LoginUIState
-import com.thechance.identity.viewmodel.login.LoginViewModel
+import com.thechance.identity.viewmodel.login.LoginPasswordUIState
+import com.thechance.identity.viewmodel.login.LoginPasswordViewModel
 
 @Composable
 fun LogInPasswordScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginPasswordViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     LogInPasswordContent(
@@ -31,7 +30,7 @@ fun LogInPasswordScreen(
         onChangePassword = viewModel::onChangePassword,
         onLogin = {
             viewModel.onLogin()
-            navController.navigateToHome()
+            //navController.navigateToHome()
         },
         onClickBack = { navController.navigateUp() }
     )
@@ -39,7 +38,7 @@ fun LogInPasswordScreen(
 
 @Composable
 fun LogInPasswordContent(
-    state: LoginUIState,
+    state: LoginPasswordUIState,
     onChangePassword: (String) -> Unit,
     onLogin: () -> Unit,
     onClickBack: () -> Unit
