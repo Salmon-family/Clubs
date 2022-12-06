@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.screen.signup.activation.navigateToAccountActivation
 import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
@@ -36,7 +37,7 @@ fun SignUpBirthdateAndGenderScreen(
         onChangeGender = viewModel::onChangeGender,
         onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
-        onCreateAccount = viewModel::makeSignupRequest
+        onCreateAccount = {navController.navigateToAccountActivation()}
     )
 }
 
@@ -98,12 +99,12 @@ private fun SignUpBirthdateAndGanderContent(
 
         SpacerVertical24()
         AuthButton(
-            onClick = {},
+            onClick = onCreateAccount,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            isEnabled = false,
-            text = stringResource(id = R.string.continue_label),
+            isEnabled = true,
+            text = stringResource(id = R.string.create_account_label),
         )
     }
 
