@@ -35,7 +35,10 @@ fun ChatsScreen(
         state = state,
         onValueChanged = viewModel::onSearchTextChange,
         onClickChat = {
-            navController.navigateToConversation(id = viewModel.id, friendId = it.guid)
+            navController.navigateToConversation(id = viewModel.id,
+                friendId = it.guid,
+                friendName = it.fullName,
+                friendImage = it.icon)
         },
         onCLickBack = {}
     )
@@ -46,8 +49,8 @@ fun ChatsScreen(
 private fun ChatsContent(
     state: ChatsUiState,
     onValueChanged: (String) -> Unit,
-    onClickChat :(ChatUiState) -> Unit,
-    onCLickBack: ()->Unit,
+    onClickChat: (ChatUiState) -> Unit,
+    onCLickBack: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -77,7 +80,7 @@ private fun ChatsContent(
                 items(
                     items = state.chats,
                     key = { chatUiState ->
-                        chatUiState.guid
+                        chatUiState.fullName
                     }
                 ) { chat ->
                     FriendChat(
