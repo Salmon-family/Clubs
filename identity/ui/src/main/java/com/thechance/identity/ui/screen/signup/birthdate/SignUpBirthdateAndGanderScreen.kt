@@ -1,10 +1,7 @@
 package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,7 +12,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
-import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
+import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -34,7 +33,7 @@ fun SignUpBirthdateAndGenderScreen(
         onChangeGender = viewModel::onChangeGender,
         onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
-        onCreateAccount = viewModel::makeSignupRequest
+        onCreateAccount = {navController.navigateToAccountActivation()}
     )
 }
 
@@ -54,7 +53,7 @@ private fun SignUpBirthdateAndGanderContent(
 
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(height = 36.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
@@ -62,7 +61,7 @@ private fun SignUpBirthdateAndGanderContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 8.dp)
+        SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
@@ -71,7 +70,7 @@ private fun SignUpBirthdateAndGanderContent(
             text3 = stringResource(id = R.string.to_login)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.birth_date),
             style = Typography.body2,
@@ -79,14 +78,14 @@ private fun SignUpBirthdateAndGanderContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             DatePicker(
                 image = R.drawable.ic_arrow_down_circle,
             )
         }
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.gender),
             style = Typography.body2,
@@ -94,14 +93,14 @@ private fun SignUpBirthdateAndGanderContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthButton(
-            onClick = {},
+            onClick = onCreateAccount,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            isEnabled = false,
-            text = stringResource(id = R.string.continue_label),
+            isEnabled = true,
+            text = stringResource(id = R.string.create_account_label),
         )
     }
 

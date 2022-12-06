@@ -1,9 +1,6 @@
 package com.thechance.identity.ui.screen.login.password
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,8 +11,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
-import com.thechance.identity.ui.spacer.SpacerVertical
-import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -55,10 +50,9 @@ fun LogInPasswordContent(
             .padding(16.dp)
     ) {
 
-        SpacerVertical12()
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(52.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.log_in),
             style = Typography.h1,
@@ -66,7 +60,7 @@ fun LogInPasswordContent(
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
-        SpacerVertical(height = 32.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.your_password),
             style = Typography.subtitle2,
@@ -74,7 +68,7 @@ fun LogInPasswordContent(
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         PasswordInputText(
             placeHolder = stringResource(id = R.string.password_place_holder),
             text = state.password,

@@ -1,9 +1,6 @@
 package com.thechance.identity.ui.screen.signup.email
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,11 +15,11 @@ import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.InputText
-import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.ui.screen.signup.confirmpassword.navigateToSignupConfirmPassword
+import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
@@ -55,7 +52,7 @@ private fun SignUpEmailContent(
     ) {
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(height = 36.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
@@ -63,7 +60,7 @@ private fun SignUpEmailContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 24.dp)
+        Spacer(Modifier.height(24.dp))
         AuthText(
             text = stringResource(id = R.string.email),
             style = Typography.subtitle2,
@@ -71,14 +68,14 @@ private fun SignUpEmailContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Email,
             placeHolder = stringResource(id = R.string.email_place_holder),
             text = state.email,
             onTextChange = onChangeEmail
         )
-        SpacerVertical(height = 24.dp)
+        Spacer(Modifier.height(24.dp))
         AuthButton(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)

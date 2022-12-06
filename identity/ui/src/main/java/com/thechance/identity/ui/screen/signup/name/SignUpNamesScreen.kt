@@ -1,9 +1,6 @@
 package com.thechance.identity.ui.screen.signup.name
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,7 +13,8 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.screen.signup.birthdate.navigateToBirthdateAndGander
-import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -57,7 +55,7 @@ private fun SignUpFullNameContent(
 
         BackButton(onClick = onClickBack)
 
-        SpacerVertical(height = 36.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
@@ -65,7 +63,7 @@ private fun SignUpFullNameContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 8.dp)
+        SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
@@ -74,7 +72,7 @@ private fun SignUpFullNameContent(
             text3 = stringResource(id = R.string.to_login)
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.full_naame),
             style = Typography.body2,
@@ -82,7 +80,7 @@ private fun SignUpFullNameContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = "ali",
@@ -90,7 +88,7 @@ private fun SignUpFullNameContent(
             onTextChange = onChangeFullName
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthText(
             text = stringResource(id = R.string.user_name),
             style = Typography.body2,
@@ -98,7 +96,7 @@ private fun SignUpFullNameContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.user_name_hint),
@@ -106,7 +104,7 @@ private fun SignUpFullNameContent(
             onTextChange = onChangeUserName
         )
 
-        SpacerVertical(height = 24.dp)
+        SpacerVertical24()
         AuthButton(
             onClick = onClickUserNameScreen,
             buttonModifier = Modifier

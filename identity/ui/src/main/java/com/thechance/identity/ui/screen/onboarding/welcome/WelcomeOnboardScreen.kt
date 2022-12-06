@@ -13,8 +13,6 @@ import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
 import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardingBoxOfParallelogramShape
-import com.thechance.identity.ui.spacer.SpacerVertical
-import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
@@ -39,12 +37,13 @@ fun WelcomeOnboardContent(
         modifier = Modifier
             .fillMaxSize()
             .background(LightTernaryBrandColor)
+            .padding(bottom = 16.dp)
     ) {
 
         Spacer(modifier = Modifier.weight(1f))
         WelcomeOnBoardingBoxOfParallelogramShape()
 
-        SpacerVertical(height = 60.dp)
+        Spacer(modifier = Modifier.weight(1f))
         ClubText()
 
         SpacerVertical8()
@@ -63,7 +62,7 @@ fun WelcomeOnboardContent(
             Modifier.padding(start = 24.dp)
         )
 
-        SpacerVertical(height = 20.dp)
+        Spacer(modifier = Modifier.weight(0.2f))
         AuthButton(
             onClick = onClickNextScreen,
             text = stringResource(id = R.string.lets_do),
@@ -73,12 +72,11 @@ fun WelcomeOnboardContent(
             textModifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 24.dp)
         )
-        SpacerVertical16()
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewWelcomeOnboard() {
-    WelcomeOnboardContent({})
+    WelcomeOnboardContent{}
 }
