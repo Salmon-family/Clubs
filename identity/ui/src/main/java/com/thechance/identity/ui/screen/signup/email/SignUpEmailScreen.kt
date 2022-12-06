@@ -27,7 +27,7 @@ import com.thechance.identity.viewmodel.signup.UserUIState
 @Composable
 fun SignUpEmailScreen(
     navController: NavController,
-    viewModel: SignupViewModel = hiltViewModel()
+    viewModel: SignupViewModel
 ) {
     val state by viewModel.uiState.collectAsState()
     SignUpEmailContent(

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 
 fun NavController.navigateToBirthdateAndGander() {
@@ -13,11 +14,12 @@ fun NavController.navigateToBirthdateAndGander() {
 
 const val SIGNUP_BIRTHDATE_AND_GANDER_Route = "signupBirthdateAndGanderScreen"
 
-fun NavGraphBuilder.signupBirthDateAndGanderRoute(navHostController: NavHostController) {
+fun NavGraphBuilder.signupBirthDateAndGanderRoute(navHostController: NavHostController,viewModel: SignupViewModel) {
     composable(SIGNUP_BIRTHDATE_AND_GANDER_Route) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             SignupBirthdateAndGenderScreen(
                 navController = navHostController,
+                viewModel
             )
         }
     }

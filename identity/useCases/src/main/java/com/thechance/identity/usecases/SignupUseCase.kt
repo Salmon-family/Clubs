@@ -1,5 +1,6 @@
 package com.thechance.identity.usecases
 
+import com.thechance.identity.entities.Account
 import javax.inject.Inject
 
 class SignupUseCase @Inject constructor(
@@ -15,10 +16,10 @@ class SignupUseCase @Inject constructor(
         birthdate: String,
         username: String,
         password: String
-    ): Boolean {
+    ): Account {
         return identityRepository.signup(
             firstname = firstName, lastname = lastName, email = email, reEmail = reEmail,
             gender = gender, birthdate = birthdate, username = username, password = password
-        ) != -1
+        )
     }
 }

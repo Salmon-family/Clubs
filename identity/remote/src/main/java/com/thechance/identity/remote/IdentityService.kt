@@ -15,22 +15,6 @@ interface IdentityService {
     ): Response<IdentityBaseResponse<Any>>
 
     @FormUrlEncoded
-    @POST("user_details")
-    suspend fun getUserDetails(@Field("guid") userID: Int): Response<IdentityBaseResponse<UserDTO>>
-
-    @FormUrlEncoded
-    @POST("user_edit")
-    suspend fun editUser(
-        @Field("guid") userID: Int,
-        @Field("new_email") email: String,
-        @Field("new_gender") gender: String,
-        @Field("new_first_name") firstName: String,
-        @Field("new_last_name") lastName: String,
-        @Field("current_password") currentPassword: String,
-        @Field("new_password") newPassword: String = ""
-    ): Response<IdentityBaseResponse<UserDTO>>
-
-    @FormUrlEncoded
     @POST("user_add")
     suspend fun addUser(
         @Field("firstname") firstname: String,
@@ -41,6 +25,6 @@ interface IdentityService {
         @Field("birthdate") birthdate: String,
         @Field("username") username: String,
         @Field("password") password: String
-    ): Response<IdentityBaseResponse<Any>>
+    ): Response<IdentityBaseResponse<AccountDTO>>
 
 }

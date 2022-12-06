@@ -25,7 +25,7 @@ import com.thechance.identity.viewmodel.signup.UserUIState
 @Composable
 fun SignUpFullNameScreen(
     navController: NavController,
-    viewModel: SignupViewModel = hiltViewModel(),
+    viewModel: SignupViewModel,
 ) {
     val state by viewModel.uiState.collectAsState()
     SignUpFullNameContent(
@@ -67,7 +67,7 @@ private fun SignUpFullNameContent(
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
-            text2 = stringResource(id = R.string.email_place_holder),
+            text2 = state.email,
             color2 = LightPrimaryBrandColor,
             text3 = stringResource(id = R.string.to_login)
         )

@@ -3,6 +3,8 @@ package com.thechance.identity.ui.screen.signup.birthdate
 import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -16,28 +18,33 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.viewmodel.signup.SignupViewModel
+import com.thechance.identity.viewmodel.signup.UserUIState
 
 @Composable
 fun SignupBirthdateAndGenderScreen(
     navController: NavController,
-//    viewModel: SignupViewModel = hiltViewModel(),
+    viewModel: SignupViewModel,
 ) {
-//    val state by viewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
     SignupBirthdateAndGanderContent(
-//        state,
-//        onChangeGender = viewModel::onChangeGender,
-//        onChangeBirthdate = viewModel::onChangeBirthdate,
+        state,
+        onChangeGender = viewModel::onChangeGender,
+        onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
-        onCreateAccount = {navController.navigateToAccountActivation()}
+        onCreateAccount = {
+            viewModel.makeSignupRequest()
+            navController.navigateToAccountActivation()
+        }
     )
 }
 
 @Composable
 private fun SignupBirthdateAndGanderContent(
-//    state: UserUIState,
+    state: UserUIState,
     onClickBack: () -> Unit,
-//    onChangeBirthdate: (String) -> Unit,
-//    onChangeGender: (String) -> Unit,
+    onChangeBirthdate: (String) -> Unit,
+    onChangeGender: (String) -> Unit,
     onCreateAccount: () -> Unit
 ) {
     Column(
@@ -60,7 +67,7 @@ private fun SignupBirthdateAndGanderContent(
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
             color1 = LightSecondaryBlackColor,
-            text2 = stringResource(id = R.string.email_place_holder),
+            text2 = state.email,
             color2 = LightPrimaryBrandColor,
             text3 = stringResource(id = R.string.to_login)
         )

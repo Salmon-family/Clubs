@@ -10,6 +10,5 @@ data class UserUIState(
     val username: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val isLoading: Boolean = true,
-    val error: String = "" ,
+    val isError: String = "" ,
 )
