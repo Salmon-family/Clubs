@@ -1,9 +1,6 @@
 package com.thechance.identity.ui.screen.signup.name
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,7 +13,6 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.screen.signup.birthdate.navigateToBirthdateAndGander
-import com.thechance.identity.ui.spacer.SpacerVertical
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -84,7 +80,7 @@ private fun SignUpFullNameContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = "ali",
@@ -100,7 +96,7 @@ private fun SignUpFullNameContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.user_name_hint),

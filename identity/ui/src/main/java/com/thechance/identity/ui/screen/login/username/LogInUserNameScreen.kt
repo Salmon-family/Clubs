@@ -2,10 +2,7 @@
 
 package com.thechance.identity.ui.screen.login.username
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,8 +18,6 @@ import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.InputText
 import com.thechance.identity.ui.screen.login.password.navigateToLogInPassword
-import com.thechance.identity.ui.spacer.SpacerVertical
-import com.thechance.identity.ui.spacer.SpacerVertical12
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -74,7 +69,7 @@ private fun LogInUserNameContent(
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.user_name_place_holder),

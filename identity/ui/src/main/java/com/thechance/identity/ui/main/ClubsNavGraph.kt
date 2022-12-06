@@ -9,7 +9,7 @@ import com.thechance.identity.ui.screen.login.username.logInUserNameRoute
 import com.thechance.identity.ui.screen.onboarding.pager.onBoardingPagerRoute
 import com.thechance.identity.ui.screen.onboarding.welcome.WELCOME_ON_BOARDING_Route
 import com.thechance.identity.ui.screen.onboarding.welcome.welcomeOnBoardRoute
-import com.thechance.identity.ui.screen.signup.activation.accountActivationRoute
+import com.thechance.identity.ui.screen.activation.accountActivationRoute
 import com.thechance.identity.ui.screen.signup.birthdate.signupBirthDateAndGanderRoute
 import com.thechance.identity.ui.screen.signup.confirmpassword.signupConfirmPasswordRoute
 import com.thechance.identity.ui.screen.signup.email.signupEmailRoute

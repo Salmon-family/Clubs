@@ -1,10 +1,7 @@
 package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,8 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
-import com.thechance.identity.ui.screen.signup.activation.navigateToAccountActivation
-import com.thechance.identity.ui.spacer.SpacerVertical
+import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -82,7 +78,7 @@ private fun SignUpBirthdateAndGanderContent(
             Modifier.padding(start = 8.dp)
         )
 
-        SpacerVertical(height = 14.dp)
+        Spacer(Modifier.height(14.dp))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             DatePicker(
                 image = R.drawable.ic_arrow_down_circle,
