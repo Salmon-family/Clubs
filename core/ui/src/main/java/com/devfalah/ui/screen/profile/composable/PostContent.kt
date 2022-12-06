@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,8 +20,10 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.devfalah.ui.R
 import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.theme.LightSecondaryBlackColor
+import com.devfalah.ui.theme.LightTernaryGrayColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.userProfile.PostUIState
 
@@ -100,8 +103,14 @@ fun ExpandableText(
         if (!expanded) {
             val density = LocalDensity.current
             Text(
-                "... See more",
+                text = stringResource(id = R.string.read_more),
                 onTextLayout = { seeMoreSizeState.value = it.size },
+                style = TextStyle(
+                    color = LightTernaryGrayColor,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp,
+                    fontFamily = PlusJakartaSans
+                ),
                 modifier = Modifier
                     .then(
                         if (seeMoreOffset != null)

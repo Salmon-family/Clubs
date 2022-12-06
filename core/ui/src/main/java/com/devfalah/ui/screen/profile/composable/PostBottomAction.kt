@@ -5,10 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -17,6 +20,8 @@ import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.composable.WidthSpacer24
 import com.devfalah.ui.composable.WidthSpacer8
+import com.devfalah.ui.theme.LightPrimaryBlackColor
+import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -32,7 +37,7 @@ fun PostBottomAction(
 
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
-        Image(
+        Icon(
             modifier = Modifier.clickable { onClickLike(post) },
             painter = painterResource(
                 id = if (post.isLikedByUser) {
@@ -41,6 +46,11 @@ fun PostBottomAction(
                     R.drawable.like_icon
                 }
             ),
+            tint = if (post.isLikedByUser) {
+                LightPrimaryBrandColor
+            } else {
+                Color.Unspecified
+            },
             contentDescription = null
         )
         WidthSpacer8()
@@ -55,7 +65,7 @@ fun PostBottomAction(
         }
         WidthSpacer24()
 
-        Image(
+        Icon(
             modifier = Modifier.clickable { onClickComment(post) },
             painter = painterResource(id = R.drawable.comment_icon),
             contentDescription = null
