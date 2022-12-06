@@ -26,11 +26,8 @@ class ChatWithFriendViewModel @Inject constructor(
     private val args = ConversationArgs(savedStateHandle)
     private val userId = args.id
     private val friendId = args.friendId
-
-    private val friendName = "Falah Hassan"
-    private val friendImage =
-        "https://media-exp1.licdn.com/dms/image/C4E03AQFyNk3KWF8e5g/profile-displayphoto-shrink_100_100/0/1654340458023?e=1675900800&v=beta&t=hyvVy73bGr7139fPhKdLwfcC0af3zfAskWiq2KlyL_M"
-
+    private val friendName = args.friendName
+    private val friendImage = args.friendImage
 
     private val _uiState = MutableStateFlow(ChatUIState())
     val uiState = _uiState.asStateFlow()
@@ -39,7 +36,7 @@ class ChatWithFriendViewModel @Inject constructor(
         getListMessages(userId, friendId)
         _uiState.update {
             it.copy(
-                appBar = it.appBar.copy(userName = friendName, icon = friendImage),
+                appBar = it.appBar.copy(userName = friendName, icon = friendImage)
             )
         }
     }

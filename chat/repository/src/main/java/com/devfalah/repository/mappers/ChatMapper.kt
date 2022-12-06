@@ -10,7 +10,7 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
         return Chat(
             fullName = messageTo?.fullname ?: "",
             guid = messageTo?.guid ?: 0,
-            icon = messageTo?.icon?.small ?: "",
+            icon = messageTo?.icon?.larger ?: "",
             time = time ?: 0,
             recentMessage = message ?: ""
         )
@@ -18,7 +18,7 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
         return Chat(
             fullName = messageFrom?.fullname ?: "",
             guid = messageFrom?.guid ?: 0,
-            icon = messageFrom?.icon?.small ?: "",
+            icon = messageFrom?.icon?.larger ?: "",
             time = time ?: 0,
             recentMessage = message ?: ""
         )
