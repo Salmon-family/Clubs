@@ -3,6 +3,8 @@ package com.devfalah.viewmodels.userProfile
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.devfalah.usecases.*
 import com.devfalah.viewmodels.userProfile.mapper.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 
@@ -42,7 +45,8 @@ class ProfileViewModel @Inject constructor(
     val getUserFriendsUseCase: GetUserFriendsUseCase,
     val getProfilePostUseCase: GetProfilePostsUseCase,
     val addFriendUseCase: AddFriendUseCase,
-    val likeUseCase: SetLikeUseCase
+    val likeUseCase: SetLikeUseCase,
+    val changeProfileImageUseCase: ChangeProfileImageUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUIState())
@@ -157,4 +161,41 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
+
+    fun setErrorUiState(combinedLoadStates: CombinedLoadStates) {
+        when (combinedLoadStates.refresh) {
+            is LoadState.NotLoading -> {
+                _uiState.update {
+                    it.copy(loading = false, majorError = "")
+                }
+            }
+            LoadState.Loading -> {
+                _uiState.update {
+                    it.copy(loading = true, majorError = "")
+                }
+            }
+            is LoadState.Error -> {
+                _uiState.update { it.copy(loading = false, majorError = "") }
+            }
+        }
+    }
+
+    fun onClickChangeImage(imagePath: ByteArray, file: File) {
+        //should display dialog chose from album or select from yours.
+        viewModelScope.launch {
+            try {
+                val updatedUser =
+                    changeProfileImageUseCase(userId = userId, image = imagePath, file)
+
+                _uiState.update { it.copy(userDetails = it.userDetails.copy(profilePicture = updatedUser.profileUrl)) }
+
+            } catch (e: Throwable) {
+                _uiState.update { it.copy(loading = false, majorError = e.message.toString()) }
+            }
+        }
+
+    }
+
+
 }

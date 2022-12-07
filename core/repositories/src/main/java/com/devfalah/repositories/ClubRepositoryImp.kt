@@ -6,6 +6,7 @@ import com.devfalah.entities.Post
 import com.devfalah.entities.User
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
+import java.io.File
 import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
@@ -13,7 +14,10 @@ class ClubRepositoryImp @Inject constructor(
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
-        return remoteDataSource.removeFriendRequest(userID = userID, friendRequestID = friendRequestID)
+        return remoteDataSource.removeFriendRequest(
+            userID = userID,
+            friendRequestID = friendRequestID
+        )
     }
 
     override suspend fun addFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -53,7 +57,11 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
-        return remoteDataSource.checkFriendShip(userID,friendID)
+        return remoteDataSource.checkFriendShip(userID, friendID)
+    }
+
+    override suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): User {
+        return remoteDataSource.addProfilePicture(userID = userID, image = image, file).toEntity()
     }
 
 }

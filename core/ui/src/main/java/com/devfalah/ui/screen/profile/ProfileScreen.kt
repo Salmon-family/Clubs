@@ -1,6 +1,13 @@
 package com.devfalah.ui.screen.profile
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,10 +22,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.R
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 @Composable
 fun ProfileScreen(
@@ -27,6 +37,26 @@ fun ProfileScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+//    val file = File(context.assets.open(R.drawable.test_image))
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+
+
+
+            val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uri!!))
+            } else {
+                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+            }
+            val stream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
+            val image = stream.toByteArray()
+
+            viewModel.onClickChangeImage(image,File(uri?.path))
+        }
+    )
+
     ProfileContent(
         state,
         onClickLike = viewModel::onClickLike,
@@ -35,6 +65,11 @@ fun ProfileScreen(
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickSendMessage = {
             Toast.makeText(context, "not done yet.. ", Toast.LENGTH_LONG).show()
+        },
+        onChangeProfileImage = {
+            singlePhotoPickerLauncher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
         }
     )
 }
@@ -46,7 +81,8 @@ fun ProfileContent(
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onClickAddFriend: () -> Unit,
-    onClickSendMessage: () -> Unit
+    onClickSendMessage: () -> Unit,
+    onChangeProfileImage: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +92,8 @@ fun ProfileContent(
         item {
             ProfileDetailsSection(
                 state.userDetails,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
+                onChangeProfileImage = onChangeProfileImage
             )
         }
         if (!state.isMyProfile) {

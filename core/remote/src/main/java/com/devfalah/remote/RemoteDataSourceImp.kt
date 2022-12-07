@@ -1,6 +1,9 @@
 package com.devfalah.remote
 
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.FriendDTO
 import com.devfalah.repositories.models.ReactionDTO
@@ -8,11 +11,21 @@ import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import javax.inject.Inject
+
 
 class RemoteDataSourceImp @Inject constructor(
     private val apiService: ClubService,
+    private val posts: ProfilePostData
 ) : RemoteDataSource {
+
+    val config = PagingConfig(pageSize = 100, prefetchDistance = 5, enablePlaceholders = false)
+
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
         return apiService.removeFriend(userID, friendRequestID).body()?.payload?.success
@@ -64,5 +77,24 @@ class RemoteDataSourceImp @Inject constructor(
         return apiService.isFriendWith(userID = userID, otherUserID = friendID)
             .body()?.payload?.isFriend ?: throw Throwable("error")
     }
+
+    override suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): UserDTO {
+        val filePart = MultipartBody.Part.createFormData(
+            "userphoto", "userphoto",
+            image.toRequestBody()
+        )
+
+        val result = apiService.addProfilePicture(
+            userId = userID,
+            file = filePart
+        )
+        val x = result.body()
+        return x?.payload ?: throw Throwable("Errorssssss")
+    }
+
+//    override suspend fun getProfilePost(userID: Int, profileUserID: Int): Flow<PagingData<WallPostDTO>> {
+//        posts.setData(viewerId = userID, ownerProfileId = profileUserID)
+//        return Pager(config = config, pagingSourceFactory = { posts }).flow
+//    }
 
 }

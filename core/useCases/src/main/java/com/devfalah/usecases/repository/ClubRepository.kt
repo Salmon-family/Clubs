@@ -4,6 +4,8 @@ import com.devfalah.entities.Album
 import com.devfalah.entities.Notification
 import com.devfalah.entities.Post
 import com.devfalah.entities.User
+import org.intellij.lang.annotations.Flow
+import java.io.File
 
 interface ClubRepository {
 
@@ -28,4 +30,7 @@ interface ClubRepository {
     suspend fun removeLikeOnPost(userID: Int, postId: Int): Int
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+
+    suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): User
+
 }

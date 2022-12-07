@@ -6,6 +6,7 @@ import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import java.io.File
 
 interface RemoteDataSource {
 
@@ -30,5 +31,7 @@ interface RemoteDataSource {
     suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+
+    suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): UserDTO
 
 }

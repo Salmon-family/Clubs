@@ -6,6 +6,8 @@ import com.devfalah.repositories.models.album.AlbumDetailsDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationCountDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -284,4 +286,12 @@ interface ClubService {
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null
     ): Response<BaseResponse<ProfilePostResponse>>
+
+
+    @Multipart
+    @POST("photos_profile_add")
+    suspend fun addProfilePicture(
+        @Query("guid") userId: Int,
+        @Part file: MultipartBody.Part,
+    ): Response<BaseResponse<UserDTO>>
 }
