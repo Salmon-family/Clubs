@@ -23,18 +23,18 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
-import com.thechance.identity.viewmodel.login.LoginViewModel
+import com.thechance.identity.viewmodel.login.username.LoginUserNameViewModel
 
 @Composable
 fun LogInUserNameScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel(),
+    viewModel: LoginUserNameViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
     LogInUserNameContent(
-        state = uiState,
+        state = state,
         onChangeUserName = viewModel::onChangeUserName,
-        onClickContinue = { navController.navigateToLogInPassword() },
+        onClickContinue = {navController.navigateToLogInPassword(state.userName)},
         onClickBack = { navController.navigateUp() }
     )
 }

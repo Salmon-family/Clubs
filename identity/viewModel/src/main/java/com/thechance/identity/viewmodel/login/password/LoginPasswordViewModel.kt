@@ -1,9 +1,11 @@
-package com.thechance.identity.viewmodel.login
+package com.thechance.identity.viewmodel.login.password
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.LoginUseCase
+import com.thechance.identity.viewmodel.login.LoginUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,16 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class LoginPasswordViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
 
-    fun onChangeUserName(userName: String){
-        _uiState.update { it.copy(userName = userName) }
-    }
+    private val args = LoginPasswordArgs(savedStateHandle)
 
     fun onChangePassword(password: String){
         _uiState.update { it.copy(password = password) }
@@ -30,8 +30,8 @@ class LoginViewModel @Inject constructor(
     fun onLogin(){
         try {
             viewModelScope.launch {
-                val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
-                _uiState.update { it.copy(isSuccess = true) }
+                val login = loginUseCase(args.userName, _uiState.value.password)
+                Log.i("userName", login.email)
             }
         }catch (e: Exception){
             Log.i("error", e.message.toString())
