@@ -13,9 +13,9 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.screen.signup.composable.DatePicker
 import com.thechance.identity.ui.composable.EmailDescriptionText
 import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
+import com.thechance.identity.ui.screen.signup.composable.DatePicker
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -24,6 +24,7 @@ import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
+import kotlinx.coroutines.delay
 
 @Composable
 fun SignupBirthdateAndGenderScreen(

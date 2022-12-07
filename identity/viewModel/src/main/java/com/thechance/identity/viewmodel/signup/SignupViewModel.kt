@@ -35,6 +35,7 @@ class SignupViewModel @Inject constructor(
                     password = state.password,
                 )
                 Log.i("Guid", sign.guid.toString())
+                _uiState.update { it.copy(isSuccess = true) }
             }
         } catch (t: Throwable) {
             _uiState.update { it.copy(isError = t.message.toString()) }

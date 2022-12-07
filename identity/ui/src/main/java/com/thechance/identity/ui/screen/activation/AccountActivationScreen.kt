@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.theme.*
 
@@ -20,7 +21,7 @@ fun AccountActivationScreen(
     navController: NavController
 ){
   AccountActivationContent(
-      onclickBack = {navController.navigateUp()}
+      onclickBack = {navController.navigateToLogInUserName()}
   )
 }
 
