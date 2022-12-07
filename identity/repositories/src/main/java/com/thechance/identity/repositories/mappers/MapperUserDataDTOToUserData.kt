@@ -14,7 +14,7 @@ class MapperUserDataDTOToUserData @Inject constructor() : Mapper<UserData, UserD
             firstname = input.firstname,
             lastname = input.lastname,
             gender = input.gender,
-            password = input.password
+            password = input.password,
         )
     }
 }

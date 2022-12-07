@@ -1,5 +1,6 @@
 package com.thechance.identity.usecases
 
+import com.thechance.identity.entities.User
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(

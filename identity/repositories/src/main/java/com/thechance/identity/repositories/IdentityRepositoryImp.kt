@@ -1,10 +1,9 @@
 package com.thechance.identity.repositories
 
 import com.thechance.identity.entities.Account
+import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
 import com.thechance.identity.repositories.mappers.MapperUserDataDTOToUserData
-import com.thechance.identity.repositories.mappers.toEntity
-import com.thechance.identity.entities.User
 import com.thechance.identity.repositories.mappers.toEntity
 import com.thechance.identity.usecases.IdentityRepository
 import javax.inject.Inject

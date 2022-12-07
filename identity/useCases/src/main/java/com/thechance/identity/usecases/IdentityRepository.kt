@@ -1,9 +1,8 @@
 package com.thechance.identity.usecases
 
 import com.thechance.identity.entities.Account
-import com.thechance.identity.entities.UserData
-
 import com.thechance.identity.entities.User
+import com.thechance.identity.entities.UserData
 
 interface IdentityRepository {
 

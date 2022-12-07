@@ -8,5 +8,5 @@ data class UserData(
     val gender: String,
     val birthdate: String,
     val username: String,
-    val password: String
+    val password: String,
 )
