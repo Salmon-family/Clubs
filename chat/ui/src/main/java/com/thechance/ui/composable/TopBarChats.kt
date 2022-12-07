@@ -8,12 +8,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thechance.ui.R
 import com.thechance.ui.theme.BlackColor
+import com.thechance.ui.theme.PlusJakartaSans
 
 @Composable
 fun TopBarChats(
@@ -37,6 +39,7 @@ fun TopBarChats(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = BlackColor,
+                fontFamily = PlusJakartaSans
             )
         }
         Image(painter = painterResource(id = R.drawable.edit), contentDescription =null)

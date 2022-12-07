@@ -3,6 +3,7 @@ package com.thechance.remote
 import com.devfalah.repository.ChatDataSource
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ConversationDTO
+import com.google.gson.Gson
 import com.thechance.remote.response.BaseResponse
 import retrofit2.Response
 import javax.inject.Inject
@@ -38,3 +39,12 @@ class ChatDataSourceImp @Inject constructor(
         }
     }
 }
+
+fun retrofit2.HttpException.toDomain(): DomainException {
+    return DomainException(this.code(), this.response()?.errorBody()?.string().toString())
+}
+
+data class DomainException(
+    val code: Int,
+    override val message: String
+) : Throwable(message)

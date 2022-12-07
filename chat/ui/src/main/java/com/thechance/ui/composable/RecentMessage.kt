@@ -9,6 +9,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thechance.ui.theme.BlackColor
+import com.thechance.ui.theme.PlusJakartaSans
 
 @Composable
 fun RecentMessage(
@@ -22,7 +23,8 @@ fun RecentMessage(
         color = BlackColor.copy(alpha = 0.6f),
         modifier = modifier,
         overflow = TextOverflow.Ellipsis,
-        maxLines = 1
+        maxLines = 1,
+        fontFamily = PlusJakartaSans
     )
 
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thechance.ui.R
 import com.thechance.ui.theme.LightSecondaryBlackColor
+import com.thechance.ui.theme.PlusJakartaSans
 import com.thechance.ui.theme.White
 
 @Composable
@@ -43,6 +44,7 @@ fun SearchTextField(
                 text = stringResource(R.string.search_text),
                 fontSize = 14.sp,
                 color = LightSecondaryBlackColor.copy(alpha = 0.4f),
+                fontFamily = PlusJakartaSans
             )
         },
         leadingIcon = {
