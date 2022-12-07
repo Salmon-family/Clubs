@@ -4,7 +4,6 @@ import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.IdentityDataSource
 import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
-import com.thechance.identity.repositories.models.UserDataDTO
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -18,8 +17,22 @@ class IdentityDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun signup(userDataDTO: UserDataDTO): AccountDTO {
-        return wrap { service.addUser(userDataDTO) }
+    override suspend fun signup(
+        firstname: String, lastname: String, email: String, reEmail: String,
+        gender: String, birthdate: String, username: String, password: String
+    ): AccountDTO {
+        return wrap {
+            service.addUser(
+                firstname = firstname,
+                lastname = lastname,
+                email = email,
+                reEmail = reEmail,
+                gender = gender,
+                birthdate = birthdate,
+                username = username,
+                password = password
+            )
+        }
     }
 
 

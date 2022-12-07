@@ -3,7 +3,6 @@ package com.thechance.identity.viewmodel.signup
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thechance.identity.entities.UserData
 import com.thechance.identity.usecases.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,28 +21,25 @@ class SignupViewModel @Inject constructor(
 
 
     fun makeSignupRequest() {
-        viewModelScope.launch {
-            val state = _uiState.value
-            val userData = UserData(
-                firstname = state.firstName,
-                lastname = "_",
-                email = state.email,
-                reEmail = state.email,
-                gender = "female",
-                birthdate = "01/10/2001",
-                username = state.username,
-                password = state.password
-            )
-
-            try {
-                val sign = signupUseCase(userData)
+        try {
+            viewModelScope.launch {
+                val state = _uiState.value
+                val sign = signupUseCase(
+                    firstName = state.firstName,
+                    lastName = "_",
+                    email = state.email,
+                    reEmail = state.email,
+                    gender = "female",
+                    birthdate = "01/10/2001",
+                    username = state.username,
+                    password = state.password,
+                )
                 Log.i("Guid", sign.guid.toString())
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(isError = t.message.toString()) }
-                Log.e("Test", t.message.toString())
             }
+        } catch (t: Throwable) {
+            _uiState.update { it.copy(isError = t.message.toString()) }
+            Log.e("Test", t.message.toString())
         }
-
     }
 
     fun onChangeEmail(email: String) {

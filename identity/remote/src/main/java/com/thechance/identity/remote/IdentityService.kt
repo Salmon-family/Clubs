@@ -15,10 +15,17 @@ interface IdentityService {
         @Query("password") password: String
     ): Response<IdentityBaseResponse<UserDTO>>
 
-    @Headers("Content-Type: application/json")
+    @FormUrlEncoded
     @POST("user_add")
     suspend fun addUser(
-        @Body userData: UserDataDTO
+        @Field("firstname") firstname: String,
+        @Field("lastname") lastname: String,
+        @Field("email") email: String,
+        @Field("reemail") reEmail: String,
+        @Field("gender") gender: String,
+        @Field("birthdate") birthdate: String,
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Response<IdentityBaseResponse<AccountDTO>>
 
 }
