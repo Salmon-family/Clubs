@@ -39,12 +39,3 @@ class ChatDataSourceImp @Inject constructor(
         }
     }
 }
-
-fun retrofit2.HttpException.toDomain(): DomainException {
-    return DomainException(this.code(), this.response()?.errorBody()?.string().toString())
-}
-
-data class DomainException(
-    val code: Int,
-    override val message: String
-) : Throwable(message)
