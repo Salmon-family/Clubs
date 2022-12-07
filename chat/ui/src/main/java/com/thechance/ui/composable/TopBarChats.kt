@@ -42,7 +42,6 @@ fun TopBarChats(
                 fontFamily = PlusJakartaSans
             )
         }
-        Image(painter = painterResource(id = R.drawable.edit), contentDescription =null)
     }
 }
 
