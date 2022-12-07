@@ -39,7 +39,6 @@ fun TopBarChats(
                 color = BlackColor,
             )
         }
-        Image(painter = painterResource(id = R.drawable.edit), contentDescription =null)
     }
 }
 
