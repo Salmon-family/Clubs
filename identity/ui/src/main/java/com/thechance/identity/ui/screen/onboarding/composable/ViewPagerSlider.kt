@@ -2,6 +2,7 @@ package com.thechance.identity.ui.screen.onboarding.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -14,7 +15,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.model.SliderData
 import com.thechance.identity.ui.model.sliderDataList
 import com.thechance.identity.ui.spacer.SpacerVertical16
@@ -51,19 +51,19 @@ fun ViewPagerSlider() {
                 val sliderData = sliderDataList[page]
 
                 OnBoardingImage(sliderData = sliderData)
-                AuthText(
+                Text(
                     text = sliderData.title ?: "",
                     style = Typography.h1,
                     color = LightPrimaryBlackColor,
-                    Modifier.padding(horizontal = 24.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp)
                 )
 
                 SpacerVertical16()
-                AuthText(
+                Text(
                     text = sliderData.description,
                     style = Typography.body1,
                     color = LightTernaryBlackColor,
-                    Modifier.padding(horizontal = 24.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp)
                 )
 
             }

@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.login.password
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,12 +11,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.PasswordInputText
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.composable.PasswordInputText
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.password.LoginPasswordViewModel
 
@@ -49,7 +51,7 @@ fun LogInPasswordContent(
         BackButton(onClick = onClickBack)
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.log_in),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -57,7 +59,7 @@ fun LogInPasswordContent(
         )
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.your_password),
             style = Typography.subtitle2,
             color = LightSecondaryBlackColor,

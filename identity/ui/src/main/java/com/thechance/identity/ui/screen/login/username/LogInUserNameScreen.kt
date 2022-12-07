@@ -3,6 +3,7 @@
 package com.thechance.identity.ui.screen.login.username
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,7 +15,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.InputText
 import com.thechance.identity.ui.screen.login.password.navigateToLogInPassword
@@ -34,7 +34,7 @@ fun LogInUserNameScreen(
     LogInUserNameContent(
         state = state,
         onChangeUserName = viewModel::onChangeUserName,
-        onClickContinue = {navController.navigateToLogInPassword(state.userName)},
+        onClickContinue = { navController.navigateToLogInPassword(state.userName) },
         onClickBack = { navController.navigateUp() }
     )
 }
@@ -54,7 +54,7 @@ private fun LogInUserNameContent(
         BackButton(onClick = onClickBack)
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.user_name_question),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
@@ -62,7 +62,7 @@ private fun LogInUserNameContent(
         )
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.user_name),
             style = Typography.subtitle2,
             color = LightSecondaryBlackColor,

@@ -1,16 +1,19 @@
 package com.thechance.identity.ui.screen.signup.confirmpassword
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.EmailDescriptionText
+import com.thechance.identity.ui.composable.PasswordInputText
 import com.thechance.identity.ui.screen.signup.name.navigateToSignupNames
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
@@ -59,11 +62,11 @@ fun SignUpConfirmPasswordContent(
         BackButton(onClick = onClickBack)
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
-            Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical8()
@@ -76,11 +79,11 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.your_password),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
-            Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp)
         )
 
         Spacer(Modifier.height(14.dp))
@@ -92,11 +95,11 @@ fun SignUpConfirmPasswordContent(
         )
 
         SpacerVertical24()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.confirm_password),
             style = Typography.body2,
             color = LightSecondaryBlackColor,
-            Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp)
         )
 
         Spacer(Modifier.height(14.dp))

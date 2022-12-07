@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -62,7 +63,7 @@ fun PasswordInputText(
         ),
         singleLine = true,
         placeholder = {
-            AuthText(
+            Text(
                 text = placeHolder,
                 style = Typography.InputText,
                 color = LightPrimaryGrayColor,

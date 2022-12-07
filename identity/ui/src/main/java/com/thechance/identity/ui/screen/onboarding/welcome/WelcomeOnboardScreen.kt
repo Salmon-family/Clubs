@@ -2,6 +2,7 @@ package com.thechance.identity.ui.screen.onboarding.welcome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -11,14 +12,13 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
-import com.thechance.identity.ui.composable.AuthText
 import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardingBoxOfParallelogramShape
+import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBrandColor
 import com.thechance.identity.ui.theme.Typography
-import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 
 @Composable
 fun WelcomeOnboardScreen(
@@ -47,19 +47,19 @@ fun WelcomeOnboardContent(
         ClubText()
 
         SpacerVertical8()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.have_fun),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
-            Modifier.padding(start = 24.dp)
+            modifier = Modifier.padding(start = 24.dp)
         )
 
         SpacerVertical8()
-        AuthText(
+        Text(
             text = stringResource(id = R.string.onboard_body),
             style = Typography.body1,
             color = LightTernaryBlackColor,
-            Modifier.padding(start = 24.dp)
+            modifier = Modifier.padding(start = 24.dp)
         )
 
         Spacer(modifier = Modifier.weight(0.2f))
@@ -78,5 +78,5 @@ fun WelcomeOnboardContent(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewWelcomeOnboard() {
-    WelcomeOnboardContent{}
+    WelcomeOnboardContent {}
 }

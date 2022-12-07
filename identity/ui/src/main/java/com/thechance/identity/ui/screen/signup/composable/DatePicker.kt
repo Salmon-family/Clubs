@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.composable
+package com.thechance.identity.ui.screen.signup.composable
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +54,7 @@ fun DatePicker(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AuthText(
+        Text(
             text = date.value,
             style = Typography.subtitle2,
             color = LightPrimaryBlackColor,
