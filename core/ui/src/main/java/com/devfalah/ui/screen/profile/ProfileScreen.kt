@@ -17,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -85,6 +86,7 @@ fun ProfileContent(
     onChangeProfileImage: () -> Unit,
     onRefresh: (Int) -> Unit
 ) {
+
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = { onRefresh(Constants.SWIPE_UP) },

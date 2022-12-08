@@ -1,12 +1,10 @@
 package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +18,7 @@ import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.composable.WidthSpacer24
 import com.devfalah.ui.composable.WidthSpacer8
-import com.devfalah.ui.theme.LightPrimaryBlackColor
+import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -38,7 +36,8 @@ fun PostBottomAction(
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
         Icon(
-            modifier = Modifier.clickable { onClickLike(post) },
+            modifier = Modifier
+                .RemoveRippleEffect { onClickLike(post) },
             painter = painterResource(
                 id = if (post.isLikedByUser) {
                     R.drawable.heart_full
@@ -66,8 +65,9 @@ fun PostBottomAction(
         WidthSpacer24()
 
         Icon(
-            modifier = Modifier.clickable { onClickComment(post) },
+            modifier = Modifier.RemoveRippleEffect { onClickComment(post) },
             painter = painterResource(id = R.drawable.comment_icon),
+
             contentDescription = null
         )
 
@@ -87,7 +87,7 @@ fun PostBottomAction(
         ) {
             Image(
                 modifier = Modifier
-                    .clickable { onClickSave(post) },
+                    .RemoveRippleEffect { onClickSave(post) },
                 alignment = Alignment.CenterEnd,
                 painter = painterResource(
                     id = if (post.isSaved) {
