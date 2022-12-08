@@ -30,6 +30,7 @@ fun LogInPasswordScreen(
     LogInPasswordContent(
         state = state,
         onChangePassword = viewModel::onChangePassword,
+        onValidate = viewModel::onValidatePassword,
         onLogin = viewModel::onLogin,
         onClickBack = { navController.navigateUp() }
     )
@@ -39,6 +40,7 @@ fun LogInPasswordScreen(
 fun LogInPasswordContent(
     state: LoginUIState,
     onChangePassword: (String) -> Unit,
+    onValidate: () -> Boolean,
     onLogin: () -> Unit,
     onClickBack: () -> Unit
 ) {
@@ -76,7 +78,7 @@ fun LogInPasswordContent(
         SpacerVertical24()
         AuthButton(
             onClick = onLogin,
-            isEnabled = state.password.isNotEmpty() && (state.password.length > 6),
+            isEnabled = onValidate.invoke(),
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier
                 .fillMaxWidth()

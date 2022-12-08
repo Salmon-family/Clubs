@@ -27,6 +27,11 @@ class LoginPasswordViewModel @Inject constructor(
         _uiState.update { it.copy(password = password) }
     }
 
+    fun onValidatePassword(): Boolean {
+        val state = _uiState.value
+        return state.password.isNotEmpty() && state.password.length > 6
+    }
+
     fun onLogin(){
         try {
             viewModelScope.launch {
