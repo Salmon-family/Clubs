@@ -118,7 +118,7 @@ fun ProfileContent(
             )
         }
 
-        // for test 
+        // for test
 
         item(state.bitmap != null) {
             Image(
@@ -131,10 +131,8 @@ fun ProfileContent(
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun createFileFromContentUri(fileUri: Uri, context: Context): File {
-
-    var fileName: String = ""
-
+private fun createFileFromContentUri(fileUri: Uri, context: Context): File {
+    var fileName = ""
     fileUri.let { returnUri ->
         context.contentResolver.query(returnUri, null, null, null)
     }?.use { cursor ->
@@ -143,21 +141,16 @@ fun createFileFromContentUri(fileUri: Uri, context: Context): File {
         fileName = cursor.getString(nameIndex)
     }
 
-//  For extract file mimeType
-    val fileType: String? = fileUri.let { returnUri ->
-        context.contentResolver.getType(returnUri)
-    }
+    val iStream = context.contentResolver.openInputStream(fileUri)!!
+    val outputDir = context.cacheDir!!
 
-    val iStream: InputStream =
-        context.contentResolver.openInputStream(fileUri)!!
-    val outputDir: File = context?.cacheDir!!
-    val outputFile: File = File(outputDir, fileName)
+    val outputFile = File(outputDir, fileName)
     copyStreamToFile(iStream, outputFile)
     iStream.close()
     return outputFile
 }
 
-fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
+private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
     inputStream.use { input ->
         val outputStream = FileOutputStream(outputFile)
         outputStream.use { output ->

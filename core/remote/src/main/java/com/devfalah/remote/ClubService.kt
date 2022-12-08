@@ -291,7 +291,6 @@ interface ClubService {
     @POST("photos_profile_add")
     suspend fun addProfilePicture(
         @Part("guid") userId: RequestBody,
-//        @Part("userphoto") description: RequestBody,
         @Part file: MultipartBody.Part,
     ): Response<BaseResponse<UserDTO>>
 }

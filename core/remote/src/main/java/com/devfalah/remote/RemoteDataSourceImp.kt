@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 class RemoteDataSourceImp @Inject constructor(
     private val apiService: ClubService,
-    private val posts: ProfilePostData
 ) : RemoteDataSource {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -75,11 +74,9 @@ class RemoteDataSourceImp @Inject constructor(
     override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {
         val requestBody = file.asRequestBody("image/${file.extension}".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("userphoto", file.name, requestBody)
-        val id = RequestBody.create("text/plain".toMediaTypeOrNull(), "6")
-
-        val result = apiService.addProfilePicture(userId = id, file = part)
-        val x = result.body()
-        return x?.payload ?: throw Throwable("Error")
+        val id = RequestBody.create("text/plain".toMediaTypeOrNull(), userID.toString())
+        return apiService.addProfilePicture(userId = id, file = part).body()?.payload
+            ?: throw Throwable("Error")
     }
 
 }
