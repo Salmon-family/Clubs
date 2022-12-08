@@ -33,4 +33,6 @@
     <string name="open_gmail">Open Gmail</string>
     <string name="create_account_label">Create Account</string>
     <string name="name_hint">ali</string>
+    <string name="your_label">Your</string>
+
 </resources>
