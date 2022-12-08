@@ -1,11 +1,8 @@
 package com.devfalah.ui.screen.profile
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -32,7 +29,6 @@ import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -49,17 +45,10 @@ fun ProfileScreen(
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
+            uri?.let {
 
-            val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uri!!))
-            } else {
-                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+                viewModel.onClickChangeImage(createFileFromContentUri(it, context))
             }
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
-            val image = stream.toByteArray()
-
-            viewModel.onClickChangeImage(image, createFileFromContentUri(uri!!, context), bitmap)
         }
     )
 
@@ -172,7 +161,7 @@ fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
     inputStream.use { input ->
         val outputStream = FileOutputStream(outputFile)
         outputStream.use { output ->
-            val buffer = ByteArray(4 * 1024) // buffer size
+            val buffer = ByteArray(4 * 1024)
             while (true) {
                 val byteCount = input.read(buffer)
                 if (byteCount < 0) break

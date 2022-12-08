@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ChangeProfileImageUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    suspend operator fun invoke(userId: Int, image: ByteArray, file: File): User {
-        return clubRepository.addProfilePicture(userId, image, file)
+    suspend operator fun invoke(userId: Int, file: File): User {
+        return clubRepository.addProfilePicture(userId, file)
     }
 }

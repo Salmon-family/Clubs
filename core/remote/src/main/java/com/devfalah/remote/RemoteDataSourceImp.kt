@@ -8,13 +8,10 @@ import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.File
 import javax.inject.Inject
 
@@ -75,21 +72,14 @@ class RemoteDataSourceImp @Inject constructor(
             .body()?.payload?.isFriend ?: throw Throwable("error")
     }
 
-    override suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): UserDTO {
-
-        //////////////////////
-        val imm= image.toRequestBody("image/png".toMediaTypeOrNull())
-        val requestBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+    override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {
+        val requestBody = file.asRequestBody("image/${file.extension}".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("userphoto", file.name, requestBody)
-        /////////////////
-        val id: RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "6")
+        val id = RequestBody.create("text/plain".toMediaTypeOrNull(), "6")
 
-        val result = apiService.addProfilePicture(
-            userId = id,
-            file = part
-        )
+        val result = apiService.addProfilePicture(userId = id, file = part)
         val x = result.body()
-        return x?.payload ?: throw Throwable("Errorssssss")
+        return x?.payload ?: throw Throwable("Error")
     }
 
 }

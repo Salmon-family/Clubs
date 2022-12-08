@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.userProfile
 
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -161,17 +160,14 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun onClickChangeImage(imagePath: ByteArray, file: File, bitmap: Bitmap) {
+    fun onClickChangeImage(file: File) {
         //should display dialog chose from album or select from yours.
         viewModelScope.launch {
             try {
                 val updatedUser =
-                    changeProfileImageUseCase(userId = userId, image = imagePath, file)
-
+                    changeProfileImageUseCase(userId = userId, file)
                 _uiState.update { it.copy(userDetails = it.userDetails.copy(profilePicture = updatedUser.profileUrl)) }
-
             } catch (e: Throwable) {
-                _uiState.update { it.copy(bitmap = bitmap) }
                 _uiState.update { it.copy(loading = false, majorError = e.message.toString()) }
             }
         }

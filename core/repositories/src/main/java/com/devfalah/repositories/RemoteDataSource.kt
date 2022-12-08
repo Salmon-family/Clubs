@@ -32,6 +32,6 @@ interface RemoteDataSource {
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
 
-    suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): UserDTO
+    suspend fun addProfilePicture(userID: Int, file: File): UserDTO
 
 }

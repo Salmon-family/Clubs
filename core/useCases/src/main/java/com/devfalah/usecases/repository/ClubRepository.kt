@@ -30,6 +30,6 @@ interface ClubRepository {
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
 
-    suspend fun addProfilePicture(userID: Int, image: ByteArray, file: File): User
+    suspend fun addProfilePicture(userID: Int, file: File): User
 
 }
