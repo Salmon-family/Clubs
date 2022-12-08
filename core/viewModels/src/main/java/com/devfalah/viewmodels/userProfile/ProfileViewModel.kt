@@ -50,7 +50,7 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val userId = 3
+    private val userId = 6
     private val ownerID = 6
 
     init {
@@ -105,7 +105,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update {
-                    it.copy(posts = getProfilePostUseCase(userID, profileOwnerID).toUIState())
+                    it.copy(
+                        posts = getProfilePostUseCase(userID, profileOwnerID).toUIState()
+                    )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
@@ -170,7 +172,24 @@ class ProfileViewModel @Inject constructor(
                 _uiState.update { it.copy(loading = false, majorError = e.message.toString()) }
             }
         }
+    }
 
+    fun swipeToRefresh(type: Int) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(loading = true) }
+                val newPosts = getProfilePostUseCase.loadMore(6, 6, type).toUIState()
+                val allPosts = if (type > 0) {
+                    newPosts + _uiState.value.posts
+                } else {
+                    _uiState.value.posts + newPosts
+                }.distinct().toList()
+
+                _uiState.update { it.copy(loading = false, posts = allPosts) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
+            }
+        }
     }
 
 

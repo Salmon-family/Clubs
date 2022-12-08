@@ -34,4 +34,5 @@ interface RemoteDataSource {
 
     suspend fun addProfilePicture(userID: Int, file: File): UserDTO
 
+    suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<WallPostDTO>
 }

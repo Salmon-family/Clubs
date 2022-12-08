@@ -1,7 +1,5 @@
 package com.devfalah.viewmodels.userProfile
 
-import android.graphics.Bitmap
-
 data class UserUIState(
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
     val albums: List<AlbumUIState> = emptyList(),
@@ -11,8 +9,6 @@ data class UserUIState(
     val loading: Boolean = false,
     val majorError: String = "",
     val minorError: String = "",
-
-    val bitmap: Bitmap? = null
 )
 
 data class UserDetailsUIState(

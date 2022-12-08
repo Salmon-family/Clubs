@@ -71,4 +71,8 @@ dependencies {
     // Coil image
     def coil_version = '2.2.2'
     implementation "io.coil-kt:coil-compose:$coil_version"
+
+    // swipe
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.27.0"
+
 }

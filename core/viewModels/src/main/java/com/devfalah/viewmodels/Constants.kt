@@ -6,4 +6,8 @@ object Constants {
     const val REQUEST_GROUP = 3
     const val NOTHING = -1
 
+
+    const val SWIPE_UP = 1
+    const val SWIPE_DOWN = -1
+
 }

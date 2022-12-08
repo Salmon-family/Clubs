@@ -32,4 +32,5 @@ interface ClubRepository {
 
     suspend fun addProfilePicture(userID: Int, file: File): User
 
+    suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<Post>
 }

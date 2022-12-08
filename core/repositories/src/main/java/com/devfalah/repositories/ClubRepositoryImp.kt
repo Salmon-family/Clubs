@@ -60,8 +60,15 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.checkFriendShip(userID, friendID)
     }
 
-    override suspend fun addProfilePicture(userID: Int,  file: File): User {
+    override suspend fun addProfilePicture(userID: Int, file: File): User {
         return remoteDataSource.addProfilePicture(userID = userID, file).toEntity()
+    }
+
+    override suspend fun getProfilePostsPager(
+        userID: Int, profileUserID: Int, page: Int
+    ): List<Post> {
+        return remoteDataSource.getProfilePostsPager(userID, profileUserID, page)
+            .map { it.toEntity() }
     }
 
 }

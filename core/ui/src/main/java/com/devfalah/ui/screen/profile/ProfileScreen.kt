@@ -9,26 +9,31 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.screen.profile.composable.*
+import com.devfalah.ui.theme.LightCardColor
+import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -45,15 +50,13 @@ fun ProfileScreen(
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            uri?.let {
-
-                viewModel.onClickChangeImage(createFileFromContentUri(it, context))
-            }
+            uri?.let { viewModel.onClickChangeImage(createFileFromContentUri(it, context)) }
         }
     )
 
     ProfileContent(
         state,
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
         onClickComment = viewModel::onClickComment,
         onClickSave = viewModel::onClickSave,
@@ -65,66 +68,83 @@ fun ProfileScreen(
             singlePhotoPickerLauncher.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
-        }
+        },
+        onRefresh = viewModel::swipeToRefresh
     )
 }
 
 @Composable
 fun ProfileContent(
     state: UserUIState,
+    swipeRefreshState: SwipeRefreshState,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onClickAddFriend: () -> Unit,
     onClickSendMessage: () -> Unit,
-    onChangeProfileImage: () -> Unit
+    onChangeProfileImage: () -> Unit,
+    onRefresh: (Int) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        item {
-            ProfileDetailsSection(
-                state.userDetails,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                onChangeProfileImage = onChangeProfileImage
+    SwipeRefresh(
+        state = swipeRefreshState,
+        onRefresh = { onRefresh(Constants.SWIPE_UP) },
+        indicator = { state, refreshTrigger ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = refreshTrigger,
+                backgroundColor = LightPrimaryBrandColor,
+                contentColor = LightCardColor
             )
-        }
-        if (!state.isMyProfile) {
+        },
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             item {
-                FriendOptionsSection(
+                ProfileDetailsSection(
+                    state.userDetails,
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    areFriends = state.userDetails.areFriends,
-                    onClickAddFriend = onClickAddFriend,
-                    onClickSendMessage = onClickSendMessage
+                    onChangeProfileImage = onChangeProfileImage
                 )
             }
-        }
-        item { AlbumSection(state.albums, modifier = Modifier.padding(horizontal = 16.dp)) }
-        item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-        item {
-            PostCreatingSection(
-                state.userDetails,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
-        items(state.posts) {
-            ProfilePostItem(
-                it,
-                onClickLike = { onClickLike(it) },
-                onClickComment = { onClickComment(it) },
-                onClickSave = { onClickSave(it) }
-            )
-        }
-
-        // for test
-
-        item(state.bitmap != null) {
-            Image(
-                bitmap = state.bitmap!!.asImageBitmap(),
-                contentDescription = "some useful description",
-            )
+            if (!state.isMyProfile) {
+                item {
+                    FriendOptionsSection(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        areFriends = state.userDetails.areFriends,
+                        onClickAddFriend = onClickAddFriend,
+                        onClickSendMessage = onClickSendMessage
+                    )
+                }
+            }
+            item { AlbumSection(state.albums, modifier = Modifier.padding(horizontal = 16.dp)) }
+            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
+            item {
+                PostCreatingSection(
+                    state.userDetails,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+            items(state.posts) {
+                ProfilePostItem(
+                    it,
+                    onClickLike = { onClickLike(it) },
+                    onClickComment = { onClickComment(it) },
+                    onClickSave = { onClickSave(it) }
+                )
+            }
+            item {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onRefresh(Constants.SWIPE_DOWN) },
+                    text = "Load more",
+                    textAlign = TextAlign.Center,
+                    color = LightPrimaryBrandColor
+                )
+            }
         }
     }
 }

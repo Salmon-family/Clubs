@@ -56,6 +56,13 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Error")
     }
 
+    override suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int)
+            : List<WallPostDTO> {
+        return apiService.getAllWallPosts(userID, profileUserID, page = page).body()?.payload?.posts
+            ?: throw Throwable("Error")
+    }
+
+
     override suspend fun setLikeOnPost(userID: Int, postId: Int): ReactionDTO {
         return apiService.addLike(userID = userID, postID = postId, type = LikeType.post.name)
             .body()?.payload ?: throw Throwable("Error")
