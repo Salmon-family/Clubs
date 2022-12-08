@@ -24,7 +24,6 @@ import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
-import kotlinx.coroutines.delay
 
 @Composable
 fun SignupBirthdateAndGenderScreen(
@@ -50,7 +49,7 @@ private fun SignupBirthdateAndGanderContent(
     onClickBack: () -> Unit,
     onChangeBirthdate: (String) -> Unit,
     onChangeGender: (String) -> Unit,
-    onCreateAccount: () -> Unit
+    onCreateAccount: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -89,6 +88,8 @@ private fun SignupBirthdateAndGanderContent(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             DatePicker(
                 image = R.drawable.ic_arrow_down_circle,
+                birthDate = state.birthdate,
+                onDateChange = onChangeBirthdate
             )
         }
 

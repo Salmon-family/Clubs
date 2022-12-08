@@ -5,4 +5,8 @@
         <item name="android:statusBarColor">@color/status_color</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/brand_color</item>
+    </style>
 </resources>

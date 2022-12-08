@@ -1,7 +1,8 @@
 package com.thechance.identity.viewmodel.signup
 
+
 data class UserUIState(
-    val birthdate: String = "",
+    val birthdate: String = "11/11/2001",
     val email: String = "",
     val reEmail: String = "",
     val firstName: String = "",
@@ -10,6 +11,6 @@ data class UserUIState(
     val username: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val isError: String = "" ,
+    val isError: String = "",
     val isSuccess: Boolean = false,
 )

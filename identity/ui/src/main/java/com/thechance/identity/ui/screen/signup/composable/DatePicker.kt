@@ -11,13 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.thechance.identity.ui.R
 import com.thechance.identity.ui.extension.convertToDayMonthYearFormat
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -27,6 +26,8 @@ import java.util.*
 @Composable
 fun DatePicker(
     image: Int = 0,
+    birthDate: String,
+    onDateChange: (String) -> Unit
 ) {
 
     val now = Calendar.getInstance()
@@ -34,14 +35,14 @@ fun DatePicker(
     val mMonth = now.get(Calendar.MONTH)
     val mDay = now.get(Calendar.DAY_OF_MONTH)
     now.time = Date()
-    val date = remember { mutableStateOf("28/01/2002") }
 
     val datePickerDialog = DatePickerDialog(
         LocalContext.current,
+        R.style.DialogTheme,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
             val cal = Calendar.getInstance()
             cal.set(year, month, dayOfMonth)
-            date.value = cal.time.convertToDayMonthYearFormat()
+            onDateChange(cal.time.convertToDayMonthYearFormat())
         }, mYear, mMonth, mDay
     )
 
@@ -55,7 +56,7 @@ fun DatePicker(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = date.value,
+            text = birthDate,
             style = Typography.subtitle2,
             color = LightPrimaryBlackColor,
             modifier = Modifier
