@@ -30,7 +30,7 @@ class SignupViewModel @Inject constructor(
                     email = state.email,
                     reEmail = state.email,
                     gender = "female",
-                    birthdate = "01/10/2001",
+                    birthdate = state.birthdate,
                     username = state.username,
                     password = state.password,
                 )
