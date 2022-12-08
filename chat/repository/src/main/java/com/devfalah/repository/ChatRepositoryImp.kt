@@ -15,6 +15,7 @@ import javax.inject.Inject
 class ChatRepositoryImp @Inject constructor(
     private val ChatDataSource: ChatDataSource,
     private val chatLocalDataSource: ChatLocalDataSource,
+    private val firebaseDataSource: ChatFirebaseDataSource,
 ) : ChatRepository {
 
     override suspend fun insertChatsLocally(list: List<Chat>) {
@@ -47,6 +48,10 @@ class ChatRepositoryImp @Inject constructor(
 
     override suspend fun insertMessage(message: Message) {
         chatLocalDataSource.insertMessage(message.toMessage())
+    }
+
+    override fun onReceiveId(): Flow<Int> {
+        return firebaseDataSource.onReceiveId()
     }
 
     override fun getMessages(friendId: Int): Flow<List<Message>> {

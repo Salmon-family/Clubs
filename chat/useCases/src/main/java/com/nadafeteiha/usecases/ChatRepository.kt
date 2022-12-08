@@ -25,4 +25,6 @@ interface ChatRepository {
 
     fun getMessages(friendId: Int): Flow<List<Message>>
 
+    fun onReceiveId():Flow<Int>
+
 }
