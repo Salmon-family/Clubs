@@ -287,11 +287,11 @@ interface ClubService {
         @Query("count") pageSize: Int? = null
     ): Response<BaseResponse<ProfilePostResponse>>
 
-
     @Multipart
     @POST("photos_profile_add")
     suspend fun addProfilePicture(
-        @Query("guid") userId: Int,
+        @Part("guid") userId: RequestBody,
+//        @Part("userphoto") description: RequestBody,
         @Part file: MultipartBody.Part,
     ): Response<BaseResponse<UserDTO>>
 }

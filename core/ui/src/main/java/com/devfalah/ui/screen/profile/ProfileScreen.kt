@@ -1,13 +1,18 @@
 package com.devfalah.ui.screen.profile
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,18 +23,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.R
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
     navController: NavController,
@@ -37,12 +45,10 @@ fun ProfileScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-//    val file = File(context.assets.open(R.drawable.test_image))
+
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-
-
 
             val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uri!!))
@@ -53,7 +59,7 @@ fun ProfileScreen(
             bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream)
             val image = stream.toByteArray()
 
-            viewModel.onClickChangeImage(image,File(uri?.path))
+            viewModel.onClickChangeImage(image, createFileFromContentUri(uri!!, context), bitmap)
         }
     )
 
@@ -121,6 +127,58 @@ fun ProfileContent(
                 onClickComment = { onClickComment(it) },
                 onClickSave = { onClickSave(it) }
             )
+        }
+
+        // for test 
+
+        item(state.bitmap != null) {
+            Image(
+                bitmap = state.bitmap!!.asImageBitmap(),
+                contentDescription = "some useful description",
+            )
+        }
+    }
+}
+
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun createFileFromContentUri(fileUri: Uri, context: Context): File {
+
+    var fileName: String = ""
+
+    fileUri.let { returnUri ->
+        context.contentResolver.query(returnUri, null, null, null)
+    }?.use { cursor ->
+        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        cursor.moveToFirst()
+        fileName = cursor.getString(nameIndex)
+    }
+
+//  For extract file mimeType
+    val fileType: String? = fileUri.let { returnUri ->
+        context.contentResolver.getType(returnUri)
+    }
+
+    val iStream: InputStream =
+        context.contentResolver.openInputStream(fileUri)!!
+    val outputDir: File = context?.cacheDir!!
+    val outputFile: File = File(outputDir, fileName)
+    copyStreamToFile(iStream, outputFile)
+    iStream.close()
+    return outputFile
+}
+
+fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
+    inputStream.use { input ->
+        val outputStream = FileOutputStream(outputFile)
+        outputStream.use { output ->
+            val buffer = ByteArray(4 * 1024) // buffer size
+            while (true) {
+                val byteCount = input.read(buffer)
+                if (byteCount < 0) break
+                output.write(buffer, 0, byteCount)
+            }
+            output.flush()
         }
     }
 }

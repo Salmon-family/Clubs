@@ -1,10 +1,9 @@
 package com.devfalah.viewmodels.userProfile
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
 import com.devfalah.usecases.*
 import com.devfalah.viewmodels.userProfile.mapper.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -162,26 +161,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-
-    fun setErrorUiState(combinedLoadStates: CombinedLoadStates) {
-        when (combinedLoadStates.refresh) {
-            is LoadState.NotLoading -> {
-                _uiState.update {
-                    it.copy(loading = false, majorError = "")
-                }
-            }
-            LoadState.Loading -> {
-                _uiState.update {
-                    it.copy(loading = true, majorError = "")
-                }
-            }
-            is LoadState.Error -> {
-                _uiState.update { it.copy(loading = false, majorError = "") }
-            }
-        }
-    }
-
-    fun onClickChangeImage(imagePath: ByteArray, file: File) {
+    fun onClickChangeImage(imagePath: ByteArray, file: File, bitmap: Bitmap) {
         //should display dialog chose from album or select from yours.
         viewModelScope.launch {
             try {
@@ -191,6 +171,7 @@ class ProfileViewModel @Inject constructor(
                 _uiState.update { it.copy(userDetails = it.userDetails.copy(profilePicture = updatedUser.profileUrl)) }
 
             } catch (e: Throwable) {
+                _uiState.update { it.copy(bitmap = bitmap) }
                 _uiState.update { it.copy(loading = false, majorError = e.message.toString()) }
             }
         }
