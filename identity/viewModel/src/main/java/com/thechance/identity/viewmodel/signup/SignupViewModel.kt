@@ -62,7 +62,10 @@ class SignupViewModel @Inject constructor(
 
     fun onValidatePassword(): Boolean {
         val state = _uiState.value
-        return state.password.isNotEmpty() && state.confirmPassword.isNotEmpty()
+        return state.password.isNotEmpty()
+                && state.confirmPassword.isNotEmpty()
+                && state.password.length > 6
+                && state.confirmPassword.length > 6
     }
 
     fun onChangeFullName(fullName: String) {

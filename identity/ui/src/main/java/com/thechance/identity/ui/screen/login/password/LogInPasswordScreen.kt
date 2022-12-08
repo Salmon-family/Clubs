@@ -76,7 +76,7 @@ fun LogInPasswordContent(
         SpacerVertical24()
         AuthButton(
             onClick = onLogin,
-            isEnabled = state.password.isNotEmpty(),
+            isEnabled = state.password.isNotEmpty() && (state.password.length > 6),
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier
                 .fillMaxWidth()
