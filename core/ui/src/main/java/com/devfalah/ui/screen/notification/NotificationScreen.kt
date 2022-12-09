@@ -37,9 +37,6 @@ fun NotificationContent(
         modifier = Modifier.fillMaxSize().background(color = LightBackgroundColor),
         contentPadding = PaddingValues(vertical = 16.dp),
     ) {
-        item {
-            AppBar()
-        }
         items(state.notifications) {
             NotificationItem(notification = it, onNotificationClick)
         }
