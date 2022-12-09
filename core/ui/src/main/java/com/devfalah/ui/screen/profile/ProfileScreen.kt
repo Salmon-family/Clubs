@@ -10,17 +10,16 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -89,16 +88,18 @@ fun ProfileContent(
     onRefresh: (Int) -> Unit,
     onClickPostSetting: (PostUIState) -> Unit
 ) {
-
+    val scrollState = rememberLazyListState()
+    loadMore(scrollState, onRefresh = onRefresh, items = state.posts)
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = { onRefresh(Constants.SWIPE_UP) },
+        indicatorAlignment = Alignment.BottomCenter,
         indicator = { state, refreshTrigger ->
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
-                backgroundColor = LightPrimaryBrandColor,
-                contentColor = LightCardColor
+                backgroundColor = Color.Transparent,
+                contentColor = LightPrimaryBrandColor
             )
         },
     ) {
@@ -106,6 +107,7 @@ fun ProfileContent(
             modifier = Modifier
                 .background(LightCardBackgroundColor)
                 .fillMaxSize(),
+            state = scrollState,
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -140,16 +142,6 @@ fun ProfileContent(
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },
                     onClickPostSetting = { onClickPostSetting(it) }
-                )
-            }
-            item {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onRefresh(Constants.SWIPE_DOWN) },
-                    text = "Load more",
-                    textAlign = TextAlign.Center,
-                    color = LightPrimaryBrandColor
                 )
             }
         }
@@ -189,5 +181,43 @@ private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
             }
             output.flush()
         }
+    }
+}
+
+@Composable
+private fun LazyListState.isScrollingUp(): Boolean {
+    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
+    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
+    return remember(this) {
+        derivedStateOf {
+            if (previousIndex != firstVisibleItemIndex) {
+                previousIndex > firstVisibleItemIndex
+            } else {
+                previousScrollOffset >= firstVisibleItemScrollOffset
+            }.also {
+                previousIndex = firstVisibleItemIndex
+                previousScrollOffset = firstVisibleItemScrollOffset
+            }
+        }
+    }.value
+}
+
+@Composable
+private fun loadMore(
+    scrollState: LazyListState,
+    items: List<PostUIState>,
+    onRefresh: (Int) -> Unit
+) {
+    val comparedItemIndex = if (items.size > 5) {
+        items.size.minus(5)
+    } else {
+        items.lastIndex
+    }
+
+    if (!scrollState.isScrollingUp() && !scrollState.isScrollInProgress
+        && comparedItemIndex > 0 && scrollState.firstVisibleItemIndex < items.lastIndex
+        && (items[scrollState.firstVisibleItemIndex].postId != items[comparedItemIndex].postId)
+    ) {
+        onRefresh(Constants.SWIPE_DOWN)
     }
 }
