@@ -166,21 +166,15 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(loading = true) }
-                val newPosts = getProfilePostUseCase.loadMore(6, 6, type).toUIState()
-                val allPosts = if (type > 0) {
-                    newPosts + _uiState.value.posts
-                } else {
-                    _uiState.value.posts + newPosts
-                }.distinct().toList()
-
-                _uiState.update { it.copy(loading = false, posts = allPosts) }
+                val posts = getProfilePostUseCase.loadMore(6, 6, type).toUIState()
+                _uiState.update { it.copy(loading = false, posts = posts) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
             }
         }
     }
 
-    fun onClickPostSetting(post: PostUIState){
+    fun onClickPostSetting(post: PostUIState) {
 
     }
 

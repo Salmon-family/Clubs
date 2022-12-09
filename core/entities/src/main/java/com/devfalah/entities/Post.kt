@@ -3,7 +3,8 @@ package com.devfalah.entities
 data class Post(
     val id: Int,
     val privacy: Boolean,
-    val createdTime: String,
+    val createdTimeValue: String,
+    val createdTime: Long,
     val content: String,
     val imageUrl: String,
     val totalLikes: Int,
