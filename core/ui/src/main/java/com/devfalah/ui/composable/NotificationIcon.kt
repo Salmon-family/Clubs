@@ -18,10 +18,10 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 fun NotificationIcon(
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier.padding(top = 8.dp)) {
+    Box(modifier = modifier) {
         Image(
             modifier = Modifier
-                .size(10.dp)
+                .size(16.dp)
                 .fillMaxHeight(),
             colorFilter = ColorFilter.tint(LightPrimaryBrandColor),
             painter = painterResource(R.drawable.ic_circle),

@@ -1,5 +1,6 @@
 package com.devfalah.ui.screen.notification
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.screen.notification.composable.AppBar
 import com.devfalah.ui.screen.notification.composable.NotificationItem
+import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.notifications.NotificationState
 import com.devfalah.viewmodels.notifications.NotificationsUIState
 import com.devfalah.viewmodels.notifications.NotificationsViewModel
@@ -31,9 +34,12 @@ fun NotificationContent(
     onNotificationClick: (NotificationState) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(color = LightBackgroundColor),
         contentPadding = PaddingValues(vertical = 16.dp),
     ) {
+        item {
+            AppBar()
+        }
         items(state.notifications) {
             NotificationItem(notification = it, onNotificationClick)
         }
