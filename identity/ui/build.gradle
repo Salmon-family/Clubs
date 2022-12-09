@@ -79,4 +79,8 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    //flowRow
+    def accompanist_version = "0.28.0"
+    implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
+
 }

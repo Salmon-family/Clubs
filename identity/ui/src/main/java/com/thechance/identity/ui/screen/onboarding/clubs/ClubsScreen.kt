@@ -1,7 +1,6 @@
-package com.thechance.identity.ui.screen.onboardclubs
+package com.thechance.identity.ui.screen.onboarding.clubs
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -11,8 +10,8 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.screen.onboardclubs.composable.ClubsTitle
-import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.screen.onboardclubs.ClubGroup
+import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 
@@ -20,7 +19,10 @@ import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 fun ClubsScreen(
     navController: NavController
 ){
-
+    ClubsContent(
+        onClickBack = {},
+        onClickContinue = {}
+    )
 }
 
 @Composable
@@ -32,6 +34,7 @@ fun ClubsContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            //.verticalScroll(rememberScrollState())
     ) {
         BackButton(onClick = onClickBack)
 
@@ -44,6 +47,14 @@ fun ClubsContent(
         )
 
         ClubGroup()
+//        FlowRow(
+//            mainAxisSize = SizeMode.Expand,
+//            mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
+//        ) {
+//            for(i in 0..8){
+//                PreviewClubItem()
+//            }
+//        }
         
         Spacer(modifier = Modifier.weight(4.25f))
         AuthButton(
