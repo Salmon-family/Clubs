@@ -35,8 +35,6 @@ class SignupViewModel @Inject constructor(
                     password = state.password,
                 )
                 Log.i("Guid", sign.guid.toString())
-                _uiState.update { it.copy(isSuccess = true) }
-
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isError = t.message.toString()) }
                 Log.e("Test", t.message.toString())
@@ -46,6 +44,14 @@ class SignupViewModel @Inject constructor(
 
     fun onChangeEmail(email: String) {
         _uiState.update { it.copy(email = email) }
+    }
+
+    fun checkIfGmailOrAnotherType(email: String): Boolean {
+        return email.isEmailValid()
+    }
+
+    private fun String.isEmailValid(): Boolean {
+        return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
     fun onChangePassword(password: String) {
@@ -63,10 +69,9 @@ class SignupViewModel @Inject constructor(
 
     fun onValidatePassword(): Boolean {
         val state = _uiState.value
-        return state.password.isNotEmpty()
-                && state.confirmPassword.isNotEmpty()
-                && state.password.length > 6
+        return state.password.length > 6
                 && state.confirmPassword.length > 6
+                && onConfirmPassword()
     }
 
     fun onChangeFullName(fullName: String) {
@@ -89,4 +94,5 @@ class SignupViewModel @Inject constructor(
     fun onChangeGender(gender: String) {
         _uiState.update { it.copy(gender = gender) }
     }
+
 }
