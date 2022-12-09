@@ -1,21 +1,27 @@
 package com.devfalah.ui.screen.friendrequest.friendcomposable
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleProfileImage
-import com.devfalah.ui.composable.HeightSpacer8
-import com.devfalah.ui.composable.RoundButton
+import com.devfalah.ui.composable.HeightSpacer4
+import com.devfalah.ui.composable.UserIconButton
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
@@ -32,16 +38,21 @@ fun FriendRequestItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.White),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
+            .clip(RoundedCornerShape(20.dp))
+            .background(LightCardBackgroundColor)
+            .padding(vertical = 8.dp, horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         CircleProfileImage(
             painter = rememberAsyncImagePainter(model = userState.profileImage),
-            size = 72
+            size = 56
         )
+
         WidthSpacer16()
-        Column(modifier = Modifier.fillMaxSize()) {
+
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
                 text = userState.name,
                 textAlign = TextAlign.Start,
@@ -50,29 +61,44 @@ fun FriendRequestItem(
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
-            HeightSpacer8()
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                RoundButton(
-                    modifier = Modifier.weight(1f),
-                    userState = userState,
-                    onButtonClick = onAcceptButtonClick,
-                    buttonColor = LightPrimaryBrandColor,
-                    text = stringResource(id = R.string.accept),
-                    textColor = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
-                WidthSpacer16()
-                RoundButton(
-                    modifier = Modifier.weight(1f),
-                    userState = userState,
-                    onButtonClick = onDeleteButtonClick,
-                    buttonColor = LightCardBackgroundColor,
-                    text = stringResource(id = R.string.delete),
-                    textColor = Color.Black
-                )
-            }
+            HeightSpacer4()
+            Text(
+                text = userState.title,
+                textAlign = TextAlign.Start,
+                fontSize = 12.sp,
+                color = LightPrimaryBrandColor,
+                fontWeight = FontWeight.Normal,
+                maxLines = 1
+            )
         }
+
+        WidthSpacer16()
+
+        UserIconButton(
+            userState = userState,
+            onButtonClick = { onDeleteButtonClick(userState.userID) },
+            iconsSize = 20.dp,
+            painter = painterResource(id = R.drawable.ic_x)
+        )
+
+        WidthSpacer16()
+
+        UserIconButton(
+            userState = userState,
+            onButtonClick = { onAcceptButtonClick(userState.userID) },
+            iconsSize = 32.dp,
+            painter = painterResource(id = R.drawable.ic_accept_filled)
+        )
+
     }
+}
+
+@Preview(showSystemUi = false)
+@Composable
+fun PreviewFoo() {
+    FriendRequestItem(
+        userState = UserState(1, "Mustafa Ahmed", "Android Developer"),
+        onAcceptButtonClick = {},
+        onDeleteButtonClick = {}
+    )
 }
