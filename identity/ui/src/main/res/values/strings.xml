@@ -33,6 +33,6 @@
     <string name="open_gmail">Open Gmail</string>
     <string name="create_account_label">Create Account</string>
     <string name="name_hint">ali</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
 </resources>
