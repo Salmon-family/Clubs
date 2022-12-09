@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 
@@ -38,22 +39,21 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     val getUserAccountDetails: GetUserAccountDetailsUseCase,
-    val getUserAlbumsUseCase: GetUserAlbumsUseCase,
     val getUserFriendsUseCase: GetUserFriendsUseCase,
     val getProfilePostUseCase: GetProfilePostsUseCase,
     val addFriendUseCase: AddFriendUseCase,
-    val likeUseCase: SetLikeUseCase
+    val likeUseCase: SetLikeUseCase,
+    val changeProfileImageUseCase: ChangeProfileImageUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val userId = 3
+    private val userId = 6
     private val ownerID = 6
 
     init {
         getUserDetails(userId, ownerID)
-        getUserAlbums(ownerID)
         getUserFriends(ownerID)
         getProfilePost(userId, ownerID)
     }
@@ -79,16 +79,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun getUserAlbums(profileOwnerID: Int) {
-        viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(albums = getUserAlbumsUseCase(profileOwnerID).toUIState()) }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
-            }
-        }
-    }
-
     private fun getUserFriends(profileOwnerID: Int) {
         viewModelScope.launch {
             try {
@@ -103,7 +93,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update {
-                    it.copy(posts = getProfilePostUseCase(userID, profileOwnerID).toUIState())
+                    it.copy(
+                        posts = getProfilePostUseCase(userID, profileOwnerID).toUIState()
+                    )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
@@ -157,4 +149,34 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
+    fun onClickChangeImage(file: File) {
+        //should display dialog chose from album or select from yours.
+        viewModelScope.launch {
+            try {
+                val updatedUser = changeProfileImageUseCase(userId = ownerID, file)
+                _uiState.update { it.copy(userDetails = it.userDetails.copy(profilePicture = updatedUser.profileUrl)) }
+            } catch (e: Throwable) {
+                _uiState.update { it.copy(loading = false, majorError = e.message.toString()) }
+            }
+        }
+    }
+
+    fun swipeToRefresh(type: Int) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(loading = true) }
+                val posts = getProfilePostUseCase.loadMore(6, 6, type).toUIState()
+                _uiState.update { it.copy(loading = false, posts = posts) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
+            }
+        }
+    }
+
+    fun onClickPostSetting(post: PostUIState) {
+
+    }
+
+
 }

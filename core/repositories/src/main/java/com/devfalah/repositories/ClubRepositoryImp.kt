@@ -6,6 +6,7 @@ import com.devfalah.entities.Post
 import com.devfalah.entities.User
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
+import java.io.File
 import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
@@ -13,7 +14,10 @@ class ClubRepositoryImp @Inject constructor(
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
-        return remoteDataSource.removeFriendRequest(userID = userID, friendRequestID = friendRequestID)
+        return remoteDataSource.removeFriendRequest(
+            userID = userID,
+            friendRequestID = friendRequestID
+        )
     }
 
     override suspend fun addFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -41,7 +45,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<Post> {
-        return remoteDataSource.getProfilePosts(userID, profileUserID).map { it.toEntity() }
+        return remoteDataSource.getProfilePosts(userID, profileUserID).toEntity()
     }
 
     override suspend fun setLikeOnPost(userID: Int, postId: Int): Int {
@@ -53,7 +57,17 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
-        return remoteDataSource.checkFriendShip(userID,friendID)
+        return remoteDataSource.checkFriendShip(userID, friendID)
+    }
+
+    override suspend fun addProfilePicture(userID: Int, file: File): User {
+        return remoteDataSource.addProfilePicture(userID = userID, file).toEntity()
+    }
+
+    override suspend fun getProfilePostsPager(
+        userID: Int, profileUserID: Int, page: Int
+    ): List<Post> {
+        return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
     }
 
 }

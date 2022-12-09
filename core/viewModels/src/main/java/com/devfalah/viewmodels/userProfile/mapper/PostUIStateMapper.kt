@@ -11,7 +11,7 @@ fun Post.toUIState(): PostUIState {
         posterImage = publisherImageUrl,
         posterName = publisher,
         privacy = privacy,
-        createdData = createdTime,
+        createdData = createdTimeValue,
         totalLikes = totalLikes,
         totalComments = totalComments,
         isSaved = false,

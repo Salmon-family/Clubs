@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -29,7 +30,8 @@ import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 @Composable
 fun ProfileDetailsSection(
     userDetails: UserDetailsUIState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onChangeProfileImage: () -> Unit
 ) {
     ConstraintLayout(modifier = modifier.fillMaxWidth()) {
 
@@ -54,6 +56,7 @@ fun ProfileDetailsSection(
             painter = rememberAsyncImagePainter(model = userDetails.profilePicture),
             contentDescription = null,
             modifier = Modifier
+                .clickable { onChangeProfileImage() }
                 .constrainAs(imageProfile) {
                     top.linkTo(imageCover.bottom)
                     start.linkTo(imageCover.start)
