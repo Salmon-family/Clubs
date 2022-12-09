@@ -34,7 +34,7 @@ fun ClubItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .fillMaxWidth()
+            //.fillMaxSize()
             .border(
                 width = 2.dp,
                 color = if (isSelected) selectedColor else Color.Transparent,
