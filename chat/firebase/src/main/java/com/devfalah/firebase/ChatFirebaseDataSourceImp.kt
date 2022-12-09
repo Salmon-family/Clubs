@@ -8,6 +8,6 @@ import javax.inject.Inject
 class ChatFirebaseDataSourceImp @Inject constructor() : ChatFirebaseDataSource {
 
     override fun onReceiveNotification(): Flow<NotificationDto> {
-        return Events.notification
+        return FirebaseCloudMessagingService.events
     }
 }

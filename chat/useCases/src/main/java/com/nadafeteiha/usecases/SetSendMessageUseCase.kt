@@ -10,13 +10,13 @@ class SetSendMessageUseCase @Inject constructor(
 
     suspend operator fun invoke(userID: Int, friendID: Int, text: String): Message {
         val message = chatRepository.setSendMessage(userID, friendID, text)
-       val x = chatRepository.postNotification(
+        chatRepository.postNotification(
             notification = Notification(
                 id = message.id,
                 friendId = userID,
                 messageText = text,
                 time = message.time,
-                to = "fqx2x1DxRverG02nPSIHdL:APA91bEpQ-Jm8AkJqsfjXzBF3tX-xWYKCiBQVcI022H7LTxoV4QrkJE9_vkOl2XU18c31lP3nb6yi3tBiA-laY5GUrqbKGh0X9O195hd4D5KL0oZENiaFLXm09RcfNon0XOjOyE3z1h4"
+                to = "cD0K3w_EQ4ufkFhufn0p4C:APA91bH94OfXT508XpMJvg_uZTX8uK8p8Cx0J_6zr2ZiwzXTXxnC1hLz7KRlUE4kX_o7nCpK-TUeq80Siu6oq1K-R3VuCGLrNqC2tjouAldPbAgWxCPn6PifipcpSbYdsSjNZuYSw4wC"
             )
         )
         chatRepository.insertMessage(message)

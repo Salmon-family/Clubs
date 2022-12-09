@@ -1,10 +1,15 @@
 package com.devfalah.firebase
 
 import android.util.Log
+import com.devfalah.repository.models.NotificationDataModel
+import com.devfalah.repository.models.NotificationDto
 import com.devfalah.repository.models.NotificationDtoKeys
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 
 class FirebaseCloudMessagingService : FirebaseMessagingService() {
@@ -17,15 +22,16 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 val friendId = (data[NotificationDtoKeys.FRIEND_ID_KEY]?.toInt() ?: 0)
                 val messageText = (data[NotificationDtoKeys.MESSAGE_TEXT_KEY]).toString()
                 val time = (data[NotificationDtoKeys.TIME_KEY]).toString()
-                Events.notification.update {
-                    it.copy(
-                        data = it.data.copy(
+
+                GlobalScope.launch {
+                    events.emit(NotificationDto(
+                        data = NotificationDataModel(
                             id = id,
                             friendId = friendId,
                             messageText = messageText,
                             time = time,
                         )
-                    )
+                    ))
                 }
             }
         }
@@ -33,6 +39,10 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         Log.v("DEVFALAHMESSAGE", token)
+    }
+
+    companion object{
+        val events = MutableSharedFlow<NotificationDto>()
     }
 
 }
