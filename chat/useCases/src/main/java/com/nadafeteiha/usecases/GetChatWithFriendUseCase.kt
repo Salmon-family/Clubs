@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatWithFriendUseCase @Inject constructor(
-    private val chatRepository: ChatRepository
+    private val chatRepository: ChatRepository,
 ) {
 
     suspend operator fun invoke(userId: Int, friendId: Int): Flow<List<Message>> {
@@ -13,9 +13,8 @@ class GetChatWithFriendUseCase @Inject constructor(
         return chatRepository.getMessages(friendId)
     }
 
-    private suspend fun refreshMessages(userID: Int, friendID: Int) {
+    private suspend fun refreshMessages(userID: Int, friendID: Int){
         val message = chatRepository.getMessages(userID, friendID).messages
         chatRepository.insertMessages(message)
-        println("refreshMessages $message" )
     }
 }

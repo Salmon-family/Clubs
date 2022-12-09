@@ -1,9 +1,9 @@
 package com.devfalah.firebase
 
-import kotlinx.coroutines.flow.Flow
+import com.devfalah.repository.models.NotificationDto
 import kotlinx.coroutines.flow.MutableStateFlow
 
 object Events {
-     var id = MutableStateFlow(0)
 
+     val notification = MutableStateFlow(NotificationDto())
 }

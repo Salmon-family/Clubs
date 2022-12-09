@@ -1,15 +1,17 @@
 package com.thechance.remote
 
+import android.util.Log
 import com.devfalah.repository.ChatDataSource
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ConversationDTO
-import com.google.gson.Gson
+import com.devfalah.repository.models.NotificationDto
 import com.thechance.remote.response.BaseResponse
 import retrofit2.Response
 import javax.inject.Inject
 
 class ChatDataSourceImp @Inject constructor(
     private val service: ChatService,
+    private val cloudMessagingService: CloudMessagingService,
 ) : ChatDataSource {
 
     override suspend fun getChats(userID: Int): ConversationDTO {
@@ -23,6 +25,19 @@ class ChatDataSourceImp @Inject constructor(
     override suspend fun setSendMessage(from: Int, to: Int, message: String): ChatDTO {
         return wrap { service.sendMessage(from, to, message) }
     }
+
+    override suspend fun postNotification(notification: NotificationDto): Boolean {
+        return try {
+            cloudMessagingService.postNotification(notification)
+            true
+        }catch (e:Throwable){
+            Log.e("DEVFALAH",e.message.toString())
+            false
+        }
+
+
+    }
+
 
     private suspend fun <T> wrap(
         function: suspend () -> Response<BaseResponse<T>>,

@@ -1,11 +1,13 @@
 package com.devfalah.firebase
 
 import com.devfalah.repository.ChatFirebaseDataSource
+import com.devfalah.repository.models.NotificationDto
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ChatFirebaseDataSourceImp @Inject constructor():ChatFirebaseDataSource {
-    override fun onReceiveId(): Flow<Int> {
-        return Events.id
+class ChatFirebaseDataSourceImp @Inject constructor() : ChatFirebaseDataSource {
+
+    override fun onReceiveNotification(): Flow<NotificationDto> {
+        return Events.notification
     }
 }

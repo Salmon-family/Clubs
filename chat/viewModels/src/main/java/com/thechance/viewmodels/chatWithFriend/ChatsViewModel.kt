@@ -27,9 +27,7 @@ class ChatsViewModel @Inject constructor(
     val id = 2
 
     init {
-
         initChats(id)
-        viewModelScope.launch {receiveNotificationUseCase() }
     }
 
    private fun initChats(userID: Int){

@@ -1,13 +1,11 @@
 package com.devfalah.repository
 
-import com.devfalah.repository.mappers.toEntities
-import com.devfalah.repository.mappers.toEntity
-import com.devfalah.repository.mappers.toLocalDto
-import com.devfalah.repository.mappers.toMessage
+import com.devfalah.repository.mappers.*
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.Chat
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
+import com.thechance.entities.Notification
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -50,8 +48,12 @@ class ChatRepositoryImp @Inject constructor(
         chatLocalDataSource.insertMessage(message.toMessage())
     }
 
-    override fun onReceiveId(): Flow<Int> {
-        return firebaseDataSource.onReceiveId()
+    override fun onReceiveMessage(): Flow<Message> {
+        return firebaseDataSource.onReceiveNotification().map { it.toMessage() }
+    }
+
+    override suspend fun postNotification(notification: Notification): Boolean {
+        return ChatDataSource.postNotification(notification.toDto())
     }
 
     override fun getMessages(friendId: Int): Flow<List<Message>> {

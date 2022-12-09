@@ -7,8 +7,8 @@ class ReceiveNotificationUseCase @Inject constructor(
     private val chatRepository: ChatRepository,
 ) {
     suspend operator fun invoke(){
-         chatRepository.onReceiveId().filterNot { it==0 }.collect{
-            println("DEVFALAHMESSAGE $it")
+         chatRepository.onReceiveMessage().filterNot { it.friendId==0 }.collect{
+             chatRepository.insertMessage(it)
         }
     }
 }

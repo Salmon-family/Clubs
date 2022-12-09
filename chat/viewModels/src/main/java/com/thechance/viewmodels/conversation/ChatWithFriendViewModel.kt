@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
+import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SetSendMessageUseCase
 import com.thechance.viewmodels.conversation.uiMappers.toMessage
 import com.thechance.viewmodels.conversation.uiStates.ChatUIState
@@ -20,7 +21,8 @@ class ChatWithFriendViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getListMessagesUseCase: GetChatWithFriendUseCase,
     private val setSendMessageUseCase: SetSendMessageUseCase,
-) :
+    private val receiveNotificationUseCase: ReceiveNotificationUseCase,
+    ) :
     ViewModel() {
 
     private val args = ConversationArgs(savedStateHandle)
@@ -33,6 +35,7 @@ class ChatWithFriendViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        viewModelScope.launch {receiveNotificationUseCase() }
         getListMessages(userId, friendId)
         _uiState.update {
             it.copy(
@@ -62,6 +65,7 @@ class ChatWithFriendViewModel @Inject constructor(
             try {
                 setSendMessageUseCase(userId, friendId, message)
             } catch (e: Exception) {
+                Log.e("DEVFALAHMESSAGE",e.message.toString())
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }

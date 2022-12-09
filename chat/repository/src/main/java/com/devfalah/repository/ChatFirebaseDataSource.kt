@@ -1,7 +1,9 @@
 package com.devfalah.repository
 
+import com.devfalah.repository.models.NotificationDto
 import kotlinx.coroutines.flow.Flow
 
 interface ChatFirebaseDataSource {
-     fun onReceiveId():Flow<Int>
+
+    fun onReceiveNotification(): Flow<NotificationDto>
 }
