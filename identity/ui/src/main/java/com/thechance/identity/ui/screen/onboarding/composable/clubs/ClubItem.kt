@@ -41,7 +41,7 @@ fun ClubItem(
                 shape = RoundedCornerShape(20.dp)
             )
             .background(
-                color = Color(0xFFFAFAFA),
+                color = CardBackground,
                 shape = RoundedCornerShape(20.dp)
             )
             .clip(RoundedCornerShape(20.dp))

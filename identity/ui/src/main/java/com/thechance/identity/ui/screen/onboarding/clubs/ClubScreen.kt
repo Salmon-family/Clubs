@@ -1,5 +1,6 @@
 package com.thechance.identity.ui.screen.onboardclubs
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -20,6 +21,7 @@ import com.thechance.identity.ui.model.Club
 import com.thechance.identity.ui.model.getClubs
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
 import com.thechance.identity.ui.spacer.SpacerVertical24
+import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 
@@ -33,7 +35,8 @@ fun ClubScreen(
         columns = GridCells.Adaptive(115.dp),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.background(LightCardColor)
     ){
         item(
             span = {
@@ -72,7 +75,7 @@ fun ClubScreen(
                 }
             )
             SpacerVertical24()
-        }
+       }
 
         item(
             span = {
