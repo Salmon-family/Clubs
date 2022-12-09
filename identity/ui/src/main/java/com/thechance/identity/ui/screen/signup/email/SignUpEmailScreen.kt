@@ -32,6 +32,7 @@ fun SignUpEmailScreen(
     SignUpEmailContent(
         state = state,
         onChangeEmail = viewModel::onChangeEmail,
+        onValidateEmailType = viewModel::checkIfGmailOrAnotherType,
         onClickPasswordScreen = { navController.navigateToSignupConfirmPassword() },
         onClickBack = { navController.navigateUp() }
     )
@@ -42,6 +43,7 @@ private fun SignUpEmailContent(
     state: UserUIState,
     onChangeEmail: (String) -> Unit,
     onClickPasswordScreen: () -> Unit,
+    onValidateEmailType: (String) -> Boolean,
     onClickBack: () -> Unit
 ) {
     Column(
@@ -79,7 +81,7 @@ private fun SignUpEmailContent(
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            isEnabled = state.email.isNotEmpty(),
+            isEnabled = onValidateEmailType.invoke(state.email),
             onClick = onClickPasswordScreen,
             text = stringResource(id = R.string.continue_label)
         )

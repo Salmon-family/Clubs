@@ -1,13 +1,12 @@
 package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -35,7 +34,6 @@ fun SignupBirthdateAndGenderScreen(
     viewModel: SignupViewModel,
 ) {
     val context = LocalContext.current
-    val rememberState = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.uiState.collectAsState()
 
     SignupBirthdateAndGanderContent(
