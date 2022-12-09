@@ -34,93 +34,43 @@ fun ClubsContent(
     onClickContinue: () -> Unit,
     onClickBack: () -> Unit
 ) {
-    LazyColumn(
-        contentPadding = PaddingValues(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+        //.verticalScroll(rememberScrollState())
     ) {
-        item {
-            BackButton(onClick = onClickBack)
-        }
+        BackButton(onClick = onClickBack)
 
-        item {
-            SpacerVertical24()
-        }
+        Spacer(modifier = Modifier.weight(1f))
+        ClubsTitle(
+            text1 = stringResource(id = R.string.your_label),
+            color1 = LightPrimaryBlackColor,
+            text2 = stringResource(id = R.string.app_name),
+            color2 = LightPrimaryBrandColor
+        )
 
-        item {
-            ClubsTitle(
-                text1 = stringResource(id = R.string.your_label),
-                color1 = LightPrimaryBlackColor,
-                text2 = stringResource(id = R.string.app_name),
-                color2 = LightPrimaryBrandColor
-            )
-        }
+        ClubGroup()
+//        FlowRow(
+//            mainAxisSize = SizeMode.Expand,
+//            mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
+//        ) {
+//            for(i in 0..8){
+//                PreviewClubItem()
+//            }
+//        }
 
-        item {
-            FlowRow(
-                modifier = Modifier.fillMaxSize().padding(vertical = 24.dp),
-                mainAxisSpacing = 12.dp,
-                crossAxisSpacing = 12.dp,
-                mainAxisAlignment = MainAxisAlignment.Center,
-                crossAxisAlignment = FlowCrossAxisAlignment.Center,
-                mainAxisSize = com.google.accompanist.flowlayout.SizeMode.Expand
-            ) {
-                for (i in 0..1) {
-                    PreviewClubItem()
-                }
-            }
-        }
-
-        item {
-            SpacerVertical24()
-        }
-
-        item {
-            AuthButton(
-                onClick = onClickContinue,
-                isEnabled = true,
-                text = stringResource(id = R.string.continue_label),
-                buttonModifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            )
-        }
+        Spacer(modifier = Modifier.weight(4.25f))
+        AuthButton(
+            onClick = onClickContinue,
+            isEnabled = true,
+            text = stringResource(id = R.string.continue_label),
+            buttonModifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        )
     }
 }
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(16.dp)
-//            //.verticalScroll(rememberScrollState())
-//    ) {
-//        BackButton(onClick = onClickBack)
-//
-//        Spacer(modifier = Modifier.weight(1f))
-//        ClubsTitle(
-//            text1 = stringResource(id = R.string.your_label),
-//            color1 = LightPrimaryBlackColor,
-//            text2 = stringResource(id = R.string.app_name),
-//            color2 = LightPrimaryBrandColor
-//        )
-//
-//        ClubGroup()
-////        FlowRow(
-////            mainAxisSize = SizeMode.Expand,
-////            mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
-////        ) {
-////            for(i in 0..8){
-////                PreviewClubItem()
-////            }
-////        }
-//
-//        Spacer(modifier = Modifier.weight(4.25f))
-//        AuthButton(
-//            onClick = onClickContinue,
-//            isEnabled = true,
-//            text = stringResource(id = R.string.continue_label),
-//            buttonModifier = Modifier
-//                .fillMaxWidth()
-//                .padding(horizontal = 8.dp)
-//        )
-//    }
 
 
 @Preview(showBackground = true)
