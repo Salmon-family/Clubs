@@ -22,8 +22,13 @@ class NotificationsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val notifications = getNotifications(6)
-            _uiState.update { it.copy(notifications = notifications.toUIState()) }
+            _uiState.update { it.copy(isLoading = true) }
+            try {
+                val notifications = getNotifications(6)
+                _uiState.update { it.copy(notifications = notifications.toUIState()) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
+            }
         }
     }
 

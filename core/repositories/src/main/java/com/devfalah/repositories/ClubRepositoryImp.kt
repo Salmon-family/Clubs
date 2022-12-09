@@ -25,15 +25,15 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getUserFriendRequests(userID: Int): List<User> {
-        return remoteDataSource.getUserFriendRequests(userID = userID).map { it.toEntity() }
+        return remoteDataSource.getUserFriendRequests(userID = userID).toEntity()
     }
 
     override suspend fun getUserFriends(userID: Int): List<User> {
-        return remoteDataSource.getUserFriends(userID).map { it.toEntity() }
+        return remoteDataSource.getUserFriends(userID).toEntity()
     }
 
     override suspend fun getNotifications(userID: Int): List<Notification> {
-        return remoteDataSource.getNotifications(userID).map { it.toEntity() }
+        return remoteDataSource.getNotifications(userID).toEntity()
     }
 
     override suspend fun getUserAccountDetails(userID: Int): User {
@@ -41,7 +41,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getUserAlbums(userID: Int, albumID: Int): List<Album> {
-        return remoteDataSource.getUserAlbums(userID, albumID).map { it.toEntity() }
+        return remoteDataSource.getUserAlbums(userID, albumID).toEntity()
     }
 
     override suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<Post> {

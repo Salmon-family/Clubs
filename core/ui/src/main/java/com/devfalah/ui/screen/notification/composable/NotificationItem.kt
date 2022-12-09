@@ -18,6 +18,7 @@ import com.devfalah.ui.composable.NotificationIcon
 import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer16
+import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -33,7 +34,7 @@ fun NotificationItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clickable { onNotificationClick(notification) },
+                .RemoveRippleEffect { onNotificationClick(notification) },
             backgroundColor = LightCardBackgroundColor,
             elevation = 0.dp,
             shape = RoundedCornerShape(20.dp)
@@ -52,9 +53,7 @@ fun NotificationItem(
                 WidthSpacer16()
 
                 Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize(),
+                    modifier = Modifier.weight(1f).fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
 

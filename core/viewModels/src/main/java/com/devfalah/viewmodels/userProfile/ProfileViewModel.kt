@@ -49,7 +49,7 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val userId = 6
+    private val userId = 2
     private val ownerID = 6
 
     init {
@@ -106,24 +106,21 @@ class ProfileViewModel @Inject constructor(
     fun onClickLike(post: PostUIState) {
         viewModelScope.launch {
             try {
+                val totalLikes = likeUseCase(
+                    postID = post.postId, userId = userId,
+                    isLiked = post.isLikedByUser
+                )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser,
-                    totalLikes = likeUseCase(
-                        postID = post.postId,
-                        userId = userId,
-                        isLiked = post.isLikedByUser
-                    )
+                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) {
-                            updatedPost
-                        } else {
-                            it
-                        }
+                        if (it.postId == post.postId) { updatedPost }
+                        else { it }
                     })
                 }
             } catch (t: Throwable) {
+                Log.e("Test Test Test", t.message.toString())
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }

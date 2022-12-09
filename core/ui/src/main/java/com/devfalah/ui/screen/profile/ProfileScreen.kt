@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.screen.profile.composable.*
+import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightCardColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -104,9 +105,7 @@ fun ProfileContent(
         },
     ) {
         LazyColumn(
-            modifier = Modifier
-                .background(LightCardBackgroundColor)
-                .fillMaxSize(),
+            modifier = Modifier.background(LightBackgroundColor).fillMaxSize(),
             state = scrollState,
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)

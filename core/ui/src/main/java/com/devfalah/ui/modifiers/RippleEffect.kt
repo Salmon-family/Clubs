@@ -6,13 +6,12 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun Modifier.RemoveRippleEffect(onClick: () -> Unit) = clickable(
-    interactionSource = remember { MutableInteractionSource() },
-    indication = rememberRipple(radius = 0.dp)
-) {
+    interactionSource = remember { MutableInteractionSource() }, indication = null) {
     onClick()
 }
 

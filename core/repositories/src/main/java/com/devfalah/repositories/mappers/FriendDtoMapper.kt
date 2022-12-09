@@ -1,8 +1,9 @@
 package com.devfalah.repositories.mappers
 
+import com.devfalah.entities.Post
 import com.devfalah.entities.User
 import com.devfalah.repositories.models.FriendDTO
-
+import com.devfalah.repositories.models.WallPostDTO
 
 fun FriendDTO.toEntity(): User {
     return User(
@@ -21,3 +22,4 @@ fun FriendDTO.toEntity(): User {
     )
 }
 
+fun List<FriendDTO>.toEntity():List<User> = map { it.toEntity() }
