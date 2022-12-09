@@ -9,6 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +18,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.screen.profile.composable.*
+import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightCardColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.Constants
@@ -62,6 +63,7 @@ fun ProfileScreen(
         onClickComment = viewModel::onClickComment,
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
+        onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
             Toast.makeText(context, "not done yet.. ", Toast.LENGTH_LONG).show()
         },
@@ -70,7 +72,7 @@ fun ProfileScreen(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
         },
-        onRefresh = viewModel::swipeToRefresh
+        onRefresh = viewModel::swipeToRefresh,
     )
 }
 
@@ -84,7 +86,8 @@ fun ProfileContent(
     onClickAddFriend: () -> Unit,
     onClickSendMessage: () -> Unit,
     onChangeProfileImage: () -> Unit,
-    onRefresh: (Int) -> Unit
+    onRefresh: (Int) -> Unit,
+    onClickPostSetting: (PostUIState) -> Unit
 ) {
 
     SwipeRefresh(
@@ -100,11 +103,13 @@ fun ProfileContent(
         },
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .background(LightCardBackgroundColor)
+                .fillMaxSize(),
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            item {
+            item(key = state.userDetails.userID) {
                 ProfileDetailsSection(
                     state.userDetails,
                     modifier = Modifier.padding(horizontal = 16.dp),
@@ -112,7 +117,7 @@ fun ProfileContent(
                 )
             }
             if (!state.isMyProfile) {
-                item {
+                item(key = state.userDetails.areFriends) {
                     FriendOptionsSection(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         areFriends = state.userDetails.areFriends,
@@ -130,11 +135,12 @@ fun ProfileContent(
                 )
             }
             items(state.posts) {
-                ProfilePostItem(
-                    it,
+                PostItem(
+                    state = it,
                     onClickLike = { onClickLike(it) },
                     onClickComment = { onClickComment(it) },
-                    onClickSave = { onClickSave(it) }
+                    onClickSave = { onClickSave(it) },
+                    onClickPostSetting = { onClickPostSetting(it) }
                 )
             }
             item {

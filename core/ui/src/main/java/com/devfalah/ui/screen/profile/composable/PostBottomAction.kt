@@ -4,20 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.HeightSpacer16
-import com.devfalah.ui.composable.WidthSpacer16
-import com.devfalah.ui.composable.WidthSpacer24
-import com.devfalah.ui.composable.WidthSpacer8
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
@@ -35,9 +35,8 @@ fun PostBottomAction(
 
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
-        Icon(
-            modifier = Modifier
-                .RemoveRippleEffect { onClickLike(post) },
+
+        PostActionIcon(
             painter = painterResource(
                 id = if (post.isLikedByUser) {
                     R.drawable.heart_full
@@ -45,60 +44,60 @@ fun PostBottomAction(
                     R.drawable.like_icon
                 }
             ),
-            tint = if (post.isLikedByUser) {
-                LightPrimaryBrandColor
-            } else {
-                Color.Unspecified
-            },
-            contentDescription = null
+            tint = if (post.isLikedByUser) { LightPrimaryBrandColor } else { Color.Unspecified },
+            onClick = { onClickLike(post) }
         )
+
         WidthSpacer8()
-        if (post.totalLikes > 0) {
-            Text(
-                text = "${post.totalLikes}",
-                fontSize = 14.sp,
-                fontFamily = PlusJakartaSans,
-                fontWeight = FontWeight.Normal,
-                color = LightSecondaryBlackColor
-            )
-        }
+
+        PostTextValue(if (post.totalLikes > 0) { "${post.totalLikes}" } else { "" }.take(3))
+
         WidthSpacer24()
 
-        Icon(
-            modifier = Modifier.RemoveRippleEffect { onClickComment(post) },
-            painter = painterResource(id = R.drawable.comment_icon),
-
-            contentDescription = null
+        PostActionIcon(
+            painter = painterResource(id = R.drawable.ic_comment),
+            onClick = { onClickComment(post) }
         )
 
-        WidthSpacer8()
-        if (post.totalComments > 0) {
-            Text(
-                text = "${post.totalComments}",
-                fontSize = 14.sp,
-                fontFamily = PlusJakartaSans,
-                fontWeight = FontWeight.Normal,
-                color = LightSecondaryBlackColor
-            )
-        }
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Image(
-                modifier = Modifier
-                    .RemoveRippleEffect { onClickSave(post) },
-                alignment = Alignment.CenterEnd,
+        WidthSpacer4()
+
+        PostTextValue(if (post.totalComments > 0) { "${post.totalComments}" } else { "" })
+
+        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
+            PostActionIcon(
                 painter = painterResource(
-                    id = if (post.isSaved) {
-                        R.drawable.save_full
-                    } else {
-                        R.drawable.save_icon
-                    }
+                    id = if (post.isSaved) { R.drawable.save_full } else { R.drawable.save_icon }
                 ),
-                contentDescription = null,
+                onClick = { onClickSave(post) }
             )
         }
         WidthSpacer16()
     }
+}
+
+@Composable
+private fun PostTextValue(text: String) {
+    Text(
+        modifier = Modifier.sizeIn(minWidth = 24.dp, maxWidth = 24.dp),
+        text = text,
+        fontSize = 14.sp,
+        fontFamily = PlusJakartaSans,
+        fontWeight = FontWeight.Normal,
+        color = LightSecondaryBlackColor
+    )
+}
+
+
+@Composable
+private fun PostActionIcon(
+    onClick: () -> Unit,
+    painter: Painter,
+    tint: Color = Color.Unspecified
+) {
+    Icon(
+        modifier = Modifier.RemoveRippleEffect { onClick() },
+        painter = painter,
+        tint = tint,
+        contentDescription = null
+    )
 }

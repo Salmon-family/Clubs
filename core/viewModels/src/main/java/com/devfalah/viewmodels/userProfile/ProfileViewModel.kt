@@ -192,5 +192,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun onClickPostSetting(post: PostUIState){
+
+    }
+
 
 }

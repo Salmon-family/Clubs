@@ -1,13 +1,12 @@
 package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
@@ -20,13 +19,17 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.composable.WidthSpacer8
+import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 @Composable
-fun PostHeader(post: PostUIState) {
+fun PostHeader(
+    post: PostUIState,
+    onClickPostSetting: (PostUIState) -> Unit
+) {
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
         Image(
@@ -46,20 +49,22 @@ fun PostHeader(post: PostUIState) {
                 color = LightPrimaryBlackColor
             )
             Row {
+                Icon(
+                    painter = getPrivacyIcon(post.privacy),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(top = 4.dp)
+                )
+                WidthSpacer8()
                 Text(
                     text = getPrivacyText(post.privacy),
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,
-                    color = LightTernaryBlackColor
+                    color = LightTernaryBlackColor,
                 )
-                WidthSpacer8()
 
-                Image(
-                    painter = getPrivacyIcon(post.privacy),
-                    contentDescription = null,
-                    modifier = Modifier.alignByBaseline()
-                )
                 WidthSpacer8()
                 Text(
                     text = " |  ${post.createdData}",
@@ -69,6 +74,17 @@ fun PostHeader(post: PostUIState) {
                     color = LightTernaryBlackColor
                 )
             }
+        }
+
+        Box(
+            modifier = Modifier.weight(1f).padding(end = 16.dp),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            Icon(
+                modifier = Modifier.RemoveRippleEffect { onClickPostSetting(post) },
+                painter = painterResource(R.drawable.ic_setting),
+                contentDescription = null
+            )
         }
     }
 }
@@ -85,7 +101,7 @@ private fun getPrivacyText(privacy: Boolean): String {
 @Composable
 private fun getPrivacyIcon(privacy: Boolean): Painter {
     return if (privacy) {
-        painterResource(id = R.drawable.private_icon)
+        painterResource(id = R.drawable.ic_friends)
     } else {
         painterResource(id = R.drawable.public_icon)
     }

@@ -45,7 +45,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<Post> {
-        return remoteDataSource.getProfilePosts(userID, profileUserID).map { it.toEntity() }
+        return remoteDataSource.getProfilePosts(userID, profileUserID).toEntity()
     }
 
     override suspend fun setLikeOnPost(userID: Int, postId: Int): Int {
@@ -67,8 +67,7 @@ class ClubRepositoryImp @Inject constructor(
     override suspend fun getProfilePostsPager(
         userID: Int, profileUserID: Int, page: Int
     ): List<Post> {
-        return remoteDataSource.getProfilePostsPager(userID, profileUserID, page)
-            .map { it.toEntity() }
+        return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
     }
 
 }
