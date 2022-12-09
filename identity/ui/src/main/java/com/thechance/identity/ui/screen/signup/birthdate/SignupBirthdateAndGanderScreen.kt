@@ -1,12 +1,16 @@
 package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -30,6 +34,8 @@ fun SignupBirthdateAndGenderScreen(
     navController: NavController,
     viewModel: SignupViewModel,
 ) {
+    val context = LocalContext.current
+    val rememberState = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.uiState.collectAsState()
     SignupBirthdateAndGanderContent(
         state,
@@ -38,7 +44,12 @@ fun SignupBirthdateAndGenderScreen(
         onClickBack = { navController.navigateUp() },
         onCreateAccount = {
             viewModel.makeSignupRequest()
-            navController.navigateToAccountActivation()
+            rememberState.value = state.isSuccess
+            if (rememberState.value) {
+                navController.navigateToAccountActivation()
+            } else {
+                Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
+            }
         }
     )
 }

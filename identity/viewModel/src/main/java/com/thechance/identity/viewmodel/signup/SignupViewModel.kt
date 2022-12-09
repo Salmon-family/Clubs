@@ -21,8 +21,8 @@ class SignupViewModel @Inject constructor(
 
 
     fun makeSignupRequest() {
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 val state = _uiState.value
                 val sign = signupUseCase(
                     firstName = state.firstName,
@@ -36,10 +36,10 @@ class SignupViewModel @Inject constructor(
                 )
                 Log.i("Guid", sign.guid.toString())
                 _uiState.update { it.copy(isSuccess = true) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(isError = t.message.toString()) }
+                Log.e("Test", t.message.toString())
             }
-        } catch (t: Throwable) {
-            _uiState.update { it.copy(isError = t.message.toString()) }
-            Log.e("Test", t.message.toString())
         }
     }
 
