@@ -23,10 +23,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightCardColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -137,6 +136,8 @@ fun ProfileContent(
             items(state.posts) {
                 PostItem(
                     state = it,
+                    isMyProfile = state.isMyProfile,
+                    isContentExpandable = true,
                     onClickLike = { onClickLike(it) },
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },

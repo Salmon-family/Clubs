@@ -28,6 +28,7 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 @Composable
 fun PostHeader(
     post: PostUIState,
+    isMyProfile: Boolean,
     onClickPostSetting: (PostUIState) -> Unit
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -76,15 +77,17 @@ fun PostHeader(
             }
         }
 
-        Box(
-            modifier = Modifier.weight(1f).padding(end = 16.dp),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Icon(
-                modifier = Modifier.RemoveRippleEffect { onClickPostSetting(post) },
-                painter = painterResource(R.drawable.ic_setting),
-                contentDescription = null
-            )
+        if (isMyProfile) {
+            Box(
+                modifier = Modifier.weight(1f).padding(end = 16.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Icon(
+                    modifier = Modifier.RemoveRippleEffect { onClickPostSetting(post) },
+                    painter = painterResource(R.drawable.ic_setting),
+                    contentDescription = null
+                )
+            }
         }
     }
 }

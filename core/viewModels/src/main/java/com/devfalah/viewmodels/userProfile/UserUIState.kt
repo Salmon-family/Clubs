@@ -39,9 +39,7 @@ data class PostUIState(
     val isLikedByUser: Boolean = false,
     val postImage: String = "",
     val postContent: String = "",
-) {
-    companion object
-}
+)
 
 data class FriendUIState(
     val id: Int = 0,
