@@ -17,6 +17,7 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.EmailDescriptionText
+import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.signup.composable.DatePicker
 import com.thechance.identity.ui.screen.signup.composable.SegmentControls
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -44,12 +45,7 @@ fun SignupBirthdateAndGenderScreen(
         onClickBack = { navController.navigateUp() },
         onCreateAccount = {
             viewModel.makeSignupRequest()
-//            rememberState.value = state.isSuccess
-//            if (rememberState.value) {
-//                navController.navigateToAccountActivation()
-//            } else {
-//                Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
-//            }
+            navController.navigateToAccountActivation()
         }
     )
 }
