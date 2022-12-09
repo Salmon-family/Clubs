@@ -5,6 +5,7 @@ import com.devfalah.remote.ClubService
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
 import com.thechance.remote.ChatService
+import com.thechance.remote.CloudMessagingService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,15 @@ object NetworkModule {
     fun provideIdentityService(retrofit: Retrofit): IdentityService {
         return retrofit.create(IdentityService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseCloudMessagingApi(factory: GsonConverterFactory): CloudMessagingService =
+        Retrofit.Builder()
+            .baseUrl(CloudMessagingService.BASE_URL)
+            .addConverterFactory(factory)
+            .build()
+            .create(CloudMessagingService::class.java)
 
     @Singleton
     @Provides

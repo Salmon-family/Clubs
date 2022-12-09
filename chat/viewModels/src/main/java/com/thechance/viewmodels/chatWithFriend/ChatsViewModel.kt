@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
+import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
 import com.thechance.viewmodels.chatWithFriend.uiStates.toUiState
 import com.thechance.viewmodels.chatWithFriend.uiStates.ChatsUiState
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class ChatsViewModel @Inject constructor(
     private val getChats: GetChatsUseCase,
     private val searchForChats: SearchForChatsUseCase,
+    private val receiveNotificationUseCase: ReceiveNotificationUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatsUiState())

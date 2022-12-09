@@ -1,11 +1,11 @@
 package com.devfalah.repository.mappers
 
 import com.devfalah.repository.ConvertDate
+import com.devfalah.repository.models.ChatDTO
+import com.devfalah.repository.models.ConversationDTO
 import com.devfalah.repository.models.MessageEntityLocalDTO
 import com.thechance.entities.Conversation
 import com.thechance.entities.Message
-import com.devfalah.repository.models.ConversationDTO
-import com.devfalah.repository.models.ChatDTO
 
 fun ConversationDTO.toEntity(userId: Int): Conversation {
     return Conversation(
@@ -15,7 +15,7 @@ fun ConversationDTO.toEntity(userId: Int): Conversation {
 
 
 fun ChatDTO.toEntity(userId: Int): Message {
-    return if(messageFrom?.guid == userId) {
+    return if (messageFrom?.guid == userId) {
         Message(
             id = id ?: 0,
             friendId = messageTo?.guid ?: 0,
@@ -23,7 +23,7 @@ fun ChatDTO.toEntity(userId: Int): Message {
             message = message ?: "",
             time = time?.let { ConvertDate().convertTime(it) } ?: ""
         )
-    }else{
+    } else {
         Message(
             id = id ?: 0,
             friendId = messageFrom?.guid ?: 0,

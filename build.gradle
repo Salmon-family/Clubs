@@ -17,6 +17,7 @@ buildscript {
 
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -26,3 +27,36 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
     id 'org.jetbrains.kotlin.jvm' version '1.7.10' apply false
 }
+
+//
+//buildscript {
+//    repositories {
+//        // Make sure that you have the following two repositories
+//        google()  // Google's Maven repository
+//        content_copy
+//
+//        mavenCentral()  // Maven Central repository
+//        content_copy
+//
+//    }
+//    dependencies {
+//        ...
+//        // Add the dependency for the Google services Gradle plugin
+//        classpath 'com.google.gms:google-services:4.3.13'
+//        content_copy
+//
+//    }
+//}
+//
+//allprojects {
+//    ...
+//    repositories {
+//        // Make sure that you have the following two repositories
+//        google()  // Google's Maven repository
+//        content_copy
+//
+//        mavenCentral()  // Maven Central repository
+//        content_copy
+//
+//    }
+//}
