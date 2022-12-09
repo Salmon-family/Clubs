@@ -39,7 +39,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     val getUserAccountDetails: GetUserAccountDetailsUseCase,
-    val getUserAlbumsUseCase: GetUserAlbumsUseCase,
     val getUserFriendsUseCase: GetUserFriendsUseCase,
     val getProfilePostUseCase: GetProfilePostsUseCase,
     val addFriendUseCase: AddFriendUseCase,
@@ -55,7 +54,6 @@ class ProfileViewModel @Inject constructor(
 
     init {
         getUserDetails(userId, ownerID)
-        getUserAlbums(ownerID)
         getUserFriends(ownerID)
         getProfilePost(userId, ownerID)
     }
@@ -77,16 +75,6 @@ class ProfileViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, majorError = t.message.toString()) }
-            }
-        }
-    }
-
-    private fun getUserAlbums(profileOwnerID: Int) {
-        viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(albums = getUserAlbumsUseCase(profileOwnerID).toUIState()) }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }

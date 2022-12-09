@@ -126,7 +126,6 @@ fun ProfileContent(
                     )
                 }
             }
-            item { AlbumSection(state.albums, modifier = Modifier.padding(horizontal = 16.dp)) }
             item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
             item {
                 PostCreatingSection(
