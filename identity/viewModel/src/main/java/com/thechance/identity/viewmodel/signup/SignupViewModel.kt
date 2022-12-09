@@ -29,13 +29,14 @@ class SignupViewModel @Inject constructor(
                     lastName = "_",
                     email = state.email,
                     reEmail = state.email,
-                    gender = "female",
+                    gender = state.gender,
                     birthdate = state.birthdate,
                     username = state.username,
                     password = state.password,
                 )
                 Log.i("Guid", sign.guid.toString())
                 _uiState.update { it.copy(isSuccess = true) }
+
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isError = t.message.toString()) }
                 Log.e("Test", t.message.toString())

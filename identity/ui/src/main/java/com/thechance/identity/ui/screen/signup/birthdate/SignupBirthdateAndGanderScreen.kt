@@ -1,7 +1,6 @@
 package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,8 +17,8 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.EmailDescriptionText
-import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.signup.composable.DatePicker
+import com.thechance.identity.ui.screen.signup.composable.SegmentControls
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -37,6 +36,7 @@ fun SignupBirthdateAndGenderScreen(
     val context = LocalContext.current
     val rememberState = rememberSaveable { mutableStateOf(false) }
     val state by viewModel.uiState.collectAsState()
+
     SignupBirthdateAndGanderContent(
         state,
         onChangeGender = viewModel::onChangeGender,
@@ -44,12 +44,12 @@ fun SignupBirthdateAndGenderScreen(
         onClickBack = { navController.navigateUp() },
         onCreateAccount = {
             viewModel.makeSignupRequest()
-            rememberState.value = state.isSuccess
-            if (rememberState.value) {
-                navController.navigateToAccountActivation()
-            } else {
-                Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
-            }
+//            rememberState.value = state.isSuccess
+//            if (rememberState.value) {
+//                navController.navigateToAccountActivation()
+//            } else {
+//                Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
+//            }
         }
     )
 }
@@ -110,6 +110,11 @@ private fun SignupBirthdateAndGanderContent(
             style = Typography.body2,
             color = LightSecondaryBlackColor,
             modifier = Modifier.padding(start = 8.dp)
+        )
+
+        SpacerVertical8()
+        SegmentControls(
+            onChangeGander = onChangeGender
         )
 
         SpacerVertical24()

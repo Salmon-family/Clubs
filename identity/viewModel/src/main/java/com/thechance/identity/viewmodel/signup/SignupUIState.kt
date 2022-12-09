@@ -7,7 +7,7 @@ data class UserUIState(
     val reEmail: String = "",
     val firstName: String = "",
     val lastName: String = "",
-    val gender: String = "",
+    val gender: String = "male",
     val username: String = "",
     val password: String = "",
     val confirmPassword: String = "",
