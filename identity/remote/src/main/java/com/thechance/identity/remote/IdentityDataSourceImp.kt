@@ -1,7 +1,6 @@
 package com.thechance.identity.remote
 
 import com.thechance.identity.remote.response.IdentityBaseResponse
-import com.thechance.identity.repositories.LocalIdentityDataSource
 import com.thechance.identity.repositories.RemoteIdentityDataSource
 import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
@@ -10,7 +9,7 @@ import javax.inject.Inject
 
 class IdentityDataSourceImp @Inject constructor(
     private val service: IdentityService,
-) : RemoteIdentityDataSource{
+) : RemoteIdentityDataSource {
 
     override suspend fun login(userName: String, password: String): UserDTO {
         return wrap {

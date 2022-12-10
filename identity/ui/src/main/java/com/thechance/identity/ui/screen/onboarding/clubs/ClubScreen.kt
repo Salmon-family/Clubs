@@ -1,7 +1,10 @@
-package com.thechance.identity.ui.screen.onboardclubs
+package com.thechance.identity.ui.screen.onboarding.clubs
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -19,6 +22,7 @@ import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.model.Club
 import com.thechance.identity.ui.model.getClubs
+import com.thechance.identity.ui.screen.onboardclubs.ClubItem
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightCardColor
@@ -30,19 +34,19 @@ fun ClubScreen(
     clubs: List<Club> = getClubs(),
     selectedClub: Club? = null,
     onSelectedChanged: (String) -> Unit = {}
-){
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(115.dp),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.background(LightCardColor)
-    ){
+    ) {
         item(
             span = {
                 GridItemSpan(3)
             }
-        ){
+        ) {
             BackButton(onClick = {})
             SpacerVertical24()
         }
@@ -60,7 +64,7 @@ fun ClubScreen(
             )
         }
 
-        items(clubs){
+        items(clubs) {
             val state = remember {
                 mutableStateOf(false)
             }
@@ -75,7 +79,7 @@ fun ClubScreen(
                 }
             )
             SpacerVertical24()
-       }
+        }
 
         item(
             span = {
@@ -96,6 +100,6 @@ fun ClubScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewClubScreen(){
+fun PreviewClubScreen() {
     ClubScreen()
 }
