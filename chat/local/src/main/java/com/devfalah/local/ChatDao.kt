@@ -14,10 +14,10 @@ interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChats(chats: List<ChatLocalDto>)
 
-    @Query("SELECT * FROM CHATS_TABLE ORDER BY time ASC")
+    @Query("SELECT * FROM CHATS_TABLE ORDER BY time DESC")
     fun getChats(): Flow<List<ChatLocalDto>>
 
-    @Query("SELECT * FROM CHATS_TABLE WHERE fullName LIKE '%' || :query || '%' ORDER BY time ASC")
+    @Query("SELECT * FROM CHATS_TABLE WHERE fullName LIKE '%' || :query || '%' ORDER BY fullName DESC")
     fun getChats(query: String): Flow<List<ChatLocalDto>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

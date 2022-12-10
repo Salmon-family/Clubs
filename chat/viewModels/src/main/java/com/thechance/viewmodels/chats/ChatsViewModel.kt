@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
-import com.thechance.viewmodels.chats.uiStates.toUiState
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
+import com.thechance.viewmodels.chats.uiStates.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

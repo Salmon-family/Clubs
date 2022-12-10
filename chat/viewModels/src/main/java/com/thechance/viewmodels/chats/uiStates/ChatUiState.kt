@@ -6,5 +6,5 @@ data class ChatUiState(
     val guid: Int = 0,
     val icon: String = "",
     val time: String = "",
-    val recentMessage: String = ""
+    val recentMessage: String = "",
 )
