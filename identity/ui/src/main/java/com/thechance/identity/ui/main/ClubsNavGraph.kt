@@ -11,6 +11,7 @@ import com.thechance.identity.ui.screen.login.username.logInUserNameRoute
 import com.thechance.identity.ui.screen.onboarding.pager.onBoardingPagerRoute
 import com.thechance.identity.ui.screen.onboarding.welcome.WELCOME_ON_BOARDING_Route
 import com.thechance.identity.ui.screen.onboarding.welcome.welcomeOnBoardRoute
+import com.thechance.identity.ui.screen.signup.birthdate.SIGNUP_BIRTHDATE_AND_GANDER_Route
 import com.thechance.identity.ui.screen.signup.birthdate.signupBirthDateAndGanderRoute
 import com.thechance.identity.ui.screen.signup.confirmpassword.signupConfirmPasswordRoute
 import com.thechance.identity.ui.screen.signup.email.signupEmailRoute
@@ -22,7 +23,7 @@ fun ClubsNavGraph(
     navController: NavHostController,
     viewModel: SignupViewModel = hiltViewModel()
 ) {
-    NavHost(navController = navController, startDestination = WELCOME_ON_BOARDING_Route) {
+    NavHost(navController = navController, startDestination = SIGNUP_BIRTHDATE_AND_GANDER_Route) {
         welcomeOnBoardRoute(navController)
         onBoardingPagerRoute(navController)
         signupEmailRoute(navController, viewModel)

@@ -2,15 +2,13 @@ package com.thechance.identity.repositories
 
 import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
+import com.thechance.identity.repositories.models.UserDataDTO
 
 interface RemoteIdentityDataSource {
 
     suspend fun login(userName: String, password: String): UserDTO
 
-    suspend fun signup(
-        firstname: String, lastname: String, email: String, reEmail: String,
-        gender: String, birthdate: String, username: String, password: String
-    ): AccountDTO
+    suspend fun signup(userDataDTO: UserDataDTO): AccountDTO
 
 
 }
