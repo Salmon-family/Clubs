@@ -25,9 +25,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.PostItem
+import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
@@ -36,6 +38,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -48,13 +51,14 @@ fun ProfileScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             uri?.let { viewModel.onClickChangeImage(createFileFromContentUri(it, context)) }
         }
     )
+
+    SetStatusBarColor(LightPrimaryBrandColor, darkIcons = false)
 
     ProfileContent(
         state,
@@ -134,7 +138,9 @@ fun ProfileContent(
             item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
             item {
                 PostCreatingSection(
-                    modifier = Modifier.padding(horizontal = 16.dp), onCreatePost = onCreatePost
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onCreatePost = onCreatePost,
+                    isMyProfile = state.isMyProfile
                 )
             }
             items(state.posts) {

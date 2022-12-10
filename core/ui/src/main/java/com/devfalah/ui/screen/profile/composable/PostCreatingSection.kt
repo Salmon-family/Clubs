@@ -1,109 +1,79 @@
 package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.runtime.*
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devfalah.ui.R
+import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.theme.LightTernaryBlackColor
+import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
-import kotlin.math.roundToInt
 
 @Composable
 fun PostCreatingSection(
     modifier: Modifier = Modifier,
+    isMyProfile: Boolean,
     onCreatePost: () -> Unit
 ) {
-    SwipeButton(
-        modifier = modifier,
-        text = "Share what you love",
-        onCreatePost = onCreatePost
-    )
-}
-
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun SwipeButton(
-    text: String,
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = WhiteColor,
-    onCreatePost: () -> Unit,
-) {
-    val width = 250.dp
-    val widthInPx = with(LocalDensity.current) {
-        width.toPx()
-    }
-    val anchors = mapOf(0F to 0, widthInPx to 1)
-    val swappableState = rememberSwipeableState(0)
-    val (swipeComplete, setSwipeComplete) = remember {
-        mutableStateOf(false)
-    }
-
-    LaunchedEffect(
-        key1 = swappableState.currentValue,
-    ) {
-        if (swappableState.currentValue == 1) {
-            setSwipeComplete(true)
-            onCreatePost()
-        }
-    }
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
+            .RemoveRippleEffect { onCreatePost() }
             .fillMaxWidth()
             .clip(CircleShape)
-            .background(backgroundColor)
-            .requiredHeight(64.dp),
+            .background(WhiteColor)
+            .requiredHeight(40.dp),
     ) {
-        SwipeIndicator(
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .offset {
-                    IntOffset(swappableState.offset.value.roundToInt(), 0)
+        IconIndicator(
+            modifier = Modifier.align(Alignment.CenterStart),
+            painter = painterResource(
+                if (isMyProfile) {
+                    R.drawable.pen
+                } else {
+                    R.drawable.ic_message
                 }
-                .swipeable(
-                    state = swappableState,
-                    anchors = anchors,
-                    thresholds = { _, _ ->
-                        FractionalThreshold(0.3F)
-                    },
-                    orientation = Orientation.Horizontal,
-                ),
-            backgroundColor = backgroundColor,
+            )
         )
         Text(
-            text = text,
-            color = LightPrimaryBrandColor,
+            text = stringResource(
+                id = if (isMyProfile) {
+                    R.string.create_post
+                } else {
+                    R.string.send_message
+                }
+            ),
+            color = LightTernaryBlackColor,
             fontSize = 14.sp,
             maxLines = 1,
             fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
+            fontFamily = PlusJakartaSans,
             modifier = Modifier
                 .fillMaxWidth()
-                .offset { IntOffset(swappableState.offset.value.roundToInt(), 0) },
+                .padding(start = 56.dp)
         )
     }
 }
 
 @Composable
-fun SwipeIndicator(
+fun IconIndicator(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = LightPrimaryBrandColor,
+    painter: Painter
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -118,10 +88,9 @@ fun SwipeIndicator(
             .background(LightPrimaryBrandColor),
     ) {
         Icon(
-            imageVector = Icons.Rounded.Add,
+            painter = painter,
+            tint = Color.Unspecified,
             contentDescription = null,
-            tint = backgroundColor,
-            modifier = Modifier.size(36.dp),
         )
     }
 }
