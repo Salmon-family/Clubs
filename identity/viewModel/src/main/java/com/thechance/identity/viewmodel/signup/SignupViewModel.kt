@@ -25,14 +25,14 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
             val state = _uiState.value
             val userData = UserData(
-                firstname = "state firstName",
+                firstname = state.firstName,
                 lastname = "_",
-                email = "stateemail@gmail.com",
-                reEmail = "stateemail@gmail.com",
+                email = state.email,
+                reEmail = state.email,
                 gender = state.gender,
                 birthdate = state.birthdate,
-                username = "state.username",
-                password = "state.password",
+                username = state.username,
+                password = state.password,
             )
             try {
                 val sign = signupUseCase(userData)
@@ -53,6 +53,7 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun String.isEmailValid(): Boolean {
+        //todo: for use case
         return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
@@ -65,11 +66,13 @@ class SignupViewModel @Inject constructor(
     }
 
     fun onConfirmPassword(): Boolean {
+        //todo: for use case
         return (_uiState.value.password == _uiState.value.confirmPassword) &&
                 (_uiState.value.password != "") && (_uiState.value.confirmPassword != "")
     }
 
     fun onValidatePassword(): Boolean {
+        //todo: for use case
         val state = _uiState.value
         return state.password.length > 6
                 && state.confirmPassword.length > 6
@@ -86,6 +89,7 @@ class SignupViewModel @Inject constructor(
 
     fun onValidateName(): Boolean {
         val state = _uiState.value
+        //todo: for use case
         return state.firstName.isNotEmpty() && state.username.isNotEmpty()
     }
 

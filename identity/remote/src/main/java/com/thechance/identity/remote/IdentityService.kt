@@ -18,9 +18,17 @@ interface IdentityService {
     ): Response<IdentityBaseResponse<UserDTO>>
 
 
+    @FormUrlEncoded
     @POST("user_add")
     suspend fun addUser(
-        @Body userDTO: UserDataDTO
+        @Field("firstname") firstname: String,
+        @Field("lastname") lastname: String,
+        @Field("email") email: String,
+        @Field("reemail") reEmail: String,
+        @Field("gender") gender: String,
+        @Field("birthdate") birthdate: String,
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Response<IdentityBaseResponse<AccountDTO>>
 
 }
