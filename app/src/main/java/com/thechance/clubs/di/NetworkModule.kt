@@ -4,8 +4,8 @@ import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
-import com.thechance.remote.ChatService
-import com.thechance.remote.CloudMessagingService
+import com.thechance.remote.api.ChatService
+import com.thechance.remote.api.CloudMessagingService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

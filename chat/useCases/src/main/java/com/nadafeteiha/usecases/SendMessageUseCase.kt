@@ -4,12 +4,12 @@ import com.thechance.entities.Message
 import com.thechance.entities.Notification
 import javax.inject.Inject
 
-class SetSendMessageUseCase @Inject constructor(
+class SendMessageUseCase @Inject constructor(
     private val chatRepository: ChatRepository,
 ) {
 
     suspend operator fun invoke(userID: Int, friendID: Int, text: String): Message {
-        val message = chatRepository.setSendMessage(userID, friendID, text)
+        val message = chatRepository.sendMessage(userID, friendID, text)
         chatRepository.postNotification(
             notification = Notification(
                 id = message.id,

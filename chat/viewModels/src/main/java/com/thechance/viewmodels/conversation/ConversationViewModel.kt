@@ -1,14 +1,13 @@
 package com.thechance.viewmodels.conversation
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
-import com.nadafeteiha.usecases.SetSendMessageUseCase
-import com.thechance.viewmodels.conversation.uiMappers.toMessage
-import com.thechance.viewmodels.conversation.uiStates.ChatUIState
+import com.nadafeteiha.usecases.SendMessageUseCase
+import com.thechance.viewmodels.conversation.uiStates.toUiState
+import com.thechance.viewmodels.conversation.uiStates.ConversationUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,29 +16,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChatWithFriendViewModel @Inject constructor(
+class ConversationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getListMessagesUseCase: GetChatWithFriendUseCase,
-    private val setSendMessageUseCase: SetSendMessageUseCase,
-    private val receiveNotificationUseCase: ReceiveNotificationUseCase,
-    ) :
+    private val getMessages: GetChatWithFriendUseCase,
+    private val sendMessageUseCase: SendMessageUseCase,
+    private val receiveNotification: ReceiveNotificationUseCase,
+) :
     ViewModel() {
 
     private val args = ConversationArgs(savedStateHandle)
-    private val userId = args.id
-    private val friendId = args.friendId
-    private val friendName = args.friendName
-    private val friendImage = args.friendImage
-
-    private val _uiState = MutableStateFlow(ChatUIState())
+    private val _uiState = MutableStateFlow(ConversationUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {receiveNotificationUseCase() }
-        getListMessages(userId, friendId)
+        viewModelScope.launch { receiveNotification() }
+        getListMessages(args.id, args.friendId)
         _uiState.update {
             it.copy(
-                appBar = it.appBar.copy(userName = friendName, icon = friendImage)
+                appBar = it.appBar.copy(userName = args.friendName, icon = args.friendImage)
             )
         }
     }
@@ -47,12 +41,11 @@ class ChatWithFriendViewModel @Inject constructor(
     private fun getListMessages(userId: Int, friendId: Int) {
         viewModelScope.launch {
             try {
-                getListMessagesUseCase(userId, friendId).collect { item ->
-                    val message = item.map { it.toMessage() }
+                getMessages(userId, friendId).collect { item ->
+                    val message = item.map { it.toUiState() }
                     _uiState.update { it.copy(messages = message, isLoading = false) }
                 }
             } catch (e: Exception) {
-                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
@@ -60,12 +53,11 @@ class ChatWithFriendViewModel @Inject constructor(
         }
     }
 
-    private fun setSendMessage(message: String) {
+    private fun sendMessage(message: String) {
         viewModelScope.launch {
             try {
-                setSendMessageUseCase(userId, friendId, message)
+                sendMessageUseCase(args.id, args.friendId, message)
             } catch (e: Exception) {
-                Log.e("DEVFALAHMESSAGE",e.message.toString())
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
@@ -78,8 +70,8 @@ class ChatWithFriendViewModel @Inject constructor(
         _uiState.update { it.copy(message = newValue) }
     }
 
-    fun sendMessage() {
-        setSendMessage(uiState.value.message)
+    fun onClickSendButton() {
+        sendMessage(uiState.value.message)
         _uiState.update { it.copy(message = "") }
     }
 }

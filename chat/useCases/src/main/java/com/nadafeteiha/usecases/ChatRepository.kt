@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
 
-    suspend fun insertChatsLocally(list: List<Chat>)
+    suspend fun insertChats(list: List<Chat>)
 
-    fun getChatsFromLocal(): Flow<List<Chat>>
+    fun getChats(): Flow<List<Chat>>
 
     suspend fun getChats(userID: Int): List<Chat>
 
@@ -18,7 +18,7 @@ interface ChatRepository {
 
     suspend fun getMessages(userID: Int, friendID: Int): Conversation
 
-    suspend fun setSendMessage(from: Int, to: Int, message: String): Message
+    suspend fun sendMessage(from: Int, to: Int, message: String): Message
 
     suspend fun insertMessages(message: List<Message>)
 

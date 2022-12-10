@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.thechance.ui.spacer.SpaceHorizontal
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.ui.theme.LightQuaternaryBlackColor
 import com.thechance.ui.theme.Typography

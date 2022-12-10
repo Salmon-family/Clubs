@@ -1,4 +1,4 @@
-package com.thechance.ui.spacer
+package com.thechance.ui.composable
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width

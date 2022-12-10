@@ -1,4 +1,4 @@
-package com.thechance.viewmodels.chatWithFriend.uiStates
+package com.thechance.viewmodels.chats.uiStates
 
 
 data class ChatUiState(

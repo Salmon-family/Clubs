@@ -1,4 +1,4 @@
-package com.thechance.remote
+package com.thechance.remote.api
 
 import com.devfalah.repository.models.NotificationDto
 import okhttp3.ResponseBody

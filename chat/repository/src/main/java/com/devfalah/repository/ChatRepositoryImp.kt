@@ -11,16 +11,16 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ChatRepositoryImp @Inject constructor(
-    private val ChatDataSource: ChatDataSource,
+    private val ChatDataSource: ChatRemoteDataSource,
     private val chatLocalDataSource: ChatLocalDataSource,
     private val firebaseDataSource: ChatFirebaseDataSource,
 ) : ChatRepository {
 
-    override suspend fun insertChatsLocally(list: List<Chat>) {
+    override suspend fun insertChats(list: List<Chat>) {
         chatLocalDataSource.insertChats(list.map { it.toLocalDto() })
     }
 
-    override fun getChatsFromLocal(): Flow<List<Chat>> {
+    override fun getChats(): Flow<List<Chat>> {
         return chatLocalDataSource.getChats().map { list -> list.map { it.toEntity() } }
     }
 
@@ -36,8 +36,8 @@ class ChatRepositoryImp @Inject constructor(
         return ChatDataSource.getMessagesWithFriend(userID, friendID).toEntity(userID)
     }
 
-    override suspend fun setSendMessage(userID: Int, friendId: Int, message: String): Message {
-        return ChatDataSource.setSendMessage(userID, friendId, message).toEntity(userID)
+    override suspend fun sendMessage(userID: Int, friendId: Int, message: String): Message {
+        return ChatDataSource.sendMessage(userID, friendId, message).toEntity(userID)
     }
 
     override suspend fun insertMessages(message: List<Message>) {

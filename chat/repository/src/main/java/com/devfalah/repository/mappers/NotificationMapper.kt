@@ -16,12 +16,12 @@ fun Notification.toDto(): NotificationDto {
     )
 }
 
-fun NotificationDto.toMessage(): Message {
+fun NotificationDataModel.toMessage(): Message {
     return Message(
-        id = this.data.id,
-        friendId = this.data.friendId,
+        id = this.id,
+        friendId = this.friendId,
         fromMe = false,
-        time = this.data.time,
-        message = this.data.messageText
+        time = this.time,
+        message = this.messageText
     )
 }

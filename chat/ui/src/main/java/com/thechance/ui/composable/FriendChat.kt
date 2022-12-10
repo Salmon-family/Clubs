@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.thechance.viewmodels.chatWithFriend.uiStates.ChatUiState
+import com.thechance.viewmodels.chats.uiStates.ChatUiState
 
 @Composable
 fun FriendChat(
