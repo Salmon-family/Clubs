@@ -20,6 +20,7 @@ val LightSecondaryGrayColor = Color(0xFFBDBDBF)
 val LightTernaryGrayColor = Color(0xFFD2D2D3)
 val WhiteColor = Color(0xFFFFFFFF)
 val LightCardColor = Color(0xFFF6F6F7)
+val CardBackground = Color(0xFFFAFAFA)
 
 //for light theme
 //val DarkPrimaryBrandColor = Color(0xFF6C56D6)

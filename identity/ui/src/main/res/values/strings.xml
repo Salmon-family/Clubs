@@ -35,4 +35,5 @@
     <string name="name_hint">ali</string>
     <string name="male">male</string>
     <string name="female">female</string>
+    <string name="your_label">Your </string>
 </resources>
