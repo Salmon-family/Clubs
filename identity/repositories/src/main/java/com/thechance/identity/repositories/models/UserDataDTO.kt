@@ -4,19 +4,19 @@ import com.google.gson.annotations.SerializedName
 
 data class UserDataDTO(
     @SerializedName("firstname")
-    val firstname: String,
+    var firstname: String,
     @SerializedName("lastname")
-    val lastname: String,
+    var lastname: String,
     @SerializedName("email")
-    val email: String,
+    var email: String,
     @SerializedName("reemail")
-    val reEmail: String,
+    var reemail: String,
     @SerializedName("gender")
-    val gender: String,
+    var gender: String,
     @SerializedName("birthdate")
-    val birthdate: String,
+    var birthdate: String,
     @SerializedName("username")
-    val username: String,
+    var username: String,
     @SerializedName("password")
-    val password: String
+    var password: String
 )

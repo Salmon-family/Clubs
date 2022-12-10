@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
@@ -23,18 +22,18 @@ import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
-import com.thechance.identity.viewmodel.login.username.LoginUserNameViewModel
+import com.thechance.identity.viewmodel.login.LoginViewModel
 
 @Composable
 fun LogInUserNameScreen(
     navController: NavController,
-    viewModel: LoginUserNameViewModel = hiltViewModel(),
+    viewModel: LoginViewModel
 ) {
     val state by viewModel.uiState.collectAsState()
     LogInUserNameContent(
         state = state,
         onChangeUserName = viewModel::onChangeUserName,
-        onClickContinue = { navController.navigateToLogInPassword(state.userName) },
+        onClickContinue = { navController.navigateToLogInPassword() },
         onClickBack = { navController.navigateUp() }
     )
 }

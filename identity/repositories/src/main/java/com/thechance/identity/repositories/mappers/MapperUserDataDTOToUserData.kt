@@ -9,7 +9,7 @@ class MapperUserDataDTOToUserData @Inject constructor() : Mapper<UserData, UserD
         return UserDataDTO(
             birthdate = input.birthdate,
             email = input.email,
-            reEmail = input.reEmail,
+            reemail = input.reEmail,
             username = input.username,
             firstname = input.firstname,
             lastname = input.lastname,

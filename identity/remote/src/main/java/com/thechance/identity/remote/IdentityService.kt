@@ -4,8 +4,10 @@ import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
 import com.thechance.identity.repositories.models.UserDataDTO
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
+
 
 interface IdentityService {
 
@@ -14,6 +16,7 @@ interface IdentityService {
         @Query("username") username: String,
         @Query("password") password: String
     ): Response<IdentityBaseResponse<UserDTO>>
+
 
     @FormUrlEncoded
     @POST("user_add")

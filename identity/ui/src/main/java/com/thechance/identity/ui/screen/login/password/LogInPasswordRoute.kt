@@ -1,21 +1,22 @@
 package com.thechance.identity.ui.screen.login.password
 
-import androidx.navigation.*
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.thechance.identity.viewmodel.login.password.LoginPasswordArgs
+import com.thechance.identity.viewmodel.login.LoginViewModel
 
-fun NavController.navigateToLogInPassword(userName: String){
-    navigate("$LOGIN_PASSWORD_ROUTE/$userName")
+fun NavController.navigateToLogInPassword() {
+    navigate(LOGIN_PASSWORD_ROUTE)
 }
 
 const val LOGIN_PASSWORD_ROUTE = "logInPasswordScreen"
-fun NavGraphBuilder.logInPasswordRoute(navHostController: NavHostController) {
-    composable(
-        "$LOGIN_PASSWORD_ROUTE/{${LoginPasswordArgs.USER_NAME_ARG}}",
-        arguments = listOf(
-            navArgument(LoginPasswordArgs.USER_NAME_ARG){NavType.StringType}
-        )
-    ) {
-        LogInPasswordScreen(navHostController)
+fun NavGraphBuilder.logInPasswordRoute(
+    navHostController: NavHostController,
+    loginViewModel: LoginViewModel
+) {
+    composable(LOGIN_PASSWORD_ROUTE)
+    {
+        LogInPasswordScreen(navHostController, loginViewModel)
     }
 }
