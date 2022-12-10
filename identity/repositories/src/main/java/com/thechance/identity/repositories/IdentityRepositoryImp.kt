@@ -8,9 +8,17 @@ import com.thechance.identity.usecases.IdentityRepository
 import javax.inject.Inject
 
 class IdentityRepositoryImp @Inject constructor(
-    private val remoteDataSource: IdentityDataSource,
-    private val mapperUserDataDTOToUserData: MapperUserDataDTOToUserData
+    private val remoteDataSource: RemoteIdentityDataSource,
+    private val localIdentityDataSource: LocalIdentityDataSource,
+    private val mapperUserDataDTOToUserData: MapperUserDataDTOToUserData,
 ) : IdentityRepository {
+    override suspend fun getFirstInstallValue(): Boolean {
+        return localIdentityDataSource.getFirstInstallValue()
+    }
+
+    override suspend fun saveFirstInstallValue(value: Boolean): Boolean {
+        return localIdentityDataSource.saveFirstInstallValue(value)
+    }
 
     override suspend fun login(userName: String, password: String): User {
         return remoteDataSource.login(userName, password).toEntity()

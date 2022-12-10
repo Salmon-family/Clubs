@@ -5,6 +5,7 @@ import javax.inject.Inject
 interface AppConfiguration {
 
     fun getSignupState()
+
     suspend fun setSignupState(value: String)
 }
 

@@ -5,6 +5,10 @@ import com.thechance.identity.entities.User
 
 interface IdentityRepository {
 
+    suspend fun getFirstInstallValue(): Boolean
+
+    suspend fun saveFirstInstallValue(value: Boolean): Boolean
+
     suspend fun login(userName: String, password: String): User
 
     suspend fun signup(

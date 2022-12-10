@@ -1,15 +1,16 @@
 package com.thechance.identity.remote
 
 import com.thechance.identity.remote.response.IdentityBaseResponse
-import com.thechance.identity.repositories.IdentityDataSource
+import com.thechance.identity.repositories.LocalIdentityDataSource
+import com.thechance.identity.repositories.RemoteIdentityDataSource
 import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.UserDTO
 import retrofit2.Response
 import javax.inject.Inject
 
 class IdentityDataSourceImp @Inject constructor(
-    private val service: IdentityService
-) : IdentityDataSource {
+    private val service: IdentityService,
+) : RemoteIdentityDataSource{
 
     override suspend fun login(userName: String, password: String): UserDTO {
         return wrap {
@@ -51,4 +52,5 @@ class IdentityDataSourceImp @Inject constructor(
             throw Throwable(" Not Success Request ")
         }
     }
+
 }
