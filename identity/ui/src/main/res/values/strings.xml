@@ -30,7 +30,7 @@
     <string name="user_name_hint">ali44</string>
     <string name="account_activation_title">Account Activation</string>
     <string name="account_activation_body">We just sent you an activation email. Please check \n it out before you trying to log in.</string>
-    <string name="open_gmail">Open Gmail</string>
+    <string name="open_email">Open Email</string>
     <string name="create_account_label">Create Account</string>
     <string name="name_hint">ali</string>
     <string name="male">male</string>
