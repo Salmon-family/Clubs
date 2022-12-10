@@ -57,7 +57,8 @@ fun ProfileScreen(
         state,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
-        onClickComment = viewModel::onClickComment,
+        // should navigate to post screen details.
+        onClickComment ={ navController.navigate(Screen.CreatePost.screen_route) },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,

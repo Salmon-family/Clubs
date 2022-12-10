@@ -65,7 +65,6 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Mapping Error")
     }
 
-
     override suspend fun setLikeOnPost(userID: Int, postId: Int): ReactionDTO {
         return wrap {
             apiService.addLike(userID = userID, postID = postId, type = LikeType.post.name)

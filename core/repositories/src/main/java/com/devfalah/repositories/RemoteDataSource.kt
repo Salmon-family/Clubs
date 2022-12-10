@@ -6,6 +6,7 @@ import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import org.intellij.lang.annotations.Flow
 import java.io.File
 
 interface RemoteDataSource {
@@ -35,4 +36,7 @@ interface RemoteDataSource {
     suspend fun addProfilePicture(userID: Int, file: File): UserDTO
 
     suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<WallPostDTO>
+
+//    suspend fun getHomePost(userID: Int): Flow<List<WallPostDTO>>
+
 }

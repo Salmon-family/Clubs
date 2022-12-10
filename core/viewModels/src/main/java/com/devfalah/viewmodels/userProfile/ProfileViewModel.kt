@@ -130,10 +130,6 @@ class ProfileViewModel @Inject constructor(
         Log.e("Test", "Save $post")
     }
 
-    fun onClickComment(post: PostUIState) {
-        Log.e("Test", "Comment $post")
-    }
-
     fun onClickAddFriend() {
         viewModelScope.launch {
             try {
