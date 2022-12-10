@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -72,6 +73,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
+        onCreatePost = {navController.navigate(Screen.CreatePost.screen_route)}
     )
 }
 
@@ -86,7 +88,8 @@ fun ProfileContent(
     onClickSendMessage: () -> Unit,
     onChangeProfileImage: () -> Unit,
     onRefresh: (Int) -> Unit,
-    onClickPostSetting: (PostUIState) -> Unit
+    onClickPostSetting: (PostUIState) -> Unit,
+    onCreatePost: () -> Unit
 ) {
     val scrollState = rememberLazyListState()
     loadMore(scrollState, onRefresh = onRefresh, items = state.posts)
@@ -104,7 +107,9 @@ fun ProfileContent(
         },
     ) {
         LazyColumn(
-            modifier = Modifier.background(LightBackgroundColor).fillMaxSize(),
+            modifier = Modifier
+                .background(LightBackgroundColor)
+                .fillMaxSize(),
             state = scrollState,
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -129,8 +134,7 @@ fun ProfileContent(
             item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
             item {
                 PostCreatingSection(
-                    state.userDetails,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp), onCreatePost = onCreatePost
                 )
             }
             items(state.posts) {

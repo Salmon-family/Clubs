@@ -1,102 +1,127 @@
 package com.devfalah.ui.screen.profile.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import com.devfalah.ui.R
-import com.devfalah.ui.composable.WidthSpacer16
-import com.devfalah.ui.composable.WidthSpacer8
-import com.devfalah.ui.composable.HeightSpacer16
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
-import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.viewmodels.userProfile.UserDetailsUIState
+import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.theme.WhiteColor
+import kotlin.math.roundToInt
 
 @Composable
 fun PostCreatingSection(
-    user: UserDetailsUIState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCreatePost: () -> Unit
 ) {
-    Column(
-        modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(LightCardBackgroundColor)
-            .padding(16.dp)
+    SwipeButton(
+        modifier = modifier,
+        text = "Share what you love",
+        onCreatePost = onCreatePost
+    )
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun SwipeButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = WhiteColor,
+    onCreatePost: () -> Unit,
+) {
+    val width = 250.dp
+    val widthInPx = with(LocalDensity.current) {
+        width.toPx()
+    }
+    val anchors = mapOf(0F to 0, widthInPx to 1)
+    val swappableState = rememberSwipeableState(0)
+    val (swipeComplete, setSwipeComplete) = remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(
+        key1 = swappableState.currentValue,
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = rememberAsyncImagePainter(model = user.profilePicture),
-                contentDescription = null,
-                Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
-            )
-            WidthSpacer16()
-            Text(
-                text = stringResource(R.string.what_are_you_thinking_about),
-                fontFamily = PlusJakartaSans,
-                color = LightSecondaryBlackColor
-            )
+        if (swappableState.currentValue == 1) {
+            setSwipeComplete(true)
+            onCreatePost()
         }
+    }
 
-        HeightSpacer16()
-        Divider(color = Color.White, thickness = 1.dp)
-        HeightSpacer16()
-
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-
-            PostOption(imagePainter = R.drawable.ic_photo, text = stringResource(R.string.photo))
-            PostOption(imagePainter = R.drawable.ic_tag, text = stringResource(R.string.tag))
-            PostOption(
-                imagePainter = R.drawable.ic_location,
-                text = stringResource(R.string.location)
-            )
-            PostOption(imagePainter = R.drawable.ic_color, text = stringResource(R.string.color))
-        }
-
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(CircleShape)
+            .background(backgroundColor)
+            .requiredHeight(64.dp),
+    ) {
+        SwipeIndicator(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .offset {
+                    IntOffset(swappableState.offset.value.roundToInt(), 0)
+                }
+                .swipeable(
+                    state = swappableState,
+                    anchors = anchors,
+                    thresholds = { _, _ ->
+                        FractionalThreshold(0.3F)
+                    },
+                    orientation = Orientation.Horizontal,
+                ),
+            backgroundColor = backgroundColor,
+        )
+        Text(
+            text = text,
+            color = LightPrimaryBrandColor,
+            fontSize = 14.sp,
+            maxLines = 1,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset { IntOffset(swappableState.offset.value.roundToInt(), 0) },
+        )
     }
 }
 
 @Composable
-fun PostOption(
+fun SwipeIndicator(
     modifier: Modifier = Modifier,
-    imagePainter: Int,
-    text: String
+    backgroundColor: Color = LightPrimaryBrandColor,
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(2.dp)
+            .clip(CircleShape)
+            .aspectRatio(
+                ratio = 1.0F,
+                matchHeightConstraintsFirst = true,
+            )
+            .background(LightPrimaryBrandColor),
     ) {
-        Image(
-            painter = painterResource(id = imagePainter),
+        Icon(
+            imageVector = Icons.Rounded.Add,
             contentDescription = null,
-            Modifier.size(24.dp)
-        )
-        WidthSpacer8()
-        Text(
-            text = text,
-            fontFamily = PlusJakartaSans,
-            color = LightTernaryBlackColor,
-            fontSize = 12.sp
+            tint = backgroundColor,
+            modifier = Modifier.size(36.dp),
         )
     }
 }

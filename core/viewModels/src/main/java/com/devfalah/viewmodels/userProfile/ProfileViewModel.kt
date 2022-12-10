@@ -49,7 +49,7 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val userId = 2
+    private val userId = 6
     private val ownerID = 6
 
     init {

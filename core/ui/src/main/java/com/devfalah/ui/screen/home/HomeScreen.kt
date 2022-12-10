@@ -9,8 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.FriendRequestRoute
-import com.devfalah.ui.Profile
+import com.devfalah.ui.Screen
 import com.devfalah.viewmodels.home.HomeViewModel
 
 
@@ -18,11 +17,11 @@ import com.devfalah.viewmodels.home.HomeViewModel
 fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
-
 ) {
     val state by viewModel.uiState.collectAsState()
-    HomeContent(onClickFriends = { navController.navigate(route = FriendRequestRoute) },
-        onClickProfile = { navController.navigate(Profile) })
+    HomeContent(
+        onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
+        onClickProfile = { navController.navigate(Screen.Profile.screen_route) })
 }
 
 @Composable
