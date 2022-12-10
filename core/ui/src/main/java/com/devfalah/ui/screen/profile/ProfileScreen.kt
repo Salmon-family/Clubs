@@ -12,33 +12,26 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.WhiteColor
-import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -77,7 +70,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = {navController.navigate(Screen.CreatePost.screen_route)}
+        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) }
     )
 }
 
@@ -96,19 +89,11 @@ fun ProfileContent(
     onCreatePost: () -> Unit
 ) {
     val scrollState = rememberLazyListState()
-    loadMore(scrollState, onRefresh = onRefresh, items = state.posts)
-    SwipeRefresh(
-        state = swipeRefreshState,
-        onRefresh = { onRefresh(Constants.SWIPE_UP) },
-        indicatorAlignment = Alignment.BottomCenter,
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                backgroundColor = Color.Transparent,
-                contentColor = LightPrimaryBrandColor
-            )
-        },
+    ManualPager(
+        swipeRefreshState = swipeRefreshState,
+        onRefresh = onRefresh,
+        items = state.posts,
+        scrollState = scrollState
     ) {
         LazyColumn(
             modifier = Modifier
@@ -156,6 +141,7 @@ fun ProfileContent(
             }
         }
     }
+
 }
 
 
@@ -191,43 +177,5 @@ private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
             }
             output.flush()
         }
-    }
-}
-
-@Composable
-private fun LazyListState.isScrollingUp(): Boolean {
-    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
-    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
-    return remember(this) {
-        derivedStateOf {
-            if (previousIndex != firstVisibleItemIndex) {
-                previousIndex > firstVisibleItemIndex
-            } else {
-                previousScrollOffset >= firstVisibleItemScrollOffset
-            }.also {
-                previousIndex = firstVisibleItemIndex
-                previousScrollOffset = firstVisibleItemScrollOffset
-            }
-        }
-    }.value
-}
-
-@Composable
-private fun loadMore(
-    scrollState: LazyListState,
-    items: List<PostUIState>,
-    onRefresh: (Int) -> Unit
-) {
-    val comparedItemIndex = if (items.size > 5) {
-        items.size.minus(5)
-    } else {
-        items.lastIndex
-    }
-
-    if (!scrollState.isScrollingUp() && !scrollState.isScrollInProgress
-        && comparedItemIndex > 0 && scrollState.firstVisibleItemIndex < items.lastIndex
-        && (items[scrollState.firstVisibleItemIndex].postId != items[comparedItemIndex].postId)
-    ) {
-        onRefresh(Constants.SWIPE_DOWN)
     }
 }
