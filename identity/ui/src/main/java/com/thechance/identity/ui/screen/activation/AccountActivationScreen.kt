@@ -27,9 +27,9 @@ fun AccountActivationScreen(
     AccountActivationContent(
         onclickBack = {navController.navigateToLogInUserName()},
         onClickOpenEmail = {
-            val i = Intent(Intent.ACTION_SEND)
-            i.type = Constants.MESSAGE_TYPE
-            context.startActivity(i)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = Constants.MESSAGE_TYPE
+            context.startActivity(intent)
         }
     )
 }
