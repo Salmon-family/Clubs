@@ -21,3 +21,23 @@ fun Post.toUIState(): PostUIState {
         postContent = content,
     )
 }
+
+
+fun PostUIState.toEntity(): Post {
+    return Post(
+        id = postId,
+        publisherId = publisherId,
+        publisherImageUrl = publisherImage,
+        publisher = publisherName,
+        privacy = privacy,
+        createdTimeValue = createdData,
+        totalLikes = totalLikes,
+        totalComments = totalComments,
+        isLiked = isLikedByUser,
+        imageUrl = postImage,
+        content = postContent,
+        createdTime = 0L
+    )
+}
+
+

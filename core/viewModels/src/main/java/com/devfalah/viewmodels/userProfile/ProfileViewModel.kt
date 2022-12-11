@@ -5,10 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
+import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -45,6 +45,7 @@ class ProfileViewModel @Inject constructor(
     val getProfilePostUseCase: GetProfilePostsUseCase,
     val addFriendUseCase: AddFriendUseCase,
     val likeUseCase: SetLikeUseCase,
+    val favoritePostUseCase: SetFavoritePostUseCase,
     val changeProfileImageUseCase: ChangeProfileImageUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -70,7 +71,8 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true, majorError = "") }
             try {
-                val userDetails = getUserAccountDetails(userId = userID, profileOwnerId = profileOwnerID)
+                val userDetails =
+                    getUserAccountDetails(userId = userID, profileOwnerId = profileOwnerID)
                 _uiState.update {
                     it.copy(
                         loading = false,
@@ -135,7 +137,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onClickSave(post: PostUIState) {
-        Log.e("Test", "Save $post")
+        viewModelScope.launch {
+            try {
+                favoritePostUseCase(post.toEntity())
+            } catch (t: Throwable) {
+                t.message.toString()
+            }
+        }
     }
 
     fun onClickAddFriend() {

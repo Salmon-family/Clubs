@@ -4,6 +4,7 @@ import com.devfalah.entities.Album
 import com.devfalah.entities.Notification
 import com.devfalah.entities.Post
 import com.devfalah.entities.User
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 interface ClubRepository {
@@ -37,4 +38,13 @@ interface ClubRepository {
     suspend fun getGroupsIDsThatUserMemberOF(userID: Int): List<Int>
 
     suspend fun getUserHomePosts(userID: Int, page: Int): List<Post>
+
+    suspend fun isPostSavedLocally(postId: Int): Boolean
+
+    suspend fun getSavedPosted(): Flow<List<Int>>
+
+    suspend fun savedPosted(post: Post)
+
+    suspend fun deletePost(postId: Int)
+
 }

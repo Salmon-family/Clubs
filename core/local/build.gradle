@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.devfalah.repositories'
+    namespace 'com.thechance.local'
     compileSdk 32
 
     defaultConfig {
@@ -33,9 +33,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:useCases"))
-
-    implementation "com.google.code.gson:gson:$gson_version"
+    implementation(project(":core:repositories"))
 
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
@@ -44,6 +42,4 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
-
 }

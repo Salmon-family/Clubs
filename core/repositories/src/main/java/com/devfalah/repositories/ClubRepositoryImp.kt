@@ -6,11 +6,14 @@ import com.devfalah.entities.Post
 import com.devfalah.entities.User
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.io.File
 import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -77,6 +80,22 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun getUserHomePosts(userID: Int, page: Int): List<Post> {
         return remoteDataSource.getUserHomePosts(userID, page = page).toEntity()
+    }
+
+    override suspend fun isPostSavedLocally(postId: Int): Boolean {
+        return localDataSource.isPostFound(postId)
+    }
+
+    override suspend fun getSavedPosted(): Flow<List<Int>> {
+        return localDataSource.getPostsIds()
+    }
+
+    override suspend fun savedPosted(post: Post) {
+        localDataSource.insertPost(post.toEntity())
+    }
+
+    override suspend fun deletePost(postId: Int) {
+        localDataSource.deletePostById(postId)
     }
 
 }
