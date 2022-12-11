@@ -13,7 +13,11 @@ import androidx.navigation.NavController
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
+import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -26,6 +30,8 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    SetStatusBarColor(LightBackgroundColor, darkIcons = true)
+
     val state by viewModel.uiState.collectAsState()
     HomeContent(
         state = state,
@@ -35,7 +41,8 @@ fun HomeScreen(
         onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
-        onRefresh = viewModel::swipeToRefresh
+        onRefresh = viewModel::swipeToRefresh,
+        onClickProfile = { navController.navigateToProfile(it) }
     )
 }
 
@@ -48,6 +55,7 @@ fun HomeContent(
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onRefresh: (Int) -> Unit,
+    onClickProfile: (Int) -> Unit
 ) {
     val scrollState = rememberLazyListState()
 
@@ -76,7 +84,8 @@ fun HomeContent(
                 onClickLike = { onClickLike(it) },
                 onClickComment = { onClickComment(it) },
                 onClickSave = { onClickSave(it) },
-                onClickPostSetting = { /*onClickPostSetting(it)*/ }
+                onClickProfile = onClickProfile,
+                onClickPostSetting = { },
             )
         }
     }

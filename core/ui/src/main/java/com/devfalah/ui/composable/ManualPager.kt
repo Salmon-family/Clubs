@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
@@ -12,11 +13,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
+import com.devfalah.ui.theme.LightPrimaryGrayColor
+import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -59,14 +63,19 @@ fun ManualPager(
         ) {
             content()
 
-            val message = if (isRefreshing) {
-                "Loading.."
-            } else {
-                error
-            }
-
             item {
-                Text(text = message)
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = if (isRefreshing) {
+                        stringResource(id = R.string.friends_privacy)
+                    } else {
+                        error
+                    },
+                    textAlign = TextAlign.Center,
+                    fontFamily = PlusJakartaSans,
+                    fontWeight = FontWeight.Light,
+                    color = LightPrimaryGrayColor
+                )
             }
         }
     }

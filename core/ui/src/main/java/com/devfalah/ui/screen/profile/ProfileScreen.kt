@@ -12,6 +12,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -68,7 +70,13 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) }
+        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
+        onClickProfile = {
+            if (!state.isMyProfile) {
+                navController.navigateToProfile(it)
+            }
+        },
+        onRetry = viewModel::getData
     )
 }
 
@@ -84,56 +92,66 @@ fun ProfileContent(
     onChangeProfileImage: () -> Unit,
     onRefresh: (Int) -> Unit,
     onClickPostSetting: (PostUIState) -> Unit,
-    onCreatePost: () -> Unit
+    onCreatePost: () -> Unit,
+    onClickProfile: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
-    val scrollState = rememberLazyListState()
-    ManualPager(
-        swipeRefreshState = swipeRefreshState,
-        onRefresh = onRefresh,
-        items = state.posts,
-        scrollState = scrollState,
-        isRefreshing = state.loading,
-        error = state.minorError
-
-    ) {
-        item(key = state.userDetails.userID) {
-            ProfileDetailsSection(
-                state.userDetails,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                onChangeProfileImage = onChangeProfileImage
-            )
+    if (state.majorError.isNotEmpty()) {
+        Box(modifier = Modifier.fillMaxSize())
+        Button(
+            onClick = onRetry
+        ) {
+            Text(text = "Retry")
         }
-        if (!state.isMyProfile) {
-            item(key = state.userDetails.areFriends) {
-                FriendOptionsSection(
+    } else {
+        val scrollState = rememberLazyListState()
+        ManualPager(
+            swipeRefreshState = swipeRefreshState,
+            onRefresh = onRefresh,
+            items = state.posts,
+            scrollState = scrollState,
+            isRefreshing = state.loading,
+            error = state.minorError
+        ) {
+            item(key = state.userDetails.userID) {
+                ProfileDetailsSection(
+                    state.userDetails,
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    areFriends = state.userDetails.areFriends,
-                    onClickAddFriend = onClickAddFriend,
-                    onClickSendMessage = onClickSendMessage
+                    onChangeProfileImage = onChangeProfileImage
+                )
+            }
+            if (!state.isMyProfile) {
+                item(key = state.userDetails.areFriends) {
+                    FriendOptionsSection(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        areFriends = state.userDetails.areFriends,
+                        onClickAddFriend = onClickAddFriend,
+                        onClickSendMessage = onClickSendMessage
+                    )
+                }
+            }
+            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
+            item {
+                PostCreatingSection(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onCreatePost = onCreatePost,
+                    isMyProfile = state.isMyProfile
+                )
+            }
+            items(state.posts) {
+                PostItem(
+                    state = it,
+                    isMyPost = true,
+                    isContentExpandable = true,
+                    onClickLike = { onClickLike(it) },
+                    onClickComment = { onClickComment(it) },
+                    onClickSave = { onClickSave(it) },
+                    onClickPostSetting = { onClickPostSetting(it) },
+                    onClickProfile = onClickProfile
                 )
             }
         }
-        item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-        item {
-            PostCreatingSection(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                onCreatePost = onCreatePost,
-                isMyProfile = state.isMyProfile
-            )
-        }
-        items(state.posts) {
-            PostItem(
-                state = it,
-                isMyPost = true,
-                isContentExpandable = true,
-                onClickLike = { onClickLike(it) },
-                onClickComment = { onClickComment(it) },
-                onClickSave = { onClickSave(it) },
-                onClickPostSetting = { onClickPostSetting(it) }
-            )
-        }
     }
-
 }
 
 

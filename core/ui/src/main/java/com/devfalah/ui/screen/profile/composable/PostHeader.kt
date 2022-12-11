@@ -29,7 +29,8 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun PostHeader(
     post: PostUIState,
     isMyProfile: Boolean,
-    onClickPostSetting: (PostUIState) -> Unit
+    onClickPostSetting: (PostUIState) -> Unit,
+    onClickProfile: (Int) -> Unit
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
@@ -37,6 +38,7 @@ fun PostHeader(
             painter = rememberAsyncImagePainter(model = post.publisherImage),
             contentDescription = null,
             Modifier
+                .RemoveRippleEffect { onClickProfile(post.publisherId) }
                 .size(40.dp)
                 .clip(CircleShape),
         )
@@ -79,7 +81,9 @@ fun PostHeader(
 
         if (isMyProfile) {
             Box(
-                modifier = Modifier.weight(1f).padding(end = 16.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 16.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Icon(

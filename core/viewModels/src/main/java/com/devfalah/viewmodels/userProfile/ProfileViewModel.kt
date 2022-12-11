@@ -1,12 +1,14 @@
 package com.devfalah.viewmodels.userProfile
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
 import com.devfalah.viewmodels.userProfile.mapper.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -43,16 +45,22 @@ class ProfileViewModel @Inject constructor(
     val getProfilePostUseCase: GetProfilePostsUseCase,
     val addFriendUseCase: AddFriendUseCase,
     val likeUseCase: SetLikeUseCase,
-    val changeProfileImageUseCase: ChangeProfileImageUseCase
+    val changeProfileImageUseCase: ChangeProfileImageUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    private val ownerID = checkNotNull(savedStateHandle["profileId"]).toString().toInt()
 
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
     private val userId = 6
-    private val ownerID = 6
 
     init {
+        getData()
+    }
+
+    fun getData() {
         getUserDetails(userId, ownerID)
         getUserFriends(ownerID)
         getProfilePost(userId, ownerID)
@@ -62,15 +70,12 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true, majorError = "") }
             try {
-                val userDetails = getUserAccountDetails(
-                    userId = userID,
-                    profileOwnerId = profileOwnerID
-                ).toUIState()
+                val userDetails = getUserAccountDetails(userId = userID, profileOwnerId = profileOwnerID)
                 _uiState.update {
                     it.copy(
                         loading = false,
                         isMyProfile = userID == profileOwnerID,
-                        userDetails = userDetails,
+                        userDetails = userDetails.toUIState(),
                     )
                 }
             } catch (t: Throwable) {
@@ -115,8 +120,11 @@ class ProfileViewModel @Inject constructor(
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) { updatedPost }
-                        else { it }
+                        if (it.postId == post.postId) {
+                            updatedPost
+                        } else {
+                            it
+                        }
                     })
                 }
             } catch (t: Throwable) {
@@ -159,7 +167,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(loading = true) }
-                val posts = getProfilePostUseCase.loadMore(6, 6, type).toUIState()
+                val posts = getProfilePostUseCase.loadMore(userId, ownerID, type).toUIState()
                 _uiState.update { it.copy(loading = false, posts = posts) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
