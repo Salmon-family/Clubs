@@ -42,8 +42,13 @@ fun SignupBirthdateAndGenderScreen(
         onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
         onCreateAccount = {
-            viewModel.makeSignupRequest()
-            navController.navigateToAccountActivation()
+            viewModel.makeSignupRequest({
+                navController.navigateToAccountActivation()
+                Toast.makeText(context, "Create account is successfully", Toast.LENGTH_SHORT).show()
+            }, {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            })
+
         }
     )
 }
