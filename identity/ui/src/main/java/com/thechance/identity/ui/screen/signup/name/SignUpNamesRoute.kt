@@ -9,7 +9,9 @@ import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 
 fun NavController.navigateToSignupNames() {
-    navigate(route = SIGNUP_USER_INFORMATION_Route)
+    navigate(route = SIGNUP_USER_INFORMATION_Route){
+        launchSingleTop = true
+    }
 }
 
 const val SIGNUP_USER_INFORMATION_Route = "signupFirstNameScreen"

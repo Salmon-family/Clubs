@@ -7,7 +7,9 @@ import androidx.navigation.compose.composable
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 fun NavController.navigateToSignupConfirmPassword(){
-    navigate(route = SIGNUP_CONFIRM_PASSWORD_Route)
+    navigate(route = SIGNUP_CONFIRM_PASSWORD_Route){
+        launchSingleTop = true
+    }
 }
 
 const val SIGNUP_CONFIRM_PASSWORD_Route = "signupConfirmPasswordScreen"

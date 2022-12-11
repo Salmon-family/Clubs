@@ -9,7 +9,9 @@ import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 
 fun NavController.navigateToBirthdateAndGander() {
-    navigate(route = SIGNUP_BIRTHDATE_AND_GANDER_Route)
+    navigate(route = SIGNUP_BIRTHDATE_AND_GANDER_Route){
+        launchSingleTop = true
+    }
 }
 
 const val SIGNUP_BIRTHDATE_AND_GANDER_Route = "signupBirthdateAndGanderScreen"

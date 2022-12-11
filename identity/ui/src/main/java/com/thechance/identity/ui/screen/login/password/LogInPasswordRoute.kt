@@ -7,7 +7,9 @@ import androidx.navigation.compose.composable
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
 fun NavController.navigateToLogInPassword() {
-    navigate(LOGIN_PASSWORD_ROUTE)
+    navigate(LOGIN_PASSWORD_ROUTE){
+        launchSingleTop = true
+    }
 }
 
 const val LOGIN_PASSWORD_ROUTE = "logInPasswordScreen"

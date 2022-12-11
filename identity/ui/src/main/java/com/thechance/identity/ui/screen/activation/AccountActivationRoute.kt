@@ -6,7 +6,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
 fun NavController.navigateToAccountActivation(){
-    navigate(route = ACCOUNT_ACTIVATION_Route)
+    navigate(route = ACCOUNT_ACTIVATION_Route){
+        launchSingleTop = true
+    }
 }
 
 const val ACCOUNT_ACTIVATION_Route = "accountActivationScreen"

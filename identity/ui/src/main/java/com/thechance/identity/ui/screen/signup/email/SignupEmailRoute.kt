@@ -9,7 +9,9 @@ import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 
 fun NavController.navigateToSignupEmail() {
-    navigate(route = SIGNUP_EMAIL_Route)
+    navigate(route = SIGNUP_EMAIL_Route){
+        launchSingleTop = true
+    }
 }
 
 const val SIGNUP_EMAIL_Route = "signupEmailScreen"

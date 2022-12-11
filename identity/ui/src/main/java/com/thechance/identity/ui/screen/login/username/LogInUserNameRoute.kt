@@ -7,7 +7,9 @@ import androidx.navigation.compose.composable
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
 fun NavController.navigateToLogInUserName(){
-    navigate(route = LOGIN_USER_NAME_ROUTE)
+    navigate(route = LOGIN_USER_NAME_ROUTE){
+        launchSingleTop = true
+    }
 }
 
 const val LOGIN_USER_NAME_ROUTE = "logInUserNameScreen"
