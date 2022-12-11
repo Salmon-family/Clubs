@@ -17,6 +17,7 @@ import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 
@@ -28,6 +29,7 @@ fun HomeScreen(
     val state by viewModel.uiState.collectAsState()
     HomeContent(
         state = state,
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading),
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
         onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
@@ -40,6 +42,7 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     state: HomeUIState,
+    swipeRefreshState: SwipeRefreshState,
     onCreatePost: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
@@ -49,10 +52,12 @@ fun HomeContent(
     val scrollState = rememberLazyListState()
 
     ManualPager(
-        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading),
+        swipeRefreshState = swipeRefreshState,
         onRefresh = onRefresh,
         items = state.posts,
-        scrollState = scrollState
+        scrollState = scrollState,
+        isRefreshing = state.isPagerLoading,
+        error = state.pagerError
     ) {
 
         item {

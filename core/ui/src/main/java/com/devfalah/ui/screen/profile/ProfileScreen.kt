@@ -52,6 +52,7 @@ fun ProfileScreen(
 
     ProfileContent(
         state,
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
         onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
@@ -74,7 +75,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileContent(
     state: UserUIState,
-    swipeRefreshState: SwipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
+    swipeRefreshState: SwipeRefreshState,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -90,7 +91,10 @@ fun ProfileContent(
         swipeRefreshState = swipeRefreshState,
         onRefresh = onRefresh,
         items = state.posts,
-        scrollState = scrollState
+        scrollState = scrollState,
+        isRefreshing = state.loading,
+        error = state.minorError
+
     ) {
         item(key = state.userDetails.userID) {
             ProfileDetailsSection(

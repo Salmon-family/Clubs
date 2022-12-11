@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetHomePostUseCase
 import com.devfalah.usecases.SetLikeUseCase
 import com.devfalah.viewmodels.Constants
+import com.devfalah.viewmodels.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +28,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch { allPosts(userId) }
-        swipeToRefresh(Constants.SWIPE_UP)
+        swipeToRefresh(Constants.FIRST_TIME)
     }
 
     fun onClickLike(post: PostUIState) {
@@ -40,18 +41,29 @@ class HomeViewModel @Inject constructor(
 
     fun swipeToRefresh(type: Int) {
         viewModelScope.launch {
-            try {
+            if (type == FIRST_TIME) {
                 _uiState.update { it.copy(isLoading = true) }
+            } else {
+                _uiState.update { it.copy(isPagerLoading = true) }
+            }
+            try {
                 allPosts.loadData(userId, type).collect { posts ->
                     _uiState.update {
                         it.copy(
+                            isPagerLoading = false,
                             isLoading = false,
                             posts = it.posts + posts.toUIState()
                         )
                     }
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isLoading = false, minorError = t.message.toString()) }
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        pagerError = t.message.toString()
+                    )
+                }
             }
         }
     }
