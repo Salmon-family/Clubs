@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -42,10 +43,19 @@ fun SignupBirthdateAndGenderScreen(
         onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
         onCreateAccount = {
-            viewModel.makeSignupRequest()
-            navController.navigateToAccountActivation()
+            if (!state.isSuccess) {
+                Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
+            } else {
+                navController.navigateToAccountActivation()
+                Toast.makeText(context, "Create account is successfully", Toast.LENGTH_SHORT).show()
+
+            }
         }
     )
+
+    LaunchedEffect(key1 = viewModel) {
+        viewModel.makeSignupRequest()
+    }
 }
 
 @Composable
@@ -56,6 +66,8 @@ private fun SignupBirthdateAndGanderContent(
     onChangeGender: (String) -> Unit,
     onCreateAccount: () -> Unit,
 ) {
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()

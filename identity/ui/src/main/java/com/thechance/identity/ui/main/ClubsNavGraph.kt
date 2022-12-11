@@ -8,6 +8,7 @@ import com.thechance.identity.ui.screen.activation.accountActivationRoute
 import com.thechance.identity.ui.screen.home.homeRoute
 import com.thechance.identity.ui.screen.login.password.logInPasswordRoute
 import com.thechance.identity.ui.screen.login.username.logInUserNameRoute
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
 import com.thechance.identity.ui.screen.onboarding.pager.onBoardingPagerRoute
 import com.thechance.identity.ui.screen.onboarding.welcome.WELCOME_ON_BOARDING_Route
 import com.thechance.identity.ui.screen.onboarding.welcome.welcomeOnBoardRoute
@@ -17,14 +18,21 @@ import com.thechance.identity.ui.screen.signup.email.signupEmailRoute
 import com.thechance.identity.ui.screen.signup.name.signupNamesRoute
 import com.thechance.identity.viewmodel.login.LoginViewModel
 import com.thechance.identity.viewmodel.signup.SignupViewModel
+import com.thechance.identity.viewmodel.start.StartInstallViewModel
 
 @Composable
 fun ClubsNavGraph(
     navController: NavHostController,
     signupViewModel: SignupViewModel = hiltViewModel(),
-    loginViewModel: LoginViewModel = hiltViewModel()
-    ) {
-    NavHost(navController = navController, startDestination = WELCOME_ON_BOARDING_Route) {
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    startInstallViewModel: StartInstallViewModel = hiltViewModel()
+) {
+    val startRoute = if (startInstallViewModel.getStartInstall() == true) {
+        ON_BOARDING_PAGER_Route
+    } else {
+        WELCOME_ON_BOARDING_Route
+    }
+    NavHost(navController = navController, startDestination = startRoute) {
         welcomeOnBoardRoute(navController)
         onBoardingPagerRoute(navController)
         signupEmailRoute(navController, signupViewModel)

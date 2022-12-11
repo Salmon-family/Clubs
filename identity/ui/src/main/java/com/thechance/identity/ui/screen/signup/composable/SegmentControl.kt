@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.theme.LightCardColor
@@ -39,7 +40,7 @@ fun SegmentControls(
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier
             .weight(1f)
-            .height(42.dp)
+            .wrapContentHeight()
             .clip(
                 shape = RoundedCornerShape(100.dp)
             )
@@ -51,6 +52,7 @@ fun SegmentControls(
                 onChangeGander(genderItems[index.value])
             }) {
             Text(
+                modifier = Modifier.padding(vertical = 12.dp),
                 text = genderItems.first(),
                 color = if (index.value == 0) Color.White else LightPrimaryBlackColor,
                 style = Typography.body2
@@ -59,7 +61,7 @@ fun SegmentControls(
         Box(contentAlignment = Alignment.Center,
             modifier = Modifier
                 .weight(1f)
-                .height(42.dp)
+                .wrapContentHeight()
                 .clip(shape = RoundedCornerShape(100.dp))
                 .background(
                     color = if (index.value == 1) LightPrimaryBrandColor else LightCardColor
@@ -69,10 +71,17 @@ fun SegmentControls(
                     onChangeGander(genderItems[index.value])
                 }) {
             Text(
+                modifier = Modifier.padding(vertical = 12.dp),
                 text = genderItems.last(),
                 color = if (index.value == 1) Color.White else LightPrimaryBlackColor,
                 style = Typography.body2
             )
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun SegmentPreview() {
+    SegmentControls(onChangeGander = {})
 }

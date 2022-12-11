@@ -10,8 +10,17 @@ import javax.inject.Inject
 
 class IdentityRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteIdentityDataSource,
+    private val localIdentityDataSource: LocalIdentityDataSource,
     private val mapperUserDataDTOToUserData: MapperUserDataDTOToUserData,
 ) : IdentityRepository {
+
+    override fun getStartInstallState(): Boolean? {
+        return localIdentityDataSource.getStartInstall()
+    }
+
+    override suspend fun setStartInstallState(value: Boolean) {
+        return localIdentityDataSource.setStartInstall(value)
+    }
 
     override suspend fun login(userName: String, password: String): User {
         return remoteDataSource.login(userName, password).toEntity()
