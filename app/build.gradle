@@ -79,6 +79,7 @@ dependencies {
     api(project(":identity:useCases"))
     api(project(":identity:repositories"))
     api(project(":identity:remote"))
+    api(project(":identity:local"))
     //endregion
 
 

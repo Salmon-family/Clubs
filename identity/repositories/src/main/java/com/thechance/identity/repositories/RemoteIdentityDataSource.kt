@@ -10,5 +10,4 @@ interface RemoteIdentityDataSource {
 
     suspend fun signup(userDataDTO: UserDataDTO): AccountDTO
 
-
 }

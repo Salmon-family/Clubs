@@ -16,6 +16,8 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
+import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.theme.*
 
@@ -25,7 +27,7 @@ fun AccountActivationScreen(
 ){
     val context = LocalContext.current
     AccountActivationContent(
-        onclickBack = {navController.navigateToLogInUserName()},
+        onclickBack = {navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)},
         onClickOpenEmail = {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = Constants.MESSAGE_TYPE
