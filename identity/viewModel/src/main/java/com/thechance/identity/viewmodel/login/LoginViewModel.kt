@@ -1,9 +1,9 @@
 package com.thechance.identity.viewmodel.login
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thechance.identity.usecases.AccountValidationUseCase
 import com.thechance.identity.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    private val accountValidationUseCase: AccountValidationUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUIState())
@@ -30,8 +31,7 @@ class LoginViewModel @Inject constructor(
 
     fun onValidatePassword(): Boolean {
         val state = _uiState.value
-        //todo: for use case
-        return state.password.isNotEmpty() && state.password.length > 6
+        return accountValidationUseCase.validatePassword(state.password)
     }
 
     fun onLogin() {

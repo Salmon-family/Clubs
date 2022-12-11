@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
+import com.thechance.identity.usecases.AccountValidationUseCase
 import com.thechance.identity.usecases.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val signupUseCase: SignupUseCase,
+    private val accountValidationUseCase: AccountValidationUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUIState())
@@ -66,16 +68,13 @@ class SignupViewModel @Inject constructor(
     }
 
     fun onConfirmPassword(): Boolean {
-        //todo: for use case
-        return (_uiState.value.password == _uiState.value.confirmPassword) &&
-                (_uiState.value.password != "") && (_uiState.value.confirmPassword != "")
+        val state = _uiState.value
+        return accountValidationUseCase.checkPasswordMatching(state.password, state.confirmPassword)
     }
 
     fun onValidatePassword(): Boolean {
-        //todo: for use case
         val state = _uiState.value
-        return state.password.length > 6
-                && state.confirmPassword.length > 6
+        return accountValidationUseCase.validatePassword(state.password)
                 && onConfirmPassword()
     }
 
@@ -89,8 +88,7 @@ class SignupViewModel @Inject constructor(
 
     fun onValidateName(): Boolean {
         val state = _uiState.value
-        //todo: for use case
-        return state.firstName.isNotEmpty() && state.username.isNotEmpty()
+        return accountValidationUseCase.validateName(state.firstName, state.username)
     }
 
     fun onChangeBirthdate(birthdate: String) {
