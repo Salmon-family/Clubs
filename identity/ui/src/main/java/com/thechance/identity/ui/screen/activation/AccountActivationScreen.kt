@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.activation
 
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -29,8 +30,8 @@ fun AccountActivationScreen(
     AccountActivationContent(
         onclickBack = {navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)},
         onClickOpenEmail = {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = Constants.MESSAGE_TYPE
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_APP_EMAIL)
             context.startActivity(intent)
         }
     )
