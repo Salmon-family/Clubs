@@ -14,5 +14,7 @@ fun NavGraphBuilder.onBoardingPagerRoute(navHostController: NavHostController) {
 }
 
 fun NavController.navigateToOnBoardingPager() {
-    navigate(route = ON_BOARDING_PAGER_Route)
+    navigate(route = ON_BOARDING_PAGER_Route) {
+        launchSingleTop = true
+    }
 }

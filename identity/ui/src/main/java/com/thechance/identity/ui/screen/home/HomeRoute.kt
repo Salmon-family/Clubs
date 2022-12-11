@@ -5,8 +5,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
-fun NavController.navigateToHome(){
-    navigate(route = Home_ROUTE)
+fun NavController.navigateToHome() {
+    navigate(route = Home_ROUTE) {
+        launchSingleTop = true
+    }
 }
 
 const val Home_ROUTE = "homeScreen"

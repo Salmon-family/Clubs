@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
-fun NavController.navigateToAccountActivation(){
-    navigate(route = ACCOUNT_ACTIVATION_Route){
+fun NavController.navigateToAccountActivation() {
+    navigate(route = ACCOUNT_ACTIVATION_Route) {
         launchSingleTop = true
     }
 }
