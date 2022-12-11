@@ -20,7 +20,7 @@ class SignupViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
 
-    fun makeSignupRequest(onSuccess: () -> Unit, onToastMessage: (String) -> Unit) {
+    fun makeSignupRequest() {
         viewModelScope.launch {
             val state = _uiState.value
             val userData = UserData(
@@ -37,16 +37,8 @@ class SignupViewModel @Inject constructor(
                 signupUseCase(userData)
                 _uiState.update { it.copy(isSuccess = true) }
 
-                if (_uiState.value.isSuccess) {
-                    onSuccess()
-                }
-
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isError = t.message.toString()) }
-
-                if (_uiState.value.isSuccess) {
-                    onToastMessage(_uiState.value.isError)
-                }
             }
         }
     }
