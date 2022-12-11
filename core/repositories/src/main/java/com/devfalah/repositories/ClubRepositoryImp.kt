@@ -70,4 +70,13 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
     }
 
+    override suspend fun getGroupsIDsThatUserMemberOF(userID: Int): List<Int> {
+        return remoteDataSource.getGroupsThatUserMemberOF(userID).toEntity()
+    }
+
+
+    override suspend fun getUserHomePosts(userID: Int, page: Int): List<Post> {
+        return remoteDataSource.getUserHomePosts(userID, page = page).toEntity()
+    }
+
 }

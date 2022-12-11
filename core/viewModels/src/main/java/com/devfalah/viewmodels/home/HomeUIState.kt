@@ -6,5 +6,7 @@ data class HomeUIState(
     val posts: List<PostUIState> = emptyList(),
     val isLoading: Boolean = false,
     val error: String = "",
-    val minorError: String = ""
+    val minorError: String = "",
+    val id :Int = 6
 )
+

@@ -9,9 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
@@ -25,7 +23,6 @@ import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.composable.*
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
@@ -55,10 +52,9 @@ fun ProfileScreen(
 
     ProfileContent(
         state,
-        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
-        onClickComment ={ navController.navigate(Screen.CreatePost.screen_route) },
+        onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
@@ -78,7 +74,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileContent(
     state: UserUIState,
-    swipeRefreshState: SwipeRefreshState,
+    swipeRefreshState: SwipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -96,50 +92,41 @@ fun ProfileContent(
         items = state.posts,
         scrollState = scrollState
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .background(LightBackgroundColor)
-                .fillMaxSize(),
-            state = scrollState,
-            contentPadding = PaddingValues(vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            item(key = state.userDetails.userID) {
-                ProfileDetailsSection(
-                    state.userDetails,
+        item(key = state.userDetails.userID) {
+            ProfileDetailsSection(
+                state.userDetails,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                onChangeProfileImage = onChangeProfileImage
+            )
+        }
+        if (!state.isMyProfile) {
+            item(key = state.userDetails.areFriends) {
+                FriendOptionsSection(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    onChangeProfileImage = onChangeProfileImage
+                    areFriends = state.userDetails.areFriends,
+                    onClickAddFriend = onClickAddFriend,
+                    onClickSendMessage = onClickSendMessage
                 )
             }
-            if (!state.isMyProfile) {
-                item(key = state.userDetails.areFriends) {
-                    FriendOptionsSection(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        areFriends = state.userDetails.areFriends,
-                        onClickAddFriend = onClickAddFriend,
-                        onClickSendMessage = onClickSendMessage
-                    )
-                }
-            }
-            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-            item {
-                PostCreatingSection(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    onCreatePost = onCreatePost,
-                    isMyProfile = state.isMyProfile
-                )
-            }
-            items(state.posts) {
-                PostItem(
-                    state = it,
-                    isMyProfile = state.isMyProfile,
-                    isContentExpandable = true,
-                    onClickLike = { onClickLike(it) },
-                    onClickComment = { onClickComment(it) },
-                    onClickSave = { onClickSave(it) },
-                    onClickPostSetting = { onClickPostSetting(it) }
-                )
-            }
+        }
+        item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
+        item {
+            PostCreatingSection(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                onCreatePost = onCreatePost,
+                isMyProfile = state.isMyProfile
+            )
+        }
+        items(state.posts) {
+            PostItem(
+                state = it,
+                isMyPost = true,
+                isContentExpandable = true,
+                onClickLike = { onClickLike(it) },
+                onClickComment = { onClickComment(it) },
+                onClickSave = { onClickSave(it) },
+                onClickPostSetting = { onClickPostSetting(it) }
+            )
         }
     }
 

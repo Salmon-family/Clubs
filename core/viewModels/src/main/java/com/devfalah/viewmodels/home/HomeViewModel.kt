@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetHomePostUseCase
 import com.devfalah.usecases.SetLikeUseCase
+import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,48 +25,35 @@ class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
     val userId = 6
 
-
     init {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            try {
-                val posts = allPosts(userId)
-                _uiState.update { it.copy(isLoading = false, posts = posts.toUIState()) }
-            } catch (t: Throwable) {
-
-            }
-        }
-
+        viewModelScope.launch { allPosts(userId) }
+        swipeToRefresh(Constants.SWIPE_UP)
     }
 
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
-            try {
-                val totalLikes = likeUseCase(
-                    postID = post.postId, userId = userId,
-                    isLiked = post.isLikedByUser
-                )
-                val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
-                )
-                _uiState.update {
-                    it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) {
-                            updatedPost
-                        } else {
-                            it
-                        }
-                    })
-                }
-            } catch (t: Throwable) {
-                Log.e("Test Test Test", t.message.toString())
-                _uiState.update { it.copy(minorError = t.message.toString()) }
-            }
-        }
+
     }
 
     fun onClickSave(post: PostUIState) {
         Log.e("Test", "Save $post")
+    }
+
+    fun swipeToRefresh(type: Int) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                allPosts.loadData(userId, type).collect { posts ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            posts = it.posts + posts.toUIState()
+                        )
+                    }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(isLoading = false, minorError = t.message.toString()) }
+            }
+        }
     }
 
 }

@@ -8,8 +8,9 @@ fun List<Post>.toUIState() = map { it.toUIState() }
 fun Post.toUIState(): PostUIState {
     return PostUIState(
         postId = id,
-        posterImage = publisherImageUrl,
-        posterName = publisher,
+        publisherId = publisherId,
+        publisherImage = publisherImageUrl,
+        publisherName = publisher,
         privacy = privacy,
         createdData = createdTimeValue,
         totalLikes = totalLikes,
@@ -17,6 +18,6 @@ fun Post.toUIState(): PostUIState {
         isSaved = false,
         isLikedByUser = isLiked,
         postImage = imageUrl,
-        postContent = content
+        postContent = content,
     )
 }

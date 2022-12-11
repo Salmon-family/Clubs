@@ -34,7 +34,7 @@ fun PostHeader(
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
         Image(
-            painter = rememberAsyncImagePainter(model = post.posterImage),
+            painter = rememberAsyncImagePainter(model = post.publisherImage),
             contentDescription = null,
             Modifier
                 .size(40.dp)
@@ -43,7 +43,7 @@ fun PostHeader(
         WidthSpacer8()
         Column {
             Text(
-                text = post.posterName,
+                text = post.publisherName,
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,

@@ -287,6 +287,13 @@ interface ClubService {
         @Query("count") pageSize: Int? = null
     ): Response<BaseResponse<ProfilePostResponse>>
 
+    @GET("wall_list_home")
+    suspend fun getHomePosts(
+        @Query("guid") userID: Int,
+        @Query("offset") page: Int? = null,
+        @Query("count") pageSize: Int? = null
+    ): Response<BaseResponse<ProfilePostResponse>>
+
     @Multipart
     @POST("photos_profile_add")
     suspend fun addProfilePicture(

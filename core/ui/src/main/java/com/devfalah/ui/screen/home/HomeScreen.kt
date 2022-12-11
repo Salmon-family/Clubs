@@ -1,12 +1,8 @@
 package com.devfalah.ui.screen.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,12 +11,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 
 @Composable
@@ -33,9 +30,10 @@ fun HomeScreen(
         state = state,
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
-        onClickComment = {navController.navigate(Screen.CreatePost.screen_route)},
+        onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
         onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) }
+        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
+        onRefresh = viewModel::swipeToRefresh
     )
 }
 
@@ -46,14 +44,15 @@ fun HomeContent(
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
+    onRefresh: (Int) -> Unit,
+) {
+    val scrollState = rememberLazyListState()
 
-    ) {
-    LazyColumn(
-        modifier = Modifier
-            .background(LightBackgroundColor)
-            .fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ManualPager(
+        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading),
+        onRefresh = onRefresh,
+        items = state.posts,
+        scrollState = scrollState
     ) {
 
         item {
@@ -64,18 +63,16 @@ fun HomeContent(
             )
         }
 
-        items(state.posts){
+        items(state.posts) {
             PostItem(
                 state = it,
-                isMyProfile = true,
                 isContentExpandable = true,
+                isMyPost = it.publisherId == state.id,
                 onClickLike = { onClickLike(it) },
                 onClickComment = { onClickComment(it) },
                 onClickSave = { onClickSave(it) },
                 onClickPostSetting = { /*onClickPostSetting(it)*/ }
             )
         }
-
-
     }
 }
