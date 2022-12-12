@@ -19,11 +19,6 @@ import javax.inject.Inject
 
 /**
  * Need To Do:
- * add friend status (pending ..)
- * get album cover photo.
- * save post
- * block or unfriend user.
- * create post
  * change cover or profile photo.
  * display youtube view.
 
@@ -33,7 +28,6 @@ import javax.inject.Inject
  * comments
  * messages
  * external URL
- * selected/all albums
  * selected/all friends
  *
  * */

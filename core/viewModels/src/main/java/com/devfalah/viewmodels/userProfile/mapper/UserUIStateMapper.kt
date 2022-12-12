@@ -14,6 +14,8 @@ fun User.toUIState(): UserDetailsUIState {
         bio = bio,
         coverUrl = coverUrl,
         profilePicture = profileUrl,
-        areFriends = isFriend
+        areFriends = isFriend,
+        isMyProfile = isMyProfile,
+        isRequestSend = isRequestExists
     )
 }

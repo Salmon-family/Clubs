@@ -28,7 +28,7 @@ interface RemoteDataSource {
 
     suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO
 
-    suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+    suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO
 
     suspend fun addProfilePicture(userID: Int, file: File): UserDTO
 

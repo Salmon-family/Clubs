@@ -18,5 +18,7 @@ fun UserDTO.toEntity(): User {
         language = this.language ?: "",
         profileUrl = this.icon?.large ?: "",
         isFriend = false,
+        isMyProfile = false,
+        isRequestExists = false
     )
 }

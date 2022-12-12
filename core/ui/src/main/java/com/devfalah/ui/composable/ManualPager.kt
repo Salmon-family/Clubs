@@ -35,7 +35,8 @@ fun ManualPager(
     scrollState: LazyListState,
     isRefreshing: Boolean,
     error: String,
-    content: LazyListScope.() -> Unit
+    contentPadding: PaddingValues,
+    content: LazyListScope.() -> Unit,
 ) {
     loadMore(scrollState, onRefresh = onRefresh, items = items)
 
@@ -58,7 +59,7 @@ fun ManualPager(
                 .background(LightBackgroundColor)
                 .fillMaxSize(),
             state = scrollState,
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = contentPadding,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             content()

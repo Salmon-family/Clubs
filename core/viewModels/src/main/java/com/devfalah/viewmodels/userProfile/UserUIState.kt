@@ -19,6 +19,8 @@ data class UserDetailsUIState(
     val coverUrl: String = "",
     val profilePicture: String = "",
     val areFriends: Boolean = false,
+    val isMyProfile: Boolean = false,
+    val isRequestSend: Boolean = false,
 )
 
 data class AlbumUIState(

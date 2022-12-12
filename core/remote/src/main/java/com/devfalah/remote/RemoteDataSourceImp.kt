@@ -3,10 +3,7 @@ package com.devfalah.remote
 
 import com.devfalah.remote.response.BaseResponse
 import com.devfalah.repositories.RemoteDataSource
-import com.devfalah.repositories.models.FriendDTO
-import com.devfalah.repositories.models.ReactionDTO
-import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.WallPostDTO
+import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
@@ -78,9 +75,8 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
-        return wrap { apiService.isFriendWith(userID = userID, otherUserID = friendID) }.isFriend
-            ?: throw Throwable("Mapping Error")
+    override suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO {
+        return wrap { apiService.isFriendWith(userID = userID, otherUserID = friendID) }
     }
 
     override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {

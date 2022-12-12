@@ -111,24 +111,14 @@ fun ProfileContent(
             items = state.posts,
             scrollState = scrollState,
             isRefreshing = state.loading,
-            error = state.minorError
+            error = state.minorError,
+            contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             item(key = state.userDetails.userID) {
                 ProfileDetailsSection(
                     state.userDetails,
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     onChangeProfileImage = onChangeProfileImage
                 )
-            }
-            if (!state.isMyProfile) {
-                item(key = state.userDetails.areFriends) {
-                    FriendOptionsSection(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        areFriends = state.userDetails.areFriends,
-                        onClickAddFriend = onClickAddFriend,
-                        onClickSendMessage = onClickSendMessage
-                    )
-                }
             }
             item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
             item {

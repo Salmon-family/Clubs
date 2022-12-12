@@ -1,9 +1,6 @@
 package com.devfalah.usecases.repository
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Notification
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.entities.*
 import kotlinx.coroutines.flow.Flow
 import java.io.File
 
@@ -29,7 +26,7 @@ interface ClubRepository {
 
     suspend fun removeLikeOnPost(userID: Int, postId: Int): Int
 
-    suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+    suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip
 
     suspend fun addProfilePicture(userID: Int, file: File): User
 

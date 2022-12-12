@@ -1,5 +1,6 @@
 package com.devfalah.ui.screen.home
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -17,7 +18,6 @@ import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -65,7 +65,9 @@ fun HomeContent(
         items = state.posts,
         scrollState = scrollState,
         isRefreshing = state.isPagerLoading,
-        error = state.pagerError
+        error = state.pagerError,
+        contentPadding = PaddingValues(vertical = 16.dp)
+
     ) {
 
         item {

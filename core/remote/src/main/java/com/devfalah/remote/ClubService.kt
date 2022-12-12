@@ -35,21 +35,21 @@ interface ClubService {
     suspend fun isFriendWith(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     @FormUrlEncoded
     @POST("user_remove_friend")
     suspend fun removeFriend(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     @FormUrlEncoded
     @POST("user_add_friend")
     suspend fun addFriendRequest(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     /**
      * posts
