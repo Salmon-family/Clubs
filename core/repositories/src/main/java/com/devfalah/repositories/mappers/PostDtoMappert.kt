@@ -11,7 +11,6 @@ fun WallPostDTO.toEntity(): Post? {
         Post(
             id = post?.guid ?: 0,
             privacy = post?.access == "3",
-            createdTimeValue = post?.timeCreated?.let { ConvertDate().convertTime(it) } ?: "",
             createdTime= post?.timeCreated?:0L,
             content = text?.let {
                 if (it != "false") { it } else { "" } } ?: "",

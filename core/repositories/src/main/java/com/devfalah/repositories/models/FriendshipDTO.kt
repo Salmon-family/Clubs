@@ -3,7 +3,7 @@ package com.devfalah.repositories.models
 
 import com.google.gson.annotations.SerializedName
 
-data class CheckFriendshipDTO(
+data class FriendshipDTO(
     @SerializedName("success")
     val success: Boolean?,
     @SerializedName("is_friend")

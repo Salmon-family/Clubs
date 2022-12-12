@@ -7,6 +7,7 @@ object Constants {
     const val NOTHING = -1
 
 
+    const val FIRST_TIME = 0
     const val SWIPE_UP = 1
     const val SWIPE_DOWN = -1
 

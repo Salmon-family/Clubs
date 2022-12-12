@@ -9,30 +9,26 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
+import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.composable.*
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.io.File
@@ -47,7 +43,6 @@ fun ProfileScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
@@ -55,11 +50,14 @@ fun ProfileScreen(
         }
     )
 
+    SetStatusBarColor(LightPrimaryBrandColor, darkIcons = false)
+
     ProfileContent(
         state,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
-        onClickComment = viewModel::onClickComment,
+        // should navigate to post screen details.
+        onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
@@ -72,6 +70,13 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
+        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
+        onClickProfile = {
+            if (!state.isMyProfile) {
+                navController.navigateToProfile(it)
+            }
+        },
+        onRetry = viewModel::getData
     )
 }
 
@@ -86,62 +91,55 @@ fun ProfileContent(
     onClickSendMessage: () -> Unit,
     onChangeProfileImage: () -> Unit,
     onRefresh: (Int) -> Unit,
-    onClickPostSetting: (PostUIState) -> Unit
+    onClickPostSetting: (PostUIState) -> Unit,
+    onCreatePost: () -> Unit,
+    onClickProfile: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
-    val scrollState = rememberLazyListState()
-    loadMore(scrollState, onRefresh = onRefresh, items = state.posts)
-    SwipeRefresh(
-        state = swipeRefreshState,
-        onRefresh = { onRefresh(Constants.SWIPE_UP) },
-        indicatorAlignment = Alignment.BottomCenter,
-        indicator = { state, refreshTrigger ->
-            SwipeRefreshIndicator(
-                state = state,
-                refreshTriggerDistance = refreshTrigger,
-                backgroundColor = Color.Transparent,
-                contentColor = LightPrimaryBrandColor
-            )
-        },
-    ) {
-        LazyColumn(
-            modifier = Modifier.background(LightBackgroundColor).fillMaxSize(),
-            state = scrollState,
-            contentPadding = PaddingValues(vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+    if (state.majorError.isNotEmpty()) {
+        Box(modifier = Modifier.fillMaxSize())
+        Button(
+            onClick = onRetry
+        ) {
+            Text(text = "Retry")
+        }
+    } else {
+        val scrollState = rememberLazyListState()
+        ManualPager(
+            swipeRefreshState = swipeRefreshState,
+            onRefresh = onRefresh,
+            items = state.posts,
+            scrollState = scrollState,
+            isRefreshing = state.loading,
+            error = state.minorError,
+            contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             item(key = state.userDetails.userID) {
                 ProfileDetailsSection(
                     state.userDetails,
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     onChangeProfileImage = onChangeProfileImage
                 )
             }
-            if (!state.isMyProfile) {
-                item(key = state.userDetails.areFriends) {
-                    FriendOptionsSection(
+            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
+            if (state.isMyProfile || state.userDetails.areFriends){
+                item {
+                    PostCreatingSection(
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        areFriends = state.userDetails.areFriends,
-                        onClickAddFriend = onClickAddFriend,
-                        onClickSendMessage = onClickSendMessage
+                        onCreatePost = onCreatePost,
+                        isMyProfile = state.isMyProfile
                     )
                 }
-            }
-            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-            item {
-                PostCreatingSection(
-                    state.userDetails,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
             }
             items(state.posts) {
                 PostItem(
                     state = it,
-                    isMyProfile = state.isMyProfile,
+                    isMyPost = true,
                     isContentExpandable = true,
                     onClickLike = { onClickLike(it) },
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },
-                    onClickPostSetting = { onClickPostSetting(it) }
+                    onClickPostSetting = { onClickPostSetting(it) },
+                    onClickProfile = onClickProfile
                 )
             }
         }
@@ -181,43 +179,5 @@ private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
             }
             output.flush()
         }
-    }
-}
-
-@Composable
-private fun LazyListState.isScrollingUp(): Boolean {
-    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
-    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
-    return remember(this) {
-        derivedStateOf {
-            if (previousIndex != firstVisibleItemIndex) {
-                previousIndex > firstVisibleItemIndex
-            } else {
-                previousScrollOffset >= firstVisibleItemScrollOffset
-            }.also {
-                previousIndex = firstVisibleItemIndex
-                previousScrollOffset = firstVisibleItemScrollOffset
-            }
-        }
-    }.value
-}
-
-@Composable
-private fun loadMore(
-    scrollState: LazyListState,
-    items: List<PostUIState>,
-    onRefresh: (Int) -> Unit
-) {
-    val comparedItemIndex = if (items.size > 5) {
-        items.size.minus(5)
-    } else {
-        items.lastIndex
-    }
-
-    if (!scrollState.isScrollingUp() && !scrollState.isScrollInProgress
-        && comparedItemIndex > 0 && scrollState.firstVisibleItemIndex < items.lastIndex
-        && (items[scrollState.firstVisibleItemIndex].postId != items[comparedItemIndex].postId)
-    ) {
-        onRefresh(Constants.SWIPE_DOWN)
     }
 }

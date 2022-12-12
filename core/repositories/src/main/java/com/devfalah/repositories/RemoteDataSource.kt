@@ -1,10 +1,8 @@
 package com.devfalah.repositories
 
-import com.devfalah.repositories.models.FriendDTO
-import com.devfalah.repositories.models.ReactionDTO
-import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.WallPostDTO
+import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
+import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import java.io.File
 
@@ -30,9 +28,13 @@ interface RemoteDataSource {
 
     suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO
 
-    suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+    suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO
 
     suspend fun addProfilePicture(userID: Int, file: File): UserDTO
 
     suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<WallPostDTO>
+
+    suspend fun getGroupsThatUserMemberOF(userID: Int): List<GroupDTO>
+
+    suspend fun getUserHomePosts(userID: Int, page: Int): List<WallPostDTO>
 }

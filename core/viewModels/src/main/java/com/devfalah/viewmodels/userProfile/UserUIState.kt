@@ -19,6 +19,8 @@ data class UserDetailsUIState(
     val coverUrl: String = "",
     val profilePicture: String = "",
     val areFriends: Boolean = false,
+    val isMyProfile: Boolean = false,
+    val isRequestSend: Boolean = false,
 )
 
 data class AlbumUIState(
@@ -29,10 +31,12 @@ data class AlbumUIState(
 
 data class PostUIState(
     val postId: Int = 0,
-    val posterName: String = "",
-    val posterImage: String = "",
+    val publisherName: String = "",
+    val publisherImage: String = "",
+    val publisherId: Int = 0,
     val privacy: Boolean = false,
     val createdData: String = "",
+    val createdDataValue: Long = 0L,
     val totalLikes: Int = 0,
     val totalComments: Int = 0,
     val isSaved: Boolean = false,

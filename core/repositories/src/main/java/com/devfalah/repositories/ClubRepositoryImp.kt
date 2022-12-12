@@ -1,16 +1,16 @@
 package com.devfalah.repositories
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Notification
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.io.File
 import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -56,8 +56,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.removeLikeOnPost(userID = userID, postId = postId).toEntity()
     }
 
-    override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
-        return remoteDataSource.checkFriendShip(userID, friendID)
+    override suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip {
+        return remoteDataSource.getFriendShipStatus(userID, friendID).toEntity()
     }
 
     override suspend fun addProfilePicture(userID: Int, file: File): User {
@@ -68,6 +68,35 @@ class ClubRepositoryImp @Inject constructor(
         userID: Int, profileUserID: Int, page: Int
     ): List<Post> {
         return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
+    }
+
+    override suspend fun getGroupsIDsThatUserMemberOF(userID: Int): List<Int> {
+        return remoteDataSource.getGroupsThatUserMemberOF(userID).toEntity()
+    }
+
+
+    override suspend fun getUserHomePosts(userID: Int, page: Int): List<Post> {
+        return remoteDataSource.getUserHomePosts(userID, page = page).toEntity()
+    }
+
+    override suspend fun isPostSavedLocally(postId: Int): Boolean {
+        return localDataSource.isPostFound(postId)
+    }
+
+    override suspend fun getSavedPostedIds(): Flow<List<Int>> {
+        return localDataSource.getPostsIds()
+    }
+
+    override suspend fun getSavedPosted(): Flow<List<Post>> {
+        return localDataSource.getPosts().map { it.toEntity() }
+    }
+
+    override suspend fun savedPosted(post: Post) {
+        localDataSource.insertPost(post.toEntity())
+    }
+
+    override suspend fun deletePost(postId: Int) {
+        localDataSource.deletePostById(postId)
     }
 
 }
