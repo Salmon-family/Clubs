@@ -5,7 +5,9 @@ import com.devfalah.entities.User
 data class FriendRequestUiState(
     val friendRequests: List<UserState> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String = ""
+    val error: String = "",
+    val minorError: String = ""
+
 )
 
 data class UserState(

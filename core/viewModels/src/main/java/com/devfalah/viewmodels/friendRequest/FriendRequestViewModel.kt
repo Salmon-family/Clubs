@@ -48,15 +48,41 @@ class FriendRequestViewModel @Inject constructor(
 
     fun acceptFriendRequest(friendRequestId: Int) {
         viewModelScope.launch {
-            addFriendRequestUseCase(userID = userID, friendRequestId = friendRequestId)
+            _uiStateFriendRequests.update { it.copy(isLoading = true, minorError = "") }
+            try {
+                if (addFriendRequestUseCase(userID = userID, friendRequestId = friendRequestId)) {
+                    updateFriendRequestList(friendRequestId)
+                }
+            } catch (t: Throwable) {
+                _uiStateFriendRequests.update {
+                    it.copy(isLoading = false, minorError = t.message.toString())
+                }
+            }
         }
-        fetchFriendsRequest()
     }
 
     fun deniedFriendRequest(friendRequestId: Int) {
         viewModelScope.launch {
-            removeFriendRequestUseCase(userID = userID, friendRequestId = friendRequestId)
+            _uiStateFriendRequests.update { it.copy(isLoading = true, minorError = "") }
+
+            try {
+                if (removeFriendRequestUseCase(userID = userID, friendRequestId = friendRequestId)){
+                    updateFriendRequestList(friendRequestId)
+                }
+            } catch (t: Throwable) {
+                _uiStateFriendRequests.update {
+                    it.copy(isLoading = false, minorError = t.message.toString())
+                }
+            }
         }
-        fetchFriendsRequest()
+    }
+
+    private fun updateFriendRequestList(friendRequestId: Int) {
+        _uiStateFriendRequests.update {
+            it.copy(
+                friendRequests = _uiStateFriendRequests.value.friendRequests
+                    .filterNot { it.userID == friendRequestId }
+            )
+        }
     }
 }
