@@ -11,7 +11,9 @@ interface ChatRepository {
 
     fun getChats(): Flow<List<Chat>>
 
-    suspend fun getChats(userID: Int): List<Chat>
+    suspend fun getChats(userID: Int, page: Int): List<Chat>
+
+    suspend fun getChatsCount(userID: Int): Int
 
     fun getChats(query: String): Flow<List<Chat>>
 
@@ -29,4 +31,5 @@ interface ChatRepository {
 
     suspend fun postNotification(notification: Notification): Boolean
 
+    suspend fun getChatsCount(): Int
 }

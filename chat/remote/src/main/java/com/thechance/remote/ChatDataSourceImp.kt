@@ -14,8 +14,8 @@ class ChatDataSourceImp @Inject constructor(
     private val cloudMessagingService: CloudMessagingService,
 ) : ChatRemoteDataSource {
 
-    override suspend fun getChats(userID: Int): List<ChatDTO> {
-        return wrap { chatService.getRecentMessages(userID) }.list ?: emptyList()
+    override suspend fun getChats(userID: Int, page: Int): List<ChatDTO> {
+        return wrap { chatService.getRecentMessages(userID, page) }.list ?: emptyList()
     }
 
     override suspend fun getMessagesWithFriend(userID: Int, friendID: Int): List<ChatDTO> {
@@ -30,6 +30,10 @@ class ChatDataSourceImp @Inject constructor(
         return cloudMessagingService.postNotification(notification).isSuccessful
 
 
+    }
+
+    override suspend fun getChatsCount(userID: Int): Int {
+        return wrap { chatService.getRecentMessages(userID, 1) }.count ?: 0
     }
 
 

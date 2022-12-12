@@ -3,6 +3,7 @@ package com.thechance.viewmodels.chats
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nadafeteiha.usecases.GetChatsCountUseCase
 import com.nadafeteiha.usecases.GetChatsUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
@@ -20,32 +21,29 @@ class ChatsViewModel @Inject constructor(
     private val getChats: GetChatsUseCase,
     private val searchForChats: SearchForChatsUseCase,
     private val receiveNotificationUseCase: ReceiveNotificationUseCase,
-) : ViewModel() {
+    private val getChatsCount: GetChatsCountUseCase,
+) : ViewModel(), Pagination {
 
     private val _uiState = MutableStateFlow(ChatsUiState())
     val uiState = _uiState.asStateFlow()
-    val id = 2
+    val id = 10
 
     init {
         initChats(id)
     }
 
-   private fun initChats(userID: Int){
+    private fun initChats(userID: Int) {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 getChats(userID).collect { chats ->
                     _uiState.update { chatsUiState ->
-                        chatsUiState.copy(
-                            chats = chats.map { it.toUiState() }, isLoading = false
-                        )
+                        chatsUiState.copy(chats = chats.map { it.toUiState() }, isLoading = false)
                     }
                 }
             } catch (e: Exception) {
-                Log.e("DEVFALAH",e.message.toString())
-                _uiState.update {
-                    it.copy(isLoading = false, error = e.message.toString())
-                }
+                Log.e("DEVFALAH", e.message.toString())
+                _uiState.update { it.copy(isLoading = false, error = e.message.toString()) }
             }
         }
     }
@@ -65,5 +63,27 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
+    override fun onLoadingMore() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            val chatsCount = getChatsCount(id)
+            val chatsCountLocally = getChatsCount.getChatsCountLocally()
+            if (chatsCount > chatsCountLocally) {
+                try {
+                    val nextPage = chatsCountLocally / 10 + 1
+                    getChats.refreshChats(id, nextPage)
+                    _uiState.update { it.copy(isLoading = false) }
+
+                } catch (e: Exception) {
+                    _uiState.update { it.copy(isLoading = false, error = e.message.toString()) }
+                }
+            } else {
+                _uiState.update { it.copy(isLastPage = true, isLoading = false) }
+            }
+        }
+    }
 }
 
+interface Pagination {
+    fun onLoadingMore()
+}

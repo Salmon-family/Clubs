@@ -5,4 +5,5 @@ data class ChatsUiState(
     val error: String = "",
     val chats: List<ChatUiState> = emptyList(),
     val searchText: String = "",
+    val isLastPage: Boolean = false,
 )

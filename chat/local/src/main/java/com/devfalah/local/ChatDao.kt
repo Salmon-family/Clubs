@@ -29,4 +29,6 @@ interface ChatDao {
     @Query("SELECT * FROM MESSAGES_TABLE WHERE friendId = :friendId ORDER BY id DESC")
     fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
+    @Query("SELECT COUNT(*) FROM CHATS_TABLE")
+    suspend fun getChatsCount(): Int
 }

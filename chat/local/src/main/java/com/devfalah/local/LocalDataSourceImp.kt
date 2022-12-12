@@ -33,4 +33,8 @@ class LocalDataSourceImp @Inject constructor(
     override fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>> {
         return chatDao.getMessages(friendId)
     }
+
+    override suspend fun getChatsCount(): Int {
+        return chatDao.getChatsCount()
+    }
 }

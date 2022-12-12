@@ -18,4 +18,5 @@ interface ChatLocalDataSource {
 
     fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
+    suspend fun getChatsCount(): Int
 }
