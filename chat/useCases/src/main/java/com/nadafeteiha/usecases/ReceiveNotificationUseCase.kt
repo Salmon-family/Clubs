@@ -9,6 +9,7 @@ class ReceiveNotificationUseCase @Inject constructor(
     suspend operator fun invoke(){
          chatRepository.onReceiveMessage().filterNot { it.friendId==0 }.collect{
              chatRepository.insertMessage(it)
+             chatRepository.updateRecentMessage(it.friendId,it.message)
         }
     }
 }

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "MESSAGES_TABLE")
-data class MessageEntityLocalDTO (
+data class MessageEntityLocalDTO(
     @PrimaryKey val id:Int,
     val friendId: Int,
     val fromMe: Boolean,

@@ -1,4 +1,4 @@
-package com.thechance.remote
+package com.thechance.remote.api
 
 import com.thechance.remote.response.BaseResponse
 import com.thechance.remote.response.UnreadMessagesResponse

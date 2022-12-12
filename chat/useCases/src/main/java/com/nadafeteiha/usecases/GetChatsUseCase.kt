@@ -9,11 +9,11 @@ class GetChatsUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(userID: Int): Flow<List<Chat>> {
         refreshChats(userID)
-        return chatRepository.getChatsFromLocal()
+        return chatRepository.getChats()
     }
 
     private suspend fun refreshChats(userID: Int) {
         val chats = chatRepository.getChats(userID)
-        chatRepository.insertChatsLocally(chats)
+        chatRepository.insertChats(chats)
     }
 }

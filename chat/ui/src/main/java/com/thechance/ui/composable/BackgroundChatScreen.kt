@@ -13,7 +13,7 @@ import com.thechance.ui.R
 fun BackgroundChatScreen() {
     Image(
         modifier = Modifier.fillMaxSize(),
-        painter = painterResource(id = R.drawable.background_chat_screen),
+        painter = painterResource(id = R.drawable.background_chat_screen2),
         contentDescription = "background chat screen",
         contentScale = ContentScale.Crop,
     )

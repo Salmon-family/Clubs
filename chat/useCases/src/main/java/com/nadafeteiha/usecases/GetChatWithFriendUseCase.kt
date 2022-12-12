@@ -14,7 +14,7 @@ class GetChatWithFriendUseCase @Inject constructor(
     }
 
     private suspend fun refreshMessages(userID: Int, friendID: Int){
-        val message = chatRepository.getMessages(userID, friendID).messages
+        val message = chatRepository.getMessages(userID, friendID)
         chatRepository.insertMessages(message)
     }
 }

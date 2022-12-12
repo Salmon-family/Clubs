@@ -7,7 +7,7 @@ import com.devfalah.repositories.RemoteDataSource
 import com.thechance.identity.remote.IdentityDataSourceImp
 import com.thechance.identity.repositories.IdentityDataSource
 import com.thechance.remote.ChatDataSourceImp
-import com.devfalah.repository.ChatDataSource
+import com.devfalah.repository.ChatRemoteDataSource
 import com.devfalah.repository.ChatFirebaseDataSource
 import com.devfalah.repository.ChatLocalDataSource
 import dagger.Binds
@@ -27,7 +27,7 @@ abstract class DataSourceModule {
     @Binds
     abstract fun bindChatDataSource(
         chatDataSourceImp: ChatDataSourceImp
-    ): ChatDataSource
+    ): ChatRemoteDataSource
 
     @Binds
     abstract fun bindIdentityDataSource(

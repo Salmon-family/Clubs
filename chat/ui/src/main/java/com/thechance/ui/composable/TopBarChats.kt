@@ -1,14 +1,13 @@
 package com.thechance.ui.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,21 +18,10 @@ import com.thechance.ui.theme.PlusJakartaSans
 
 @Composable
 fun TopBarChats(
-    onCLickBack: ()->Unit,
+    onCLickBack: () -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            BackButton(onCLickBack)
-            Spacer(modifier = Modifier.width(16.dp))
+    TopAppBar(
+        title = {
             Text(
                 text = stringResource(id = R.string.chats),
                 fontSize = 24.sp,
@@ -41,11 +29,19 @@ fun TopBarChats(
                 color = BlackColor,
                 fontFamily = PlusJakartaSans
             )
-        }
-    }
+        },
+        navigationIcon = {
+            BackButton(onClick = onCLickBack)
+        },
+        backgroundColor = MaterialTheme.colors.background,
+        contentColor = Color.Black,
+        elevation = 0.dp,
+        modifier = Modifier.fillMaxWidth()
+    )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, locale = "en")
+@Preview(showBackground = true, showSystemUi = true, locale = "ar")
 @Composable
 fun PreviewTopBarChats() {
     TopBarChats({})

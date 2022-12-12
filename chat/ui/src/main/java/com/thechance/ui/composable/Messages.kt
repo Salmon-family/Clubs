@@ -8,35 +8,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.thechance.ui.spacer.SpaceHorizontal
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.ui.theme.LightQuaternaryBlackColor
 import com.thechance.ui.theme.Typography
 import com.thechance.ui.theme.WhiteColor
 
 @Composable
-private fun TextMessage(text: String, date: String, color: Color, textColor: Color) {
-    Box(modifier = Modifier
+private fun TextMessage(
+    text: String,
+    date: String,
+    color: Color,
+    textColor: Color,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier
         .fillMaxWidth()
         .padding(horizontal = 16.dp)
         .padding(top = 8.dp),
-        contentAlignment = Alignment.TopEnd) {
+        contentAlignment = Alignment.TopEnd
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = date,
                 style = Typography.subtitle2,
                 color = LightQuaternaryBlackColor.copy(alpha = 0.38f))
             SpaceHorizontal(width = 8)
-            Text(modifier = Modifier.background(
+            Text(modifier = Modifier
+                .background(
                     color = color,
                     shape = RoundedCornerShape(8.dp))
                 .padding(16.dp),
@@ -50,18 +54,33 @@ private fun TextMessage(text: String, date: String, color: Color, textColor: Col
 }
 
 @Composable
-fun SenderMessage(text: String, dateMessage: String) {
-    TextMessage(text = text,
+fun SenderMessage(
+    text: String,
+    dateMessage: String,
+    modifier: Modifier = Modifier,
+) {
+    TextMessage(
+        text = text,
         date = dateMessage,
         color = LightPrimaryBrandColor,
-        textColor = WhiteColor)
+        textColor = WhiteColor,
+        modifier = modifier,
+    )
 }
 
 @Composable
-fun ReceiverMessage(text: String, dateMessage: String) {
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-        TextMessage(text = text, date = dateMessage, color = WhiteColor, textColor = Color.Black)
-    }
+fun ReceiverMessage(
+    text: String,
+    dateMessage: String,
+    modifier: Modifier = Modifier,
+) {
+    TextMessage(
+        text = text,
+        date = dateMessage,
+        color = WhiteColor,
+        textColor = Color.Black,
+        modifier = modifier,
+    )
 }
 
 @Preview(showBackground = true)

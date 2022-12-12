@@ -9,29 +9,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.thechance.ui.composable.SendTextField
 import com.thechance.ui.composable.AppBar
 import com.thechance.ui.composable.BackgroundChatScreen
 import com.thechance.ui.composable.ListOfChat
-import com.thechance.viewmodels.conversation.ChatWithFriendViewModel
-import com.thechance.viewmodels.conversation.uiStates.ChatUIState
+import com.thechance.viewmodels.conversation.ConversationViewModel
+import com.thechance.viewmodels.conversation.uiStates.ConversationUIState
 
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
 internal fun ConversationScreen(
     navController: NavHostController,
-    viewModel: ChatWithFriendViewModel = hiltViewModel(),
+    viewModel: ConversationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     ChatContent(
         state = state,
         messageText = state.message,
         onValueChanged = viewModel::onChanceMessage,
-        sendMessage = viewModel::sendMessage,
+        sendMessage = viewModel::onClickSendButton,
         onCLickBack = {
             navController.popBackStack()
         }
@@ -40,7 +39,7 @@ internal fun ConversationScreen(
 
 @Composable
 fun ChatContent(
-    state: ChatUIState,
+    state: ConversationUIState,
     messageText: String,
     onValueChanged: (String) -> Unit,
     sendMessage: () -> Unit,

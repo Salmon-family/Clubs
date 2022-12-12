@@ -18,4 +18,6 @@ interface ChatLocalDataSource {
 
     fun getMessages(friendId: Int): Flow<List<MessageEntityLocalDTO>>
 
+    suspend fun updateRecentMessage(id: Int, recentMessage: String)
+
 }

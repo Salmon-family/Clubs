@@ -2,18 +2,15 @@ package com.devfalah.firebase
 
 import android.util.Log
 import com.devfalah.repository.models.NotificationDataModel
-import com.devfalah.repository.models.NotificationDto
 import com.devfalah.repository.models.NotificationDtoKeys
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
 class FirebaseCloudMessagingService : FirebaseMessagingService() {
-
 
     override fun onMessageReceived(message: RemoteMessage) {
         message.data.let { data ->
@@ -24,14 +21,14 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 val time = (data[NotificationDtoKeys.TIME_KEY]).toString()
 
                 GlobalScope.launch {
-                    events.emit(NotificationDto(
-                        data = NotificationDataModel(
+                    events.emit(
+                        NotificationDataModel(
                             id = id,
                             friendId = friendId,
                             messageText = messageText,
                             time = time,
                         )
-                    ))
+                    )
                 }
             }
         }
@@ -42,7 +39,7 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
     }
 
     companion object{
-        val events = MutableSharedFlow<NotificationDto>()
+        val events = MutableSharedFlow<NotificationDataModel>()
     }
 
 }
