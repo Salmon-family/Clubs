@@ -74,10 +74,11 @@ fun ViewPagerSlider() {
             pagerState = pageState,
             modifier = Modifier
                 .align(Alignment.Start)
-                .padding(24.dp),
+                .padding(horizontal = 24.dp),
             activeColor = LightPrimaryBrandColor,
             inactiveColor = LightSecondaryBrandColor
         )
+        SpacerVertical16()
     }
 }
 

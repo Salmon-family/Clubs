@@ -2,6 +2,10 @@ package com.thechance.identity.ui.screen.onboarding.pager
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -10,12 +14,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.composable.TextTwoToneColor
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.onboarding.composable.ViewPagerSlider
 import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical16
-import com.thechance.identity.ui.theme.*
+import com.thechance.identity.ui.theme.LightPrimaryBlackColor
+import com.thechance.identity.ui.theme.LightPrimaryBrandColor
+import com.thechance.identity.ui.theme.LightTernaryBlackColor
+import com.thechance.identity.ui.theme.WhiteColor
 
 @Composable
 fun OnBoardingPagerScreen(
