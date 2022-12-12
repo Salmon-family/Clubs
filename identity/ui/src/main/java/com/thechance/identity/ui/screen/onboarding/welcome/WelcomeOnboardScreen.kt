@@ -1,10 +1,15 @@
 package com.thechance.identity.ui.screen.onboarding.welcome
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -12,12 +17,13 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
-import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardingBoxOfParallelogramShape
+import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardImage
 import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
+import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical8
+import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
-import com.thechance.identity.ui.theme.LightTernaryBrandColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
@@ -36,12 +42,14 @@ fun WelcomeOnboardContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightTernaryBrandColor)
-            .padding(bottom = 16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
 
         Spacer(modifier = Modifier.weight(1f))
-        WelcomeOnBoardingBoxOfParallelogramShape()
+        WelcomeOnBoardImage(
+            painter = painterResource(id = R.drawable.welcome),
+            description = stringResource(id = R.string.welcome)
+        )
 
         Spacer(modifier = Modifier.weight(1f))
         ClubText()
@@ -51,7 +59,7 @@ fun WelcomeOnboardContent(
             text = stringResource(id = R.string.have_fun),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
-            modifier = Modifier.padding(start = 24.dp)
+            modifier = Modifier.padding(horizontal = 24.dp)
         )
 
         SpacerVertical8()
@@ -59,10 +67,10 @@ fun WelcomeOnboardContent(
             text = stringResource(id = R.string.onboard_body),
             style = Typography.body1,
             color = LightTernaryBlackColor,
-            modifier = Modifier.padding(start = 24.dp)
+            modifier = Modifier.padding(horizontal = 24.dp)
         )
 
-        Spacer(modifier = Modifier.weight(0.2f))
+        SpacerVertical16()
         AuthButton(
             onClick = onClickNextScreen,
             text = stringResource(id = R.string.lets_do),
@@ -72,6 +80,8 @@ fun WelcomeOnboardContent(
             textModifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 24.dp)
         )
+
+        SpacerVertical16()
     }
 }
 
