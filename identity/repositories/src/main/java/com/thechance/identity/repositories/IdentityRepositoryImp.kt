@@ -29,4 +29,12 @@ class IdentityRepositoryImp @Inject constructor(
     override suspend fun signup(userData: UserData): Account {
         return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData)).toEntity()
     }
+
+    override fun getUserId(): String? {
+        return localIdentityDataSource.getUserId()
+    }
+
+    override suspend fun saveUserId(id: String) {
+        return localIdentityDataSource.saveUserId(id)
+    }
 }
