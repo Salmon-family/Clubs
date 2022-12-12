@@ -1,5 +1,6 @@
 package com.devfalah.usecases
 
+import com.devfalah.entities.FriendShip
 import com.devfalah.entities.User
 import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
@@ -14,12 +15,12 @@ class GetUserAccountDetailsUseCase @Inject constructor(
         val friendShip = if (userId != profileOwnerId) {
             friendShip(userId, profileOwnerId)
         } else {
-            null
+            FriendShip()
         }
         return userDetails.copy(
             isMyProfile = userId == profileOwnerId,
-            isFriend = friendShip?.isFriend ?: false,
-            isRequestExists = friendShip?.requestExists ?: false
+            isFriend = friendShip.isFriend,
+            isRequestExists = friendShip.requestExists && !friendShip.isFriend
         )
     }
 }

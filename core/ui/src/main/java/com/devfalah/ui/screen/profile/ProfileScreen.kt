@@ -121,12 +121,14 @@ fun ProfileContent(
                 )
             }
             item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-            item {
-                PostCreatingSection(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    onCreatePost = onCreatePost,
-                    isMyProfile = state.isMyProfile
-                )
+            if (state.isMyProfile || state.userDetails.areFriends){
+                item {
+                    PostCreatingSection(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        onCreatePost = onCreatePost,
+                        isMyProfile = state.isMyProfile
+                    )
+                }
             }
             items(state.posts) {
                 PostItem(

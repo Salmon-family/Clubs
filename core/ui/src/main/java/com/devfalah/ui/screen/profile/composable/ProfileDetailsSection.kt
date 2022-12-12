@@ -89,7 +89,6 @@ fun ProfileDetailsSection(
             maxLines = 2
         )
 
-
         Box(
             modifier = Modifier
                 .constrainAs(imageProfile) {
@@ -128,7 +127,7 @@ fun ProfileDetailsSection(
             ProfileImageWithIcon(
                 profilePicture = userDetails.profilePicture,
                 onClickIcon = onChangeProfileImage,
-                GetPainterProfileIcon(userDetails)
+                painter = GetPainterProfileIcon(userDetails)
             )
         }
 
@@ -138,14 +137,14 @@ fun ProfileDetailsSection(
 @Composable
 private fun GetPainterProfileIcon(
     userDetails: UserDetailsUIState
-): Painter {
+): Painter? {
     return if (userDetails.isMyProfile) {
         painterResource(id = R.drawable.ic_camera)
-    } else if (userDetails.areFriends) {
-        painterResource(id = R.drawable.ic_message)
+    } else if (!userDetails.areFriends) {
+        painterResource(id = R.drawable.ic_add_user)
     } else if (userDetails.isRequestSend) {
         painterResource(id = R.drawable.ic_requsted_add_user)
     } else {
-        painterResource(id = R.drawable.ic_add_user)
+        null
     }
 }

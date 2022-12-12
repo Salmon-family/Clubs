@@ -27,7 +27,7 @@ import com.devfalah.ui.theme.LightSecondaryBrandColor
 fun ProfileImageWithIcon(
     profilePicture: String,
     onClickIcon: () -> Unit,
-    painter: Painter
+    painter: Painter?
 ) {
     Box {
         Image(
@@ -39,26 +39,28 @@ fun ProfileImageWithIcon(
                 .border(4.dp, Color.White, CircleShape),
         )
 
-        Box(
-            modifier = Modifier
-                .padding(start = 8.dp, top = 80.dp)
-                .size(40.dp)
-                .RemoveRippleEffect { onClickIcon }
-                .align(Alignment.BottomEnd)
-                .clip(CircleShape)
-                .background(LightSecondaryBrandColor)
-                .border(4.dp, Color.White, CircleShape)
-                .align(Alignment.BottomEnd),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                tint = LightPrimaryBrandColor,
-                painter = painter,
-                contentDescription = null
-            )
+        painter?.let {
+            Box(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 80.dp)
+                    .size(40.dp)
+                    .RemoveRippleEffect { onClickIcon }
+                    .align(Alignment.BottomEnd)
+                    .clip(CircleShape)
+                    .background(LightSecondaryBrandColor)
+                    .border(4.dp, Color.White, CircleShape)
+                    .align(Alignment.BottomEnd),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    tint = LightPrimaryBrandColor,
+                    painter = painter,
+                    contentDescription = null
+                )
+
+            }
         }
     }
-
 }
 
 
