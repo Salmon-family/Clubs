@@ -7,7 +7,6 @@ fun Post.toEntity(): PostLocalDto {
     return PostLocalDto(
         id = id,
         privacy = privacy,
-        createdTimeValue = createdTimeValue,
         createdTime = createdTime,
         content = content,
         imageUrl = imageUrl,
@@ -24,7 +23,6 @@ fun PostLocalDto.toEntity(): Post {
     return Post(
         id = id,
         privacy = privacy,
-        createdTimeValue = createdTimeValue,
         createdTime = createdTime,
         content = content,
         imageUrl = imageUrl,

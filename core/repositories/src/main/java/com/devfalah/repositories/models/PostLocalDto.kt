@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 data class PostLocalDto(
     @PrimaryKey(autoGenerate = false)val id: Int,
     val privacy: Boolean,
-    val createdTimeValue: String,
     val createdTime: Long,
     val content: String,
     val imageUrl: String,

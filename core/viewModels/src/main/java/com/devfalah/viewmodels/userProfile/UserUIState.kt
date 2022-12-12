@@ -36,6 +36,7 @@ data class PostUIState(
     val publisherId: Int = 0,
     val privacy: Boolean = false,
     val createdData: String = "",
+    val createdDataValue: Long = 0L,
     val totalLikes: Int = 0,
     val totalComments: Int = 0,
     val isSaved: Boolean = false,
