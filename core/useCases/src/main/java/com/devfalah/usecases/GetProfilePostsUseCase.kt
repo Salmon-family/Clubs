@@ -31,7 +31,7 @@ class GetProfilePostsUseCase @Inject constructor(
     }
 
     private suspend fun getSavedPostsIds(): Flow<List<Int>> {
-        return clubRepository.getSavedPosted()
+        return clubRepository.getSavedPostedIds()
     }
 
 }

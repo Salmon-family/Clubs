@@ -19,3 +19,22 @@ fun Post.toEntity(): PostLocalDto {
         isLiked = isLiked
     )
 }
+
+fun PostLocalDto.toEntity(): Post {
+    return Post(
+        id = id,
+        privacy = privacy,
+        createdTimeValue = createdTimeValue,
+        createdTime = createdTime,
+        content = content,
+        imageUrl = imageUrl,
+        totalLikes = totalLikes,
+        totalComments = totalComments,
+        publisher = publisher,
+        publisherId = publisherId,
+        publisherImageUrl = publisherImageUrl,
+        isLiked = isLiked
+    )
+}
+
+fun List<PostLocalDto>.toEntity() = map { it.toEntity() }

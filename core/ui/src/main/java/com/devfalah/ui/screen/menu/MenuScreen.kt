@@ -26,5 +26,6 @@ fun MenuContent(
         Button(onClick = { onClickFriends() }) {
             Text(text = "Friend Request")
         }
+
     }
 }

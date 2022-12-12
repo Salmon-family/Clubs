@@ -38,7 +38,9 @@ interface ClubRepository {
 
     suspend fun isPostSavedLocally(postId: Int): Boolean
 
-    suspend fun getSavedPosted(): Flow<List<Int>>
+    suspend fun getSavedPostedIds(): Flow<List<Int>>
+
+    suspend fun getSavedPosted(): Flow<List<Post>>
 
     suspend fun savedPosted(post: Post)
 

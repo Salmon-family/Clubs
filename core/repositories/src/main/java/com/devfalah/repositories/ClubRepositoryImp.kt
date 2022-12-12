@@ -4,6 +4,7 @@ import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.io.File
 import javax.inject.Inject
 
@@ -82,8 +83,12 @@ class ClubRepositoryImp @Inject constructor(
         return localDataSource.isPostFound(postId)
     }
 
-    override suspend fun getSavedPosted(): Flow<List<Int>> {
+    override suspend fun getSavedPostedIds(): Flow<List<Int>> {
         return localDataSource.getPostsIds()
+    }
+
+    override suspend fun getSavedPosted(): Flow<List<Post>> {
+        return localDataSource.getPosts().map { it.toEntity() }
     }
 
     override suspend fun savedPosted(post: Post) {
