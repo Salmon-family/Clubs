@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
 import com.thechance.identity.usecases.AccountValidationUseCase
+import com.thechance.identity.usecases.GetUserIdUseCase
+import com.thechance.identity.usecases.SaveUserIdUseCase
 import com.thechance.identity.usecases.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     private val signupUseCase: SignupUseCase,
-    private val accountValidationUseCase: AccountValidationUseCase
+    private val accountValidationUseCase: AccountValidationUseCase,
+    private val getUserIdUseCase: GetUserIdUseCase,
+    private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUIState())
@@ -36,13 +40,23 @@ class SignupViewModel @Inject constructor(
                 password = state.password,
             )
             try {
-                signupUseCase(userData)
+                val userId = signupUseCase(userData).guid.toString()
                 _uiState.update { it.copy(isSuccess = true) }
-
+                saveUserId(userId)
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isError = t.message.toString()) }
             }
         }
+    }
+
+    private fun saveUserId(id: String){
+        viewModelScope.launch {
+            saveUserIdUseCase(id)
+        }
+    }
+
+    fun getUserId(): String?{
+        return getUserIdUseCase()
     }
 
     fun onChangeEmail(email: String) {

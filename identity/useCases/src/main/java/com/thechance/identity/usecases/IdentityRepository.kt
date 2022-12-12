@@ -13,4 +13,8 @@ interface IdentityRepository {
     suspend fun login(userName: String, password: String): User
 
     suspend fun signup(userData: UserData): Account
+
+    fun getUserId(): String?
+
+    suspend fun saveUserId(id: String)
 }

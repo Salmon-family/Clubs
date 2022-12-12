@@ -36,4 +36,12 @@ class AppConfiguratorImpl @Inject constructor(
     override suspend fun setStartInstall(value: Boolean) {
         return dataStorePreferences.writeBoolean(START_INSTALL_STATE_KEY, value)
     }
+
+    override fun getUserId(): String? {
+        return dataStorePreferences.readString(SIGN_UP_STATE_KEY)
+    }
+
+    override suspend fun saveUserId(id: String) {
+        return dataStorePreferences.writeString(SIGN_UP_STATE_KEY, id)
+    }
 }
