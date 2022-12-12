@@ -21,6 +21,7 @@ import com.thechance.identity.ui.extension.convertToDayMonthYearFormat
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.theme.WhiteColor
 import java.util.*
 
 @Composable
@@ -50,7 +51,7 @@ fun DatePicker(
         Modifier
             .padding(8.dp)
             .background(
-                color = LightCardColor,
+                color = WhiteColor,
                 shape = RoundedCornerShape(20.dp)
             ),
         verticalAlignment = Alignment.CenterVertically

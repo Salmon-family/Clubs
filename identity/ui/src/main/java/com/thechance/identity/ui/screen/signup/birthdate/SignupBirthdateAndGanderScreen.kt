@@ -3,8 +3,6 @@ package com.thechance.identity.ui.screen.signup.birthdate
 import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +20,7 @@ import com.thechance.identity.ui.composable.EmailDescriptionText
 import com.thechance.identity.ui.composable.NavigateToAnotherScreen
 import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
+import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.screen.signup.composable.DatePicker
 import com.thechance.identity.ui.screen.signup.composable.SegmentControls
 import com.thechance.identity.ui.spacer.SpacerVertical24

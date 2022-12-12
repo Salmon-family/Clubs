@@ -18,7 +18,10 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.screen.login.username.LOGIN_USER_NAME_ROUTE
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
+import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.*
@@ -28,14 +31,19 @@ fun AccountActivationScreen(
     navController: NavController
 ) {
     val context = LocalContext.current
+    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
+
+    BackPressHandler(onBackPressed = { onBack() })
     AccountActivationContent(
-        onclickBack = {
-            navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
-        },
+        onclickBack = { onBack() },
         onClickOpenEmail = {
             val intent = Intent(Intent.ACTION_MAIN)
             intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
+        },
+        navigateToLoginScreen = {
+            navController.navigateToLogInUserName()
         }
     )
 }
@@ -43,7 +51,8 @@ fun AccountActivationScreen(
 @Composable
 private fun AccountActivationContent(
     onclickBack: () -> Unit,
-    onClickOpenEmail: () -> Unit
+    onClickOpenEmail: () -> Unit,
+    navigateToLoginScreen: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -94,7 +103,7 @@ private fun AccountActivationContent(
                 .padding(8.dp)
         )
         AuthButton(
-            onClick = {},
+            onClick = navigateToLoginScreen,
             isEnabled = true,
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier.fillMaxWidth()
@@ -106,5 +115,5 @@ private fun AccountActivationContent(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewAccountActivationScreen() {
-    AccountActivationContent({}, {})
+    AccountActivationContent({}, {}, {})
 }
