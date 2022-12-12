@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +47,8 @@ private fun AccountActivationContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         BackButton(onClick = onclickBack)
@@ -75,13 +78,14 @@ private fun AccountActivationContent(
             modifier = Modifier.fillMaxWidth()
                 .clickable(onClick = onClickOpenEmail),
         )
-        Spacer(Modifier.weight(1f))
+        Spacer(Modifier.weight(1f).padding(8.dp))
         AuthButton(
             onClick = {},
             isEnabled = true,
             text = stringResource(id = R.string.log_in),
             buttonModifier = Modifier.fillMaxWidth()
         )
+        SpacerVertical16()
     }
 }
 
