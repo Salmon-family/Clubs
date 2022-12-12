@@ -11,10 +11,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.composable.EmailDescriptionText
-import com.thechance.identity.ui.composable.InputText
+import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.signup.birthdate.navigateToBirthdateAndGander
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
@@ -38,6 +36,7 @@ fun SignUpFullNameScreen(
         onValidate = viewModel::onValidateName,
         onClickBack = { navController.navigateUp() },
         onClickUserNameScreen = { navController.navigateToBirthdateAndGander() },
+        onNavigate = {navController.navigateToLogInUserName()}
     )
 }
 
@@ -48,7 +47,8 @@ private fun SignUpFullNameContent(
     onClickUserNameScreen: () -> Unit,
     onChangeFullName: (String) -> Unit,
     onChangeUserName: (String) -> Unit,
-    onValidate: () -> Boolean
+    onValidate: () -> Boolean,
+    onNavigate: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -115,6 +115,12 @@ private fun SignUpFullNameContent(
                 .fillMaxWidth(),
             isEnabled = onValidate.invoke(),
             text = stringResource(id = R.string.continue_label),
+        )
+
+        NavigateToAnotherScreen(
+            hintText = R.string.navigate_to_login,
+            navigateText = R.string.log_in,
+            onNavigate = onNavigate
         )
     }
 

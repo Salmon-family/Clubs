@@ -17,7 +17,9 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.EmailDescriptionText
+import com.thechance.identity.ui.composable.NavigateToAnotherScreen
 import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.signup.composable.DatePicker
 import com.thechance.identity.ui.screen.signup.composable.SegmentControls
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -42,12 +44,17 @@ fun SignupBirthdateAndGenderScreen(
         onChangeGender = viewModel::onChangeGender,
         onChangeBirthdate = viewModel::onChangeBirthdate,
         onClickBack = { navController.navigateUp() },
+        onNavigate = { navController.navigateToLogInUserName() },
         onCreateAccount = {
             if (!state.isSuccess) {
                 Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
             } else {
                 navController.navigateToAccountActivation()
-                Toast.makeText(context, "Create account is successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.success_message),
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
         }
@@ -65,6 +72,7 @@ private fun SignupBirthdateAndGanderContent(
     onChangeBirthdate: (String) -> Unit,
     onChangeGender: (String) -> Unit,
     onCreateAccount: () -> Unit,
+    onNavigate: () -> Unit
 ) {
 
 
@@ -131,6 +139,12 @@ private fun SignupBirthdateAndGanderContent(
                 .fillMaxWidth(),
             isEnabled = true,
             text = stringResource(id = R.string.create_account_label),
+        )
+
+        NavigateToAnotherScreen(
+            hintText = R.string.navigate_to_login,
+            navigateText = R.string.log_in,
+            onNavigate = onNavigate
         )
     }
 

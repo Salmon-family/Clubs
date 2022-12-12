@@ -7,12 +7,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.NavigateToAnotherScreen
 import com.thechance.identity.ui.composable.PasswordInputText
+import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightSecondaryBlackColor
@@ -31,7 +34,8 @@ fun LogInPasswordScreen(
         onChangePassword = viewModel::onChangePassword,
         onValidate = viewModel::onValidatePassword,
         onLogin = viewModel::onLogin,
-        onClickBack = { navController.navigateUp() }
+        onClickBack = { navController.navigateUp() },
+        onNavigate = { navController.navigateToSignupEmail() }
     )
 }
 
@@ -41,7 +45,8 @@ fun LogInPasswordContent(
     onChangePassword: (String) -> Unit,
     onValidate: () -> Boolean,
     onLogin: () -> Unit,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onNavigate: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -83,5 +88,25 @@ fun LogInPasswordContent(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         )
+
+        NavigateToAnotherScreen(
+            hintText = R.string.navigate_to_signup,
+            navigateText = R.string.sign_up,
+            onNavigate = onNavigate
+        )
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun LoginPasswordPreview() {
+
+    LogInPasswordContent(
+        state = LoginUIState(),
+        onChangePassword = {},
+        onValidate = { false },
+        onLogin = {},
+        onNavigate = {},
+        onClickBack = {}
+    )
 }

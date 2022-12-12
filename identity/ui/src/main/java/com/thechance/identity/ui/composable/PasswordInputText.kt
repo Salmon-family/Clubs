@@ -56,7 +56,7 @@ fun PasswordInputText(
 
         },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = LightCardColor,
+            backgroundColor = WhiteColor,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             textColor = LightPrimaryBlackColor

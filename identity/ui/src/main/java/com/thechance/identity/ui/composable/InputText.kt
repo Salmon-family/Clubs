@@ -29,7 +29,7 @@ fun InputText(
         onValueChange = onTextChange,
         shape = RoundedCornerShape(size = 100.dp),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = LightCardColor,
+            backgroundColor = WhiteColor,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             textColor = LightPrimaryBlackColor

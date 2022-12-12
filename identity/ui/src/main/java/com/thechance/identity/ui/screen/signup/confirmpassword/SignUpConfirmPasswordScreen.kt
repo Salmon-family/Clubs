@@ -10,10 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.composable.EmailDescriptionText
-import com.thechance.identity.ui.composable.PasswordInputText
+import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.signup.name.navigateToSignupNames
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
@@ -40,7 +38,8 @@ fun SignUpConfirmPasswordScreen(
         onClickSignupFirstNameScreen = {
             navController.navigateToSignupNames()
         },
-        onClickBack = { navController.navigateUp() }
+        onClickBack = { navController.navigateUp() },
+        onNavigate = {navController.navigateToLogInUserName()}
     )
 }
 
@@ -52,7 +51,8 @@ fun SignUpConfirmPasswordContent(
     onChangePassword: (String) -> Unit,
     onChangeConfirmPassword: (String) -> Unit,
     onClickSignupFirstNameScreen: () -> Unit,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onNavigate: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -118,6 +118,12 @@ fun SignUpConfirmPasswordContent(
             onClick = onClickSignupFirstNameScreen,
             isEnabled = onValidate.invoke(),
             text = stringResource(id = R.string.continue_label)
+        )
+
+        NavigateToAnotherScreen(
+            hintText = R.string.navigate_to_login,
+            navigateText = R.string.log_in,
+            onNavigate = onNavigate
         )
     }
 }

@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
+import com.thechance.identity.ui.screen.onboarding.composable.ViewPagerSlider
 import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardImage
 import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 import com.thechance.identity.ui.spacer.SpacerVertical16
@@ -45,13 +46,14 @@ fun WelcomeOnboardContent(
             .verticalScroll(rememberScrollState())
     ) {
 
-        Spacer(modifier = Modifier.weight(1f))
-        WelcomeOnBoardImage(
-            painter = painterResource(id = R.drawable.welcome),
-            description = stringResource(id = R.string.welcome)
-        )
+        Box(Modifier.weight(1f)) {
+            WelcomeOnBoardImage(
+                painter = painterResource(id = R.drawable.welcome),
+                description = stringResource(id = R.string.welcome)
+            )
+        }
 
-        Spacer(modifier = Modifier.weight(1f))
+        SpacerVertical16()
         ClubText()
 
         SpacerVertical8()

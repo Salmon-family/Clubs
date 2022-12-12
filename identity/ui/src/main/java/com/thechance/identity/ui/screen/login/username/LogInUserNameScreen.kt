@@ -10,17 +10,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.composable.InputText
+import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.screen.login.password.navigateToLogInPassword
+import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical24
-import com.thechance.identity.ui.theme.LightPrimaryBlackColor
-import com.thechance.identity.ui.theme.LightSecondaryBlackColor
-import com.thechance.identity.ui.theme.Typography
+import com.thechance.identity.ui.theme.*
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 
@@ -34,7 +32,8 @@ fun LogInUserNameScreen(
         state = state,
         onChangeUserName = viewModel::onChangeUserName,
         onClickContinue = { navController.navigateToLogInPassword() },
-        onClickBack = { navController.navigateUp() }
+        onClickBack = { navController.navigateUp() },
+        onNavigate = { navController.navigateToSignupEmail() }
     )
 }
 
@@ -43,7 +42,8 @@ private fun LogInUserNameContent(
     state: LoginUIState,
     onChangeUserName: (String) -> Unit,
     onClickContinue: () -> Unit,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onNavigate: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -54,7 +54,7 @@ private fun LogInUserNameContent(
 
         SpacerVertical24()
         Text(
-            text = stringResource(id = R.string.user_name_question),
+            text = stringResource(id = R.string.log_in),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
             modifier = Modifier.padding(horizontal = 8.dp)
@@ -85,6 +85,24 @@ private fun LogInUserNameContent(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         )
+
+        NavigateToAnotherScreen(
+            hintText = R.string.navigate_to_signup,
+            navigateText = R.string.sign_up,
+            onNavigate = onNavigate
+        )
     }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun LogInUserNamePreview() {
+    LogInUserNameContent(
+        state = LoginUIState(),
+        onChangeUserName = {},
+        onClickBack = {},
+        onClickContinue = {},
+        onNavigate = {}
+    )
 }
 

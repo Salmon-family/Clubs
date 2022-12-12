@@ -14,6 +14,8 @@ import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.InputText
+import com.thechance.identity.ui.composable.NavigateToAnotherScreen
+import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.signup.confirmpassword.navigateToSignupConfirmPassword
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -34,7 +36,8 @@ fun SignUpEmailScreen(
         onChangeEmail = viewModel::onChangeEmail,
         onValidateEmailType = viewModel::checkIfGmailOrAnotherType,
         onClickPasswordScreen = { navController.navigateToSignupConfirmPassword() },
-        onClickBack = { navController.navigateUp() }
+        onClickBack = { navController.navigateUp() },
+        onNavigate = {navController.navigateToLogInUserName()}
     )
 }
 
@@ -44,7 +47,8 @@ private fun SignUpEmailContent(
     onChangeEmail: (String) -> Unit,
     onClickPasswordScreen: () -> Unit,
     onValidateEmailType: (String) -> Boolean,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onNavigate: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -84,6 +88,12 @@ private fun SignUpEmailContent(
             isEnabled = onValidateEmailType.invoke(state.email),
             onClick = onClickPasswordScreen,
             text = stringResource(id = R.string.continue_label)
+        )
+
+        NavigateToAnotherScreen(
+            hintText = R.string.navigate_to_login,
+            navigateText = R.string.log_in,
+            onNavigate = onNavigate
         )
     }
 }

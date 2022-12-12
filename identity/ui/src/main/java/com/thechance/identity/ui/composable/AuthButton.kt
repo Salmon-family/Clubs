@@ -38,7 +38,7 @@ fun AuthButton(
         Text(
             modifier = textModifier,
             text = text,
-            style = Typography.body1,
+            style = Typography.body2,
             color = textColor
         )
     }

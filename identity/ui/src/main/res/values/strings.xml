@@ -9,7 +9,7 @@
     <string name="register">Register</string>
     <string name="footer_first_text">By continuing you argree Habeet’s</string>
     <string name="footer_second_text">Terms of \nServices &amp; Privacy Policy</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">Sign up</string>
     <string name="user_name_question">What’s your \n user name?</string>
     <string name="email_label">Your Email</string>
     <string name="email_place_holder">Motu.uiux@gmail.com</string>
@@ -24,7 +24,7 @@
     <string name="log_in">Log In</string>
     <string name="password_place_holder">More than 6 character</string>
     <string name="using">Using</string>
-    <string name="to_login">to login</string>
+    <string name="to_login"> to login</string>
     <string name="user_name_place_holder">Thao Lee</string>
     <string name="pick_user_name">Pick your \nusername</string>
     <string name="user_name_hint">ali44</string>
@@ -36,4 +36,7 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="your_label">Your </string>
+    <string name="navigate_to_signup">Don’t have an account? </string>
+    <string name="navigate_to_login">Already have an account? </string>
+    <string name="success_message">Create account is successfully</string>
 </resources>
