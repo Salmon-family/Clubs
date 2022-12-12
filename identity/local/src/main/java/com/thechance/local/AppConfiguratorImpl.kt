@@ -7,23 +7,6 @@ class AppConfiguratorImpl @Inject constructor(
     private val dataStorePreferences: DataStorePreferences
 ) : LocalIdentityDataSource {
 
-//    override fun getSignupState() {
-//        dataStorePreferences.readString(SIGN_UP_STATE_KEY)
-//    }
-//
-//    override suspend fun setSignupState(value: String) {
-//        dataStorePreferences.writeString(SIGN_UP_STATE_KEY, value)
-//    }
-//
-//    override fun getStartInstallState() {
-//        dataStorePreferences.readBoolean(START_INSTALL_STATE_KEY)
-//    }
-//
-//    override suspend fun setStartInstallState(value: Boolean) {
-//        dataStorePreferences.writeBoolean(START_INSTALL_STATE_KEY, value)
-//    }
-
-
     companion object DataStorePreferencesKeys {
         const val SIGN_UP_STATE_KEY = "sign_up_state_key"
         const val START_INSTALL_STATE_KEY = "start_install_state_key"

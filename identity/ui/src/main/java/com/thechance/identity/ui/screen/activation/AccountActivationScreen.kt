@@ -1,7 +1,6 @@
 package com.thechance.identity.ui.screen.activation
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,24 +12,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
-import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 import com.thechance.identity.ui.spacer.SpacerVertical16
+import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.*
 
 @Composable
 fun AccountActivationScreen(
     navController: NavController
-){
+) {
     val context = LocalContext.current
     AccountActivationContent(
-        onclickBack = {navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)},
+        onclickBack = {
+            navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
+        },
         onClickOpenEmail = {
             val intent = Intent(Intent.ACTION_MAIN)
             intent.addCategory(Intent.CATEGORY_APP_EMAIL)
@@ -43,7 +44,7 @@ fun AccountActivationScreen(
 private fun AccountActivationContent(
     onclickBack: () -> Unit,
     onClickOpenEmail: () -> Unit
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,16 +52,22 @@ private fun AccountActivationContent(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        SpacerVertical16()
         BackButton(onClick = onclickBack)
-        Spacer(modifier = Modifier.weight(0.25f))
+
+        SpacerVertical24()
         Text(
             text = stringResource(id = R.string.account_activation_title),
             style = Typography.h1,
             color = LightPrimaryBlackColor,
             modifier = Modifier.wrapContentSize()
         )
+
         SpacerVertical16()
-        ActivationImage()
+        Box(Modifier.weight(1f)) {
+            ActivationImage()
+        }
+
         SpacerVertical16()
         Text(
             text = stringResource(id = R.string.account_activation_body),
@@ -69,16 +76,23 @@ private fun AccountActivationContent(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
+
         SpacerVertical16()
         Text(
             text = stringResource(id = R.string.open_email),
             style = Typography.subtitle2,
             color = LightPrimaryBrandColor,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .clickable(onClick = onClickOpenEmail),
         )
-        Spacer(Modifier.weight(1f).padding(8.dp))
+
+        Spacer(
+            Modifier
+                .weight(1f)
+                .padding(8.dp)
+        )
         AuthButton(
             onClick = {},
             isEnabled = true,
@@ -89,8 +103,8 @@ private fun AccountActivationContent(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewAccountActivationScreen(){
-//    AccountActivationContent()
-//}
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewAccountActivationScreen() {
+    AccountActivationContent({}, {})
+}

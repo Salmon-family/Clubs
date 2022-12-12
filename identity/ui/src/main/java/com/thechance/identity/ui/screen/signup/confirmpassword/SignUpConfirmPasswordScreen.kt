@@ -59,8 +59,7 @@ fun SignUpConfirmPasswordContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .verticalScroll(rememberScrollState()),
+            .padding(16.dp),
     ) {
         BackButton(onClick = onClickBack)
 
@@ -128,5 +127,6 @@ fun SignUpConfirmPasswordContent(
             navigateText = R.string.log_in,
             onNavigate = onNavigate
         )
+        SpacerVertical24()
     }
 }
