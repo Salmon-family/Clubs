@@ -22,7 +22,7 @@ class ChatsViewModel @Inject constructor(
     private val searchForChats: SearchForChatsUseCase,
     private val receiveNotificationUseCase: ReceiveNotificationUseCase,
     private val getChatsCount: GetChatsCountUseCase,
-) : ViewModel(), Pagination {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatsUiState())
     val uiState = _uiState.asStateFlow()
@@ -63,7 +63,7 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
-    override fun onLoadingMore() {
+    fun onLoadingMore() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val chatsCount = getChatsCount(id)
@@ -82,8 +82,4 @@ class ChatsViewModel @Inject constructor(
             }
         }
     }
-}
-
-interface Pagination {
-    fun onLoadingMore()
 }
