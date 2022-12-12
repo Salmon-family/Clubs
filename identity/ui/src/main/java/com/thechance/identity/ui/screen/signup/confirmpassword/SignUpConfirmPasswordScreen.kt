@@ -75,7 +75,7 @@ fun SignUpConfirmPasswordContent(
             color1 = LightSecondaryBlackColor,
             text2 = state.email,
             color2 = LightPrimaryBrandColor,
-            text3 = stringResource(id = R.string.to_login)
+            text3 = stringResource(id = R.string.to_sign_up)
         )
 
         SpacerVertical24()
