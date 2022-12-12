@@ -16,11 +16,15 @@ class ConvertDate {
         val diffInMin = TimeUnit.MILLISECONDS.toMinutes(diffInMillisecond)
         val diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMillisecond)
 
-        return if (diffInDays > 10) {
+        return if (diffInDays > 7) {
             convertLongToFullDate(createdTimeDate)
-        } else if (diffInDays > 0) {
-            "$diffInDays days ago"
-        } else if (diffInHours > 0) {
+        }
+        else if (diffInDays<7){
+            val date = Date(createdTimeDate)
+            val format = SimpleDateFormat("EEE")
+            format.format(date)
+        }
+         else if (diffInHours > 0) {
             "$diffInHours hours ago"
         } else if (diffInMin > 0) {
             "$diffInMin minutes ago"

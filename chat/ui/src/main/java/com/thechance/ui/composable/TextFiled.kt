@@ -1,6 +1,5 @@
 package com.thechance.ui.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -37,30 +36,28 @@ fun SendTextField(
         onValueChange = onValueChanged,
         placeholder = {
             Text(
-                text = "Enter your message...",
+                text = stringResource(R.string.enter_your_message),
                 color = LightTernaryBlackColor,
                 style = Typography.body1
             )
         },
-        leadingIcon = {
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.paperclip),
-                contentDescription = stringResource(R.string.chats),
-            )
-        },
         trailingIcon = {
-            ButtonSend(onClickAction = sendMessage)
+            ButtonSend(onClickAction = sendMessage, isEnabled = text.isNotEmpty())
         }
     )
 }
 
 @Composable
-fun ButtonSend(onClickAction: () -> Unit) {
-    Button(
+fun ButtonSend(
+    onClickAction: () -> Unit,
+    isEnabled: Boolean = true,
 
+) {
+    Button(
         modifier = Modifier
             .width(40.dp)
             .padding(2.dp),
+        enabled = isEnabled,
         colors = ButtonDefaults.buttonColors(LightPrimaryBrandColor),
         shape = RoundedCornerShape(100.dp),
         elevation = ButtonDefaults.elevation(0.dp),
@@ -76,7 +73,7 @@ fun ButtonSend(onClickAction: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, locale = "en")
 @Composable
 fun DefaultTextFieldPreview() {
 //    CustomTextField("", {}, {}, )

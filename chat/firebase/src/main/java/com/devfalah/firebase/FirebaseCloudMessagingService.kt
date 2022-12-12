@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 class FirebaseCloudMessagingService : FirebaseMessagingService() {
 
-
     override fun onMessageReceived(message: RemoteMessage) {
         message.data.let { data ->
             if (data.isNotEmpty()) {

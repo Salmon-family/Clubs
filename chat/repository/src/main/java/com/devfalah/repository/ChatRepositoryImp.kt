@@ -55,6 +55,10 @@ class ChatRepositoryImp @Inject constructor(
         return chatRemoteDataSource.postNotification(notification.toDto())
     }
 
+    override suspend fun updateRecentMessage(id: Int, recentMessage: String) {
+        chatLocalDataSource.updateRecentMessage(id, recentMessage)
+    }
+
     override fun getMessages(friendId: Int): Flow<List<Message>> {
         return chatLocalDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
     }

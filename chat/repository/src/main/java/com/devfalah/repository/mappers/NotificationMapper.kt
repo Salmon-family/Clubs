@@ -21,7 +21,7 @@ fun NotificationDataModel.toMessage(): Message {
         id = this.id,
         friendId = this.friendId,
         fromMe = false,
-        time = this.time,
+        time = this.time.toLong(),
         message = this.messageText
     )
 }

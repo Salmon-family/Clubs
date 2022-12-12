@@ -29,4 +29,5 @@ interface ChatRepository {
 
     suspend fun postNotification(notification: Notification): Boolean
 
+    suspend fun updateRecentMessage(id: Int, recentMessage: String)
 }

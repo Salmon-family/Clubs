@@ -29,7 +29,7 @@ fun SearchTextField(
     TextField(
         modifier = modifier.fillMaxWidth(),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = White,
+            backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,

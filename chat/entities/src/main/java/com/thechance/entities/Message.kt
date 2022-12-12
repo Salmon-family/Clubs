@@ -5,5 +5,5 @@ data class Message(
     val friendId: Int,
     val fromMe: Boolean,
     val message: String,
-    val time: String,
+    val time: Long,
 )

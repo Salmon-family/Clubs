@@ -1,5 +1,6 @@
 package com.thechance.viewmodels.conversation
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,7 @@ import com.nadafeteiha.usecases.SendMessageUseCase
 import com.thechance.viewmodels.conversation.uiStates.toUiState
 import com.thechance.viewmodels.conversation.uiStates.ConversationUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -42,7 +44,9 @@ class ConversationViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 getMessages(userId, friendId).collect { item ->
-                    val message = item.map { it.toUiState() }
+
+                    val message = item.map {
+                        it.toUiState() }
                     _uiState.update { it.copy(messages = message, isLoading = false) }
                 }
             } catch (e: Exception) {
@@ -58,6 +62,7 @@ class ConversationViewModel @Inject constructor(
             try {
                 sendMessageUseCase(args.id, args.friendId, message)
             } catch (e: Exception) {
+                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }

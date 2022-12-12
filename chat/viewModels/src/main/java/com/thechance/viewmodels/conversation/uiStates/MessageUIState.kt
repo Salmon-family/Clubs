@@ -5,5 +5,5 @@ data class MessageUIState(
     val friendId: Int = 0,
     val isFromUser: Boolean = true,
     val message: String = "",
-    val messageDate: String = "",
+    val messageDate: Long = 0,
 )
