@@ -57,7 +57,6 @@ fun SignupBirthdateAndGenderScreen(
                     context.getString(R.string.success_message),
                     Toast.LENGTH_SHORT
                 ).show()
-
             }
         }
     )

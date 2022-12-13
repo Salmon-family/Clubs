@@ -8,5 +8,6 @@
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/brand_color</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 </resources>

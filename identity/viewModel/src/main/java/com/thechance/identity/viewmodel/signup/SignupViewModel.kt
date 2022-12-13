@@ -68,7 +68,6 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun String.isEmailValid(): Boolean {
-        //todo: for use case
         return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 

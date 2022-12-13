@@ -38,8 +38,10 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
+                _uiState.update { it.copy(isSuccess = true) }
                 Log.i("userName", login.email)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
+                _uiState.update { it.copy(isError = e.message.toString()) }
                 Log.i("error", e.message.toString())
             }
         }

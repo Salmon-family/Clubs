@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
+import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
@@ -36,7 +37,7 @@ private fun HomeContent(
         Text(
             text = "Done",
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
+            color = LightPrimaryBrandColor,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
