@@ -4,10 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -25,6 +22,7 @@ import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun LogInPasswordScreen(

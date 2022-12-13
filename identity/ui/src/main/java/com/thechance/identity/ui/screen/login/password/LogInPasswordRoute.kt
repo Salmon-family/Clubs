@@ -20,7 +20,7 @@ fun NavGraphBuilder.logInPasswordRoute(
     composable(LOGIN_PASSWORD_ROUTE) {
         LogInPasswordScreen(
             navController = navHostController,
-            viewModel = loginViewModel
+            loginViewModel = loginViewModel
         )
     }
 }
