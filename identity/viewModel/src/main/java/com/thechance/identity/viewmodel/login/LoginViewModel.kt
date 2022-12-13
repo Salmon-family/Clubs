@@ -21,6 +21,21 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
 
+
+    fun onLogin() {
+        viewModelScope.launch {
+            Log.i("llllllllllll", _uiState.value.userName)
+            try {
+                val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
+                _uiState.update { it.copy(isSuccess = true) }
+                Log.i("userName", login.email)
+            } catch (e: Throwable) {
+                _uiState.update { it.copy(isError = e.message.toString()) }
+                Log.i("error", e.message.toString())
+            }
+        }
+    }
+
     fun onChangeUserName(userName: String) {
         _uiState.update { it.copy(userName = userName) }
     }
@@ -32,18 +47,5 @@ class LoginViewModel @Inject constructor(
     fun onValidatePassword(): Boolean {
         val state = _uiState.value
         return accountValidationUseCase.validatePassword(state.password)
-    }
-
-    fun onLogin() {
-        viewModelScope.launch {
-            try {
-                val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
-                _uiState.update { it.copy(isSuccess = true) }
-                Log.i("userName", login.email)
-            } catch (e: Throwable) {
-                _uiState.update { it.copy(isError = e.message.toString()) }
-                Log.i("error", e.message.toString())
-            }
-        }
     }
 }

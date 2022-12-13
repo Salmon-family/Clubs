@@ -1,7 +1,6 @@
 package com.thechance.identity.ui.screen.login.password
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -20,7 +19,6 @@ import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.composable.NavigateToAnotherScreen
 import com.thechance.identity.ui.composable.PasswordInputText
-import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.home.navigateToHome
 import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -74,7 +72,7 @@ fun LogInPasswordContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(MaterialTheme.colors.background)
+
     ) {
 
         BackButton(onClick = onClickBack)

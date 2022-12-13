@@ -11,10 +11,11 @@ import retrofit2.http.*
 
 interface IdentityService {
 
+    @FormUrlEncoded
     @POST("user_authenticate")
     suspend fun login(
-        @Query("username") username: String,
-        @Query("password") password: String
+        @Field("username") username: String,
+        @Field("password") password: String
     ): Response<IdentityBaseResponse<UserDTO>>
 
 

@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.signup.birthdate
 
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -75,7 +76,6 @@ private fun SignupBirthdateAndGanderContent(
     onCreateAccount: () -> Unit,
     onNavigate: () -> Unit
 ) {
-
 
     Column(
         modifier = Modifier
