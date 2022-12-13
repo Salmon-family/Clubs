@@ -3,6 +3,7 @@ package com.thechance.identity.ui.screen.signup.birthdate
 import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -89,16 +90,14 @@ private fun SignupBirthdateAndGanderContent(
         Text(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
+            color = MaterialTheme.colors.primaryVariant,
             modifier = Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
-            color1 = LightSecondaryBlackColor,
             text2 = state.email,
-            color2 = LightPrimaryBrandColor,
             text3 = stringResource(id = R.string.to_sign_up)
         )
 
@@ -106,14 +105,13 @@ private fun SignupBirthdateAndGanderContent(
         Text(
             text = stringResource(id = R.string.birth_date),
             style = Typography.body2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 
         Spacer(Modifier.height(14.dp))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             DatePicker(
-                image = R.drawable.ic_arrow_down_circle,
                 birthDate = state.birthdate,
                 onDateChange = onChangeBirthdate
             )
@@ -123,7 +121,7 @@ private fun SignupBirthdateAndGanderContent(
         Text(
             text = stringResource(id = R.string.gender),
             style = Typography.body2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 

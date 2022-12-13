@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,17 +53,17 @@ fun PasswordInputText(
 
         },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = WhiteColor,
+            backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            textColor = LightPrimaryBlackColor
+            textColor = MaterialTheme.colors.primaryVariant
         ),
         singleLine = true,
         placeholder = {
             Text(
                 text = placeHolder,
                 style = Typography.InputText,
-                color = LightPrimaryGrayColor,
+                color = MaterialTheme.colors.secondaryVariant,
                 modifier = Modifier.fillMaxWidth()
             )
         },

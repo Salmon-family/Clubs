@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.signup.email
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -61,7 +62,7 @@ private fun SignUpEmailContent(
         Text(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
+            color = MaterialTheme.colors.primaryVariant,
             modifier = Modifier.padding(start = 8.dp)
         )
 
@@ -69,7 +70,7 @@ private fun SignUpEmailContent(
         Text(
             text = stringResource(id = R.string.email),
             style = Typography.subtitle2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 

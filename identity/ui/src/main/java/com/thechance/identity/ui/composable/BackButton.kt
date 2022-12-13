@@ -1,9 +1,12 @@
 package com.thechance.identity.ui.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +18,7 @@ fun BackButton(
     onClick: () -> Unit
 ){
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.wrapContentSize(),
         horizontalAlignment = Alignment.Start
     ) {
         Image(

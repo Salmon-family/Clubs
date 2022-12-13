@@ -2,6 +2,7 @@ package com.thechance.identity.ui.screen.onboarding.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,7 +55,7 @@ fun ViewPagerSlider() {
                 Text(
                     text = sliderData.title ?: "",
                     style = Typography.h1,
-                    color = LightPrimaryBlackColor,
+                    color = MaterialTheme.colors.primaryVariant,
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
 
@@ -62,7 +63,7 @@ fun ViewPagerSlider() {
                 Text(
                     text = sliderData.description,
                     style = Typography.body1,
-                    color = LightTernaryBlackColor,
+                    color = MaterialTheme.colors.secondaryVariant,
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
 

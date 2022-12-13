@@ -3,6 +3,7 @@ package com.thechance.identity.ui.screen.signup.confirmpassword
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -67,16 +68,14 @@ fun SignUpConfirmPasswordContent(
         Text(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
+            color = MaterialTheme.colors.primaryVariant,
             modifier = Modifier.padding(start = 8.dp)
         )
 
         SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
-            color1 = LightSecondaryBlackColor,
             text2 = state.email,
-            color2 = LightPrimaryBrandColor,
             text3 = stringResource(id = R.string.to_sign_up)
         )
 
@@ -84,7 +83,7 @@ fun SignUpConfirmPasswordContent(
         Text(
             text = stringResource(id = R.string.your_password),
             style = Typography.body2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 
@@ -100,7 +99,7 @@ fun SignUpConfirmPasswordContent(
         Text(
             text = stringResource(id = R.string.confirm_password),
             style = Typography.body2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 
