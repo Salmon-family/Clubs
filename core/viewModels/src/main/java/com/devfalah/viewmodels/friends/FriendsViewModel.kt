@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+const val friendsUserId = "friendsUserId"
+
 @HiltViewModel
 class FriendsViewModel @Inject constructor(
     val getUserFriendsUseCase: GetUserFriendsUseCase,
@@ -19,7 +21,7 @@ class FriendsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(FriendsUIState())
     val uiState = _uiState.asStateFlow()
-    private val ownerID = checkNotNull(savedStateHandle["profileId"]).toString().toInt()
+    private val ownerID = checkNotNull(savedStateHandle[friendsUserId]).toString().toInt()
 
     init {
         getUserFriends()

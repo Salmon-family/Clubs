@@ -6,17 +6,17 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.devfalah.ui.Screen
+import com.devfalah.viewmodels.friends.friendsUserId
 
-const val profileId = "profileId"
 fun NavController.navigateToFriends(id: Int) {
     navigate("${Screen.Friends}/${id}")
 }
 
 fun NavGraphBuilder.friendsRoute(navController: NavController) {
     composable(
-        route = "${Screen.Friends}/{${profileId}}",
+        route = "${Screen.Friends}/{${friendsUserId}}",
         arguments = listOf(
-            navArgument(profileId) { NavType.IntType }
+            navArgument(friendsUserId) { NavType.IntType }
         )
 
     ) {

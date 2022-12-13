@@ -25,6 +25,7 @@ import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.screen.createPost.navigateToCreatePost
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -72,8 +73,12 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
-        onClickProfile = { if (!state.isMyProfile) { navController.navigateToProfile(it) } },
+        onCreatePost = { navController.navigateToCreatePost(state.userDetails.userID) },
+        onClickProfile = {
+            if (!state.isMyProfile) {
+                navController.navigateToProfile(it)
+            }
+        },
         onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) }
     )
@@ -132,7 +137,11 @@ fun ProfileContent(
                 item {
                     PostCreatingSection(
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        onCreatePost = onCreatePost,
+                        onCreatePost = if (state.isMyProfile) {
+                            onCreatePost
+                        } else {
+                            onClickSendMessage
+                        },
                         isMyProfile = state.isMyProfile
                     )
                 }
