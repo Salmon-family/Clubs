@@ -89,7 +89,7 @@ private fun PostTextValue(text: String) {
 
 
 @Composable
-private fun PostActionIcon(
+fun PostActionIcon(
     onClick: () -> Unit,
     painter: Painter,
     tint: Color = Color.Unspecified

@@ -3,10 +3,7 @@ package com.devfalah.remote
 
 import com.devfalah.remote.response.BaseResponse
 import com.devfalah.repositories.RemoteDataSource
-import com.devfalah.repositories.models.FriendDTO
-import com.devfalah.repositories.models.ReactionDTO
-import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.WallPostDTO
+import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -65,6 +62,27 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Mapping Error")
     }
 
+    override suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO {
+        return apiService.getWallPost(userID, postID).body()?.payload ?: throw Throwable("Mapping Error")
+    }
+
+    override suspend fun getAllComments(userID: Int, postID: Int): List<CommentDto> {
+        return wrap { apiService.getComments(userID, postID) }.comments
+            ?: throw Throwable("Mapping Error")
+    }
+
+    override suspend fun addComment(userID: Int, postID: Int, comment: String): CommentDto {
+        return wrap { apiService.addComment(userID, postID, comment) }.comment ?: throw Throwable("Mapping Error")
+    }
+
+    override suspend fun deleteComment(userID: Int, commentID: Int): Boolean {
+        return wrap { apiService.deleteComment(userID, commentID) }
+    }
+
+    override suspend fun editComment(userID: Int, comment: String): SuccessDTO {
+        return wrap { apiService.editComment(userID, comment) }
+    }
+
 
     override suspend fun setLikeOnPost(userID: Int, postId: Int): ReactionDTO {
         return wrap {
@@ -94,6 +112,7 @@ class RemoteDataSourceImp @Inject constructor(
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {
+            println("--------------------> statue code: "+response.body()?.code)
             when (response.body()?.code) {
                 "100" -> response.body()?.payload
                 else -> throw Throwable(response.body()?.message.toString())

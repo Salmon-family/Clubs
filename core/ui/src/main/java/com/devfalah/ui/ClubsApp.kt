@@ -15,6 +15,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.devfalah.ui.screen.postDetails.PostDetailsScreen
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor

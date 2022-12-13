@@ -25,5 +25,8 @@
     <string name="public_privacy">Public</string>
     <string name="read_more">Read More</string>
 
+    <!--    post details-->
+    <string name="send_comment">send comment</string>
+
     <string name="home">Home</string>
 </resources>

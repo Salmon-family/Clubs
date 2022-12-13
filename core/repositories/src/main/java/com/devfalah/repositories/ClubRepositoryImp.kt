@@ -1,9 +1,7 @@
 package com.devfalah.repositories
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Notification
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.entities.*
+import com.devfalah.repositories.mappers.toEntities
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
 import java.io.File
@@ -68,6 +66,26 @@ class ClubRepositoryImp @Inject constructor(
         userID: Int, profileUserID: Int, page: Int
     ): List<Post> {
         return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
+    }
+
+    override suspend fun getPostDetails(userID: Int, postID: Int): Post {
+            return remoteDataSource.getPostDetails(userID, postID).toEntities()
+    }
+
+    override suspend fun getAllComments(userID: Int, postID: Int): List<Comment> {
+        return remoteDataSource.getAllComments(userID, postID).toEntity()
+    }
+
+    override suspend fun addComment(userID: Int, postID: Int, content: String): Comment {
+        return remoteDataSource.addComment(userID, postID, content).toEntity()
+    }
+
+    override suspend fun deleteComment(userID: Int, commentID: Int): Boolean {
+        return remoteDataSource.deleteComment(userID, commentID)
+    }
+
+    override suspend fun editComment(commentID: Int, content: String): Success {
+        return remoteDataSource.editComment(commentID, content).toEntity()
     }
 
 }

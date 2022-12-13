@@ -1,9 +1,6 @@
 package com.devfalah.repositories
 
-import com.devfalah.repositories.models.FriendDTO
-import com.devfalah.repositories.models.ReactionDTO
-import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.WallPostDTO
+import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import java.io.File
@@ -35,4 +32,15 @@ interface RemoteDataSource {
     suspend fun addProfilePicture(userID: Int, file: File): UserDTO
 
     suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<WallPostDTO>
+
+    suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO
+
+    suspend fun getAllComments(userID: Int, postID: Int): List<CommentDto>
+
+    suspend fun addComment(userID: Int, postID: Int, comment: String): CommentDto
+
+    suspend fun deleteComment(userID: Int, commentID: Int): Boolean
+
+    suspend fun editComment(userID: Int, comment: String): SuccessDTO
+
 }

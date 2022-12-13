@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.devfalah.ui.ClubsApp
+import com.devfalah.ui.screen.postDetails.PostDetailsScreen
 import com.devfalah.ui.theme.ClubsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ClubsTheme {
-                ClubsApp()
+                PostDetailsScreen()
+//                ClubsApp()
             }
         }
     }

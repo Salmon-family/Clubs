@@ -1,9 +1,6 @@
 package com.devfalah.usecases.repository
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Notification
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.entities.*
 import java.io.File
 
 interface ClubRepository {
@@ -33,4 +30,14 @@ interface ClubRepository {
     suspend fun addProfilePicture(userID: Int, file: File): User
 
     suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<Post>
+
+    suspend fun getPostDetails(userID: Int, postID: Int): Post
+
+    suspend fun getAllComments(userID: Int, postID: Int): List<Comment>
+
+    suspend fun addComment(userID: Int, postID: Int, content: String): Comment
+
+    suspend fun deleteComment(userID: Int, commentID: Int): Boolean
+
+    suspend fun editComment(commentID: Int, content: String): Success
 }
