@@ -1,5 +1,6 @@
 package com.thechance.local
 
+import com.thechance.identity.entities.Club
 import com.thechance.identity.repositories.LocalIdentityDataSource
 import javax.inject.Inject
 
@@ -26,5 +27,9 @@ class AppConfiguratorImpl @Inject constructor(
 
     override suspend fun saveUserId(id: String) {
         return dataStorePreferences.writeString(SIGN_UP_STATE_KEY, id)
+    }
+
+    override fun getClubs(): List<Club> {
+        return Clubs().getClubs()
     }
 }

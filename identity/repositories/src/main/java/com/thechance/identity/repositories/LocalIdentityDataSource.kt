@@ -1,5 +1,7 @@
 package com.thechance.identity.repositories
 
+import com.thechance.identity.entities.Club
+
 
 interface LocalIdentityDataSource {
     fun getStartInstall(): Boolean?
@@ -7,4 +9,6 @@ interface LocalIdentityDataSource {
 
     fun getUserId(): String?
     suspend fun saveUserId(id: String)
+
+    fun getClubs(): List<Club>
 }

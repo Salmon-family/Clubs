@@ -1,6 +1,7 @@
 package com.thechance.identity.repositories
 
 import com.thechance.identity.entities.Account
+import com.thechance.identity.entities.Club
 import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
 import com.thechance.identity.repositories.mappers.MapperUserDataDTOToUserData
@@ -36,5 +37,13 @@ class IdentityRepositoryImp @Inject constructor(
 
     override suspend fun saveUserId(id: String) {
         return localIdentityDataSource.saveUserId(id)
+    }
+
+    override suspend fun joinClub(clubId: Int, userId: Int): Club {
+        return remoteDataSource.joinClub(clubId, userId).toEntity()
+    }
+
+    override fun getClubs(): List<Club> {
+        return localIdentityDataSource.getClubs()
     }
 }

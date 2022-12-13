@@ -2,9 +2,8 @@ package com.thechance.identity.remote
 
 import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.models.AccountDTO
+import com.thechance.identity.repositories.models.ClubDto
 import com.thechance.identity.repositories.models.UserDTO
-import com.thechance.identity.repositories.models.UserDataDTO
-import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -31,4 +30,9 @@ interface IdentityService {
         @Field("password") password: String
     ): Response<IdentityBaseResponse<AccountDTO>>
 
+    @POST("groups_join")
+    suspend fun joinClub(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") userId: Int
+    ): Response<IdentityBaseResponse<ClubDto>>
 }
