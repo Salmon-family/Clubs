@@ -78,5 +78,7 @@ dependencies {
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
+    //web-view
+    implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
 
 }

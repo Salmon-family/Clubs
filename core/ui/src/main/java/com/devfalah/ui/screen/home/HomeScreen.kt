@@ -1,5 +1,8 @@
 package com.devfalah.ui.screen.home
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
@@ -8,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
@@ -32,8 +37,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     SetStatusBarColor(LightBackgroundColor, darkIcons = true)
-
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     HomeContent(
         state = state,
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading),
@@ -43,7 +48,8 @@ fun HomeScreen(
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToCreatePost(state.id) },
         onRefresh = viewModel::swipeToRefresh,
-        onClickProfile = { navController.navigateToProfile(it) }
+        onClickProfile = { navController.navigateToProfile(it) },
+        onOpenLinkClick = { openBrowser(context, it) }
     )
 }
 
@@ -56,7 +62,8 @@ fun HomeContent(
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onRefresh: (Int) -> Unit,
-    onClickProfile: (Int) -> Unit
+    onClickProfile: (Int) -> Unit,
+    onOpenLinkClick: (String) -> Unit
 ) {
     val scrollState = rememberLazyListState()
 
@@ -89,7 +96,14 @@ fun HomeContent(
                 onClickSave = { onClickSave(it) },
                 onClickProfile = onClickProfile,
                 onClickPostSetting = { },
+                onOpenLinkClick = onOpenLinkClick
             )
         }
     }
+}
+
+fun openBrowser(context: Context, url: String) {
+    val openURL = Intent(Intent.ACTION_VIEW)
+    openURL.data = Uri.parse(url)
+    startActivity(context, openURL, null)
 }

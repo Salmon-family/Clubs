@@ -27,6 +27,7 @@ import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.screen.createPost.navigateToCreatePost
 import com.devfalah.ui.screen.friends.navigateToFriends
+import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -80,7 +81,8 @@ fun ProfileScreen(
             }
         },
         onRetry = viewModel::getData,
-        onClickFriends = { navController.navigateToFriends(it) }
+        onClickFriends = { navController.navigateToFriends(it) },
+        onOpenLinkClick = { openBrowser(context, it) }
     )
 }
 
@@ -99,7 +101,8 @@ fun ProfileContent(
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRetry: () -> Unit,
-    onClickFriends: (Int) -> Unit
+    onClickFriends: (Int) -> Unit,
+    onOpenLinkClick:(String)-> Unit
 ) {
     if (state.majorError.isNotEmpty()) {
         Box(modifier = Modifier.fillMaxSize())
@@ -155,7 +158,8 @@ fun ProfileContent(
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },
                     onClickPostSetting = { onClickPostSetting(it) },
-                    onClickProfile = onClickProfile
+                    onClickProfile = onClickProfile,
+                    onOpenLinkClick = onOpenLinkClick,
                 )
             }
         }
