@@ -24,6 +24,8 @@ import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
+import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -71,12 +73,9 @@ fun ProfileScreen(
         },
         onRefresh = viewModel::swipeToRefresh,
         onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
-        onClickProfile = {
-            if (!state.isMyProfile) {
-                navController.navigateToProfile(it)
-            }
-        },
-        onRetry = viewModel::getData
+        onClickProfile = { if (!state.isMyProfile) { navController.navigateToProfile(it) } },
+        onRetry = viewModel::getData,
+        onClickFriends = { navController.navigateToFriends(it) }
     )
 }
 
@@ -94,7 +93,8 @@ fun ProfileContent(
     onClickPostSetting: (PostUIState) -> Unit,
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onClickFriends: (Int) -> Unit
 ) {
     if (state.majorError.isNotEmpty()) {
         Box(modifier = Modifier.fillMaxSize())
@@ -120,8 +120,15 @@ fun ProfileContent(
                     onChangeProfileImage = onChangeProfileImage
                 )
             }
-            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-            if (state.isMyProfile || state.userDetails.areFriends){
+            item {
+                FriendsSection(
+                    state.friends,
+                    modifier = Modifier
+                        .RemoveRippleEffect { onClickFriends(state.userDetails.userID) }
+                        .padding(horizontal = 16.dp)
+                )
+            }
+            if (state.isMyProfile || state.userDetails.areFriends) {
                 item {
                     PostCreatingSection(
                         modifier = Modifier.padding(horizontal = 16.dp),
