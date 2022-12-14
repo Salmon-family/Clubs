@@ -1,10 +1,15 @@
 package com.thechance.identity.ui.screen.login.password
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -12,48 +17,47 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.AuthButton
-import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.composable.NavigateToAnotherScreen
-import com.thechance.identity.ui.composable.PasswordInputText
+import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.screen.home.navigateToHome
 import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun LogInPasswordScreen(
-    navController: NavController,
-    viewModel: LoginViewModel
+    navController: NavController, viewModel: LoginViewModel
 ) {
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsState()
+    val scope = rememberCoroutineScope()
 
-    LogInPasswordContent(
-        state = state,
+    LogInPasswordContent(state = state,
         onChangePassword = viewModel::onChangePassword,
         onValidate = viewModel::onValidatePassword,
         onLogin = {
-            if (!state.isSuccess) {
-                Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
-            } else {
-                navController.navigateToHome()
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.success_message),
-                    Toast.LENGTH_SHORT
-                ).show()
+            scope.launch {
+                viewModel.onLogin()
+                delay(1000)
+                checkLogin(state, context, navController)
             }
         },
         onClickBack = { navController.navigateUp() },
-        onNavigate = { navController.navigateToSignupEmail() }
-    )
+        onNavigate = { navController.navigateToSignupEmail() })
 
-    LaunchedEffect(key1 = viewModel) {
-        viewModel.onLogin()
+}
+
+private fun checkLogin(state: LoginUIState, context: Context, navController: NavController) {
+    if (!state.isSuccess) {
+        Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
+    } else {
+        navController.navigateToHome()
+        Toast.makeText(
+            context, context.getString(R.string.success_message), Toast.LENGTH_SHORT
+        ).show()
     }
 }
 
@@ -120,12 +124,10 @@ fun LogInPasswordContent(
 @Composable
 fun LoginPasswordPreview() {
 
-    LogInPasswordContent(
-        state = LoginUIState(),
+    LogInPasswordContent(state = LoginUIState(),
         onChangePassword = {},
         onValidate = { false },
         onLogin = {},
         onNavigate = {},
-        onClickBack = {}
-    )
+        onClickBack = {})
 }

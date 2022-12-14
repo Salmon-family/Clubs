@@ -44,7 +44,7 @@ class SignupViewModel @Inject constructor(
                 _uiState.update { it.copy(isSuccess = true) }
                 saveUserId(userId)
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isError = t.message.toString()) }
+                _uiState.update { it.copy(isError = t.message.toString(), isSuccess = false) }
             }
         }
     }

@@ -29,7 +29,12 @@ class LoginViewModel @Inject constructor(
                 _uiState.update { it.copy(isSuccess = true) }
                 Log.i("userName", login.guid.toString())
             } catch (e: Throwable) {
-                _uiState.update { it.copy(isError = e.message.toString()) }
+                _uiState.update {
+                    it.copy(
+                        isError = e.message.toString(),
+                        isSuccess = false
+                    )
+                }
                 Log.i("error", e.message.toString())
             }
         }
