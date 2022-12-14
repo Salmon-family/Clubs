@@ -7,13 +7,13 @@ import javax.inject.Inject
 class GetChatsUseCase @Inject constructor(
     private val chatRepository: ChatRepository
 ) {
-    suspend operator fun invoke(userID: Int): Flow<List<Chat>> {
-        refreshChats(userID)
+    suspend  operator fun invoke(): Flow<List<Chat>> {
         return chatRepository.getChats()
     }
 
-    private suspend fun refreshChats(userID: Int) {
-        val chats = chatRepository.getChats(userID)
-        chatRepository.insertChats(chats)
+    suspend fun refreshChats(userID: Int,page: Int): Int{
+        val chats = chatRepository.getChats(userID,page)
+        chatRepository.insertChats(chats.chats)
+        return chats.count
     }
 }

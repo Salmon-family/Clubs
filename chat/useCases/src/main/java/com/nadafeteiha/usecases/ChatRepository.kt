@@ -1,6 +1,7 @@
 package com.nadafeteiha.usecases
 
 import com.thechance.entities.Chat
+import com.thechance.entities.Chats
 import com.thechance.entities.Message
 import com.thechance.entities.Notification
 import kotlinx.coroutines.flow.Flow
@@ -9,9 +10,9 @@ interface ChatRepository {
 
     suspend fun insertChats(list: List<Chat>)
 
-    fun getChats(): Flow<List<Chat>>
+    suspend fun getChats(): Flow<List<Chat>>
 
-    suspend fun getChats(userID: Int): List<Chat>
+    suspend fun getChats(userID: Int,page: Int): Chats
 
     fun getChats(query: String): Flow<List<Chat>>
 
