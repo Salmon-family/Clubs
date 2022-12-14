@@ -58,7 +58,7 @@ fun FriendsContent(
     ) {
         item {
             Text(
-                text = "${state.friends.size} " + stringResource(id = R.string.friends),
+                text = "${state.totalFriends} " + stringResource(id = R.string.friends),
                 fontFamily = PlusJakartaSans,
                 fontSize = 18.sp,
                 color = LightSecondaryBlackColor,

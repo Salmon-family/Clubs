@@ -48,7 +48,13 @@ class FriendsViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val friends = getUserFriendsUseCase(ownerID)
-                _uiState.update { it.copy(isLoading = false, friends = friends.toUIState()) }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        totalFriends = friends.total,
+                        friends = friends.friends.toUIState()
+                    )
+                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }

@@ -83,7 +83,13 @@ class ProfileViewModel @Inject constructor(
     private fun getUserFriends(profileOwnerID: Int) {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(friends = getUserFriendsUseCase(profileOwnerID).toFriendsUIState()) }
+                val friends = getUserFriendsUseCase(profileOwnerID)
+                _uiState.update {
+                    it.copy(
+                        friends = friends.friends.toFriendsUIState(),
+                        totalFriends = friends.total
+                    )
+                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
             }

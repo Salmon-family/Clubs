@@ -23,7 +23,7 @@ interface ClubService {
     @FormUrlEncoded
     @POST("user_friends")
     suspend fun getUserFriends(@Field("guid") userID: Int)
-            : Response<BaseResponse<FriendsResponse>>
+            : Response<BaseResponse<FriendsDTO>>
 
     @FormUrlEncoded
     @POST("user_friend_requests")

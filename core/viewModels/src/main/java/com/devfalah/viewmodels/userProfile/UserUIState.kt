@@ -4,6 +4,7 @@ data class UserUIState(
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
     val friends: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
+    val totalFriends: Int = 0,
     val isMyProfile: Boolean = true,
     val loading: Boolean = false,
     val majorError: String = "",

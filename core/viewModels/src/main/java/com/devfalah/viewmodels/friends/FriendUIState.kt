@@ -3,6 +3,7 @@ package com.devfalah.viewmodels.friends
 data class FriendsUIState(
     val id: Int = 0,
     val friends: List<FriendUIState> = emptyList(),
+    val totalFriends: Int = 0,
     val isMyProfile: Boolean = false,
     val isLoading: Boolean = false,
     val error: String = "",

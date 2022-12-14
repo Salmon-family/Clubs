@@ -132,6 +132,7 @@ fun ProfileContent(
             item {
                 FriendsSection(
                     state.friends,
+                    totalFriends = state.totalFriends,
                     modifier = Modifier
                         .RemoveRippleEffect { onClickFriends(state.userDetails.userID) }
                         .padding(horizontal = 16.dp)
