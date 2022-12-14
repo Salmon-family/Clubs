@@ -1,6 +1,5 @@
 package com.devfalah.repositories
 
-import com.devfalah.entities.Friends
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
@@ -38,4 +37,6 @@ interface RemoteDataSource {
     suspend fun getGroupsThatUserMemberOF(userID: Int): List<GroupDTO>
 
     suspend fun getUserHomePosts(userID: Int, page: Int): List<WallPostDTO>
+
+    suspend fun deletePostById(userId: Int, postId: Int): Boolean
 }

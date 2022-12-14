@@ -95,6 +95,10 @@ class ClubRepositoryImp @Inject constructor(
         localDataSource.insertPost(post.toEntity())
     }
 
+    override suspend fun deletePost(userId: Int, postId: Int): Boolean {
+        return remoteDataSource.deletePostById(userId, postId)
+    }
+
     override suspend fun deletePost(postId: Int) {
         localDataSource.deletePostById(postId)
     }

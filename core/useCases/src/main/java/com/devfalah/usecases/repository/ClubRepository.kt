@@ -46,4 +46,6 @@ interface ClubRepository {
 
     suspend fun deletePost(postId: Int)
 
+    suspend fun deletePost(userId: Int, postId: Int): Boolean
+
 }

@@ -16,22 +16,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
-
-/**
- * Need To Do:
- * change cover or profile photo.
- * display youtube view.
-
- *
- * navigate to :
- * image in full screen.
- * comments
- * messages
- * external URL
- * selected/all friends
- *
- * */
-
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     val getUserAccountDetails: GetUserAccountDetailsUseCase,
@@ -41,6 +25,7 @@ class ProfileViewModel @Inject constructor(
     val likeUseCase: SetLikeUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val changeProfileImageUseCase: ChangeProfileImageUseCase,
+    val deletePostUseCase: DeletePostUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -196,7 +181,19 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onClickPostSetting(post: PostUIState) {
-
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(loading = true) }
+                if (deletePostUseCase(_uiState.value.userDetails.userID, post.postId)) {
+                    _uiState.update {
+                        it.copy(
+                            loading = false, posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                    }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(minorError = t.message.toString()) }
+            }
+        }
     }
 
 }

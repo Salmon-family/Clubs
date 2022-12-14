@@ -12,8 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -116,7 +115,7 @@ fun ProfileContent(
         ManualPager(
             swipeRefreshState = swipeRefreshState,
             onRefresh = onRefresh,
-            items = state.posts,
+            items = state.posts.map { it.postId },
             scrollState = scrollState,
             isRefreshing = state.loading,
             error = state.minorError,
@@ -203,3 +202,4 @@ private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
         }
     }
 }
+

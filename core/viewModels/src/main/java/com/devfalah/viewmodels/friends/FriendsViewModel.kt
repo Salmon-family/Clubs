@@ -52,7 +52,7 @@ class FriendsViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         totalFriends = friends.total,
-                        friends = friends.friends.toUIState()
+                        friends = friends.friends.toFriendsUIState()
                     )
                 }
             } catch (t: Throwable) {
@@ -73,5 +73,9 @@ class FriendsViewModel @Inject constructor(
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
+    }
+
+    fun swipeToRefresh(type: Int) {
+
     }
 }

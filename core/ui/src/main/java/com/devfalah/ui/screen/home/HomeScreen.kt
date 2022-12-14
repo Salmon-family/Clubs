@@ -70,7 +70,7 @@ fun HomeContent(
     ManualPager(
         swipeRefreshState = swipeRefreshState,
         onRefresh = onRefresh,
-        items = state.posts,
+        items = state.posts.map { it.postId },
         scrollState = scrollState,
         isRefreshing = state.isPagerLoading,
         error = state.pagerError,
