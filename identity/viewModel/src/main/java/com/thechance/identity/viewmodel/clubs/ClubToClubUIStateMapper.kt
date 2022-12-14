@@ -5,7 +5,8 @@ import com.thechance.identity.entities.Club
 fun Club.toUIState(): ClubUIState{
     return ClubUIState(
         id = this.id,
-        name = this.name
+        name = this.name,
+        icon = this.icon
     )
 }
 

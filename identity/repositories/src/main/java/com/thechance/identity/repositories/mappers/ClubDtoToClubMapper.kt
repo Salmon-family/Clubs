@@ -6,6 +6,7 @@ import com.thechance.identity.repositories.models.ClubDto
 fun ClubDto.toEntity(): Club{
     return Club(
         id = this.guid ?: 0,
-        name = this.title ?: ""
+        name = this.title ?: "",
+        icon = 0
     )
 }

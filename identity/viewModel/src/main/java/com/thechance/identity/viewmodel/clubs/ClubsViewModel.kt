@@ -1,5 +1,6 @@
 package com.thechance.identity.viewmodel.clubs
 
+import androidx.lifecycle.ViewModel
 import com.thechance.identity.usecases.GetClubsUseCaase
 import com.thechance.identity.usecases.JoinClubUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,7 @@ import javax.inject.Inject
 class ClubsViewModel @Inject constructor(
     private val getClubsUseCase: GetClubsUseCaase,
     private val joinClubUseCase: JoinClubUseCase
-) {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ClubsUIState())
     val uiState = _uiState.asStateFlow()
 

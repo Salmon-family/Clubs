@@ -8,6 +8,8 @@ import com.thechance.identity.ui.screen.activation.accountActivationRoute
 import com.thechance.identity.ui.screen.home.homeRoute
 import com.thechance.identity.ui.screen.login.password.logInPasswordRoute
 import com.thechance.identity.ui.screen.login.username.logInUserNameRoute
+import com.thechance.identity.ui.screen.onboarding.clubs.CLUBS_ROUTE
+import com.thechance.identity.ui.screen.onboarding.clubs.clubsRoute
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
 import com.thechance.identity.ui.screen.onboarding.pager.onBoardingPagerRoute
 import com.thechance.identity.ui.screen.onboarding.welcome.WELCOME_ON_BOARDING_Route
@@ -32,7 +34,7 @@ fun ClubsNavGraph(
     } else {
         WELCOME_ON_BOARDING_Route
     }
-    NavHost(navController = navController, startDestination = startRoute) {
+    NavHost(navController = navController, startDestination = CLUBS_ROUTE) {
         welcomeOnBoardRoute(navController)
         onBoardingPagerRoute(navController)
         signupEmailRoute(navController, signupViewModel)
@@ -43,5 +45,6 @@ fun ClubsNavGraph(
         logInPasswordRoute(navController, loginViewModel)
         homeRoute(navController)
         accountActivationRoute(navController)
+        clubsRoute(navController)
     }
 }
