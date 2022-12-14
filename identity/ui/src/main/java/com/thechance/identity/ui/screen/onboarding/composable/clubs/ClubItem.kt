@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -23,7 +24,7 @@ fun ClubItem(
     club: ClubUIState,
     tintColor: Color = Color.Black,
     isSelected: Boolean = false,
-    onSelectionChanged: (Boolean) -> Unit,
+    onSelectionChanged: (ClubUIState) -> Unit = {},
     selectedColor: Color = LightPrimaryBrandColor
 ){
     Column(
@@ -41,7 +42,12 @@ fun ClubItem(
                 shape = RoundedCornerShape(20.dp)
             )
             .clip(RoundedCornerShape(20.dp))
-            .clickable {onSelectionChanged(!isSelected)}
+            .toggleable(
+                value = isSelected,
+                onValueChange = {
+                    onSelectionChanged(club)
+                }
+            )
     ) {
         Icon(
             painter = painterResource(id = club.icon),
@@ -49,6 +55,7 @@ fun ClubItem(
             tint = if(isSelected) selectedColor else tintColor,
             modifier = Modifier.padding(top = 30.dp, start = 30.dp, end = 30.dp)
         )
+
         Spacer(Modifier.height(8.dp))
         Text(
             text = club.name,

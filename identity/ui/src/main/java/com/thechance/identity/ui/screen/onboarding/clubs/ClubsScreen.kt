@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -14,13 +16,13 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.model.Club
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubItem
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
+import com.thechance.identity.viewmodel.clubs.ClubUIState
 import com.thechance.identity.viewmodel.clubs.ClubsUIState
 import com.thechance.identity.viewmodel.clubs.ClubsViewModel
 
@@ -28,18 +30,20 @@ import com.thechance.identity.viewmodel.clubs.ClubsViewModel
 fun ClubsScreen(
     navController: NavController,
     viewModel: ClubsViewModel = hiltViewModel()
-){
+) {
     val state by viewModel.uiState.collectAsState()
     ClubsContent(
-        state = state
+        state = state,
+        onSelectedChanged = viewModel::onChangeSelectedClub,
+        onClickContinue = viewModel::joinClubs
     )
 }
 
 @Composable
 fun ClubsContent(
     state: ClubsUIState,
-    selectedClub: Club? = null,
-    onSelectedChanged: (String) -> Unit = {}
+    onSelectedChanged: (ClubUIState) -> Unit,
+    onClickContinue: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -62,26 +66,20 @@ fun ClubsContent(
             contentPadding = PaddingValues(vertical = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ){
-            items(state.clubs){ club ->
-                val selectedState = remember {
-                    mutableStateOf(false)
-                }
-
+        ) {
+            items(state.clubs) { club ->
                 ClubItem(
                     club = club,
-                    isSelected = selectedState.value,
-                    onSelectionChanged = {
-                        selectedState.value = it
-                    }
+                    isSelected = state.selectedClubs.contains(club),
+                    onSelectionChanged = onSelectedChanged
                 )
             }
         }
 
         SpacerVertical24()
         AuthButton(
-            onClick = {},
-            isEnabled = true,
+            onClick = onClickContinue,
+            isEnabled = state.selectedClubs.isNotEmpty(),
             text = stringResource(id = R.string.continue_label),
             buttonModifier = Modifier
                 .fillMaxWidth()
