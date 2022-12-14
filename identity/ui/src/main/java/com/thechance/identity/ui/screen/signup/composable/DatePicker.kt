@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +27,6 @@ import java.util.*
 
 @Composable
 fun DatePicker(
-    image: Int = 0,
     birthDate: String,
     onDateChange: (String) -> Unit
 ) {
@@ -51,22 +51,22 @@ fun DatePicker(
         Modifier
             .padding(8.dp)
             .background(
-                color = WhiteColor,
-                shape = RoundedCornerShape(20.dp)
+                color = MaterialTheme.colors.surface,
+                shape = RoundedCornerShape(100.dp)
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = birthDate,
             style = Typography.subtitle2,
-            color = LightPrimaryBlackColor,
+            color = MaterialTheme.colors.primaryVariant,
             modifier = Modifier
                 .padding(start = 16.dp)
                 .fillMaxWidth()
                 .weight(1f)
         )
         Image(
-            painter = painterResource(id = image),
+            painter = painterResource(id = R.drawable.ic_arrow_down_circle),
             contentDescription = null,
             modifier = Modifier
                 .padding(16.dp)

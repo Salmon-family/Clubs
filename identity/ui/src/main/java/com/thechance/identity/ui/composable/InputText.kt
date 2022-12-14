@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -30,17 +31,17 @@ fun InputText(
         onValueChange = onTextChange,
         shape = RoundedCornerShape(size = 100.dp),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = WhiteColor,
+            backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            textColor = LightPrimaryBlackColor
+            textColor = MaterialTheme.colors.primaryVariant
         ),
         singleLine = true,
         placeholder = {
             Text(
                 text = placeHolder,
                 style = Typography.InputText,
-                color = LightPrimaryGrayColor,
+                color = MaterialTheme.colors.secondaryVariant,
                 modifier = Modifier.fillMaxWidth()
             )
         },

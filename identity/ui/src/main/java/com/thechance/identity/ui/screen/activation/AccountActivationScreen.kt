@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,7 +60,6 @@ private fun AccountActivationContent(
             .fillMaxSize()
             .padding(horizontal = 16.dp)
             .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         SpacerVertical16()
         BackButton(onClick = onclickBack)
@@ -68,8 +68,10 @@ private fun AccountActivationContent(
         Text(
             text = stringResource(id = R.string.account_activation_title),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
-            modifier = Modifier.wrapContentSize()
+            color = MaterialTheme.colors.primaryVariant,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+
         )
 
         SpacerVertical16()
@@ -81,7 +83,7 @@ private fun AccountActivationContent(
         Text(
             text = stringResource(id = R.string.account_activation_body),
             style = Typography.InputText,
-            color = LightTernaryBlackColor,
+            color = MaterialTheme.colors.secondaryVariant,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )

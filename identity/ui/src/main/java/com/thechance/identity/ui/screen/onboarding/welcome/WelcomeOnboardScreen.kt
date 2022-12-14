@@ -1,11 +1,10 @@
 package com.thechance.identity.ui.screen.onboarding.welcome
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,12 +16,10 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.ClubText
-import com.thechance.identity.ui.screen.onboarding.composable.ViewPagerSlider
 import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardImage
 import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical8
-import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
 import com.thechance.identity.ui.theme.Typography
@@ -44,6 +41,7 @@ fun WelcomeOnboardContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .background(MaterialTheme.colors.background)
     ) {
 
         Box(Modifier.weight(1f)) {
@@ -60,7 +58,7 @@ fun WelcomeOnboardContent(
         Text(
             text = stringResource(id = R.string.have_fun),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
+            color = MaterialTheme.colors.primaryVariant,
             modifier = Modifier.padding(horizontal = 24.dp)
         )
 
@@ -68,7 +66,7 @@ fun WelcomeOnboardContent(
         Text(
             text = stringResource(id = R.string.onboard_body),
             style = Typography.body1,
-            color = LightTernaryBlackColor,
+            color = MaterialTheme.colors.secondaryVariant,
             modifier = Modifier.padding(horizontal = 24.dp)
         )
 

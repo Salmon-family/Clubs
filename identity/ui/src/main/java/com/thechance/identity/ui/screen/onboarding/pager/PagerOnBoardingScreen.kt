@@ -1,11 +1,9 @@
 package com.thechance.identity.ui.screen.onboarding.pager
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,10 +17,10 @@ import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.onboarding.composable.ViewPagerSlider
 import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical16
+import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.LightTernaryBlackColor
-import com.thechance.identity.ui.theme.WhiteColor
 
 @Composable
 fun OnBoardingPagerScreen(
@@ -40,7 +38,9 @@ fun OnBoardingPagerContent(
     onClickSignUpScreen: () -> Unit,
     onClickLogInScreen: () -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier.background(MaterialTheme.colors.background)
+    ) {
         Box(Modifier.weight(1f)) {
             ViewPagerSlider()
         }
@@ -55,19 +55,11 @@ fun OnBoardingPagerContent(
         AuthButton(
             onClick = onClickLogInScreen,
             text = stringResource(id = R.string.login),
-            buttonColor = WhiteColor,
-            textColor = LightPrimaryBlackColor
+            buttonColor = MaterialTheme.colors.surface,
+            textColor = MaterialTheme.colors.primaryVariant
         )
 
-        SpacerVertical16()
-        TextTwoToneColor(
-            text1 = stringResource(R.string.footer_first_text),
-            color1 = LightTernaryBlackColor,
-            text2 = stringResource(id = R.string.footer_second_text),
-            color2 = LightPrimaryBrandColor,
-            navigate = {}
-        )
-        SpacerVertical16()
+        SpacerVertical24()
     }
 }
 

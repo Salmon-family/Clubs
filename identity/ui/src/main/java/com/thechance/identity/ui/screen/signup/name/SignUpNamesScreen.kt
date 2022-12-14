@@ -3,6 +3,7 @@ package com.thechance.identity.ui.screen.signup.name
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
@@ -64,16 +66,14 @@ private fun SignUpFullNameContent(
         Text(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
-            modifier = Modifier.padding(start = 8.dp)
+            color = MaterialTheme.colors.primaryVariant,
+            modifier = Modifier.padding(start = 8.dp),
         )
 
         SpacerVertical8()
         EmailDescriptionText(
             text1 = stringResource(id = R.string.using),
-            color1 = LightSecondaryBlackColor,
             text2 = state.email,
-            color2 = LightPrimaryBrandColor,
             text3 = stringResource(id = R.string.to_sign_up)
         )
 
@@ -81,7 +81,7 @@ private fun SignUpFullNameContent(
         Text(
             text = stringResource(id = R.string.full_naame),
             style = Typography.body2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 
@@ -97,7 +97,7 @@ private fun SignUpFullNameContent(
         Text(
             text = stringResource(id = R.string.user_name),
             style = Typography.body2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp)
         )
 

@@ -1,6 +1,8 @@
 package com.thechance.identity.ui.screen.login.password
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -52,6 +54,7 @@ fun LogInPasswordContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .background(MaterialTheme.colors.background)
     ) {
 
         BackButton(onClick = onClickBack)
@@ -60,7 +63,7 @@ fun LogInPasswordContent(
         Text(
             text = stringResource(id = R.string.log_in),
             style = Typography.h1,
-            color = LightPrimaryBlackColor,
+            color = MaterialTheme.colors.primaryVariant,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 
@@ -68,7 +71,7 @@ fun LogInPasswordContent(
         Text(
             text = stringResource(id = R.string.your_password),
             style = Typography.subtitle2,
-            color = LightSecondaryBlackColor,
+            color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 

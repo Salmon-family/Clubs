@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -33,7 +34,7 @@ fun SegmentControls(
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
             .wrapContentSize()
-            .background(WhiteColor, shape = RoundedCornerShape(100.dp))
+            .background(MaterialTheme.colors.surface, shape = RoundedCornerShape(100.dp))
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier
             .weight(1f)
@@ -42,7 +43,7 @@ fun SegmentControls(
                 shape = RoundedCornerShape(100.dp)
             )
             .background(
-                color = if (index.value == 0) LightPrimaryBrandColor else WhiteColor
+                color = if (index.value == 0) LightPrimaryBrandColor else MaterialTheme.colors.surface
             )
             .clickable {
                 index.value = 0
@@ -51,7 +52,7 @@ fun SegmentControls(
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
                 text = genderItems.first(),
-                color = if (index.value == 0) WhiteColor else LightPrimaryBlackColor,
+                color = if (index.value == 0) WhiteColor else MaterialTheme.colors.primaryVariant,
                 style = Typography.body2
             )
         }
@@ -61,7 +62,7 @@ fun SegmentControls(
                 .wrapContentHeight()
                 .clip(shape = RoundedCornerShape(100.dp))
                 .background(
-                    color = if (index.value == 1) LightPrimaryBrandColor else WhiteColor
+                    color = if (index.value == 1) LightPrimaryBrandColor else MaterialTheme.colors.surface
                 )
                 .clickable {
                     index.value = 1
@@ -70,7 +71,7 @@ fun SegmentControls(
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
                 text = genderItems.last(),
-                color = if (index.value == 1) WhiteColor else LightPrimaryBlackColor,
+                color = if (index.value == 1) WhiteColor else MaterialTheme.colors.primaryVariant,
                 style = Typography.body2
             )
         }

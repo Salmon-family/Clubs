@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +22,7 @@ fun AuthButton(
     onClick: () -> Unit,
     isEnabled:Boolean = true,
     text: String,
-    buttonColor: Color = LightPrimaryBrandColor,
+    buttonColor: Color = MaterialTheme.colors.primary,
     textColor: Color = WhiteColor,
     buttonModifier: Modifier = Modifier.fillMaxWidth().padding(horizontal = 23.dp),
     textModifier: Modifier = Modifier.padding(8.dp)
