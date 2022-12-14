@@ -31,6 +31,7 @@ fun FriendItem(
 ) {
     Row(
         modifier = modifier
+            .RemoveRippleEffect { onOpenProfileClick(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(LightCardBackgroundColor)
@@ -38,7 +39,6 @@ fun FriendItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CircleProfileImage(
-            modifier = Modifier.RemoveRippleEffect { onOpenProfileClick(state.id) },
             painter = rememberAsyncImagePainter(model = state.profilePictureUrl),
             size = 56
         )
