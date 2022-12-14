@@ -4,12 +4,13 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -56,6 +57,7 @@ private fun ChatsContent(
     onCLickBack: () -> Unit,
     onLoadingMoreChats: () -> Unit,
 ) {
+    val listState = rememberLazyListState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +71,8 @@ private fun ChatsContent(
             TopBarChats(onCLickBack)
         }
         LazyColumn(
-            contentPadding = PaddingValues(16.dp)
+            contentPadding = PaddingValues(16.dp),
+            state = listState,
         ) {
             item {
                 SearchTextField(
@@ -104,23 +107,13 @@ private fun ChatsContent(
                         )
                     }
                 }
-            }
-            item {
-                if (!state.isLoading && !state.isLastPage && state.chats.size >= 10) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Button(onClick = {
-                            onLoadingMoreChats()
-                        }) {
-                            Text(text = "Load More")
-                        }
-                    }
+                LaunchedEffect(key1 = (!state.isLoading && listState.isScrolledToTheEnd() && state.chats.size >= 10)){
+                        onLoadingMoreChats()
                 }
             }
         }
     }
 }
+
+fun LazyListState.isScrolledToTheEnd() =
+    layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1

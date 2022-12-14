@@ -10,6 +10,7 @@ import com.nadafeteiha.usecases.SearchForChatsUseCase
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
 import com.thechance.viewmodels.chats.uiStates.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -33,7 +34,7 @@ class ChatsViewModel @Inject constructor(
     }
 
     private fun initChats(userID: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 getChats(userID).collect { chats ->
@@ -64,16 +65,17 @@ class ChatsViewModel @Inject constructor(
     }
 
     fun onLoadingMore() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO){
             _uiState.update { it.copy(isLoading = true) }
-            val chatsCount = getChatsCount(id)
+            val chatsCount = 34
             val chatsCountLocally = getChatsCount.getChatsCountLocally()
+            Log.e("DEVFALAH",(chatsCount >= chatsCountLocally).toString())
+            Log.e("DEVFALAH",(chatsCountLocally).toString())
             if (chatsCount > chatsCountLocally) {
                 try {
                     val nextPage = chatsCountLocally / 10 + 1
-                    getChats.refreshChats(id, nextPage)
-                    _uiState.update { it.copy(isLoading = false) }
-
+                        getChats.refreshChats(id, nextPage)
+                        _uiState.update { it.copy(isLoading = false) }
                 } catch (e: Exception) {
                     _uiState.update { it.copy(isLoading = false, error = e.message.toString()) }
                 }
