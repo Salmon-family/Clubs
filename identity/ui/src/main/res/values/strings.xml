@@ -38,5 +38,5 @@
     <string name="your_label">Your </string>
     <string name="navigate_to_signup">Don’t have an account? </string>
     <string name="navigate_to_login">Already have an account? </string>
-    <string name="success_message">Create account is successfully</string>
+    <string name="success_message">Done…</string>
 </resources>

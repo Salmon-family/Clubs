@@ -3,4 +3,6 @@
     <color name="status_color">#000000</color>
     <color name="icon">#99FFFFFF</color>
     <color name="bottom_arrow">#61FFFFFF</color>
+    <color name="background_dialog">#FF1C1C1E</color>
+
 </resources>

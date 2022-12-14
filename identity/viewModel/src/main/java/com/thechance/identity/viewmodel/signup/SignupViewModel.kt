@@ -44,7 +44,7 @@ class SignupViewModel @Inject constructor(
                 _uiState.update { it.copy(isSuccess = true) }
                 saveUserId(userId)
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isError = t.message.toString()) }
+                _uiState.update { it.copy(isError = t.message.toString(), isSuccess = false) }
             }
         }
     }
@@ -68,7 +68,6 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun String.isEmailValid(): Boolean {
-        //todo: for use case
         return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 

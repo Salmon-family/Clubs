@@ -10,4 +10,5 @@
     <color name="brand_color">#FF6C56D6</color>
     <color name="icon">#9904030A</color>
     <color name="bottom_arrow">#04030A</color>
+    <color name="background_dialog">#FFFFFFFF</color>
 </resources>

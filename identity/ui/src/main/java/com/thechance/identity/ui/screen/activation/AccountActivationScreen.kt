@@ -32,9 +32,10 @@ fun AccountActivationScreen(
     navController: NavController
 ) {
     val context = LocalContext.current
-    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
 
+    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
     BackPressHandler(onBackPressed = { onBack() })
+
     AccountActivationContent(
         onclickBack = { onBack() },
         onClickOpenEmail = {
