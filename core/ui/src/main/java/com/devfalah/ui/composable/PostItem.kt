@@ -33,7 +33,8 @@ fun PostItem(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         backgroundColor = WhiteColor,
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(20.dp),
+        elevation = 0.dp
     ) {
         Column(
             modifier = modifier

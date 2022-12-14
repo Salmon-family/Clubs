@@ -19,7 +19,7 @@ class FriendRequestViewModel @Inject constructor(
     private val removeFriendRequestUseCase: RemoveFriendRequestUseCase
 ) : ViewModel() {
 
-    private val _uiStateFriendRequests = MutableStateFlow(FriendRequestUiState(emptyList()))
+    private val _uiStateFriendRequests = MutableStateFlow(FriendRequestUiState())
     val uiStateFriendRequests = _uiStateFriendRequests.asStateFlow()
 
     private val userID = 6

@@ -102,7 +102,7 @@ fun ProfileContent(
     onClickProfile: (Int) -> Unit,
     onRetry: () -> Unit,
     onClickFriends: (Int) -> Unit,
-    onOpenLinkClick:(String)-> Unit
+    onOpenLinkClick: (String) -> Unit
 ) {
     if (state.majorError.isNotEmpty()) {
         Box(modifier = Modifier.fillMaxSize())
@@ -125,7 +125,8 @@ fun ProfileContent(
             item(key = state.userDetails.userID) {
                 ProfileDetailsSection(
                     state.userDetails,
-                    onChangeProfileImage = onChangeProfileImage
+                    onChangeProfileImage = onChangeProfileImage,
+                    onSendRequestClick = onClickAddFriend
                 )
             }
             item {

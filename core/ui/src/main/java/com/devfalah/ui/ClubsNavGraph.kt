@@ -11,6 +11,7 @@ import com.devfalah.ui.screen.home.homeRoute
 import com.devfalah.ui.screen.menu.menuRoute
 import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.profile.profileRoute
+import com.devfalah.ui.screen.savedPosts.savedPostsRoute
 import com.devfalah.ui.screen.search.searchRoute
 
 
@@ -30,5 +31,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         profileRoute(navController = navController)
         createPostRoute(navController = navController)
         friendsRoute(navController = navController)
+        savedPostsRoute(navController = navController)
+
     }
 }

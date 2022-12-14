@@ -26,7 +26,8 @@ import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 fun ProfileDetailsSection(
     userDetails: UserDetailsUIState,
     modifier: Modifier = Modifier,
-    onChangeProfileImage: () -> Unit
+    onChangeProfileImage: () -> Unit,
+    onSendRequestClick: () -> Unit
 ) {
 
     ConstraintLayout(
@@ -124,9 +125,17 @@ fun ProfileDetailsSection(
                 )
             }
 
+            val onClick = if (userDetails.isMyProfile) {
+                onChangeProfileImage
+            } else if (!userDetails.isRequestSend) {
+                onSendRequestClick
+            } else {
+                {}
+            }
+
             ProfileImageWithIcon(
                 profilePicture = userDetails.profilePicture,
-                onClickIcon = onChangeProfileImage,
+                onClickIcon = onClick,
                 painter = GetPainterProfileIcon(userDetails)
             )
         }

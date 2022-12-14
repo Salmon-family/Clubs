@@ -13,18 +13,26 @@ fun MenuScreen(
     navController: NavController,
 ) {
 
-    MenuContent(onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) })
+    MenuContent(
+        onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
+        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) }
+    )
 }
 
 @Composable
 fun MenuContent(
     onClickFriends: () -> Unit,
+    onClickSavedPosts: () -> Unit
 ) {
     Column() {
         Text(text = "Menu", fontSize = 24.sp)
 
         Button(onClick = { onClickFriends() }) {
             Text(text = "Friend Request")
+        }
+
+        Button(onClick = { onClickSavedPosts() }) {
+            Text(text = "Saved Posts")
         }
 
     }

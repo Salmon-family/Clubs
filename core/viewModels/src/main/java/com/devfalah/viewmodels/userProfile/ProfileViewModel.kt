@@ -11,7 +11,6 @@ import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
@@ -135,6 +134,18 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 favoritePostUseCase(post.toEntity())
+                _uiState.update {
+                    it.copy(
+                        posts = _uiState.value.posts
+                            .map {
+                                if (it.postId == post.postId) {
+                                    it.copy(isSaved = true)
+                                } else {
+                                    it
+                                }
+                            }
+                    )
+                }
             } catch (t: Throwable) {
                 t.message.toString()
             }
