@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.FriendItem
+import com.devfalah.ui.composable.FriendRemoveItem
 import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -37,14 +38,16 @@ fun FriendsScreen(
     val state by viewModel.uiState.collectAsState()
     FriendsContent(
         state = state,
-        onClickProfile = { navController.navigateToProfile(it) }
+        onClickProfile = { navController.navigateToProfile(it) },
+        onRemoveFriend = viewModel::removeFriend
     )
 }
 
 @Composable
 fun FriendsContent(
     state: FriendsUIState,
-    onClickProfile: (Int) -> Unit
+    onClickProfile: (Int) -> Unit,
+    onRemoveFriend: (Int) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -62,11 +65,21 @@ fun FriendsContent(
                 fontWeight = FontWeight.SemiBold
             )
         }
-        items(state.friends) {
-            FriendItem(
-                state = it,
-                onOpenProfileClick = onClickProfile
-            )
+        if (state.isMyProfile) {
+            items(state.friends) {
+                FriendRemoveItem(
+                    state = it,
+                    onClickOpenProfile = onClickProfile,
+                    onRemoveFriend = onRemoveFriend
+                )
+            }
+        } else {
+            items(state.friends) {
+                FriendItem(
+                    state = it,
+                    onOpenProfileClick = onClickProfile
+                )
+            }
         }
     }
 }
