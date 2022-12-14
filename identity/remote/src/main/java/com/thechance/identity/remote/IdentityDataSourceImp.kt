@@ -4,6 +4,7 @@ import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.LocalIdentityDataSource
 import com.thechance.identity.repositories.RemoteIdentityDataSource
 import com.thechance.identity.repositories.models.AccountDTO
+import com.thechance.identity.repositories.models.ClubDto
 import com.thechance.identity.repositories.models.UserDTO
 import com.thechance.identity.repositories.models.UserDataDTO
 import retrofit2.Response
@@ -32,6 +33,10 @@ class IdentityDataSourceImp @Inject constructor(
                 password = userDataDTO.password
             )
         }
+    }
+
+    override suspend fun joinClub(clubId: Int, userId: Int): ClubDto {
+        return wrap { service.joinClub(clubId, userId) }
     }
 
 
