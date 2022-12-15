@@ -3,77 +3,89 @@ package com.thechance.local
 import com.thechance.identity.entities.Club
 
 class Clubs {
-    fun getClubs() = listOf<Club>(
+    fun getClubs() = listOf(
         Club(
             401,
             "Coding",
-            R.drawable.ic_coding
+            outLineIcon = R.drawable.ic_coding,
+            fillLineIcon = R.drawable.ic_fill_coding ,
         ),
 
         Club(
             402,
             "Gaming",
-            R.drawable.ic_gamepad
+            outLineIcon = R.drawable.ic_gamepad,
+            fillLineIcon = R.drawable.ic_fill_gamepad,
         ),
 
         Club(
             403,
             "Astronomy",
-            R.drawable.ic_telescope
+            outLineIcon = R.drawable.ic_telescope,
+            fillLineIcon = R.drawable.ic_fill_telescope,
         ),
 
         Club(
             404,
             "Science",
-            R.drawable.ic_atom
+            outLineIcon = R.drawable.ic_atom,
+            fillLineIcon = R.drawable.ic_fill_atom,
         ),
 
         Club(
             405,
             "Sport",
-            R.drawable.ic_ball
+            outLineIcon = R.drawable.ic_ball,
+            fillLineIcon = R.drawable.ic_fill_ball,
         ),
 
         Club(
             406,
             "Business",
-            R.drawable.ic_diagram
+            outLineIcon = R.drawable.ic_diagram,
+            fillLineIcon = R.drawable.ic_fill_diagram,
         ),
 
         Club(
             407,
             "Cook",
-            R.drawable.ic_hat
+            outLineIcon = R.drawable.ic_hat,
+            fillLineIcon = R.drawable.ic_fill_hat,
         ),
 
         Club(
             408,
             "Design",
-            R.drawable.ic_palette
+            outLineIcon = R.drawable.ic_palette,
+            fillLineIcon = R.drawable.ic_fill_palette,
         ),
 
         Club(
             409,
             "Art",
-            R.drawable.ic_art
+            outLineIcon = R.drawable.ic_art,
+            fillLineIcon = R.drawable.ic_fill_art,
         ),
 
         Club(
             410,
             "Movies",
-            R.drawable.ic_movie
+            outLineIcon = R.drawable.ic_movie,
+            fillLineIcon = R.drawable.ic_fill_movie,
         ),
 
         Club(
             412,
             "Reading",
-            R.drawable.ic_notebook
+            outLineIcon = R.drawable.ic_notebook,
+            fillLineIcon = R.drawable.ic_fill_notebook,
         ),
 
         Club(
             413,
             "Camping",
-            R.drawable.ic_fire
+            outLineIcon = R.drawable.ic_fire,
+            fillLineIcon = R.drawable.ic_fill_fire,
         ),
     )
 }

@@ -1,5 +1,6 @@
 package com.thechance.identity.viewmodel.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
@@ -43,6 +44,7 @@ class SignupViewModel @Inject constructor(
                 val userId = signupUseCase(userData).guid.toString()
                 _uiState.update { it.copy(isSuccess = true) }
                 saveUserId(userId)
+                 Log.i("userName", userId)
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isError = t.message.toString(), isSuccess = false) }
             }

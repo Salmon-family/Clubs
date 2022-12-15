@@ -16,22 +16,12 @@ class IdentityDataSourceImp @Inject constructor(
 ) : RemoteIdentityDataSource {
 
     override suspend fun login(userName: String, password: String): UserDTO {
-        Log.i("lllllllllllll1", userName.toString())
-        Log.i("lllllllllllll2", password.toString())
         return wrap {
             service.login(userName, password)
         }
     }
 
     override suspend fun signup(userDataDTO: UserDataDTO): AccountDTO {
-        Log.i("lllllllllllll1", userDataDTO.firstname.toString())
-        Log.i("lllllllllllll2", userDataDTO.lastname.toString())
-        Log.i("lllllllllllll3", userDataDTO.email.toString())
-        Log.i("lllllllllllll4", userDataDTO.gender.toString())
-        Log.i("lllllllllllll5", userDataDTO.birthdate.toString())
-        Log.i("lllllllllllll6", userDataDTO.username.toString())
-        Log.i("lllllllllllll7", userDataDTO.password.toString())
-
         return wrap {
             service.addUser(
                 firstname = userDataDTO.firstname,

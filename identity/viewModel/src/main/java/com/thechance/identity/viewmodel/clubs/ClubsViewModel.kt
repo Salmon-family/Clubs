@@ -49,10 +49,10 @@ class ClubsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.value.selectedClubs.forEach { club ->
-                    joinClubUseCase(club.id, userId!!.toInt())
+                    joinClubUseCase(club.id, userId?.toInt() ?:0)
                 }
-            }catch (e: Exception) {
-                Log.i("error", e.message.toString())
+            }catch (t: Throwable) {
+                Log.i("error", t.message.toString())
             }
         }
     }

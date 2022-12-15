@@ -1,10 +1,12 @@
 package com.thechance.identity.ui.screen.signup.clubs
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,6 +21,8 @@ import com.thechance.identity.ui.composable.BackButton
 import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubItem
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
+import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightCardColor
 import com.thechance.identity.ui.theme.LightPrimaryBlackColor
@@ -26,16 +30,22 @@ import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.viewmodel.clubs.ClubUIState
 import com.thechance.identity.viewmodel.clubs.ClubsUIState
 import com.thechance.identity.viewmodel.clubs.ClubsViewModel
+import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 @Composable
 fun ClubsScreen(
     navController: NavController,
-    viewModel: ClubsViewModel = hiltViewModel()
+    viewModel: ClubsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+
+    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
+    BackPressHandler(onBackPressed = { onBack() })
+
     ClubsContent(
         state = state,
         onSelectedChanged = viewModel::onChangeSelectedClub,
+        onClickBack = { navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false) },
         onClickContinue = {
             viewModel.joinClubs()
             navController.navigateToAccountActivation()
@@ -46,6 +56,7 @@ fun ClubsScreen(
 @Composable
 fun ClubsContent(
     state: ClubsUIState,
+    onClickBack: () -> Unit,
     onSelectedChanged: (ClubUIState) -> Unit,
     onClickContinue: () -> Unit
 ) {
@@ -53,14 +64,13 @@ fun ClubsContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(LightCardColor)
     ) {
-        BackButton(onClick = {})
+        BackButton(onClick = onClickBack)
         SpacerVertical24()
 
         ClubsTitle(
             text1 = stringResource(id = R.string.your_label),
-            color1 = LightPrimaryBlackColor,
+            color1 = MaterialTheme.colors.primaryVariant,
             text2 = stringResource(id = R.string.app_name),
             color2 = LightPrimaryBrandColor
         )

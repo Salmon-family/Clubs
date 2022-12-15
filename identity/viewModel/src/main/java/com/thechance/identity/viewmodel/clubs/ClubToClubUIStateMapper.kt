@@ -6,7 +6,8 @@ fun Club.toUIState(): ClubUIState{
     return ClubUIState(
         id = this.id,
         name = this.name,
-        icon = this.icon
+        outLineIcon = this.outLineIcon,
+        fillLineIcon = this.fillLineIcon
     )
 }
 

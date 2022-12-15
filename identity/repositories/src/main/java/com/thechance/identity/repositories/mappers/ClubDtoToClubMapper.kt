@@ -7,6 +7,7 @@ fun ClubDto.toEntity(): Club{
     return Club(
         id = this.guid ?: 0,
         name = this.title ?: "",
-        icon = 0
+        outLineIcon = 0,
+        fillLineIcon = 0
     )
 }
