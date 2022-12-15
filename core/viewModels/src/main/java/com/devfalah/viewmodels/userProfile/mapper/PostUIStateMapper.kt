@@ -8,6 +8,7 @@ fun List<Post>.toUIState() = map { it.toUIState() }
 fun Post.toUIState(): PostUIState {
     return PostUIState(
         postId = id,
+        publisherId = publisherId,
         posterImage = publisherImageUrl,
         posterName = publisher,
         privacy = privacy,

@@ -8,6 +8,8 @@ class GetAllCommentsUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
     suspend operator fun invoke(userId: Int, postId: Int): List<Comment> {
-        return clubRepository.getAllComments(userId, postId)
+        val comments = clubRepository.getAllComments(userId, postId)
+        println("comments: $comments")
+        return comments
     }
 }

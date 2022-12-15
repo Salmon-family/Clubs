@@ -15,8 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ClubsTheme {
-                PostDetailsScreen()
-//                ClubsApp()
+                ClubsApp()
             }
         }
     }

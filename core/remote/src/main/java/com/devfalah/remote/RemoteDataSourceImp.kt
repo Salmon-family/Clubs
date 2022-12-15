@@ -112,7 +112,6 @@ class RemoteDataSourceImp @Inject constructor(
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {
-            println("--------------------> statue code: "+response.body()?.code)
             when (response.body()?.code) {
                 "100" -> response.body()?.payload
                 else -> throw Throwable(response.body()?.message.toString())

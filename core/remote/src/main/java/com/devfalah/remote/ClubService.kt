@@ -102,7 +102,7 @@ interface ClubService {
     suspend fun getComments(
         @Field("uguid") userID: Int,
         @Field("guid") postID: Int,
-        @Field("type") type: LikeType = LikeType.post,
+        @Field("type") type: LikeType = LikeType.annotation,
         @Field("page_limit") page: Int? = null,
         @Field("limit") limit: Int = 5
     ): Response<BaseResponse<CommentsResponse>>

@@ -29,6 +29,7 @@ data class AlbumUIState(
 
 data class PostUIState(
     val postId: Int = 0,
+    val publisherId: Int = 0,
     val posterName: String = "",
     val posterImage: String = "",
     val privacy: Boolean = false,

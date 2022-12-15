@@ -11,8 +11,6 @@ data class CommentDto(
     val id: Int?,
     @SerializedName("is_liked_by_user")
     val isLikedByUser: Boolean?,
-    @SerializedName("last_three_reactions")
-    val lastThreeReactions: Boolean?,
     @SerializedName("owner_guid")
     val ownerGuid: Int?,
     @SerializedName("subject_guid")
@@ -24,5 +22,5 @@ data class CommentDto(
     @SerializedName("type")
     val type: String?,
     @SerializedName("user")
-    val user: User?
+    val user: UserDTO?
 )
