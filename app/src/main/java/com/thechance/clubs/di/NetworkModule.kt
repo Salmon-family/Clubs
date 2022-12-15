@@ -8,7 +8,6 @@ import com.thechance.identity.remote.IdentityService
 import com.thechance.remote.api.ChatService
 import com.thechance.remote.api.CloudMessagingService
 import com.thechance.local.DataStorePreferences
-import com.thechance.remote.ChatService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
