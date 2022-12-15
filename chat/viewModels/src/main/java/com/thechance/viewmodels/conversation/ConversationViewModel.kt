@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SendMessageUseCase
-import com.thechance.viewmodels.conversation.uiStates.toUiState
 import com.thechance.viewmodels.conversation.uiStates.ConversationUIState
+import com.thechance.viewmodels.conversation.uiStates.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,17 +41,14 @@ class ConversationViewModel @Inject constructor(
     }
 
     private fun getListMessages(userId: Int, friendId: Int) {
+        refreshMessages(userId, friendId)
         viewModelScope.launch {
-            try {
-                getMessages(userId, friendId).collect { item ->
-
-                    val message = item.map {
-                        it.toUiState() }
-                    _uiState.update { it.copy(messages = message, isLoading = false) }
-                }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(error = e.message, isLoading = false)
+            getMessages(friendId).collect {
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        messages = it.map { it.toUiState() },
+                        isLoading = false
+                    )
                 }
             }
         }
@@ -62,7 +59,7 @@ class ConversationViewModel @Inject constructor(
             try {
                 sendMessageUseCase(args.id, args.friendId, message)
             } catch (e: Exception) {
-                Log.e("DEVFALAH",e.message.toString())
+                Log.e("DEVFALAH", e.message.toString())
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
@@ -78,5 +75,38 @@ class ConversationViewModel @Inject constructor(
     fun onClickSendButton() {
         sendMessage(uiState.value.message)
         _uiState.update { it.copy(message = "") }
+    }
+
+    private fun refreshMessages(userId: Int, friendId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                val messagesCount = getMessages.refreshMessages(userId, friendId, 1)
+                _uiState.update { it.copy(messagesCount = messagesCount) }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(error = e.message, isLoading = false)
+                }
+            }
+        }
+    }
+
+    fun onLoadingMoreMessages() {
+        viewModelScope.launch(Dispatchers.Default) {
+            _uiState.update { it.copy(isLoading = true) }
+            val messagesCountLocally = _uiState.value.messages.count()
+            val messagesCount = _uiState.value.messagesCount
+            if (messagesCount > messagesCountLocally) {
+                try {
+                    val nextPage = messagesCountLocally / 10 + 1
+                    getMessages.refreshMessages(userID = args.id, args.friendId, nextPage)
+                    _uiState.update { it.copy(isLoadingMore = false) }
+                } catch (e: Exception) {
+                    _uiState.update { it.copy(isLoadingMore = false, error = e.message.toString()) }
+                }
+            } else {
+                _uiState.update { it.copy(isLastPage = true, isLoadingMore = false) }
+            }
+        }
     }
 }

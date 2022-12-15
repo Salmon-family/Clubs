@@ -4,6 +4,7 @@ import com.devfalah.repository.mappers.*
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.Chat
 import com.thechance.entities.Message
+import com.thechance.entities.Messages
 import com.thechance.entities.Notification
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -31,8 +32,8 @@ class ChatRepositoryImp @Inject constructor(
         return chatLocalDataSource.getChats(query).map { list -> list.map { it.toEntity() } }
     }
 
-    override suspend fun getMessages(userID: Int, friendID: Int): List<Message> {
-        return chatRemoteDataSource.getMessagesWithFriend(userID, friendID).map { it.toEntity(userID) }
+    override suspend fun getMessages(userID: Int, friendID: Int, page: Int): Messages {
+        return chatRemoteDataSource.getMessagesWithFriend(userID, friendID, page).toEntity(userID)
     }
 
     override suspend fun sendMessage(from: Int, to: Int, message: String): Message {
@@ -59,7 +60,7 @@ class ChatRepositoryImp @Inject constructor(
         chatLocalDataSource.updateRecentMessage(id, recentMessage)
     }
 
-    override fun getMessages(friendId: Int): Flow<List<Message>> {
+    override suspend fun getMessages(friendId: Int): Flow<List<Message>> {
         return chatLocalDataSource.getMessages(friendId).map { list -> list.map { it.toMessage() } }
     }
 

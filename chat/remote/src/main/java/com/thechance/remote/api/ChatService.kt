@@ -19,7 +19,7 @@ interface ChatService {
         @Query("to") userID: Int,
         @Query("guid") friendID: Int,
         @Query("markallread") markAsRead: Int = 0,
-        @Query("offset") page: Boolean? = null
+        @Query("offset") page: Int
     ): Response<BaseResponse<ConversationDTO>>
 
 

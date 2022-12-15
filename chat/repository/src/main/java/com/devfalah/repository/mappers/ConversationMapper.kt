@@ -1,8 +1,10 @@
 package com.devfalah.repository.mappers
 
 import com.devfalah.repository.models.ChatDTO
+import com.devfalah.repository.models.ConversationDTO
 import com.devfalah.repository.models.MessageEntityLocalDTO
 import com.thechance.entities.Message
+import com.thechance.entities.Messages
 
 
 fun ChatDTO.toEntity(userId: Int): Message {
@@ -43,5 +45,12 @@ fun Message.toMessage(): MessageEntityLocalDTO {
         fromMe = fromMe,
         message = message,
         time = time.toString(),
+    )
+}
+
+fun ConversationDTO.toEntity(userId: Int): Messages {
+    return Messages(
+        messages = list?.map { it.toEntity(userId) } ?: emptyList(),
+        count = count ?: 0
     )
 }
