@@ -26,7 +26,7 @@ fun FriendRequestScreen(
     navController: NavController,
     friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
 ) {
-    val state by friendRequestViewModel.uiStateFriendRequests.collectAsState()
+    val state by friendRequestViewModel.uiState.collectAsState()
 
     FriendRequestsContent(
         friendRequestUiState = state,

@@ -1,6 +1,7 @@
 package com.devfalah.viewmodels.userProfile
 
 data class UserUIState(
+    val id: Int = 0,
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
     val friends: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),

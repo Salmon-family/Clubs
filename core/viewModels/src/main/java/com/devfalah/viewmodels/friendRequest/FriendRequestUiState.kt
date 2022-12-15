@@ -3,6 +3,7 @@ package com.devfalah.viewmodels.friendRequest
 import com.devfalah.entities.User
 
 data class FriendRequestUiState(
+    val userId: Int = 0,
     val friendRequests: List<UserState> = emptyList(),
     val isLoading: Boolean = false,
     val error: String = "",

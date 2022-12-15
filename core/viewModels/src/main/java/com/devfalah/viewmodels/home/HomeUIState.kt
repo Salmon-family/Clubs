@@ -8,6 +8,6 @@ data class HomeUIState(
     val isPagerLoading:Boolean = false,
     val error: String = "",
     val pagerError: String = "",
-    val id :Int = 6
+    val id :Int = 0
 )
 
