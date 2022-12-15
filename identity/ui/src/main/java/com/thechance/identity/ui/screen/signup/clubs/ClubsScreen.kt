@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.onboarding.clubs
+package com.thechance.identity.ui.screen.signup.clubs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubItem
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -35,7 +36,10 @@ fun ClubsScreen(
     ClubsContent(
         state = state,
         onSelectedChanged = viewModel::onChangeSelectedClub,
-        onClickContinue = viewModel::joinClubs
+        onClickContinue = {
+            viewModel.joinClubs()
+            navController.navigateToAccountActivation()
+        }
     )
 }
 
