@@ -23,6 +23,7 @@ import com.devfalah.ui.composable.CircleProfileImage
 import com.devfalah.ui.composable.HeightSpacer4
 import com.devfalah.ui.composable.UserIconButton
 import com.devfalah.ui.composable.WidthSpacer16
+import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -33,7 +34,8 @@ fun FriendRequestItem(
     userState: UserState,
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickOpenProfile: (Int) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -44,6 +46,7 @@ fun FriendRequestItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CircleProfileImage(
+            modifier = Modifier.RemoveRippleEffect { onClickOpenProfile(userState.userID) },
             painter = rememberAsyncImagePainter(model = userState.profileImage),
             size = 56
         )
@@ -99,6 +102,7 @@ fun PreviewFoo() {
     FriendRequestItem(
         userState = UserState(1, "Mustafa Ahmed", "Android Developer"),
         onAcceptButtonClick = {},
-        onDeleteButtonClick = {}
+        onDeleteButtonClick = {},
+        onClickOpenProfile = { 6 }
     )
 }

@@ -12,6 +12,8 @@ data class User(
     val profileUrl: String,
     val coverUrl: String,
     val language: String,
-    val isFriend: Boolean
+    val isMyProfile:Boolean,
+    val isFriend: Boolean,
+    val isRequestExists: Boolean
 )
 

@@ -23,7 +23,7 @@ interface ClubService {
     @FormUrlEncoded
     @POST("user_friends")
     suspend fun getUserFriends(@Field("guid") userID: Int)
-            : Response<BaseResponse<FriendsResponse>>
+            : Response<BaseResponse<FriendsDTO>>
 
     @FormUrlEncoded
     @POST("user_friend_requests")
@@ -35,21 +35,21 @@ interface ClubService {
     suspend fun isFriendWith(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     @FormUrlEncoded
     @POST("user_remove_friend")
     suspend fun removeFriend(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     @FormUrlEncoded
     @POST("user_add_friend")
     suspend fun addFriendRequest(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     /**
      * posts
@@ -283,6 +283,13 @@ interface ClubService {
     suspend fun getAllWallPosts(
         @Query("guid") userID: Int,
         @Query("uguid") friendID: Int,
+        @Query("offset") page: Int? = null,
+        @Query("count") pageSize: Int? = null
+    ): Response<BaseResponse<ProfilePostResponse>>
+
+    @GET("wall_list_home")
+    suspend fun getHomePosts(
+        @Query("guid") userID: Int,
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null
     ): Response<BaseResponse<ProfilePostResponse>>

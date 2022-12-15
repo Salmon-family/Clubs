@@ -1,10 +1,9 @@
-package com.devfalah.remote.response
+package com.devfalah.repositories.models
 
 
-import com.devfalah.repositories.models.FriendDTO
 import com.google.gson.annotations.SerializedName
 
-data class FriendsResponse(
+data class FriendsDTO(
     @SerializedName("friends")
     val list: List<FriendDTO>?,
     @SerializedName("offset")

@@ -18,29 +18,45 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun PostItem(
     modifier: Modifier = Modifier,
     state: PostUIState,
-    isMyProfile: Boolean,
+    maxLineContentExpand: Int = 2,
+    isContentExpandable: Boolean,
+    isMyPost: Boolean,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onClickPostSetting: (PostUIState) -> Unit,
-    maxLineContentExpand: Int = 2,
-    isContentExpandable: Boolean
+    onClickProfile: (Int) -> Unit,
+    onOpenLinkClick: (String) -> Unit
 ) {
     Card(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         backgroundColor = WhiteColor,
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(20.dp),
+        elevation = 0.dp
     ) {
         Column(
-            modifier = modifier.fillMaxWidth().padding(vertical = 16.dp)
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
         ) {
-            PostHeader(state, onClickPostSetting = onClickPostSetting, isMyProfile = isMyProfile)
+            PostHeader(
+                state,
+                onClickPostSetting = onClickPostSetting,
+                onClickProfile = onClickProfile,
+                isMyProfile = isMyPost
+            )
+
             PostContent(
                 post = state,
                 maxLineToExpand = maxLineContentExpand,
-                contentExpandable = isContentExpandable
+                contentExpandable = isContentExpandable,
+                onOpenLinkClick = onOpenLinkClick
             )
+
             PostBottomAction(state, onClickLike, onClickComment, onClickSave)
         }
     }
 }
+

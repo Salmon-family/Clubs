@@ -24,6 +24,10 @@
     <string name="friends_privacy">Friends</string>
     <string name="public_privacy">Public</string>
     <string name="read_more">Read More</string>
+    <string name="create_post">Share what you love..</string>
+    <string name="send_message">Send a message</string>
+    <string name="loading">"Loading.."</string>
+
 
     <!--    post details-->
     <string name="send_comment">send comment</string>

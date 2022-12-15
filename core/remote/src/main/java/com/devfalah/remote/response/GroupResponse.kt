@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 
 data class GroupResponse(
     @SerializedName("groups")
-    val groups: List<GroupDTO?>?
+    val groups: List<GroupDTO>?
 )

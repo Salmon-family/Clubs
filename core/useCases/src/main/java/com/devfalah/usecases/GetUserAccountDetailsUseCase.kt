@@ -1,5 +1,6 @@
 package com.devfalah.usecases
 
+import com.devfalah.entities.FriendShip
 import com.devfalah.entities.User
 import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
@@ -11,11 +12,15 @@ class GetUserAccountDetailsUseCase @Inject constructor(
 
     suspend operator fun invoke(userId: Int, profileOwnerId: Int): User {
         val userDetails = clubRepository.getUserAccountDetails(userID = profileOwnerId)
-        val isFriends = if (userId != profileOwnerId) {
+        val friendShip = if (userId != profileOwnerId) {
             friendShip(userId, profileOwnerId)
         } else {
-            false
+            FriendShip()
         }
-        return userDetails.copy(isFriend = isFriends)
+        return userDetails.copy(
+            isMyProfile = userId == profileOwnerId,
+            isFriend = friendShip.isFriend,
+            isRequestExists = friendShip.requestExists && !friendShip.isFriend
+        )
     }
 }

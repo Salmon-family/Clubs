@@ -1,14 +1,13 @@
 package com.devfalah.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -41,15 +40,19 @@ fun BottomBar(navController: NavHostController) {
         Screen.Clubs,
         Screen.Notification,
         Screen.Menu
-        )
+    )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
-    
+
     BottomNavigation(
         backgroundColor = LightCardBackgroundColor
     ) {
         items.forEach { screen ->
-            AddItem(screen = screen, currentDestination = currentRoute, navController = navController)
+            AddItem(
+                screen = screen,
+                currentDestination = currentRoute,
+                navController = navController
+            )
         }
     }
 
@@ -60,15 +63,18 @@ fun RowScope.AddItem(
     screen: Screen,
     currentDestination: NavDestination?,
     navController: NavHostController
-){
+) {
     val selected = currentDestination?.hierarchy?.any { it.route == screen.screen_route } == true
     BottomNavigationItem(
-        label = {Text(text = screen.title,softWrap = false) },
+        label = { Text(text = screen.title, softWrap = false) },
         alwaysShowLabel = false,
-        icon = { Icon(
-                painterResource(id =
-                if (selected) screen.iconSelected else screen.iconUnselected),
-                    contentDescription = screen.title
+        icon = {
+            Icon(
+                painterResource(
+                    id =
+                    if (selected) screen.iconSelected else screen.iconUnselected
+                ),
+                contentDescription = screen.title
             )
         },
         selected = selected,

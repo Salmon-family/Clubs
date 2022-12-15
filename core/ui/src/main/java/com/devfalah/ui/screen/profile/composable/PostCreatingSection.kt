@@ -1,102 +1,96 @@
 package com.devfalah.ui.screen.profile.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.WidthSpacer16
-import com.devfalah.ui.composable.WidthSpacer8
-import com.devfalah.ui.composable.HeightSpacer16
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
+import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.viewmodels.userProfile.UserDetailsUIState
+import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun PostCreatingSection(
-    user: UserDetailsUIState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isMyProfile: Boolean,
+    onCreatePost: () -> Unit
 ) {
-    Column(
-        modifier
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .RemoveRippleEffect { onCreatePost() }
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(LightCardBackgroundColor)
-            .padding(16.dp)
+            .clip(CircleShape)
+            .background(WhiteColor)
+            .requiredHeight(40.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = rememberAsyncImagePainter(model = user.profilePicture),
-                contentDescription = null,
-                Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
+        IconIndicator(
+            modifier = Modifier.align(Alignment.CenterStart),
+            painter = painterResource(
+                if (isMyProfile) {
+                    R.drawable.pen
+                } else {
+                    R.drawable.ic_message
+                }
             )
-            WidthSpacer16()
-            Text(
-                text = stringResource(R.string.what_are_you_thinking_about),
-                fontFamily = PlusJakartaSans,
-                color = LightSecondaryBlackColor
-            )
-        }
-
-        HeightSpacer16()
-        Divider(color = Color.White, thickness = 1.dp)
-        HeightSpacer16()
-
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-
-            PostOption(imagePainter = R.drawable.ic_photo, text = stringResource(R.string.photo))
-            PostOption(imagePainter = R.drawable.ic_tag, text = stringResource(R.string.tag))
-            PostOption(
-                imagePainter = R.drawable.ic_location,
-                text = stringResource(R.string.location)
-            )
-            PostOption(imagePainter = R.drawable.ic_color, text = stringResource(R.string.color))
-        }
-
+        )
+        Text(
+            text = stringResource(
+                id = if (isMyProfile) {
+                    R.string.create_post
+                } else {
+                    R.string.send_message
+                }
+            ),
+            color = LightTernaryBlackColor,
+            fontSize = 14.sp,
+            maxLines = 1,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Start,
+            fontFamily = PlusJakartaSans,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 56.dp)
+        )
     }
 }
 
 @Composable
-fun PostOption(
+fun IconIndicator(
     modifier: Modifier = Modifier,
-    imagePainter: Int,
-    text: String
+    painter: Painter
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(2.dp)
+            .clip(CircleShape)
+            .aspectRatio(
+                ratio = 1.0F,
+                matchHeightConstraintsFirst = true,
+            )
+            .background(LightPrimaryBrandColor),
     ) {
-        Image(
-            painter = painterResource(id = imagePainter),
+        Icon(
+            painter = painter,
+            tint = Color.Unspecified,
             contentDescription = null,
-            Modifier.size(24.dp)
-        )
-        WidthSpacer8()
-        Text(
-            text = text,
-            fontFamily = PlusJakartaSans,
-            color = LightTernaryBlackColor,
-            fontSize = 12.sp
         )
     }
 }
