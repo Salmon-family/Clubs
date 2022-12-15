@@ -39,7 +39,8 @@ private fun TextMessage(
             Text(
                 text = date,
                 style = Typography.subtitle2,
-                color = LightQuaternaryBlackColor.copy(alpha = 0.38f))
+                color = MaterialTheme.colors.onSurface,
+            )
             SpaceHorizontal(width = 8)
             Text(modifier = Modifier
                 .background(
