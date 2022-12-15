@@ -3,6 +3,7 @@ package com.thechance.viewmodels.chats
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
+import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
 import com.thechance.viewmodels.chats.uiStates.toUiState
@@ -19,15 +20,19 @@ import javax.inject.Inject
 class ChatsViewModel @Inject constructor(
     private val getChats: GetChatsUseCase,
     private val searchForChats: SearchForChatsUseCase,
+    private val receiveNotificationUseCase: ReceiveNotificationUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatsUiState())
     val uiState = _uiState.asStateFlow()
-    val id = 10
+    val id = 2
 
 
     init {
         initChats(id)
+        viewModelScope.launch {
+            receiveNotificationUseCase()
+        }
     }
 
     private fun initChats(userID: Int) {

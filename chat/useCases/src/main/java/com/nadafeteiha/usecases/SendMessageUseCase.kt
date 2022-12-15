@@ -16,7 +16,7 @@ class SendMessageUseCase @Inject constructor(
                 friendId = userID,
                 messageText = text,
                 time = message.time.toString(),
-                to = "cD0K3w_EQ4ufkFhufn0p4C:APA91bH94OfXT508XpMJvg_uZTX8uK8p8Cx0J_6zr2ZiwzXTXxnC1hLz7KRlUE4kX_o7nCpK-TUeq80Siu6oq1K-R3VuCGLrNqC2tjouAldPbAgWxCPn6PifipcpSbYdsSjNZuYSw4wC"
+                to = "f9HAVG-GSRKYwb2i61VmPv:APA91bFhH7lx03b85S7ztuJ3rapkm1OS0TFHlA3FR2zb1rJk5cjFWtsiy_YNerP9K4Nl4cDGZuus3mDP2M0yu1QDjU9zvqaU21fNRs6FLfnzQPWUQyjY2wl1-8gSYIlZetK6q731S4eW"
             )
         )
         chatRepository.insertMessage(message)

@@ -9,15 +9,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.thechance.ui.parseHtml
 import com.thechance.ui.theme.LightPrimaryBrandColor
-import com.thechance.ui.theme.LightQuaternaryBlackColor
 import com.thechance.ui.theme.Typography
 import com.thechance.ui.theme.WhiteColor
 
@@ -42,11 +45,12 @@ private fun TextMessage(
                 color = MaterialTheme.colors.onSurface,
             )
             SpaceHorizontal(width = 8)
-            Text(modifier = Modifier
-                .background(
-                    color = color,
-                    shape = RoundedCornerShape(8.dp))
-                .padding(16.dp),
+            Text(
+                modifier = Modifier
+                    .background(
+                        color = color,
+                        shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp),
                 text = text.parseHtml(),
                 style = Typography.body1,
                 textAlign = TextAlign.Start,
@@ -62,13 +66,21 @@ fun SenderMessage(
     dateMessage: String,
     modifier: Modifier = Modifier,
 ) {
-    TextMessage(
-        text = text,
-        date = dateMessage,
-        color = LightPrimaryBrandColor,
-        textColor = WhiteColor,
-        modifier = modifier,
-    )
+    CompositionLocalProvider(
+        LocalLayoutDirection.provides(
+            value = if (LocalConfiguration.current.layoutDirection == LayoutDirection.Rtl.ordinal)
+                LayoutDirection.Rtl
+            else LayoutDirection.Ltr
+        )
+    ) {
+        TextMessage(
+            text = text,
+            date = dateMessage,
+            color = LightPrimaryBrandColor,
+            textColor = WhiteColor,
+            modifier = modifier,
+        )
+    }
 }
 
 @Composable
@@ -77,13 +89,22 @@ fun ReceiverMessage(
     dateMessage: String,
     modifier: Modifier = Modifier,
 ) {
-    TextMessage(
-        text = text,
-        date = dateMessage,
-        color = MaterialTheme.colors.background,
-        textColor = MaterialTheme.colors.onBackground,
-        modifier = modifier,
-    )
+    CompositionLocalProvider(
+        LocalLayoutDirection.provides(
+            value = if (LocalConfiguration.current.layoutDirection == LayoutDirection.Rtl.ordinal)
+                LayoutDirection.Ltr
+            else LayoutDirection.Rtl
+        )
+    ) {
+        TextMessage(
+            text = text,
+            date = dateMessage,
+            color = MaterialTheme.colors.background,
+            textColor = MaterialTheme.colors.onBackground,
+            modifier = modifier,
+        )
+    }
+
 }
 
 @Preview(showBackground = true)
