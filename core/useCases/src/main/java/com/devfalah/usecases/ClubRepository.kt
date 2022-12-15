@@ -1,9 +1,6 @@
 package com.devfalah.usecases
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Notifications
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.entities.*
 
 interface ClubRepository {
 
@@ -28,4 +25,6 @@ interface ClubRepository {
     suspend fun removeLike(userID: Int, postId: Int, type: String): Int
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+
+    suspend fun GetUserGroups(userId: Int): List<Group>
 }

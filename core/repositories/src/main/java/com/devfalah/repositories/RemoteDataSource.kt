@@ -5,6 +5,7 @@ import com.devfalah.repositories.models.ReactionDTO
 import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
+import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 
 interface RemoteDataSource {
@@ -30,5 +31,7 @@ interface RemoteDataSource {
     suspend fun removeLike(userID: Int, postId: Int, type: String): ReactionDTO
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+
+    suspend fun getUserGroups(userId: Int): List<GroupDTO>
 
 }

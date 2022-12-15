@@ -7,6 +7,7 @@ import com.devfalah.repositories.models.ReactionDTO
 import com.devfalah.repositories.models.UserDTO
 import com.devfalah.repositories.models.WallPostDTO
 import com.devfalah.repositories.models.album.AlbumDTO
+import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import javax.inject.Inject
 
@@ -64,6 +65,11 @@ class RemoteDataSourceImp @Inject constructor(
         return apiService.isFriendWith(userID = userID, otherUserID = friendID)
             .body()?.payload?.isFriend
             ?: throw Throwable("error")
+    }
+
+    override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
+        return apiService.getAllUserGroups(userId).body()?.payload?.groups
+            ?: throw Throwable("empty groups")
     }
 
 }

@@ -21,7 +21,7 @@ data class GroupDTO(
     @SerializedName("type")
     val type: String?,
     @SerializedName("coverurl")
-    val coverurl: Boolean?,
+    val coverurl: Any?,
     @SerializedName("ismember")
     val ismember: Boolean?,
     @SerializedName("OssnFile")

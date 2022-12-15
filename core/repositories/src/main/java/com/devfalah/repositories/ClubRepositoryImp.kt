@@ -1,9 +1,6 @@
 package com.devfalah.repositories
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Notifications
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.ClubRepository
 import javax.inject.Inject
@@ -54,6 +51,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean {
         return remoteDataSource.checkFriendShip(userID,friendID)
+    }
+
+    override suspend fun GetUserGroups(userId: Int): List<Group> {
+        return remoteDataSource.getUserGroups(userId).toEntity()
     }
 
 }
