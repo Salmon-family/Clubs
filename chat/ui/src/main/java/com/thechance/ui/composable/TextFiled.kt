@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -12,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.thechance.ui.R
 import com.thechance.ui.theme.LightPrimaryBrandColor
-import com.thechance.ui.theme.LightTernaryBlackColor
 import com.thechance.ui.theme.Typography
 import com.thechance.ui.theme.WhiteColor
 
@@ -26,9 +26,10 @@ fun SendTextField(
     TextField(
         modifier = modifier.fillMaxWidth(),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = WhiteColor,
-            focusedIndicatorColor = WhiteColor,
-            unfocusedIndicatorColor = WhiteColor,
+            backgroundColor = MaterialTheme.colors.background,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
         ),
         maxLines = 4,
         value = text,
@@ -37,7 +38,6 @@ fun SendTextField(
         placeholder = {
             Text(
                 text = stringResource(R.string.enter_your_message),
-                color = LightTernaryBlackColor,
                 style = Typography.body1
             )
         },
@@ -58,7 +58,7 @@ fun ButtonSend(
             .width(40.dp)
             .padding(2.dp),
         enabled = isEnabled,
-        colors = ButtonDefaults.buttonColors(LightPrimaryBrandColor),
+        colors = ButtonDefaults.buttonColors(LightPrimaryBrandColor, disabledBackgroundColor = Color.Transparent),
         shape = RoundedCornerShape(100.dp),
         elevation = ButtonDefaults.elevation(0.dp),
         contentPadding = PaddingValues(0.dp),
@@ -68,7 +68,7 @@ fun ButtonSend(
             modifier = Modifier.size(20.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.paper_airplane),
             contentDescription = "back button",
-            tint = WhiteColor,
+            tint = if (isEnabled) WhiteColor else Color.Gray,
         )
     }
 }
