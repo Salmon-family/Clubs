@@ -1,14 +1,18 @@
 package com.thechance.clubs.di
 
+import android.content.Context
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
 import com.thechance.remote.api.ChatService
 import com.thechance.remote.api.CloudMessagingService
+import com.thechance.local.DataStorePreferences
+import com.thechance.remote.ChatService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -73,4 +77,8 @@ object NetworkModule {
         return GsonConverterFactory.create()
     }
 
+    @Singleton
+    @Provides
+    fun provideDataStorePreferences(@ApplicationContext context: Context) =
+        DataStorePreferences(context)
 }

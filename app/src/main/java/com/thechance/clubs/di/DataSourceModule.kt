@@ -5,7 +5,9 @@ import com.devfalah.local.LocalDataSourceImp
 import com.devfalah.remote.RemoteDataSourceImp
 import com.devfalah.repositories.RemoteDataSource
 import com.thechance.identity.remote.IdentityDataSourceImp
-import com.thechance.identity.repositories.IdentityDataSource
+import com.thechance.identity.repositories.LocalIdentityDataSource
+import com.thechance.identity.repositories.RemoteIdentityDataSource
+import com.thechance.local.AppConfiguratorImpl
 import com.thechance.remote.ChatDataSourceImp
 import com.devfalah.repository.ChatRemoteDataSource
 import com.devfalah.repository.ChatFirebaseDataSource
@@ -32,7 +34,7 @@ abstract class DataSourceModule {
     @Binds
     abstract fun bindIdentityDataSource(
         identityDataSourceImp: IdentityDataSourceImp
-    ): IdentityDataSource
+    ): RemoteIdentityDataSource
 
     @Binds
     abstract fun bindLocalDataSource(
@@ -43,4 +45,5 @@ abstract class DataSourceModule {
     abstract fun bindChatFirebaseDataSource(
         chatDataSource: ChatFirebaseDataSourceImp
     ): ChatFirebaseDataSource
+
 }

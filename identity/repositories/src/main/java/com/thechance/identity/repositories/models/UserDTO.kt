@@ -1,8 +1,6 @@
 package com.thechance.identity.repositories.models
 
 import com.google.gson.annotations.SerializedName
-import com.thechance.identity.repositories.models.IconDto
-
 
 data class UserDTO(
     @SerializedName("birthdate")
