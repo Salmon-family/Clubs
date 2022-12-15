@@ -1,10 +1,8 @@
 package com.thechance.viewmodels.chats
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
-import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
 import com.thechance.viewmodels.chats.uiStates.toUiState
@@ -12,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,23 +31,24 @@ class ChatsViewModel @Inject constructor(
     }
 
     private fun initChats(userID: Int) {
-        refreshChats(userID)
         viewModelScope.launch {
-            getChats().collect { chats ->
+            refreshChats(userID)
+            getChats().filterNot { it.isEmpty() }.collect { chats ->
                 _uiState.update { chatsUiState ->
                     chatsUiState.copy(
-                        chats = chats.map { it.toUiState() }, isLoading = false
+                        chats = chats.map { it.toUiState() },
+                        isLoading = false
                     )
                 }
             }
         }
     }
 
-   private fun refreshChats(userID: Int){
-        viewModelScope.launch (Dispatchers.IO){
+    private fun refreshChats(userID: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                val count = getChats.refreshChats(userID,1)
+                val count = getChats.getChats(userID, 1)
                 _uiState.update { it.copy(chatsCount = count) }
             } catch (e: Exception) {
                 _uiState.update {
@@ -73,24 +73,20 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
-    fun onLoadingMore() {
-        viewModelScope.launch(Dispatchers.Default){
-            _uiState.update { it.copy(isLoadingMore = true) }
-            val chatsCount =  _uiState.value.chatsCount
-            val chatsCountLocally = _uiState.value.chats.count()
-            if (chatsCount > chatsCountLocally) {
-                try {
-                    val nextPage = chatsCountLocally / 10 + 1
-                    getChats.refreshChats(id, nextPage)
-                    _uiState.update { it.copy(isLoadingMore = false) }
-                } catch (e: Exception) {
-                    _uiState.update { it.copy(isLoadingMore = false, error = e.message.toString()) }
-                }
-            } else {
+     fun onLoadingMore() {
+        _uiState.update { it.copy(isLoadingMore = true) }
+        viewModelScope.launch {
+            try {
+                val isLastPage = getChats.loadingMoreChats(
+                    userID = id,
+                    chatsCount = _uiState.value.chatsCount,
+                    chatsCountLocally= _uiState.value.chats.size,
+                )
+                _uiState.update { it.copy(isLoadingMore = false, isLastPage = isLastPage) }
+            } catch (e: Throwable) {
                 _uiState.update { it.copy(isLastPage = true, isLoadingMore = false) }
             }
         }
     }
-
 }
 
