@@ -2,7 +2,9 @@ package com.devfalah.repository.mappers
 
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ChatLocalDto
+import com.devfalah.repository.models.ConversationDTO
 import com.thechance.entities.Chat
+import com.thechance.entities.Chats
 
 fun ChatDTO.toLocalDto(userId: Int): Chat {
     if (messageFrom?.guid == userId) {
@@ -24,6 +26,12 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
     }
 }
 
+fun ConversationDTO.toEntity(userId: Int) : Chats {
+    return Chats(
+        chats = this.list?.map{it.toLocalDto(userId)} ?: emptyList(),
+        count = this.count?:0,
+    )
+}
 fun ChatLocalDto.toEntity(): Chat {
     return Chat(
         fullName = fullName,

@@ -5,15 +5,29 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(
-    private val chatRepository: ChatRepository
+    private val chatRepository: ChatRepository,
 ) {
-    suspend operator fun invoke(userID: Int): Flow<List<Chat>> {
-        refreshChats(userID)
+    suspend operator fun invoke(): Flow<List<Chat>> {
         return chatRepository.getChats()
     }
 
-    private suspend fun refreshChats(userID: Int) {
-        val chats = chatRepository.getChats(userID)
-        chatRepository.insertChats(chats)
+    suspend fun getChats(userID: Int, page: Int): Int {
+        val chats = chatRepository.getChats(userID, page)
+        chatRepository.insertChats(chats.chats)
+        return chats.count
+    }
+
+    suspend fun loadingMoreChats(
+        userID: Int,
+        chatsCount: Int,
+        chatsCountLocally: Int,
+    ): Boolean {
+        return if (chatsCount > chatsCountLocally) {
+            val nextPage = chatsCountLocally / 10 + 1
+            getChats(userID, nextPage)
+            false
+        } else {
+            true
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.devfalah.repository
 import com.devfalah.repository.mappers.*
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.Chat
+import com.thechance.entities.Chats
 import com.thechance.entities.Message
 import com.thechance.entities.Notification
 import kotlinx.coroutines.flow.Flow
@@ -19,12 +20,12 @@ class ChatRepositoryImp @Inject constructor(
         chatLocalDataSource.insertChats(list.map { it.toLocalDto() })
     }
 
-    override fun getChats(): Flow<List<Chat>> {
+    override suspend  fun getChats(): Flow<List<Chat>> {
         return chatLocalDataSource.getChats().map { list -> list.map { it.toEntity() } }
     }
 
-    override suspend fun getChats(userID: Int): List<Chat> {
-        return chatRemoteDataSource.getChats(userID).map { it.toLocalDto(userId = userID) }
+    override suspend fun getChats(userID: Int,page: Int): Chats {
+        return chatRemoteDataSource.getChats(userID,page).toEntity(userID)
     }
 
     override fun getChats(query: String): Flow<List<Chat>> {

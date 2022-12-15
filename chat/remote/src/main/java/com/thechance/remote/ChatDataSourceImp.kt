@@ -2,6 +2,7 @@ package com.thechance.remote
 
 import com.devfalah.repository.ChatRemoteDataSource
 import com.devfalah.repository.models.ChatDTO
+import com.devfalah.repository.models.ConversationDTO
 import com.devfalah.repository.models.NotificationDto
 import com.thechance.remote.api.ChatService
 import com.thechance.remote.api.CloudMessagingService
@@ -14,8 +15,8 @@ class ChatDataSourceImp @Inject constructor(
     private val cloudMessagingService: CloudMessagingService,
 ) : ChatRemoteDataSource {
 
-    override suspend fun getChats(userID: Int): List<ChatDTO> {
-        return wrap { chatService.getRecentMessages(userID) }.list ?: emptyList()
+    override suspend fun getChats(userID: Int,page: Int): ConversationDTO {
+        return wrap { chatService.getRecentMessages(userID,page) }
     }
 
     override suspend fun getMessagesWithFriend(userID: Int, friendID: Int): List<ChatDTO> {
