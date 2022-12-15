@@ -44,7 +44,7 @@ fun ProfileImageWithIcon(
                 modifier = Modifier
                     .padding(start = 8.dp, top = 80.dp)
                     .size(40.dp)
-                    .RemoveRippleEffect { onClickIcon }
+                    .RemoveRippleEffect { onClickIcon() }
                     .align(Alignment.BottomEnd)
                     .clip(CircleShape)
                     .background(LightSecondaryBrandColor)

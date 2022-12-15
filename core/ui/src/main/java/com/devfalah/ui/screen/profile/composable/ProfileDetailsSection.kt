@@ -135,7 +135,7 @@ fun ProfileDetailsSection(
 
             ProfileImageWithIcon(
                 profilePicture = userDetails.profilePicture,
-                onClickIcon = onClick,
+                onClickIcon = onClick ,
                 painter = GetPainterProfileIcon(userDetails)
             )
         }

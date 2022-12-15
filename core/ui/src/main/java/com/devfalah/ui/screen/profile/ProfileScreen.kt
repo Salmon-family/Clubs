@@ -74,11 +74,7 @@ fun ProfileScreen(
         },
         onRefresh = viewModel::swipeToRefresh,
         onCreatePost = { navController.navigateToCreatePost(state.userDetails.userID) },
-        onClickProfile = {
-            if (!state.isMyProfile) {
-                navController.navigateToProfile(it)
-            }
-        },
+        onClickProfile = { if (!state.isMyProfile) { navController.navigateToProfile(it) } },
         onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) }
