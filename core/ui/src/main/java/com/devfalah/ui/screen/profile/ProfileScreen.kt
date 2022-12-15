@@ -80,7 +80,7 @@ fun ProfileScreen(
         onOpenLinkClick = { openBrowser(context, it) }
     )
 
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = state.minorError) {
         if (state.minorError.isNotEmpty()) {
             Toast.makeText(context, state.minorError, Toast.LENGTH_LONG).show()
         }
@@ -158,10 +158,10 @@ fun ProfileContent(
                     state = it,
                     isMyPost = true,
                     isContentExpandable = true,
-                    onClickLike = { onClickLike(it) },
-                    onClickComment = { onClickComment(it) },
-                    onClickSave = { onClickSave(it) },
-                    onClickPostSetting = { onClickPostSetting(it) },
+                    onClickLike = onClickLike,
+                    onClickComment = onClickComment,
+                    onClickSave = onClickSave,
+                    onClickPostSetting = onClickPostSetting,
                     onClickProfile = onClickProfile,
                     onOpenLinkClick = onOpenLinkClick,
                 )
