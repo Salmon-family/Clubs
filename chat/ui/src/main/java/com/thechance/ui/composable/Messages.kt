@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,7 +48,7 @@ private fun TextMessage(
                 text = text,
                 style = Typography.body1,
                 textAlign = TextAlign.Start,
-                color = textColor
+                color = textColor,
             )
         }
     }
@@ -77,8 +78,8 @@ fun ReceiverMessage(
     TextMessage(
         text = text,
         date = dateMessage,
-        color = WhiteColor,
-        textColor = Color.Black,
+        color = MaterialTheme.colors.background,
+        textColor = MaterialTheme.colors.onBackground,
         modifier = modifier,
     )
 }

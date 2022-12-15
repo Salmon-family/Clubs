@@ -3,6 +3,7 @@ package com.thechance.ui.composable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -17,11 +18,12 @@ fun BackButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    IconButton(
-        onClick = onClick,
-        modifier = modifier.padding(top = 5.dp)
-    ) {
-        Icon(ImageVector.vectorResource(id = R.drawable.arrow_icon), "backIcon")
+    IconButton(onClick = onClick, modifier = modifier.padding(top = 5.dp)) {
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.arrow_icon),
+            contentDescription = "backIcon",
+            tint = MaterialTheme.colors.onBackground,
+        )
     }
 }
 

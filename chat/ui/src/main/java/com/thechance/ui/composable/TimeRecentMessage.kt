@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.thechance.ui.theme.BlackColor
 import com.thechance.ui.theme.PlusJakartaSans
 
 @Composable
@@ -17,8 +16,6 @@ fun TimeRecentMessage(
         text = timeRecent,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        color =
-        BlackColor.copy(alpha = 0.6f),
         modifier = modifier,
         fontFamily = PlusJakartaSans
     )
