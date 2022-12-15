@@ -2,6 +2,7 @@ package com.devfalah.viewmodels.postDetails
 
 import android.util.Log
 import androidx.compose.runtime.toMutableStateList
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.SetLikeUseCase
@@ -24,13 +25,14 @@ class PostDetailsViewModel @Inject constructor(
     private val deleteCommentUseCase: DeleteCommentUseCase,
     private val setLikeUseCase: SetLikeUseCase,
     private val setEditCommentUseCase: SetEditCommentUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    private val userId = checkNotNull(savedStateHandle["userId"]).toString().toInt()
+    private val postId = checkNotNull(savedStateHandle["postId"]).toString().toInt()
 
     private val _uiState = MutableStateFlow(PostDetailsUIState())
     val uiState = _uiState.asStateFlow()
-
-    private val userId = 7
-    private val postId = 158
 
     init {
         getPostDetails(userId, postId)

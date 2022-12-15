@@ -100,12 +100,15 @@ fun PostDetailsContent(
                             }
                             .fillMaxWidth(),
                         state = state.postDetails,
-                        isMyProfile = state.isMyProfile,
+                        isMyPost = state.isMyProfile,
                         onClickLike = { onClickLike(it) },
                         onClickComment = { onClickComment(it) },
                         onClickSave = { onClickSave(it) },
                         onClickPostSetting = { },
-                        isContentExpandable = true
+                        isContentExpandable = true,
+                        maxLineContentExpand = 5,
+                        onClickProfile = { },
+                        onOpenLinkClick = { },
                     )
                 }
                 item {

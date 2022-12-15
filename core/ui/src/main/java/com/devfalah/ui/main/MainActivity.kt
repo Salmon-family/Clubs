@@ -9,7 +9,6 @@ import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.theme.ClubsTheme
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
