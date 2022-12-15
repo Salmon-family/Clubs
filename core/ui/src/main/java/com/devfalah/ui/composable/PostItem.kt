@@ -47,12 +47,14 @@ fun PostItem(
                 onClickProfile = onClickProfile,
                 isMyProfile = isMyPost
             )
+
             PostContent(
                 post = state,
                 maxLineToExpand = maxLineContentExpand,
                 contentExpandable = isContentExpandable,
                 onOpenLinkClick = onOpenLinkClick
             )
+
             PostBottomAction(state, onClickLike, onClickComment, onClickSave)
         }
     }

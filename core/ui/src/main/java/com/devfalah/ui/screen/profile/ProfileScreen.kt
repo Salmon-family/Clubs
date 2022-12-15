@@ -83,6 +83,13 @@ fun ProfileScreen(
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) }
     )
+
+    LaunchedEffect(key1 = true) {
+        if (state.minorError.isNotEmpty()) {
+            Toast.makeText(context, state.minorError, Toast.LENGTH_LONG).show()
+        }
+    }
+
 }
 
 @Composable

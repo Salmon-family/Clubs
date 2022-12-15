@@ -191,6 +191,7 @@ class ProfileViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
+                Log.e("Test", t.message.toString())
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
