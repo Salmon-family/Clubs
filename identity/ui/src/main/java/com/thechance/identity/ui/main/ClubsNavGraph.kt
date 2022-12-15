@@ -34,7 +34,7 @@ fun ClubsNavGraph(
     } else {
         WELCOME_ON_BOARDING_Route
     }
-    NavHost(navController = navController, startDestination = CLUBS_ROUTE) {
+    NavHost(navController = navController, startDestination = startRoute) {
         welcomeOnBoardRoute(navController)
         onBoardingPagerRoute(navController)
         signupEmailRoute(navController, signupViewModel)

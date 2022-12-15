@@ -49,6 +49,7 @@ fun SignupBirthdateAndGenderScreen(
                 Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
             } else {
                 navController.navigateToClubs()
+                Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
             }
         }
     )
