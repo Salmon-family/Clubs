@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.thechance.ui.parseHtml
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.ui.theme.LightQuaternaryBlackColor
 import com.thechance.ui.theme.Typography
@@ -45,7 +46,7 @@ private fun TextMessage(
                     color = color,
                     shape = RoundedCornerShape(8.dp))
                 .padding(16.dp),
-                text = text,
+                text = text.parseHtml(),
                 style = Typography.body1,
                 textAlign = TextAlign.Start,
                 color = textColor,

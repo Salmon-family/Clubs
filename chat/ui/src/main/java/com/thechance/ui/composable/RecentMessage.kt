@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import com.thechance.ui.parseHtml
 import com.thechance.ui.theme.PlusJakartaSans
 
 @Composable
@@ -14,7 +15,7 @@ fun RecentMessage(
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = message,
+        text = message.parseHtml(),
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
         modifier = modifier,

@@ -1,8 +1,18 @@
 package com.thechance.ui
 
+import android.os.Build
+import android.text.Html
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+
+fun String.parseHtml(): String{
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).toString()
+    } else {
+        Html.fromHtml(this).toString()
+    }
+}
 
 fun Long.toTime(): String {
     val createdTimeDate = Date(this * 1000).time
