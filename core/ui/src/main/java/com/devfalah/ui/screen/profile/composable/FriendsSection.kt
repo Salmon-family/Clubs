@@ -25,6 +25,7 @@ import com.devfalah.viewmodels.userProfile.FriendUIState
 @Composable
 fun FriendsSection(
     friends: List<FriendUIState>,
+    totalFriends: Int,
     modifier: Modifier = Modifier
 ) {
     Column(modifier.fillMaxWidth()) {
@@ -41,7 +42,7 @@ fun FriendsSection(
                 fontSize = 14.sp
             )
             Text(
-                text = "${friends.size} ${stringResource(id = R.string.friends)}",
+                text = "$totalFriends ${stringResource(id = R.string.friends)}",
                 fontFamily = PlusJakartaSans,
                 color = LightTernaryBlackColor,
                 fontSize = 12.sp

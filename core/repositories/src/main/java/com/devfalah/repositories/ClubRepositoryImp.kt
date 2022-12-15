@@ -28,7 +28,7 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getUserFriendRequests(userID = userID).toEntity()
     }
 
-    override suspend fun getUserFriends(userID: Int): List<User> {
+    override suspend fun getUserFriends(userID: Int): Friends {
         return remoteDataSource.getUserFriends(userID).toEntity()
     }
 
@@ -93,6 +93,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun savedPosted(post: Post) {
         localDataSource.insertPost(post.toEntity())
+    }
+
+    override suspend fun deletePost(userId: Int, postId: Int): Boolean {
+        return remoteDataSource.deletePostById(userId, postId)
     }
 
     override suspend fun deletePost(postId: Int) {

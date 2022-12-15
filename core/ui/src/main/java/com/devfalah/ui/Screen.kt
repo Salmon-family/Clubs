@@ -15,5 +15,8 @@ sealed class Screen(
     object Profile : Screen(title = "Profile Screen", screen_route = "ProfileScreen")
     object FriendRequestRoute : Screen(title = "Friend Request", screen_route = "FriendRequest")
     object CreatePost : Screen(title = "Create Post", screen_route = "CreatePost")
+    object Friends : Screen(title = "Friends Screen", screen_route = "AllFriendsScreen")
+    object SavedPosts : Screen(title = "favorite Screen", screen_route = "SavedPostsScreen")
+
 
 }

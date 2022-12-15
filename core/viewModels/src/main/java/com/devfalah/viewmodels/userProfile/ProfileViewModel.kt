@@ -11,27 +11,10 @@ import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
-
-
-/**
- * Need To Do:
- * change cover or profile photo.
- * display youtube view.
-
- *
- * navigate to :
- * image in full screen.
- * comments
- * messages
- * external URL
- * selected/all friends
- *
- * */
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
@@ -42,6 +25,8 @@ class ProfileViewModel @Inject constructor(
     val likeUseCase: SetLikeUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val changeProfileImageUseCase: ChangeProfileImageUseCase,
+    val deletePostUseCase: DeletePostUseCase,
+    val getUser: GetUserIdUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -50,16 +35,26 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val userId = 6
 
     init {
-        getData()
+        getUserID()
     }
 
     fun getData() {
-        getUserDetails(userId, ownerID)
+        getUserDetails(uiState.value.id, ownerID)
+        getProfilePost(uiState.value.id, ownerID)
         getUserFriends(ownerID)
-        getProfilePost(userId, ownerID)
+    }
+
+    private fun getUserID() {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(id = getUser()) }
+                getData()
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(majorError = t.message.toString()) }
+            }
+        }
     }
 
     private fun getUserDetails(userID: Int, profileOwnerID: Int) {
@@ -84,7 +79,13 @@ class ProfileViewModel @Inject constructor(
     private fun getUserFriends(profileOwnerID: Int) {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(friends = getUserFriendsUseCase(profileOwnerID).toFriendsUIState()) }
+                val friends = getUserFriendsUseCase(profileOwnerID)
+                _uiState.update {
+                    it.copy(
+                        friends = friends.friends.toFriendsUIState(),
+                        totalFriends = friends.total
+                    )
+                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
             }
@@ -109,7 +110,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val totalLikes = likeUseCase(
-                    postID = post.postId, userId = userId,
+                    postID = post.postId, userId = uiState.value.id,
                     isLiked = post.isLikedByUser
                 )
                 val updatedPost = post.copy(
@@ -135,6 +136,18 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 favoritePostUseCase(post.toEntity())
+                _uiState.update {
+                    it.copy(
+                        posts = _uiState.value.posts
+                            .map {
+                                if (it.postId == post.postId) {
+                                    it.copy(isSaved = true)
+                                } else {
+                                    it
+                                }
+                            }
+                    )
+                }
             } catch (t: Throwable) {
                 t.message.toString()
             }
@@ -144,7 +157,7 @@ class ProfileViewModel @Inject constructor(
     fun onClickAddFriend() {
         viewModelScope.launch {
             try {
-                val success = addFriendUseCase(userId, ownerID)
+                val success = addFriendUseCase(uiState.value.id, ownerID)
                 if (success) {
                     _uiState.update { it.copy(userDetails = it.userDetails.copy(areFriends = true)) }
                 }
@@ -170,7 +183,8 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(loading = true) }
-                val posts = getProfilePostUseCase.loadMore(userId, ownerID, type).toUIState()
+                val posts =
+                    getProfilePostUseCase.loadMore(uiState.value.id, ownerID, type).toUIState()
                 _uiState.update { it.copy(loading = false, posts = posts) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
@@ -179,7 +193,21 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onClickPostSetting(post: PostUIState) {
-
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(loading = true) }
+                if (deletePostUseCase(_uiState.value.userDetails.userID, post.postId)) {
+                    _uiState.update {
+                        it.copy(
+                            loading = false,
+                            posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                    }
+                }
+            } catch (t: Throwable) {
+                Log.e("Test", t.message.toString())
+                _uiState.update { it.copy(minorError = t.message.toString()) }
+            }
+        }
     }
 
 }

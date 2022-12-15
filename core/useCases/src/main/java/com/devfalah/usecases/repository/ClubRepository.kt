@@ -12,7 +12,7 @@ interface ClubRepository {
 
     suspend fun getUserFriendRequests(userID: Int): List<User>
 
-    suspend fun getUserFriends(userID: Int): List<User>
+    suspend fun getUserFriends(userID: Int): Friends
 
     suspend fun getNotifications(userID: Int): List<Notification>
 
@@ -45,5 +45,7 @@ interface ClubRepository {
     suspend fun savedPosted(post: Post)
 
     suspend fun deletePost(postId: Int)
+
+    suspend fun deletePost(userId: Int, postId: Int): Boolean
 
 }

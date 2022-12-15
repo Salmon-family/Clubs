@@ -12,8 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,6 +23,10 @@ import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
+import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.screen.createPost.navigateToCreatePost
+import com.devfalah.ui.screen.friends.navigateToFriends
+import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -70,14 +73,23 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigate(Screen.CreatePost.screen_route) },
+        onCreatePost = { navController.navigateToCreatePost(state.userDetails.userID) },
         onClickProfile = {
             if (!state.isMyProfile) {
                 navController.navigateToProfile(it)
             }
         },
-        onRetry = viewModel::getData
+        onRetry = viewModel::getData,
+        onClickFriends = { navController.navigateToFriends(it) },
+        onOpenLinkClick = { openBrowser(context, it) }
     )
+
+    LaunchedEffect(key1 = true) {
+        if (state.minorError.isNotEmpty()) {
+            Toast.makeText(context, state.minorError, Toast.LENGTH_LONG).show()
+        }
+    }
+
 }
 
 @Composable
@@ -94,7 +106,9 @@ fun ProfileContent(
     onClickPostSetting: (PostUIState) -> Unit,
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onClickFriends: (Int) -> Unit,
+    onOpenLinkClick: (String) -> Unit
 ) {
     if (state.majorError.isNotEmpty()) {
         Box(modifier = Modifier.fillMaxSize())
@@ -108,7 +122,7 @@ fun ProfileContent(
         ManualPager(
             swipeRefreshState = swipeRefreshState,
             onRefresh = onRefresh,
-            items = state.posts,
+            items = state.posts.map { it.postId },
             scrollState = scrollState,
             isRefreshing = state.loading,
             error = state.minorError,
@@ -117,15 +131,28 @@ fun ProfileContent(
             item(key = state.userDetails.userID) {
                 ProfileDetailsSection(
                     state.userDetails,
-                    onChangeProfileImage = onChangeProfileImage
+                    onChangeProfileImage = onChangeProfileImage,
+                    onSendRequestClick = onClickAddFriend
                 )
             }
-            item { FriendsSection(state.friends, modifier = Modifier.padding(horizontal = 16.dp)) }
-            if (state.isMyProfile || state.userDetails.areFriends){
+            item {
+                FriendsSection(
+                    state.friends,
+                    totalFriends = state.totalFriends,
+                    modifier = Modifier
+                        .RemoveRippleEffect { onClickFriends(state.userDetails.userID) }
+                        .padding(horizontal = 16.dp)
+                )
+            }
+            if (state.isMyProfile || state.userDetails.areFriends) {
                 item {
                     PostCreatingSection(
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        onCreatePost = onCreatePost,
+                        onCreatePost = if (state.isMyProfile) {
+                            onCreatePost
+                        } else {
+                            onClickSendMessage
+                        },
                         isMyProfile = state.isMyProfile
                     )
                 }
@@ -139,7 +166,8 @@ fun ProfileContent(
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },
                     onClickPostSetting = { onClickPostSetting(it) },
-                    onClickProfile = onClickProfile
+                    onClickProfile = onClickProfile,
+                    onOpenLinkClick = onOpenLinkClick,
                 )
             }
         }
@@ -181,3 +209,4 @@ private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
         }
     }
 }
+

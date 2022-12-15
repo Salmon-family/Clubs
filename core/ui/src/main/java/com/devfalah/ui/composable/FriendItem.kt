@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.friendrequest.friendcomposable
+package com.devfalah.ui.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,34 +11,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.devfalah.ui.R
-import com.devfalah.ui.composable.CircleProfileImage
-import com.devfalah.ui.composable.HeightSpacer4
-import com.devfalah.ui.composable.UserIconButton
-import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.viewmodels.friendRequest.UserState
+import com.devfalah.viewmodels.friends.FriendUIState
 
 @Composable
-fun FriendRequestItem(
-    userState: UserState,
-    onAcceptButtonClick: (Int) -> Unit,
-    onDeleteButtonClick: (Int) -> Unit,
+fun FriendItem(
     modifier: Modifier = Modifier,
-    onClickOpenProfile: (Int) -> Unit
+    state: FriendUIState,
+    onOpenProfileClick: (Int) -> Unit
 ) {
     Row(
         modifier = modifier
+            .RemoveRippleEffect { onOpenProfileClick(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(LightCardBackgroundColor)
@@ -46,8 +39,7 @@ fun FriendRequestItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CircleProfileImage(
-            modifier = Modifier.RemoveRippleEffect { onClickOpenProfile(userState.userID) },
-            painter = rememberAsyncImagePainter(model = userState.profileImage),
+            painter = rememberAsyncImagePainter(model = state.profilePictureUrl),
             size = 56
         )
 
@@ -57,7 +49,7 @@ fun FriendRequestItem(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = userState.name,
+                text = state.name,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
                 color = LightPrimaryBlackColor,
@@ -66,7 +58,7 @@ fun FriendRequestItem(
             )
             HeightSpacer4()
             Text(
-                text = userState.title,
+                text = state.title,
                 textAlign = TextAlign.Start,
                 fontSize = 12.sp,
                 color = LightPrimaryBrandColor,
@@ -75,34 +67,16 @@ fun FriendRequestItem(
             )
         }
 
-        WidthSpacer16()
-
-        UserIconButton(
-            userState = userState,
-            onButtonClick = { onDeleteButtonClick(userState.userID) },
-            iconsSize = 20.dp,
-            painter = painterResource(id = R.drawable.ic_x)
-        )
-
-        WidthSpacer16()
-
-        UserIconButton(
-            userState = userState,
-            onButtonClick = { onAcceptButtonClick(userState.userID) },
-            iconsSize = 32.dp,
-            painter = painterResource(id = R.drawable.ic_accept_filled)
-        )
-
     }
 }
 
 @Preview(showSystemUi = false)
 @Composable
-fun PreviewFoo() {
-    FriendRequestItem(
-        userState = UserState(1, "Mustafa Ahmed", "Android Developer"),
-        onAcceptButtonClick = {},
-        onDeleteButtonClick = {},
-        onClickOpenProfile = { 6 }
+fun PreviewFriendItem() {
+    FriendItem(
+        state = FriendUIState(
+            1, "", "Test Test", " Android Developer"
+        ),
+        onOpenProfileClick = {},
     )
 }

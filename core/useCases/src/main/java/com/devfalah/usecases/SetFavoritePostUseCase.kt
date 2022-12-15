@@ -23,7 +23,7 @@ class SetFavoritePostUseCase @Inject constructor(
         clubRepository.savedPosted(post)
     }
 
-    private suspend fun deletePostLocally(postId: Int) {
+    suspend fun deletePostLocally(postId: Int) {
         clubRepository.deletePost(postId)
     }
 }

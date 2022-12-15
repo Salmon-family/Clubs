@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetNotificationsUseCase
+import com.devfalah.usecases.GetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,13 +15,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
-    private val getNotifications: GetNotificationsUseCase
+    private val getNotifications: GetNotificationsUseCase,
+    val getUser: GetUserIdUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NotificationsUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(userId = getUser()) }
+                getUserNotifications()
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString()) }
+            }
+        }
+    }
+
+    private fun getUserNotifications() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {

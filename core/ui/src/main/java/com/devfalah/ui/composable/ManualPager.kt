@@ -31,7 +31,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 fun ManualPager(
     swipeRefreshState: SwipeRefreshState,
     onRefresh: (Int) -> Unit,
-    items: List<PostUIState>,
+    items: List<Int>,
     scrollState: LazyListState,
     isRefreshing: Boolean,
     error: String,
@@ -85,7 +85,7 @@ fun ManualPager(
 @Composable
 private fun loadMore(
     scrollState: LazyListState,
-    items: List<PostUIState>,
+    items: List<Int>,
     onRefresh: (Int) -> Unit
 ) {
     val comparedItemIndex = if (items.size > 5) {
@@ -96,7 +96,7 @@ private fun loadMore(
 
     if (!scrollState.isScrollingUp() && !scrollState.isScrollInProgress
         && comparedItemIndex > 0 && scrollState.firstVisibleItemIndex < items.lastIndex
-        && (items[scrollState.firstVisibleItemIndex].postId != items[comparedItemIndex].postId)
+        && (items[scrollState.firstVisibleItemIndex] != items[comparedItemIndex])
     ) {
         onRefresh(Constants.SWIPE_DOWN)
     }

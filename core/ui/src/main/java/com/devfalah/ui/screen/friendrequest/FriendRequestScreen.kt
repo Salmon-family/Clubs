@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
 import com.devfalah.viewmodels.friendRequest.FriendRequestViewModel
@@ -25,12 +26,13 @@ fun FriendRequestScreen(
     navController: NavController,
     friendRequestViewModel: FriendRequestViewModel = hiltViewModel()
 ) {
-    val state by friendRequestViewModel.uiStateFriendRequests.collectAsState()
+    val state by friendRequestViewModel.uiState.collectAsState()
 
     FriendRequestsContent(
         friendRequestUiState = state,
         onAcceptButtonClick = friendRequestViewModel::acceptFriendRequest,
-        onDeleteButtonClick = friendRequestViewModel::deniedFriendRequest
+        onDeleteButtonClick = friendRequestViewModel::deniedFriendRequest,
+        onClickOpenProfile = { navController.navigateToProfile(it) }
     )
 }
 
@@ -39,12 +41,15 @@ fun FriendRequestScreen(
 fun FriendRequestsContent(
     friendRequestUiState: FriendRequestUiState,
     onAcceptButtonClick: (Int) -> Unit,
-    onDeleteButtonClick: (Int) -> Unit
+    onDeleteButtonClick: (Int) -> Unit,
+    onClickOpenProfile: (Int) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.background(LightBackgroundColor).fillMaxSize(),
+        modifier = Modifier
+            .background(LightBackgroundColor)
+            .fillMaxSize(),
     ) {
         items(
             items = friendRequestUiState.friendRequests,
@@ -52,6 +57,7 @@ fun FriendRequestsContent(
         ) { userState ->
             FriendRequestItem(
                 userState = userState,
+                onClickOpenProfile = onClickOpenProfile,
                 onAcceptButtonClick = onAcceptButtonClick,
                 onDeleteButtonClick = onDeleteButtonClick,
                 modifier = Modifier.animateItemPlacement()

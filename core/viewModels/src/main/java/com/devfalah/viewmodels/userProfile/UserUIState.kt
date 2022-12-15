@@ -1,9 +1,11 @@
 package com.devfalah.viewmodels.userProfile
 
 data class UserUIState(
+    val id: Int = 0,
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
     val friends: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
+    val totalFriends: Int = 0,
     val isMyProfile: Boolean = true,
     val loading: Boolean = false,
     val majorError: String = "",
