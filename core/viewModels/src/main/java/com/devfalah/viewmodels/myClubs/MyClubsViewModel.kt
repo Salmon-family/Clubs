@@ -33,6 +33,6 @@ class MyClubsViewModel @Inject constructor(
     }
 
     fun onClubClicked(myClub: MyClubsState) {
-
+        Log.w("club_Clicked", myClub.title)
     }
 }
