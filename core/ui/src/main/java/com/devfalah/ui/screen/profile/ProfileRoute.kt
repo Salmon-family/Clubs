@@ -7,23 +7,20 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.devfalah.viewmodels.userProfile.ProfileArgs
 
-
-const val profileId = "profileId"
+const val PROFILE_SCREEN = "PROFILE_SCREEN"
 fun NavController.navigateToProfile(id: Int) {
     navigate("${PROFILE_SCREEN}/${id}")
 }
 
-const val PROFILE_SCREEN = "PROFILE_SCREEN"
-
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.profileRoute(navController: NavController) {
     composable(
-        route = "${PROFILE_SCREEN}/{${profileId}}",
+        route = "${PROFILE_SCREEN}/{${ProfileArgs.PROFILE_OWNER_ID_ARG}}",
         arguments = listOf(
-            navArgument(profileId) { NavType.IntType }
+            navArgument(ProfileArgs.PROFILE_OWNER_ID_ARG) { NavType.IntType }
         )
-
     ) {
         ProfileScreen(navController)
     }

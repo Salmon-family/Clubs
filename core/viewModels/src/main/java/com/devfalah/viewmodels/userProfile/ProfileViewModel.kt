@@ -30,8 +30,7 @@ class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val ownerID = checkNotNull(savedStateHandle["profileId"]).toString().toInt()
-
+    private val args = ProfileArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
@@ -41,9 +40,9 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getData() {
-        getUserDetails(uiState.value.id, ownerID)
-        getProfilePost(uiState.value.id, ownerID)
-        getUserFriends(ownerID)
+        getUserDetails(uiState.value.id, args.ownerId)
+        getProfilePost(uiState.value.id, args.ownerId)
+        getUserFriends(args.ownerId)
     }
 
     private fun getUserID() {
@@ -157,7 +156,7 @@ class ProfileViewModel @Inject constructor(
     fun onClickAddFriend() {
         viewModelScope.launch {
             try {
-                val success = addFriendUseCase(uiState.value.id, ownerID)
+                val success = addFriendUseCase(uiState.value.id, args.ownerId)
                 if (success) {
                     _uiState.update { it.copy(userDetails = it.userDetails.copy(areFriends = true)) }
                 }
@@ -171,7 +170,7 @@ class ProfileViewModel @Inject constructor(
         //should display dialog chose from album or select from yours.
         viewModelScope.launch {
             try {
-                val updatedUser = changeProfileImageUseCase(userId = ownerID, file)
+                val updatedUser = changeProfileImageUseCase(userId = args.ownerId, file)
                 _uiState.update { it.copy(userDetails = it.userDetails.copy(profilePicture = updatedUser.profileUrl)) }
             } catch (e: Throwable) {
                 _uiState.update { it.copy(loading = false, majorError = e.message.toString()) }
@@ -184,7 +183,7 @@ class ProfileViewModel @Inject constructor(
             try {
                 _uiState.update { it.copy(loading = true) }
                 val posts =
-                    getProfilePostUseCase.loadMore(uiState.value.id, ownerID, type).toUIState()
+                    getProfilePostUseCase.loadMore(uiState.value.id, args.ownerId, type).toUIState()
                 _uiState.update { it.copy(loading = false, posts = posts) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
