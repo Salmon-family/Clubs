@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,11 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
+import com.devfalah.ui.composable.CircleProfileImage
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
@@ -29,21 +32,21 @@ fun MyClubCard(
     onClubClick: (MyClubsState) -> Unit
     ) {
     Row(modifier = Modifier
+        .clip(RoundedCornerShape(20.dp))
         .fillMaxWidth()
         .background(Color.White)
-        .padding(horizontal = 16.dp, vertical = 8.dp)
-        .clickable { onClubClick(myClub) },
+        .clickable { onClubClick(myClub) }
+        .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
 
 
     ) {
 
-        Image(painter = rememberAsyncImagePainter(model = myClub.coverUrl),
-            contentDescription = "my club cover",
-            modifier = Modifier
-                .size(64.dp)
-                .clip(CircleShape)
+        CircleProfileImage(
+            painter = rememberAsyncImagePainter(model = myClub.coverUrl,
+                error = painterResource(id = R.drawable.user_image)),
+            size = 64,
         )
 
         Column(modifier = Modifier
