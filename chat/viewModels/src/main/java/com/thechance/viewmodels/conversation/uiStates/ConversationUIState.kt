@@ -6,7 +6,9 @@ data class ConversationUIState(
     val message: String = "",
     val isLoading: Boolean = false,
     val error: String? = "",
+    val isLastPage: Boolean = false,
+    val messagesCount: Int = 0,
+    val isLoadingMore: Boolean = false,
 )
-
 
 
