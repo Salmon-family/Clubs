@@ -31,6 +31,7 @@ fun MyClubCard(
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(Color.White)
+        .padding(horizontal = 16.dp, vertical = 8.dp)
         .clickable { onClubClick(myClub) },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
