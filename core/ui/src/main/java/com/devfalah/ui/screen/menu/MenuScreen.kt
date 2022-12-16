@@ -1,39 +1,81 @@
 package com.devfalah.ui.screen.menu
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
+import com.devfalah.ui.screen.menu.composable.AccountSection
+import com.devfalah.ui.screen.menu.composable.PreferencesSection
+import com.devfalah.ui.screen.menu.composable.TopSection
+import com.devfalah.ui.theme.LightBackgroundColor
 
 @Composable
 fun MenuScreen(
     navController: NavController,
 ) {
-
     MenuContent(
-        onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
-        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) }
+        onClickProfile = {},
+        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) },
+        onClickAccountSettings = {},
+        onClickFriendsRequests = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
+        onClickBlockedPeople = {},
+        onClickTheme = {},
+        onClickLanguage = {}
     )
 }
 
 @Composable
 fun MenuContent(
-    onClickFriends: () -> Unit,
-    onClickSavedPosts: () -> Unit
+    onClickProfile: () -> Unit,
+    onClickSavedPosts: () -> Unit,
+    onClickAccountSettings: () -> Unit,
+    onClickFriendsRequests: () -> Unit,
+    onClickBlockedPeople: () -> Unit,
+    onClickTheme: () -> Unit,
+    onClickLanguage: () -> Unit
 ) {
-    Column() {
-        Text(text = "Menu", fontSize = 24.sp)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(LightBackgroundColor)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
 
-        Button(onClick = { onClickFriends() }) {
-            Text(text = "Friend Request")
+        item {
+            TopSection(
+                onClickProfile = onClickProfile,
+                onClickSavedThreads = onClickSavedPosts
+            )
         }
 
-        Button(onClick = { onClickSavedPosts() }) {
-            Text(text = "Saved Posts")
+        item {
+            AccountSection(
+                onClickAccountSettings = onClickAccountSettings,
+                onClickFriendsRequests = onClickFriendsRequests,
+                onClickBlockedPeople = onClickBlockedPeople
+            )
         }
 
+        item {
+            PreferencesSection(
+                onClickTheme = onClickTheme,
+                onClickLanguage = onClickLanguage
+            )
+        }
     }
+}
+
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewMenu() {
+    MenuContent({}, {}, {}, {}, {}, {}, {})
 }

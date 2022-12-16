@@ -30,4 +30,13 @@
 
 
     <string name="home">Home</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="friends_requests">Friends Requests</string>
+    <string name="blocked_people">Blocked People</string>
+    <string name="account_section">Account</string>
+    <string name="preferences_section">Preferences</string>
+    <string name="theme">Theme</string>
+    <string name="language">Language</string>
+    <string name="my_account">My Account</string>
+    <string name="saved_threads">Saved Threads</string>
 </resources>
