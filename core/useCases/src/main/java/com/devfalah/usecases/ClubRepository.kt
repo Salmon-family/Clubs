@@ -26,5 +26,5 @@ interface ClubRepository {
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
 
-    suspend fun GetUserGroups(userId: Int): List<Group>
+    suspend fun GetUserGroups(userId: Int): List<Club>
 }

@@ -1,6 +1,6 @@
 package com.devfalah.entities
 
-data class Group(
+data class Club(
     val title: String,
     val description: String,
     val coverUrl: Any,

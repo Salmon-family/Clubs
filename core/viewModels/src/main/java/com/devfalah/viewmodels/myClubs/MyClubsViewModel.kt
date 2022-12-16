@@ -3,7 +3,7 @@ package com.devfalah.viewmodels.myClubs
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetUserGroupsUseCase
+import com.devfalah.usecases.GetUserClubsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyClubsViewModel @Inject constructor(
-    private val getUserGroups: GetUserGroupsUseCase
+    private val getUserClubs: GetUserClubsUseCase
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(MyClubsUiState())
@@ -27,7 +27,7 @@ class MyClubsViewModel @Inject constructor(
 
     private fun getMyGroups() {
         viewModelScope.launch {
-            val myClubs = getUserGroups(myGuid)
+            val myClubs = getUserClubs(myGuid)
             _uiState.update { it.copy(myClubs = myClubs.map { club -> club.toUiState() }) }
         }
     }

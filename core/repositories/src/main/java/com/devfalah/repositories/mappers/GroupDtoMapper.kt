@@ -1,10 +1,10 @@
 package com.devfalah.repositories.mappers
 
-import com.devfalah.entities.Group
+import com.devfalah.entities.Club
 import com.devfalah.repositories.models.group.GroupDTO
 
-fun GroupDTO.toEntity(): Group {
-    return Group(
+fun GroupDTO.toEntity(): Club {
+    return Club(
         title = title ?: "",
         description = description ?: "",
         coverUrl = coverurl ?: "",
@@ -12,4 +12,4 @@ fun GroupDTO.toEntity(): Group {
     )
 }
 
-fun List<GroupDTO>.toEntity(): List<Group> = map { it.toEntity() }
+fun List<GroupDTO>.toEntity(): List<Club> = map { it.toEntity() }

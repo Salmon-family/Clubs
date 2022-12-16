@@ -1,6 +1,6 @@
 package com.devfalah.viewmodels.myClubs
 
-import com.devfalah.entities.Group
+import com.devfalah.entities.Club
 
 data class MyClubsUiState(
     val myClubs: List<MyClubsState> = emptyList(),
@@ -14,7 +14,7 @@ data class MyClubsState(
     val privacy: String
 )
 
-fun Group.toUiState(): MyClubsState {
+fun Club.toUiState(): MyClubsState {
     return MyClubsState(
         title = title,
         description = description,

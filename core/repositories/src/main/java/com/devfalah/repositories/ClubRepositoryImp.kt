@@ -53,7 +53,7 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.checkFriendShip(userID,friendID)
     }
 
-    override suspend fun GetUserGroups(userId: Int): List<Group> {
+    override suspend fun GetUserGroups(userId: Int): List<Club> {
         return remoteDataSource.getUserGroups(userId).toEntity()
     }
 
