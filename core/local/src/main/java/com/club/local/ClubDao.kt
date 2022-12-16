@@ -1,4 +1,4 @@
-package com.thechance.local
+package com.club.local
 
 import androidx.room.Dao
 import androidx.room.Insert

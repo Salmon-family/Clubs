@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.thechance.local'
+    namespace 'com.club.local'
     compileSdk 32
 
     defaultConfig {

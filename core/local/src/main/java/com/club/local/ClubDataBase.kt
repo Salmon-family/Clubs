@@ -1,4 +1,4 @@
-package com.thechance.local
+package com.club.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

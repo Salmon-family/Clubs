@@ -1,13 +1,13 @@
-package com.thechance.local
+package com.club.local
 
-import com.devfalah.repositories.LocalDataSource
+import com.devfalah.repositories.ClubLocalDataSource
 import com.devfalah.repositories.models.PostLocalDto
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocalDataSourceImp @Inject constructor(
+class ClubLocalDataSourceImp @Inject constructor(
     private val clubDao: ClubDao
-) : LocalDataSource {
+) : ClubLocalDataSource {
 
     override suspend fun insertPost(post: PostLocalDto) {
         clubDao.insertPost(post)
