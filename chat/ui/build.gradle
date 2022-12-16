@@ -51,13 +51,14 @@ dependencies {
     implementation(project(":chat:viewModels"))
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
 
     implementation "androidx.core:core-ktx:$core_kotlin_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
@@ -72,4 +73,18 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //constraint layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+
+    //view model
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.2.2")
+
+
+    implementation "androidx.navigation:navigation-compose:2.5.3"
 }

@@ -1,6 +1,9 @@
 package com.thechance.entities
 
 data class Message(
-    val messageID: Int,
+    val id: Int,
+    val friendId: Int,
+    val fromMe: Boolean,
     val message: String,
-    )
+    val time: Long,
+)

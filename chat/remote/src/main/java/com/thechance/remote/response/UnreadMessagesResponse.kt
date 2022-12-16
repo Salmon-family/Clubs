@@ -1,12 +1,12 @@
 package com.thechance.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.thechance.repositories.models.MessagesDTO
-import com.thechance.repositories.models.UserDTO
+import com.devfalah.repository.models.ChatDTO
+import com.devfalah.repository.models.UserDTO
 
 data class UnreadMessagesResponse(
     @SerializedName("list")
-    val list: List<MessagesDTO>?,
+    val list: List<ChatDTO>?,
     @SerializedName("withuser")
-    val withuser: UserDTO?
+    val withUser: UserDTO?
 )
