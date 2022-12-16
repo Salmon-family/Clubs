@@ -24,6 +24,7 @@ import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
 import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.createPost.navigateToCreatePost
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
@@ -60,7 +61,7 @@ fun ProfileScreen(
         swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
-        onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
+        onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,

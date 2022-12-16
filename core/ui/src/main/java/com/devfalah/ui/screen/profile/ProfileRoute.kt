@@ -7,21 +7,19 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.devfalah.ui.Screen
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
-
 
 
 const val profileId = "profileId"
 fun NavController.navigateToProfile(id: Int) {
-    navigate("${Screen.Profile}/${id}")
+    navigate("${PROFILE_SCREEN}/${id}")
 }
+
+const val PROFILE_SCREEN = "PROFILE_SCREEN"
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.profileRoute(navController: NavController) {
     composable(
-        route = "${Screen.Profile}/{${profileId}}",
+        route = "${PROFILE_SCREEN}/{${profileId}}",
         arguments = listOf(
             navArgument(profileId) { NavType.IntType }
         )

@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.SetStatusBarColor
+import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -37,7 +38,7 @@ fun SavedPostsScreen(
     SavedPostsContent(
         state = state,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { navController.navigate(Screen.CreatePost.screen_route) },
+        onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
         onClickRemoveSavedPost = viewModel::onClickRemoveSavedPost,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }

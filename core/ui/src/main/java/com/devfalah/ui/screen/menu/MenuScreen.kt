@@ -7,6 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
+import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
+import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
+import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 
 @Composable
 fun MenuScreen(
@@ -14,8 +17,8 @@ fun MenuScreen(
 ) {
 
     MenuContent(
-        onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
-        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) }
+        onClickFriends = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
+        onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) }
     )
 }
 

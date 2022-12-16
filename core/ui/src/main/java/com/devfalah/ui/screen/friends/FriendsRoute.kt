@@ -9,12 +9,13 @@ import com.devfalah.ui.Screen
 import com.devfalah.viewmodels.friends.friendsUserId
 
 fun NavController.navigateToFriends(id: Int) {
-    navigate("${Screen.Friends}/${id}")
+    navigate("${FRIENDS_SCREEN}/${id}")
 }
 
+const val FRIENDS_SCREEN = "FRIENDS_SCREEN"
 fun NavGraphBuilder.friendsRoute(navController: NavController) {
     composable(
-        route = "${Screen.Friends}/{${friendsUserId}}",
+        route = "${FRIENDS_SCREEN}/{${friendsUserId}}",
         arguments = listOf(
             navArgument(friendsUserId) { NavType.IntType }
         )
