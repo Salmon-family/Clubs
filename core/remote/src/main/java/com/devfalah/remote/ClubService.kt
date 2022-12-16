@@ -284,4 +284,10 @@ interface ClubService {
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null
     ): Response<BaseResponse<ProfilePostResponse>>
+
+    @GET("my_custom_end_point")
+    suspend fun search(
+        @Query("guid") userId: Int,
+        @Query("keyword") keyWord: String
+    ): Response<BaseResponse<SearchDTO>>
 }
