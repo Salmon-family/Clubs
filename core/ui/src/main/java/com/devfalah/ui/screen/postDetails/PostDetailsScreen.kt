@@ -111,8 +111,8 @@ fun PostDetailsContent(
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                     }
-                    .fillMaxWidth()
-                    .padding(bottom = 56.dp),
+                    .fillMaxWidth(),
+                contentPadding = PaddingValues(bottom = 64.dp, top = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 item {
