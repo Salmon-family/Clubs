@@ -1,17 +1,18 @@
 package com.devfalah.ui.screen.postDetails.composable
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
@@ -26,23 +27,30 @@ fun CommentBody(
     onClickLikeComment: (CommentUIState) -> Unit,
     onValueChanged: (String) -> Unit,
     sendMessage: (CommentUIState) -> Unit,
+    closeDialog: () -> Unit,
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()) {
         if (comment.isEdited) {
-            TextFieldEditing(
-                modifier = Modifier.fillMaxWidth(),
-                comment = comment,
-                text = comment.commentEdited,
-                onValueChanged = onValueChanged,
-                sendMessage = sendMessage
-            )
+            InputDialogView(onDismiss = {
+                sendMessage(comment)
+            },
+                onExit = { closeDialog() },
+                text = comment.content,
+                onValueChanged = onValueChanged)
         } else {
             Text(
                 text = comment.content,
                 style = Typography.body2
             )
         }
+        HeightSpacer8()
+        Image(
+            painter = rememberAsyncImagePainter(model = comment.imageFile),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxSize()
+        )
         HeightSpacer8()
         Row {
             Row {
@@ -79,26 +87,3 @@ fun CommentBody(
         }
     }
 }
-
-@Composable
-fun TextFieldEditing(
-    modifier: Modifier = Modifier,
-    comment: CommentUIState,
-    text: String,
-    onValueChanged: (String) -> Unit,
-    sendMessage: (CommentUIState) -> Unit,)
-{
-    TextField(
-        modifier = modifier.fillMaxWidth(),
-        value = text,
-        onValueChange = onValueChanged,
-        label = { Text(text = "Comment...") },
-        trailingIcon = {
-            PostActionIcon(
-                painter = painterResource(id = R.drawable.paper_airplane),
-                onClick = { sendMessage(comment) }
-            )
-        }
-    )
-}
-

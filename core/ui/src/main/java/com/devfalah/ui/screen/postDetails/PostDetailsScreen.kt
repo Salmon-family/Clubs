@@ -1,5 +1,13 @@
 package com.devfalah.ui.screen.postDetails
 
+import android.content.Context
+import android.net.Uri
+import android.os.Build
+import android.provider.OpenableColumns
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,10 +19,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.screen.postDetails.composable.CommentItem
 import com.devfalah.ui.screen.postDetails.composable.CustomTextFiled
@@ -25,27 +33,42 @@ import com.devfalah.viewmodels.postDetails.CommentUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PostDetailsScreen(
-    navController: NavController,
+//    navController: NavController,
     viewModel: PostDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            uri?.let { viewModel.setComment(state.comment/*, createFileFromContentUri(it, context)*/) }
+        }
+    )
 
     PostDetailsContent(
         state,
         commentText = state.comment,
         onValueChanged = viewModel::onChanceComment,
         sendMessage = viewModel::sendComment,
+        addImageWithComment = {
+            singlePhotoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        },
         onClickLike = viewModel::onClickLike,
         onClickLikeComment = viewModel::onClickLikeComment,
         onClickComment = viewModel::onClickComment,
         onClickSave = viewModel::onClickSave,
         onClickDeletedComment = viewModel::onClickDeletedComment,
         onClickEditComment = viewModel::onClickEditComment,
-        onValueChangedEdited = viewModel::onChanceComment,
-        sendMessageEdited = viewModel::sendEditComment,
+        onValueChangedEdited = viewModel::onChanceCommentEditing,
+        sendMessageEdited = viewModel::sendCommentEdited,
+        closeDialog = viewModel::closeDialog,
     )
 }
 
@@ -55,6 +78,7 @@ fun PostDetailsContent(
     commentText: String,
     onValueChanged: (String) -> Unit,
     sendMessage: () -> Unit,
+    addImageWithComment: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickLikeComment: (CommentUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
@@ -63,16 +87,17 @@ fun PostDetailsContent(
     onClickEditComment: (CommentUIState) -> Unit,
     onValueChangedEdited: (String) -> Unit,
     sendMessageEdited: (CommentUIState) -> Unit,
+    closeDialog: () -> Unit,
 ) {
-    if (state.loading){
+    if (state.loading) {
         Box(modifier = Modifier
             .fillMaxSize(),
-            contentAlignment = Alignment.Center){
+            contentAlignment = Alignment.Center) {
             CircularProgressIndicator(
                 color = LightPrimaryBrandColor,
             )
         }
-    }else{
+    } else {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
@@ -100,7 +125,6 @@ fun PostDetailsContent(
                             }
                             .fillMaxWidth(),
                         state = state.postDetails,
-                        isMyPost = state.isMyProfile,
                         onClickLike = { onClickLike(it) },
                         onClickComment = { onClickComment(it) },
                         onClickSave = { onClickSave(it) },
@@ -125,6 +149,7 @@ fun PostDetailsContent(
                         onClickEditComment = onClickEditComment,
                         onValueChanged = onValueChangedEdited,
                         sendMessage = sendMessageEdited,
+                        closeDialog = closeDialog,
                     )
                 }
             }
@@ -139,7 +164,44 @@ fun PostDetailsContent(
                 text = commentText,
                 onValueChanged = onValueChanged,
                 sendMessage = sendMessage,
+                addImageWithComment = addImageWithComment,
             )
         }
     }
 }
+
+@RequiresApi(Build.VERSION_CODES.O)
+private fun createFileFromContentUri(fileUri: Uri, context: Context): File {
+    var fileName = ""
+    fileUri.let { returnUri ->
+        context.contentResolver.query(returnUri, null, null, null)
+    }?.use { cursor ->
+        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        cursor.moveToFirst()
+        fileName = cursor.getString(nameIndex)
+    }
+
+    val iStream = context.contentResolver.openInputStream(fileUri)!!
+    val outputDir = context.cacheDir!!
+
+    val outputFile = File(outputDir, fileName)
+    copyStreamToFile(iStream, outputFile)
+    iStream.close()
+    return outputFile
+}
+
+private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
+    inputStream.use { input ->
+        val outputStream = FileOutputStream(outputFile)
+        outputStream.use { output ->
+            val buffer = ByteArray(4 * 1024)
+            while (true) {
+                val byteCount = input.read(buffer)
+                if (byteCount < 0) break
+                output.write(buffer, 0, byteCount)
+            }
+            output.flush()
+        }
+    }
+}
+

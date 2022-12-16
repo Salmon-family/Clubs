@@ -112,8 +112,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getAllComments(userID, postID).toEntity()
     }
 
-    override suspend fun addComment(userID: Int, postID: Int, content: String): Comment {
-        return remoteDataSource.addComment(userID, postID, content).toEntity()
+    override suspend fun addComment(userID: Int, postID: Int, content: String/*, imageFile: File?*/): Comment {
+        return remoteDataSource.addComment(userID, postID, content/*, imageFile*/).toEntity()
     }
 
     override suspend fun deleteComment(userID: Int, commentID: Int): Boolean {

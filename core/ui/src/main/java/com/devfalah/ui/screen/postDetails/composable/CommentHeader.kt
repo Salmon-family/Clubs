@@ -125,10 +125,10 @@ fun PopupMenu(
             onDismissRequest = { expanded = false }
         ) {
             DropdownMenuItem(onClick = {
-                /*onClickEditComment(user)*/
-                Toast.makeText(context,
-                    "Soon when you decide on the shape of the design",
-                    Toast.LENGTH_SHORT).show()
+                onClickEditComment(user)
+//                Toast.makeText(context,
+//                    "Soon when you decide on the shape of the design",
+//                    Toast.LENGTH_SHORT).show()
             }) {
                 Text("Edit Comment")
             }

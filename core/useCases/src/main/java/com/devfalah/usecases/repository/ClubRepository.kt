@@ -53,7 +53,7 @@ interface ClubRepository {
 
     suspend fun getAllComments(userID: Int, postID: Int): List<Comment>
 
-    suspend fun addComment(userID: Int, postID: Int, content: String): Comment
+    suspend fun addComment(userID: Int, postID: Int, content: String/*, imageFile: File?*/): Comment
 
     suspend fun deleteComment(userID: Int, commentID: Int): Boolean
 

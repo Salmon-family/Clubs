@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.postDetails.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -16,6 +17,7 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.Typography
 import com.devfalah.ui.theme.WhiteColor
+import java.io.File
 
 @Composable
 fun CustomTextFiled(
@@ -23,6 +25,7 @@ fun CustomTextFiled(
     text: String,
     onValueChanged: (String) -> Unit,
     sendMessage: () -> Unit,
+    addImageWithComment: () -> Unit,
 ) {
     TextField(
         modifier = modifier.fillMaxWidth(),
@@ -44,6 +47,7 @@ fun CustomTextFiled(
         },
         leadingIcon = {
             Image(
+                modifier = Modifier.clickable { addImageWithComment() },
                 imageVector = ImageVector.vectorResource(id = R.drawable.photo),
                 contentDescription = stringResource(R.string.send_comment),
             )
@@ -79,5 +83,5 @@ fun ButtonSend(onClickAction: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultTextFieldPreview() {
-    CustomTextFiled(text = "", onValueChanged = {}, sendMessage = {})
+    CustomTextFiled(text = "", onValueChanged = {}, sendMessage = {}, addImageWithComment = {})
 }

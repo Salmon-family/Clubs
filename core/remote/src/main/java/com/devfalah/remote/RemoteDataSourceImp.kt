@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
@@ -64,7 +65,8 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO {
-        return apiService.getWallPost(userID, postID).body()?.payload ?: throw Throwable("Mapping Error")
+        return apiService.getWallPost(userID, postID).body()?.payload
+            ?: throw Throwable("Mapping Error")
     }
 
     override suspend fun getAllComments(userID: Int, postID: Int): List<CommentDto> {
@@ -72,8 +74,21 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Mapping Error")
     }
 
-    override suspend fun addComment(userID: Int, postID: Int, comment: String): CommentDto {
-        return wrap { apiService.addComment(userID, postID, comment) }.comment ?: throw Throwable("Mapping Error")
+    override suspend fun addComment(
+        userID: Int,
+        postID: Int,
+        comment: String,
+//        imageFile: File?,
+    ): CommentDto {
+//        val requestBody: RequestBody? =
+//            imageFile?.asRequestBody("image/${imageFile.extension}".toMediaTypeOrNull())
+//        val part = requestBody?.let {
+//            MultipartBody.Part.createFormData("imageWithComment", imageFile.name,
+//                it)
+//        }
+//        val id = userID.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        return wrap { apiService.addComment(userID, postID, comment/*, part*/) }.comment
+            ?: throw Throwable("Mapping Error")
     }
 
     override suspend fun deleteComment(userID: Int, commentID: Int): Boolean {
@@ -104,7 +119,7 @@ class RemoteDataSourceImp @Inject constructor(
     override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {
         val requestBody = file.asRequestBody("image/${file.extension}".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("userphoto", file.name, requestBody)
-        val id = RequestBody.create("text/plain".toMediaTypeOrNull(), userID.toString())
+        val id = userID.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         return apiService.addProfilePicture(userId = id, file = part).body()?.payload
             ?: throw Throwable("Error")
     }

@@ -5,17 +5,20 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.devfalah.ui.Screen
+import com.devfalah.viewmodels.postDetails.PostDetailsArgs
 
-const val postId = "postId"
-fun NavController.navigateToPostDetails(id: Int) {
-    navigate("${Screen.Profile}/${id}")
+private const val ROUT = "postDetailsScreen"
+fun NavController.navigateToPostDetails(userId: Int, postId: Int) {
+    navigate("$ROUT/${userId}/${postId}")
 }
 
 fun NavGraphBuilder.postDetailsRoute(navController: NavController) {
-    composable(route = "${Screen.PostDetails}/{$postId}", arguments = listOf(
-        navArgument(postId) { NavType.IntType }
-    )) {
-        PostDetailsScreen(navController)
+    composable(route = "$ROUT/{${PostDetailsArgs.USER_ID}}/{${PostDetailsArgs.POST_ID}}",
+        arguments = listOf(
+            navArgument(PostDetailsArgs.USER_ID) { NavType.IntType },
+            navArgument(PostDetailsArgs.POST_ID) { NavType.IntType },
+
+            )) {
+//        PostDetailsScreen(navController)
     }
 }

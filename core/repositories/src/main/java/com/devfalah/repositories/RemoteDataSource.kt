@@ -44,7 +44,7 @@ interface RemoteDataSource {
 
     suspend fun getAllComments(userID: Int, postID: Int): List<CommentDto>
 
-    suspend fun addComment(userID: Int, postID: Int, comment: String): CommentDto
+    suspend fun addComment(userID: Int, postID: Int, comment: String/*, imageFile: File?*/): CommentDto
 
     suspend fun deleteComment(userID: Int, commentID: Int): Boolean
 

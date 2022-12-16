@@ -20,7 +20,7 @@ fun PostItem(
     state: PostUIState,
     maxLineContentExpand: Int = 2,
     isContentExpandable: Boolean,
-    isMyPost: Boolean,
+    isMyPost: Boolean = false,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,

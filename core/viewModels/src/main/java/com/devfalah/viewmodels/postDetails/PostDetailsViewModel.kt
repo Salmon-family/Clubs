@@ -1,6 +1,11 @@
 package com.devfalah.viewmodels.postDetails
 
+import android.content.Context
+import android.net.Uri
+import android.os.Build
+import android.provider.OpenableColumns
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -15,6 +20,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,8 +36,10 @@ class PostDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val userId = checkNotNull(savedStateHandle["userId"]).toString().toInt()
-    private val postId = checkNotNull(savedStateHandle["postId"]).toString().toInt()
+//    private val args = PostDetailsArgs(savedStateHandle)
+
+    private val userId = 7
+    private val postId = 158
 
     private val _uiState = MutableStateFlow(PostDetailsUIState())
     val uiState = _uiState.asStateFlow()
@@ -37,6 +47,7 @@ class PostDetailsViewModel @Inject constructor(
     init {
         getPostDetails(userId, postId)
         getAllComments(userId, postId)
+        checkCommentDirection(_uiState.value.postDetails.publisherId)
     }
 
     private fun getPostDetails(userId: Int, postId: Int) {
@@ -69,11 +80,11 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun setComment(comment: String) {
+    fun setComment(comment: String/*, file: File*/) {
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true, error = "") }
             try {
-                val newComment = setCommentUseCase(userId, postId, comment)
+                val newComment = setCommentUseCase(userId, postId, comment, /*file*/)
                 _uiState.update {
                     it.copy(
                         comments = it.copy(
@@ -116,6 +127,11 @@ class PostDetailsViewModel @Inject constructor(
             _uiState.update { it.copy(loading = true, error = "") }
             try {
                 setEditCommentUseCase(comment.id, comment.content)
+                _uiState.update {
+                    it.copy(
+                        loading = false,
+                    )
+                }
             } catch (e: Exception) {
                 _uiState.update { it.copy(loading = false, error = e.message ?: "") }
             }
@@ -187,6 +203,18 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
+    fun checkCommentDirection(publisherId: Int) {
+        viewModelScope.launch {
+            _uiState.update { it ->
+                it.copy(
+                    comments = _uiState.value.comments.map {
+                        it.copy(isOwner = it.ownerCommentId == publisherId)
+                    }
+                )
+            }
+        }
+    }
+
     fun onClickSave(post: PostUIState) {
         Log.e("Test", "Save $post")
     }
@@ -199,13 +227,43 @@ class PostDetailsViewModel @Inject constructor(
         _uiState.update { it.copy(comment = newValue) }
     }
 
+    fun onChanceCommentEditing(newValue: String) {
+        _uiState.update { it ->
+            it.copy(
+                comments = _uiState.value.comments.map {
+                    if (it.isEdited) {
+                        it.copy(content = newValue)
+                    } else {
+                        it
+                    }
+                }
+            )
+        }
+    }
+
     fun sendComment() {
-        setComment(uiState.value.comment)
+        setComment(uiState.value.comment/*, File("")*/)
         _uiState.update { it.copy(comment = "", comments = it.comments) }
     }
 
     fun sendCommentEdited(comment: CommentUIState) {
         sendEditComment(comment)
         _uiState.update { it.copy(comment = "") }
+        closeDialog()
     }
+
+    fun closeDialog() {
+        _uiState.update { it ->
+            it.copy(
+                comments = _uiState.value.comments.map {
+                    if (it.isEdited) {
+                        it.copy(isEdited = false)
+                    } else {
+                        it
+                    }
+                }
+            )
+        }
+    }
+
 }

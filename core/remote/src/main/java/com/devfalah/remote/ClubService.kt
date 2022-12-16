@@ -80,7 +80,7 @@ interface ClubService {
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
         @Field("comment") comment: String,
-        @Field("image_file") imageFile: Array<String>? = null,
+        @Field("image_file") imageFile: MultipartBody.Part? = null,
     ): Response<BaseResponse<CommentResponse>>
 
     @FormUrlEncoded

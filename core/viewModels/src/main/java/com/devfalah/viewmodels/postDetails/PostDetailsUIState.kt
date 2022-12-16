@@ -7,7 +7,6 @@ data class PostDetailsUIState(
     val postDetails: PostUIState = PostUIState(),
     val comments: List<CommentUIState> = emptyList(),
     val comment: String = "",
-    val isMyProfile: Boolean = false,
     val loading: Boolean = false,
     val error: String = "",
 )
@@ -15,15 +14,31 @@ data class PostDetailsUIState(
 data class CommentUIState(
     val id: Int = 0,
     val postId: Int = 0,
+
+    // edit comment
+    var isEdited: Boolean = false,
     val commentEdited: String = "",
+
+    // author and add of comment
     val ownerCommentId: Int = 0,
-    val isEdited: Boolean = false,
+    val imageFile: String = "",
+
+    // user details
     val userName: String = "",
     val userImage: String = "",
+
+    // comment details
     val isLikedByUser: Boolean = false,
     val totalLikes: Int = 0,
-    val isDeleted: Boolean = false,
     val content: String = "",
     val time: String = "",
     val type: String = "",
+
+    //delete comment
+    val isDeleted: Boolean = false,
+
+    // comment directions
+    val isCommentDirection: Boolean = false,
+    val isMyComment: Boolean = false,
+    val isOwner: Boolean = false,
 )

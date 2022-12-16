@@ -1,11 +1,15 @@
 package com.devfalah.ui.screen.postDetails.composable
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
@@ -21,14 +25,13 @@ fun CommentItem(
     onClickEditComment: (CommentUIState) -> Unit,
     onValueChanged: (String) -> Unit,
     sendMessage: (CommentUIState) -> Unit,
+    closeDialog: () -> Unit,
 ) {
-    Row {
-        if(state.ownerCommentId == post.postDetails.publisherId){
-            Spacer(modifier = Modifier.weight(.04f))
-        }
+    Box(modifier = Modifier.fillMaxWidth(),
+        contentAlignment = if (state.ownerCommentId == post.postDetails.publisherId) Alignment.TopEnd else Alignment.TopStart) {
         Card(
             modifier = modifier
-                .weight(.86f)
+                .fillMaxWidth(.9f)
                 .padding(horizontal = 16.dp),
             backgroundColor = WhiteColor,
             shape = RoundedCornerShape(20.dp),
@@ -38,12 +41,26 @@ fun CommentItem(
                 CommentHeader(state, post, onClickDeletedComment, onClickEditComment)
                 CommentBody(
                     state,
-                    onClickLikeComment, onValueChanged, sendMessage
+                    onClickLikeComment,
+                    onValueChanged,
+                    sendMessage,
+                    closeDialog,
                 )
             }
         }
-        if(state.ownerCommentId != post.postDetails.publisherId){
-            Spacer(modifier = Modifier.weight(.04f))
-        }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CommentItemPreview() {
+    CommentItem(state = CommentUIState(),
+        post = PostDetailsUIState(),
+        onClickLikeComment = {},
+        onClickDeletedComment = {},
+        onClickEditComment = {},
+        onValueChanged = {},
+        sendMessage = {},
+        closeDialog = {}
+    )
 }
