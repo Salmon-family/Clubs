@@ -10,24 +10,25 @@ class GetProfilePostsUseCase @Inject constructor(
 ) {
     private var page = 1
     private var lastPage = 1
-    private val allPosts = mutableSetOf<Post>()
     private lateinit var savedPosts: Flow<List<Int>>
 
     suspend operator fun invoke(userId: Int, profileUserID: Int): List<Post> {
         savedPosts = getSavedPostsIds()
-        allPosts.addAll(clubRepository.getProfilePostsPager(userId, profileUserID, page = page))
-        return allPosts.toList()
+        return clubRepository.getProfilePostsPager(userId, profileUserID, page = page)
     }
 
     suspend fun loadMore(userId: Int, profileUserID: Int, scrollType: Int): List<Post> {
         val page = if (scrollType >= 0) {
             1
         } else {
-            lastPage += 1
             lastPage
         }
-        allPosts.addAll(clubRepository.getProfilePostsPager(userId, profileUserID, page = page))
-        return allPosts.sortedByDescending { it.createdTime }.toList()
+
+        val posts = clubRepository.getProfilePostsPager(userId, profileUserID, page = page)
+        if (posts.isNotEmpty()){
+            lastPage += 1
+        }
+        return posts
     }
 
     private suspend fun getSavedPostsIds(): Flow<List<Int>> {

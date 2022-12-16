@@ -81,8 +81,7 @@ class ProfileViewModel @Inject constructor(
                 val friends = getUserFriendsUseCase(profileOwnerID)
                 _uiState.update {
                     it.copy(
-                        friends = friends.friends.toFriendsUIState(),
-                        totalFriends = friends.total
+                        friends = friends.friends.toFriendsUIState(), totalFriends = friends.total
                     )
                 }
             } catch (t: Throwable) {
@@ -95,9 +94,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update {
-                    it.copy(
-                        posts = getProfilePostUseCase(userID, profileOwnerID).toUIState()
-                    )
+                    it.copy(posts = getProfilePostUseCase(userID, profileOwnerID).toUIState())
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
@@ -182,10 +179,16 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(loading = true) }
-                val posts =
-                    getProfilePostUseCase.loadMore(uiState.value.id, args.ownerId, type).toUIState()
-                _uiState.update { it.copy(loading = false, posts = posts) }
+                val posts = getProfilePostUseCase.loadMore(uiState.value.id, args.ownerId, type)
+                _uiState.update {
+                    it.copy(
+                        loading = false,
+                        posts = (uiState.value.posts + posts.toUIState()),
+                        isEndOfPager = posts.isEmpty()
+                    )
+                }
             } catch (t: Throwable) {
+                Log.e("TESTTEST", t.message.toString())
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
             }
         }

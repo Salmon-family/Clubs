@@ -4,22 +4,32 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.devfalah.ui.Screen
-import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
+import com.devfalah.ui.theme.LightBackgroundColor
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun MenuScreen(
     navController: NavController,
 ) {
+    val systemUIController = rememberSystemUiController()
 
     MenuContent(
         onClickFriends = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) }
     )
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightBackgroundColor,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable

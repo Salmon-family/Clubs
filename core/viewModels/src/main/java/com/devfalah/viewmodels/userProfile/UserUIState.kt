@@ -7,7 +7,9 @@ data class UserUIState(
     val posts: List<PostUIState> = emptyList(),
     val totalFriends: Int = 0,
     val isMyProfile: Boolean = true,
+
     val loading: Boolean = false,
+    val isEndOfPager: Boolean = false,
     val majorError: String = "",
     val minorError: String = "",
 )
@@ -52,3 +54,5 @@ data class FriendUIState(
     val name: String = "",
     val profileImageUrl: String = ""
 )
+
+fun List<PostUIState>.getIds() = map { it.postId }

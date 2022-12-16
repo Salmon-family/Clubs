@@ -6,8 +6,8 @@ import android.net.Uri
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,10 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.SetStatusBarColor
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.createPost.navigateToCreatePost
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
@@ -28,8 +27,7 @@ import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
-import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
@@ -37,12 +35,11 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    SetStatusBarColor(LightBackgroundColor, darkIcons = true)
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val systemUIController = rememberSystemUiController()
     HomeContent(
         state = state,
-        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading),
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
         onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
@@ -52,12 +49,18 @@ fun HomeScreen(
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }
     )
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightBackgroundColor,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable
 fun HomeContent(
     state: HomeUIState,
-    swipeRefreshState: SwipeRefreshState,
     onCreatePost: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
@@ -66,17 +69,13 @@ fun HomeContent(
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit
 ) {
-    val scrollState = rememberLazyListState()
 
     ManualPager(
-        swipeRefreshState = swipeRefreshState,
         onRefresh = onRefresh,
-        items = state.posts.map { it.postId },
-        scrollState = scrollState,
-        isRefreshing = state.isPagerLoading,
+        contentPadding = PaddingValues(vertical = 16.dp),
+        isLoading = state.isPagerLoading,
         error = state.pagerError,
-        contentPadding = PaddingValues(vertical = 16.dp)
-
+        isEndOfPager = state.isEndOfPager,
     ) {
 
         item {

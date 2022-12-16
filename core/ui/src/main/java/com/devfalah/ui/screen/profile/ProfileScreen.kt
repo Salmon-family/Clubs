@@ -11,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,10 +18,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.SetStatusBarColor
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.RemoveRippleEffect
 import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.createPost.navigateToCreatePost
@@ -33,8 +31,7 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
-import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -47,18 +44,15 @@ fun ProfileScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val systemUIController = rememberSystemUiController()
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             uri?.let { viewModel.onClickChangeImage(createFileFromContentUri(it, context)) }
         }
     )
-
-    SetStatusBarColor(LightPrimaryBrandColor, darkIcons = false)
-
     ProfileContent(
         state,
-        swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.loading),
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
         onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
@@ -75,10 +69,14 @@ fun ProfileScreen(
         },
         onRefresh = viewModel::swipeToRefresh,
         onCreatePost = { navController.navigateToCreatePost(state.userDetails.userID) },
-        onClickProfile = { if (!state.isMyProfile) { navController.navigateToProfile(it) } },
+        onClickProfile = {
+            if (!state.isMyProfile) {
+                navController.navigateToProfile(it)
+            }
+        },
         onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) },
-        onOpenLinkClick = { openBrowser(context, it) }
+        onOpenLinkClick = { openBrowser(context, it) },
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -86,13 +84,18 @@ fun ProfileScreen(
             Toast.makeText(context, state.minorError, Toast.LENGTH_LONG).show()
         }
     }
-
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightPrimaryBrandColor,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable
 fun ProfileContent(
     state: UserUIState,
-    swipeRefreshState: SwipeRefreshState,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -115,15 +118,12 @@ fun ProfileContent(
             Text(text = "Retry")
         }
     } else {
-        val scrollState = rememberLazyListState()
         ManualPager(
-            swipeRefreshState = swipeRefreshState,
             onRefresh = onRefresh,
-            items = state.posts.map { it.postId },
-            scrollState = scrollState,
-            isRefreshing = state.loading,
+            contentPadding = PaddingValues(bottom = 16.dp),
+            isLoading = state.loading,
             error = state.minorError,
-            contentPadding = PaddingValues(bottom = 16.dp)
+            isEndOfPager = state.isEndOfPager
         ) {
             item(key = state.userDetails.userID) {
                 ProfileDetailsSection(

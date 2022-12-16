@@ -27,7 +27,7 @@
     <string name="create_post">Share what you love..</string>
     <string name="send_message">Send a message</string>
     <string name="loading">"Loading.."</string>
-
-
+    <string name="no_data">No More Data</string>
+    <string name="try_again">Try Again</string>
     <string name="home">Home</string>
 </resources>
