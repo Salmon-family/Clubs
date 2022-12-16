@@ -13,10 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.devfalah.ui.R
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightQuaternaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
-import com.devfalah.ui.theme.Typography
+import com.devfalah.ui.theme.*
 
 @Composable
 fun SearchTextField(
@@ -40,7 +37,7 @@ fun SearchTextField(
         },
 
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = LightCardBackgroundColor,
+            backgroundColor = LightBackgroundColor,
             focusedIndicatorColor = Color.White,
             unfocusedIndicatorColor = Color.White,
         ),
