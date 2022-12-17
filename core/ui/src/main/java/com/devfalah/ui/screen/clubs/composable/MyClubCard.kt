@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -48,7 +49,7 @@ fun MyClubCard(
 
         Column(modifier = Modifier
             .weight(1f)
-            .padding(start = 16.dp)) {
+            .padding(horizontal = 16.dp)) {
             Text(text = myClub.title,
                 style = Typography.subtitle2,
                 color = LightPrimaryBlackColor
@@ -56,7 +57,9 @@ fun MyClubCard(
 
             Text(text = myClub.description,
                 style = Typography.caption,
-                color = LightSecondaryBlackColor
+                color = LightSecondaryBlackColor,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2
             )
 
         }
@@ -74,7 +77,7 @@ fun MyClubCard(
 private fun Preview() {
     MyClubCard(myClub = ClubsState(
         "Cooking Club",
-        "this club is for cooking",
+        "this club is for cooking this club is for cookingthis club is for cookingthis club is for cookingthis club is for cooking",
         "",
         "1"
     ),

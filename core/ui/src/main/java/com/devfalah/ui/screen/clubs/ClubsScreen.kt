@@ -49,7 +49,7 @@ fun ClubsContent(
         ){
 
         items(state.clubs){
-            ClubCard(club = it, onClubClick = onClubClick)
+            MyClubCard(myClub = it, onClubClick = onClubClick)
         }
 
 //        item {
