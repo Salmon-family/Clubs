@@ -65,7 +65,7 @@ fun SearchContent(
 
         items(
             items = state.clubs,
-            key = { it.id }
+            key = { "${it.id} ${it.title}" }
         ) { club ->
             Text(text = club.title)
         }
