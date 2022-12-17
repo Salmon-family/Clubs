@@ -42,7 +42,6 @@ class HomeViewModel @Inject constructor(
 
     private fun getData() {
         viewModelScope.launch { allPosts(uiState.value.id) }
-        swipeToRefresh(FIRST_TIME)
     }
 
     fun onClickLike(post: PostUIState) {
@@ -108,9 +107,7 @@ class HomeViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        pagerError = t.message.toString()
+                        isPagerLoading = false, isLoading = false, pagerError = t.message.toString()
                     )
                 }
             }

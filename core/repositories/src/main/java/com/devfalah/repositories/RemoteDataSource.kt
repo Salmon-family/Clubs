@@ -14,7 +14,7 @@ interface RemoteDataSource {
 
     suspend fun getUserFriendRequests(userID: Int): List<FriendDTO>
 
-    suspend fun getUserFriends(userID: Int): FriendsDTO
+    suspend fun getUserFriends(userID: Int, page: Int): FriendsDTO
 
     suspend fun getNotifications(userID: Int): List<NotificationsDTO>
 
@@ -39,4 +39,7 @@ interface RemoteDataSource {
     suspend fun getUserHomePosts(userID: Int, page: Int): List<WallPostDTO>
 
     suspend fun deletePostById(userId: Int, postId: Int): Boolean
+
+    suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto
+
 }

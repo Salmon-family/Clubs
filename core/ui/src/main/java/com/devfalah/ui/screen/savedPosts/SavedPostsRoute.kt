@@ -5,8 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.devfalah.ui.Screen
 
+const val SAVED_SCREEN = "SAVED_SCREEN"
 fun NavGraphBuilder.savedPostsRoute(navController: NavController) {
-    composable(route = Screen.SavedPosts.screen_route) {
+    composable(route = SAVED_SCREEN) {
         SavedPostsScreen(navController)
     }
 }

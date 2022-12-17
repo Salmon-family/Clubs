@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.friends
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,8 +14,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-const val friendsUserId = "friendsUserId"
-
 @HiltViewModel
 class FriendsViewModel @Inject constructor(
     val getUserFriendsUseCase: GetUserFriendsUseCase,
@@ -23,39 +22,43 @@ class FriendsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    private val args = FriendsArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(FriendsUIState())
     val uiState = _uiState.asStateFlow()
-    private val ownerID = checkNotNull(savedStateHandle[friendsUserId]).toString().toInt()
 
     init {
         getUserID()
-        getUserFriends()
     }
 
     private fun getUserID() {
         viewModelScope.launch {
             try {
                 val userId = userId()
-                _uiState.update { it.copy(isMyProfile = userId == ownerID, id = userId) }
+                _uiState.update { it.copy(isMyProfile = userId == args.ownerId, id = userId) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }
 
-    private fun getUserFriends() {
+    fun getUserFriends(type: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val friends = getUserFriendsUseCase(ownerID)
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        totalFriends = friends.total,
-                        friends = friends.friends.toFriendsUIState()
-                    )
+                val friends = getUserFriendsUseCase(args.ownerId)
+                if (friends.friends.isNotEmpty()) {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            totalFriends = friends.total,
+                            friends = (_uiState.value.friends + friends.friends.toFriendsUIState())
+                        )
+                    }
+                }else{
+                    _uiState.update { it.copy(isLoading = false, isPagerEnd = true) }
                 }
             } catch (t: Throwable) {
+                Log.e("TEST", t.message.toString())
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
         }
@@ -73,9 +76,5 @@ class FriendsViewModel @Inject constructor(
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
-    }
-
-    fun swipeToRefresh(type: Int) {
-
     }
 }

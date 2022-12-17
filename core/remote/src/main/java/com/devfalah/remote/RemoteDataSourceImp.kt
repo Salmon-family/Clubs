@@ -35,8 +35,8 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Mapping Error")
     }
 
-    override suspend fun getUserFriends(userID: Int): FriendsDTO {
-        return wrap { apiService.getUserFriends(userID) }
+    override suspend fun getUserFriends(userID: Int, page: Int): FriendsDTO {
+        return wrap { apiService.getUserFriends(userID, page) }
     }
 
     override suspend fun getNotifications(userID: Int): List<NotificationsDTO> {
@@ -98,6 +98,10 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun deletePostById(userId: Int, postId: Int): Boolean {
         return wrap { apiService.deletePost(userID = userId, postID = postId) }
+    }
+
+    override suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto {
+        return wrap { apiService.getSearch(userID = userId, keyword = keyword) }
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

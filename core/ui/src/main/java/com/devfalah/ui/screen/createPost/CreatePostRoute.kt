@@ -9,12 +9,13 @@ import com.devfalah.ui.Screen
 import com.devfalah.viewmodels.createPost.publisherId
 
 fun NavController.navigateToCreatePost(id: Int) {
-    navigate("${Screen.CreatePost}/${id}")
+    navigate("${CREATE_POST_SCREEN}/${id}")
 }
 
+const val CREATE_POST_SCREEN = "CreatePost"
 fun NavGraphBuilder.createPostRoute(navController: NavController) {
     composable(
-        route = "${Screen.CreatePost}/{${publisherId}}",
+        route = "${CREATE_POST_SCREEN}/{${publisherId}}",
         arguments = listOf(
             navArgument(publisherId) { NavType.IntType }
         )) {

@@ -22,8 +22,10 @@ interface ClubService {
      * */
     @FormUrlEncoded
     @POST("user_friends")
-    suspend fun getUserFriends(@Field("guid") userID: Int)
-            : Response<BaseResponse<FriendsDTO>>
+    suspend fun getUserFriends(
+        @Field("guid") userID: Int,
+        @Field("offset") page: Int
+    ): Response<BaseResponse<FriendsDTO>>
 
     @FormUrlEncoded
     @POST("user_friend_requests")
@@ -300,4 +302,11 @@ interface ClubService {
         @Part("guid") userId: RequestBody,
         @Part file: MultipartBody.Part,
     ): Response<BaseResponse<UserDTO>>
+
+    @GET("my_custom_end_point")
+    suspend fun getSearch(
+        @Query("guid") userID: Int,
+        @Query("keyword") keyword: String,
+    ): Response<BaseResponse<SearchResultDto>>
+
 }
