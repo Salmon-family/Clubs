@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,10 +15,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.devfalah.ui.screen.clubs.composable.ClubCard
 import com.devfalah.ui.screen.clubs.composable.MyClubCard
 import com.devfalah.ui.screen.clubs.composable.SearchTextField
 import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.viewmodels.myClubs.MyClubsState
+import com.devfalah.viewmodels.myClubs.ClubsState
+import com.devfalah.viewmodels.myClubs.ClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
 
@@ -28,7 +29,7 @@ fun ClubsScreen(
     navController: NavController,
     viewModel : MyClubsViewModel = hiltViewModel()
 ) {
-    val state by viewModel.uiState.collectAsState()
+    val state by viewModel.clubsUiState.collectAsState()
     ClubsContent(state = state, onClubClick = viewModel::onClubClicked)
 
 
@@ -36,8 +37,8 @@ fun ClubsScreen(
 
 @Composable
 fun ClubsContent(
-    state: MyClubsUiState,
-    onClubClick: (MyClubsState) -> Unit
+    state: ClubsUiState,
+    onClubClick: (ClubsState) -> Unit
 ) {
     
     LazyColumn(modifier = Modifier
@@ -47,14 +48,18 @@ fun ClubsContent(
         verticalArrangement = Arrangement.spacedBy(16.dp)
         ){
 
-        item {
-            SearchTextField(value = "", onValueChanged = {})
+        items(state.clubs){
+            ClubCard(club = it, onClubClick = onClubClick)
         }
 
-
-        items(state.myClubs){
-            MyClubCard(myClub = it, onClubClick = onClubClick)
-        }
+//        item {
+//            SearchTextField(value = "", onValueChanged = {})
+//        }
+//
+//
+//        items(state.myClubs){
+//            MyClubCard(myClub = it, onClubClick = onClubClick)
+//        }
     }
 }
 

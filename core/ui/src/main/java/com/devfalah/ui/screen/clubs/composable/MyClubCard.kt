@@ -1,10 +1,8 @@
 package com.devfalah.ui.screen.clubs.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -13,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,12 +21,12 @@ import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.Typography
-import com.devfalah.viewmodels.myClubs.MyClubsState
+import com.devfalah.viewmodels.myClubs.ClubsState
 
 @Composable
 fun MyClubCard(
-    myClub: MyClubsState,
-    onClubClick: (MyClubsState) -> Unit
+    myClub: ClubsState,
+    onClubClick: (ClubsState) -> Unit
     ) {
     Row(modifier = Modifier
         .clip(RoundedCornerShape(20.dp))
@@ -75,7 +72,7 @@ fun MyClubCard(
 @Preview
 @Composable
 private fun Preview() {
-    MyClubCard(myClub = MyClubsState(
+    MyClubCard(myClub = ClubsState(
         "Cooking Club",
         "this club is for cooking",
         "",

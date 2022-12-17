@@ -1,6 +1,7 @@
 package com.devfalah.repositories
 
 import com.devfalah.entities.*
+import com.devfalah.repositories.mappers.search.toEntity
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.ClubRepository
 import javax.inject.Inject
@@ -55,6 +56,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun GetUserGroups(userId: Int): List<Club> {
         return remoteDataSource.getUserGroups(userId).toEntity()
+    }
+
+    override suspend fun search(userId: Int, keyword: String): Search {
+        return remoteDataSource.search(userId, keyword).toEntity()
     }
 
 }

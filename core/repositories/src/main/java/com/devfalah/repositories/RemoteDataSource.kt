@@ -1,9 +1,6 @@
 package com.devfalah.repositories
 
-import com.devfalah.repositories.models.FriendDTO
-import com.devfalah.repositories.models.ReactionDTO
-import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.WallPostDTO
+import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
@@ -34,6 +31,6 @@ interface RemoteDataSource {
 
     suspend fun getUserGroups(userId: Int): List<GroupDTO>
 
-
+    suspend fun search(userId: Int, keyword: String): SearchDTO
 
 }
