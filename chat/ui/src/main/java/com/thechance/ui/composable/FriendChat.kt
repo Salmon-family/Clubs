@@ -16,7 +16,6 @@ import com.thechance.ui.toTime
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
 
 
-
 @Composable
 fun FriendChat(
     chatUiState: ChatUiState,
@@ -27,7 +26,8 @@ fun FriendChat(
     Card(
         elevation = 0.dp,
         modifier = modifier
-            .fillMaxWidth().clip(RoundedCornerShape(20.dp),)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
             .clickable {
                 onClick(chatUiState)
             },

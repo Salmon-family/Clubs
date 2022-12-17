@@ -1,13 +1,14 @@
 package com.devfalah.ui.screen.clubs
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.devfalah.ui.R
+import com.devfalah.ui.composable.AppBar
 
 @Composable
 fun ClubsScreen(
     navController: NavController,
 ) {
-    Text(text = "ClubsScreen", fontSize = 24.sp)
+    AppBar(title = stringResource(R.string.clubs), navHostController =navController)
 }

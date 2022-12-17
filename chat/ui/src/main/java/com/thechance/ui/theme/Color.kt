@@ -18,7 +18,6 @@ val LightBackgroundColor = Color(0xFFF6F6F7)
 val LightCardColor = Color(0xFFFFFFFF)
 
 
-
 //for Dark theme
 
 val DarkBackgroundColor = Color(0xFF04030A)

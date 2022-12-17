@@ -23,8 +23,8 @@ class ChatActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val navController = rememberNavController( )
-                    ChatNavGraph(navController =navController )
+                    val navController = rememberNavController()
+                    ChatNavGraph(navController = navController)
                 }
             }
         }

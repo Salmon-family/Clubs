@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-fun String.parseHtml(): String{
+fun String.parseHtml(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).toString()
     } else {
@@ -22,11 +22,9 @@ fun Long.toTime(): String {
 
     return if (diffInDays > 7) {
         formatDate(createdTimeDate, "d MMM")
-    }
-    else if (diffInDays in 7..364){
-        formatDate(createdTimeDate,"yy.MM.dd")
-    }
-    else if (diffInDays in 1..7) {
+    } else if (diffInDays in 7..364) {
+        formatDate(createdTimeDate, "yy.MM.dd")
+    } else if (diffInDays in 1..7) {
         formatDate(createdTimeDate, "EEE")
     } else {
         formatDate(createdTimeDate, "h:mm a")

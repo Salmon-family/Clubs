@@ -1,7 +1,5 @@
 package com.thechance.ui.screens.chat
 
-import android.content.res.Resources.Theme
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,22 +8,18 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.thechance.ui.composable.*
 import com.thechance.ui.screens.conversation.navigateToConversation
-import com.thechance.ui.theme.BlackColor
+import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
-import com.thechance.ui.composable.*
-import com.thechance.ui.theme.LightPrimaryBrandColor
 
 @Composable
 fun ChatsScreen(
@@ -114,6 +108,7 @@ private fun ChatsContent(
         }
     }
 }
+
 fun LazyListState.isScrolledToTheEnd(): Boolean {
     return layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 3
 }

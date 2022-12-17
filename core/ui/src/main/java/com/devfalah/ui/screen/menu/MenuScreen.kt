@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.AppBar
 
 @Composable
 fun MenuScreen(
@@ -14,6 +15,7 @@ fun MenuScreen(
 ) {
 
     MenuContent(
+        navController,
         onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
         onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) }
     )
@@ -21,12 +23,12 @@ fun MenuScreen(
 
 @Composable
 fun MenuContent(
+    navController: NavController,
     onClickFriends: () -> Unit,
     onClickSavedPosts: () -> Unit
 ) {
     Column() {
-        Text(text = "Menu", fontSize = 24.sp)
-
+        AppBar(title = "Menu", navHostController =navController)
         Button(onClick = { onClickFriends() }) {
             Text(text = "Friend Request")
         }

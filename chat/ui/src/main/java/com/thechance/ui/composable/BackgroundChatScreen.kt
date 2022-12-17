@@ -15,10 +15,11 @@ import com.thechance.ui.R
 
 @Composable
 fun BackgroundChatScreen() {
-    if (isSystemInDarkTheme()){
-        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.surface))
-    }
-    else {
+    if (isSystemInDarkTheme()) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.surface))
+    } else {
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.background_chat_screen2),

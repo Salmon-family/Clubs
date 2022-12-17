@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun Loading(
-    modifier: Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
