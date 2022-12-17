@@ -1,14 +1,14 @@
 package com.devfalah.ui.composable
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.devfalah.ui.R
@@ -19,6 +19,11 @@ import com.devfalah.ui.theme.LightBackgroundColor
 fun AppBar(
     title: String,
     navHostController: NavController,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+    backgroundColor: Color = MaterialTheme.colors.background,
+    contentColor: Color = contentColorFor(backgroundColor),
+    elevation: Dp = 0.dp
 ) {
     TopAppBar(
         title = {
@@ -36,8 +41,10 @@ fun AppBar(
                 }
             }
         } else null,
-        backgroundColor = LightBackgroundColor,
-        elevation = 0.dp,
-        modifier = Modifier.fillMaxWidth()
+        actions = actions,
+        backgroundColor = backgroundColor,
+        elevation = elevation,
+        contentColor = contentColor,
+        modifier = modifier.fillMaxWidth()
     )
 }
