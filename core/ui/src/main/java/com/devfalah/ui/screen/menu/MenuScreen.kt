@@ -2,11 +2,13 @@ package com.devfalah.ui.screen.menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,28 +19,27 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
+import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
-import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
-import com.devfalah.ui.theme.LightBackgroundColor
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.devfalah.ui.Screen
 import com.devfalah.ui.screen.menu.composable.AccountSection
 import com.devfalah.ui.screen.menu.composable.MenuItem
 import com.devfalah.ui.screen.menu.composable.PreferencesSection
 import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
 import com.devfalah.viewmodels.menu.UserUiState
-import com.devfalah.ui.composable.AppBar
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun MenuScreen(
@@ -49,11 +50,12 @@ fun MenuScreen(
     val systemUIController = rememberSystemUiController()
 
     MenuContent(
+        navController = navController,
         state = state,
         onClickProfile = { navController.navigateToProfile(state.userId) },
-        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) },
-        onClickAccountSettings = { navController.navigate(route = Screen.AccountSettings.screen_route) },
-        onClickFriendsRequests = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
+        onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
+        onClickAccountSettings = { navController.navigate(route = ACCOUNT_SETTINGS_SCREEN) },
+        onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
         onClickReportBug = {}
@@ -69,6 +71,7 @@ fun MenuScreen(
 
 @Composable
 fun MenuContent(
+    navController: NavController,
     state: UserUiState,
     onClickProfile: () -> Unit,
     onClickSavedPosts: () -> Unit,
@@ -78,57 +81,61 @@ fun MenuContent(
     onClickLanguage: () -> Unit,
     onClickReportBug: () -> Unit
 ) {
-    AppBar(title = "Menu", navHostController =navController)
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(LightBackgroundColor)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column {
 
-        item {
-            TopSection(
-                state = state,
-                onClickProfile = onClickProfile,
-                onClickSavedThreads = onClickSavedPosts
-            )
-        }
+        AppBar(title = "Menu", navHostController = navController)
 
-        item {
-            AccountSection(
-                onClickAccountSettings = onClickAccountSettings,
-                onClickFriendsRequests = onClickFriendsRequests,
-            )
-        }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(LightBackgroundColor)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        item {
-            PreferencesSection(
-                onClickTheme = onClickTheme,
-                onClickLanguage = onClickLanguage
-            )
-        }
-
-        item {
-            MenuItem(
-                text = stringResource(R.string.report_bugs),
-                painter = painterResource(id = R.drawable.ic_menu_bug),
-                onClickItem = onClickReportBug
-            )
-        }
-
-        item {
-            Text(
-                text = "version would be shown here",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    color = LightTernaryBlackColor,
-                    fontFamily = PlusJakartaSans,
-                    fontWeight = FontWeight.Normal
+            item {
+                TopSection(
+                    state = state,
+                    onClickProfile = onClickProfile,
+                    onClickSavedThreads = onClickSavedPosts
                 )
-            )
+            }
+
+            item {
+                AccountSection(
+                    onClickAccountSettings = onClickAccountSettings,
+                    onClickFriendsRequests = onClickFriendsRequests,
+                )
+            }
+
+            item {
+                PreferencesSection(
+                    onClickTheme = onClickTheme,
+                    onClickLanguage = onClickLanguage
+                )
+            }
+
+            item {
+                MenuItem(
+                    text = stringResource(R.string.report_bugs),
+                    painter = painterResource(id = R.drawable.ic_menu_bug),
+                    onClickItem = onClickReportBug
+                )
+            }
+
+            item {
+                Text(
+                    text = "version would be shown here",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        color = LightTernaryBlackColor,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.Normal
+                    )
+                )
+            }
         }
     }
 }
@@ -137,5 +144,5 @@ fun MenuContent(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewMenu() {
-    MenuContent(UserUiState(), {}, {}, {}, {}, {}, {}, {})
+    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {})
 }

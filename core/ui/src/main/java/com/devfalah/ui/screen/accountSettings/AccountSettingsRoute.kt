@@ -5,9 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 
-private const val ROUTE_ACCOUNT_SETTINGS = "AccountSettings"
+const val ACCOUNT_SETTINGS_SCREEN = "AccountSettings"
 fun NavGraphBuilder.accountSettingsRoute(navController: NavController){
-    composable(route = ROUTE_ACCOUNT_SETTINGS){
+    composable(route = ACCOUNT_SETTINGS_SCREEN){
         AccountSettingsScreen(navController)
     }
 }
