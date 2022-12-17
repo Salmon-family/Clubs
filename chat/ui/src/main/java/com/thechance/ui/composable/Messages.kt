@@ -99,7 +99,7 @@ fun ReceiverMessage(
         TextMessage(
             text = text,
             date = dateMessage,
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colors.surface,
             textColor = MaterialTheme.colors.onBackground,
             modifier = modifier,
         )

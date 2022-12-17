@@ -89,11 +89,6 @@ private fun ChatsContent(
                         modifier = Modifier.animateItemPlacement(),
                         onClick = onClickChat,
                     )
-                    LaunchedEffect(key1 = state.isLoadingMore) {
-                        if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
-                            onLoadingMoreChats()
-                        }
-                    }
                 }
                 item {
                     if (state.isLoadingMore) {
@@ -109,7 +104,12 @@ private fun ChatsContent(
                         }
                     }
                 }
+            }
+        }
 
+        LaunchedEffect(key1 = listState.isScrolledToTheEnd()) {
+            if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
+                onLoadingMoreChats()
             }
         }
     }
