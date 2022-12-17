@@ -12,6 +12,8 @@ import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.AppBar
 
 @Composable
 fun MenuScreen(
@@ -22,6 +24,9 @@ fun MenuScreen(
     MenuContent(
         onClickFriends = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) }
+        navController,
+        onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
+        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) }
     )
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -34,12 +39,12 @@ fun MenuScreen(
 
 @Composable
 fun MenuContent(
+    navController: NavController,
     onClickFriends: () -> Unit,
     onClickSavedPosts: () -> Unit
 ) {
     Column() {
-        Text(text = "Menu", fontSize = 24.sp)
-
+        AppBar(title = "Menu", navHostController =navController)
         Button(onClick = { onClickFriends() }) {
             Text(text = "Friend Request")
         }

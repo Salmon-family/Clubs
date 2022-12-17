@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.notification
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.notifications.NotificationState
@@ -29,7 +32,7 @@ fun NotificationScreen(
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
-    NotificationContent(state, viewModel::onNotificationClick)
+    NotificationContent(navController, state, viewModel::onNotificationClick)
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
@@ -41,17 +44,21 @@ fun NotificationScreen(
 
 @Composable
 fun NotificationContent(
+    navController: NavController,
     state: NotificationsUIState,
     onNotificationClick: (NotificationState) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = LightBackgroundColor),
-        contentPadding = PaddingValues(vertical = 16.dp),
-    ) {
-        items(state.notifications) {
-            NotificationItem(notification = it, onNotificationClick)
+    Column {
+        AppBar(title = Screen.Notification.title, navHostController =navController )
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = LightBackgroundColor),
+            contentPadding = PaddingValues(vertical = 16.dp),
+        ) {
+            items(state.notifications) {
+                NotificationItem(notification = it, onNotificationClick)
+            }
         }
     }
 }

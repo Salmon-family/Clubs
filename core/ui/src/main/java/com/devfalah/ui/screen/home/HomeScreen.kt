@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.home
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
@@ -16,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.Screen
+import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
@@ -70,6 +73,8 @@ fun HomeContent(
     onOpenLinkClick: (String) -> Unit
 ) {
 
+    AppBar(title = Screen.Home.title, navHostController =navController )
+
     ManualPager(
         onRefresh = onRefresh,
         contentPadding = PaddingValues(vertical = 16.dp),
@@ -77,7 +82,6 @@ fun HomeContent(
         error = state.pagerError,
         isEndOfPager = state.isEndOfPager,
     ) {
-
         item {
             PostCreatingSection(
                 modifier = Modifier.padding(horizontal = 16.dp),

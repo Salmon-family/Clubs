@@ -7,7 +7,7 @@ import com.thechance.ui.START_DESTINATION
 
 
 private const val ROUTE = START_DESTINATION
-fun NavGraphBuilder.chatRoute(navController: NavHostController){
+fun NavGraphBuilder.chatRoute(navController: NavHostController) {
     composable(
         route = ROUTE
     ) {

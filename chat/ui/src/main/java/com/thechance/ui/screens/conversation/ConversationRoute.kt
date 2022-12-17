@@ -10,7 +10,7 @@ fun NavController.navigateToConversation(
     id: Int,
     friendId: Int,
     friendName: String,
-    friendImage: String
+    friendImage: String,
 ) {
     val friendImageEncoded = URLEncoder.encode(friendImage, StandardCharsets.UTF_8.toString())
     navigate("$ROUTE/$id/$friendId/$friendName/$friendImageEncoded")
