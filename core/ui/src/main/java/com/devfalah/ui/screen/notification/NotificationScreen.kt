@@ -37,7 +37,7 @@ fun NotificationScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = LightBackgroundColor,
-            darkIcons = false
+            darkIcons = true
         )
     }
 }

@@ -23,16 +23,14 @@ fun MenuScreen(
 
     MenuContent(
         onClickFriends = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
-        onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) }
-        navController,
-        onClickFriends = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
-        onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) }
+        onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
+        navController = navController,
     )
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
             color = LightBackgroundColor,
-            darkIcons = false
+            darkIcons = true
         )
     }
 }

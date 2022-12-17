@@ -24,7 +24,7 @@ fun CreatePostScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = LightBackgroundColor,
-            darkIcons = false
+            darkIcons = true
         )
     }
     CreatePostContent(

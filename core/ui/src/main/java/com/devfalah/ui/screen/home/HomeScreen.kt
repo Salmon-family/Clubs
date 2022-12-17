@@ -42,6 +42,7 @@ fun HomeScreen(
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
     HomeContent(
+        navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
         // should navigate to post screen details.
@@ -56,13 +57,14 @@ fun HomeScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = LightBackgroundColor,
-            darkIcons = false
+            darkIcons = true
         )
     }
 }
 
 @Composable
 fun HomeContent(
+    navController: NavController,
     state: HomeUIState,
     onCreatePost: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
@@ -72,38 +74,41 @@ fun HomeContent(
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit
 ) {
+    Column {
 
-    AppBar(title = Screen.Home.title, navHostController =navController )
+        AppBar(title = Screen.Home.title, navHostController = navController)
 
-    ManualPager(
-        onRefresh = onRefresh,
-        contentPadding = PaddingValues(vertical = 16.dp),
-        isLoading = state.isPagerLoading,
-        error = state.pagerError,
-        isEndOfPager = state.isEndOfPager,
-    ) {
-        item {
-            PostCreatingSection(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                onCreatePost = onCreatePost,
-                isMyProfile = true
-            )
-        }
+        ManualPager(
+            onRefresh = onRefresh,
+            contentPadding = PaddingValues(vertical = 16.dp),
+            isLoading = state.isPagerLoading,
+            error = state.pagerError,
+            isEndOfPager = state.isEndOfPager,
+        ) {
+            item {
+                PostCreatingSection(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onCreatePost = onCreatePost,
+                    isMyProfile = true
+                )
+            }
 
-        items(state.posts) {
-            PostItem(
-                state = it,
-                isContentExpandable = true,
-                isMyPost = it.publisherId == state.id,
-                onClickLike = { onClickLike(it) },
-                onClickComment = { onClickComment(it) },
-                onClickSave = { onClickSave(it) },
-                onClickProfile = onClickProfile,
-                onClickPostSetting = { },
-                onOpenLinkClick = onOpenLinkClick
-            )
+            items(state.posts) {
+                PostItem(
+                    state = it,
+                    isContentExpandable = true,
+                    isMyPost = it.publisherId == state.id,
+                    onClickLike = { onClickLike(it) },
+                    onClickComment = { onClickComment(it) },
+                    onClickSave = { onClickSave(it) },
+                    onClickProfile = onClickProfile,
+                    onClickPostSetting = { },
+                    onOpenLinkClick = onOpenLinkClick
+                )
+            }
         }
     }
+
 }
 
 fun openBrowser(context: Context, url: String) {

@@ -42,7 +42,9 @@ fun FriendsScreen(
     )
     LaunchedEffect(true) {
         setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = false
+            systemUIController = systemUIController,
+            color = LightBackgroundColor,
+            darkIcons = true
         )
     }
 }

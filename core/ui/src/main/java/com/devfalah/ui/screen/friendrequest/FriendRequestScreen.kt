@@ -14,9 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.R
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
@@ -47,7 +49,7 @@ fun FriendRequestScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = LightBackgroundColor,
-            darkIcons = false
+            darkIcons = true
         )
     }
 }
@@ -63,7 +65,7 @@ fun FriendRequestsContent(
     onClickOpenProfile: (Int) -> Unit,
 ) {
     Column {
-        AppBar(title = Screen.FriendRequestRoute.title, navHostController = navController)
+        AppBar(title = stringResource(R.string.friends_request), navHostController = navController)
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
