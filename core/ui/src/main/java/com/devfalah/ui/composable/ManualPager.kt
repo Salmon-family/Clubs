@@ -58,7 +58,9 @@ fun ManualPager(
 
     if (!scrollState.isScrollingUp() || !isEndOfPager) {
         LaunchedEffect(key1 = scrollState.isScrollInProgress) {
-            onRefresh(Constants.SWIPE_DOWN)
+            if (!isLoading && !isEndOfPager){
+                onRefresh(Constants.SWIPE_DOWN)
+            }
         }
     }
 }

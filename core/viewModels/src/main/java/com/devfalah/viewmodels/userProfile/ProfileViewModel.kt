@@ -5,8 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
+import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
-import com.devfalah.viewmodels.userProfile.mapper.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -179,11 +179,11 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(loading = true) }
-                val posts = getProfilePostUseCase.loadMore(uiState.value.id, args.ownerId, type)
+                val posts = getProfilePostUseCase.loadMore(uiState.value.id, args.ownerId)
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        posts = (uiState.value.posts + posts.toUIState()),
+                        posts = (it.posts + posts.toUIState()),
                         isEndOfPager = posts.isEmpty()
                     )
                 }

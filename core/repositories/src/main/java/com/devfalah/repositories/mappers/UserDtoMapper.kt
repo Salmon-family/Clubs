@@ -22,3 +22,5 @@ fun UserDTO.toEntity(): User {
         isRequestExists = false
     )
 }
+
+fun List<UserDTO>.toEntity() = map { it.toEntity() }

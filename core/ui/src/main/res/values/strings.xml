@@ -29,5 +29,7 @@
     <string name="loading">"Loading.."</string>
     <string name="no_data">No More Data</string>
     <string name="try_again">Try Again</string>
+    <string name="search">Search</string>
+
     <string name="home">Home</string>
 </resources>

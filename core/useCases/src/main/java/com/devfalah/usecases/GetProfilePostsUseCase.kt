@@ -9,7 +9,6 @@ class GetProfilePostsUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
     private var page = 1
-    private var lastPage = 1
     private lateinit var savedPosts: Flow<List<Int>>
 
     suspend operator fun invoke(userId: Int, profileUserID: Int): List<Post> {
@@ -17,17 +16,9 @@ class GetProfilePostsUseCase @Inject constructor(
         return clubRepository.getProfilePostsPager(userId, profileUserID, page = page)
     }
 
-    suspend fun loadMore(userId: Int, profileUserID: Int, scrollType: Int): List<Post> {
-        val page = if (scrollType >= 0) {
-            1
-        } else {
-            lastPage
-        }
-
+    suspend fun loadMore(userId: Int, profileUserID: Int): List<Post> {
         val posts = clubRepository.getProfilePostsPager(userId, profileUserID, page = page)
-        if (posts.isNotEmpty()){
-            lastPage += 1
-        }
+        if (posts.isNotEmpty()){ page += 1 }
         return posts
     }
 

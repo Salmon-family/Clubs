@@ -76,7 +76,7 @@ fun PostContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(260.dp),
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.Crop
         )
     }
 }

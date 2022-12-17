@@ -39,4 +39,7 @@ interface RemoteDataSource {
     suspend fun getUserHomePosts(userID: Int, page: Int): List<WallPostDTO>
 
     suspend fun deletePostById(userId: Int, postId: Int): Boolean
+
+    suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto
+
 }

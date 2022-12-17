@@ -1,5 +1,7 @@
 package com.devfalah.viewmodels.userProfile
 
+import com.devfalah.viewmodels.friends.FriendUIState
+
 data class UserUIState(
     val id: Int = 0,
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
@@ -47,12 +49,6 @@ data class PostUIState(
     val isLikedByUser: Boolean = false,
     val postImage: String = "",
     val postContent: String = "",
-)
-
-data class FriendUIState(
-    val id: Int = 0,
-    val name: String = "",
-    val profileImageUrl: String = ""
 )
 
 fun List<PostUIState>.getIds() = map { it.postId }

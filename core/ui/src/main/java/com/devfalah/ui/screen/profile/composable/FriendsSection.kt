@@ -20,7 +20,7 @@ import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.viewmodels.userProfile.FriendUIState
+import com.devfalah.viewmodels.friends.FriendUIState
 
 @Composable
 fun FriendsSection(
@@ -58,7 +58,7 @@ fun FriendsSection(
         ) {
             friends.take(4).forEach {
                 Friend(
-                    painter = rememberAsyncImagePainter(model = it.profileImageUrl),
+                    painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
                     text = it.name,
                 )
             }

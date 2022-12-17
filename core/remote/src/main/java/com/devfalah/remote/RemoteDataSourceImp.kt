@@ -100,6 +100,10 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.deletePost(userID = userId, postID = postId) }
     }
 
+    override suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto {
+        return wrap { apiService.getSearch(userID = userId, keyword = keyword) }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

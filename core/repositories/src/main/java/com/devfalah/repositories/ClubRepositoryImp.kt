@@ -70,7 +70,7 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
     }
 
-    override suspend fun getGroupsIDsThatUserMemberOF(userID: Int): List<Int> {
+    override suspend fun getGroupsIDsThatUserMemberOF(userID: Int): List<Club> {
         return remoteDataSource.getGroupsThatUserMemberOF(userID).toEntity()
     }
 
@@ -97,6 +97,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun deletePost(userId: Int, postId: Int): Boolean {
         return remoteDataSource.deletePostById(userId, postId)
+    }
+
+    override suspend fun getSearch(userID: Int, keyword: String): SearchResult {
+        return remoteDataSource.getSearchResult(userID, keyword).toEntity()
     }
 
     override suspend fun deletePost(postId: Int) {

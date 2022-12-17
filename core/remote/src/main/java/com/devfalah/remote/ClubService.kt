@@ -302,4 +302,11 @@ interface ClubService {
         @Part("guid") userId: RequestBody,
         @Part file: MultipartBody.Part,
     ): Response<BaseResponse<UserDTO>>
+
+    @GET("my_custom_end_point")
+    suspend fun getSearch(
+        @Query("guid") userID: Int,
+        @Query("keyword") keyword: String,
+    ): Response<BaseResponse<SearchResultDto>>
+
 }
