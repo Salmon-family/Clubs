@@ -101,4 +101,5 @@ fun ClubsContent(
                 .padding(horizontal = 8.dp)
         )
     }
+
 }

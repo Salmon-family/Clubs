@@ -46,4 +46,8 @@ class IdentityRepositoryImp @Inject constructor(
     override fun getClubs(): List<Club> {
         return localIdentityDataSource.getClubs()
     }
+
+    override suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean {
+        return remoteDataSource.acceptJoiningRequest(clubId, userId, clubOwnerId)
+    }
 }

@@ -3,6 +3,7 @@ package com.thechance.identity.viewmodel.clubs
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.thechance.identity.usecases.AcceptJoiningRequestUseCase
 import com.thechance.identity.usecases.GetClubsUseCaase
 import com.thechance.identity.usecases.GetUserIdUseCase
 import com.thechance.identity.usecases.JoinClubUseCase
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class ClubsViewModel @Inject constructor(
     private val getClubsUseCase: GetClubsUseCaase,
     private val joinClubUseCase: JoinClubUseCase,
-    private val getUserIdUseCase: GetUserIdUseCase
+    private val getUserIdUseCase: GetUserIdUseCase,
+    private val acceptJoiningRequestUseCase: AcceptJoiningRequestUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ClubsUIState())
     val uiState = _uiState.asStateFlow()
@@ -45,15 +47,20 @@ class ClubsViewModel @Inject constructor(
     }
 
     fun joinClubs(){
-        val userId = getUserIdUseCase()
+        val userId = getUserIdUseCase()?.toInt() ?: 0
         viewModelScope.launch {
             try {
                 _uiState.value.selectedClubs.forEach { club ->
-                    joinClubUseCase(club.id, userId?.toInt() ?:0)
+                    joinClubUseCase(club.id, userId)
+                    acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
                 }
             }catch (t: Throwable) {
                 Log.i("error", t.message.toString())
             }
         }
+    }
+
+    companion object{
+        private const val OWNER_ID = 3
     }
 }

@@ -22,4 +22,6 @@ interface IdentityRepository {
     suspend fun joinClub(clubId: Int, userId: Int): Club
 
     fun getClubs(): List<Club>
+
+    suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
 }
