@@ -55,6 +55,7 @@ fun ProfileItem(
         Icon(
             modifier = Modifier
                 .size(32.dp)
+                .clip(CircleShape)
                 .border(
                     BorderStroke(2.dp, LightBackgroundColor),
                     CircleShape

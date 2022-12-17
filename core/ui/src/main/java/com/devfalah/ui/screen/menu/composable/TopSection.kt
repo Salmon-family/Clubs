@@ -7,11 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.HeightSpacer16
+import com.devfalah.viewmodels.menu.UserUiState
 
 @Composable
 fun TopSection(
+    state: UserUiState,
     modifier: Modifier = Modifier,
     onClickProfile: () -> Unit,
     onClickSavedThreads: () -> Unit,
@@ -20,7 +23,10 @@ fun TopSection(
         modifier = modifier.fillMaxWidth()
     ) {
         ProfileItem(
-            painter = painterResource(R.drawable.ic_menu_avatar),
+            painter = rememberAsyncImagePainter(
+                model = state.profilePhotoUrl,
+                placeholder = painterResource(id = R.drawable.ic_menu_avatar)
+            ),
             onClickItem = onClickProfile,
         )
 
@@ -38,6 +44,7 @@ fun TopSection(
 @Composable
 fun PreviewTopSection() {
     TopSection(
+        state = UserUiState(),
         onClickProfile = {},
         onClickSavedThreads = {}
     )
