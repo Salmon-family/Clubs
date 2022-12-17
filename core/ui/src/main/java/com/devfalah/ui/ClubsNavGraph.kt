@@ -3,6 +3,7 @@ package com.devfalah.ui
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.devfalah.ui.screen.accountSettings.accountSettingsRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.createPost.createPostRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
@@ -32,6 +33,6 @@ fun ClubsNavGraph(navController: NavHostController) {
         createPostRoute(navController = navController)
         friendsRoute(navController = navController)
         savedPostsRoute(navController = navController)
-
+        accountSettingsRoute(navController = navController)
     }
 }

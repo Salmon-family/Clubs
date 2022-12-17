@@ -17,6 +17,7 @@ sealed class Screen(
     object CreatePost : Screen(title = "Create Post", screen_route = "CreatePost")
     object Friends : Screen(title = "Friends Screen", screen_route = "AllFriendsScreen")
     object SavedPosts : Screen(title = "favorite Screen", screen_route = "SavedPostsScreen")
+    object AccountSettings : Screen(title = "Account Settings", screen_route = "AccountSettings")
 
 
 }
