@@ -13,7 +13,6 @@ fun AccountSection(
     modifier: Modifier = Modifier,
     onClickAccountSettings: () -> Unit,
     onClickFriendsRequests: () -> Unit,
-    onClickBlockedPeople: () -> Unit
 ) {
     MenuSection(
         modifier = modifier,
@@ -34,12 +33,6 @@ fun AccountSection(
         )
 
         HeightSpacer8()
-
-        MenuItem(
-            text = stringResource(R.string.blocked_people),
-            painter = painterResource(R.drawable.ic_menu_blocked),
-            onClickItem = onClickBlockedPeople,
-        )
     }
 }
 
@@ -48,7 +41,6 @@ fun AccountSection(
 fun PreviewAccountSection() {
     AccountSection(
         onClickAccountSettings = {},
-        onClickFriendsRequests = {},
-        onClickBlockedPeople = {}
+        onClickFriendsRequests = {}
     )
 }

@@ -25,7 +25,6 @@ fun MenuScreen(
         onClickSavedPosts = { navController.navigate(route = Screen.SavedPosts.screen_route) },
         onClickAccountSettings = {},
         onClickFriendsRequests = { navController.navigate(route = Screen.FriendRequestRoute.screen_route) },
-        onClickBlockedPeople = {},
         onClickTheme = {},
         onClickLanguage = {}
     )
@@ -37,7 +36,6 @@ fun MenuContent(
     onClickSavedPosts: () -> Unit,
     onClickAccountSettings: () -> Unit,
     onClickFriendsRequests: () -> Unit,
-    onClickBlockedPeople: () -> Unit,
     onClickTheme: () -> Unit,
     onClickLanguage: () -> Unit
 ) {
@@ -60,7 +58,6 @@ fun MenuContent(
             AccountSection(
                 onClickAccountSettings = onClickAccountSettings,
                 onClickFriendsRequests = onClickFriendsRequests,
-                onClickBlockedPeople = onClickBlockedPeople
             )
         }
 
