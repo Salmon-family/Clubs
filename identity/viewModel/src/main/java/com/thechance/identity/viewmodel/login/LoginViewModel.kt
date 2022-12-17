@@ -21,22 +21,38 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
 
-
     fun onLogin() {
+        onLoading()
+        makeLoginRequest()
+    }
+
+    private fun onLoading() {
+        _uiState.update { it.copy(isLoading = true, isSuccess = false, isError = "") }
+    }
+
+    private fun makeLoginRequest() {
         viewModelScope.launch {
             try {
                 val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
-                _uiState.update { it.copy(isSuccess = true) }
+                onSuccess()
                 Log.i("userName", login.guid.toString())
-            } catch (e: Throwable) {
-                _uiState.update {
-                    it.copy(
-                        isError = e.message.toString(),
-                        isSuccess = false
-                    )
-                }
-                Log.i("error", e.message.toString())
+            } catch (t: Throwable) {
+                onError(errorMessage = t)
             }
+        }
+    }
+
+    private fun onSuccess() {
+        _uiState.update { it.copy(isSuccess = true, isError = "", isLoading = false) }
+    }
+
+    private fun onError(errorMessage: Throwable) {
+        _uiState.update {
+            it.copy(
+                isError = errorMessage.message.toString(),
+                isSuccess = false,
+                isLoading = false
+            )
         }
     }
 
