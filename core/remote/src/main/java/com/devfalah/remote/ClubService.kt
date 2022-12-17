@@ -22,8 +22,10 @@ interface ClubService {
      * */
     @FormUrlEncoded
     @POST("user_friends")
-    suspend fun getUserFriends(@Field("guid") userID: Int)
-            : Response<BaseResponse<FriendsDTO>>
+    suspend fun getUserFriends(
+        @Field("guid") userID: Int,
+        @Field("offset") page: Int
+    ): Response<BaseResponse<FriendsDTO>>
 
     @FormUrlEncoded
     @POST("user_friend_requests")

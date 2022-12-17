@@ -14,7 +14,7 @@ interface RemoteDataSource {
 
     suspend fun getUserFriendRequests(userID: Int): List<FriendDTO>
 
-    suspend fun getUserFriends(userID: Int): FriendsDTO
+    suspend fun getUserFriends(userID: Int, page: Int): FriendsDTO
 
     suspend fun getNotifications(userID: Int): List<NotificationsDTO>
 

@@ -36,15 +36,13 @@ fun FriendsScreen(
 
     FriendsContent(
         state = state,
-        onRefresh = viewModel::swipeToRefresh,
+        onRefresh = viewModel::getUserFriends,
         onClickProfile = { navController.navigateToProfile(it) },
         onRemoveFriend = viewModel::removeFriend
     )
     LaunchedEffect(true) {
         setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = false
+            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = false
         )
     }
 }
@@ -61,7 +59,7 @@ fun FriendsContent(
         contentPadding = PaddingValues(16.dp),
         isLoading = state.isLoading,
         error = state.error,
-        isEndOfPager = false,
+        isEndOfPager = state.isPagerEnd,
     ) {
         item {
             Text(

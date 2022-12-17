@@ -35,8 +35,8 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Mapping Error")
     }
 
-    override suspend fun getUserFriends(userID: Int): FriendsDTO {
-        return wrap { apiService.getUserFriends(userID) }
+    override suspend fun getUserFriends(userID: Int, page: Int): FriendsDTO {
+        return wrap { apiService.getUserFriends(userID, page) }
     }
 
     override suspend fun getNotifications(userID: Int): List<NotificationsDTO> {

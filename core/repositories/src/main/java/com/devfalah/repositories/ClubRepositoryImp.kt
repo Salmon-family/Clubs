@@ -28,8 +28,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getUserFriendRequests(userID = userID).toEntity()
     }
 
-    override suspend fun getUserFriends(userID: Int): Friends {
-        return remoteDataSource.getUserFriends(userID).toEntity()
+    override suspend fun getUserFriends(userID: Int, page: Int): Friends {
+        return remoteDataSource.getUserFriends(userID, page).toEntity()
     }
 
     override suspend fun getNotifications(userID: Int): List<Notification> {

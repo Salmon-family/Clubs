@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.friends
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +28,6 @@ class FriendsViewModel @Inject constructor(
 
     init {
         getUserID()
-        getUserFriends()
     }
 
     private fun getUserID() {
@@ -41,19 +41,24 @@ class FriendsViewModel @Inject constructor(
         }
     }
 
-    private fun getUserFriends() {
+    fun getUserFriends(type: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val friends = getUserFriendsUseCase(args.ownerId)
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        totalFriends = friends.total,
-                        friends = friends.friends.toFriendsUIState()
-                    )
+                if (friends.friends.isNotEmpty()) {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            totalFriends = friends.total,
+                            friends = (_uiState.value.friends + friends.friends.toFriendsUIState())
+                        )
+                    }
+                }else{
+                    _uiState.update { it.copy(isLoading = false, isPagerEnd = true) }
                 }
             } catch (t: Throwable) {
+                Log.e("TEST", t.message.toString())
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
         }
@@ -71,9 +76,5 @@ class FriendsViewModel @Inject constructor(
                 _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
-    }
-
-    fun swipeToRefresh(type: Int) {
-
     }
 }
