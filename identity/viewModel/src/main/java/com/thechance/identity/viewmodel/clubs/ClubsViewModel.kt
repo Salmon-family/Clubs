@@ -52,7 +52,8 @@ class ClubsViewModel @Inject constructor(
             try {
                 _uiState.value.selectedClubs.forEach { club ->
                     joinClubUseCase(club.id, userId)
-                    acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
+                    val test = acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
+                    Log.i("myResult", test.toString())
                 }
             }catch (t: Throwable) {
                 Log.i("error", t.message.toString())
