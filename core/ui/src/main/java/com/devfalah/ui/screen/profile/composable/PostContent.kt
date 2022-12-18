@@ -2,7 +2,6 @@ package com.devfalah.ui.screen.profile.composable
 
 import android.webkit.URLUtil
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,8 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.composable.HeightSpacer16
-import com.devfalah.ui.modifiers.RemoveRippleEffect
-import com.devfalah.ui.screen.home.openBrowser
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -37,7 +35,7 @@ fun PostContent(
     if (URLUtil.isValidUrl(post.postContent)) {
         Text(
             modifier = Modifier
-                .RemoveRippleEffect { onOpenLinkClick(post.postContent) }
+                .nonRippleEffect { onOpenLinkClick(post.postContent) }
                 .padding(horizontal = 16.dp)
                 .padding(top = 8.dp),
             text = post.postContent,

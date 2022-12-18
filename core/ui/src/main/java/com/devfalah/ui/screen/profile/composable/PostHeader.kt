@@ -24,7 +24,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.composable.WidthSpacer8
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -46,7 +46,7 @@ fun PostHeader(
             painter = rememberAsyncImagePainter(model = post.publisherImage),
             contentDescription = null,
             Modifier
-                .RemoveRippleEffect { onClickProfile(post.publisherId) }
+                .nonRippleEffect { onClickProfile(post.publisherId) }
                 .size(40.dp)
                 .clip(CircleShape),
         )
@@ -95,7 +95,7 @@ fun PostHeader(
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Icon(
-                    modifier = Modifier.RemoveRippleEffect { expanded = true },
+                    modifier = Modifier.nonRippleEffect { expanded = true },
                     painter = painterResource(R.drawable.ic_setting),
                     contentDescription = null
                 )

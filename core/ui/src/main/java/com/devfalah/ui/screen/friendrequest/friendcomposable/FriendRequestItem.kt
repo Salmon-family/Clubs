@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.CircleProfileImage
+import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.HeightSpacer4
 import com.devfalah.ui.composable.UserIconButton
 import com.devfalah.ui.composable.WidthSpacer16
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -45,8 +45,8 @@ fun FriendRequestItem(
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CircleProfileImage(
-            modifier = Modifier.RemoveRippleEffect { onClickOpenProfile(userState.userID) },
+        CircleImage(
+            modifier = Modifier.nonRippleEffect { onClickOpenProfile(userState.userID) },
             painter = rememberAsyncImagePainter(model = userState.profileImage),
             size = 56
         )

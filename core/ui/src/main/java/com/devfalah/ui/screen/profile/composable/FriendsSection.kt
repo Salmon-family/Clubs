@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.CircleProfileImage
+import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -85,7 +85,7 @@ fun Friend(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        CircleProfileImage(
+        CircleImage(
             painter = painter,
             size = 56
         )

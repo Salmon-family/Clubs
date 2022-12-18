@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.profile.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -95,7 +94,7 @@ private fun PostActionIcon(
     tint: Color = Color.Unspecified
 ) {
     Icon(
-        modifier = Modifier.RemoveRippleEffect { onClick() },
+        modifier = Modifier.nonRippleEffect { onClick() },
         painter = painter,
         tint = tint,
         contentDescription = null

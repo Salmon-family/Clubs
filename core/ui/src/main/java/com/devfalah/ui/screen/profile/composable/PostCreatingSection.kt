@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -33,7 +33,7 @@ fun PostCreatingSection(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .RemoveRippleEffect { onCreatePost() }
+            .nonRippleEffect { onCreatePost() }
             .fillMaxWidth()
             .clip(CircleShape)
             .background(WhiteColor)

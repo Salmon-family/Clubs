@@ -1,69 +1,77 @@
 package com.devfalah.ui.composable
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.viewmodels.friends.FriendUIState
+import com.devfalah.ui.theme.*
+import com.devfalah.viewmodels.search.ClubUIState
 
 @Composable
-fun FriendItem(
+fun ClubItem(
     modifier: Modifier = Modifier,
-    state: FriendUIState,
-    onOpenProfileClick: (Int) -> Unit
+    state: ClubUIState,
+    onClubSelected: (Int) -> Unit
 ) {
+
     Row(
         modifier = modifier
-            .nonRippleEffect { onOpenProfileClick(state.id) }
+            .nonRippleEffect { onClubSelected(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(LightCardBackgroundColor)
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CircleImage(
-            painter = rememberAsyncImagePainter(model = state.profilePictureUrl),
-            size = 56
-        )
 
+        Image(
+            painter = painterResource(R.drawable.ic_clubs_filled),
+            contentDescription = "profile user",
+            modifier = modifier
+                .clip(shape = CircleShape)
+                .background(LightSecondaryBrandColor)
+                .padding(12.dp)
+                .size(56.dp),
+            contentScale = ContentScale.Crop,
+            colorFilter = ColorFilter.tint(color = LightPrimaryBrandColor)
+        )
         WidthSpacer16()
 
         Column(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = state.name,
+                text = state.title,
                 textAlign = TextAlign.Start,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color = LightPrimaryBlackColor,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
             HeightSpacer4()
             Text(
-                text = state.title,
+                text = state.description,
                 textAlign = TextAlign.Start,
-                fontSize = 12.sp,
-                color = LightPrimaryBrandColor,
+                fontSize = 14.sp,
+                color = LightTernaryBlackColor,
                 fontWeight = FontWeight.Normal,
-                maxLines = 1
+                maxLines = 2
             )
         }
 
@@ -72,11 +80,11 @@ fun FriendItem(
 
 @Preview(showSystemUi = false)
 @Composable
-fun PreviewFriendItem() {
-    FriendItem(
-        state = FriendUIState(
-            1, "", "Test Test", " Android Developer"
+fun PreviewClubItem() {
+    ClubItem(
+        state = ClubUIState(
+            1, "Club Title", "Test Test TestTestTestTestTestTest Test"
         ),
-        onOpenProfileClick = {},
+        onClubSelected = {},
     )
 }
