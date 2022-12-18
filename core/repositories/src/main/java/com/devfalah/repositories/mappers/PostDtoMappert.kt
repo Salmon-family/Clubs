@@ -20,7 +20,8 @@ fun WallPostDTO.toEntity(): Post? {
             publisher = postedUser?.firstName ?: "",
             publisherId = postedUser?.guid ?: 0,
             publisherImageUrl = postedUser?.icon?.large?.substringBefore("?") ?: "",
-            isLiked = post?.isLikedByUser ?: false
+            isLiked = post?.isLikedByUser ?: false,
+            isSaved = false
         )
     }
 }

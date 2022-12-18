@@ -11,13 +11,22 @@ class GetHomePostUseCase @Inject constructor(
 ) {
     private var page = 1
     private val userGroupsIds = mutableListOf<Int>()
+    private lateinit var savedPosts: List<Int>
 
     suspend operator fun invoke(userId: Int) {
+        getSavedPostsIds()
         userGroupsIds.addAll(getUserGroups(userId))
     }
 
     suspend fun loadData(userId: Int, scrollType: Int): Flow<List<Post>> {
-        val homePosts = getHomePosts(userId, page)
+        val homePosts = getHomePosts(userId, page).map { post ->
+            if (post.id in savedPosts) {
+                post.copy(isSaved = true)
+            } else {
+                post
+            }
+        }
+
         if (homePosts.isNotEmpty()) {
             page += 1
         }
@@ -40,6 +49,12 @@ class GetHomePostUseCase @Inject constructor(
 
     private suspend fun getUserGroupsPosts(groupId: Int): List<Post> {
         return clubRepository.getProfilePosts(groupId, groupId)
+    }
+
+    private suspend fun getSavedPostsIds() {
+        return clubRepository.getSavedPostedIds().collect {
+            savedPosts = it
+        }
     }
 
 }

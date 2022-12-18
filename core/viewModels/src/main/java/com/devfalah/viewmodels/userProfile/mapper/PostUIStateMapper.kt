@@ -16,7 +16,7 @@ fun Post.toUIState(): PostUIState {
         createdData = ConvertDate().convertTime(createdTime),
         totalLikes = totalLikes,
         totalComments = totalComments,
-        isSaved = false,
+        isSaved = isSaved,
         isLikedByUser = isLiked,
         postImage = imageUrl,
         postContent = content,
@@ -37,7 +37,8 @@ fun PostUIState.toEntity(): Post {
         isLiked = isLikedByUser,
         imageUrl = postImage,
         content = postContent,
-        createdTime = createdDataValue
+        createdTime = createdDataValue,
+        isSaved = isSaved
     )
 }
 

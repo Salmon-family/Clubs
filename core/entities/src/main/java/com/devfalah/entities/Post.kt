@@ -11,5 +11,6 @@ data class Post(
     val publisher: String,
     val publisherId: Int,
     val publisherImageUrl: String,
-    val isLiked: Boolean
+    val isLiked: Boolean,
+    val isSaved:Boolean
 )
