@@ -1,7 +1,6 @@
 package com.thechance.remote.api
 
 import com.thechance.remote.response.BaseResponse
-import com.thechance.remote.response.UnreadMessagesResponse
 import com.devfalah.repository.models.ConversationDTO
 import com.devfalah.repository.models.ChatDTO
 import retrofit2.Response
@@ -20,17 +19,8 @@ interface ChatService {
         @Query("to") userID: Int,
         @Query("guid") friendID: Int,
         @Query("markallread") markAsRead: Int = 0,
-        @Query("offset") page: Boolean? = null
+        @Query("offset") page: Int
     ): Response<BaseResponse<ConversationDTO>>
-
-
-    // 1 to mark as read , 0 if not.
-    @POST("message_new")
-    suspend fun getUnreadMessages(
-        @Query("to") userID: Int,
-        @Query("from") friendID: Int,
-        @Query("markallread") markAsRead: Int = 0
-    ): Response<BaseResponse<UnreadMessagesResponse>>
 
     @FormUrlEncoded
     @POST("message_add")

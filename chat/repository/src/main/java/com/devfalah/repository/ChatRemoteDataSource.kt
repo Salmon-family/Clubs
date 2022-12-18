@@ -8,7 +8,7 @@ interface ChatRemoteDataSource {
 
     suspend fun getChats(userID: Int,page: Int): ConversationDTO
 
-    suspend fun getMessagesWithFriend(userID: Int, friendID: Int): List<ChatDTO>
+    suspend fun getMessagesWithFriend(userID: Int, friendID: Int, page: Int): ConversationDTO
 
     suspend fun sendMessage(from: Int, to: Int, message: String): ChatDTO
 
