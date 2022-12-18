@@ -155,7 +155,14 @@ class ProfileViewModel @Inject constructor(
             try {
                 val success = addFriendUseCase(uiState.value.id, args.ownerId)
                 if (success) {
-                    _uiState.update { it.copy(userDetails = it.userDetails.copy(areFriends = true)) }
+                    _uiState.update {
+                        it.copy(
+                            userDetails = it.userDetails.copy(
+                                areFriends = false,
+                                isRequestSend = true
+                            )
+                        )
+                    }
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
@@ -164,7 +171,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onClickChangeImage(file: File) {
-        //should display dialog chose from album or select from yours.
         viewModelScope.launch {
             try {
                 val updatedUser = changeProfileImageUseCase(userId = args.ownerId, file)

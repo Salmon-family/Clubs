@@ -12,13 +12,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CircleImage(
+    modifier: Modifier = Modifier,
     painter: Painter,
     size: Int = 48,
-    modifier: Modifier = Modifier,
 ) {
     Image(
         painter = painter,
-        contentDescription = "profile user",
+        contentDescription = null,
         modifier = modifier
             .clip(shape = CircleShape)
             .size(size.dp),

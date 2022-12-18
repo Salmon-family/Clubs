@@ -47,7 +47,10 @@ fun ProfileDetailsSection(
                 end.linkTo(parent.end)
             }) {
             Image(
-                painter = rememberAsyncImagePainter(model = userDetails.profilePicture),
+                painter = rememberAsyncImagePainter(
+                    model = userDetails.profilePicture,
+                    error = painterResource(id = R.drawable.test_image)
+                ),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.fillMaxSize()
@@ -135,7 +138,7 @@ fun ProfileDetailsSection(
 
             ProfileImageWithIcon(
                 profilePicture = userDetails.profilePicture,
-                onClickIcon = onClick ,
+                onClickIcon = onClick,
                 painter = GetPainterProfileIcon(userDetails)
             )
         }
@@ -149,10 +152,10 @@ private fun GetPainterProfileIcon(
 ): Painter? {
     return if (userDetails.isMyProfile) {
         painterResource(id = R.drawable.ic_camera)
-    } else if (!userDetails.areFriends) {
-        painterResource(id = R.drawable.ic_add_user)
     } else if (userDetails.isRequestSend) {
         painterResource(id = R.drawable.ic_requsted_add_user)
+    } else if (!userDetails.areFriends) {
+        painterResource(id = R.drawable.ic_add_user)
     } else {
         null
     }
