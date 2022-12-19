@@ -23,6 +23,7 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.viewmodels.clubCreation.ClubCreationUiState
 import com.devfalah.viewmodels.clubCreation.ClubCreationViewModel
+import com.devfalah.viewmodels.clubCreation.isCreateClubButtonEnabled
 
 @Composable
 fun ClubCreationScreen(
@@ -93,7 +94,7 @@ fun ClubCreationContent(
                 text = stringResource(id = R.string.create_club),
                 onClick = onClickCreateClub,
                 isLoading = state.isLoading,
-                isEnabled = state.name.isNotEmpty(),
+                isEnabled = state.isCreateClubButtonEnabled(),
                 modifier = Modifier.height(50.dp),
             )
         }

@@ -8,6 +8,8 @@ data class ClubCreationUiState(
     val isSuccessful: Boolean = false,
 )
 
+fun ClubCreationUiState.isCreateClubButtonEnabled() = name.isNotEmpty() && description.isNotEmpty()
+
 enum class ClubPrivacy(val value: Int){
     PUBLIC(2),
     PRIVATE(1),

@@ -14,17 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.devfalah.ui.theme.LightTernaryBlackColor
 
 @Composable
 fun CustomTextField(
     title: String,
-    hint: String? = null,
     value: String,
+    modifier: Modifier = Modifier,
+    hint: String? = null,
     maxChar: Int = Int.MAX_VALUE,
     showTextCount: Boolean = false,
     onValueChange: (String) -> Unit,
     singleLine: Boolean = false,
-    modifier: Modifier = Modifier,
 ) {
     Column {
         Row {
@@ -54,7 +55,9 @@ fun CustomTextField(
                 disabledIndicatorColor = Color.Transparent,
             ),
             placeholder = {
-                hint?.let { Text(text = it, textAlign = TextAlign.Center) }
+                hint?.let { Text(text = it,
+                    textAlign = TextAlign.Center,
+                color = LightTernaryBlackColor) }
             },
             shape = RoundedCornerShape(100.dp),
             singleLine = singleLine,
