@@ -25,13 +25,15 @@ fun ClubsScreen(
             AppBar(title = stringResource(R.string.clubs), navHostController =navController)
         }
     ) {
-       Button(onClick = {
-           navController.navigateToClubCreation()
-       }) {
+      Column {
+          Button(onClick = {
+              navController.navigateToClubCreation()
+          }) {
 
-       }
-        Button(onClick = { navController.navigateToClubRequests(clubId = 256, ownerId = 6) }) {
-            Text(text = "Requests")
-        }
+          }
+          Button(onClick = { navController.navigateToClubRequests(clubId = 256, ownerId = 6) }) {
+              Text(text = "Requests")
+          }
+      }
     }
 }
