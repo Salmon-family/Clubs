@@ -15,9 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.devfalah.ui.screen.clubs.composable.ClubCard
 import com.devfalah.ui.screen.clubs.composable.MyClubCard
-import com.devfalah.ui.screen.clubs.composable.SearchTextField
+import com.devfalah.ui.screen.clubs.composable.SearchItem
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.viewmodels.myClubs.ClubsState
 import com.devfalah.viewmodels.myClubs.ClubsUiState
@@ -41,25 +40,51 @@ fun ClubsContent(
     onClubClick: (ClubsState) -> Unit
 ) {
     
+    MyClubsScreen(state = state , onClubClick = onClubClick)
+}
+
+@Composable
+fun MyClubsScreen(
+    state: ClubsUiState,
+    onClubClick: (ClubsState) -> Unit
+    ){
     LazyColumn(modifier = Modifier
         .fillMaxSize()
         .background(LightCardBackgroundColor),
-    contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
-        ){
+    ){
+
+        item {
+            SearchItem(onSearchItemClick = {})
+        }
 
         items(state.clubs){
             MyClubCard(myClub = it, onClubClick = onClubClick)
         }
+    }
+}
 
-//        item {
-//            SearchTextField(value = "", onValueChanged = {})
-//        }
-//
-//
-//        items(state.myClubs){
-//            MyClubCard(myClub = it, onClubClick = onClubClick)
-//        }
+@Composable
+fun TopClubsScreen(
+    state: MyClubsUiState,
+    onClubClick: (ClubsState) -> Unit
+){
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .background(LightCardBackgroundColor),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ){
+
+        item {
+            SearchItem(onSearchItemClick = {})
+        }
+
+
+        items(state.myClubs){
+            MyClubCard(myClub = it, onClubClick = onClubClick)
+        }
     }
 }
 
