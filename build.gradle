@@ -17,6 +17,8 @@ buildscript {
 
         nav_version = "2.5.3"
 
+        accompanist_version = "0.13.0"
+
     }
 
     dependencies {

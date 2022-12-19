@@ -8,7 +8,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -19,9 +18,8 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.screen.login.username.LOGIN_USER_NAME_ROUTE
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
-import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_ROUTE
 import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical24
@@ -33,7 +31,7 @@ fun AccountActivationScreen(
 ) {
     val context = LocalContext.current
 
-    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
+    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_ROUTE, inclusive = false)
     BackPressHandler(onBackPressed = { onBack() })
 
     AccountActivationContent(

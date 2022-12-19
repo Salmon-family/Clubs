@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.Typography
@@ -28,9 +29,8 @@ fun Error(
         Text(
             text = errorMessage,
             style = Typography.body2,
-            color = MaterialTheme.colors.onSecondary,
+            color = Color.Red,
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(start = 8.dp),
         )
 

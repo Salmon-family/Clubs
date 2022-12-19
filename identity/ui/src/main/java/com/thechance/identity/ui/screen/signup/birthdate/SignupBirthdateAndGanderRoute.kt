@@ -9,15 +9,15 @@ import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 
 fun NavController.navigateToBirthdateAndGander() {
-    navigate(route = SIGNUP_BIRTHDATE_AND_GANDER_Route){
+    navigate(route = SIGNUP_BIRTHDATE_AND_GANDER_ROUTE){
         launchSingleTop = true
     }
 }
 
-const val SIGNUP_BIRTHDATE_AND_GANDER_Route = "signupBirthdateAndGanderScreen"
+const val SIGNUP_BIRTHDATE_AND_GANDER_ROUTE = "signupBirthdateAndGanderScreen"
 
 fun NavGraphBuilder.signupBirthDateAndGanderRoute(navHostController: NavHostController,viewModel: SignupViewModel) {
-    composable(SIGNUP_BIRTHDATE_AND_GANDER_Route) {
+    composable(SIGNUP_BIRTHDATE_AND_GANDER_ROUTE) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             SignupBirthdateAndGenderScreen(
                 navController = navHostController,

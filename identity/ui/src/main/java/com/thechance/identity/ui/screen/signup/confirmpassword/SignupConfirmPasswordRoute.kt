@@ -7,14 +7,14 @@ import androidx.navigation.compose.composable
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 fun NavController.navigateToSignupConfirmPassword(){
-    navigate(route = SIGNUP_CONFIRM_PASSWORD_Route){
+    navigate(route = SIGNUP_CONFIRM_PASSWORD_ROUTE){
         launchSingleTop = true
     }
 }
 
-const val SIGNUP_CONFIRM_PASSWORD_Route = "signupConfirmPasswordScreen"
+const val SIGNUP_CONFIRM_PASSWORD_ROUTE = "signupConfirmPasswordScreen"
 fun NavGraphBuilder.signupConfirmPasswordRoute(navHostController: NavHostController,viewModel: SignupViewModel) {
-    composable(SIGNUP_CONFIRM_PASSWORD_Route) {
+    composable(SIGNUP_CONFIRM_PASSWORD_ROUTE) {
         SignUpConfirmPasswordScreen(
             navHostController,
             viewModel
