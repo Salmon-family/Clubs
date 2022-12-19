@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.search
 
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -67,6 +68,7 @@ fun SearchScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchContent(
     state: SearchUIState,
@@ -84,7 +86,7 @@ fun SearchContent(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item(key = "keyword") {
+        stickyHeader(key = "keyword") {
             SearchTextField(
                 text = state.keyword,
                 onValueChanged = onSearchValueChanged

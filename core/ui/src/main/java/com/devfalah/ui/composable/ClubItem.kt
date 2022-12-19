@@ -1,17 +1,15 @@
 package com.devfalah.ui.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,17 +38,22 @@ fun ClubItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
-        Image(
-            painter = painterResource(R.drawable.ic_clubs_filled),
-            contentDescription = "profile user",
-            modifier = modifier
+        Box(
+            modifier = Modifier
                 .clip(shape = CircleShape)
                 .background(LightSecondaryBrandColor)
-                .padding(4.dp)
                 .size(56.dp),
-            contentScale = ContentScale.Crop,
-            colorFilter = ColorFilter.tint(color = LightPrimaryBrandColor)
-        )
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_clubs_filled),
+                contentDescription = null,
+                modifier = modifier.size(24.dp),
+                tint = LightPrimaryBrandColor
+            )
+        }
+
+
         WidthSpacer16()
 
         Column(
