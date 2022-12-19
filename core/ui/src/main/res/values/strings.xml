@@ -27,4 +27,6 @@
 
     <string name="home">Home</string>
     <string name="search_for_club">Search for a club</string>
+    <string name="my_special_clubs">My Special Clubs</string>
+    <string name="my_clubs">My Clubs</string>
 </resources>

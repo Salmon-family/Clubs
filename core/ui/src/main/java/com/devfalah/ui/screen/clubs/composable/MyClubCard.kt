@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,11 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleProfileImage
 import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.myClubs.ClubsState
@@ -27,35 +24,40 @@ import com.devfalah.viewmodels.myClubs.ClubsState
 @Composable
 fun MyClubCard(
     myClub: ClubsState,
+    modifier: Modifier = Modifier,
     onClubClick: (ClubsState) -> Unit
-    ) {
-    Row(modifier = Modifier
-        .clip(RoundedCornerShape(20.dp))
-        .fillMaxWidth()
-        .background(Color.White)
-        .clickable { onClubClick(myClub) }
-        .padding(horizontal = 16.dp, vertical = 8.dp),
+) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(20.dp))
+            .fillMaxWidth()
+            .background(Color.White)
+            .clickable { onClubClick(myClub) }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
 
 
-    ) {
+        ) {
 
         CircleProfileImage(
-            painter = rememberAsyncImagePainter(model = myClub.coverUrl,
-                error = painterResource(id = R.drawable.user_image)),
+            painter = painterResource(id = R.drawable.club_icon),
             size = 64,
         )
 
-        Column(modifier = Modifier
-            .weight(1f)
-            .padding(horizontal = 16.dp)) {
-            Text(text = myClub.title,
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = myClub.title,
                 style = Typography.subtitle2,
                 color = LightPrimaryBlackColor
             )
 
-            Text(text = myClub.description,
+            Text(
+                text = myClub.description,
                 style = Typography.caption,
                 color = LightSecondaryBlackColor,
                 overflow = TextOverflow.Ellipsis,
@@ -63,11 +65,6 @@ fun MyClubCard(
             )
 
         }
-
-        Icon(painter = painterResource(id = R.drawable.star),
-            contentDescription = null,
-        modifier = Modifier.size(24.dp),
-        tint = LightPrimaryBrandColor)
 
     }
 }
