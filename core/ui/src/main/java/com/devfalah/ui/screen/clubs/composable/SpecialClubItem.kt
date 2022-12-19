@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,10 +28,10 @@ fun SpecialClubItem(
 
     Column(
         modifier = Modifier
-            .size(100.dp)
-            .clip(CircleShape)
+            .size(98.dp)
+            .clip(RoundedCornerShape(100))
             .background(LightSecondaryBrandColor)
-            .padding(16.dp),
+            .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
 
