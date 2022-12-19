@@ -44,7 +44,7 @@ fun LogInPasswordScreen(
 
 private fun checkLogin(state: LoginUIState, context: Context, navController: NavController) {
     if (!state.isSuccess) {
-        Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, state.errorMessage, Toast.LENGTH_SHORT).show()
     } else {
         navController.navigateToHome()
         Toast.makeText(
@@ -111,6 +111,13 @@ fun LogInPasswordContent(
                     .padding(horizontal = 8.dp)
             )
 
+            if (state.errorMessage.isNotEmpty()) {
+                Error(
+                    errorMessage = state.errorMessage,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
             NavigateToAnotherScreen(
                 hintText = R.string.navigate_to_signup,
                 navigateText = R.string.sign_up,
@@ -127,9 +134,6 @@ fun LogInPasswordContent(
         if (state.isSuccess) {
             navController.navigateToHome()
             Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
-        }
-        if (state.isError.isNotEmpty()) {
-            Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
         }
     }
 }
