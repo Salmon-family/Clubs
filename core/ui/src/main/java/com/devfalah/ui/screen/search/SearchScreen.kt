@@ -89,7 +89,8 @@ fun SearchContent(
         stickyHeader(key = "keyword") {
             SearchTextField(
                 text = state.keyword,
-                onValueChanged = onSearchValueChanged
+                onValueChanged = onSearchValueChanged,
+                modifier = Modifier.background(LightBackgroundColor)
             )
         }
 
