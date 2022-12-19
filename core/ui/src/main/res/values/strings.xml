@@ -19,7 +19,7 @@
     <string name="like_photo">liked your photo</string>
     <string name="like_post">liked your post</string>
     <string name="request_group">request to join your group</string>
-    <string name="see_all">"See All"</string>
+    <string name="see_all">See All</string>
     <string name="albums">Albums</string>
     <string name="friends_privacy">Friends</string>
     <string name="public_privacy">Public</string>
@@ -43,4 +43,7 @@
     <string name="my_account">My Account</string>
     <string name="saved_threads">Saved Threads</string>
     <string name="report_bugs">Report Bugs</string>
+    <string name="people">People</string>
+    <string name="users_requests">User Requests</string>
+
 </resources>

@@ -104,6 +104,23 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getSearch(userID = userId, keyword = keyword) }
     }
 
+    override suspend fun getRequestsToClub(clubId: Int): List<UserDTO> {
+        return wrap { apiService.getMemberRequestsToGroup(groupID = clubId) }.requests
+            ?: throw Throwable("Error")
+    }
+
+    override suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return wrap {
+            apiService.declineGroupsRequest(userId = userId, memberId = memberId, clubId = clubId)
+        }
+    }
+
+    override suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return wrap {
+            apiService.acceptGroupsRequest(userId = userId, memberId = memberId, clubId = clubId)
+        }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

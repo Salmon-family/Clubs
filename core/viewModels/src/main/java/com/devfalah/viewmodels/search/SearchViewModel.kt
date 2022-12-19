@@ -34,11 +34,13 @@ class SearchViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            clubs = searchResult.clubs.toUIState(),
-                            users = searchResult.users.toFriendsUIState()
+                            clubs = searchResult.clubs.toUIState().take(3),
+                            showSeeAllClubs = searchResult.clubs.size > 3,
+                            users = searchResult.users.toFriendsUIState().take(3),
+                            showSeeAllUsers = searchResult.clubs.size > 3,
                         )
                     }
-                }else{
+                } else {
                     _uiState.update {
                         it.copy(isLoading = false, clubs = emptyList(), users = emptyList())
                     }

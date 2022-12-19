@@ -103,6 +103,20 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getSearchResult(userID, keyword).toEntity()
     }
 
+    override suspend fun getRequestsToClub(clubId: Int): List<User> {
+        return remoteDataSource.getRequestsToClub(clubId).toEntity()
+    }
+
+    override suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return remoteDataSource
+            .declineClubRequest(userId = userId, memberId = memberId, clubId = clubId)
+    }
+
+    override suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return remoteDataSource
+            .acceptClubRequest(userId = userId, memberId = memberId, clubId = clubId)
+    }
+
     override suspend fun deletePost(postId: Int) {
         localDataSource.deletePostById(postId)
     }

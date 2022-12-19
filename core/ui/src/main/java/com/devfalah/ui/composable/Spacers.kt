@@ -46,3 +46,8 @@ fun HeightSpacer8() {
 fun HeightSpacer4() {
     Spacer(modifier = Modifier.height(4.dp))
 }
+
+@Composable
+fun HeightSpacer24() {
+    Spacer(modifier = Modifier.height(24.dp))
+}

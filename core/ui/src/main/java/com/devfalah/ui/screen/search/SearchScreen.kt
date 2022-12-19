@@ -13,15 +13,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.composable.ClubItem
-import com.devfalah.ui.composable.FriendItem
-import com.devfalah.ui.composable.SearchTextField
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.R
+import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.allSearchResultScreen.navigateToAllSearchResult
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.viewmodels.Constants.SEARCH_CLUB
+import com.devfalah.viewmodels.Constants.SEARCH_USER
 import com.devfalah.viewmodels.search.SearchUIState
 import com.devfalah.viewmodels.search.SearchViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -38,8 +40,24 @@ fun SearchScreen(
     SearchContent(
         state = state,
         onSearchValueChanged = viewModel::onSearchTextChange,
-        onClubSelected = {Toast.makeText(context, "Should Navigate to Club Id = $it", Toast.LENGTH_LONG).show()},
-        OnUserClick = { navController.navigateToProfile(it) }
+        onClubSelected = {
+            Toast.makeText(
+                context,
+                "Should Navigate to Club Id = $it",
+                Toast.LENGTH_LONG
+            ).show()
+        },
+        OnUserClick = { navController.navigateToProfile(it) },
+        onClickSeeAllClubs = {
+            navController.navigateToAllSearchResult(
+                title = "Clubs", keyword = state.keyword, searchType = SEARCH_CLUB
+            )
+        },
+        onClickSeeAllPeople = {
+            navController.navigateToAllSearchResult(
+                title = "People", keyword = state.keyword, searchType = SEARCH_USER
+            )
+        }
     )
 
     LaunchedEffect(true) {
@@ -54,7 +72,9 @@ fun SearchContent(
     state: SearchUIState,
     onSearchValueChanged: (String) -> Unit,
     onClubSelected: (Int) -> Unit,
-    OnUserClick: (Int) -> Unit
+    OnUserClick: (Int) -> Unit,
+    onClickSeeAllClubs: () -> Unit,
+    onClickSeeAllPeople: () -> Unit
 ) {
 
     LazyColumn(
@@ -71,11 +91,14 @@ fun SearchContent(
             )
         }
 
-        items(
-            items = state.clubs,
-            key = { "${it.id} ${it.title}" }
-        ) { club ->
-            ClubItem(state = club, onClubSelected = onClubSelected)
+        if (state.users.isNotEmpty()) {
+            item("Users") {
+                RowTitleWithSeeAll(
+                    title = stringResource(id = R.string.people),
+                    onclickSeeAll = onClickSeeAllPeople,
+                    showSeeAll = state.showSeeAllClubs
+                )
+            }
         }
 
         items(
@@ -85,7 +108,26 @@ fun SearchContent(
             FriendItem(state = user, onOpenProfileClick = OnUserClick)
         }
 
+        if (state.clubs.isNotEmpty()) {
+            item("Clubs") {
+                HeightSpacer24()
+
+                RowTitleWithSeeAll(
+                    title = stringResource(id = R.string.clubs),
+                    onclickSeeAll = onClickSeeAllClubs,
+                    showSeeAll = state.showSeeAllClubs
+                )
+            }
+        }
+
+        items(
+            items = state.clubs,
+            key = { "${it.id} ${it.title}" }
+        ) { club ->
+            ClubItem(state = club, onClubSelected = onClubSelected)
+        }
     }
 }
+
 
 

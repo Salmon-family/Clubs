@@ -46,7 +46,7 @@ fun ClubItem(
             modifier = modifier
                 .clip(shape = CircleShape)
                 .background(LightSecondaryBrandColor)
-                .padding(12.dp)
+                .padding(4.dp)
                 .size(56.dp),
             contentScale = ContentScale.Crop,
             colorFilter = ColorFilter.tint(color = LightPrimaryBrandColor)

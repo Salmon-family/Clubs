@@ -143,6 +143,20 @@ interface ClubService {
         @Query("guid") userID: Int
     ): Response<BaseResponse<GroupResponse>>
 
+    @GET("groups_request_decline")
+    suspend fun declineGroupsRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") memberId: Int,
+        @Query("uguid") userId: Int
+    ): Response<BaseResponse<Boolean>>
+
+    @GET("groups_request_accept")
+    suspend fun acceptGroupsRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") memberId: Int,
+        @Query("uguid") userId: Int
+    ): Response<BaseResponse<Boolean>>
+
     @GET("groups_view")
     suspend fun getGroupDetails(
         @Query("guid") userID: Int,

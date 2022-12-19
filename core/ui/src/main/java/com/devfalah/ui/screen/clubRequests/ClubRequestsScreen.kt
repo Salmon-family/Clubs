@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.friendrequest
+package com.devfalah.ui.screen.clubRequests
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -19,30 +19,30 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
-import com.devfalah.viewmodels.friendRequest.FriendRequestViewModel
+import com.devfalah.viewmodels.clubRequests.ClubRequestsUIState
+import com.devfalah.viewmodels.clubRequests.ClubRequestsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FriendRequestScreen(
+fun ClubRequestsScreen(
     navController: NavController,
-    viewModel: FriendRequestViewModel = hiltViewModel(),
+    viewModel: ClubRequestsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
-    FriendRequestsContent(
+    ClubRequestsContent(
         navController,
-        friendRequestUiState = state,
-        onAcceptButtonClick = viewModel::acceptFriendRequest,
-        onDeleteButtonClick = viewModel::deniedFriendRequest,
+        state = state,
+        onAcceptButtonClick = viewModel::acceptRequest,
+        onDeleteButtonClick = viewModel::declineRequest,
         onClickOpenProfile = { navController.navigateToProfile(it) }
     )
     LaunchedEffect(true) {
@@ -57,15 +57,15 @@ fun FriendRequestScreen(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalFoundationApi
 @Composable
-fun FriendRequestsContent(
+fun ClubRequestsContent(
     navController: NavController,
-    friendRequestUiState: FriendRequestUiState,
+    state: ClubRequestsUIState,
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
 ) {
     Column {
-        AppBar(title = stringResource(R.string.friends_request), navHostController = navController)
+        AppBar(title = stringResource(R.string.users_requests), navHostController = navController)
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -74,7 +74,7 @@ fun FriendRequestsContent(
                 .fillMaxSize(),
         ) {
             items(
-                items = friendRequestUiState.friendRequests,
+                items = state.users,
                 key = { currentRequest -> currentRequest.userID }
             ) { userState ->
                 FriendRequestItem(

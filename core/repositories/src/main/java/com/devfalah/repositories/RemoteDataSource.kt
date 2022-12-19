@@ -42,4 +42,10 @@ interface RemoteDataSource {
 
     suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto
 
+    suspend fun getRequestsToClub(clubId: Int): List<UserDTO>
+
+    suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+    suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
 }

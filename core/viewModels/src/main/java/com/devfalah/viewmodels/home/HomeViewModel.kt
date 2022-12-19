@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getData() {
-        viewModelScope.launch { allPosts(uiState.value.id) }
+        viewModelScope.launch { allPosts() }
     }
 
     fun onClickLike(post: PostUIState) {
@@ -56,7 +56,11 @@ class HomeViewModel @Inject constructor(
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) { updatedPost } else { it }
+                        if (it.postId == post.postId) {
+                            updatedPost
+                        } else {
+                            it
+                        }
                     })
                 }
             } catch (t: Throwable) {
@@ -95,14 +99,14 @@ class HomeViewModel @Inject constructor(
                 _uiState.update { it.copy(isPagerLoading = true) }
             }
             try {
-                allPosts.loadData(uiState.value.id, type).collect { posts ->
-                    _uiState.update {
-                        it.copy(
-                            isPagerLoading = false,
-                            isLoading = false,
-                            posts = it.posts + posts.toUIState()
-                        )
-                    }
+                val homePosts = allPosts.loadData(uiState.value.id)
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        isEndOfPager = homePosts.isNotEmpty(),
+                        posts = it.posts + homePosts.toUIState()
+                    )
                 }
             } catch (t: Throwable) {
                 _uiState.update {

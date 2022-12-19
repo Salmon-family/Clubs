@@ -49,4 +49,12 @@ interface ClubRepository {
     suspend fun deletePost(userId: Int, postId: Int): Boolean
 
     suspend fun getSearch(userID: Int, keyword: String): SearchResult
+
+    suspend fun getRequestsToClub(clubId: Int): List<User>
+
+    suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+    suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+
 }
