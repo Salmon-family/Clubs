@@ -27,7 +27,7 @@ fun InputText(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
-        value = text.take(20),
+        value = text,
         onValueChange = onTextChange,
         shape = RoundedCornerShape(size = 100.dp),
         colors = TextFieldDefaults.textFieldColors(
