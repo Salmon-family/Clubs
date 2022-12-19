@@ -49,4 +49,14 @@ interface ClubRepository {
     suspend fun deletePost(userId: Int, postId: Int): Boolean
 
     suspend fun getSearch(userID: Int, keyword: String): SearchResult
+
+    suspend fun getPostDetails(userID: Int, postID: Int): Post
+
+    suspend fun getAllComments(userID: Int, postID: Int, page: Int): List<Comment>
+
+    suspend fun addComment(userID: Int, postID: Int, content: String): Comment
+
+    suspend fun deleteComment(userID: Int, commentID: Int): Boolean
+
+    suspend fun editComment(commentID: Int, content: String): Success
 }

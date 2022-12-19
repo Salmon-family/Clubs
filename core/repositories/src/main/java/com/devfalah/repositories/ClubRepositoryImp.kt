@@ -1,6 +1,7 @@
 package com.devfalah.repositories
 
 import com.devfalah.entities.*
+import com.devfalah.repositories.mappers.toEntities
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
@@ -105,6 +106,26 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun deletePost(postId: Int) {
         localDataSource.deletePostById(postId)
+    }
+
+    override suspend fun getPostDetails(userID: Int, postID: Int): Post {
+        return remoteDataSource.getPostDetails(userID, postID).toEntities()
+    }
+
+    override suspend fun getAllComments(userID: Int, postID: Int, page: Int): List<Comment> {
+        return remoteDataSource.getAllComments(userID, postID, page).toEntity(userID)
+    }
+
+    override suspend fun addComment(userID: Int, postID: Int, content: String): Comment {
+        return remoteDataSource.addComment(userID, postID, content).toEntity(userID)
+    }
+
+    override suspend fun deleteComment(userID: Int, commentID: Int): Boolean {
+        return remoteDataSource.deleteComment(userID, commentID)
+    }
+
+    override suspend fun editComment(commentID: Int, content: String): Success {
+        return remoteDataSource.editComment(commentID, content).toEntity()
     }
 
 }

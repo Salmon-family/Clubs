@@ -104,6 +104,33 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getSearch(userID = userId, keyword = keyword) }
     }
 
+    override suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO {
+        return apiService.getWallPost(userID, postID).body()?.payload
+            ?: throw Throwable("Mapping Error")
+    }
+
+    override suspend fun getAllComments(userID: Int, postID: Int, page: Int): List<CommentDto> {
+        return wrap { apiService.getComments(userID, postID, page = page) }.comments
+            ?: throw Throwable("Mapping Error")
+    }
+
+    override suspend fun addComment(
+        userID: Int,
+        postID: Int,
+        comment: String,
+    ): CommentDto {
+        return wrap { apiService.addComment(userID, postID, comment) }.comment
+            ?: throw Throwable("Mapping Error")
+    }
+
+    override suspend fun deleteComment(userID: Int, commentID: Int): Boolean {
+        return wrap { apiService.deleteComment(userID, commentID) }
+    }
+
+    override suspend fun editComment(userID: Int, comment: String): SuccessDTO {
+        return wrap { apiService.editComment(userID, comment) }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

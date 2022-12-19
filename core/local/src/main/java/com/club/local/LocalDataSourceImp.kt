@@ -1,4 +1,4 @@
-package com.club.local
+ package com.club.local
 
 import com.devfalah.repositories.ClubLocalDataSource
 import com.devfalah.repositories.models.PostLocalDto

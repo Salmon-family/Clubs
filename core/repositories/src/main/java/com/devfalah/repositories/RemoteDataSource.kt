@@ -42,4 +42,14 @@ interface RemoteDataSource {
 
     suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto
 
+    suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO
+
+    suspend fun getAllComments(userID: Int, postID: Int, page: Int): List<CommentDto>
+
+    suspend fun addComment(userID: Int, postID: Int, comment: String): CommentDto
+
+    suspend fun deleteComment(userID: Int, commentID: Int): Boolean
+
+    suspend fun editComment(userID: Int, comment: String): SuccessDTO
+
 }
