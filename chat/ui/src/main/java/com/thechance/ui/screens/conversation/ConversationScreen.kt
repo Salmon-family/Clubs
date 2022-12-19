@@ -33,7 +33,8 @@ internal fun ConversationScreen(
         sendMessage = viewModel::onClickSendButton,
         onCLickBack = {
             navController.popBackStack()
-        }
+        },
+        onLoadMoreMessages =  viewModel::onLoadingMoreMessages
     )
 }
 
@@ -44,6 +45,7 @@ fun ChatContent(
     onValueChanged: (String) -> Unit,
     sendMessage: () -> Unit,
     onCLickBack: () -> Unit,
+    onLoadMoreMessages: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(state.appBar.userName, state.appBar.icon, onCLickBack)
@@ -51,7 +53,7 @@ fun ChatContent(
             contentAlignment = Alignment.BottomCenter
         ) {
             BackgroundChatScreen()
-            ListOfChat(state.messages)
+            ListOfChat(state, onLoadMoreMessages)
             SendTextField(
                 text = messageText,
                 onValueChanged = onValueChanged,

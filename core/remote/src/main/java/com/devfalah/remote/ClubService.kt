@@ -125,7 +125,8 @@ interface ClubService {
     suspend fun addGroups(
         @Field("guid") userID: Int,
         @Field("name") groupName: String,
-        @Field("privacy") groupPrivacy: Int
+        @Field("privacy") groupPrivacy: Int,
+        @Field("description") description:String,
     ): Response<BaseResponse<GroupDTO>>
 
     @FormUrlEncoded

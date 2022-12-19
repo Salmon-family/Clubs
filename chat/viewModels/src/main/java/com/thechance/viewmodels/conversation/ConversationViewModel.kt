@@ -42,16 +42,13 @@ class ConversationViewModel @Inject constructor(
 
     private fun getListMessages(userId: Int, friendId: Int) {
         viewModelScope.launch {
-            try {
-                getMessages(userId, friendId).collect { item ->
-
-                    val message = item.map {
-                        it.toUiState() }
-                    _uiState.update { it.copy(messages = message, isLoading = false) }
-                }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(error = e.message, isLoading = false)
+            refreshMessages(userId, friendId)
+            getMessages(friendId).collect {
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        messages = it.map { it.toUiState() },
+                        isLoading = false
+                    )
                 }
             }
         }
@@ -78,5 +75,36 @@ class ConversationViewModel @Inject constructor(
     fun onClickSendButton() {
         sendMessage(uiState.value.message)
         _uiState.update { it.copy(message = "") }
+    }
+
+    private fun refreshMessages(userId: Int, friendId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                val messagesCount = getMessages.refreshMessages(userId, friendId, 1)
+                _uiState.update { it.copy(messagesCount = messagesCount) }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(error = e.message, isLoading = false)
+                }
+            }
+        }
+    }
+
+    fun onLoadingMoreMessages() {
+        _uiState.update { it.copy(isLoadingMore = true) }
+        viewModelScope.launch {
+            try {
+                val isLastPage = getMessages.loadingMoreMessages(
+                    userID = args.id,
+                    friendId = args.friendId,
+                    messagesCount = _uiState.value.messagesCount,
+                    messagesCountLocally = _uiState.value.messages.size,
+                )
+                _uiState.update { it.copy(isLoadingMore = false, isLastPage = isLastPage) }
+            } catch (e: Throwable) {
+                _uiState.update { it.copy(isLastPage = true, isLoadingMore = false) }
+            }
+        }
     }
 }

@@ -3,12 +3,14 @@ package com.devfalah.ui
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.devfalah.ui.screen.accountSettings.accountSettingsRoute
 import com.devfalah.ui.screen.allSearchResultScreen.allSearchResultRoute
 import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
+import com.devfalah.ui.screen.clubCreation.clubCreationRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.createPost.createPostRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
@@ -42,7 +44,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         accountSettingsRoute(navController = navController)
         allSearchResultRoute(navController = navController)
         clubRequestsRoute(navController = navController)
-
+        clubCreationRoute(navController = navController)
     }
 }
 

@@ -19,8 +19,8 @@ class ChatDataSourceImp @Inject constructor(
         return wrap { chatService.getRecentMessages(userID,page) }
     }
 
-    override suspend fun getMessagesWithFriend(userID: Int, friendID: Int): List<ChatDTO> {
-        return wrap { chatService.getConversationWithFriend(userID, friendID) }.list ?: emptyList()
+    override suspend fun getMessagesWithFriend(userID: Int, friendID: Int, page: Int): ConversationDTO {
+        return wrap { chatService.getConversationWithFriend(userID, friendID, page = page) }
     }
 
     override suspend fun sendMessage(from: Int, to: Int, message: String): ChatDTO {
