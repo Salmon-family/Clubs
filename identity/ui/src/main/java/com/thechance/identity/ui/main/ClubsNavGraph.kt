@@ -8,11 +8,10 @@ import com.thechance.identity.ui.screen.activation.accountActivationRoute
 import com.thechance.identity.ui.screen.home.homeRoute
 import com.thechance.identity.ui.screen.login.password.logInPasswordRoute
 import com.thechance.identity.ui.screen.login.username.logInUserNameRoute
-import com.thechance.identity.ui.screen.signup.clubs.CLUBS_ROUTE
 import com.thechance.identity.ui.screen.signup.clubs.clubsRoute
-import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_ROUTE
 import com.thechance.identity.ui.screen.onboarding.pager.onBoardingPagerRoute
-import com.thechance.identity.ui.screen.onboarding.welcome.WELCOME_ON_BOARDING_Route
+import com.thechance.identity.ui.screen.onboarding.welcome.WELCOME_ON_BOARDING_ROUTE
 import com.thechance.identity.ui.screen.onboarding.welcome.welcomeOnBoardRoute
 import com.thechance.identity.ui.screen.signup.birthdate.signupBirthDateAndGanderRoute
 import com.thechance.identity.ui.screen.signup.confirmpassword.signupConfirmPasswordRoute
@@ -30,9 +29,9 @@ fun ClubsNavGraph(
     startInstallViewModel: StartInstallViewModel = hiltViewModel()
 ) {
     val startRoute = if (startInstallViewModel.getStartInstall() == true) {
-        ON_BOARDING_PAGER_Route
+        ON_BOARDING_PAGER_ROUTE
     } else {
-        WELCOME_ON_BOARDING_Route
+        WELCOME_ON_BOARDING_ROUTE
     }
     NavHost(navController = navController, startDestination = startRoute) {
         welcomeOnBoardRoute(navController)

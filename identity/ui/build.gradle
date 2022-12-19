@@ -68,8 +68,9 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     //slider with indicator
-    implementation "com.google.accompanist:accompanist-pager:0.13.0"
-    implementation "com.google.accompanist:accompanist-pager-indicators:0.13.0"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
 
     //viewModel
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"

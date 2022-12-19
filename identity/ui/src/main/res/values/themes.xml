@@ -2,8 +2,6 @@
 <resources >
 
     <style name="Theme.Clubs" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/status_color</item>
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">

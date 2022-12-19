@@ -6,15 +6,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
 
-const val ON_BOARDING_PAGER_Route = "onBoardingPagerScreen"
+const val ON_BOARDING_PAGER_ROUTE = "onBoardingPagerScreen"
 fun NavGraphBuilder.onBoardingPagerRoute(navHostController: NavHostController) {
-    composable(ON_BOARDING_PAGER_Route) {
+    composable(ON_BOARDING_PAGER_ROUTE) {
         OnBoardingPagerScreen(navHostController)
     }
 }
 
 fun NavController.navigateToOnBoardingPager() {
-    navigate(route = ON_BOARDING_PAGER_Route) {
+    navigate(route = ON_BOARDING_PAGER_ROUTE) {
         launchSingleTop = true
     }
 }

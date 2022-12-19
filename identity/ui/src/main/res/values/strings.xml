@@ -23,7 +23,7 @@
     <string name="gender">Gender</string>
     <string name="log_in">Log In</string>
     <string name="password_place_holder">More than 6 character</string>
-    <string name="using">Using</string>
+    <string name="using">Using&#160;</string>
     <string name="to_sign_up">&#160;to sign up</string>
     <string name="user_name_place_holder">Thao Lee</string>
     <string name="pick_user_name">Pick your \nusername</string>
