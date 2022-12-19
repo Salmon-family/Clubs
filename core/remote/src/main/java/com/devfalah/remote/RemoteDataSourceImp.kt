@@ -104,6 +104,21 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getSearch(userID = userId, keyword = keyword) }
     }
 
+    override suspend fun createClub(
+        userID: Int,
+        groupName: String,
+        description: String,
+        groupPrivacy: Int,
+    ): GroupDTO {
+        return wrap { apiService.addGroups(
+            userID = userID,
+            groupName = groupName,
+            groupPrivacy = groupPrivacy,
+            description = description
+        )
+        }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

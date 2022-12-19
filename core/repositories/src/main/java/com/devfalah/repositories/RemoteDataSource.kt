@@ -42,4 +42,6 @@ interface RemoteDataSource {
 
     suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto
 
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : GroupDTO
+
 }

@@ -43,4 +43,12 @@
     <string name="my_account">My Account</string>
     <string name="saved_threads">Saved Threads</string>
     <string name="report_bugs">Report Bugs</string>
+    <string name="create_club">Create Club</string>
+    <string name="clubـcreated_successfully">Club created successfully</string>
+    <string name="club_name">Club Name</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe your club in  few words…</string>
+    <string name="privacy">Privacy</string>
+    <string name="public_text">Public</string>
+    <string name="private_privacy">Private</string>
 </resources>
