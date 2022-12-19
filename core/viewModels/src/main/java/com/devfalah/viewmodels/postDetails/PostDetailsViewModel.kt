@@ -72,11 +72,6 @@ class PostDetailsViewModel @Inject constructor(
 
     fun swipeToRefresh(type: Int) {
         viewModelScope.launch {
-            if(type == FIRST_TIME){
-                _uiState.update { it.copy(isLoading = true) }
-            }else{
-                _uiState.update { it.copy(isPagerLoading = true) }
-            }
             try {
                 val comments = getAllCommentsUseCase(userId, postId)
                 if (comments.isNotEmpty()) {
