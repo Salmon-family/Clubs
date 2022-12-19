@@ -83,9 +83,7 @@ private fun SignupBirthdateAndGanderContent(
 
             SpacerVertical8()
             EmailDescriptionText(
-                text1 = stringResource(id = R.string.using),
-                text2 = state.email,
-                text3 = stringResource(id = R.string.to_sign_up)
+                email = state.email,
             )
 
             SpacerVertical24()
@@ -127,6 +125,13 @@ private fun SignupBirthdateAndGanderContent(
                 text = stringResource(id = R.string.create_account_label),
             )
 
+            if (state.errorMessage.isNotEmpty()) {
+                Error(
+                    errorMessage = state.errorMessage,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
             NavigateToAnotherScreen(
                 hintText = R.string.navigate_to_login,
                 navigateText = R.string.log_in,
@@ -146,10 +151,6 @@ private fun SignupBirthdateAndGanderContent(
         if (state.isSuccess) {
             navController.navigateToClubs()
             Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
-        }
-
-        if (state.isError.isNotEmpty()) {
-            Toast.makeText(context, state.isError, Toast.LENGTH_SHORT).show()
         }
     }
 }

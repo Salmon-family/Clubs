@@ -1,6 +1,5 @@
 package com.thechance.identity.ui.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.thechance.identity.ui.theme.*
+import com.thechance.identity.ui.theme.InputText
+import com.thechance.identity.ui.theme.Typography
 
 @Composable
 fun InputText(
@@ -27,7 +27,7 @@ fun InputText(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
-        value = text,
+        value = text.take(20),
         onValueChange = onTextChange,
         shape = RoundedCornerShape(size = 100.dp),
         colors = TextFieldDefaults.textFieldColors(

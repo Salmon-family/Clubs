@@ -32,7 +32,7 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun onLoading() {
-        _uiState.update { it.copy(isLoading = true, isSuccess = false, isError = "") }
+        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
     }
 
     private fun makeSignupRequest() {
@@ -60,13 +60,13 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun onSuccess() {
-        _uiState.update { it.copy(isSuccess = true, isError = "", isLoading = false) }
+        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
     }
 
     private fun onError(errorMessage: Throwable) {
         _uiState.update {
             it.copy(
-                isError = errorMessage.message.toString(),
+                errorMessage = errorMessage.message.toString(),
                 isSuccess = false,
                 isLoading = false
             )
