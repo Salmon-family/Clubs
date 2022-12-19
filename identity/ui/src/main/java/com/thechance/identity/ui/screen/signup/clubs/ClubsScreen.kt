@@ -44,6 +44,7 @@ fun ClubsScreen(
         state = state,
         onSelectedChanged = viewModel::onChangeSelectedClub,
         onClickBack = { navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false) },
+        checkSelectedClubs = viewModel.checkSelectedClubs(),
         onClickContinue = {
             viewModel.joinClubs()
             navController.navigateToAccountActivation()
@@ -56,6 +57,7 @@ fun ClubsContent(
     state: ClubsUIState,
     onClickBack: () -> Unit,
     onSelectedChanged: (ClubUIState) -> Unit,
+    checkSelectedClubs: Boolean,
     onClickContinue: () -> Unit
 ) {
     Column(
@@ -94,7 +96,7 @@ fun ClubsContent(
         SpacerVertical24()
         AuthButton(
             onClick = onClickContinue,
-            isEnabled = state.selectedClubs.isNotEmpty(),
+            isEnabled = checkSelectedClubs,
             text = stringResource(id = R.string.continue_label),
             buttonModifier = Modifier
                 .fillMaxWidth()

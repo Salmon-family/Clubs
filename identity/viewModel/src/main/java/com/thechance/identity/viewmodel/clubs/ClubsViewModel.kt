@@ -46,14 +46,17 @@ class ClubsViewModel @Inject constructor(
         Log.i("selected", _uiState.value.selectedClubs.size.toString())
     }
 
+    fun checkSelectedClubs(): Boolean{
+        return _uiState.value.selectedClubs.size in 1..5
+    }
+
     fun joinClubs(){
         val userId = getUserIdUseCase()?.toInt() ?: 0
         viewModelScope.launch {
             try {
                 _uiState.value.selectedClubs.forEach { club ->
                     joinClubUseCase(club.id, userId)
-                    val test = acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
-                    Log.i("myResult", test.toString())
+                    acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
                 }
             }catch (t: Throwable) {
                 Log.i("error", t.message.toString())
