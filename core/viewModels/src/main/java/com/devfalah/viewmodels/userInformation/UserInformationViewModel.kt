@@ -1,5 +1,6 @@
-package com.devfalah.viewmodels.editUserInformation
+package com.devfalah.viewmodels.userInformation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.EditUserInformationUseCase
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditUserViewModel @Inject constructor(
+class UserInformationViewModel @Inject constructor(
     val editUserInformationUseCase: EditUserInformationUseCase,
     val getUserAccountDetails: GetUserAccountDetailsUseCase,
     val getUser: GetUserIdUseCase,
@@ -30,9 +31,13 @@ class EditUserViewModel @Inject constructor(
     private fun getUserInformation() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            val id = getUser()
-            _uiState.update {
-                getUserAccountDetails(userId = id, profileOwnerId = id).toUserInfoUIState()
+            try {
+                val id = getUser()
+                _uiState.update {
+                    getUserAccountDetails(userId = id, profileOwnerId = id).toUserInfoUIState()
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
         }
     }
@@ -58,6 +63,7 @@ class EditUserViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val user = editUserInformationUseCase(user = uiState.value.toEntity())
+                Log.e("Test Test", user.toString())
                 _uiState.update { it.copy(isLoading = false, isSuccessful = true) }
 
             } catch (t: Throwable) {

@@ -127,18 +127,26 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         groupPrivacy: Int,
     ): GroupDTO {
-        return wrap { apiService.addGroups(userID = userID, groupName = groupName, groupPrivacy = groupPrivacy, description = description)
+        return wrap {
+            apiService.addGroups(
+                userID = userID,
+                groupName = groupName,
+                groupPrivacy = groupPrivacy,
+                description = description
+            )
         }
     }
 
     override suspend fun editUserInformation(user: UserInfo): UserDTO {
-       return wrap { apiService.editUserDetails(
-           userID = user.id,
-           firstName = user.name ,
-           lastName = user.title+"$%"+user.bio,
-           email = user.email,
-           currentPassword = user.password,
-       ) }
+        return wrap {
+            apiService.editUserDetails(
+                userID = user.id,
+                firstName = user.name,
+                lastName = user.title,
+                email = user.email,
+                currentPassword = user.password,
+            )
+        }
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

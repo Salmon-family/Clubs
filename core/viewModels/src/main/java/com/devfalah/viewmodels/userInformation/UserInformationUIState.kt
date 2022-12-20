@@ -1,4 +1,4 @@
-package com.devfalah.viewmodels.editUserInformation
+package com.devfalah.viewmodels.userInformation
 
 import com.devfalah.entities.User
 import com.devfalah.entities.UserInformation

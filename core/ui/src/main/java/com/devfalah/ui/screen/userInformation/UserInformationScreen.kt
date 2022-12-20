@@ -15,15 +15,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.viewmodels.editUserInformation.EditUserViewModel
-import com.devfalah.viewmodels.editUserInformation.UserInformationUIState
-import com.devfalah.viewmodels.editUserInformation.isUpdateInformationButtonEnabled
+import com.devfalah.viewmodels.userInformation.UserInformationViewModel
+import com.devfalah.viewmodels.userInformation.UserInformationUIState
+import com.devfalah.viewmodels.userInformation.isUpdateInformationButtonEnabled
 
 
 @Composable
 fun UserInformationScreen(
     navController: NavController,
-    viewModel: EditUserViewModel = hiltViewModel(),
+    viewModel: UserInformationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     UserInformationContent(
