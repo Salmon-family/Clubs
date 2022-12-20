@@ -1,19 +1,18 @@
 package com.devfalah.viewmodels.userProfile
 
-import com.devfalah.entities.Album
-import com.devfalah.entities.Post
-import com.devfalah.entities.User
+import com.devfalah.viewmodels.friends.FriendUIState
 
 data class UserUIState(
+    val id: Int = 0,
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
-    val albums: List<AlbumUIState> = emptyList(),
-    val friends: List<UserDetailsUIState> = emptyList(),
+    val friends: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
-    val isMyProfile: Boolean = false,
-    val areFriends: Boolean = false,
+    val totalFriends: Int = 0,
+    val isMyProfile: Boolean = true,
     val loading: Boolean = false,
+    val isEndOfPager: Boolean = false,
     val majorError: String = "",
-    val minorError: String = ""
+    val minorError: String = "",
 )
 
 data class UserDetailsUIState(
@@ -21,9 +20,12 @@ data class UserDetailsUIState(
     val name: String = "",
     val userName: String = "",
     val title: String = "",
-    val description: String = "",
+    val bio: String = "",
     val coverUrl: String = "",
-    val profilePicture: String = ""
+    val profilePicture: String = "",
+    val areFriends: Boolean = false,
+    val isMyProfile: Boolean = false,
+    val isRequestSend: Boolean = false,
 )
 
 data class AlbumUIState(
@@ -31,12 +33,15 @@ data class AlbumUIState(
     val albumCover: String
 )
 
+
 data class PostUIState(
     val postId: Int = 0,
-    val posterName: String = "",
-    val posterImage: String = "",
+    val publisherName: String = "",
+    val publisherImage: String = "",
+    val publisherId: Int = 0,
     val privacy: Boolean = false,
-    val createdData: String,
+    val createdData: String = "",
+    val createdDataValue: Long = 0L,
     val totalLikes: Int = 0,
     val totalComments: Int = 0,
     val isSaved: Boolean = false,
@@ -44,39 +49,3 @@ data class PostUIState(
     val postImage: String = "",
     val postContent: String = "",
 )
-
-////// Mappers
-fun User.toUIState(): UserDetailsUIState {
-    return UserDetailsUIState(
-        userID = userID,
-        name = name,
-        userName = username,
-        title = title,
-        description = description,
-        coverUrl = coverUrl,
-        profilePicture = icon.large
-    )
-}
-
-fun Album.toUIState(): AlbumUIState {
-    return AlbumUIState(
-        albumID = albumID,
-        albumCover = albumCoverPicture
-    )
-}
-
-fun Post.toUIState(): PostUIState {
-    return PostUIState(
-        postId = postID,
-        posterImage = posterImage,
-        posterName = posterName,
-        privacy = privacy,
-        createdData = createdTime,
-        totalLikes = totalLikes,
-        totalComments = totalComments,
-        isSaved = false,
-        isLikedByUser = isLikedByUser,
-        postImage = image,
-        postContent = content
-    )
-}

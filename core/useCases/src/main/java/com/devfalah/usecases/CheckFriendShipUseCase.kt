@@ -1,11 +1,17 @@
 package com.devfalah.usecases
 
+import com.devfalah.entities.FriendShip
+import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class CheckFriendShipUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    suspend operator fun invoke(userID: Int, profileID: Int): Boolean {
-        return clubRepository.checkFriendShip(userID,profileID)
+    suspend operator fun invoke(userID: Int, profileID: Int): FriendShip {
+        try {
+            return clubRepository.checkFriendShip(userID, profileID)
+        } catch (t: Throwable) {
+            throw Throwable(t.message.toString())
+        }
     }
 }

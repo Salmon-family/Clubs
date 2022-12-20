@@ -1,8 +1,3 @@
 package com.devfalah.entities
 
-data class Club(
-    val title: String,
-    val description: String,
-    val coverUrl: Any,
-    val privacy: String
-)
+data class Club(val id: Int, val name: String, val privacy: String, val description: String)

@@ -4,6 +4,7 @@ import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import java.io.File
 
 interface RemoteDataSource {
 
@@ -13,7 +14,7 @@ interface RemoteDataSource {
 
     suspend fun getUserFriendRequests(userID: Int): List<FriendDTO>
 
-    suspend fun getUserFriends(userID: Int): List<FriendDTO>
+    suspend fun getUserFriends(userID: Int, page: Int): FriendsDTO
 
     suspend fun getNotifications(userID: Int): List<NotificationsDTO>
 
@@ -23,11 +24,31 @@ interface RemoteDataSource {
 
     suspend fun getProfilePosts(userID: Int, profileUserID: Int): List<WallPostDTO>
 
-    suspend fun setLike(userID: Int, postId: Int, type: String): ReactionDTO
+    suspend fun setLikeOnPost(userID: Int, postId: Int): ReactionDTO
 
-    suspend fun removeLike(userID: Int, postId: Int, type: String): ReactionDTO
+    suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO
 
-    suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
+    suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO
+
+    suspend fun addProfilePicture(userID: Int, file: File): UserDTO
+
+    suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int): List<WallPostDTO>
+
+    suspend fun getGroupsThatUserMemberOF(userID: Int): List<GroupDTO>
+
+    suspend fun getUserHomePosts(userID: Int, page: Int): List<WallPostDTO>
+
+    suspend fun deletePostById(userId: Int, postId: Int): Boolean
+
+    suspend fun getSearchResult(userId: Int, keyword: String): SearchResultDto
+
+    suspend fun getRequestsToClub(clubId: Int): List<UserDTO>
+
+    suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+    suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : GroupDTO
 
     suspend fun getUserGroups(userId: Int): List<GroupDTO>
 }

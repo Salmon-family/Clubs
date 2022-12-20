@@ -32,5 +32,8 @@ data class PostDTO(
     @SerializedName("total_likes")
     val totalLikes: Int?,
     @SerializedName("type")
-    val type: String?
-)
+    val type: String?,
+    @SerializedName("profile_photo_url")
+    val profileImage: String?,
+
+    )

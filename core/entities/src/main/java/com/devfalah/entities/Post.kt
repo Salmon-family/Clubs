@@ -1,15 +1,16 @@
 package com.devfalah.entities
 
 data class Post(
-    val postID: Int,
+    val id: Int,
     val privacy: Boolean,
-    val createdTime: String,
+    val createdTime: Long,
     val content: String,
-    val image: String,
+    val imageUrl: String,
     val totalLikes: Int,
     val totalComments: Int,
-    val posterName: String,
-    val posterID: Int,
-    val posterImage: String,
-    val isLikedByUser: Boolean
+    val publisher: String,
+    val publisherId: Int,
+    val publisherImageUrl: String,
+    val isLiked: Boolean,
+    val isSaved:Boolean
 )

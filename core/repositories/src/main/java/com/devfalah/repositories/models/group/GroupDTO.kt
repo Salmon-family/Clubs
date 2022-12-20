@@ -20,15 +20,10 @@ data class GroupDTO(
     val title: String?,
     @SerializedName("type")
     val type: String?,
-    @SerializedName("coverurl")
-    val coverurl: Any?,
     @SerializedName("ismember")
     val ismember: Boolean?,
-    @SerializedName("OssnFile")
-    val ossnFile: OssnFile?,
     @SerializedName("request_exists")
     val requestExists: Boolean?,
     @SerializedName("total_requests")
     val totalRequests: Int?,
-
     )

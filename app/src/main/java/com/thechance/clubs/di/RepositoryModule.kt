@@ -1,11 +1,11 @@
 package com.thechance.clubs.di
 
 import com.devfalah.repositories.ClubRepositoryImp
-import com.devfalah.usecases.ClubRepository
+import com.devfalah.usecases.repository.ClubRepository
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.identity.repositories.IdentityRepositoryImp
 import com.thechance.identity.usecases.IdentityRepository
-import com.thechance.repositories.ChatRepositoryImp
+import com.devfalah.repository.ChatRepositoryImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ abstract class RepositoryModule {
     @ViewModelScoped
     @Binds
     abstract fun bindChatRepository(
-        chatRepositoryImp: ChatRepositoryImp
+        chatRepositoryImp: com.devfalah.repository.ChatRepositoryImp
     ): ChatRepository
 
     @ViewModelScoped

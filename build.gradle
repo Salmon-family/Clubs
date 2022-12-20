@@ -6,15 +6,24 @@ buildscript {
         retrofit_version ='2.9.0'
         gson_version = '2.9.0'
 
-        okhttp_version = '4.10.0'
+        okhttp_version = '5.0.0-alpha.3'
         core_kotlin_version ='1.9.0'
         activity_compose_version ='1.6.1'
         lifecycle_version ='2.5.1'
+        room_version = "2.4.3"
+        coil_version = "2.2.2"
+
+        data_store_version = '1.0.0'
+
+        nav_version = "2.5.3"
+
+        accompanist_version = "0.13.0"
 
     }
 
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath 'com.google.gms:google-services:4.3.14'
     }
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.

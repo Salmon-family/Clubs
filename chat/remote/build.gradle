@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":chat:repositories"))
+    implementation(project(":chat:repository"))
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

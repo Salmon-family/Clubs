@@ -1,9 +1,7 @@
 package com.devfalah.repositories.mappers
 
-import com.devfalah.entities.Icon
 import com.devfalah.entities.User
 import com.devfalah.repositories.models.FriendDTO
-
 
 fun FriendDTO.toEntity(): User {
     return User(
@@ -12,12 +10,16 @@ fun FriendDTO.toEntity(): User {
         email = this.email ?: "",
         name = this.firstName ?: "",
         title = this.lastName?.substringBefore("$%") ?: "",
-        description = this.lastName?.substringAfter("$%") ?: "",
+        bio = this.lastName?.substringAfter("$%") ?: "",
         username = this.username ?: "",
         gender = this.gender ?: "",
-        userID = this.guid ?: 0,
+        id = this.guid ?: 0,
         language = this.language ?: "",
-        icon = this.icon?.toEntity() ?: Icon()
+        profileUrl = this.icon?.large ?: "",
+        isFriend = false,
+        isRequestExists = false,
+        isMyProfile = false
     )
 }
 
+fun List<FriendDTO>.toEntity(): List<User> = map { it.toEntity() }

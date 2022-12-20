@@ -19,14 +19,42 @@
     <string name="like_photo">liked your photo</string>
     <string name="like_post">liked your post</string>
     <string name="request_group">request to join your group</string>
-    <string name="see_all">"See All"</string>
+    <string name="see_all">See All</string>
     <string name="albums">Albums</string>
     <string name="friends_privacy">Friends</string>
     <string name="public_privacy">Public</string>
-
+    <string name="read_more">Read More</string>
+    <string name="create_post">Share what you love..</string>
+    <string name="send_message">Send a message</string>
+    <string name="loading">"Loading.."</string>
+    <string name="no_data">No More Data</string>
+    <string name="try_again">Try Again</string>
+    <string name="search">Search</string>
 
     <string name="home">Home</string>
     <string name="search_for_club">Search for a club</string>
     <string name="my_special_clubs">My Special Clubs</string>
     <string name="my_clubs">My Clubs</string>
+    <string name="clubs">Clubs</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="friends_requests">Friends Requests</string>
+    <string name="blocked_people">Blocked People</string>
+    <string name="account_section">Account</string>
+    <string name="preferences_section">Preferences</string>
+    <string name="theme">Theme</string>
+    <string name="language">Language</string>
+    <string name="my_account">My Account</string>
+    <string name="saved_threads">Saved Threads</string>
+    <string name="report_bugs">Report Bugs</string>
+    <string name="create_club">Create Club</string>
+    <string name="clubـcreated_successfully">Club created successfully</string>
+    <string name="club_name">Club Name</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe your club in  few words…</string>
+    <string name="privacy">Privacy</string>
+    <string name="public_text">Public</string>
+    <string name="private_privacy">Private</string>
+    <string name="people">People</string>
+    <string name="users_requests">Join Requests</string>
+
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chats">Chats</string>
+    <string name="arrow_back">Arrow Back</string>
+    <string name="edit">Add</string>
+    <string name="search">Search</string>
+    <string name="search_text">Search for a friend</string>
+    <string name="enter_your_message">Enter your message…</string>
+</resources>

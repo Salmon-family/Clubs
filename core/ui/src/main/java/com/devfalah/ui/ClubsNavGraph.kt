@@ -1,20 +1,29 @@
 package com.devfalah.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.devfalah.ui.screen.accountSettings.accountSettingsRoute
+import com.devfalah.ui.screen.allSearchResultScreen.allSearchResultRoute
+import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
+import com.devfalah.ui.screen.clubCreation.clubCreationRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
+import com.devfalah.ui.screen.createPost.createPostRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
+import com.devfalah.ui.screen.friends.friendsRoute
 import com.devfalah.ui.screen.home.homeRoute
 import com.devfalah.ui.screen.menu.menuRoute
 import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.profile.profileRoute
+import com.devfalah.ui.screen.savedPosts.savedPostsRoute
 import com.devfalah.ui.screen.search.searchRoute
 
-const val Profile = "ProfileScreen"
-const val FriendRequestRoute = "FriendRequest"
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ClubsNavGraph(navController: NavHostController) {
     NavHost(
@@ -28,6 +37,24 @@ fun ClubsNavGraph(navController: NavHostController) {
         notificationRoute(navController = navController)
         menuRoute(navController = navController)
         friendRequestRoute(navController = navController)
-        profileRoute(navController= navController)
+        profileRoute(navController = navController)
+        createPostRoute(navController = navController)
+        friendsRoute(navController = navController)
+        savedPostsRoute(navController = navController)
+        accountSettingsRoute(navController = navController)
+        allSearchResultRoute(navController = navController)
+        clubRequestsRoute(navController = navController)
+        clubCreationRoute(navController = navController)
+    }
+}
+
+fun NavController.showingBack(): Boolean {
+    return when (this.currentBackStackEntry?.destination?.route) {
+        Screen.Home.screen_route,
+        Screen.Clubs.screen_route,
+        Screen.Search.screen_route,
+        Screen.Notification.screen_route,
+        Screen.Menu.screen_route -> false
+        else -> true
     }
 }

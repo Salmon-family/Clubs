@@ -63,14 +63,17 @@ dependencies {
     api(project(":core:repositories"))
     api(project(":core:useCases"))
     api(project(":core:viewModels"))
+    api(project(":core:local"))
     //endregion
 
     //region chat
     api(project(":chat:ui"))
     api(project(":chat:viewModels"))
     api(project(":chat:useCases"))
-    api(project(":chat:repositories"))
+    api(project(":chat:repository"))
     api(project(":chat:remote"))
+    api(project(":chat:local"))
+    api(project(":chat:firebase"))
     //endregion
 
     //region identity
@@ -79,6 +82,7 @@ dependencies {
     api(project(":identity:useCases"))
     api(project(":identity:repositories"))
     api(project(":identity:remote"))
+    api(project(":identity:local"))
     //endregion
 
 
@@ -90,6 +94,12 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
     implementation("androidx.compose.runtime:runtime:$compose_ui_version")
 
 
@@ -98,6 +108,5 @@ dependencies {
     implementation "io.coil-kt:coil-compose:$coil_version"
 
     implementation "androidx.navigation:navigation-compose:2.6.0-alpha04"
-
 
 }
