@@ -106,7 +106,7 @@ fun ClubHeaderDetails(
 
                     ClubCard(
                         imageVector = com.devfalah.ui.R.drawable.ic_people,
-                        text = "3500"
+                        text = state.membersCount.toString()
                     )
 
                     ClubCard(

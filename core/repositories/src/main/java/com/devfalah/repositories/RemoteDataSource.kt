@@ -48,7 +48,14 @@ interface RemoteDataSource {
 
     suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
 
-    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : GroupDTO
+    suspend fun createClub(
+        userID: Int,
+        groupName: String,
+        description: String,
+        groupPrivacy: Int
+    ): GroupDTO
 
     suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO
+
+    suspend fun getGroupMembers(groupID: Int): Int
 }

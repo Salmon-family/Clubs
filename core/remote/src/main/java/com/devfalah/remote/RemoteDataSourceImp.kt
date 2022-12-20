@@ -21,8 +21,9 @@ class RemoteDataSourceImp @Inject constructor(
 ) : RemoteDataSource {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
-        return wrap { apiService.removeFriend(userID, friendRequestID) }.success
-            ?: throw Throwable("Mapping Error")
+        return wrap { apiService.removeFriend(userID, friendRequestID) }.success ?: throw Throwable(
+            "Mapping Error"
+        )
     }
 
     override suspend fun addFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -57,8 +58,11 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Error")
     }
 
-    override suspend fun getProfilePostsPager(userID: Int, profileUserID: Int, page: Int)
-            : List<WallPostDTO> {
+    override suspend fun getProfilePostsPager(
+        userID: Int,
+        profileUserID: Int,
+        page: Int
+    ): List<WallPostDTO> {
         return wrap { apiService.getAllWallPosts(userID, profileUserID, page = page) }.posts
             ?: throw Throwable("Mapping Error")
     }
@@ -140,10 +144,15 @@ class RemoteDataSourceImp @Inject constructor(
     override suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO {
         return wrap {
             apiService.getGroupDetails(
-                userID = userID,
-                groupID = groupID
+                userID = userID, groupID = groupID
             )
         }.group ?: throw Throwable("Error")
+    }
+
+    override suspend fun getGroupMembers(groupID: Int): Int {
+        return wrap {
+            apiService.getGroupMembers(groupID)
+        }.count ?: 0
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

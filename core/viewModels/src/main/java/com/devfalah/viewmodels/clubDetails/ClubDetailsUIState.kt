@@ -5,6 +5,7 @@ data class ClubDetailsUiState(
     val name: String = "",
     val description: String = "",
     val privacy: String = "",
+    val membersCount: Int = 0,
     val isLoading: Boolean = false,
     val isSuccessful: Boolean = false,
 )
