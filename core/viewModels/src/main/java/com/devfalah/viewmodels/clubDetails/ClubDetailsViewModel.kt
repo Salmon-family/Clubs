@@ -36,6 +36,7 @@ class ClubDetailsViewModel @Inject constructor(
                     it.copy(
                         name = clubDetails.name,
                         description = clubDetails.description,
+                        privacy = getPrivacy(clubDetails.privacy),
                         isLoading = false,
                         isSuccessful = true
                     )
@@ -47,4 +48,16 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
 
+    private fun getPrivacy(value: String): String {
+        return when (value) {
+            "1" -> PRIVATE_PRIVACY
+            else -> PUBLIC_PRIVACY
+        }
+    }
+
+
+    companion object {
+        private const val PRIVATE_PRIVACY = "Private"
+        private const val PUBLIC_PRIVACY = "Public"
+    }
 }

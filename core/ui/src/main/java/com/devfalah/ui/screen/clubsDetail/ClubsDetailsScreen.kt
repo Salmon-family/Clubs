@@ -47,8 +47,7 @@ private fun ClubsDetailsContent(
 
         item {
             ClubHeaderDetails(
-                name = state.name,
-                description = state.description
+               state = state
             )
         }
 

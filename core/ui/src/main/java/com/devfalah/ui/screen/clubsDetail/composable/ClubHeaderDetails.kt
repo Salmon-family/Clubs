@@ -17,11 +17,11 @@ import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
+import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 
 @Composable
 fun ClubHeaderDetails(
-    name: String,
-    description: String,
+    state: ClubDetailsUiState,
 ) {
 
     ConstraintLayout(
@@ -45,7 +45,7 @@ fun ClubHeaderDetails(
         }
 
         Text(
-            text = description,
+            text = state.description,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(textTitle) {
@@ -62,7 +62,7 @@ fun ClubHeaderDetails(
             maxLines = 3
         )
         Text(
-            text = name,
+            text = state.name,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(textName) {
@@ -101,7 +101,7 @@ fun ClubHeaderDetails(
                 Row {
                     ClubCard(
                         imageVector = com.devfalah.ui.R.drawable.ic_menu_language,
-                        text = "Public"
+                        text = state.privacy
                     )
 
                     ClubCard(
