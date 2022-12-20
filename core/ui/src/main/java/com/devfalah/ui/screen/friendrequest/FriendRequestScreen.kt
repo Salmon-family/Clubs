@@ -33,16 +33,16 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun FriendRequestScreen(
     navController: NavController,
-    friendRequestViewModel: FriendRequestViewModel = hiltViewModel(),
+    viewModel: FriendRequestViewModel = hiltViewModel(),
 ) {
-    val state by friendRequestViewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
     FriendRequestsContent(
         navController,
         friendRequestUiState = state,
-        onAcceptButtonClick = friendRequestViewModel::acceptFriendRequest,
-        onDeleteButtonClick = friendRequestViewModel::deniedFriendRequest,
+        onAcceptButtonClick = viewModel::acceptFriendRequest,
+        onDeleteButtonClick = viewModel::deniedFriendRequest,
         onClickOpenProfile = { navController.navigateToProfile(it) }
     )
     LaunchedEffect(true) {

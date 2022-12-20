@@ -1,8 +1,6 @@
 package com.thechance.identity.ui.screen.signup.confirmpassword
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +16,6 @@ import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.signup.name.navigateToSignupNames
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.spacer.SpacerVertical8
-import com.thechance.identity.ui.theme.LightPrimaryBlackColor
-import com.thechance.identity.ui.theme.LightPrimaryBrandColor
-import com.thechance.identity.ui.theme.LightSecondaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
@@ -42,7 +37,7 @@ fun SignUpConfirmPasswordScreen(
             navController.navigateToSignupNames()
         },
         onClickBack = { navController.navigateUp() },
-        onNavigate = {navController.navigateToLogInUserName()}
+        onNavigate = { navController.navigateToLogInUserName() }
     )
 }
 
@@ -74,9 +69,7 @@ fun SignUpConfirmPasswordContent(
 
         SpacerVertical8()
         EmailDescriptionText(
-            text1 = stringResource(id = R.string.using),
-            text2 = state.email,
-            text3 = stringResource(id = R.string.to_sign_up)
+            email = state.email,
         )
 
         SpacerVertical24()

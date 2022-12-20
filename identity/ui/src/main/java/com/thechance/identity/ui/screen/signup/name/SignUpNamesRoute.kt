@@ -9,18 +9,18 @@ import com.thechance.identity.viewmodel.signup.SignupViewModel
 
 
 fun NavController.navigateToSignupNames() {
-    navigate(route = SIGNUP_USER_INFORMATION_Route){
+    navigate(route = SIGNUP_USER_INFORMATION_ROUTE){
         launchSingleTop = true
     }
 }
 
-const val SIGNUP_USER_INFORMATION_Route = "signupFirstNameScreen"
+const val SIGNUP_USER_INFORMATION_ROUTE = "signupFirstNameScreen"
 
 fun NavGraphBuilder.signupNamesRoute(
     navHostController: NavHostController,
     viewModel: SignupViewModel
 ) {
-    composable(SIGNUP_USER_INFORMATION_Route) {
+    composable(SIGNUP_USER_INFORMATION_ROUTE) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             SignUpFullNameScreen(
                 navController = navHostController,

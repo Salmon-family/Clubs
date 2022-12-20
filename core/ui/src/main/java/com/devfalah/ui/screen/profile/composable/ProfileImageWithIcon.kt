@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBrandColor
 
@@ -44,7 +44,7 @@ fun ProfileImageWithIcon(
                 modifier = Modifier
                     .padding(start = 8.dp, top = 80.dp)
                     .size(40.dp)
-                    .RemoveRippleEffect { onClickIcon() }
+                    .nonRippleEffect { onClickIcon() }
                     .align(Alignment.BottomEnd)
                     .clip(CircleShape)
                     .background(LightSecondaryBrandColor)

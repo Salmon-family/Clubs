@@ -50,6 +50,15 @@ interface ClubRepository {
 
     suspend fun getSearch(userID: Int, keyword: String): SearchResult
 
+    suspend fun getRequestsToClub(clubId: Int): List<User>
+
+    suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+    suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
+
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : Club
+
+
     suspend fun getPostDetails(userID: Int, postID: Int): Post
 
     suspend fun getAllComments(userID: Int, postID: Int, page: Int): List<Comment>

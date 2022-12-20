@@ -13,7 +13,7 @@ val PlusJakartaSans = FontFamily(
     Font(R.font.plus_jakarta_sans_regular, weight = FontWeight.Normal),
 )
 
-val Typography = Typography(
+val AppTypography = Typography(
     h1 = TextStyle(
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.SemiBold,

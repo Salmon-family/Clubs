@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -31,14 +31,14 @@ fun FriendItem(
 ) {
     Row(
         modifier = modifier
-            .RemoveRippleEffect { onOpenProfileClick(state.id) }
+            .nonRippleEffect { onOpenProfileClick(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(LightCardBackgroundColor)
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CircleProfileImage(
+        CircleImage(
             painter = rememberAsyncImagePainter(model = state.profilePictureUrl),
             size = 56
         )

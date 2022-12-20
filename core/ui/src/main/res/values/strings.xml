@@ -19,7 +19,7 @@
     <string name="like_photo">liked your photo</string>
     <string name="like_post">liked your post</string>
     <string name="request_group">request to join your group</string>
-    <string name="see_all">"See All"</string>
+    <string name="see_all">See All</string>
     <string name="albums">Albums</string>
     <string name="friends_privacy">Friends</string>
     <string name="public_privacy">Public</string>
@@ -43,4 +43,15 @@
     <string name="my_account">My Account</string>
     <string name="saved_threads">Saved Threads</string>
     <string name="report_bugs">Report Bugs</string>
+    <string name="create_club">Create Club</string>
+    <string name="clubـcreated_successfully">Club created successfully</string>
+    <string name="club_name">Club Name</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe your club in  few words…</string>
+    <string name="privacy">Privacy</string>
+    <string name="public_text">Public</string>
+    <string name="private_privacy">Private</string>
+    <string name="people">People</string>
+    <string name="users_requests">Join Requests</string>
+
 </resources>

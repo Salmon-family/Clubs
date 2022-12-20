@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: ClubLocalDataSource
+    private val localDataSource: ClubLocalDataSource,
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -66,7 +66,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getProfilePostsPager(
-        userID: Int, profileUserID: Int, page: Int
+        userID: Int, profileUserID: Int, page: Int,
     ): List<Post> {
         return remoteDataSource.getProfilePostsPager(userID, profileUserID, page).toEntity()
     }
@@ -102,6 +102,34 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun getSearch(userID: Int, keyword: String): SearchResult {
         return remoteDataSource.getSearchResult(userID, keyword).toEntity()
+    }
+
+    override suspend fun createClub(
+        userID: Int,
+        groupName: String,
+        description: String,
+        groupPrivacy: Int,
+    ): Club {
+        return remoteDataSource.createClub(
+            userID = userID,
+            groupName = groupName,
+            description = description,
+            groupPrivacy = groupPrivacy
+        ).toEntity()
+    }
+
+    override suspend fun getRequestsToClub(clubId: Int): List<User> {
+        return remoteDataSource.getRequestsToClub(clubId).toEntity()
+    }
+
+    override suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return remoteDataSource
+            .declineClubRequest(userId = userId, memberId = memberId, clubId = clubId)
+    }
+
+    override suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return remoteDataSource
+            .acceptClubRequest(userId = userId, memberId = memberId, clubId = clubId)
     }
 
     override suspend fun deletePost(postId: Int) {

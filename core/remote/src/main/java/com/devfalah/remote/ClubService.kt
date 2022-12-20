@@ -125,7 +125,8 @@ interface ClubService {
     suspend fun addGroups(
         @Field("guid") userID: Int,
         @Field("name") groupName: String,
-        @Field("privacy") groupPrivacy: Int
+        @Field("privacy") groupPrivacy: Int,
+        @Field("description") description:String,
     ): Response<BaseResponse<GroupDTO>>
 
     @FormUrlEncoded
@@ -142,6 +143,20 @@ interface ClubService {
     suspend fun getAllUserGroups(
         @Query("guid") userID: Int
     ): Response<BaseResponse<GroupResponse>>
+
+    @GET("groups_request_decline")
+    suspend fun declineGroupsRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") memberId: Int,
+        @Query("uguid") userId: Int
+    ): Response<BaseResponse<Boolean>>
+
+    @GET("groups_request_accept")
+    suspend fun acceptGroupsRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") memberId: Int,
+        @Query("uguid") userId: Int
+    ): Response<BaseResponse<Boolean>>
 
     @GET("groups_view")
     suspend fun getGroupDetails(

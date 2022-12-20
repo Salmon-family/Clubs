@@ -104,6 +104,38 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getSearch(userID = userId, keyword = keyword) }
     }
 
+    override suspend fun getRequestsToClub(clubId: Int): List<UserDTO> {
+        return wrap { apiService.getMemberRequestsToGroup(groupID = clubId) }.requests
+            ?: throw Throwable("Error")
+    }
+
+    override suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return wrap {
+            apiService.declineGroupsRequest(userId = userId, memberId = memberId, clubId = clubId)
+        }
+    }
+
+    override suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
+        return wrap {
+            apiService.acceptGroupsRequest(userId = userId, memberId = memberId, clubId = clubId)
+        }
+    }
+
+    override suspend fun createClub(
+        userID: Int,
+        groupName: String,
+        description: String,
+        groupPrivacy: Int,
+    ): GroupDTO {
+        return wrap { apiService.addGroups(
+            userID = userID,
+            groupName = groupName,
+            groupPrivacy = groupPrivacy,
+            description = description
+        )
+        }
+    }
+
     override suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO {
         return apiService.getWallPost(userID, postID).body()?.payload
             ?: throw Throwable("Mapping Error")

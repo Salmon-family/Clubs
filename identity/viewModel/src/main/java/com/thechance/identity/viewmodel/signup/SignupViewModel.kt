@@ -26,8 +26,16 @@ class SignupViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
+    fun onSignup() {
+        onLoading()
+        makeSignupRequest()
+    }
 
-    fun makeSignupRequest() {
+    private fun onLoading() {
+        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
+    }
+
+    private fun makeSignupRequest() {
         viewModelScope.launch {
             val state = _uiState.value
             val userData = UserData(
@@ -42,22 +50,36 @@ class SignupViewModel @Inject constructor(
             )
             try {
                 val userId = signupUseCase(userData).guid.toString()
-                _uiState.update { it.copy(isSuccess = true) }
+                onSuccess()
                 saveUserId(userId)
-                 Log.i("userName", userId)
+                Log.i("userName", userId)
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isError = t.message.toString(), isSuccess = false) }
+                onError(errorMessage = t)
             }
         }
     }
 
-    private fun saveUserId(id: String){
+    private fun onSuccess() {
+        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
+    }
+
+    private fun onError(errorMessage: Throwable) {
+        _uiState.update {
+            it.copy(
+                errorMessage = errorMessage.message.toString(),
+                isSuccess = false,
+                isLoading = false
+            )
+        }
+    }
+
+    private fun saveUserId(id: String) {
         viewModelScope.launch {
             saveUserIdUseCase(id)
         }
     }
 
-    fun getUserId(): String?{
+    fun getUserId(): String? {
         return getUserIdUseCase()
     }
 

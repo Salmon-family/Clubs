@@ -31,7 +31,8 @@ fun PostLocalDto.toEntity(): Post {
         publisher = publisher,
         publisherId = publisherId,
         publisherImageUrl = publisherImageUrl,
-        isLiked = isLiked
+        isLiked = isLiked,
+        isSaved = true
     )
 }
 

@@ -19,7 +19,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.theme.*
+import com.thechance.identity.ui.theme.InputText
+import com.thechance.identity.ui.theme.Typography
 
 @Composable
 fun PasswordInputText(

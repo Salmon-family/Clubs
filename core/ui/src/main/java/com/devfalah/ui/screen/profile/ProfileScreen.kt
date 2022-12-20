@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.modifiers.RemoveRippleEffect
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.createPost.navigateToCreatePost
 import com.devfalah.ui.screen.friends.navigateToFriends
@@ -137,7 +137,7 @@ fun ProfileContent(
                     state.friends,
                     totalFriends = state.totalFriends,
                     modifier = Modifier
-                        .RemoveRippleEffect { onClickFriends(state.userDetails.userID) }
+                        .nonRippleEffect { onClickFriends(state.userDetails.userID) }
                         .padding(horizontal = 16.dp)
                 )
             }

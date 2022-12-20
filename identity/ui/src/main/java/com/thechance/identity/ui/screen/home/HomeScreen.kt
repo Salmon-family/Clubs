@@ -10,9 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_ROUTE
 import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
-import com.thechance.identity.ui.theme.LightPrimaryBlackColor
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.ui.theme.Typography
 
@@ -21,7 +20,7 @@ fun HomeScreen(
     navController: NavController,
 ) {
 
-    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_Route, inclusive = false)
+    fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_ROUTE, inclusive = false)
     BackPressHandler(onBackPressed = { onBack() })
 
     HomeContent(
