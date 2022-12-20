@@ -10,15 +10,14 @@ import androidx.navigation.navArgument
 import com.devfalah.viewmodels.postDetails.PostDetailsArgs
 
 private const val ROUT = "postDetailsScreen"
-fun NavController.navigateToPostDetails(userId: Int, postId: Int) {
-    navigate("$ROUT/${userId}/${postId}")
+fun NavController.navigateToPostDetails(postId: Int) {
+    navigate("$ROUT/${postId}")
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.postDetailsRoute(navController: NavController) {
-    composable(route = "$ROUT/{${PostDetailsArgs.USER_ID}}/{${PostDetailsArgs.POST_ID}}",
+    composable(route = "$ROUT/{${PostDetailsArgs.POST_ID}}",
         arguments = listOf(
-            navArgument(PostDetailsArgs.USER_ID) { NavType.IntType },
             navArgument(PostDetailsArgs.POST_ID) { NavType.IntType },
             )) {
         PostDetailsScreen(navController)

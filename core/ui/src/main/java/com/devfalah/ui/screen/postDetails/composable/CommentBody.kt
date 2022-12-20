@@ -19,7 +19,7 @@ import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
 fun CommentBody(
-    comment: CommentUIState,
+    state: CommentUIState,
     onClickLikeComment: (CommentUIState) -> Unit,
     onValueChanged: (String) -> Unit,
     sendMessage: (CommentUIState) -> Unit,
@@ -27,22 +27,24 @@ fun CommentBody(
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()) {
-        if (comment.isEdited) {
+        if (state.isEdited) {
             InputDialogView(onDismiss = {
-                sendMessage(comment)
+                sendMessage(state)
             },
                 onExit = { closeDialog() },
-                text = comment.content,
-                onValueChanged = onValueChanged)
+                text = state.content,
+                onValueChanged = onValueChanged,
+                state = state
+            )
         } else {
             Text(
-                text = comment.content,
+                text = state.content,
                 style = Typography.body2
             )
         }
         HeightSpacer8()
         Image(
-            painter = rememberAsyncImagePainter(model = comment.imageFile),
+            painter = rememberAsyncImagePainter(model = state.imageFile),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
@@ -52,23 +54,23 @@ fun CommentBody(
             Row {
                 PostActionIcon(
                     painter = painterResource(
-                        id = if (comment.isLikedByUser) {
+                        id = if (state.isLikedByUser) {
                             R.drawable.heart_full
                         } else {
                             R.drawable.like_icon
                         }
                     ),
-                    tint = if (comment.isLikedByUser) {
+                    tint = if (state.isLikedByUser) {
                         LightPrimaryBrandColor
                     } else {
                         Color.Unspecified
                     },
-                    onClick = { onClickLikeComment(comment) }
+                    onClick = { onClickLikeComment(state) }
                 )
                 WidthSpacer4()
                 Text(
-                    text = if (comment.totalLikes > 0) {
-                        "${comment.totalLikes}"
+                    text = if (state.totalLikes > 0) {
+                        "${state.totalLikes}"
                     } else {
                         ""
                     }.take(3),
@@ -77,7 +79,7 @@ fun CommentBody(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = comment.time,
+                text = state.time,
                 style = Typography.caption
             )
         }

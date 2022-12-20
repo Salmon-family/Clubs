@@ -11,7 +11,11 @@ class GetAllCommentsUseCase @Inject constructor(
 
     suspend operator fun invoke(userId: Int, postId: Int): List<Comment> {
         val comments = clubRepository.getAllComments(userId, postId, page)
-        if (comments.isNotEmpty()) { page += 1 }
-        return comments
+        return if (comments.isNotEmpty()) {
+            page += 1
+            comments
+        } else {
+            emptyList()
+        }
     }
 }

@@ -13,9 +13,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.theme.*
+import com.devfalah.viewmodels.postDetails.CommentUIState
+import com.devfalah.viewmodels.postDetails.isEditedButtonEnabled
 
 @Composable
 fun InputDialogView(
+    state: CommentUIState,
     onDismiss: () -> Unit,
     onExit: () -> Unit,
     text: String,
@@ -73,6 +76,7 @@ fun InputDialogView(
                         modifier = Modifier.weight(1f),
                         titleButton = "Edit",
                         backgroundColor = LightPrimaryBrandColor,
+                        isEnabled = state.isEditedButtonEnabled(),
                         onClick = onDismiss
                     )
                 }
@@ -87,6 +91,7 @@ fun CustomButtonDialog(
     titleButton: String,
     titleColor: Color = WhiteColor,
     backgroundColor: Color,
+    isEnabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Button(
@@ -95,6 +100,7 @@ fun CustomButtonDialog(
             .padding(8.dp),
         onClick = onClick,
         shape = RoundedCornerShape(20.dp),
+        enabled = isEnabled,
         elevation = ButtonDefaults.elevation(0.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = backgroundColor,

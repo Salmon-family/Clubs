@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.home
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.createPost.navigateToCreatePost
+import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -51,7 +53,8 @@ fun HomeScreen(
         onCreatePost = { navController.navigateToCreatePost(state.id) },
         onRefresh = viewModel::swipeToRefresh,
         onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) }
+        onOpenLinkClick = { openBrowser(context, it) },
+        onClickPost = { navController.navigateToPostDetails(it.postId) },
     )
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -67,6 +70,7 @@ fun HomeContent(
     navController: NavController,
     state: HomeUIState,
     onCreatePost: () -> Unit,
+    onClickPost: (PostUIState) -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -95,6 +99,7 @@ fun HomeContent(
 
             items(state.posts) {
                 PostItem(
+                    modifier = Modifier.clickable { onClickPost(it) },
                     state = it,
                     isContentExpandable = true,
                     isMyPost = it.publisherId == state.id,

@@ -18,6 +18,7 @@ import com.devfalah.ui.theme.WhiteColor
 @Composable
 fun CustomTextFiled(
     modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
     text: String,
     onValueChanged: (String) -> Unit,
     sendMessage: () -> Unit,
@@ -41,21 +42,24 @@ fun CustomTextFiled(
             )
         },
         trailingIcon = {
-            ButtonSend(onClickAction = sendMessage)
+            ButtonSend(onClickAction = sendMessage, isEnabled)
         }
     )
 }
 
 @Composable
-fun ButtonSend(onClickAction: () -> Unit) {
+fun ButtonSend(
+    onClickAction: () -> Unit,
+    isEnabled: Boolean = true,
+) {
     Button(
-
         modifier = Modifier
             .width(40.dp)
             .padding(2.dp),
         colors = ButtonDefaults.buttonColors(LightPrimaryBrandColor),
         shape = RoundedCornerShape(100.dp),
         elevation = ButtonDefaults.elevation(0.dp),
+        enabled = isEnabled,
         contentPadding = PaddingValues(0.dp),
         onClick = onClickAction,
     ) {

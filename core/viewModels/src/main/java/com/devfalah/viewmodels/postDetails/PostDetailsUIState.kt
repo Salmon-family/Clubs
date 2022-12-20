@@ -10,8 +10,7 @@ data class PostDetailsUIState(
     val isLoading: Boolean = false,
     val isPagerLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
-    val majorError: String = "",
-    val minorError: String = "",
+    val error: String = "",
     val pagerError: String = "",
 )
 
@@ -31,3 +30,7 @@ data class CommentUIState(
     val isDeleted: Boolean = false,
     val isOwnerComment: Boolean = false,
 )
+
+fun PostDetailsUIState.isSendCommentButtonEnabled() = comment.isNotEmpty()
+
+fun CommentUIState.isEditedButtonEnabled() = content.isNotEmpty()

@@ -9,7 +9,6 @@ import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.SetFavoritePostUseCase
 import com.devfalah.usecases.SetLikeUseCase
 import com.devfalah.usecases.postDetailsUseCases.*
-import com.devfalah.viewmodels.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -37,43 +36,46 @@ class PostDetailsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     private val args = PostDetailsArgs(savedStateHandle)
-    private val userId = args.userId
-    private val postId = args.postId
 
     init {
+        getUserID()
+    }
+
+    fun getData() {
+        getPostDetails(uiState.value.userId, args.postId)
+    }
+
+    private fun getUserID() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(userId = getUser()) }
                 getData()
             } catch (t: Throwable) {
-                _uiState.update { it.copy(majorError = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
 
-    private fun getData() {
-        getPostDetails(userId, postId)
-    }
-
     private fun getPostDetails(userId: Int, postId: Int) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, majorError = "") }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val post = getPostDetailsUseCase(userId, postId)
                 _uiState.update {
                     it.copy(postDetails = post.toUIState(), userId = userId, isLoading = false)
                 }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, majorError = e.message.toString()) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
 
         }
     }
 
-    fun swipeToRefresh(type: Int) {
+    fun getAllComments(type: Int) {
         viewModelScope.launch {
             try {
-                val comments = getAllCommentsUseCase(userId, postId)
+                _uiState.update { it.copy(isLoading = true, error = "") }
+                val comments = getAllCommentsUseCase(_uiState.value.userId, args.postId)
                 if (comments.isNotEmpty()) {
                     _uiState.update {
                         it.copy(
@@ -84,31 +86,28 @@ class PostDetailsViewModel @Inject constructor(
                     }
                 } else {
                     _uiState.update {
-                        it.copy(
-                            isEndOfPager = false,
-                            pagerError = "No more comments",
-                            isLoading = false,
-                        )
+                        it.copy(isEndOfPager = true, isLoading = false)
                     }
                 }
-
-            } catch (e: Exception) {
+            } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
                         isPagerLoading = false,
                         isLoading = false,
-                        pagerError = e.message.toString())
+                        error = t.message.toString(),
+                        pagerError = t.message.toString()
+                    )
+
                 }
             }
-
         }
     }
 
-    fun setComment(comment: String) {
+    private fun setComment(comment: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, minorError = "") }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val newComment = setCommentUseCase(userId, postId, comment)
+                val newComment = setCommentUseCase(_uiState.value.userId, args.postId, comment)
                 _uiState.update {
                     it.copy(
                         comments = it.copy(
@@ -119,8 +118,8 @@ class PostDetailsViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, minorError = e.message.toString()) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
 
         }
@@ -128,9 +127,9 @@ class PostDetailsViewModel @Inject constructor(
 
     fun onClickDeletedComment(comment: CommentUIState) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, minorError = "") }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val deleteComment = deleteCommentUseCase(userId, comment.id)
+                val deleteComment = deleteCommentUseCase(_uiState.value.userId, comment.id)
                 if (deleteComment) {
                     _uiState.update { it ->
                         it.copy(
@@ -140,7 +139,7 @@ class PostDetailsViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, minorError = e.message.toString()) }
+                _uiState.update { it.copy(isLoading = false, error = e.message.toString()) }
             }
 
         }
@@ -148,7 +147,7 @@ class PostDetailsViewModel @Inject constructor(
 
     private fun sendEditComment(comment: CommentUIState) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, minorError = "") }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 setEditCommentUseCase(comment.id, comment.content)
                 _uiState.update {
@@ -156,8 +155,8 @@ class PostDetailsViewModel @Inject constructor(
                         isLoading = false,
                     )
                 }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, minorError = e.message.toString()) }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
 
         }
@@ -167,7 +166,7 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val totalLikes = setLikeUseCase(
-                    postID = post.postId, userId = userId,
+                    postID = post.postId, userId = _uiState.value.userId,
                     isLiked = post.isLikedByUser
                 )
                 val updatedPost = post.copy(
@@ -180,7 +179,7 @@ class PostDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 Log.e("Test", t.message.toString())
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
@@ -189,7 +188,7 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val totalLikes = setLikeUseCase(
-                    postID = comment.id, userId = userId,
+                    postID = comment.id, userId = _uiState.value.userId,
                     isLiked = comment.isLikedByUser
                 )
                 val updatedPost = comment.copy(
@@ -207,7 +206,7 @@ class PostDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 Log.e("Test", t.message.toString())
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
@@ -227,7 +226,7 @@ class PostDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 Log.e("Test", t.message.toString())
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
@@ -244,7 +243,7 @@ class PostDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 Log.e("Test", t.message.toString())
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
