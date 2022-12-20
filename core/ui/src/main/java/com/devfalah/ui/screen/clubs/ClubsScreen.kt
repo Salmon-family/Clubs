@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
+import com.devfalah.ui.composable.ClubItem
 import com.devfalah.ui.composable.SegmentControls
 import com.devfalah.ui.screen.clubs.composable.MyClubCard
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
@@ -27,9 +28,9 @@ import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.viewmodels.myClubs.ClubsState
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
+import com.devfalah.viewmodels.search.ClubUIState
 
 @Composable
 fun ClubsScreen(
@@ -46,7 +47,7 @@ fun ClubsScreen(
 @Composable
 fun ClubsContent(
     state: MyClubsUiState,
-    onClubClick: (ClubsState) -> Unit
+    onClubClick: (Int) -> Unit
 ) {
     var animationState by remember { mutableStateOf(0) }
 
@@ -83,7 +84,7 @@ fun ClubsContent(
 @Composable
 fun MyClubsScreen(
     state: MyClubsUiState,
-    onClubClick: (ClubsState) -> Unit
+    onClubClick: (Int) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -133,11 +134,7 @@ fun MyClubsScreen(
         }
 
         items(state.myClubs) {
-            MyClubCard(
-                myClub = it,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                onClubClick = onClubClick
-            )
+            ClubItem(state = it, onClubSelected = onClubClick)
         }
     }
 }
@@ -145,7 +142,7 @@ fun MyClubsScreen(
 @Composable
 fun SpecialClubsScreen(
     state: MyClubsUiState,
-    onClubClick: (ClubsState) -> Unit
+    onClubClick: (Int) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 3),

@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.dp
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.viewmodels.myClubs.ClubsState
+import com.devfalah.viewmodels.search.ClubUIState
 
 @Composable
 fun ClubCard(
-    club: ClubsState,
-    onClubClick: (ClubsState) -> Unit
+    club: ClubUIState,
+    onClubClick: (ClubUIState) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -53,10 +53,9 @@ fun ClubCard(
 @Composable
 private fun Preview() {
     ClubCard(
-        ClubsState(
+        ClubUIState(
             title = "cooking club",
             description = "club for cooking lovers",
-            privacy = "1",
             id = 0,
         )
     ) {}

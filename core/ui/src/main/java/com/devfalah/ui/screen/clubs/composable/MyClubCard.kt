@@ -19,13 +19,13 @@ import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.viewmodels.myClubs.ClubsState
+import com.devfalah.viewmodels.search.ClubUIState
 
 @Composable
 fun MyClubCard(
-    myClub: ClubsState,
+    myClub: ClubUIState,
     modifier: Modifier = Modifier,
-    onClubClick: (ClubsState) -> Unit
+    onClubClick: (ClubUIState) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -72,11 +72,10 @@ fun MyClubCard(
 @Preview
 @Composable
 private fun Preview() {
-    MyClubCard(myClub = ClubsState(
+    MyClubCard(myClub = ClubUIState(
         0,
         "this club is for cooking this club is for cookingthis club is for cookingthis club is for cookingthis club is for cooking",
         "",
-        "1"
     ),
         onClubClick = {}
     )

@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetUserClubsUseCase
+import com.devfalah.viewmodels.search.ClubUIState
+import com.devfalah.viewmodels.search.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,11 +31,11 @@ class MyClubsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val myClubs = getUserClubs(myGuid)
-            _uiState.update { it.copy(myClubs = myClubs.map { club -> club.toUiState() }) }
+            _uiState.update { it.copy(myClubs = myClubs.map { club -> club.toUIState() }) }
         }
     }
 
-    fun onClubClicked(myClub: ClubsState) {
-        Log.w("club_Clicked", myClub.title)
+    fun onClubClicked(clubId: Int) {
+        Log.w("club_Clicked", clubId.toString())
     }
 }
