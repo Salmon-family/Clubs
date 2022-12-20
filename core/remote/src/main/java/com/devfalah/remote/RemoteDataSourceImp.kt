@@ -127,13 +127,23 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         groupPrivacy: Int,
     ): GroupDTO {
-        return wrap { apiService.addGroups(
-            userID = userID,
-            groupName = groupName,
-            groupPrivacy = groupPrivacy,
-            description = description
-        )
+        return wrap {
+            apiService.addGroups(
+                userID = userID,
+                groupName = groupName,
+                groupPrivacy = groupPrivacy,
+                description = description
+            )
         }
+    }
+
+    override suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO {
+        return wrap {
+            apiService.getGroupDetails(
+                userID = userID,
+                groupID = groupID
+            )
+        }.group ?: throw Throwable("Error")
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

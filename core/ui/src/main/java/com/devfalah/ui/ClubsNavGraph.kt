@@ -12,6 +12,7 @@ import com.devfalah.ui.screen.allSearchResultScreen.allSearchResultRoute
 import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
 import com.devfalah.ui.screen.clubCreation.clubCreationRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
+import com.devfalah.ui.screen.clubsDetail.clubsDetailsRoute
 import com.devfalah.ui.screen.createPost.createPostRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
 import com.devfalah.ui.screen.friends.friendsRoute
@@ -45,6 +46,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         allSearchResultRoute(navController = navController)
         clubRequestsRoute(navController = navController)
         clubCreationRoute(navController = navController)
+        clubsDetailsRoute(navController = navController)
     }
 }
 

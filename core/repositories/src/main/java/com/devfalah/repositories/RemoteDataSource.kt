@@ -50,4 +50,5 @@ interface RemoteDataSource {
 
     suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : GroupDTO
 
+    suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO
 }

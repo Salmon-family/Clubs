@@ -54,4 +54,6 @@
     <string name="people">People</string>
     <string name="users_requests">Join Requests</string>
 
+    <string name="clubs_member">Club Members</string>
+
 </resources>

@@ -1,0 +1,50 @@
+package com.devfalah.viewmodels.clubDetails
+
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.GetClubDetailsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ClubDetailsViewModel @Inject constructor(
+    private val getClubDetailsUseCase: GetClubDetailsUseCase,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
+
+    private val args = ClubDetailsArgs(savedStateHandle)
+    private val _uiState = MutableStateFlow(ClubDetailsUiState())
+    val uiState = _uiState.asStateFlow()
+
+    init {
+        getClubDetails()
+    }
+
+    private fun getClubDetails() {
+        _uiState.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            try {
+                val clubDetails =
+                    getClubDetailsUseCase(userID = args.userID, groupID = args.groupId)
+
+                _uiState.update {
+                    it.copy(
+                        name = clubDetails.name,
+                        description = clubDetails.description,
+                        isLoading = false,
+                        isSuccessful = true
+                    )
+                }
+            } catch (throwable: Throwable) {
+                _uiState.update { it.copy(isLoading = false, isSuccessful = false) }
+            }
+        }
+    }
+
+
+}
