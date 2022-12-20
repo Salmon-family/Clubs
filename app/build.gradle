@@ -21,7 +21,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
-        buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
+        buildConfigField "String", "BASE_URL", "\"https://club.the-chance.org/api/v1.0/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

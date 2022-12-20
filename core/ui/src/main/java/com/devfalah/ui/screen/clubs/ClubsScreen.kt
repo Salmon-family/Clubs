@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
+import com.devfalah.ui.composable.SegmentControls
 import com.devfalah.ui.screen.clubs.composable.MyClubCard
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
 import com.devfalah.ui.theme.AppTypography
@@ -48,7 +48,7 @@ fun ClubsContent(
     state: MyClubsUiState,
     onClubClick: (ClubsState) -> Unit
 ) {
-    var animationState by remember { mutableStateOf(false) }
+    var animationState by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier
@@ -56,12 +56,14 @@ fun ClubsContent(
             .padding(top = 16.dp)
             .background(LightCardBackgroundColor)
     ) {
-        Button(
-            onClick = { animationState = !animationState },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = "click me")
-        }
+
+        SegmentControls(items = listOf(
+            stringResource(id = R.string.my_clubs),
+            stringResource(R.string.special_clubs)
+        ),
+            onItemSelection = {
+                animationState = it
+            })
 
         AnimatedContent(targetState = animationState,
             transitionSpec = {
@@ -70,8 +72,8 @@ fun ClubsContent(
 
         ) {
             when (it) {
-                true -> SpecialClubsScreen(state = state, onClubClick = onClubClick)
-                false -> MyClubsScreen(state = state, onClubClick = onClubClick)
+                0 -> MyClubsScreen(state = state, onClubClick = onClubClick)
+                1 -> SpecialClubsScreen(state = state, onClubClick = onClubClick)
             }
         }
     }

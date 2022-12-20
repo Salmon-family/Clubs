@@ -19,7 +19,7 @@ class MyClubsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MyClubsUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val myGuid = 4
+    private val myGuid = 2
 
     init {
         getMyGroups()

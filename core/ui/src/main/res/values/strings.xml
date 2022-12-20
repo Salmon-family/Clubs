@@ -56,5 +56,6 @@
     <string name="private_privacy">Private</string>
     <string name="people">People</string>
     <string name="users_requests">Join Requests</string>
+    <string name="special_clubs">Special Clubs</string>
 
 </resources>
