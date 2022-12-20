@@ -10,9 +10,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
-import com.devfalah.ui.theme.Typography
 import com.devfalah.ui.theme.WhiteColor
 
 @Composable
@@ -38,7 +38,7 @@ fun CustomTextFiled(
             Text(
                 text = "Enter your comment...",
                 color = LightTernaryBlackColor,
-                style = Typography.body1
+                style = AppTypography.body1
             )
         },
         trailingIcon = {

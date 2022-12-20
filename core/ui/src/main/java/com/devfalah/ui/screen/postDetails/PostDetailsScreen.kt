@@ -22,8 +22,8 @@ import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.screen.postDetails.composable.CommentItem
 import com.devfalah.ui.screen.postDetails.composable.CustomTextFiled
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.postDetails.CommentUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsViewModel
@@ -128,7 +128,7 @@ fun PostDetailsContent(
                 }
                 item {
                     Text(text = "Comments",
-                        style = Typography.body2,
+                        style = AppTypography.body2,
                         modifier = Modifier.padding(start = 16.dp))
                 }
                 items(state.comments) {

@@ -13,8 +13,8 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
 import com.devfalah.ui.screen.profile.composable.PostActionIcon
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
@@ -39,7 +39,7 @@ fun CommentBody(
         } else {
             Text(
                 text = state.content,
-                style = Typography.body2
+                style = AppTypography.body2
             )
         }
         HeightSpacer8()
@@ -74,13 +74,13 @@ fun CommentBody(
                     } else {
                         ""
                     }.take(3),
-                    style = Typography.body2
+                    style = AppTypography.body2
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = state.time,
-                style = Typography.caption
+                style = AppTypography.caption
             )
         }
     }

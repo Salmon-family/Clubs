@@ -55,7 +55,7 @@ fun InputDialogView(
                         Text(
                             text = "Enter your comment...",
                             color = LightTernaryBlackColor,
-                            style = Typography.body1
+                            style = AppTypography.body1
                         )
                     },
                 )
@@ -107,6 +107,6 @@ fun CustomButtonDialog(
             contentColor = titleColor
         )
     ) {
-        Text(text = titleButton, style = Typography.button)
+        Text(text = titleButton, style = AppTypography.button)
     }
 }
