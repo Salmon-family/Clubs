@@ -29,9 +29,14 @@ class MyClubsViewModel @Inject constructor(
 
     private fun getMyGroups() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
-            val myClubs = getUserClubs(myGuid)
-            _uiState.update { it.copy(myClubs = myClubs.map { club -> club.toUIState() }) }
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                val myClubs = getUserClubs(myGuid)
+                _uiState.update { it.copy(myClubs = myClubs.map { club -> club.toUIState() }) }
+            } catch (e: Throwable) {
+                _uiState.update { it.copy(error = e.message.toString()) }
+                Log.e("getMyGroups", e.message.toString())
+            }
         }
     }
 
