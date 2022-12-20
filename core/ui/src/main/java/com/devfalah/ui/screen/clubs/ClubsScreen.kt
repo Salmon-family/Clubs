@@ -146,7 +146,11 @@ fun MyClubsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(9) {
-                    SpecialClubItem(R.drawable.art_icon, "art")
+                    SpecialClubItem(
+                        iconId = R.drawable.art_icon,
+                        clubTitle = "art",
+                        modifier = Modifier.size(98.dp)
+                    )
                 }
             }
         }
@@ -186,7 +190,11 @@ fun SpecialClubsScreen(
     ) {
 
         items(9) {
-            SpecialClubItem(iconId = R.drawable.art_icon, clubTitle = "art")
+            SpecialClubItem(
+                iconId = R.drawable.art_icon,
+                clubTitle = "art",
+                modifier = Modifier.aspectRatio(1f)
+                )
         }
     }
 }

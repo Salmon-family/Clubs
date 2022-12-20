@@ -1,10 +1,7 @@
 package com.devfalah.ui.screen.clubs.composable
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -23,17 +20,17 @@ import com.devfalah.ui.theme.LightSecondaryBrandColor
 @Composable
 fun SpecialClubItem(
     iconId: Int,
-    clubTitle: String
+    clubTitle: String,
+    modifier: Modifier = Modifier,
 ) {
 
     Column(
-        modifier = Modifier
-            .size(98.dp)
-            .clip(RoundedCornerShape(100))
+        modifier = modifier
+            .clip(CircleShape)
             .background(LightSecondaryBrandColor)
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.SpaceAround
 
     ) {
         Icon(
