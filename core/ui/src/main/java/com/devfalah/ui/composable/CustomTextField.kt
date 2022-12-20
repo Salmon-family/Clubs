@@ -12,6 +12,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -26,6 +27,7 @@ fun CustomTextField(
     showTextCount: Boolean = false,
     onValueChange: (String) -> Unit,
     singleLine: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     Column {
         Row {
@@ -55,13 +57,17 @@ fun CustomTextField(
                 disabledIndicatorColor = Color.Transparent,
             ),
             placeholder = {
-                hint?.let { Text(text = it,
-                    textAlign = TextAlign.Center,
-                color = LightTernaryBlackColor) }
+                hint?.let {
+                    Text(
+                        text = it,
+                        textAlign = TextAlign.Center,
+                        color = LightTernaryBlackColor
+                    )
+                }
             },
             shape = RoundedCornerShape(100.dp),
             singleLine = singleLine,
-
-            )
+            visualTransformation = visualTransformation,
+        )
     }
 }

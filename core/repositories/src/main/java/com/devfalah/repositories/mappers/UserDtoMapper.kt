@@ -11,7 +11,7 @@ fun UserDTO.toEntity(): User {
         email = this.email ?: "",
         name = this.firstName ?: "",
         title = this.lastName?.substringBefore("$%") ?: "",
-        bio = this.lastName?.substringAfter("$%") ?: "",
+        bio = getBio(this.lastName),
         username = this.username ?: "",
         gender = this.gender ?: "",
         id = this.guid ?: 0,
@@ -24,3 +24,11 @@ fun UserDTO.toEntity(): User {
 }
 
 fun List<UserDTO>.toEntity() = map { it.toEntity() }
+
+private fun getBio(lastName: String?): String {
+    return if (lastName != null && lastName.contains("$%")) {
+        lastName.substringAfter("$%")
+    } else {
+        ""
+    }
+}

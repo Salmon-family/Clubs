@@ -2,6 +2,8 @@ package com.devfalah.repositories
 
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
+import com.devfalah.repositories.mappers.toUserInfo
+import com.devfalah.repositories.models.UserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -115,6 +117,10 @@ class ClubRepositoryImp @Inject constructor(
             description = description,
             groupPrivacy = groupPrivacy
         ).toEntity()
+    }
+
+    override suspend fun editUserInformation(user: UserInformation): User {
+        return remoteDataSource.editUserInformation(user.toUserInfo()).toEntity()
     }
 
     override suspend fun getRequestsToClub(clubId: Int): List<User> {

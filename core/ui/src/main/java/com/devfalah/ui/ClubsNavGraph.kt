@@ -21,6 +21,7 @@ import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.profile.profileRoute
 import com.devfalah.ui.screen.savedPosts.savedPostsRoute
 import com.devfalah.ui.screen.search.searchRoute
+import com.devfalah.ui.screen.userInformation.editUserInformationRoute
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -45,6 +46,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         allSearchResultRoute(navController = navController)
         clubRequestsRoute(navController = navController)
         clubCreationRoute(navController = navController)
+        editUserInformationRoute(navController = navController)
     }
 }
 

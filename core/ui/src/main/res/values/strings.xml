@@ -53,5 +53,11 @@
     <string name="private_privacy">Private</string>
     <string name="people">People</string>
     <string name="users_requests">Join Requests</string>
+    <string name="name">Name</string>
+    <string name="bio">Bio</string>
+    <string name="title">Title</string>
+    <string name="save_button">Save</string>
+    <string name="password">Current password to confirm</string>
+    <string name="user_update_successfully">information updated successfully</string>
 
 </resources>

@@ -17,6 +17,18 @@ interface ClubService {
     @POST("user_details")
     suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
 
+    @FormUrlEncoded
+    @POST("user_edit")
+    suspend fun editUserDetails(
+        @Field("guid") userID: Int,
+        @Field("new_first_name") firstName: String,
+        @Field("new_last_name") lastName: String,
+        @Field("new_email") email: String,
+        @Field("current_password") currentPassword: String,
+        @Field("new_password") newPassword: String = "",
+    ): Response<BaseResponse<UserDTO>>
+
+
     /**
      * Friends
      * */
@@ -126,7 +138,7 @@ interface ClubService {
         @Field("guid") userID: Int,
         @Field("name") groupName: String,
         @Field("privacy") groupPrivacy: Int,
-        @Field("description") description:String,
+        @Field("description") description: String,
     ): Response<BaseResponse<GroupDTO>>
 
     @FormUrlEncoded
