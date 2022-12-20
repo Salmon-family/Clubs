@@ -30,7 +30,4 @@ interface RemoteDataSource {
     suspend fun checkFriendShip(userID: Int, friendID: Int): Boolean
 
     suspend fun getUserGroups(userId: Int): List<GroupDTO>
-
-    suspend fun search(userId: Int, keyword: String): SearchDTO
-
 }

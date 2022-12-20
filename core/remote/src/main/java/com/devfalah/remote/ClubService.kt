@@ -285,9 +285,4 @@ interface ClubService {
         @Query("count") pageSize: Int? = null
     ): Response<BaseResponse<ProfilePostResponse>>
 
-    @GET("my_custom_end_point")
-    suspend fun search(
-        @Query("guid") userId: Int,
-        @Query("keyword") keyWord: String
-    ): Response<BaseResponse<SearchDTO>>
 }

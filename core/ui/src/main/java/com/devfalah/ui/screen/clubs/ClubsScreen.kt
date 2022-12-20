@@ -30,8 +30,6 @@ import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.myClubs.ClubsState
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 
 @Composable
 fun ClubsScreen(
@@ -80,7 +78,6 @@ fun ClubsContent(
 
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MyClubsScreen(
     state: MyClubsUiState,
@@ -93,14 +90,6 @@ fun MyClubsScreen(
         contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item {
-            HorizontalPager(count = 2) {
-
-            }
-
-        }
-
-
 
         item {
             Row(modifier = Modifier.padding(horizontal = 16.dp)) {

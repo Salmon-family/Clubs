@@ -69,9 +69,4 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("empty groups")
     }
 
-    override suspend fun search(userId: Int, keyword: String): SearchDTO {
-        return apiService.search(userId, keyword).body()?.payload
-            ?: throw Throwable("empty search")
-    }
-
 }
