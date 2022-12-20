@@ -15,10 +15,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.CircleProfileImage
+import com.devfalah.ui.composable.CircleImage
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.myClubs.ClubsState
 
 @Composable
@@ -40,7 +40,7 @@ fun MyClubCard(
 
         ) {
 
-        CircleProfileImage(
+        CircleImage(
             painter = painterResource(id = R.drawable.club_icon),
             size = 64,
         )
@@ -52,13 +52,13 @@ fun MyClubCard(
         ) {
             Text(
                 text = myClub.title,
-                style = Typography.subtitle2,
+                style = AppTypography.subtitle2,
                 color = LightPrimaryBlackColor
             )
 
             Text(
                 text = myClub.description,
-                style = Typography.caption,
+                style = AppTypography.caption,
                 color = LightSecondaryBlackColor,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2
@@ -73,7 +73,7 @@ fun MyClubCard(
 @Composable
 private fun Preview() {
     MyClubCard(myClub = ClubsState(
-        "Cooking Club",
+        0,
         "this club is for cooking this club is for cookingthis club is for cookingthis club is for cookingthis club is for cooking",
         "",
         "1"

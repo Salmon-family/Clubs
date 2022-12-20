@@ -13,9 +13,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.devfalah.ui.spacer.HeightSpacer8
+import com.devfalah.ui.composable.HeightSpacer8
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.myClubs.ClubsState
 
 @Composable
@@ -34,7 +34,7 @@ fun ClubCard(
 
         Text(
             text = club.title,
-            style = Typography.subtitle2,
+            style = AppTypography.subtitle2,
             color = LightSecondaryBlackColor
         )
 
@@ -42,7 +42,7 @@ fun ClubCard(
 
         Text(
             text = club.description,
-            style = Typography.caption,
+            style = AppTypography.caption,
             color = LightSecondaryBlackColor
         )
 
@@ -57,7 +57,7 @@ private fun Preview() {
             title = "cooking club",
             description = "club for cooking lovers",
             privacy = "1",
-            coverUrl = "",
+            id = 0,
         )
     ) {}
 }

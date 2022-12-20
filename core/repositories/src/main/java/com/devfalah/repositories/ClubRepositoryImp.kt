@@ -135,8 +135,4 @@ class ClubRepositoryImp @Inject constructor(
         localDataSource.deletePostById(postId)
     }
 
-    override suspend fun GetUserGroups(userId: Int): List<Club> {
-        return remoteDataSource.getUserGroups(userId).toEntity()
-    }
-
 }

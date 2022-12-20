@@ -40,7 +40,7 @@ fun SearchItem(
             )
 
             Text(text = stringResource(R.string.search_for_club),
-                style = Typography.body2,
+                style = AppTypography.body2,
                 color = LightTernaryBlackColor,
                 modifier = Modifier.padding(start = 16.dp)
             )

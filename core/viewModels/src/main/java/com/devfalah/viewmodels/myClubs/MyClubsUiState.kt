@@ -13,17 +13,17 @@ data class ClubsUiState(
 )
 
 data class ClubsState(
+    val id: Int,
     val title: String,
     val description: String,
-    val coverUrl: Any,
     val privacy: String
 )
 
 fun Club.toUiState(): ClubsState {
     return ClubsState(
-        title = title,
+        id = id,
+        title = name,
         description = description,
-        coverUrl = coverUrl,
         privacy = privacy
     )
 }

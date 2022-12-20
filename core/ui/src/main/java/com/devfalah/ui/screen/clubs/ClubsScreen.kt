@@ -23,10 +23,10 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.screen.clubs.composable.MyClubCard
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.Typography
 import com.devfalah.viewmodels.myClubs.ClubsState
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
@@ -103,7 +103,7 @@ fun MyClubsScreen(
                 Text(
                     text = stringResource(R.string.my_special_clubs),
                     modifier = Modifier.padding(start = 8.dp),
-                    style = Typography.subtitle1,
+                    style = AppTypography.subtitle1,
                     color = LightPrimaryBlackColor
                 )
             }
@@ -124,7 +124,7 @@ fun MyClubsScreen(
         item {
             Text(
                 text = stringResource(R.string.my_clubs),
-                style = Typography.subtitle1,
+                style = AppTypography.subtitle1,
                 color = LightPrimaryBlackColor,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
