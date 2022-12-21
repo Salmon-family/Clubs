@@ -55,6 +55,7 @@
     <string name="users_requests">Join Requests</string>
     <string name="name">Name</string>
     <string name="bio">Bio</string>
+    <string name="edit_info">Edit Profile</string>
     <string name="title">Title</string>
     <string name="save_button">Save</string>
     <string name="password">Current password to confirm</string>

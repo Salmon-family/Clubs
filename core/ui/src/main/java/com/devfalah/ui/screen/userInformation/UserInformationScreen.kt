@@ -45,7 +45,7 @@ fun UserInformationContent(
 ) {
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.create_club), navHostController = navController)
+            AppBar(title = stringResource(R.string.edit_info), navHostController = navController)
         }
     ) {
         Column(
