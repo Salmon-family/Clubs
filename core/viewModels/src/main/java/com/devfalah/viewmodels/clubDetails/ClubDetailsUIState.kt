@@ -13,6 +13,7 @@ data class ClubDetailsUiState(
     val postCount: Int = 0,
     val members: List<MembersUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
+    val isMember: Boolean = false,
     val isLoading: Boolean = false,
     val isSuccessful: Boolean = false,
     val errorMessage: String = ""

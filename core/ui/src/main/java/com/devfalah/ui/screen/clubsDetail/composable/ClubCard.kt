@@ -1,7 +1,10 @@
 package com.devfalah.ui.screen.clubsDetail.composable
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -27,7 +30,7 @@ fun ClubCard(
 
     Box(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .width(80.dp)
             .background(
                 shape = RoundedCornerShape(16.dp), color = WhiteColor

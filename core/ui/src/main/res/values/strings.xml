@@ -57,5 +57,6 @@
     <string name="clubs_member">Club Members</string>
     <string name="join_club">Join Club</string>
     <string name="request_to_join">Request to join</string>
+    <string name="joined">Joined</string>
 
 </resources>

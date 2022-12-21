@@ -15,6 +15,7 @@ fun GroupDTO.toEntity(): Club {
         name = title ?: "",
         description = description ?: "",
         privacy = membership ?: "1",
+        isMember = ismember ?: false
     )
 }
 

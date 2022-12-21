@@ -52,6 +52,7 @@ class ClubDetailsViewModel @Inject constructor(
                         name = clubDetails.name,
                         description = clubDetails.description,
                         privacy = getPrivacy(clubDetails.privacy),
+                        isMember = clubDetails.isMember,
                         isLoading = false,
                         isSuccessful = true
                     )
@@ -94,16 +95,6 @@ class ClubDetailsViewModel @Inject constructor(
             }
         }
     }
-
-    /*
-     viewModelScope.launch {
-            try {
-
-            }catch (t: Throwable){
-
-            }
-        }
-     */
 
     private fun getPrivacy(value: String): String {
         return when (value) {

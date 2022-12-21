@@ -4,5 +4,6 @@ data class Club(
     val id: Int,
     val name: String,
     val privacy: String,
-    val description: String
+    val description: String,
+    val isMember: Boolean
 )

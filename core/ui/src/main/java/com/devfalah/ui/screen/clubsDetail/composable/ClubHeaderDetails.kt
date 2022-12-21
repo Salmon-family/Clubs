@@ -55,7 +55,7 @@ fun ClubHeaderDetails(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-                .padding(top = 50.dp),
+                .padding(top = 30.dp),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
@@ -87,7 +87,7 @@ fun ClubHeaderDetails(
                     end.linkTo(parent.end)
                 }
                 .fillMaxWidth()
-                .height(170.dp),
+                .height(124.dp),
             contentAlignment = Alignment.TopCenter
         ) {
             Box(
