@@ -21,8 +21,8 @@ interface ClubService {
     @POST("user_edit")
     suspend fun editUserDetails(
         @Field("guid") userID: Int,
-        @Field("new_first_name") firstName: String,
-        @Field("new_last_name") lastName: String,
+        @Field("new_full_name") name: String,
+        @Field("new_job_title") title: String,
         @Field("new_email") email: String,
         @Field("current_password") currentPassword: String,
         @Field("new_password") newPassword: String = "",

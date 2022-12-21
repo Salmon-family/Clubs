@@ -141,8 +141,8 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap {
             apiService.editUserDetails(
                 userID = user.id,
-                firstName = user.name,
-                lastName = user.title,
+                name = user.name,
+                title = user.title,
                 email = user.email,
                 currentPassword = user.password,
             )
