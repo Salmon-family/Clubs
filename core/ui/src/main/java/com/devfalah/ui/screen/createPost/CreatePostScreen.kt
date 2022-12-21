@@ -119,7 +119,8 @@ fun PostCreationContent(
                 hint = stringResource(id = R.string.what_are_you_thinking_about),
                 maxChar = 500,
                 onValueChange = onPostChange,
-                image = state.imageBitmap
+                image = state.imageBitmap,
+                modifier = Modifier.weight(1f)
             )
 
             Row(
