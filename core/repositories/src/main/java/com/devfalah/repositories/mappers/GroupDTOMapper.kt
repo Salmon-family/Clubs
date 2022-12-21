@@ -50,11 +50,11 @@ fun PostDTO.toEntity(): Post {
         totalComments = totalComments ?: 0,
         isLiked = isLikedByUser ?: false,
         isSaved = false,
-        content = "",
-        imageUrl = "",
+        content = description ?: "",
+        imageUrl = profileImage ?: "",
         publisherId = 0,
         publisher = "",
-        publisherImageUrl = ""
+        publisherImageUrl = profileImage ?: ""
     )
 
 }

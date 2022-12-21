@@ -178,6 +178,12 @@ interface ClubService {
         @Query("group_guid") groupID: Int
     ): Response<BaseResponse<GroupRequestsResponse>>
 
+    @POST("groups_join")
+    suspend fun joinClub(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") userId: Int
+    ): Response<BaseResponse<GroupDTO>>
+
     /**
      * notification
      * */

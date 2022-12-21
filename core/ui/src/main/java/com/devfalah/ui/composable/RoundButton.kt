@@ -25,7 +25,8 @@ fun RoundButton(
     text: String,
     textColor: Color,
     roundCorner: Int = 16,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontWeight: FontWeight = FontWeight.Normal,
+    isEnabled: Boolean
 ) {
     Button(
         onClick = { onButtonClick(userState.userID) },
@@ -34,7 +35,8 @@ fun RoundButton(
             .wrapContentHeight(),
         shape = RoundedCornerShape(roundCorner.dp),
         colors = ButtonDefaults.buttonColors(buttonColor),
-        elevation = ButtonDefaults.elevation(0.dp)
+        elevation = ButtonDefaults.elevation(0.dp),
+        enabled = isEnabled,
     ) {
         Text(
             text = text,

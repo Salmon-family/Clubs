@@ -1,14 +1,17 @@
 package com.devfalah.ui.screen.clubsDetail
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,16 +20,22 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.RoundButton
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.screen.clubCreation.ROUTE
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
+import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
+import com.devfalah.viewmodels.userProfile.PostUIState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ClubsDetailsScreen(
@@ -36,14 +45,35 @@ fun ClubsDetailsScreen(
     val state by viewModel.uiState.collectAsState()
 
     ClubsDetailsContent(
-        state = state, onBack = { navController.popBackStack() }, onRetry = viewModel::getData
+        state = state,
+        onBack = { navController.popBackStack() },
+        onRefresh = viewModel::swipeToRefresh,
+        onClickLike = viewModel::onClickLike,
+        onClickComment = { navController.navigate(ROUTE) },
+        onClickSave = viewModel::onClickSave,
+        onAddPost = { },
+        onClickFriends = { navController.navigateToFriends(it) },
+        onJoinClub = viewModel::joinClubs,
+        onRetry = viewModel::getData
     )
 }
 
 @Composable
 private fun ClubsDetailsContent(
-    state: ClubDetailsUiState, onBack: () -> Unit, onRetry: () -> Unit
+    state: ClubDetailsUiState,
+    onBack: () -> Unit,
+    onRefresh: (Int) -> Unit,
+    onClickLike: (PostUIState) -> Unit,
+    onClickComment: (PostUIState) -> Unit,
+    onClickSave: (PostUIState) -> Unit,
+    onAddPost: () -> Unit,
+    onClickFriends: (Int) -> Unit,
+    onJoinClub: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
+
+    val context = LocalContext.current
+    val systemUIController = rememberSystemUiController()
 
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -57,10 +87,10 @@ private fun ClubsDetailsContent(
             }
         } else {
             ManualPager(
-                onRefresh = { onBack() },
-                isLoading = state.isLoading,
+                onRefresh = onRefresh,
+                isLoading = state.isPagerLoading,
                 error = state.errorMessage,
-                isEndOfPager = state.privacy == "Public",
+                isEndOfPager = state.isEndOfPager,
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
 
@@ -70,14 +100,17 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.privacy != "Public") {
+                if (state.privacy != "Public" && !state.isMember) {
 
                     item {
-                        RoundButton(modifier = Modifier.padding(horizontal = 16.dp),
+                        RoundButton(
+                            modifier = Modifier.padding(horizontal = 16.dp),
                             userState = UserState(),
                             text = stringResource(id = R.string.request_to_join),
                             textColor = WhiteColor,
-                            onButtonClick = {})
+                            onButtonClick = onJoinClub,
+                            isEnabled = state.isJoin
+                        )
 
                     }
 
@@ -101,7 +134,7 @@ private fun ClubsDetailsContent(
                     item {
                         PostCreatingSection(
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            onCreatePost = {},
+                            onCreatePost = onAddPost,
                             isMyProfile = true
                         )
                     }
@@ -109,18 +142,18 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { }
+                                .nonRippleEffect { onClickFriends(state.id) }
                                 .padding(horizontal = 16.dp))
                     }
 
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = true,
+                            isMyPost = it.publisherId == state.id,
                             isContentExpandable = true,
-                            onClickLike = {},
-                            onClickComment = {},
-                            onClickSave = {},
+                            onClickLike = onClickLike,
+                            onClickComment = { onClickComment(it) },
+                            onClickSave = onClickSave,
                             onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},
@@ -128,28 +161,31 @@ private fun ClubsDetailsContent(
                     }
                 } else {
                     item {
-                        RoundButton(modifier = Modifier.padding(horizontal = 16.dp),
+                        RoundButton(
+                            modifier = Modifier.padding(horizontal = 16.dp),
                             userState = UserState(),
                             text = stringResource(id = R.string.join_club),
                             textColor = WhiteColor,
-                            onButtonClick = {})
+                            onButtonClick = onJoinClub,
+                            isEnabled = state.isJoin
+                        )
                     }
 
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { }
+                                .nonRippleEffect { onClickFriends(state.id) }
                                 .padding(horizontal = 16.dp))
                     }
 
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = true,
+                            isMyPost = it.publisherId == state.id,
                             isContentExpandable = true,
-                            onClickLike = {},
-                            onClickComment = {},
-                            onClickSave = {},
+                            onClickLike = onClickLike,
+                            onClickComment = onClickComment,
+                            onClickSave = onClickSave,
                             onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},
@@ -159,5 +195,18 @@ private fun ClubsDetailsContent(
             }
 
         }
+    }
+
+    LaunchedEffect(key1 = state.errorMessage) {
+        if (state.errorMessage.isNotEmpty()) {
+            Toast.makeText(context, state.errorMessage, Toast.LENGTH_LONG).show()
+        }
+    }
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightPrimaryBrandColor,
+            darkIcons = false
+        )
     }
 }

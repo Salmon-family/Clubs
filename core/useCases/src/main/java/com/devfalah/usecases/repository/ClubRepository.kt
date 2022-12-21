@@ -68,4 +68,7 @@ interface ClubRepository {
     suspend fun getGroupMembers(groupID: Int): List<User>
 
     suspend fun getGroupWallList(userID: Int, groupID: Int) : GroupWall
+
+    suspend fun joinClub(clubId: Int, userId: Int): Boolean
+
 }

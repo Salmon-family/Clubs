@@ -162,6 +162,10 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
+    override suspend fun joinClub(clubId: Int, userId: Int): Boolean {
+        return apiService.joinClub(clubId, userId).code() == 100
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

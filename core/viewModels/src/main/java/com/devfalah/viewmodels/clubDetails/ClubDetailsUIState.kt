@@ -6,6 +6,7 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 
 
 data class ClubDetailsUiState(
+    val id: Int = 0,
     val name: String = "",
     val description: String = "",
     val privacy: String = "",
@@ -13,10 +14,13 @@ data class ClubDetailsUiState(
     val postCount: Int = 0,
     val members: List<MembersUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
+    val isEndOfPager: Boolean = false,
     val isMember: Boolean = true,
     val isLoading: Boolean = false,
+    val isPagerLoading: Boolean = false,
     val isSuccessful: Boolean = false,
-    val errorMessage: String = ""
+    val isJoin: Boolean = false,
+    val errorMessage: String = "",
 )
 
 data class MembersUIState(
