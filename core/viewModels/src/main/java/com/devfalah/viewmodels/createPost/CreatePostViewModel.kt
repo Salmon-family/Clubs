@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,6 +40,10 @@ class CreatePostViewModel @Inject constructor(
         _uiState.update { it.copy(postContent = post) }
     }
 
+    fun onClickSelectImage(file: File) {
+        _uiState.update { it.copy(imageFile = file) }
+    }
+
     fun onClickPost() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
@@ -46,12 +51,14 @@ class CreatePostViewModel @Inject constructor(
                 val post = createThreadUseCase(
                     userId = uiState.value.id,
                     postContent = uiState.value.postContent,
-                    privacy = uiState.value.privacy
+                    privacy = uiState.value.privacy,
+                    imageFile = uiState.value.imageFile
                 )
                 Log.e("TEST", post.toString())
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }
 
             } catch (t: Throwable) {
+                Log.e("Test", t.message.toString())
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
         }

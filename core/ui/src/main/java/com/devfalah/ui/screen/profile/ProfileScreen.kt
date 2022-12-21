@@ -170,7 +170,7 @@ fun ProfileContent(
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-private fun createFileFromContentUri(fileUri: Uri, context: Context): File {
+fun createFileFromContentUri(fileUri: Uri, context: Context): File {
     var fileName = ""
     fileUri.let { returnUri ->
         context.contentResolver.query(returnUri, null, null, null)

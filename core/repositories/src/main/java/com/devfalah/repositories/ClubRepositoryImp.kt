@@ -146,4 +146,11 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
             .toEntity() ?: throw Throwable("null data")
     }
+
+    override suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): Post {
+        return remoteDataSource.publishPostWithImage(userId, publishOnId, postContent, privacy, imageFile)
+            .toEntity() ?: throw Throwable("null data")
+    }
 }

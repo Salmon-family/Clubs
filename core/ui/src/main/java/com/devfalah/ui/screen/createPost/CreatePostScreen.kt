@@ -1,6 +1,13 @@
 package com.devfalah.ui.screen.createPost
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -19,10 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubCreation.showToastMessage
+import com.devfalah.ui.screen.profile.createFileFromContentUri
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -31,6 +40,7 @@ import com.devfalah.viewmodels.createPost.CreatePostViewModel
 import com.devfalah.viewmodels.createPost.PostCreationUIState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CreatePostScreen(
     navController: NavController,
@@ -38,13 +48,25 @@ fun CreatePostScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
+    val context = LocalContext.current
 
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            uri?.let { viewModel.onClickSelectImage(createFileFromContentUri(it, context)) }
+        }
+    )
     CreatePostContent(
         state = state,
         navController = navController,
         onPrivacyChange = viewModel::onPrivacyChange,
         onPostChange = viewModel::onPostChange,
-        onClickPost = viewModel::onClickPost
+        onClickPost = viewModel::onClickPost,
+        onSelectImage = {
+            singlePhotoPickerLauncher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }
     )
 
     LaunchedEffect(true) {
@@ -64,7 +86,8 @@ fun CreatePostContent(
     navController: NavController,
     onPrivacyChange: (Int) -> Unit,
     onPostChange: (String) -> Unit,
-    onClickPost: () -> Unit
+    onClickPost: () -> Unit,
+    onSelectImage: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -78,21 +101,49 @@ fun CreatePostContent(
             modifier = Modifier.padding(16.dp)
         ) {
             SegmentControlsWithIcon(
+                modifier = Modifier.align(Alignment.End),
                 items = listOf(
                     stringResource(R.string.public_privacy),
                     stringResource(R.string.private_privacy)
+                ),
+                icons = listOf(
+                    painterResource(id = R.drawable.ic_menu_language),
+                    painterResource(id = R.drawable.ic_clubs_filled),
                 ),
                 onItemSelection = onPrivacyChange,
             )
 
             HeightSpacer16()
 
-            LongTextInput(
-                value = state.postContent,
-                hint = stringResource(id = R.string.what_are_you_thinking_about),
-                maxChar = 500,
-                onValueChange = onPostChange
-            )
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1.5f),
+                elevation = 0.dp
+            ) {
+                Column {
+                    LongTextInput(
+                        value = state.postContent,
+                        hint = stringResource(id = R.string.what_are_you_thinking_about),
+                        maxChar = 500,
+                        onValueChange = onPostChange
+                    )
+
+                    if (state.imageFile != null) {
+                        HeightSpacer24()
+                        Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1.5f),
+                            painter = rememberAsyncImagePainter(
+                                model = BitmapFactory.decodeFile(state.imageFile!!.absolutePath)
+                            ),
+                            contentDescription = null
+                        )
+                    }
+                }
+            }
+
 
             HeightSpacer16()
 
@@ -102,7 +153,7 @@ fun CreatePostContent(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Icon(
-                    modifier = Modifier.nonRippleEffect { },
+                    modifier = Modifier.nonRippleEffect { onSelectImage() },
                     painter = painterResource(id = R.drawable.ic_gallery_add),
                     contentDescription = null
                 )
@@ -128,7 +179,7 @@ fun CreatePostContent(
             LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
                 if (state.isSuccess) {
                     navController.navigateUp()
-                } else {
+                } else if (state.error.isNotBlank()) {
                     showToastMessage(context, state.error)
                 }
             }

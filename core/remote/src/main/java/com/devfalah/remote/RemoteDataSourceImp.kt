@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
@@ -150,10 +151,7 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun publishPostUserWall(
-        userId: Int,
-        publishOnId: Int,
-        postContent: String,
-        privacy: Int
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
     ): WallPostDTO {
         return wrap {
             apiService.addPostOnWallFriendOrGroup(
@@ -164,6 +162,30 @@ class RemoteDataSourceImp @Inject constructor(
                 privacy = privacy
             )
         }
+    }
+
+    override suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): WallPostDTO {
+        val requestBody =
+            imageFile.asRequestBody("image/${imageFile.extension}".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("ossn_photo", imageFile.name, requestBody)
+
+        val id = userId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val publishOn = publishOnId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val type = "user".toRequestBody("text/plain".toMediaTypeOrNull())
+        val postPrivacy = privacy.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val postText = postContent.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        return apiService.addPostWithImage(
+            userId = id,
+            friendOrGroupID = publishOn,
+            type = type,
+            privacy = postPrivacy,
+            post = postText,
+            file = part
+        ).body()?.payload ?: throw Throwable("Error")
+
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

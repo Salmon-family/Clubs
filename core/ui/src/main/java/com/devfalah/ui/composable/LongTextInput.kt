@@ -29,9 +29,6 @@ fun LongTextInput(
             if (it.length <= maxChar)
                 onValueChange(it)
         },
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(1.5f),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor = Color.Transparent,

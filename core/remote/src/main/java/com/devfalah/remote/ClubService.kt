@@ -288,6 +288,17 @@ interface ClubService {
         @Field("post_guid") postID: Int
     ): Response<BaseResponse<Boolean>>
 
+    @Multipart
+    @POST("photos_profile_add")
+    suspend fun addPostWithImage(
+        @Part("poster_guid") userId: RequestBody,
+        @Part("owner_guid") friendOrGroupID: RequestBody,
+        @Part("type") type: RequestBody,
+        @Part("post") post: RequestBody,
+        @Part("privacy") privacy: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): Response<BaseResponse<WallPostDTO>>
+
     @FormUrlEncoded
     @POST("wall_add")
     suspend fun addPostOnWallFriendOrGroup(
