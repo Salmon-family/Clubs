@@ -2,21 +2,17 @@ package com.devfalah.ui.screen.userInformation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.viewmodels.userInformation.UserInformationViewModel
 import com.devfalah.viewmodels.userInformation.UserInformationUIState
+import com.devfalah.viewmodels.userInformation.UserInformationViewModel
 import com.devfalah.viewmodels.userInformation.isUpdateInformationButtonEnabled
 
 
@@ -70,14 +66,12 @@ fun UserInformationContent(
                 onValueChange = onTitleChange,
             )
             HeightSpacer16()
-            CustomTextField(
-                title = stringResource(R.string.password),
-                value = state.password,
-                onValueChange = onPasswordChange,
-                singleLine = true,
-                visualTransformation = PasswordVisualTransformation()
-            )
 
+            PasswordInputText(
+                title = stringResource(R.string.password),
+                password = state.password,
+                onTextChange = onPasswordChange
+            )
             HeightSpacer24()
 
             ButtonWithLoading(
@@ -97,4 +91,5 @@ fun UserInformationContent(
     }
 
 }
+
 
