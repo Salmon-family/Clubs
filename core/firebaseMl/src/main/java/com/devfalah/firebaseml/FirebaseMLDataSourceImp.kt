@@ -9,7 +9,7 @@ import javax.inject.Inject
 class FirebaseMLDataSourceImp @Inject constructor(
     private val imageAnalysis: ImageAnalysis,
 ) : FirebaseMLDataSource {
-    override fun analyzeImage(file: File): List<ImageLabelData> {
+    override suspend fun analyzeImage(file: File): List<ImageLabelData> {
         return imageAnalysis.checkImage(file).map { ImageLabelData(it.text, it.confidence) }
     }
 }

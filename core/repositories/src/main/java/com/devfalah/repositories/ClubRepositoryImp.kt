@@ -118,7 +118,7 @@ class ClubRepositoryImp @Inject constructor(
         ).toEntity()
     }
 
-    override fun analyzeImage(file: File): List<String> {
+    override suspend fun analyzeImage(file: File): List<String> {
         return firebaseMLDataSource.analyzeImage(file).map { it.text }
     }
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AnalyzeImageUseCase @Inject constructor(
     private val repository: ClubRepository,
 ) {
-    operator fun invoke(file: File) {
+    suspend operator fun invoke(file: File) {
         try {
             val value = repository.analyzeImage(file)
             println("DEVFALAH $value")

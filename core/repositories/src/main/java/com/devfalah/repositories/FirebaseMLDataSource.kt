@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 interface FirebaseMLDataSource {
-    fun analyzeImage(file: File): List<ImageLabelData>
+    suspend fun analyzeImage(file: File): List<ImageLabelData>
 }
