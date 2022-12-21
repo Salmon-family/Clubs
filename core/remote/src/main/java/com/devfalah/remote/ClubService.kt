@@ -289,7 +289,7 @@ interface ClubService {
     ): Response<BaseResponse<Boolean>>
 
     @Multipart
-    @POST("photos_profile_add")
+    @POST("wall_add")
     suspend fun addPostWithImage(
         @Part("poster_guid") userId: RequestBody,
         @Part("owner_guid") friendOrGroupID: RequestBody,
