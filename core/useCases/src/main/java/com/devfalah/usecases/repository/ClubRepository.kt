@@ -58,4 +58,8 @@ interface ClubRepository {
 
     suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : Club
 
+    fun analyzeImage(file: File): List<String>
+
+
+
 }

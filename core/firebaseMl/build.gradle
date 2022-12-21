@@ -1,24 +1,19 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
 }
 
-
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
-
 android {
-    namespace 'com.devfalah.remote'
-    compileSdk 33
+    namespace 'com.devfalah.firebaseml'
+    compileSdk 32
 
     defaultConfig {
         minSdk 21
-        targetSdk 33
+        targetSdk 32
 
-        buildConfigField "String", "API_KEY", localProperties['apiKey']
-        buildConfigField "String", "BASE_URL", "\"https://club.the-chance.org/api/v1.0/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -39,19 +34,17 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:repositories"))
+    implementation(project(':core:repositories'))
 
-
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$gson_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.0.1'
-
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.mlkit:image-labeling:17.0.7'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    implementation 'androidx.paging:paging-common-ktx:3.1.1'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
 }

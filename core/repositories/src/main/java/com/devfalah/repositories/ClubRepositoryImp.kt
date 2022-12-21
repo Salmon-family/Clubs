@@ -11,6 +11,7 @@ import javax.inject.Inject
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: ClubLocalDataSource,
+    private val firebaseMLDataSource: FirebaseMLDataSource,
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -115,6 +116,10 @@ class ClubRepositoryImp @Inject constructor(
             description = description,
             groupPrivacy = groupPrivacy
         ).toEntity()
+    }
+
+    override fun analyzeImage(file: File): List<String> {
+        return firebaseMLDataSource.analyzeImage(file).map { it.text }
     }
 
     override suspend fun getRequestsToClub(clubId: Int): List<User> {

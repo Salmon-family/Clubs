@@ -72,6 +72,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel"
             android:value="Chats" />
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="label" />
     </application>
 
 </manifest>
