@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.ManualPager
+import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.RoundButton
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
@@ -24,6 +26,7 @@ import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
+import com.devfalah.viewmodels.userProfile.mapper.toUIState
 
 @Composable
 fun ClubsDetailsScreen(
@@ -86,6 +89,20 @@ private fun ClubsDetailsContent(
                     modifier = Modifier
                         .nonRippleEffect { }
                         .padding(horizontal = 16.dp)
+                )
+            }
+
+            items(state.posts) {
+                PostItem(
+                    state = it,
+                    isMyPost = true,
+                    isContentExpandable = true,
+                    onClickLike = {},
+                    onClickComment = {},
+                    onClickSave = {},
+                    onClickPostSetting = {},
+                    onClickProfile = {},
+                    onOpenLinkClick = {},
                 )
             }
 
