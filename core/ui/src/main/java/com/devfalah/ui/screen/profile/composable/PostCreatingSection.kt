@@ -27,7 +27,7 @@ import com.devfalah.ui.theme.WhiteColor
 @Composable
 fun PostCreatingSection(
     modifier: Modifier = Modifier,
-    isMyProfile: Boolean,
+    isMyProfile: Boolean = false,
     onCreatePost: () -> Unit
 ) {
     Box(

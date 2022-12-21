@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.clubsDetail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -23,7 +22,7 @@ import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
-import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
@@ -37,22 +36,17 @@ fun ClubsDetailsScreen(
     val state by viewModel.uiState.collectAsState()
 
     ClubsDetailsContent(
-        state = state,
-        onBack = { navController.popBackStack() },
-        onRetry = viewModel::getData
+        state = state, onBack = { navController.popBackStack() }, onRetry = viewModel::getData
     )
 }
 
 @Composable
 private fun ClubsDetailsContent(
-    state: ClubDetailsUiState,
-    onBack: () -> Unit,
-    onRetry: () -> Unit
+    state: ClubDetailsUiState, onBack: () -> Unit, onRetry: () -> Unit
 ) {
 
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         if (state.errorMessage.isNotEmpty()) {
             Box(modifier = Modifier.fillMaxSize())
@@ -72,21 +66,18 @@ private fun ClubsDetailsContent(
 
                 item {
                     ClubHeaderDetails(
-                        state = state,
-                        onBack = onBack
+                        state = state, onBack = onBack
                     )
                 }
 
                 if (state.privacy != "Public") {
 
                     item {
-                        RoundButton(
-                            modifier = Modifier.padding(horizontal = 16.dp),
+                        RoundButton(modifier = Modifier.padding(horizontal = 16.dp),
                             userState = UserState(),
                             text = stringResource(id = R.string.request_to_join),
                             textColor = WhiteColor,
-                            onButtonClick = {}
-                        )
+                            onButtonClick = {})
 
                     }
 
@@ -103,18 +94,23 @@ private fun ClubsDetailsContent(
                         OutlineButton(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .background(color = LightBackgroundColor)
+                                .padding(horizontal = 16.dp),
                         )
                     }
 
                     item {
-                        ClubMembers(
-                            friends = state.members,
+                        PostCreatingSection(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            onCreatePost = {},
+                            isMyProfile = true
+                        )
+                    }
+
+                    item {
+                        ClubMembers(friends = state.members,
                             modifier = Modifier
                                 .nonRippleEffect { }
-                                .padding(horizontal = 16.dp)
-                        )
+                                .padding(horizontal = 16.dp))
                     }
 
                     items(state.posts) {
@@ -132,22 +128,18 @@ private fun ClubsDetailsContent(
                     }
                 } else {
                     item {
-                        RoundButton(
-                            modifier = Modifier.padding(horizontal = 16.dp),
+                        RoundButton(modifier = Modifier.padding(horizontal = 16.dp),
                             userState = UserState(),
                             text = stringResource(id = R.string.join_club),
                             textColor = WhiteColor,
-                            onButtonClick = {}
-                        )
+                            onButtonClick = {})
                     }
 
                     item {
-                        ClubMembers(
-                            friends = state.members,
+                        ClubMembers(friends = state.members,
                             modifier = Modifier
                                 .nonRippleEffect { }
-                                .padding(horizontal = 16.dp)
-                        )
+                                .padding(horizontal = 16.dp))
                     }
 
                     items(state.posts) {
