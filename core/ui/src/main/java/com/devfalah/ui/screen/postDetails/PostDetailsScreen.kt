@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
@@ -48,13 +49,14 @@ fun PostDetailsScreen(
         onClickLikeComment = viewModel::onClickLikeComment,
         onClickComment = viewModel::onClickComment,
         onClickSave = viewModel::onClickSave,
+        onClickPostSetting = viewModel::onClickPostSetting,
         onClickDeletedComment = viewModel::onClickDeletedComment,
         onClickEditComment = viewModel::onClickEditComment,
         onValueChangedEdited = viewModel::onChanceCommentEditing,
         sendMessageEdited = viewModel::sendCommentEdited,
         closeDialog = viewModel::closeDialog,
         onRetry = viewModel::getData,
-        )
+    )
 }
 
 @Composable
@@ -68,17 +70,18 @@ fun PostDetailsContent(
     onClickLikeComment: (CommentUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
+    onClickPostSetting: (PostUIState) -> Unit,
     onClickDeletedComment: (CommentUIState) -> Unit,
     onClickEditComment: (CommentUIState) -> Unit,
     onValueChangedEdited: (String) -> Unit,
     sendMessageEdited: (CommentUIState) -> Unit,
     closeDialog: () -> Unit,
     onRetry: () -> Unit,
-    ) {
+) {
     if (state.error.isNotEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = onRetry ) {
+                Button(onClick = onRetry) {
                     Text(text = "Refresh Screen")
                 }
                 HeightSpacer8()
@@ -92,55 +95,81 @@ fun PostDetailsContent(
                 .background(LightBackgroundColor),
         ) {
             val (post, comments, textField) = createRefs()
-            ManualPager(
-                modifier = Modifier
-                    .constrainAs(comments) {
-                        top.linkTo(post.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    },
-                onRefresh = onRefresh,
-                contentPadding = PaddingValues(bottom = 64.dp, top = 8.dp),
-                isLoading = state.isPagerLoading,
-                error = state.pagerError,
-                isEndOfPager = state.isEndOfPager,
-            ) {
-                item(key = state.postDetails.postId) {
-                    PostItem(
-                        modifier = Modifier
-                            .constrainAs(post) {
-                                top.linkTo(parent.top)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                            .fillMaxWidth(),
-                        state = state.postDetails,
-                        onClickLike = { onClickLike(it) },
-                        onClickComment = { onClickComment(it) },
-                        onClickSave = { onClickSave(it) },
-                        onClickPostSetting = { },
-                        isContentExpandable = true,
-                        maxLineContentExpand = 5,
-                        onClickProfile = { },
-                        onOpenLinkClick = { },
-                        isMyPost = false,
-                    )
+            if (state.comments.isEmpty()) {
+                LazyColumn {
+                    item(key = state.postDetails.postId) {
+                        PostItem(
+                            modifier = Modifier
+                                .constrainAs(post) {
+                                    top.linkTo(parent.top)
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                }
+                                .fillMaxWidth(),
+                            state = state.postDetails,
+                            onClickLike = { onClickLike(it) },
+                            onClickComment = { onClickComment(it) },
+                            onClickSave = { onClickSave(it) },
+                            onClickPostSetting = { onClickPostSetting(it) },
+                            isContentExpandable = true,
+                            maxLineContentExpand = 5,
+                            onClickProfile = { },
+                            onOpenLinkClick = { },
+                            isMyPost = false,
+                        )
+                    }
                 }
-                item {
-                    Text(text = "Comments",
-                        style = AppTypography.body2,
-                        modifier = Modifier.padding(start = 16.dp))
-                }
-                items(state.comments) {
-                    CommentItem(
-                        state = it,
-                        onClickLikeComment = onClickLikeComment,
-                        onClickDeletedComment = onClickDeletedComment,
-                        onClickEditComment = onClickEditComment,
-                        onValueChanged = onValueChangedEdited,
-                        sendMessage = sendMessageEdited,
-                        closeDialog = closeDialog,
-                    )
+            } else {
+                ManualPager(
+                    modifier = Modifier
+                        .constrainAs(comments) {
+                            top.linkTo(post.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                    onRefresh = onRefresh,
+                    contentPadding = PaddingValues(bottom = 64.dp, top = 8.dp),
+                    isLoading = state.isPagerLoading,
+                    error = state.pagerError,
+                    isEndOfPager = state.isEndOfPager,
+                ) {
+                    item(key = state.postDetails.postId) {
+                        PostItem(
+                            modifier = Modifier
+                                .constrainAs(post) {
+                                    top.linkTo(parent.top)
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                }
+                                .fillMaxWidth(),
+                            state = state.postDetails,
+                            onClickLike = { onClickLike(it) },
+                            onClickComment = { onClickComment(it) },
+                            onClickSave = { onClickSave(it) },
+                            onClickPostSetting = { },
+                            isContentExpandable = true,
+                            maxLineContentExpand = 5,
+                            onClickProfile = { },
+                            onOpenLinkClick = { },
+                            isMyPost = false,
+                        )
+                    }
+                    item {
+                        Text(text = "Comments",
+                            style = AppTypography.body2,
+                            modifier = Modifier.padding(start = 16.dp))
+                    }
+                    items(state.comments) {
+                        CommentItem(
+                            state = it,
+                            onClickLikeComment = onClickLikeComment,
+                            onClickDeletedComment = onClickDeletedComment,
+                            onClickEditComment = onClickEditComment,
+                            onValueChanged = onValueChangedEdited,
+                            sendMessage = sendMessageEdited,
+                            closeDialog = closeDialog,
+                        )
+                    }
                 }
             }
             CustomTextFiled(

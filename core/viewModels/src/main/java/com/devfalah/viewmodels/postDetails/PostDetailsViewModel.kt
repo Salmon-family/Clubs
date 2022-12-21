@@ -1,10 +1,10 @@
 package com.devfalah.viewmodels.postDetails
 
 import android.util.Log
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.DeletePostUseCase
 import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.SetFavoritePostUseCase
 import com.devfalah.usecases.SetLikeUseCase
@@ -28,7 +28,8 @@ class PostDetailsViewModel @Inject constructor(
     private val setLikeUseCase: SetLikeUseCase,
     private val setEditCommentUseCase: SetEditCommentUseCase,
     private val favoritePostUseCase: SetFavoritePostUseCase,
-    val getUser: GetUserIdUseCase,
+    private val deletePostUseCase: DeletePostUseCase,
+    private val getUser: GetUserIdUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -84,9 +85,13 @@ class PostDetailsViewModel @Inject constructor(
                             comments = it.comments + comments.toUIState()
                         )
                     }
+                    Log.i("TAG", "getAllComments: ${_uiState.value.comments}")
                 } else {
                     _uiState.update {
-                        it.copy(isEndOfPager = true, isLoading = false)
+                        it.copy(
+                            isLoading = false,
+                            comments = emptyList()
+                        )
                     }
                 }
             } catch (t: Throwable) {
@@ -110,12 +115,8 @@ class PostDetailsViewModel @Inject constructor(
                 val newComment = setCommentUseCase(_uiState.value.userId, args.postId, comment)
                 _uiState.update {
                     it.copy(
-                        comments = it.copy(
-                            comments = it.comments.toMutableStateList().apply {
-                                add(newComment.toUIState())
-                            }
-                        ).comments,
-                        isLoading = false
+                        isLoading = false,
+                        comments = it.comments + newComment.toUIState(),
                     )
                 }
             } catch (t: Throwable) {
@@ -270,9 +271,26 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
+    fun onClickPostSetting(post: PostUIState) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                if (deletePostUseCase(_uiState.value.userId, post.postId)) {
+                    _uiState.update {
+                        it.copy(postDetails = _uiState.value.postDetails,
+                            isLoading = false)
+                    }
+                }
+            } catch (t: Throwable) {
+                Log.e("Test", t.message.toString())
+                _uiState.update { it.copy(error = t.message.toString()) }
+            }
+        }
+    }
+
     fun sendComment() {
         setComment(uiState.value.comment)
-        _uiState.update { it.copy(comment = "", comments = it.comments) }
+        _uiState.update { it.copy(comment = "") }
     }
 
     fun sendCommentEdited(comment: CommentUIState) {

@@ -12,7 +12,6 @@ data class Comment (
     val isLikedByUser: Boolean,
     val totalLikes: Int,
     val time: String,
-    val createdTime: Long,
     val type: String,
 )
 

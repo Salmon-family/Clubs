@@ -43,13 +43,6 @@ fun CommentBody(
             )
         }
         HeightSpacer8()
-        Image(
-            painter = rememberAsyncImagePainter(model = state.imageFile),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
-        HeightSpacer8()
         Row {
             Row {
                 PostActionIcon(

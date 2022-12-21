@@ -19,7 +19,6 @@ fun CommentDto.toEntity(userId: Int): Comment {
         ownerCommentId = ownerGuid ?: 0,
         postId = subjectGuid ?: 0,
         time = timeCreated?.let { ConvertDate().convertTime(it) } ?: "",
-        createdTime = timeCreated ?: 0,
         type = type ?: "",
     )
 }
