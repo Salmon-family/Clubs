@@ -1,13 +1,11 @@
 package com.devfalah.ui.screen.createPost
 
 import android.annotation.SuppressLint
-import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -17,7 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
@@ -43,7 +39,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CreatePostScreen(
+fun PostCreationScreen(
     navController: NavController,
     viewModel: CreatePostViewModel = hiltViewModel()
 ) {
@@ -57,7 +53,7 @@ fun CreatePostScreen(
             uri?.let { viewModel.onClickSelectImage(createFileFromContentUri(it, context)) }
         }
     )
-    CreatePostContent(
+    PostCreationContent(
         state = state,
         navController = navController,
         onPrivacyChange = viewModel::onPrivacyChange,
@@ -82,7 +78,7 @@ fun CreatePostScreen(
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun CreatePostContent(
+fun PostCreationContent(
     state: PostCreationUIState,
     navController: NavController,
     onPrivacyChange: (Int) -> Unit,
@@ -99,10 +95,15 @@ fun CreatePostContent(
         }
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SegmentControlsWithIcon(
-                modifier = Modifier.align(Alignment.End),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(align = Alignment.End),
                 items = listOf(
                     stringResource(R.string.public_privacy),
                     stringResource(R.string.private_privacy)
@@ -113,41 +114,13 @@ fun CreatePostContent(
                 ),
                 onItemSelection = onPrivacyChange,
             )
-
-            HeightSpacer16()
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1.5f),
-                elevation = 0.dp
-            ) {
-                Column {
-                    LongTextInput(
-                        value = state.postContent,
-                        hint = stringResource(id = R.string.what_are_you_thinking_about),
-                        maxChar = 500,
-                        onValueChange = onPostChange
-                    )
-
-                    if (state.imageFile != null) {
-                        HeightSpacer24()
-                        Image(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(1.5f),
-                            painter = rememberAsyncImagePainter(
-                                model = BitmapFactory.decodeFile(state.imageFile!!.absolutePath)
-                            ),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-            }
-
-
-            HeightSpacer16()
+            PostContent(
+                value = state.postContent,
+                hint = stringResource(id = R.string.what_are_you_thinking_about),
+                maxChar = 500,
+                onValueChange = onPostChange,
+                image = state.imageBitmap
+            )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -176,14 +149,14 @@ fun CreatePostContent(
                     )
                 }
             }
+        }
 
-            val context = LocalContext.current
-            LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
-                if (state.isSuccess) {
-                    navController.navigateUp()
-                } else if (state.error.isNotBlank()) {
-                    showToastMessage(context, state.error)
-                }
+        val context = LocalContext.current
+        LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
+            if (state.isSuccess) {
+                navController.navigateUp()
+            } else if (state.error.isNotBlank()) {
+                showToastMessage(context, state.error)
             }
         }
     }

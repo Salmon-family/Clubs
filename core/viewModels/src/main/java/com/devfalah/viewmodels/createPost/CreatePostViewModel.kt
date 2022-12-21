@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.createPost
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -41,7 +42,12 @@ class CreatePostViewModel @Inject constructor(
     }
 
     fun onClickSelectImage(file: File) {
-        _uiState.update { it.copy(imageFile = file) }
+        _uiState.update {
+            it.copy(
+                imageFile = file,
+                imageBitmap = BitmapFactory.decodeFile(file.absolutePath)
+            )
+        }
     }
 
     fun onClickPost() {

@@ -23,7 +23,7 @@ import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
-import com.devfalah.ui.screen.createPost.navigateToCreatePost
+import com.devfalah.ui.screen.createPost.navigateToPostCreation
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.profile.composable.*
@@ -69,7 +69,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigateToCreatePost() },
+        onCreatePost = { navController.navigateToPostCreation() },
         onClickProfile = {
             if (!state.isMyProfile) {
                 navController.navigateToProfile(it)
