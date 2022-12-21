@@ -50,10 +50,6 @@ class UserInformationViewModel @Inject constructor(
         _uiState.update { it.copy(title = title) }
     }
 
-    fun onBioTextChange(bio: String) {
-        _uiState.update { it.copy(bio = bio) }
-    }
-
     fun onPasswordTextChange(password: String) {
         _uiState.update { it.copy(password = password) }
     }

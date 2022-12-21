@@ -31,7 +31,6 @@ fun UserInformationScreen(
         state = state,
         onNameChange = viewModel::onNameTextChange,
         onTitleChange = viewModel::onTitleChange,
-        onBioChange = viewModel::onBioTextChange,
         onPasswordChange = viewModel::onPasswordTextChange,
         onClickSave = viewModel::onClickSave,
     )
@@ -45,7 +44,6 @@ fun UserInformationContent(
     state: UserInformationUIState,
     onNameChange: (String) -> Unit,
     onTitleChange: (String) -> Unit,
-    onBioChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onClickSave: () -> Unit,
 ) {
@@ -70,16 +68,6 @@ fun UserInformationContent(
                 hint = stringResource(R.string.title),
                 value = state.title,
                 onValueChange = onTitleChange,
-            )
-            HeightSpacer16()
-            CustomTextField(
-                title = stringResource(R.string.bio),
-                hint = stringResource(R.string.bio),
-                value = state.bio,
-                onValueChange = onBioChange,
-                maxChar = 500,
-                singleLine = false,
-                showTextCount = true,
             )
             HeightSpacer16()
             CustomTextField(

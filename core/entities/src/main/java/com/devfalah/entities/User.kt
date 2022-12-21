@@ -7,7 +7,6 @@ data class User(
     val birthdate: String,
     val email: String,
     val title: String,
-    val bio: String,
     val gender: String,
     val profileUrl: String,
     val coverUrl: String,

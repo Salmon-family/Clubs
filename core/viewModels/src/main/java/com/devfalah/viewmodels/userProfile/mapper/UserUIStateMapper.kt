@@ -11,7 +11,6 @@ fun User.toUIState(): UserDetailsUIState {
         name = name,
         userName = username,
         title = title,
-        bio = bio,
         coverUrl = coverUrl,
         profilePicture = profileUrl,
         areFriends = isFriend,
