@@ -22,11 +22,11 @@ import com.devfalah.ui.composable.RoundButton
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
+import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
-import com.devfalah.viewmodels.userProfile.mapper.toUIState
 
 @Composable
 fun ClubsDetailsScreen(
@@ -61,7 +61,7 @@ private fun ClubsDetailsContent(
             onRefresh = { onBack() },
             isLoading = state.isLoading,
             error = state.errorMessage,
-            isEndOfPager = true,
+            isEndOfPager = state.privacy == "Public",
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
 
@@ -72,38 +72,61 @@ private fun ClubsDetailsContent(
                 )
             }
 
-            item {
-                RoundButton(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    userState = UserState(),
-                    text = stringResource(id = R.string.join_club),
-                    textColor = WhiteColor,
-                    onButtonClick = {}
-                )
+            if (state.privacy != "Public") {
 
-            }
+                item {
+                    RoundButton(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        userState = UserState(),
+                        text = stringResource(id = R.string.request_to_join),
+                        textColor = WhiteColor,
+                        onButtonClick = {}
+                    )
 
-            item {
-                ClubMembers(
-                    friends = state.members,
-                    modifier = Modifier
-                        .nonRippleEffect { }
-                        .padding(horizontal = 16.dp)
-                )
-            }
+                }
 
-            items(state.posts) {
-                PostItem(
-                    state = it,
-                    isMyPost = true,
-                    isContentExpandable = true,
-                    onClickLike = {},
-                    onClickComment = {},
-                    onClickSave = {},
-                    onClickPostSetting = {},
-                    onClickProfile = {},
-                    onOpenLinkClick = {},
-                )
+                item {
+                    PrivateClubsBox(
+                        modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                    )
+                }
+
+            } else {
+                item {
+                    RoundButton(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        userState = UserState(),
+                        text = stringResource(id = R.string.join_club),
+                        textColor = WhiteColor,
+                        onButtonClick = {}
+                    )
+
+                }
+
+                item {
+                    ClubMembers(
+                        friends = state.members,
+                        modifier = Modifier
+                            .nonRippleEffect { }
+                            .padding(horizontal = 16.dp)
+                    )
+                }
+
+                items(state.posts) {
+                    PostItem(
+                        state = it,
+                        isMyPost = true,
+                        isContentExpandable = true,
+                        onClickLike = {},
+                        onClickComment = {},
+                        onClickSave = {},
+                        onClickPostSetting = {},
+                        onClickProfile = {},
+                        onOpenLinkClick = {},
+                    )
+                }
             }
 
         }
