@@ -8,12 +8,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,10 +23,11 @@ import androidx.navigation.NavController
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
+import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.composable.CommentItem
 import com.devfalah.ui.screen.postDetails.composable.CustomTextFiled
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.AppTypography
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsViewModel
@@ -38,9 +41,11 @@ fun PostDetailsScreen(
     viewModel: PostDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     PostDetailsContent(
         state = state,
+        navController = navController,
         onRefresh = viewModel::getAllComments,
         commentText = state.comment,
         onValueChanged = viewModel::onChanceComment,
@@ -56,11 +61,14 @@ fun PostDetailsScreen(
         sendMessageEdited = viewModel::sendCommentEdited,
         closeDialog = viewModel::closeDialog,
         onRetry = viewModel::getData,
+        onClickProfile = { navController.navigateToProfile(it) },
+        onOpenLinkClick = { openBrowser(context, it) },
     )
 }
 
 @Composable
 fun PostDetailsContent(
+    navController: NavController,
     state: PostDetailsUIState,
     onRefresh: (Int) -> Unit,
     commentText: String,
@@ -77,9 +85,14 @@ fun PostDetailsContent(
     sendMessageEdited: (CommentUIState) -> Unit,
     closeDialog: () -> Unit,
     onRetry: () -> Unit,
+    onClickProfile: (Int) -> Unit,
+    onOpenLinkClick: (String) -> Unit,
 ) {
     if (state.error.isNotEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(onClick = onRetry) {
                     Text(text = "Refresh Screen")
@@ -92,30 +105,24 @@ fun PostDetailsContent(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor),
+                .background(MaterialTheme.colors.background),
         ) {
             val (post, comments, textField) = createRefs()
             if (state.comments.isEmpty()) {
                 LazyColumn {
-                    item(key = state.postDetails.postId) {
+                    item {
                         PostItem(
-                            modifier = Modifier
-                                .constrainAs(post) {
-                                    top.linkTo(parent.top)
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                }
-                                .fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth(),
                             state = state.postDetails,
                             onClickLike = { onClickLike(it) },
                             onClickComment = { onClickComment(it) },
                             onClickSave = { onClickSave(it) },
                             onClickPostSetting = { onClickPostSetting(it) },
                             isContentExpandable = true,
-                            maxLineContentExpand = 5,
-                            onClickProfile = { },
-                            onOpenLinkClick = { },
-                            isMyPost = false,
+                            maxLineContentExpand = 20,
+                            onClickProfile = onClickProfile,
+                            onOpenLinkClick = onOpenLinkClick,
+                            isMyPost = state.postDetails.publisherId == state.userId,
                         )
                     }
                 }
@@ -146,12 +153,12 @@ fun PostDetailsContent(
                             onClickLike = { onClickLike(it) },
                             onClickComment = { onClickComment(it) },
                             onClickSave = { onClickSave(it) },
-                            onClickPostSetting = { },
+                            onClickPostSetting = { onClickPostSetting(it) },
                             isContentExpandable = true,
-                            maxLineContentExpand = 5,
-                            onClickProfile = { },
-                            onOpenLinkClick = { },
-                            isMyPost = false,
+                            maxLineContentExpand = 20,
+                            onClickProfile = onClickProfile,
+                            onOpenLinkClick = onOpenLinkClick,
+                            isMyPost = state.postDetails.publisherId == state.userId,
                         )
                     }
                     item {

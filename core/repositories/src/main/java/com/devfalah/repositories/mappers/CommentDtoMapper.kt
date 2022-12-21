@@ -10,7 +10,7 @@ fun CommentDto.toEntity(userId: Int): Comment {
     return Comment(
         id = id ?: 0,
         content = commentsPost ?: "",
-        userName = user?.username ?: "",
+        userName = user?.fullName ?: "",
         userImage = user?.icon?.large ?: "",
         isOwnerComment = ownerGuid == userId,
         isLikedByUser = isLikedByUser ?: false,

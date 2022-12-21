@@ -1,14 +1,15 @@
 package com.devfalah.ui.screen.postDetails.composable
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
@@ -39,7 +40,8 @@ fun CommentBody(
         } else {
             Text(
                 text = state.content,
-                style = AppTypography.body2
+                style = AppTypography.body2,
+                color = MaterialTheme.colors.secondary,
             )
         }
         HeightSpacer8()
@@ -73,8 +75,9 @@ fun CommentBody(
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = state.time,
-                style = AppTypography.caption
-            )
+                style = AppTypography.caption,
+                color = MaterialTheme.colors.secondaryVariant,
+                )
         }
     }
 }

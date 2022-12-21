@@ -85,11 +85,11 @@ class PostDetailsViewModel @Inject constructor(
                             comments = it.comments + comments.toUIState()
                         )
                     }
-                    Log.i("TAG", "getAllComments: ${_uiState.value.comments}")
                 } else {
                     _uiState.update {
                         it.copy(
                             isLoading = false,
+                            isEndOfPager = true,
                             comments = emptyList()
                         )
                     }

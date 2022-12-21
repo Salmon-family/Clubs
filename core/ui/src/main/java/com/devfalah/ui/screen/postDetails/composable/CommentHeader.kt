@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.composable.WidthSpacer8
-import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
@@ -86,7 +85,7 @@ fun TextUserName(
         fontSize = 14.sp,
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.SemiBold,
-        color = LightPrimaryBlackColor
+        color = MaterialTheme.colors.primaryVariant,
     )
 }
 
