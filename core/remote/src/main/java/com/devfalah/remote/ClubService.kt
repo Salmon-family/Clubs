@@ -293,14 +293,13 @@ interface ClubService {
     suspend fun addPostOnWallFriendOrGroup(
         @Field("poster_guid") userId: Int,
         @Field("owner_guid") friendOrGroupID: Int,
-        @Field("type") type: PostType,
-        @Field("post") post: String?,
-        @Field("friends") taggedFriends: List<Int>,
-        @Field("location") location: String,
-        //3 for Friends only, 2 for public.
+        @Field("type") type: String,
+        @Field("post") post: String,
+        @Field("friends") taggedFriends: List<Int> = emptyList(),
+        @Field("location") location: String = "",
         @Field("privacy") privacy: Int = 2,
         @Field("ossn_photo") photo: String? = null
-    )
+    ): Response<BaseResponse<WallPostDTO>>
 
     @GET("wall_view")
     suspend fun getWallPost(

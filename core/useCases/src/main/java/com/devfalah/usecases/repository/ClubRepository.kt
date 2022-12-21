@@ -65,4 +65,11 @@ interface ClubRepository {
 
     suspend fun editUserInformation(user: UserInformation): User
 
+    suspend fun publishPostUserWall(
+        userId: Int,
+        publishOnId: Int,
+        postContent: String,
+        privacy: Int
+    ): Post
+
 }

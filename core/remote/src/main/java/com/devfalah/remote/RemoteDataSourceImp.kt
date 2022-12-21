@@ -149,6 +149,23 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
+    override suspend fun publishPostUserWall(
+        userId: Int,
+        publishOnId: Int,
+        postContent: String,
+        privacy: Int
+    ): WallPostDTO {
+        return wrap {
+            apiService.addPostOnWallFriendOrGroup(
+                userId = userId,
+                friendOrGroupID = publishOnId,
+                type = "user",
+                post = postContent,
+                privacy = privacy
+            )
+        }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

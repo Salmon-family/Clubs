@@ -69,7 +69,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigateToCreatePost(state.userDetails.userID) },
+        onCreatePost = { navController.navigateToCreatePost() },
         onClickProfile = {
             if (!state.isMyProfile) {
                 navController.navigateToProfile(it)

@@ -1,6 +1,5 @@
 package com.devfalah.repositories
 
-import com.devfalah.entities.User
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
@@ -49,7 +48,16 @@ interface RemoteDataSource {
 
     suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
 
-    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : GroupDTO
+    suspend fun createClub(
+        userID: Int,
+        groupName: String,
+        description: String,
+        groupPrivacy: Int
+    ): GroupDTO
 
-    suspend fun editUserInformation(user: UserInfo):UserDTO
+    suspend fun editUserInformation(user: UserInfo): UserDTO
+
+    suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): WallPostDTO
 }

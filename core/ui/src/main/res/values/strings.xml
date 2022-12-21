@@ -60,5 +60,7 @@
     <string name="save_button">Save</string>
     <string name="password">Current password to confirm</string>
     <string name="user_update_successfully">information updated successfully</string>
+    <string name="create_thread_title">Create Thread</string>
+    <string name="post_button">Post Thread</string>
 
 </resources>

@@ -3,7 +3,6 @@ package com.devfalah.repositories
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.repositories.mappers.toUserInfo
-import com.devfalah.repositories.models.UserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -141,4 +140,10 @@ class ClubRepositoryImp @Inject constructor(
         localDataSource.deletePostById(postId)
     }
 
+    override suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): Post {
+        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
+            .toEntity() ?: throw Throwable("null data")
+    }
 }
