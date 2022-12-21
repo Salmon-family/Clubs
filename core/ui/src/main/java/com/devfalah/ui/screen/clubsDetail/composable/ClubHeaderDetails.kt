@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -22,6 +23,7 @@ import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 @Composable
 fun ClubHeaderDetails(
     state: ClubDetailsUiState,
+    onBack: () -> Unit
 ) {
 
     ConstraintLayout(
@@ -35,14 +37,14 @@ fun ClubHeaderDetails(
         BackButton(
             modifier = Modifier
                 .wrapContentSize()
+                .nonRippleEffect { onBack() }
                 .padding(16.dp)
                 .constrainAs(backButton) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
-                }
-        ) {
-
-        }
+                },
+            tint = WhiteColor
+        )
 
         Text(
             text = state.description,

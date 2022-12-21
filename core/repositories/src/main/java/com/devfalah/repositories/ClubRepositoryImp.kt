@@ -121,8 +121,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getGroupDetails(userID, groupID).toEntity()
     }
 
-    override suspend fun getGroupMembers(groupID: Int): Int {
-        return remoteDataSource.getGroupMembers(groupID)
+    override suspend fun getGroupMembers(groupID: Int): List<User> {
+        return remoteDataSource.getGroupMembers(groupID).toEntity()
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWall {

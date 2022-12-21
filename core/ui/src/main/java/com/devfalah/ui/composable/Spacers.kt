@@ -18,6 +18,11 @@ fun WidthSpacer8() {
 }
 
 @Composable
+fun WidthSpacer12() {
+    Spacer(modifier = Modifier.width(12.dp))
+}
+
+@Composable
 fun WidthSpacer16() {
     Spacer(modifier = Modifier.width(16.dp))
 }

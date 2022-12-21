@@ -1,6 +1,9 @@
 package com.devfalah.ui.screen.clubsDetail.composable
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,12 +19,11 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.HeightSpacer8
+import com.devfalah.ui.composable.WidthSpacer12
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.clubDetails.MembersUIState
-import com.devfalah.viewmodels.friends.FriendUIState
 
 @Composable
 fun ClubMembers(
@@ -31,7 +33,6 @@ fun ClubMembers(
     Column(modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -46,8 +47,7 @@ fun ClubMembers(
         HeightSpacer8()
 
         Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             friends.take(4).forEach {
@@ -57,6 +57,7 @@ fun ClubMembers(
                 )
             }
 
+            WidthSpacer12()
             Members(
                 painter = painterResource(id = R.drawable.ic_more),
                 text = stringResource(R.string.more),

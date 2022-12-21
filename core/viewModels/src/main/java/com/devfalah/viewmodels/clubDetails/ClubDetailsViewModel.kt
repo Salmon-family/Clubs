@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetClubDetailsUseCase
 import com.devfalah.usecases.GetClubMembersUseCase
 import com.devfalah.usecases.GetGroupWallUseCase
+import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,6 +27,10 @@ class ClubDetailsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        getData()
+    }
+
+    fun getData(){
         getClubDetails()
     }
 
@@ -41,14 +46,21 @@ class ClubDetailsViewModel @Inject constructor(
                         name = clubDetails.name,
                         description = clubDetails.description,
                         privacy = getPrivacy(clubDetails.privacy),
-                        membersCount = getClubMembersUseCase(args.groupId),
+                        membersCount = getClubMembersUseCase(args.groupId).size,
                         postCount = getGroupWallUseCase(args.userID, args.groupId).count,
+                        members = getClubMembersUseCase(args.groupId).toUIState(),
                         isLoading = false,
                         isSuccessful = true
                     )
                 }
             } catch (throwable: Throwable) {
-                _uiState.update { it.copy(isLoading = false, isSuccessful = false) }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isSuccessful = false,
+                        errorMessage = throwable.message.toString()
+                    )
+                }
             }
         }
     }
