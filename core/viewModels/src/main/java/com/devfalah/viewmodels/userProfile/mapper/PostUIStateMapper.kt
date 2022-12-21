@@ -38,7 +38,8 @@ fun PostUIState.toEntity(): Post {
         imageUrl = postImage,
         content = postContent,
         createdTime = createdDataValue,
-        isSaved = isSaved
+        isSaved = isSaved,
+        posterGuid = ""
     )
 }
 

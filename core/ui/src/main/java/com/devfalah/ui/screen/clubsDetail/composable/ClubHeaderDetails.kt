@@ -111,7 +111,7 @@ fun ClubHeaderDetails(
 
                     ClubCard(
                         imageVector = com.devfalah.ui.R.drawable.ic_comment,
-                        text = "35"
+                        text = state.postCount.toString()
                     )
 
                 }

@@ -3,6 +3,7 @@ package com.devfalah.repositories
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
+import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import java.io.File
 
@@ -58,4 +59,6 @@ interface RemoteDataSource {
     suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO
 
     suspend fun getGroupMembers(groupID: Int): Int
+
+    suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWallDto
 }

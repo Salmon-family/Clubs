@@ -35,5 +35,4 @@ data class PostDTO(
     val type: String?,
     @SerializedName("profile_photo_url")
     val profileImage: String?,
-
     )

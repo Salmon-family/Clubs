@@ -4,6 +4,7 @@ import com.devfalah.remote.response.*
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDetailsDTO
 import com.devfalah.repositories.models.group.GroupDTO
+import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationCountDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import okhttp3.MultipartBody
@@ -121,12 +122,20 @@ interface ClubService {
     ): Response<BaseResponse<GroupMembersResponse>>
 
     @FormUrlEncoded
+    @POST("wall_list_group")
+    suspend fun getGroupWallList(
+        @Field("group_guid") groupID: Int,
+        @Field("guid") userID: Int,
+        @Field("offset") page: Int? = null
+    ): Response<BaseResponse<GroupWallDto>>
+
+    @FormUrlEncoded
     @POST("groups_add")
     suspend fun addGroups(
         @Field("guid") userID: Int,
         @Field("name") groupName: String,
         @Field("privacy") groupPrivacy: Int,
-        @Field("description") description:String,
+        @Field("description") description: String,
     ): Response<BaseResponse<GroupDTO>>
 
     @FormUrlEncoded

@@ -5,6 +5,7 @@ data class Post(
     val privacy: Boolean,
     val createdTime: Long,
     val content: String,
+    val posterGuid: String,
     val imageUrl: String,
     val totalLikes: Int,
     val totalComments: Int,
@@ -12,5 +13,5 @@ data class Post(
     val publisherId: Int,
     val publisherImageUrl: String,
     val isLiked: Boolean,
-    val isSaved:Boolean
+    val isSaved: Boolean
 )

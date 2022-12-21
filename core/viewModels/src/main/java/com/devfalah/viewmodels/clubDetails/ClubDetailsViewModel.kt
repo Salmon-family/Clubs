@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetClubDetailsUseCase
 import com.devfalah.usecases.GetClubMembersUseCase
+import com.devfalah.usecases.GetGroupWallUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class ClubDetailsViewModel @Inject constructor(
     private val getClubDetailsUseCase: GetClubDetailsUseCase,
     private val getClubMembersUseCase: GetClubMembersUseCase,
+    private val getGroupWallUseCase: GetGroupWallUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -40,6 +42,7 @@ class ClubDetailsViewModel @Inject constructor(
                         description = clubDetails.description,
                         privacy = getPrivacy(clubDetails.privacy),
                         membersCount = getClubMembersUseCase(args.groupId),
+                        postCount = getGroupWallUseCase(args.userID, args.groupId).count,
                         isLoading = false,
                         isSuccessful = true
                     )
@@ -49,8 +52,6 @@ class ClubDetailsViewModel @Inject constructor(
             }
         }
     }
-
-
 
 
     private fun getPrivacy(value: String): String {

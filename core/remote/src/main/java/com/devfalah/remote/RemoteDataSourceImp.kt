@@ -6,6 +6,7 @@ import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
+import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationsDTO
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -153,6 +154,12 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap {
             apiService.getGroupMembers(groupID)
         }.count ?: 0
+    }
+
+    override suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWallDto {
+        return wrap {
+            apiService.getGroupWallList(userID = userID, groupID = groupID)
+        }
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

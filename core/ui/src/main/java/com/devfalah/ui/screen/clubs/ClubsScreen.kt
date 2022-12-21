@@ -35,7 +35,7 @@ fun ClubsScreen(
                 Text(text = "Requests")
             }
 
-            Button(onClick = { navController.navigateToClubDetails(userId = 3, groupId = 5) }) {
+            Button(onClick = { navController.navigateToClubDetails(userId = 6, groupId = 6) }) {
                 Text(text = "Clubs")
             }
         }

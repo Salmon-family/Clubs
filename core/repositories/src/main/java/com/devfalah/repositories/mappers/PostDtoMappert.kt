@@ -21,7 +21,8 @@ fun WallPostDTO.toEntity(): Post? {
             publisherId = postedUser?.guid ?: 0,
             publisherImageUrl = postedUser?.icon?.large?.substringBefore("?") ?: "",
             isLiked = post?.isLikedByUser ?: false,
-            isSaved = false
+            isSaved = false,
+            posterGuid = ""
         )
     }
 }
