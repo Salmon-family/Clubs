@@ -122,6 +122,16 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.editUserInformation(user.toUserInfo()).toEntity()
     }
 
+    override suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean {
+        return remoteDataSource.editClub(clubId, userID, clubName, description, clubPrivacy)
+    }
+
     override suspend fun getRequestsToClub(clubId: Int): List<User> {
         return remoteDataSource.getRequestsToClub(clubId).toEntity()
     }

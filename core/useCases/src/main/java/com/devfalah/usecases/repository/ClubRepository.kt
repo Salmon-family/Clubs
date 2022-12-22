@@ -68,4 +68,12 @@ interface ClubRepository {
     suspend fun publishPostWithImage(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): Post
+
+    suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean
 }
