@@ -37,14 +37,15 @@ fun PostContent(
         modifier = modifier
             .clip(shape = RoundedCornerShape(20.dp))
             .background(MaterialTheme.colors.surface)
-            .fillMaxWidth()
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
 
         item {
             TextField(
                 modifier = modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
+                    .fillMaxHeight(),
                 value = value,
                 onValueChange = { onValueChange(it) },
                 colors = TextFieldDefaults.textFieldColors(
