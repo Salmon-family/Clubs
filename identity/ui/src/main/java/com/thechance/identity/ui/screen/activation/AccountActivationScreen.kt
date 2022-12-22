@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.activation
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,7 +9,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.AuthButton
 import com.thechance.identity.ui.composable.BackButton
-import com.thechance.identity.ui.screen.login.username.LOGIN_USER_NAME_ROUTE
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
 import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
@@ -39,10 +38,14 @@ fun AccountActivationScreen(
     AccountActivationContent(
         onclickBack = { onBack() },
         onClickOpenEmail = {
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.addCategory(Intent.CATEGORY_APP_EMAIL)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+            try {
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }catch (e: Exception){
+                Toast.makeText(context, R.string.not_exist_email, Toast.LENGTH_SHORT).show()
+            }
         },
         navigateToLoginScreen = {
             navController.navigateToLogInUserName()

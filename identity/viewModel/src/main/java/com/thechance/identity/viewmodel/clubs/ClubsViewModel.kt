@@ -8,10 +8,12 @@ import com.thechance.identity.usecases.GetClubsUseCaase
 import com.thechance.identity.usecases.GetUserIdUseCase
 import com.thechance.identity.usecases.JoinClubUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,18 +47,16 @@ class ClubsViewModel @Inject constructor(
         _uiState.update { it.copy(selectedClubs = selectedClubs) }
         Log.i("selected", _uiState.value.selectedClubs.size.toString())
     }
-
-    fun checkSelectedClubs(): Boolean{
-        return _uiState.value.selectedClubs.size in 1..5
-    }
-
+    
     fun joinClubs(){
         val userId = getUserIdUseCase()?.toInt() ?: 0
         viewModelScope.launch {
             try {
-                _uiState.value.selectedClubs.forEach { club ->
-                    joinClubUseCase(club.id, userId)
-                    acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
+                withContext(Dispatchers.IO){
+                    _uiState.value.selectedClubs.forEach { club ->
+                        joinClubUseCase(club.id, userId)
+                        acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
+                    }
                 }
             }catch (t: Throwable) {
                 Log.i("error", t.message.toString())
