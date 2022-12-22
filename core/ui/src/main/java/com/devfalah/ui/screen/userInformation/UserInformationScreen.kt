@@ -86,8 +86,7 @@ fun UserInformationContent(
 
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
-                navController.popBackStack()
-                navController.navigateToProfile(state.id)
+                navController.navigateUp()
             }
         }
     }

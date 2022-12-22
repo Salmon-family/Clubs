@@ -78,7 +78,9 @@ fun ProfileScreen(
         onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) },
-        onEditUserInformation = { navController.navigateToEditUserInformation() }
+        onEditUserInformation = {
+            navController.navigateToEditUserInformation()
+        }
     )
 
     LaunchedEffect(key1 = state.minorError) {
