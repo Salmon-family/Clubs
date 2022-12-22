@@ -24,7 +24,7 @@ fun NotificationsDTO.toEntity(): Notification {
         type = notificationType?.value ?: -1,
         viewed = this.notification?.viewed != null,
         posterID = this.notification?.posterGuid ?: 0,
-        posterName = poster?.fullname?.split("##")?.get(0) ?: "",
+        posterName = poster?.fullname?.substringBefore("##") ?: "",
         posterImage = poster?.icon ?: ""
     )
 }
