@@ -40,7 +40,9 @@ fun EditClubScreen(
         onNameChanged = editClubViewModel::onChangedClubName,
         onDescriptionChanged = editClubViewModel::onDescriptionChanged,
         onPrivacyChanged = editClubViewModel::onPrivacyChanged,
-    onClickEditClub = editClubViewModel::onClickEditClub, onClickCancel = {})
+        onClickEditClub = editClubViewModel::onClickEditClub, onClickCancel = {
+            navController.popBackStack()
+        })
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -52,7 +54,7 @@ private fun EditClubContent(
     onDescriptionChanged: (String) -> Unit,
     onPrivacyChanged: (Int) -> Unit,
     onClickEditClub: () -> Unit,
-    onClickCancel: () -> Unit
+    onClickCancel: () -> Unit,
 ) {
     val context = LocalContext.current
     Scaffold(
