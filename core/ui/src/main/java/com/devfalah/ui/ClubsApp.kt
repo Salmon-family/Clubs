@@ -22,13 +22,31 @@ import com.devfalah.ui.theme.LightTernaryBlackColor
 @Composable
 fun ClubsApp() {
     val navController = rememberNavController()
+
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = {
+            if (currentRoute(navController) in listOf(
+                    Screen.Home.screen_route,
+                    Screen.Search.screen_route,
+                    Screen.Clubs.screen_route,
+                    Screen.Notification.screen_route,
+                    Screen.Menu.screen_route
+                )
+            ) {
+                BottomBar(navController = navController)
+            }
+        }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             ClubsNavGraph(navController = navController)
         }
     }
+}
+
+@Composable
+fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
 }
 
 @Composable
