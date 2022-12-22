@@ -1,6 +1,9 @@
 package com.thechance.identity.ui.screen.signup.clubs
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -64,7 +67,6 @@ fun ClubsContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
     ) {
         BackButton(onClick = onClickBack)
         SpacerVertical24()
@@ -76,15 +78,14 @@ fun ClubsContent(
             color2 = LightPrimaryBrandColor
         )
 
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisSpacing =  16.dp,
-            mainAxisAlignment = MainAxisAlignment.Start,
-            crossAxisAlignment = FlowCrossAxisAlignment.Start,
-            mainAxisSize = SizeMode.Expand,
-            modifier = Modifier.padding(vertical = 24.dp)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            contentPadding = PaddingValues(top = 24.dp, bottom = 48.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.weight(1f, fill = false)
         ) {
-            state.clubs.forEach { club ->
+            items(state.clubs) { club ->
                 ClubItem(
                     club = club,
                     isSelected = state.selectedClubs.contains(club),
@@ -93,7 +94,6 @@ fun ClubsContent(
             }
         }
 
-        SpacerVertical24()
         AuthButton(
             onClick = onClickContinue,
             isEnabled = checkSelectedClubs,
