@@ -50,6 +50,10 @@ class CreatePostViewModel @Inject constructor(
         }
     }
 
+    fun onRemoveImage(){
+        _uiState.update { it.copy(imageFile = null, imageBitmap = null) }
+    }
+
     fun onClickPost() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }

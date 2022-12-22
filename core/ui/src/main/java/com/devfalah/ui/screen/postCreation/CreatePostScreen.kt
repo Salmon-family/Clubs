@@ -51,11 +51,13 @@ fun PostCreationScreen(
         onPrivacyChange = viewModel::onPrivacyChange,
         onPostChange = viewModel::onPostChange,
         onClickPost = viewModel::onClickPost,
+        onRemoveImage = viewModel::onRemoveImage,
         onSelectImage = {
             singlePhotoPickerLauncher.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
         }
+
     )
 
     LaunchedEffect(true) {
@@ -76,7 +78,8 @@ fun PostCreationContent(
     onPrivacyChange: (Int) -> Unit,
     onPostChange: (String) -> Unit,
     onClickPost: () -> Unit,
-    onSelectImage: () -> Unit
+    onSelectImage: () -> Unit,
+    onRemoveImage: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -111,11 +114,12 @@ fun PostCreationContent(
 
             PostContent(
                 value = state.postContent,
+                modifier = Modifier.weight(1f),
+
                 hint = stringResource(id = R.string.what_are_you_thinking_about),
-                maxChar = 500,
-                onValueChange = onPostChange,
                 image = state.imageBitmap,
-                modifier = Modifier.weight(1f)
+                onValueChange = onPostChange,
+                onRemoveImage = onRemoveImage
             )
 
             PostFooter(onSelectImage = onSelectImage, onClickPost = onClickPost)
