@@ -13,7 +13,6 @@ import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
 import com.devfalah.ui.screen.clubCreation.clubCreationRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.postCreation.createPostRoute
-import com.devfalah.ui.screen.createPost.createPostRoute
 import com.devfalah.ui.screen.editclubscreen.editClubRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
 import com.devfalah.ui.screen.friends.friendsRoute
