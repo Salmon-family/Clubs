@@ -1,7 +1,10 @@
 package com.thechance.identity.ui.screen.onboarding.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,13 +22,16 @@ import com.google.accompanist.pager.rememberPagerState
 import com.thechance.identity.ui.model.SliderData
 import com.thechance.identity.ui.model.sliderDataList
 import com.thechance.identity.ui.spacer.SpacerVertical16
-import com.thechance.identity.ui.theme.*
+import com.thechance.identity.ui.theme.LightPrimaryBrandColor
+import com.thechance.identity.ui.theme.LightSecondaryBrandColor
+import com.thechance.identity.ui.theme.Typography
 import kotlinx.coroutines.delay
 
-@Preview(showSystemUi = true)
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ViewPagerSlider() {
+fun ViewPagerSlider(
+    modifier: Modifier = Modifier
+) {
     val pageState = rememberPagerState(
         pageCount = sliderDataList.size,
         initialPage = 0
@@ -39,19 +45,24 @@ fun ViewPagerSlider() {
     }
 
     Column(
-        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
 
     ) {
+
         HorizontalPager(
             state = pageState,
-            verticalAlignment = Alignment.Bottom
+            modifier = Modifier.weight(1f)
         ) { page ->
             Column {
                 val sliderData = sliderDataList[page]
 
-                OnBoardingImage(sliderData = sliderData)
+                OnBoardingImage(
+                    sliderData = sliderData,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                )
                 Text(
                     text = sliderData.title ?: "",
                     style = Typography.h1,
@@ -79,21 +90,26 @@ fun ViewPagerSlider() {
             activeColor = LightPrimaryBrandColor,
             inactiveColor = LightSecondaryBrandColor
         )
-        SpacerVertical16()
+
     }
 }
 
 
 @Composable
 private fun OnBoardingImage(
-    sliderData: SliderData
+    sliderData: SliderData,
+    modifier: Modifier = Modifier
 ) {
     Image(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(300.dp),
+        modifier = modifier,
         contentScale = ContentScale.Fit,
         painter = painterResource(id = sliderData.image),
         contentDescription = null
     )
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    ViewPagerSlider()
 }
