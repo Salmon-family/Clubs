@@ -161,4 +161,9 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
+    override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
+        return apiService.getAllUserGroups(userId).body()?.payload?.groups
+            ?: throw Throwable("empty groups")
+    }
+
 }

@@ -4,14 +4,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-const val ROUTE = "ClubCreation"
+const val CLUB_CREATION_ROUTE = "ClubCreation"
 
 fun NavController.navigateToClubCreation() {
-    navigate(ROUTE)
+    navigate(CLUB_CREATION_ROUTE)
 }
 
 fun NavGraphBuilder.clubCreationRoute(navController: NavController) {
-    composable(route = ROUTE) {
+    composable(route = CLUB_CREATION_ROUTE) {
         ClubCreationScreen(navController)
     }
 }
