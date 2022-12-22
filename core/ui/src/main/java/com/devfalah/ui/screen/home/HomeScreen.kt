@@ -48,7 +48,7 @@ fun HomeScreen(
         // should navigate to post screen details.
         onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
         onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigateToPostCreation() },
+        onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }

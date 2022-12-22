@@ -20,7 +20,9 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
+import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.screen.profile.createFileFromContentUri
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.createPost.CreatePostViewModel
 import com.devfalah.viewmodels.createPost.PostCreationUIState
@@ -125,7 +127,7 @@ fun PostCreationContent(
         val context = LocalContext.current
         LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
             if (state.isSuccess) {
-                navController.navigateUp()
+                navController.navigateHome()
             } else if (state.error.isNotBlank()) {
                 showToastMessage(context, state.error)
             }

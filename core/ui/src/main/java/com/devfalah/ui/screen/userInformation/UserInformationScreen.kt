@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
+import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.userInformation.UserInformationUIState
@@ -86,7 +87,7 @@ fun UserInformationContent(
 
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
-                navController.navigateUp()
+                navController.navigateToProfile(state.id)
             }
         }
     }

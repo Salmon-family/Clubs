@@ -7,7 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 const val CREATE_POST_SCREEN = "CreatePost"
-fun NavController.navigateToPostCreation() {
+
+fun NavController.navigateToPostCreation(fromRout: String) {
     navigate(CREATE_POST_SCREEN)
 }
 
