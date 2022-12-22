@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -72,7 +73,8 @@ fun WelcomeOnboardContent(
             text = stringResource(id = R.string.lets_do),
             buttonModifier = Modifier
                 .wrapContentSize()
-                .padding(start = 24.dp),
+                .align(Alignment.End)
+                .padding(horizontal = 24.dp),
             textModifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 24.dp)
         )
