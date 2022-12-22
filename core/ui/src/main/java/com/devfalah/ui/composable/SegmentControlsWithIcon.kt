@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
@@ -50,16 +51,18 @@ fun SegmentControlsWithIcon(
                 .clickable {
                     index.value = 0
                     onItemSelection(index.value)
-                }) {
+                }
+                .padding(8.dp)
+        ) {
 
             Row(
-                modifier = Modifier.padding(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = items.first(),
+                    textAlign = TextAlign.Center,
                     color = if (index.value == 0) WhiteColor else MaterialTheme.colors.primaryVariant,
                     style = AppTypography.body2
                 )
@@ -80,16 +83,18 @@ fun SegmentControlsWithIcon(
                 .clickable {
                     index.value = 1
                     onItemSelection(index.value)
-                }) {
+                }
+                .padding(8.dp)
+        ) {
 
             Row(
-                modifier = Modifier.padding(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = items.last(),
+                    textAlign = TextAlign.Center,
                     color = if (index.value == 1) WhiteColor else MaterialTheme.colors.primaryVariant,
                     style = AppTypography.body2,
                 )
