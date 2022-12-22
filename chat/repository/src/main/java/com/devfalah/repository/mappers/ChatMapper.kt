@@ -9,7 +9,7 @@ import com.thechance.entities.Chats
 fun ChatDTO.toLocalDto(userId: Int): Chat {
     if (messageFrom?.guid == userId) {
         return Chat(
-            fullName = messageTo?.fullname ?: "",
+            fullName = messageTo?.fullname?.split("##")?.first() ?: "",
             guid = messageTo?.guid ?: 0,
             icon = messageTo?.icon?.larger ?: "",
             time = time ?: 0,
@@ -17,7 +17,7 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
         )
     } else {
         return Chat(
-            fullName = messageFrom?.fullname ?: "",
+            fullName = messageTo?.fullname?.split("##")?.first() ?: "",
             guid = messageFrom?.guid ?: 0,
             icon = messageFrom?.icon?.larger ?: "",
             time = time ?: 0,

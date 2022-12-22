@@ -6,17 +6,15 @@ import javax.inject.Inject
 
 class SendMessageUseCase @Inject constructor(
     private val chatRepository: ChatRepository,
-    private val getUserDetail: GetUserDetailUseCase
 ) {
 
-    suspend operator fun invoke(userID: Int, friendID: Int, text: String): Message {
-        val user = getUserDetail(userID)
+    suspend operator fun invoke(userID: Int, friendID: Int, text: String,fcmToken: String): Message {
         val message = chatRepository.sendMessage(userID, friendID, text)
         chatRepository.postNotification(
             notification = Notification(
                 id = message.id,
                 friendId = userID,
-                to = user.fcmToken
+                to = fcmToken
             )
         )
         chatRepository.insertMessage(message)
