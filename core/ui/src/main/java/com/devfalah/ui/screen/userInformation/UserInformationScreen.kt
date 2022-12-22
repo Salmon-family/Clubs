@@ -11,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.userInformation.UserInformationUIState
 import com.devfalah.viewmodels.userInformation.UserInformationViewModel
 import com.devfalah.viewmodels.userInformation.isUpdateInformationButtonEnabled
@@ -85,7 +86,8 @@ fun UserInformationContent(
 
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
-                navController.navigateUp()
+                navController.popBackStack()
+                navController.navigateToProfile(state.id)
             }
         }
     }

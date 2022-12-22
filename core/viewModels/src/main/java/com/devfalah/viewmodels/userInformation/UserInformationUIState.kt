@@ -15,7 +15,7 @@ data class UserInformationUIState(
 )
 
 fun User.toUserInfoUIState(): UserInformationUIState {
-  return  UserInformationUIState(
+    return UserInformationUIState(
         id = id,
         name = name,
         title = title,
@@ -24,7 +24,7 @@ fun User.toUserInfoUIState(): UserInformationUIState {
 }
 
 fun UserInformationUIState.isUpdateInformationButtonEnabled(): Boolean {
-    return name.isNotEmpty() && title.isNotEmpty() && password.isNotEmpty()
+    return name.isNotEmpty() && title.isNotEmpty() && password.isNotEmpty() && password.length > 6
 }
 
 
