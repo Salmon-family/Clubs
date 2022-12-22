@@ -53,5 +53,7 @@
     <string name="private_privacy">Private</string>
     <string name="people">People</string>
     <string name="users_requests">Join Requests</string>
-
+    <string name="edit_club">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="club_edited_successfully">Club edited successfully</string>
 </resources>

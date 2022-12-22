@@ -136,6 +136,22 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
+    override suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean {
+        return wrap { apiService.editGroups(
+            groupID = clubId,
+            groupName = clubName,
+            groupOwnerID = userID,
+            groupDescription = description,
+            groupPrivacy = clubPrivacy
+        ) }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {
