@@ -1,6 +1,7 @@
 package com.devfalah.repository
 
 import com.devfalah.repository.mappers.*
+import com.devfalah.repository.models.UserDTO
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.*
 import kotlinx.coroutines.flow.Flow
@@ -45,8 +46,8 @@ class ChatRepositoryImp @Inject constructor(
         chatLocalDataSource.insertMessage(message.toMessage())
     }
 
-    override fun onReceiveMessage(): Flow<Message> {
-        return firebaseDataSource.onReceiveNotification().map { it.toMessage() }
+    override fun onReceiveMessage(): Flow<Int> {
+        return firebaseDataSource.onReceiveNotification().map { it.friendId }
     }
 
     override suspend fun postNotification(notification: Notification): Boolean {
@@ -55,6 +56,10 @@ class ChatRepositoryImp @Inject constructor(
 
     override suspend fun updateRecentMessage(id: Int, recentMessage: String) {
         chatLocalDataSource.updateRecentMessage(id, recentMessage)
+    }
+
+    override suspend fun getUserDetail(userID: Int): User {
+        return chatRemoteDataSource.getUserDetails(userID).toEntity()
     }
 
     override suspend fun getMessages(friendId: Int): Flow<List<Message>> {

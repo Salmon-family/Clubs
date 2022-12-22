@@ -6,24 +6,20 @@ import com.google.gson.annotations.SerializedName
 data class UserDTO(
     @SerializedName("birthdate")
     val birthdate: String?,
-    @SerializedName("cover_url")
-    val coverUrl: Boolean?,
     @SerializedName("email")
     val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
+    @SerializedName("fcm_token")
+    val fcmToken: String?,
     @SerializedName("fullname")
-    val fullName: String?,
+    val fullname: String?,
     @SerializedName("gender")
     val gender: String?,
     @SerializedName("guid")
     val guid: Int?,
     @SerializedName("icon")
     val icon: IconDto?,
-    @SerializedName("language")
-    val language: String?,
-    @SerializedName("last_name")
-    val lastName: String?,
+    @SerializedName("job_title")
+    val jobTitle: String?,
     @SerializedName("username")
     val username: String?
 )

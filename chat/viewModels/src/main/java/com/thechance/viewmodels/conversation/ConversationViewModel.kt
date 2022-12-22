@@ -31,7 +31,7 @@ class ConversationViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch { receiveNotification() }
+        viewModelScope.launch { receiveNotification(args.id) }
         getListMessages(args.id, args.friendId)
         _uiState.update {
             it.copy(

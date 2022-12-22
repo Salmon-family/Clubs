@@ -15,6 +15,7 @@ class GetChatWithFriendUseCase @Inject constructor(
     suspend fun refreshMessages(userID: Int, friendID: Int, page: Int): Int {
         val messages = chatRepository.getMessages(userID, friendID, page)
         chatRepository.insertMessages(messages.messages)
+        chatRepository.updateRecentMessage(friendID,messages.messages.last().message)
         return messages.count
     }
 
