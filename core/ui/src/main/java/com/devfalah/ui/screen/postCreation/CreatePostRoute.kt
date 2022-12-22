@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.createPost
+package com.devfalah.ui.screen.postCreation
 
 import android.os.Build
 import androidx.annotation.RequiresApi

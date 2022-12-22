@@ -22,8 +22,8 @@ import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
-import com.devfalah.ui.screen.createPost.navigateToPostCreation
+import com.devfalah.ui.screen.postCreation.CREATE_POST_SCREEN
+import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.profile.composable.*
