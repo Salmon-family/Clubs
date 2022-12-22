@@ -22,10 +22,11 @@ import com.devfalah.ui.theme.WhiteColor
 fun SegmentControls(
     items: List<String>,
     onItemSelection: (selectedItemIndex: Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val index = remember { mutableStateOf(0) }
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
             .wrapContentSize()

@@ -142,8 +142,8 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap {
             apiService.editUserDetails(
                 userID = user.id,
-                firstName = user.name,
-                lastName = user.title,
+                name = user.name,
+                title = user.title,
                 email = user.email,
                 currentPassword = user.password,
             )
@@ -198,6 +198,11 @@ class RemoteDataSourceImp @Inject constructor(
         } else {
             throw Throwable("Network Error")
         }
+    }
+
+    override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
+        return apiService.getAllUserGroups(userId).body()?.payload?.groups
+            ?: throw Throwable("empty groups")
     }
 
 }

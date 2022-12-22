@@ -63,4 +63,6 @@ interface RemoteDataSource {
     ): WallPostDTO
 
 
+    suspend fun getUserGroups(userId: Int): List<GroupDTO>
+
 }
