@@ -13,4 +13,6 @@ interface RemoteIdentityDataSource {
 
     suspend fun joinClub(clubId: Int, userId: Int): ClubDto
 
+    suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
+
 }

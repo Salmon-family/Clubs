@@ -36,4 +36,11 @@ interface IdentityService {
         @Query("group_guid") clubId: Int,
         @Query("guid") userId: Int
     ): Response<IdentityBaseResponse<ClubDto>>
+
+    @POST("groups_request_accept")
+    suspend fun acceptJoiningRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") userId: Int,
+        @Query("uguid") clubOwnerId: Int
+    ): Response<IdentityBaseResponse<Boolean>>
 }

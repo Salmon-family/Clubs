@@ -20,6 +20,9 @@ import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubItem
 import com.thechance.identity.ui.screen.onboarding.composable.clubs.ClubsTitle
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_ROUTE
+import com.thechance.identity.ui.screen.signup.composable.clubs.ClubItem
+import com.thechance.identity.ui.screen.signup.composable.clubs.ClubsTitle
+import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_Route
 import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
@@ -72,9 +75,10 @@ fun ClubsContent(
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(vertical = 24.dp),
+            contentPadding = PaddingValues(top = 24.dp, bottom = 48.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.weight(1f, fill = false)
         ) {
             items(state.clubs) { club ->
                 ClubItem(
@@ -85,14 +89,14 @@ fun ClubsContent(
             }
         }
 
-        SpacerVertical24()
         AuthButton(
             onClick = onClickContinue,
-            isEnabled = state.selectedClubs.isNotEmpty(),
+            isEnabled = state.selectedClubs.size in 1..5,
             text = stringResource(id = R.string.continue_label),
             buttonModifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         )
     }
+
 }

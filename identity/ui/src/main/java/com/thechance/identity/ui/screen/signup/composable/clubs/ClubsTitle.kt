@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.onboarding.composable.clubs
+package com.thechance.identity.ui.screen.signup.composable.clubs
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
