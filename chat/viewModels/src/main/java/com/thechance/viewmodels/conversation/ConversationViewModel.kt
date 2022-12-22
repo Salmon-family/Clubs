@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatWithFriendUseCase
+import com.nadafeteiha.usecases.GetUserDetailUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SendMessageUseCase
 import com.thechance.viewmodels.conversation.uiStates.toUiState
@@ -23,6 +24,7 @@ class ConversationViewModel @Inject constructor(
     private val getMessages: GetChatWithFriendUseCase,
     private val sendMessageUseCase: SendMessageUseCase,
     private val receiveNotification: ReceiveNotificationUseCase,
+    private val getUserDetail: GetUserDetailUseCase,
 ) :
     ViewModel() {
 
@@ -31,13 +33,18 @@ class ConversationViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch { receiveNotification() }
+        viewModelScope.launch { receiveNotification(args.id) }
         getListMessages(args.id, args.friendId)
-        _uiState.update {
-            it.copy(
-                appBar = it.appBar.copy(userName = args.friendName, icon = args.friendImage)
-            )
+        viewModelScope.launch {
+            val friend = getUserDetail(args.friendId)
+            _uiState.update {
+                it.copy(
+                    appBar = it.appBar.copy(userName = friend.name, icon = friend.profileUrl),
+                    fcmToken = friend.fcmToken,
+                )
+            }
         }
+
     }
 
     private fun getListMessages(userId: Int, friendId: Int) {
@@ -57,7 +64,7 @@ class ConversationViewModel @Inject constructor(
     private fun sendMessage(message: String) {
         viewModelScope.launch {
             try {
-                sendMessageUseCase(args.id, args.friendId, message)
+                sendMessageUseCase(args.id, args.friendId, message,_uiState.value.fcmToken)
             } catch (e: Exception) {
                 Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
