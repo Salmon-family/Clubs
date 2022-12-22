@@ -130,7 +130,7 @@ fun ProfileContent(
                 onSendRequestClick = onClickAddFriend
             )
         }
-        item {
+        item(key = state.friends) {
             FriendsSection(
                 state.friends,
                 totalFriends = state.totalFriends,
