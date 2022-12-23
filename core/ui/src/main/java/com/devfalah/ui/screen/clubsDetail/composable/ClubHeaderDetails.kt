@@ -19,6 +19,7 @@ import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
+import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 
 @Composable
@@ -125,9 +126,4 @@ fun ClubHeaderDetails(
         }
 
     }
-
-}
-
-fun String.htmlText(): String{
-    return HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_COMPACT).toString()
 }
