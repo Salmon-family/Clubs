@@ -47,8 +47,13 @@ class ClubsViewModel @Inject constructor(
         _uiState.update { it.copy(selectedClubs = selectedClubs) }
         Log.i("selected", _uiState.value.selectedClubs.size.toString())
     }
-    
-    fun joinClubs(){
+
+    fun onJoin(){
+        onLoading()
+        joinClubs()
+    }
+
+    private fun joinClubs(){
         val userId = getUserIdUseCase()?.toInt() ?: 0
         viewModelScope.launch {
             try {
@@ -58,13 +63,32 @@ class ClubsViewModel @Inject constructor(
                         acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
                     }
                 }
+                onSuccess()
             }catch (t: Throwable) {
-                Log.i("error", t.message.toString())
+                onError(errorMessage = t)
             }
         }
     }
 
+    private fun onLoading() {
+        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
+    }
+
+    private fun onSuccess() {
+        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
+    }
+
+    private fun onError(errorMessage: Throwable) {
+        _uiState.update {
+            it.copy(
+                errorMessage = errorMessage.message.toString(),
+                isSuccess = false,
+                isLoading = false
+            )
+        }
+    }
+
     companion object{
-        private const val OWNER_ID = 3
+        private const val OWNER_ID = 16
     }
 }

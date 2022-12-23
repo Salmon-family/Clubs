@@ -1,6 +1,5 @@
 package com.thechance.identity.viewmodel.signup
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
@@ -50,7 +49,8 @@ class SignupViewModel @Inject constructor(
                 password = state.password,
             )
             try {
-                signupUseCase(userData)
+                val userId = signupUseCase(userData)
+                saveUserId(userId)
                 onSuccess()
             } catch (t: Throwable) {
                 onError(errorMessage = t)
