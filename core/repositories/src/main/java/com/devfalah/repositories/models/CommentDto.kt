@@ -13,7 +13,13 @@ data class CommentDto(
     @SerializedName("subject_guid")
     val subjectGuid: Int?,
     @SerializedName("time_created")
-    val timeCreated: Int?,
+    val timeCreated: Long?,
     @SerializedName("type")
-    val type: String?
+    val type: String?,
+    @SerializedName("user")
+    val user: UserDTO,
+    @SerializedName("total_likes")
+    val totalLikes: Int?,
+    @SerializedName("is_liked_by_user")
+    val isLikedByUser: Boolean?,
 )

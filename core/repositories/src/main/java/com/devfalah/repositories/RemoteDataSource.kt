@@ -62,7 +62,12 @@ interface RemoteDataSource {
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): WallPostDTO
 
-
     suspend fun getUserGroups(userId: Int): List<GroupDTO>
+
+    suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto>
+
+    suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO
+
+    suspend fun addComment(userId: Int, postId: Int, comment: String): CommentDto
 
 }

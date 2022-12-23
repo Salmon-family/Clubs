@@ -57,7 +57,6 @@ fun ProfileImageWithIcon(
                     painter = painter,
                     contentDescription = null
                 )
-
             }
         }
     }

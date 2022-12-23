@@ -94,7 +94,6 @@ interface ClubService {
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
         @Field("comment") comment: String,
-        @Field("image_file") imageFile: Array<String>? = null,
     ): Response<BaseResponse<CommentResponse>>
 
     @FormUrlEncoded
@@ -115,10 +114,10 @@ interface ClubService {
     @POST("comments_list")
     suspend fun getComments(
         @Field("uguid") userID: Int,
-        @Field("type") type: LikeType,
+        @Field("type") type: String,
         @Field("guid") postID: Int,
-        @Field("page_limit") page: Int? = null,
-        @Field("limit") limit: Int = 5
+        @Field("offset") page: Int = 1,
+        @Field("limit") limit: Int = 20
     ): Response<BaseResponse<CommentsResponse>>
 
     /**

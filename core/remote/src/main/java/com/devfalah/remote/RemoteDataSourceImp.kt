@@ -188,6 +188,26 @@ class RemoteDataSourceImp @Inject constructor(
 
     }
 
+    //region postComments
+
+    override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto> {
+        return wrap {
+            apiService.getComments(userID = userId, postID = postId, type = "post", page = page)
+        }.comments ?: throw Throwable("Error")
+    }
+
+    override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {
+        return wrap { apiService.getWallPost(userID = userID, postID = postId) }
+    }
+
+    override suspend fun addComment(userId: Int, postId: Int, comment: String): CommentDto {
+        return wrap {
+            apiService.addComment(userID = userId, postID = postId, comment = comment)
+        }.comment ?: throw Throwable("Error")
+    }
+
+    //endregion
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {

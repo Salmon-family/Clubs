@@ -66,5 +66,7 @@
     <string name="create_thread_title">Create Thread</string>
     <string name="post_button">Publish Thread</string>
     <string name="special_clubs">Special Clubs</string>
+    <string name="post_details">Thread</string>
+
 
 </resources>

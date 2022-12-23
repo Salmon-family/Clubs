@@ -68,4 +68,10 @@ interface ClubRepository {
     suspend fun publishPostWithImage(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): Post
+
+    suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<Comment>
+
+    suspend fun getPostByID(postId: Int, userID: Int): Post
+
+    suspend fun addComment(userId: Int, postId: Int, comment: String): Comment
 }

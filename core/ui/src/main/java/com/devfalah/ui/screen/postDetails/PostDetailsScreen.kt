@@ -1,11 +1,9 @@
-package com.devfalah.ui.screen.home
+package com.devfalah.ui.screen.postDetails
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,45 +11,46 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.Screen
+import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.screen.postCreation.navigateToPostCreation
-import com.devfalah.ui.screen.postDetails.navigateToPostDetails
-import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.screen.home.openBrowser
+import com.devfalah.ui.screen.postDetails.compose.CommentItem
+import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.home.HomeUIState
-import com.devfalah.viewmodels.home.HomeViewModel
+import com.devfalah.viewmodels.postDetails.PostDetailsUIState
+import com.devfalah.viewmodels.postDetails.PostDetailsViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-
 @Composable
-fun HomeScreen(
+fun PostDetailsScreen(
     navController: NavController,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: PostDetailsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
-    HomeContent(
+
+    PostDetailsContent(
         navController = navController,
         state = state,
-        onClickLike = viewModel::onClickLike,
-        onClickComment = { navController.navigateToPostDetails(it.postId) },
-        onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
-        onRefresh = viewModel::swipeToRefresh,
+        onClickLike = {},
+        onClickSave = {},
+        onRefresh = viewModel::getPostComments,
+        onClickSendComment = viewModel::onClickSendComment,
+        onCommentValueChanged = viewModel::onCommentValueChanged,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }
     )
+
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
@@ -60,57 +59,59 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeContent(
+fun PostDetailsContent(
     navController: NavController,
-    state: HomeUIState,
-    onCreatePost: () -> Unit,
+    state: PostDetailsUIState,
     onClickLike: (PostUIState) -> Unit,
-    onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onRefresh: (Int) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onClickSendComment: () -> Unit,
+    onCommentValueChanged: (String) -> Unit
 ) {
-    Column {
+    Column(Modifier.fillMaxSize()) {
 
-        AppBar(title = Screen.Home.title, navHostController = navController)
+        AppBar(
+            title = stringResource(id = R.string.post_details),
+            navHostController = navController
+        )
 
         ManualPager(
+            modifier = Modifier.weight(1f),
             onRefresh = onRefresh,
-            contentPadding = PaddingValues(vertical = 16.dp),
-            isLoading = state.isPagerLoading,
-            error = state.pagerError,
+            contentPadding = PaddingValues(top = 16.dp),
+            isLoading = state.isLoading,
+            error = state.error,
             isEndOfPager = state.isEndOfPager,
         ) {
-            item {
-                PostCreatingSection(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    onCreatePost = onCreatePost,
-                    isMyProfile = true
-                )
-            }
-
-            items(state.posts) {
+            item("PostDetails") {
                 PostItem(
-                    state = it,
+                    state = state.post,
                     isContentExpandable = true,
-                    isMyPost = it.publisherId == state.id,
-                    onClickLike = { onClickLike(it) },
-                    onClickComment = { onClickComment(it) },
-                    onClickSave = { onClickSave(it) },
+                    isMyPost = state.post.publisherId == state.id,
+                    onClickLike = onClickLike,
+                    onClickComment = { },
+                    onClickSave = onClickSave,
                     onClickProfile = onClickProfile,
                     onClickPostSetting = { },
                     onOpenLinkClick = onOpenLinkClick
                 )
             }
+
+
+            items(state.comments) {
+                CommentItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    state = it
+                )
+            }
         }
+        CommentOnThread(
+            isEnabled = state.commentText.isNotEmpty(),
+            text = state.commentText,
+            onClickSendComment = onClickSendComment,
+            onValueChanged = onCommentValueChanged
+        )
     }
-
 }
-
-fun openBrowser(context: Context, url: String) {
-    val openURL = Intent(Intent.ACTION_VIEW)
-    openURL.data = Uri.parse(url)
-    startActivity(context, openURL, null)
-}
-
