@@ -27,6 +27,8 @@ class ClubDetailsViewModel @Inject constructor(
     private val allPosts: GetHomePostUseCase,
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
+    private val unJoinClubUseCase: UnJoinClubUseCase,
+    private val getClubDeclineUseCase: GetClubDeclineUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -44,7 +46,6 @@ class ClubDetailsViewModel @Inject constructor(
         getPostCount()
         getMembers()
         getClubPost()
-
     }
 
     fun swipeToRefresh(type: Int) {
@@ -61,8 +62,9 @@ class ClubDetailsViewModel @Inject constructor(
                         isPagerLoading = false,
                         isLoading = false,
                         isEndOfPager = clubPosts.isNotEmpty(),
-                        posts = it.posts + clubPosts.toUIState()
-                    )
+                        posts = it.posts + clubPosts.toUIState(),
+
+                        )
                 }
             } catch (t: Throwable) {
                 _uiState.update {
@@ -86,14 +88,17 @@ class ClubDetailsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         id = clubDetails.id,
+                        ownerId = clubDetails.ownerId,
                         name = clubDetails.name,
                         description = clubDetails.description,
                         privacy = getPrivacy(clubDetails.privacy),
+                        requestExists = clubDetails.requestExists,
                         isMember = clubDetails.isMember,
                         isLoading = false,
                         isSuccessful = true
                     )
                 }
+
             } catch (throwable: Throwable) {
                 _uiState.update {
                     it.copy(
@@ -211,11 +216,34 @@ class ClubDetailsViewModel @Inject constructor(
         }
     }
 
+
     fun joinClubs(clubId: Int) {
         viewModelScope.launch {
             try {
-                val join = joinClubUseCase(clubId = args.groupId, userId = args.userID)
-                _uiState.update { it.copy(isJoin = join) }
+                joinClubUseCase(clubId = args.groupId, userId = args.userID)
+                _uiState.update { it.copy(requestExists = true) }
+            } catch (t: Throwable) {
+                Log.i("error", t.message.toString())
+            }
+        }
+    }
+
+    fun unJoinClubs(clubId: Int) {
+        viewModelScope.launch {
+            try {
+                unJoinClubUseCase(clubId = args.groupId, userId = args.userID)
+                _uiState.update { it.copy(requestExists = false) }
+            } catch (t: Throwable) {
+                Log.i("error", t.message.toString())
+            }
+        }
+    }
+
+    fun declineRequestOfClub(clubId: Int) {
+        viewModelScope.launch {
+            try {
+                getClubDeclineUseCase(args.groupId, args.userID, _uiState.value.ownerId)
+                _uiState.update { it.copy(isMember = false, requestExists = false) }
             } catch (t: Throwable) {
                 Log.i("error", t.message.toString())
             }

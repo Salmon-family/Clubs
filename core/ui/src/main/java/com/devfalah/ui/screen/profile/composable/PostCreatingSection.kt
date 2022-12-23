@@ -37,7 +37,7 @@ fun PostCreatingSection(
             .fillMaxWidth()
             .clip(CircleShape)
             .background(WhiteColor)
-            .requiredHeight(40.dp),
+            .requiredHeight(45.dp),
     ) {
         IconIndicator(
             modifier = Modifier.align(Alignment.CenterStart),

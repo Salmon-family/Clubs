@@ -162,8 +162,21 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun joinClub(clubId: Int, userId: Int): Boolean {
-        return apiService.joinClub(clubId, userId).code() == 100
+    override suspend fun joinClub(clubId: Int, userId: Int): GroupDTO {
+        return wrap {
+            apiService.joinClub(clubId, userId)
+        }
+    }
+
+    override suspend fun unJoinClub(clubId: Int, userId: Int): GroupDTO {
+        return wrap {
+            apiService.unJoinClub(clubId, userId)
+        }
+    }
+
+    override suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean {
+        return apiService.declineGroupsRequest(clubId, memberId, userId).body()?.payload
+            ?: throw Throwable("Error")
     }
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {

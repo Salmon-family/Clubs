@@ -17,7 +17,7 @@ fun WallPostDTO.toEntity(): Post? {
             imageUrl =  image?.substringBefore("?")?:"" ,
             totalLikes = post?.totalLikes ?: 0,
             totalComments = post?.totalComments ?: 0,
-            publisher = postedUser?.firstName ?: "",
+            publisher = postedUser?.fullName ?: "",
             publisherId = postedUser?.guid ?: 0,
             publisherImageUrl = postedUser?.icon?.large?.substringBefore("?") ?: "",
             isLiked = post?.isLikedByUser ?: false,

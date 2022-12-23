@@ -58,5 +58,6 @@
     <string name="join_club">Join Club</string>
     <string name="request_to_join">Request to join</string>
     <string name="joined">Joined</string>
+    <string name="retry">Retry</string>
 
 </resources>

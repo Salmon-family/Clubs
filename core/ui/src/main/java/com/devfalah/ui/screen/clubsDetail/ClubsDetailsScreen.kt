@@ -54,6 +54,8 @@ fun ClubsDetailsScreen(
         onAddPost = { },
         onClickFriends = { navController.navigateToFriends(it) },
         onJoinClub = viewModel::joinClubs,
+        onUnJoinClubs = viewModel::unJoinClubs,
+        onDeclineClub = viewModel::declineRequestOfClub,
         onRetry = viewModel::getData
     )
 }
@@ -69,6 +71,8 @@ private fun ClubsDetailsContent(
     onAddPost: () -> Unit,
     onClickFriends: (Int) -> Unit,
     onJoinClub: (Int) -> Unit,
+    onUnJoinClubs: (Int) -> Unit,
+    onDeclineClub: (Int) -> Unit,
     onRetry: () -> Unit
 ) {
 
@@ -83,11 +87,11 @@ private fun ClubsDetailsContent(
             Button(
                 onClick = onRetry
             ) {
-                Text(text = "Retry")
+                Text(text = stringResource(id = R.string.retry))
             }
         } else {
             ManualPager(
-                onRefresh = onRefresh,
+                onRefresh = {},
                 isLoading = state.isPagerLoading,
                 error = state.errorMessage,
                 isEndOfPager = state.isEndOfPager,
@@ -101,17 +105,26 @@ private fun ClubsDetailsContent(
                 }
 
                 if (state.privacy != "Public" && !state.isMember) {
-
-                    item {
-                        RoundButton(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            userState = UserState(),
-                            text = stringResource(id = R.string.request_to_join),
-                            textColor = WhiteColor,
-                            onButtonClick = onJoinClub,
-                            isEnabled = state.isJoin
-                        )
-
+                    if (state.requestExists) {
+                        item {
+                            RoundButton(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                userState = UserState(),
+                                text = stringResource(id = R.string.request_to_join),
+                                textColor = WhiteColor,
+                                onButtonClick = onUnJoinClubs,
+                            )
+                        }
+                    } else {
+                        item {
+                            RoundButton(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                userState = UserState(),
+                                text = stringResource(id = R.string.join_club),
+                                textColor = WhiteColor,
+                                onButtonClick = onJoinClub,
+                            )
+                        }
                     }
 
                     item {
@@ -128,7 +141,9 @@ private fun ClubsDetailsContent(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
+                            onClick = onDeclineClub
                         )
+
                     }
 
                     item {
@@ -149,10 +164,10 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = it.publisherId == state.id,
+                            isMyPost = true,
                             isContentExpandable = true,
                             onClickLike = onClickLike,
-                            onClickComment = { onClickComment(it) },
+                            onClickComment = onClickComment,
                             onClickSave = onClickSave,
                             onClickPostSetting = {},
                             onClickProfile = {},
@@ -160,15 +175,26 @@ private fun ClubsDetailsContent(
                         )
                     }
                 } else {
-                    item {
-                        RoundButton(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            userState = UserState(),
-                            text = stringResource(id = R.string.join_club),
-                            textColor = WhiteColor,
-                            onButtonClick = onJoinClub,
-                            isEnabled = state.isJoin
-                        )
+                    if (state.requestExists) {
+                        item {
+                            RoundButton(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                userState = UserState(),
+                                text = stringResource(id = R.string.request_to_join),
+                                textColor = WhiteColor,
+                                onButtonClick = onUnJoinClubs,
+                            )
+                        }
+                    } else {
+                        item {
+                            RoundButton(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                userState = UserState(),
+                                text = stringResource(id = R.string.join_club),
+                                textColor = WhiteColor,
+                                onButtonClick = onJoinClub,
+                            )
+                        }
                     }
 
                     item {
@@ -181,7 +207,7 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = it.publisherId == state.id,
+                            isMyPost = true,
                             isContentExpandable = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,

@@ -13,21 +13,23 @@ import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightQuaternaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
+import com.devfalah.viewmodels.friendRequest.UserState
 
 @Composable
 fun OutlineButton(
     modifier: Modifier,
+    userState: UserState = UserState(),
+    onClick: (Int) -> Unit
 ) {
     OutlinedButton(
         modifier = modifier,
-        onClick = { },
+        onClick = { onClick(userState.userID) },
         border = BorderStroke(1.dp, LightQuaternaryBlackColor),
         shape = RoundedCornerShape(100),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = LightSecondaryBlackColor,
             backgroundColor = LightBackgroundColor
         ),
-        enabled = false
     ) {
         Text(text = stringResource(id = R.string.joined))
     }

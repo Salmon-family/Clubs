@@ -9,7 +9,7 @@ fun UserDTO.toEntity(): User {
         birthdate = this.birthdate ?: "",
         coverUrl = this.coverUrl ?: "",
         email = this.email ?: "",
-        name = this.firstName ?: "",
+        name = this.fullName ?: "",
         title = this.lastName?.substringBefore("$%") ?: "",
         bio = this.lastName?.substringAfter("$%") ?: "",
         username = this.username ?: "",
