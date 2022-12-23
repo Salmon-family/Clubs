@@ -30,7 +30,11 @@ fun ClubCard(
 
     Box(
         modifier = Modifier
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .padding(
+                top = 16.dp,
+                start = 16.dp,
+                end = 16.dp
+            )
             .width(80.dp)
             .background(
                 shape = RoundedCornerShape(16.dp), color = WhiteColor

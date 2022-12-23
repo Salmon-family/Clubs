@@ -103,7 +103,8 @@ private fun ClubsDetailsContent(
 
                 item {
                     ClubHeaderDetails(
-                        state = state, onBack = onBack
+                        state = state,
+                        onBack = onBack,
                     )
                 }
 

@@ -21,6 +21,7 @@ import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
@@ -38,7 +39,7 @@ fun PostContent(
                 .nonRippleEffect { onOpenLinkClick(post.postContent) }
                 .padding(horizontal = 16.dp)
                 .padding(top = 8.dp),
-            text = post.postContent,
+            text = post.postContent.htmlText(),
             color = LightPrimaryBrandColor,
             fontStyle = FontStyle.Italic,
             maxLines = 1,
@@ -49,7 +50,7 @@ fun PostContent(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 8.dp),
-            text = post.postContent,
+            text = post.postContent.htmlText(),
             minimizedMaxLines = if (contentExpandable) {
                 maxLineToExpand
             } else {

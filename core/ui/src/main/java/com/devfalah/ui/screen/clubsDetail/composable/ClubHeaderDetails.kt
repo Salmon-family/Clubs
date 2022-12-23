@@ -4,16 +4,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.core.text.HtmlCompat
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -25,8 +25,11 @@ import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 @Composable
 fun ClubHeaderDetails(
     state: ClubDetailsUiState,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    maxLineContentExpand: Int = 2,
 ) {
+
+    var popupController by remember { mutableStateOf(false) }
 
     ConstraintLayout(
         modifier = Modifier
@@ -34,7 +37,7 @@ fun ClubHeaderDetails(
             .background(LightPrimaryBrandColor)
     ) {
 
-        val (backButton, textDescription, textName, cover) = createRefs()
+        val (backButton, textDescription, textName, readMore, cover) = createRefs()
 
         BackButton(
             modifier = Modifier
@@ -62,26 +65,37 @@ fun ClubHeaderDetails(
             fontSize = 30.sp,
             fontFamily = PlusJakartaSans,
             color = WhiteColor,
-            maxLines = 2
+            maxLines = 1
         )
 
-        Text(
+        ReadMorePopup(
             text = state.description.htmlText(),
             modifier = Modifier
-                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(top = 24.dp)
                 .constrainAs(textDescription) {
                     top.linkTo(textName.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
-                .padding(top = 30.dp),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            fontFamily = PlusJakartaSans,
-            color = WhiteColor,
-            maxLines = 3
+                },
+            minimizedMaxLines = maxLineContentExpand,
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp,
+                fontFamily = PlusJakartaSans,
+                color = WhiteColor,
+            ),
+            onShowDescription = { popupController = true }
         )
+
+        if (popupController) {
+            DescriptionClubDialog(
+                descriptionClub = state.description.htmlText(),
+            ) {
+                popupController = false
+            }
+        }
 
         Box(
             modifier = Modifier
