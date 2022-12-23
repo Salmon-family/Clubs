@@ -76,6 +76,19 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
+
+    override suspend fun setLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
+        return wrap {
+            apiService.addLike(userID = userID, postID = commentId, type = LikeType.annotation.name)
+        }
+    }
+
+    override suspend fun removeLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
+        return wrap {
+            apiService.removeLike(userID = userID, postID = commentId, type = LikeType.annotation.name)
+        }
+    }
+
     override suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO {
         return wrap { apiService.isFriendWith(userID = userID, otherUserID = friendID) }
     }

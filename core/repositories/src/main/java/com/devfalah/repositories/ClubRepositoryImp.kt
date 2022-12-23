@@ -55,8 +55,16 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.setLikeOnPost(userID = userID, postId = postId).toEntity()
     }
 
+    override suspend fun setLikeOnComment(userID: Int, commentId: Int): Int {
+        return remoteDataSource.setLikeOnComment(userID = userID, commentId = commentId).toEntity()
+    }
+
     override suspend fun removeLikeOnPost(userID: Int, postId: Int): Int {
         return remoteDataSource.removeLikeOnPost(userID = userID, postId = postId).toEntity()
+    }
+
+    override suspend fun removeLikeOnComment(userID: Int, commentId: Int): Int {
+        return remoteDataSource.removeLikeOnComment(userID = userID, commentId = commentId).toEntity()
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip {

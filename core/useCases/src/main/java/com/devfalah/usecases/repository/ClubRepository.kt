@@ -24,7 +24,11 @@ interface ClubRepository {
 
     suspend fun setLikeOnPost(userID: Int, postId: Int): Int
 
+    suspend fun setLikeOnComment(userID: Int, commentId: Int): Int
+
     suspend fun removeLikeOnPost(userID: Int, postId: Int): Int
+
+    suspend fun removeLikeOnComment(userID: Int, commentId: Int): Int
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip
 

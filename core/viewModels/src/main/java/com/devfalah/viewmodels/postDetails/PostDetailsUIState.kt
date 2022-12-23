@@ -11,8 +11,8 @@ data class PostDetailsUIState(
 
     val isLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
-    val error: String = ""
-
+    val error: String = "",
+    val minorError: String = ""
 )
 
 data class CommentUIState(
@@ -21,7 +21,10 @@ data class CommentUIState(
     val userId: Int = 0,
     val userName: String = "",
     val userPictureUrl: String = "",
+    val timeCreate: String = "",
+    val totalLikes: Int = 0,
     val isOwnerComment: Boolean = false,
+    val isLikedByUser: Boolean = false,
 )
 
 

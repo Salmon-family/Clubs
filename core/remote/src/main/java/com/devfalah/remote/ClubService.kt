@@ -94,13 +94,15 @@ interface ClubService {
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
         @Field("comment") comment: String,
+        @Field("type") type: String = "post",
+        @Field("image_file") imageFile: Array<String>? = arrayOf(""),
     ): Response<BaseResponse<CommentResponse>>
 
     @FormUrlEncoded
     @POST("comment_delete")
     suspend fun deleteComment(
         @Field("guid") userID: Int,
-        @Field("id") commentID: Int
+        @Field("id") commentID: Int,
     ): Response<BaseResponse<Boolean>>
 
     @FormUrlEncoded

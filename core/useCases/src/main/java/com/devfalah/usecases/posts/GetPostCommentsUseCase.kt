@@ -10,8 +10,12 @@ class GetPostCommentsUseCase @Inject constructor(
     private var page = 1
 
     suspend operator fun invoke(postId: Int, userID: Int): List<Comment> {
-        return clubRepository.getPostComments(postId = postId, userId = userID, page)
+        val comments = clubRepository.getPostComments(postId = postId, userId = userID, page)
+        return if (comments.isNotEmpty()) {
+            page += 1
+            comments
+        } else {
+            emptyList()
+        }
     }
-
-
 }

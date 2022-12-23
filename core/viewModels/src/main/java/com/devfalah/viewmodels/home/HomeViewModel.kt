@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetHomePostUseCase
 import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.SetFavoritePostUseCase
-import com.devfalah.usecases.SetLikeUseCase
+import com.devfalah.usecases.SetPostLikeUseCase
 import com.devfalah.viewmodels.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    val likeUseCase: SetLikeUseCase,
+    val likeUseCase: SetPostLikeUseCase,
     val allPosts: GetHomePostUseCase,
     val getUser: GetUserIdUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,

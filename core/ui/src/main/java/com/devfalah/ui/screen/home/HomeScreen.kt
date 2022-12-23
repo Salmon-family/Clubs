@@ -45,7 +45,7 @@ fun HomeScreen(
         navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { navController.navigateToPostDetails(it.postId) },
+        onClickComment = { navController.navigateToPostDetails(it.postId, it.isSaved) },
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,

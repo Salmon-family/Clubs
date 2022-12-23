@@ -17,7 +17,7 @@ data class CommentDto(
     @SerializedName("type")
     val type: String?,
     @SerializedName("user")
-    val user: UserDTO,
+    val user: UserDTO?,
     @SerializedName("total_likes")
     val totalLikes: Int?,
     @SerializedName("is_liked_by_user")

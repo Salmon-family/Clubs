@@ -1,6 +1,7 @@
 package com.devfalah.viewmodels.postDetails.mapper
 
 import com.devfalah.entities.Comment
+import com.devfalah.viewmodels.ConvertDate
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 fun Comment.toUIState(mainUserId: Int): CommentUIState {
@@ -10,7 +11,10 @@ fun Comment.toUIState(mainUserId: Int): CommentUIState {
         userPictureUrl = user.profileUrl,
         userName = user.name,
         userId = user.id,
-        isOwnerComment = mainUserId == user.id
+        isOwnerComment = mainUserId == user.id,
+        timeCreate = ConvertDate().convertTime(timeCreated),
+        totalLikes = totalLikes,
+        isLikedByUser = isLikedByUser
     )
 }
 

@@ -10,18 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.devfalah.ui.screen.postDetails.compose.CommentBody
-import com.devfalah.ui.screen.postDetails.compose.CommentHeader
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
 fun CommentItem(
     modifier: Modifier = Modifier,
-    state: CommentUIState
+    state: CommentUIState,
+    onClickLike: () -> Unit
 ) {
+   val itemModifier = if (state.isOwnerComment){
+       modifier.padding(start = 30.dp)
+    }else{
+       modifier.padding(end = 30.dp)
+    }
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = itemModifier.fillMaxWidth(),
         contentAlignment = if (state.isOwnerComment) Alignment.TopEnd else Alignment.TopStart
     ) {
         Card(
@@ -34,7 +38,10 @@ fun CommentItem(
         ) {
             Column(modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 CommentHeader(state = state)
-                CommentBody(state = state)
+                CommentBody(
+                    state = state,
+                    onClickLike = onClickLike
+                )
             }
         }
     }

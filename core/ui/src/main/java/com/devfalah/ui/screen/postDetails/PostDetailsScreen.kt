@@ -1,10 +1,8 @@
 package com.devfalah.ui.screen.postDetails
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,7 +10,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
@@ -25,6 +26,9 @@ import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.ui.theme.LightSecondaryBlackColor
+import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.viewmodels.postDetails.CommentUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -48,7 +52,8 @@ fun PostDetailsScreen(
         onClickSendComment = viewModel::onClickSendComment,
         onCommentValueChanged = viewModel::onCommentValueChanged,
         onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) }
+        onOpenLinkClick = { openBrowser(context, it) },
+        onClickCommentLike = viewModel::onClickLikeComment
     )
 
     LaunchedEffect(true) {
@@ -68,7 +73,8 @@ fun PostDetailsContent(
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onClickSendComment: () -> Unit,
-    onCommentValueChanged: (String) -> Unit
+    onCommentValueChanged: (String) -> Unit,
+    onClickCommentLike: (CommentUIState) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
 
@@ -99,11 +105,27 @@ fun PostDetailsContent(
                 )
             }
 
+            item("commentTitle") {
+                if (state.comments.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        text = stringResource(id = R.string.replies),
+                        textAlign = TextAlign.Start,
+                        color = LightSecondaryBlackColor,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = PlusJakartaSans
+                    )
+                }
+            }
 
             items(state.comments) {
                 CommentItem(
                     modifier = Modifier.fillMaxWidth(),
-                    state = it
+                    state = it,
+                    onClickLike = { onClickCommentLike(it) }
                 )
             }
         }

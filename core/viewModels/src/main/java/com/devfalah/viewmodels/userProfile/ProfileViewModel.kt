@@ -22,7 +22,7 @@ class ProfileViewModel @Inject constructor(
     val getUserFriendsUseCase: GetUserFriendsUseCase,
     val getProfilePostUseCase: GetProfilePostsUseCase,
     val addFriendUseCase: AddFriendUseCase,
-    val likeUseCase: SetLikeUseCase,
+    val likeUseCase: SetPostLikeUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val changeProfileImageUseCase: ChangeProfileImageUseCase,
     val deletePostUseCase: DeletePostUseCase,

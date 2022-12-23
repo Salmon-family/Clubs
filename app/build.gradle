@@ -19,6 +19,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
         buildConfigField "String", "BASE_URL", "\"https://club.the-chance.org/api/v1.0/\""
@@ -85,6 +86,7 @@ dependencies {
     api(project(":identity:local"))
     //endregion
 
+    implementation 'com.android.support:multidex:1.0.3'
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

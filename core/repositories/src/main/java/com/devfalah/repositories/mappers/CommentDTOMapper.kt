@@ -1,6 +1,7 @@
 package com.devfalah.repositories.mappers
 
 import com.devfalah.entities.Comment
+import com.devfalah.entities.User
 import com.devfalah.repositories.models.CommentDto
 
 fun CommentDto.toEntity(): Comment {
@@ -10,9 +11,11 @@ fun CommentDto.toEntity(): Comment {
         content = commentsPost ?: "",
         totalLikes = totalLikes ?: 0,
         isLikedByUser = isLikedByUser ?: false,
-        user = user.toEntity()
+        user = user?.toEntity()?: User()
     )
 }
 
 
 fun List<CommentDto>.toEntity() = map { it.toEntity() }
+
+
