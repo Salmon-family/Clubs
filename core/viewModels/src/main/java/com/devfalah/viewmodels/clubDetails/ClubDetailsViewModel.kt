@@ -50,7 +50,6 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun getData() {
-        checkPrivacyAndIMemberInClub()
         getClubDetails()
         getMemberCount()
         getPostCount()
@@ -266,12 +265,4 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun isMyPost(postId: Int) = postId == _uiState.value.ownerId
-
-    private fun checkPrivacyAndIMemberInClub() {
-        if (_uiState.value.privacy != PUBLIC_PRIVACY && !_uiState.value.isMember) {
-            _uiState.update { it.copy(validateUserState = true) }
-        } else {
-            _uiState.update { it.copy(validateUserState = false) }
-        }
-    }
 }

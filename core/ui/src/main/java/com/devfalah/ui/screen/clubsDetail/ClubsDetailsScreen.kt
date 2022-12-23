@@ -31,6 +31,7 @@ import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
+import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
@@ -106,7 +107,7 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.validateUserState) {
+                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember) {
                     if (state.requestExists) {
                         item {
                             RoundButton(
