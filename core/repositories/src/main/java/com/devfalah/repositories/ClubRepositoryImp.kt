@@ -92,7 +92,8 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun savedPosted(post: Post) {
-        localDataSource.insertPost(post.toEntity())
+        val x = post.toEntity()
+        localDataSource.insertPost(x)
     }
 
     override suspend fun deletePost(userId: Int, postId: Int): Boolean {
@@ -125,8 +126,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getGroupMembers(groupID).toEntity()
     }
 
-    override suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWall {
-        return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID)
+    override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall {
+        return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID, page = page)
             .toEntity(groupID)
     }
 

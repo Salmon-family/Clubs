@@ -60,11 +60,11 @@ interface RemoteDataSource {
 
     suspend fun getGroupMembers(groupID: Int): List<UserDTO>
 
-    suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWallDto
+    suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto
 
     suspend fun joinClub(clubId: Int, userId: Int): GroupDTO
 
     suspend fun unJoinClub(clubId: Int, userId: Int): GroupDTO
 
-    suspend fun declineClub(clubId: Int, memberId: Int, userId: Int) : Boolean
+    suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean
 }

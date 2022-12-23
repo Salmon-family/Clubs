@@ -126,7 +126,7 @@ interface ClubService {
     suspend fun getGroupWallList(
         @Field("group_guid") groupID: Int,
         @Field("guid") userID: Int,
-        @Field("offset") page: Int? = null
+        @Field("offset") page: Int,
     ): Response<BaseResponse<GroupWallDto>>
 
     @FormUrlEncoded

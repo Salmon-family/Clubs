@@ -7,10 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
 import com.devfalah.viewmodels.Constants.PRIVATE_PRIVACY
 import com.devfalah.viewmodels.Constants.PUBLIC_PRIVACY
+import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
-import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -40,6 +40,7 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(userId = getUser()) }
+                getGroupWallUseCase(args.groupId)
                 getData()
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
@@ -50,26 +51,25 @@ class ClubDetailsViewModel @Inject constructor(
     fun getData() {
         getClubDetails()
         getMemberCount()
-        getPostCount()
         getMembers()
-//        getClubPost()
+        swipeToRefresh()
     }
 
 
-    fun swipeToRefresh(type: Int) {
+    fun swipeToRefresh(type: Int = 0) {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                val posts = getGroupWallUseCase(args.userID, args.groupId).toUIState()
-
-//                    getProfilePostUseCase.loadMore(uiState.value.userId, _uiState.value.ownerId)
+                val posts = getGroupWallUseCase.loadMore(args.userID, args.groupId)
+               val ll = posts.toUIState(args.groupId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        posts = (it.posts + posts.PostUIState(groupId = args.groupId)),
+                        posts = (it.posts + ll),
                         isEndOfPager = posts.isEmpty()
                     )
                 }
+                getPostCount()
             } catch (t: Throwable) {
                 Log.e("TESTTEST", t.message.toString())
                 _uiState.update { it.copy(isLoading = false, errorMessage = t.message.toString()) }
@@ -130,8 +130,7 @@ class ClubDetailsViewModel @Inject constructor(
     private fun getPostCount() {
         viewModelScope.launch {
             try {
-                val postCount =
-                    getGroupWallUseCase(args.userID, args.groupId).count
+                val postCount = getGroupWallUseCase.getPostsCount()
                 _uiState.update { it.copy(postCount = postCount) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
@@ -156,23 +155,6 @@ class ClubDetailsViewModel @Inject constructor(
             }
         }
     }
-
-//    private fun getClubPost() {
-//        viewModelScope.launch {
-//            try {
-//                _uiState.update {
-//                    it.copy(
-//                        posts = getGroupWallUseCase(
-//                            args.userID,
-//                            args.groupId
-//                        ).post.toUIState()
-//                    )
-//                }
-//            } catch (t: Throwable) {
-//                _uiState.update { it.copy(errorMessage = t.message.toString()) }
-//            }
-//        }
-//    }
 
     fun onClickLike(post: PostUIState) {
         viewModelScope.launch {
@@ -208,11 +190,7 @@ class ClubDetailsViewModel @Inject constructor(
                     it.copy(
                         posts = _uiState.value.posts
                             .map {
-                                if (it.postId == post.postId) {
-                                    it.copy(isSaved = true)
-                                } else {
-                                    it
-                                }
+                                if (it.postId == post.postId) { it.copy(isSaved = true) } else { it }
                             }
                     )
                 }
@@ -221,7 +199,6 @@ class ClubDetailsViewModel @Inject constructor(
             }
         }
     }
-
 
     fun joinClubs() {
         viewModelScope.launch {

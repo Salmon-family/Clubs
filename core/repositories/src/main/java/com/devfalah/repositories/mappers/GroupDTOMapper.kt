@@ -40,7 +40,7 @@ fun GroupPostDto.toEntity(groupId: Int): GroupWallPost {
         location = location ?: "",
         post = post.toEntity(groupId = groupId),
         text = text ?: "",
-        user = user.toEntity()
+        user = user.toEntity(),
     )
 
 }

@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.Post
 import com.devfalah.repositories.models.PostLocalDto
 
-fun Post.toEntity(groupId: Int = 0): PostLocalDto {
+fun Post.toEntity(): PostLocalDto {
     return PostLocalDto(
         id = id,
         privacy = privacy,
