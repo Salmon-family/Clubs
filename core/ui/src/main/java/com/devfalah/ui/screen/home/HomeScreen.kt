@@ -3,10 +3,15 @@ package com.devfalah.ui.screen.home
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,7 +41,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -51,7 +56,20 @@ fun HomeScreen(
         onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,
         onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) }
+        onOpenLinkClick = { openBrowser(context, it) },
+        onClickChat = {
+            try {
+                val intent = Intent(
+                    context,
+                    Class.forName("com.thechance.ui.ChatActivity")
+                )
+                intent.putExtra("id",state.id)
+                startActivity(context, intent, Bundle())
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            }
+
+        }
     )
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -72,11 +90,21 @@ fun HomeContent(
     onClickSave: (PostUIState) -> Unit,
     onRefresh: (Int) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onClickChat: () -> Unit,
 ) {
+    val context = LocalContext.current
     Column {
 
-        AppBar(title = Screen.Home.title, navHostController = navController)
+        AppBar(
+            title = Screen.Home.title,
+            navHostController = navController,
+            actions = {
+                IconButton(onClick = onClickChat) {
+                    Icon(Icons.Rounded.Send, contentDescription = "")
+                }
+            }
+        )
 
         ManualPager(
             onRefresh = onRefresh,
