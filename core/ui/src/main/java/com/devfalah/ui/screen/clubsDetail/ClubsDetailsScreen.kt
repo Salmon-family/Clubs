@@ -94,7 +94,7 @@ private fun ClubsDetailsContent(
         } else {
             ManualPager(
                 onRefresh = onRefresh,
-                isLoading = state.isPagerLoading,
+                isLoading = state.isLoading,
                 error = state.pagerError,
                 isEndOfPager = state.isEndOfPager,
                 contentPadding = PaddingValues(bottom = 16.dp)
