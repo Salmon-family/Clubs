@@ -61,7 +61,7 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 val posts = getGroupWallUseCase.loadMore(args.userID, args.groupId)
-               val ll = posts.toUIState(args.groupId)
+                val ll = posts.toUIState(args.groupId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -190,7 +190,11 @@ class ClubDetailsViewModel @Inject constructor(
                     it.copy(
                         posts = _uiState.value.posts
                             .map {
-                                if (it.postId == post.postId) { it.copy(isSaved = true) } else { it }
+                                if (it.postId == post.postId) {
+                                    it.copy(isSaved = !post.isSaved)
+                                } else {
+                                    it
+                                }
                             }
                     )
                 }
