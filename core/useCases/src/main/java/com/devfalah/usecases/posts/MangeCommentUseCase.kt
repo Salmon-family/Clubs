@@ -8,9 +8,10 @@ class MangeCommentUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
 
-    suspend fun addComment(userId: Int, postId: Int, comment: String): Comment {
+    suspend operator fun invoke(userId: Int, postId: Int, comment: String): Comment {
         return clubRepository.addComment(userId = userId, postId = postId, comment = comment)
     }
+
 
     fun deleteComment() {
 
