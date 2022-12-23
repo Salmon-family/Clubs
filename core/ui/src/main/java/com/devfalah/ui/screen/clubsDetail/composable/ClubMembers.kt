@@ -1,9 +1,6 @@
 package com.devfalah.ui.screen.clubsDetail.composable
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,6 +49,7 @@ fun ClubMembers(
         ) {
             friends.take(4).forEach {
                 Members(
+                    modifier = Modifier.padding(8.dp),
                     painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
                     text = it.name,
                 )
@@ -59,6 +57,7 @@ fun ClubMembers(
 
             WidthSpacer12()
             Members(
+                modifier = Modifier.padding(top = 8.dp, end = 8.dp, bottom = 8.dp),
                 painter = painterResource(id = R.drawable.ic_more),
                 text = stringResource(R.string.more),
                 textColor = LightPrimaryBrandColor

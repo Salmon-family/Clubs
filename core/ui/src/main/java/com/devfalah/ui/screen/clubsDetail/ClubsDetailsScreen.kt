@@ -56,6 +56,7 @@ fun ClubsDetailsScreen(
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
+        isMyPost = viewModel::isMyPost,
         onRetry = viewModel::getData
     )
 }
@@ -70,9 +71,10 @@ private fun ClubsDetailsContent(
     onClickSave: (PostUIState) -> Unit,
     onAddPost: () -> Unit,
     onClickFriends: (Int) -> Unit,
-    onJoinClub: (Int) -> Unit,
-    onUnJoinClubs: (Int) -> Unit,
-    onDeclineClub: (Int) -> Unit,
+    onJoinClub: () -> Unit,
+    onUnJoinClubs: () -> Unit,
+    onDeclineClub: () -> Unit,
+    isMyPost: (Int) -> Boolean,
     onRetry: () -> Unit
 ) {
 
@@ -91,9 +93,9 @@ private fun ClubsDetailsContent(
             }
         } else {
             ManualPager(
-                onRefresh = {},
+                onRefresh = onRefresh,
                 isLoading = state.isPagerLoading,
-                error = state.errorMessage,
+                error = state.pagerError,
                 isEndOfPager = state.isEndOfPager,
                 contentPadding = PaddingValues(bottom = 16.dp)
             ) {
@@ -104,7 +106,7 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.privacy != "Public" && !state.isMember) {
+                if (state.validateUserState) {
                     if (state.requestExists) {
                         item {
                             RoundButton(
@@ -157,18 +159,18 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickFriends(state.id) }
+                                .nonRippleEffect { onClickFriends(state.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = true,
+                            isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
-                            onClickSave = onClickSave,
+                            onClickSave = { onClickSave(it) },
                             onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},
@@ -200,18 +202,18 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickFriends(state.id) }
+                                .nonRippleEffect { onClickFriends(state.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = true,
+                            isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
-                            onClickSave = onClickSave,
+                            onClickSave = { onClickSave(it) },
                             onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},

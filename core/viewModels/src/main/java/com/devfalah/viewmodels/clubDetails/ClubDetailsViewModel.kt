@@ -5,7 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.viewmodels.Constants
+import com.devfalah.viewmodels.Constants.PRIVATE_PRIVACY
+import com.devfalah.viewmodels.Constants.PUBLIC_PRIVACY
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -20,11 +21,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClubDetailsViewModel @Inject constructor(
+    private val getUser: GetUserIdUseCase,
     private val getClubDetailsUseCase: GetClubDetailsUseCase,
     private val getClubMembersUseCase: GetClubMembersUseCase,
     private val getGroupWallUseCase: GetGroupWallUseCase,
     private val likeUseCase: SetLikeUseCase,
-    private val allPosts: GetHomePostUseCase,
+    private val getProfilePostUseCase: GetProfilePostsUseCase,
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
@@ -37,10 +39,18 @@ class ClubDetailsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getData()
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(userId = getUser()) }
+                getData()
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(errorMessage = t.message.toString()) }
+            }
+        }
     }
 
     fun getData() {
+        checkPrivacyAndIMemberInClub()
         getClubDetails()
         getMemberCount()
         getPostCount()
@@ -48,35 +58,27 @@ class ClubDetailsViewModel @Inject constructor(
         getClubPost()
     }
 
+
     fun swipeToRefresh(type: Int) {
         viewModelScope.launch {
-            if (type == Constants.FIRST_TIME) {
-                _uiState.update { it.copy(isLoading = true) }
-            } else {
-                _uiState.update { it.copy(isPagerLoading = true) }
-            }
             try {
-                val clubPosts = allPosts.loadData(uiState.value.id)
+                _uiState.update { it.copy(isLoading = true) }
+                val posts =
+                    getProfilePostUseCase.loadMore(uiState.value.clubId, _uiState.value.ownerId)
                 _uiState.update {
                     it.copy(
-                        isPagerLoading = false,
                         isLoading = false,
-                        isEndOfPager = clubPosts.isNotEmpty(),
-                        posts = it.posts + clubPosts.toUIState(),
-
-                        )
-                }
-            } catch (t: Throwable) {
-                _uiState.update {
-                    it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        errorMessage = t.message.toString()
+                        posts = (it.posts + posts.toUIState()),
+                        isEndOfPager = posts.isEmpty()
                     )
                 }
+            } catch (t: Throwable) {
+                Log.e("TESTTEST", t.message.toString())
+                _uiState.update { it.copy(isLoading = false, errorMessage = t.message.toString()) }
             }
         }
     }
+
 
     private fun getClubDetails() {
         viewModelScope.launch {
@@ -87,7 +89,7 @@ class ClubDetailsViewModel @Inject constructor(
 
                 _uiState.update {
                     it.copy(
-                        id = clubDetails.id,
+                        clubId = clubDetails.id,
                         ownerId = clubDetails.ownerId,
                         name = clubDetails.name,
                         description = clubDetails.description,
@@ -114,7 +116,7 @@ class ClubDetailsViewModel @Inject constructor(
     private fun getMemberCount() {
         viewModelScope.launch {
             try {
-                val memberCount = getClubMembersUseCase(args.groupId).size
+                val memberCount = getClubMembersUseCase(_uiState.value.clubId).size
                 _uiState.update { it.copy(membersCount = memberCount) }
             } catch (t: Throwable) {
                 _uiState.update {
@@ -130,7 +132,8 @@ class ClubDetailsViewModel @Inject constructor(
     private fun getPostCount() {
         viewModelScope.launch {
             try {
-                val postCount = getGroupWallUseCase(args.userID, args.groupId).count
+                val postCount =
+                    getGroupWallUseCase(_uiState.value.userId, _uiState.value.clubId).count
                 _uiState.update { it.copy(postCount = postCount) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
@@ -148,7 +151,7 @@ class ClubDetailsViewModel @Inject constructor(
     private fun getMembers() {
         viewModelScope.launch {
             try {
-                val members = getClubMembersUseCase(args.groupId).toUserUIState()
+                val members = getClubMembersUseCase(_uiState.value.clubId).toUserUIState()
                 _uiState.update { it.copy(members = members) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
@@ -160,7 +163,12 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update {
-                    it.copy(posts = getGroupWallUseCase(args.userID, args.groupId).post.toUIState())
+                    it.copy(
+                        posts = getGroupWallUseCase(
+                            _uiState.value.userId,
+                            _uiState.value.clubId
+                        ).post.toUIState()
+                    )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
@@ -172,7 +180,7 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val totalLikes = likeUseCase(
-                    postID = post.postId, userId = uiState.value.id,
+                    postID = post.postId, userId = uiState.value.userId,
                     isLiked = post.isLikedByUser
                 )
                 val updatedPost = post.copy(
@@ -217,10 +225,10 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
 
-    fun joinClubs(clubId: Int) {
+    fun joinClubs() {
         viewModelScope.launch {
             try {
-                joinClubUseCase(clubId = args.groupId, userId = args.userID)
+                joinClubUseCase(clubId = _uiState.value.clubId, userId = _uiState.value.userId)
                 _uiState.update { it.copy(requestExists = true) }
             } catch (t: Throwable) {
                 Log.i("error", t.message.toString())
@@ -228,10 +236,13 @@ class ClubDetailsViewModel @Inject constructor(
         }
     }
 
-    fun unJoinClubs(clubId: Int) {
+    fun unJoinClubs() {
         viewModelScope.launch {
             try {
-                unJoinClubUseCase(clubId = args.groupId, userId = args.userID)
+                unJoinClubUseCase(
+                    clubId = _uiState.value.clubId,
+                    userId = _uiState.value.userId
+                )
                 _uiState.update { it.copy(requestExists = false) }
             } catch (t: Throwable) {
                 Log.i("error", t.message.toString())
@@ -239,10 +250,14 @@ class ClubDetailsViewModel @Inject constructor(
         }
     }
 
-    fun declineRequestOfClub(clubId: Int) {
+    fun declineRequestOfClub() {
         viewModelScope.launch {
             try {
-                getClubDeclineUseCase(args.groupId, args.userID, _uiState.value.ownerId)
+                getClubDeclineUseCase(
+                    clubId = _uiState.value.clubId,
+                    memberId = _uiState.value.userId,
+                    userId = _uiState.value.ownerId
+                )
                 _uiState.update { it.copy(isMember = false, requestExists = false) }
             } catch (t: Throwable) {
                 Log.i("error", t.message.toString())
@@ -250,9 +265,13 @@ class ClubDetailsViewModel @Inject constructor(
         }
     }
 
+    fun isMyPost(postId: Int) = postId == _uiState.value.ownerId
 
-    companion object {
-        private const val PRIVATE_PRIVACY = "Private"
-        private const val PUBLIC_PRIVACY = "Public"
+    private fun checkPrivacyAndIMemberInClub() {
+        if (_uiState.value.privacy != PUBLIC_PRIVACY && !_uiState.value.isMember) {
+            _uiState.update { it.copy(validateUserState = true) }
+        } else {
+            _uiState.update { it.copy(validateUserState = false) }
+        }
     }
 }

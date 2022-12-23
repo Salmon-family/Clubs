@@ -10,8 +10,8 @@ fun List<GroupWallPost>.toUIState(): List<PostUIState> = map { it.toUIState() }
 fun GroupWallPost.toUIState(): PostUIState {
     return PostUIState(
         postId = post.id,
-        publisherName = post.publisher,
-        publisherImage = post.publisherImageUrl,
+        publisherName = user.name,
+        publisherImage = user.profileUrl,
         publisherId = post.publisherId,
         privacy = post.privacy,
         createdData = ConvertDate().convertTime(post.createdTime),
@@ -21,6 +21,6 @@ fun GroupWallPost.toUIState(): PostUIState {
         isSaved = post.isSaved,
         isLikedByUser = post.isLiked,
         postImage = post.imageUrl,
-        postContent = post.content,
+        postContent = text,
     )
 }

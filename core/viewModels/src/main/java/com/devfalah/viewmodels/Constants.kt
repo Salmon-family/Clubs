@@ -14,4 +14,7 @@ object Constants {
     const val SEARCH_CLUB = 1
     const val SEARCH_USER = 2
 
+    const val PRIVATE_PRIVACY = "Private"
+    const val PUBLIC_PRIVACY = "Public"
+
 }

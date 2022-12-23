@@ -20,7 +20,7 @@ import com.devfalah.viewmodels.friendRequest.UserState
 fun RoundButton(
     modifier: Modifier = Modifier,
     userState: UserState,
-    onButtonClick: (Int) -> Unit,
+    onButtonClick: () -> Unit,
     buttonColor: Color = LightPrimaryBrandColor,
     text: String,
     textColor: Color,
@@ -28,7 +28,7 @@ fun RoundButton(
     fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Button(
-        onClick = { onButtonClick(userState.userID) },
+        onClick = { onButtonClick() },
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(),

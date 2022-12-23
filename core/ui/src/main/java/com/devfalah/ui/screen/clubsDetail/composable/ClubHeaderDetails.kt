@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.text.HtmlCompat
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -32,7 +33,7 @@ fun ClubHeaderDetails(
             .background(LightPrimaryBrandColor)
     ) {
 
-        val (backButton, textTitle, textName, cover) = createRefs()
+        val (backButton, textDescription, textName, cover) = createRefs()
 
         BackButton(
             modifier = Modifier
@@ -47,11 +48,28 @@ fun ClubHeaderDetails(
         )
 
         Text(
-            text = state.description,
+            text = state.name,
             modifier = Modifier
                 .fillMaxWidth()
-                .constrainAs(textTitle) {
+                .constrainAs(textName) {
                     top.linkTo(backButton.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 30.sp,
+            fontFamily = PlusJakartaSans,
+            color = WhiteColor,
+            maxLines = 2
+        )
+
+        Text(
+            text = state.description.htmlText(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(textDescription) {
+                    top.linkTo(textName.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
@@ -63,26 +81,11 @@ fun ClubHeaderDetails(
             color = WhiteColor,
             maxLines = 3
         )
-        Text(
-            text = state.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(textName) {
-                    top.linkTo(textTitle.bottom)
-                    start.linkTo(textTitle.start)
-                },
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
-            fontFamily = PlusJakartaSans,
-            color = WhiteColor,
-            maxLines = 2
-        )
 
         Box(
             modifier = Modifier
                 .constrainAs(cover) {
-                    top.linkTo(textName.bottom)
+                    top.linkTo(textDescription.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
@@ -123,4 +126,8 @@ fun ClubHeaderDetails(
 
     }
 
+}
+
+fun String.htmlText(): String{
+    return HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_COMPACT).toString()
 }

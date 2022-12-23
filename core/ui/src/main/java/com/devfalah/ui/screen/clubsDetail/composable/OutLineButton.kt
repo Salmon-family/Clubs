@@ -18,12 +18,11 @@ import com.devfalah.viewmodels.friendRequest.UserState
 @Composable
 fun OutlineButton(
     modifier: Modifier,
-    userState: UserState = UserState(),
-    onClick: (Int) -> Unit
+    onClick: () -> Unit
 ) {
     OutlinedButton(
         modifier = modifier,
-        onClick = { onClick(userState.userID) },
+        onClick = { onClick() },
         border = BorderStroke(1.dp, LightQuaternaryBlackColor),
         shape = RoundedCornerShape(100),
         colors = ButtonDefaults.outlinedButtonColors(
