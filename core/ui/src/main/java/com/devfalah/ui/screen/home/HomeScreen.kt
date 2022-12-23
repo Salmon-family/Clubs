@@ -93,9 +93,7 @@ fun HomeContent(
     onOpenLinkClick: (String) -> Unit,
     onClickChat: () -> Unit,
 ) {
-    val context = LocalContext.current
     Column {
-
         AppBar(
             title = Screen.Home.title,
             navHostController = navController,
