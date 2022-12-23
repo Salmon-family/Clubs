@@ -8,7 +8,7 @@ class SignupUseCase @Inject constructor(
     private val identityRepository: IdentityRepository
 ) {
 
-    suspend operator fun invoke(userData: UserData): Account {
+    suspend operator fun invoke(userData: UserData): String {
         return identityRepository.signup(userData)
     }
 }

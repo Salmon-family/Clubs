@@ -3,10 +3,12 @@ package com.thechance.identity.repositories.models
 import com.google.gson.annotations.SerializedName
 
 data class UserDataDTO(
-    @SerializedName("firstname")
-    var firstname: String,
-    @SerializedName("lastname")
-    var lastname: String,
+    @SerializedName("fullname")
+    var fullName: String,
+    @SerializedName("job_title")
+    var jobTitle: String,
+    @SerializedName("fcm_token")
+    val fcmToken: String,
     @SerializedName("email")
     var email: String,
     @SerializedName("reemail")

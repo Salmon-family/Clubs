@@ -27,8 +27,8 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.login(userName, password).toEntity()
     }
 
-    override suspend fun signup(userData: UserData): Account {
-        return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData)).toEntity()
+    override suspend fun signup(userData: UserData): String {
+        return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData))
     }
 
     override fun getUserId(): String? {

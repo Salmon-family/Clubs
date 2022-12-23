@@ -39,8 +39,9 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
             val state = _uiState.value
             val userData = UserData(
-                firstname = state.firstName,
-                lastname = "_",
+                fullName = state.firstName,
+                jobTitle = "_",
+                fcmToken = "_",
                 email = state.email,
                 reEmail = state.email,
                 gender = state.gender,
@@ -49,10 +50,8 @@ class SignupViewModel @Inject constructor(
                 password = state.password,
             )
             try {
-                val userId = signupUseCase(userData).guid.toString()
+                signupUseCase(userData)
                 onSuccess()
-                saveUserId(userId)
-                Log.i("userName", userId)
             } catch (t: Throwable) {
                 onError(errorMessage = t)
             }

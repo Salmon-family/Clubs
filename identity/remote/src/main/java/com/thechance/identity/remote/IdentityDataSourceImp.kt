@@ -19,11 +19,12 @@ class IdentityDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun signup(userDataDTO: UserDataDTO): AccountDTO {
+    override suspend fun signup(userDataDTO: UserDataDTO): String {
         return wrap {
             service.addUser(
-                firstname = userDataDTO.firstname,
-                lastname = userDataDTO.lastname,
+                fullName = userDataDTO.fullName,
+                jobTitle = userDataDTO.jobTitle,
+                fcmToken = userDataDTO.fcmToken,
                 email = userDataDTO.email,
                 reEmail = userDataDTO.email,
                 gender = userDataDTO.gender,

@@ -21,15 +21,16 @@ interface IdentityService {
     @FormUrlEncoded
     @POST("user_add")
     suspend fun addUser(
-        @Field("firstname") firstname: String,
-        @Field("lastname") lastname: String,
+        @Field("fullname") fullName: String,
+        @Field("job_title") jobTitle: String,
+        @Field("fcm_token") fcmToken: String,
         @Field("email") email: String,
         @Field("reemail") reEmail: String,
         @Field("gender") gender: String,
         @Field("birthdate") birthdate: String,
         @Field("username") username: String,
         @Field("password") password: String
-    ): Response<IdentityBaseResponse<AccountDTO>>
+    ): Response<IdentityBaseResponse<String>>
 
     @POST("groups_join")
     suspend fun joinClub(

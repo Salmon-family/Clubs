@@ -1,8 +1,9 @@
 package com.thechance.identity.entities
 
 data class UserData(
-    val firstname: String,
-    val lastname: String,
+    val fullName: String,
+    val jobTitle: String,
+    val fcmToken: String,
     val email: String,
     val reEmail: String,
     val gender: String,
