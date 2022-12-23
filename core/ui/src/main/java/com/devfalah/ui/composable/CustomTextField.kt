@@ -12,10 +12,15 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
+import com.devfalah.ui.theme.PlusJakartaSans
 
 @Composable
 fun CustomTextField(
@@ -31,7 +36,15 @@ fun CustomTextField(
 ) {
     Column {
         Row {
-            Text(text = title)
+            Text(
+                text = title,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = PlusJakartaSans,
+                    fontWeight = FontWeight.Normal,
+                    color = LightSecondaryBlackColor
+                )
+            )
             if (showTextCount)
                 Text(
                     text = "${value.length} / $maxChar",

@@ -2,7 +2,6 @@ package com.devfalah.ui.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -14,13 +13,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
+import com.devfalah.ui.theme.PlusJakartaSans
 
 @Composable
 fun PasswordInputText(
@@ -30,12 +34,18 @@ fun PasswordInputText(
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column {
-        Text(text = title)
+        Text(
+            text = title,
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = PlusJakartaSans,
+                fontWeight = FontWeight.Normal,
+                color = LightSecondaryBlackColor
+            )
+        )
         HeightSpacer8()
         TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
+            modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = onTextChange,
             shape = RoundedCornerShape(size = 100.dp),
