@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.postDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -151,13 +150,10 @@ class PostDetailsViewModel @Inject constructor(
     //need add loading on button like editProfile...
     fun onClickSendComment() {
         val commentText = _uiState.value.commentText
-        _uiState.update { it.copy(commentText = "") }
+        _uiState.update { it.copy(commentText = "", minorError = "") }
         viewModelScope.launch {
             try {
                 val comment = mangeComment.addComment(uiState.value.id, args.postId, commentText)
-                Log.e("TEST", comment.toString())
-                Log.e("TEST", comment.toUIState(4).toString())
-
                 _uiState.update {
                     it.copy(
                         commentText = "",
@@ -166,7 +162,7 @@ class PostDetailsViewModel @Inject constructor(
                     )
                 }
             } catch (t: Throwable) {
-                Log.e("Erorrrrrr", t.message.toString())
+                _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }
