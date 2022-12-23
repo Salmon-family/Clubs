@@ -21,6 +21,7 @@ import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
@@ -46,11 +47,12 @@ fun PostDetailsScreen(
     PostDetailsContent(
         navController = navController,
         state = state,
-        onClickLike = {},
-        onClickSave = {},
+        onClickLike = viewModel::onClickLikePost,
+        onClickSave = viewModel::onClickSavePost,
         onRefresh = viewModel::getPostComments,
         onClickSendComment = viewModel::onClickSendComment,
         onCommentValueChanged = viewModel::onCommentValueChanged,
+        onDeletePost = viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickCommentLike = viewModel::onClickLikeComment
@@ -75,6 +77,7 @@ fun PostDetailsContent(
     onClickSendComment: () -> Unit,
     onCommentValueChanged: (String) -> Unit,
     onClickCommentLike: (CommentUIState) -> Unit,
+    onDeletePost: (PostUIState) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
 
@@ -100,7 +103,7 @@ fun PostDetailsContent(
                     onClickComment = { },
                     onClickSave = onClickSave,
                     onClickProfile = onClickProfile,
-                    onClickPostSetting = { },
+                    onClickPostSetting = onDeletePost,
                     onOpenLinkClick = onOpenLinkClick
                 )
             }
@@ -136,4 +139,18 @@ fun PostDetailsContent(
             onValueChanged = onCommentValueChanged
         )
     }
+
+    val context = LocalContext.current
+    LaunchedEffect(key1 = state.isPostDeleted) {
+        if (state.isPostDeleted) {
+            navController.navigateUp()
+        }
+    }
+
+    LaunchedEffect(key1 = state.minorError.isNotEmpty()) {
+        if (state.minorError.isNotEmpty()) {
+            showToastMessage(context, state.minorError)
+        }
+    }
+
 }

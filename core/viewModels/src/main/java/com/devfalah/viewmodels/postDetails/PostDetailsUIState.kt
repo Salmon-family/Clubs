@@ -6,11 +6,10 @@ data class PostDetailsUIState(
     val id: Int = 0,
     val post: PostUIState = PostUIState(),
     val comments: List<CommentUIState> = emptyList(),
-
     val commentText: String = "",
-
     val isLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
+    val isPostDeleted:Boolean= false,
     val error: String = "",
     val minorError: String = ""
 )

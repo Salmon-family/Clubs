@@ -4,12 +4,17 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.DeletePostUseCase
 import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.usecases.SetFavoritePostUseCase
+import com.devfalah.usecases.SetPostLikeUseCase
 import com.devfalah.usecases.posts.GetPostCommentsUseCase
 import com.devfalah.usecases.posts.GetPostDetailsUseCase
 import com.devfalah.usecases.posts.MangeCommentUseCase
 import com.devfalah.usecases.posts.SetCommentLikeUseCase
 import com.devfalah.viewmodels.postDetails.mapper.toUIState
+import com.devfalah.viewmodels.userProfile.PostUIState
+import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +30,9 @@ class PostDetailsViewModel @Inject constructor(
     val getPostDetailsUseCase: GetPostDetailsUseCase,
     val mangeComment: MangeCommentUseCase,
     val commentLike: SetCommentLikeUseCase,
+    val favoritePostUseCase: SetFavoritePostUseCase,
+    val postLike: SetPostLikeUseCase,
+    val deletePostUseCase: DeletePostUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -53,7 +61,12 @@ class PostDetailsViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val post = getPostDetailsUseCase(args.postId, uiState.value.id)
-                _uiState.update { it.copy(post = post.toUIState().copy(isSaved = args.isSaved), isLoading = false) }
+                _uiState.update {
+                    it.copy(
+                        post = post.toUIState().copy(isSaved = args.isSaved),
+                        isLoading = false
+                    )
+                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
@@ -109,7 +122,6 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
-
     // need to remove type..
     fun getPostComments(type: Int = 0) {
         viewModelScope.launch {
@@ -128,6 +140,49 @@ class PostDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
 
+            }
+        }
+    }
+
+    fun onClickLikePost(post: PostUIState) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(error = "") }
+            try {
+                val totalLikes = postLike(uiState.value.id, args.postId, post.isLikedByUser)
+                _uiState.update {
+                    it.copy(
+                        post = post.copy(
+                            isLikedByUser = !post.isLikedByUser,
+                            totalLikes = totalLikes
+                        )
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString()) }
+            }
+        }
+    }
+
+    fun onClickSavePost(post: PostUIState) {
+        viewModelScope.launch {
+            try {
+                favoritePostUseCase(post.toEntity())
+                _uiState.update { it.copy(post = it.post.copy(isSaved = !post.isSaved)) }
+            } catch (t: Throwable) {
+                t.message.toString()
+            }
+        }
+    }
+
+    fun onDeletePost(post: PostUIState) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                if (deletePostUseCase(_uiState.value.id, post.postId)) {
+                    _uiState.update { it.copy(isPostDeleted = true) }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
