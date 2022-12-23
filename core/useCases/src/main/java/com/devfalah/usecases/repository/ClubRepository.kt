@@ -75,4 +75,24 @@ interface ClubRepository {
 
     suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean
 
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int)
+            : Club
+
+    suspend fun editUserInformation(user: UserInformation): User
+
+    suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): Post
+
+    suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): Post
+
+    suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean
 }

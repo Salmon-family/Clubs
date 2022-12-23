@@ -1,4 +1,4 @@
-package com.thechance.identity.ui.screen.onboarding.composable.clubs
+package com.thechance.identity.ui.screen.signup.composable.clubs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,8 @@ fun ClubItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .fillMaxWidth()
+            .width((LocalConfiguration.current.screenWidthDp.dp - 64.dp) / 3)
+            .aspectRatio(1f/1.05f)
             .border(
                 width = 2.dp,
                 color = if (isSelected) selectedColor else Color.Transparent,
@@ -55,7 +57,6 @@ fun ClubItem(
             painter = if (isSelected) painterResource(id = club.fillLineIcon) else painterResource(id = club.outLineIcon),
             contentDescription = null,
             tint = if (isSelected) selectedColor else tintColor,
-            modifier = Modifier.padding(top = 30.dp, start = 30.dp, end = 30.dp)
         )
 
         Spacer(Modifier.height(8.dp))
@@ -63,7 +64,6 @@ fun ClubItem(
             text = club.name,
             style = Typography.CardTitle,
             color = MaterialTheme.colors.primaryVariant,
-            modifier = Modifier.padding(bottom = 30.dp),
             textAlign = TextAlign.Center
         )
     }

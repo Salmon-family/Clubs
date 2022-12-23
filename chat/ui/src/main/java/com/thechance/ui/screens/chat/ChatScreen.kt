@@ -7,14 +7,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.thechance.ui.composable.*
+import com.thechance.ui.composable.FriendChat
+import com.thechance.ui.composable.Loading
+import com.thechance.ui.composable.SearchTextField
+import com.thechance.ui.composable.TopBarChats
 import com.thechance.ui.screens.conversation.navigateToConversation
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
@@ -31,10 +38,10 @@ fun ChatsScreen(
         state = state,
         onValueChanged = viewModel::onSearchTextChange,
         onClickChat = {
-            navController.navigateToConversation(id = viewModel.id,
+            navController.navigateToConversation(
+                id = viewModel.id,
                 friendId = it.guid,
-                friendName = it.fullName,
-                friendImage = it.icon)
+            )
         },
         onCLickBack = {},
         onLoadingMoreChats = viewModel::onLoadingMore,

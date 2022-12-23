@@ -22,8 +22,8 @@ import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
-import com.devfalah.ui.screen.createPost.navigateToCreatePost
+import com.devfalah.ui.screen.postCreation.CREATE_POST_SCREEN
+import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -48,7 +48,7 @@ fun HomeScreen(
         // should navigate to post screen details.
         onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
         onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigateToCreatePost(state.id) },
+        onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }

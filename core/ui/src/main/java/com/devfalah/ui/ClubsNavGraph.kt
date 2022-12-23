@@ -14,6 +14,8 @@ import com.devfalah.ui.screen.clubCreation.clubCreationRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.clubsDetail.clubsDetailsRoute
 import com.devfalah.ui.screen.createPost.createPostRoute
+import com.devfalah.ui.screen.postCreation.createPostRoute
+import com.devfalah.ui.screen.editclubscreen.editClubRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
 import com.devfalah.ui.screen.friends.friendsRoute
 import com.devfalah.ui.screen.home.homeRoute
@@ -22,6 +24,7 @@ import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.profile.profileRoute
 import com.devfalah.ui.screen.savedPosts.savedPostsRoute
 import com.devfalah.ui.screen.search.searchRoute
+import com.devfalah.ui.screen.userInformation.editUserInformationRoute
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -47,6 +50,8 @@ fun ClubsNavGraph(navController: NavHostController) {
         clubRequestsRoute(navController = navController)
         clubCreationRoute(navController = navController)
         clubsDetailsRoute(navController = navController)
+        editUserInformationRoute(navController = navController)
+        editClubRoute(navController = navController)
     }
 }
 

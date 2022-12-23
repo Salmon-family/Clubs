@@ -3,6 +3,7 @@ package com.thechance.remote.api
 import com.thechance.remote.response.BaseResponse
 import com.devfalah.repository.models.ConversationDTO
 import com.devfalah.repository.models.ChatDTO
+import com.devfalah.repository.models.UserDTO
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -29,5 +30,10 @@ interface ChatService {
         @Field("to") friendID: Int,
         @Field("message") message: String
     ): Response<BaseResponse<ChatDTO>>
+
+
+    @FormUrlEncoded
+    @POST("user_details")
+    suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
 
 }
