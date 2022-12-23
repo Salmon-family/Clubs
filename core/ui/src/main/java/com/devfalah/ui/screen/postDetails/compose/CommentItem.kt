@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
@@ -39,6 +40,7 @@ fun CommentItem(
         ) {
             Column(modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 CommentHeader(state = state, onClickDeleteComment = onClickDeleteComment)
+                HeightSpacer8()
                 CommentBody(
                     state = state,
                     onClickLike = onClickLike

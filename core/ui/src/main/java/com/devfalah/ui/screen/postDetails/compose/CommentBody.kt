@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.ExpandableText
+import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -50,6 +51,8 @@ fun CommentBody(
             ),
             isTextAlignToStart = state.isOwnerComment
         )
+
+        HeightSpacer8()
 
         Row(
             modifier = Modifier.fillMaxWidth(),

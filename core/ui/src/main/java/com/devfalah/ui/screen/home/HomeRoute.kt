@@ -7,7 +7,7 @@ import com.devfalah.ui.Screen
 
 fun NavController.navigateHome() {
     popBackStack(Screen.Home.screen_route, false)
-    navigate("$ROUTE_HOME")
+    navigate(ROUTE_HOME)
 }
 
 private const val ROUTE_HOME = "home"
