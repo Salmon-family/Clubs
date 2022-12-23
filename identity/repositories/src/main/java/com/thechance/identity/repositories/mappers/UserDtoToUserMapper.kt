@@ -16,15 +16,15 @@ fun AccountDTO.toEntity(): Account {
 
 fun UserDTO.toEntity(): User {
     return User(
-        birthdate = this.birthdate ?: "",
-        coverUrl = this.coverUrl ?: false,
-        email = this.email ?: "",
-        firstName = this.firstName ?: "",
-        lastName = this.lastName ?: "",
-        fullName = this.fullName ?: "",
-        username = this.username ?: "",
-        gender = this.gender ?: "",
-        guid = this.guid ?: 0,
-        language = this.language ?: "",
+        birthdate = birthdate ?: "",
+        coverUrl = coverUrl ?: false,
+        email = email ?: "",
+        jobTitle = jobTitle ?: "",
+        fcmToken = fcmToken,
+        fullName = fullName ?: "",
+        username = username ?: "",
+        gender = gender ?: "",
+        guid = guid ?: 0,
+        language = language ?: "",
     )
 }
