@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.Post
 import com.devfalah.repositories.models.WallPostDTO
 
-fun WallPostDTO.toEntity(groupID:Int): Post? {
+fun WallPostDTO.toEntity(groupID:Int =0): Post? {
     return if ( text == "null:data"){
         null
     }else{

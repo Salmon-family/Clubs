@@ -40,7 +40,4 @@ class MyClubsViewModel @Inject constructor(
         }
     }
 
-    fun onClubClicked(clubId: Int) {
-        Log.w("club_Clicked", clubId.toString())
-    }
 }

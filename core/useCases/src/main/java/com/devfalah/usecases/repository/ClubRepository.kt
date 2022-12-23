@@ -56,13 +56,6 @@ interface ClubRepository {
 
     suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
 
-    suspend fun createClub(
-        userID: Int,
-        groupName: String,
-        description: String,
-        groupPrivacy: Int
-    ): Club
-
     suspend fun getGroupDetails(userID: Int, groupID: Int): Club
 
     suspend fun getGroupMembers(groupID: Int): List<User>

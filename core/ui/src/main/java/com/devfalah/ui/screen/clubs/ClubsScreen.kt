@@ -1,12 +1,5 @@
 package com.devfalah.ui.screen.clubs
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import android.annotation.SuppressLint
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -29,15 +22,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.screen.clubCreation.navigateToClubCreation
-import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
-import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.composable.ClubItem
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.SegmentControls
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubCreation.CLUB_CREATION_ROUTE
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
+import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.theme.*
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
@@ -49,12 +40,11 @@ fun ClubsScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    ClubsContent(navController = navController,
+    ClubsContent(
+        navController = navController,
         state = state,
-        onClubClick = viewModel::onClubClicked
+        onClubClick = { navController.navigateToClubDetails(userId = 6, groupId = 5) }
     )
-
-
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -89,10 +79,11 @@ fun ClubsContent(
                 .background(LightBackgroundColor)
         ) {
 
-            SegmentControls(items = listOf(
-                stringResource(id = R.string.my_clubs),
-                stringResource(R.string.special_clubs)
-            ),
+            SegmentControls(
+                items = listOf(
+                    stringResource(id = R.string.my_clubs),
+                    stringResource(R.string.special_clubs)
+                ),
                 onItemSelection = {
                     animationState = it
                 },
@@ -174,10 +165,11 @@ fun MyClubsScreen(
         }
 
         items(state.myClubs) {
-            ClubItem(state = it,
+            ClubItem(
+                state = it,
                 onClubSelected = onClubClick,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
             )
         }
     }
@@ -203,7 +195,7 @@ fun SpecialClubsScreen(
                 iconId = R.drawable.art_icon,
                 clubTitle = "art",
                 modifier = Modifier.aspectRatio(1f)
-                )
+            )
         }
     }
 }
