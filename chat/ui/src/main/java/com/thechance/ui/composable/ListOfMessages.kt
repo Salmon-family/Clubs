@@ -40,10 +40,8 @@ fun ListOfChat(
                 chatUiState.messageId
             }
         ) {
-            LaunchedEffect(key1 = uiState.isLoadingMore) {
-                Log.i("Before Messages", "Loading....")
+            LaunchedEffect(key1 = lazyListState.isScrolledToTheEnd()) {
                 if (!uiState.isLoadingMore && !uiState.isLastPage && lazyListState.isScrolledToTheEnd()) {
-                    Log.i("Load More Messages", "Loading....")
                     onLoadMoreMessages()
                 }
             }

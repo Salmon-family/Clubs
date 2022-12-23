@@ -89,6 +89,7 @@ class ConversationViewModel @Inject constructor(
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 val messagesCount = getMessages.refreshMessages(userId, friendId, 1)
+                getMessages.refreshMessages(userId, friendId, 2)
                 _uiState.update { it.copy(messagesCount = messagesCount) }
             } catch (e: Exception) {
                 _uiState.update {
