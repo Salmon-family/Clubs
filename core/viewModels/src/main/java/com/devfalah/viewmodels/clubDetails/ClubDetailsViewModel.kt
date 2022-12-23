@@ -41,11 +41,11 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 _uiState.update { it.copy(userId = getUser()) }
                 getGroupWallUseCase(args.groupId)
-                getData()
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
             }
         }
+        getData()
     }
 
     fun getData() {
@@ -84,7 +84,7 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 val clubDetails =
                     getClubDetailsUseCase(userID = args.userID, groupID = args.groupId)
-
+                    Log.e("TEST TESt", clubDetails.toString())
                 _uiState.update {
                     it.copy(
                         clubId = clubDetails.id,

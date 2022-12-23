@@ -140,9 +140,7 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO {
         return wrap {
-            apiService.getGroupDetails(
-                userID = userID, groupID = groupID
-            )
+            apiService.getGroupDetails(userID = userID, groupID = groupID)
         }.group ?: throw Throwable("Error")
     }
 
