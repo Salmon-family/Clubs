@@ -48,4 +48,5 @@ data class PostUIState(
     val isLikedByUser: Boolean = false,
     val postImage: String = "",
     val postContent: String = "",
+    val groupId: Int = 0,
 )

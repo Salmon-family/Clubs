@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
 import com.devfalah.viewmodels.Constants.PRIVATE_PRIVACY
 import com.devfalah.viewmodels.Constants.PUBLIC_PRIVACY
-import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -26,7 +25,6 @@ class ClubDetailsViewModel @Inject constructor(
     private val getClubMembersUseCase: GetClubMembersUseCase,
     private val getGroupWallUseCase: GetGroupWallUseCase,
     private val likeUseCase: SetLikeUseCase,
-    private val getProfilePostUseCase: GetProfilePostsUseCase,
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
@@ -54,7 +52,7 @@ class ClubDetailsViewModel @Inject constructor(
         getMemberCount()
         getPostCount()
         getMembers()
-        getClubPost()
+//        getClubPost()
     }
 
 
@@ -62,12 +60,13 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                val posts =
-                    getProfilePostUseCase.loadMore(uiState.value.userId, _uiState.value.ownerId)
+                val posts = getGroupWallUseCase(args.userID, args.groupId).toUIState()
+
+//                    getProfilePostUseCase.loadMore(uiState.value.userId, _uiState.value.ownerId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        posts = (it.posts + posts.toUIState()),
+                        posts = (it.posts + posts.PostUIState(groupId = args.groupId)),
                         isEndOfPager = posts.isEmpty()
                     )
                 }
@@ -158,22 +157,22 @@ class ClubDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun getClubPost() {
-        viewModelScope.launch {
-            try {
-                _uiState.update {
-                    it.copy(
-                        posts = getGroupWallUseCase(
-                            args.userID,
-                            args.groupId
-                        ).post.toUIState()
-                    )
-                }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(errorMessage = t.message.toString()) }
-            }
-        }
-    }
+//    private fun getClubPost() {
+//        viewModelScope.launch {
+//            try {
+//                _uiState.update {
+//                    it.copy(
+//                        posts = getGroupWallUseCase(
+//                            args.userID,
+//                            args.groupId
+//                        ).post.toUIState()
+//                    )
+//                }
+//            } catch (t: Throwable) {
+//                _uiState.update { it.copy(errorMessage = t.message.toString()) }
+//            }
+//        }
+//    }
 
     fun onClickLike(post: PostUIState) {
         viewModelScope.launch {

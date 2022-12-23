@@ -83,8 +83,8 @@ class ClubRepositoryImp @Inject constructor(
         return localDataSource.isPostFound(postId)
     }
 
-    override suspend fun getSavedPostedIds(): Flow<List<Int>> {
-        return localDataSource.getPostsIds()
+    override suspend fun getSavedPostedIds(groupId: Int): Flow<List<Int>> {
+        return localDataSource.getPostsIds(groupId)
     }
 
     override suspend fun getSavedPosted(): Flow<List<Post>> {
@@ -126,7 +126,8 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWall {
-        return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID).toEntity()
+        return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID)
+            .toEntity(groupID)
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): Club {

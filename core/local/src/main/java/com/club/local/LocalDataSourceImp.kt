@@ -17,8 +17,8 @@ class ClubLocalDataSourceImp @Inject constructor(
         return clubDao.getPosts()
     }
 
-    override suspend fun getPostsIds(): Flow<List<Int>> {
-        return clubDao.getPostsIds()
+    override suspend fun getPostsIds(groupId: Int): Flow<List<Int>> {
+        return clubDao.getPostsIds(groupId)
     }
 
     override suspend fun isPostFound(postId: Int): Boolean {

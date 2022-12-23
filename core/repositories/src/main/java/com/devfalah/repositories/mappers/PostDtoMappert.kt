@@ -1,10 +1,9 @@
 package com.devfalah.repositories.mappers
 
 import com.devfalah.entities.Post
-import com.devfalah.repositories.ConvertDate
 import com.devfalah.repositories.models.WallPostDTO
 
-fun WallPostDTO.toEntity(): Post? {
+fun WallPostDTO.toEntity(groupID:Int): Post? {
     return if ( text == "null:data"){
         null
     }else{
@@ -22,9 +21,10 @@ fun WallPostDTO.toEntity(): Post? {
             publisherImageUrl = postedUser?.icon?.large?.substringBefore("?") ?: "",
             isLiked = post?.isLikedByUser ?: false,
             isSaved = false,
-            posterGuid = ""
+            posterGuid = "",
+            groupId = groupID
         )
     }
 }
 
-fun List<WallPostDTO>.toEntity():List<Post> = mapNotNull { it.toEntity() }
+fun List<WallPostDTO>.toEntity(groupID:Int =0):List<Post> = mapNotNull { it.toEntity(groupID) }

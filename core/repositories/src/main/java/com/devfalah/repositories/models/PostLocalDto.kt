@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "CLUB_TABLE")
 data class PostLocalDto(
-    @PrimaryKey(autoGenerate = false)val id: Int,
+    @PrimaryKey(autoGenerate = false) val id: Int,
+    val groupId: Int,
     val privacy: Boolean,
     val createdTime: Long,
     val content: String,

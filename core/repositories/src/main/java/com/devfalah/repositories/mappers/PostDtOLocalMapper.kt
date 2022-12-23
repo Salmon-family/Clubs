@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.Post
 import com.devfalah.repositories.models.PostLocalDto
 
-fun Post.toEntity(): PostLocalDto {
+fun Post.toEntity(groupId: Int = 0): PostLocalDto {
     return PostLocalDto(
         id = id,
         privacy = privacy,
@@ -15,7 +15,8 @@ fun Post.toEntity(): PostLocalDto {
         publisher = publisher,
         publisherId = publisherId,
         publisherImageUrl = publisherImageUrl,
-        isLiked = isLiked
+        isLiked = isLiked,
+        groupId = groupId
     )
 }
 
@@ -33,7 +34,8 @@ fun PostLocalDto.toEntity(): Post {
         publisherImageUrl = publisherImageUrl,
         isLiked = isLiked,
         isSaved = true,
-        posterGuid = ""
+        posterGuid = "",
+        groupId = groupId
     )
 }
 

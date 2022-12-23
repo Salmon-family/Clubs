@@ -23,28 +23,29 @@ fun GroupDTO.toEntity(): Club {
     )
 }
 
-fun GroupWallDto.toEntity(): GroupWall {
+fun GroupWallDto.toEntity(groupId: Int): GroupWall {
     return GroupWall(
         count = count ?: 0,
-        post = posts?.toGroupWallPostEntity() ?: emptyList(),
+        post = posts?.toGroupWallPostEntity(groupId) ?: emptyList(),
         offset = offset ?: "1"
     )
 }
 
-fun List<GroupPostDto>.toGroupWallPostEntity(): List<GroupWallPost> = map { it.toEntity() }
+fun List<GroupPostDto>.toGroupWallPostEntity(groupId: Int): List<GroupWallPost> =
+    map { it.toEntity(groupId) }
 
-fun GroupPostDto.toEntity(): GroupWallPost {
+fun GroupPostDto.toEntity(groupId: Int): GroupWallPost {
     return GroupWallPost(
         friends = friends ?: emptyList(),
         location = location ?: "",
-        post = post.toEntity(),
+        post = post.toEntity(groupId = groupId),
         text = text ?: "",
         user = user.toEntity()
     )
 
 }
 
-fun PostDTO.toEntity(): Post {
+fun PostDTO.toEntity(groupId: Int): Post {
     return Post(
         id = guid ?: 0,
         privacy = access == "1",
@@ -58,7 +59,8 @@ fun PostDTO.toEntity(): Post {
         imageUrl = profileImage ?: "",
         publisherId = 0,
         publisher = "",
-        publisherImageUrl = profileImage ?: ""
+        publisherImageUrl = profileImage ?: "",
+        groupId = groupId
     )
 
 }

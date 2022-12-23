@@ -9,7 +9,7 @@ interface ClubLocalDataSource {
 
     suspend fun getPosts(): Flow<List<PostLocalDto>>
 
-    suspend fun getPostsIds(): Flow<List<Int>>
+    suspend fun getPostsIds(groupId: Int): Flow<List<Int>>
 
     suspend fun isPostFound(postId: Int): Boolean
 

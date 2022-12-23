@@ -19,8 +19,8 @@ interface ClubDao {
     @Query("SELECT EXISTS(SELECT 1 FROM CLUB_TABLE WHERE id = :postId)")
     suspend fun getPostWithId(postId: Int): Int
 
-    @Query("SELECT id FROM CLUB_TABLE ORDER BY createdTime ASC")
-    fun getPostsIds(): Flow<List<Int>>
+    @Query("SELECT id FROM CLUB_TABLE WHERE groupId==:groupId ORDER BY createdTime ASC")
+    fun getPostsIds(groupId: Int): Flow<List<Int>>
 
     @Query("DELETE FROM club_table WHERE id == :postId")
     suspend fun deletePostById(postId: Int)

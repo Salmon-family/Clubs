@@ -6,6 +6,7 @@ import com.devfalah.usecases.GetHomePostUseCase
 import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.SetFavoritePostUseCase
 import com.devfalah.usecases.SetLikeUseCase
+import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import com.devfalah.viewmodels.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -105,7 +106,7 @@ class HomeViewModel @Inject constructor(
                         isPagerLoading = false,
                         isLoading = false,
                         isEndOfPager = homePosts.isNotEmpty(),
-                        posts = it.posts + homePosts.toUIState()
+                        posts = it.posts + homePosts.toUIState(groupId = HOME_GROUP_ID)
                     )
                 }
             } catch (t: Throwable) {

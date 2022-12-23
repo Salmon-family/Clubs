@@ -4,10 +4,10 @@ import com.devfalah.entities.GroupWallPost
 import com.devfalah.viewmodels.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
-fun List<GroupWallPost>.toUIState(): List<PostUIState> = map { it.toUIState() }
+fun List<GroupWallPost>.toUIState(groupId:Int): List<PostUIState> = map { it.toUIState(groupId) }
 
 
-fun GroupWallPost.toUIState(): PostUIState {
+fun GroupWallPost.toUIState(groupId: Int): PostUIState {
     return PostUIState(
         postId = post.id,
         publisherName = user.name,
@@ -22,5 +22,6 @@ fun GroupWallPost.toUIState(): PostUIState {
         isLikedByUser = post.isLiked,
         postImage = post.imageUrl,
         postContent = text,
+        groupId = groupId
     )
 }
