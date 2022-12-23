@@ -20,7 +20,6 @@ data class UserDetailsUIState(
     val name: String = "",
     val userName: String = "",
     val title: String = "",
-    val bio: String = "",
     val coverUrl: String = "",
     val profilePicture: String = "",
     val areFriends: Boolean = false,
@@ -48,4 +47,5 @@ data class PostUIState(
     val isLikedByUser: Boolean = false,
     val postImage: String = "",
     val postContent: String = "",
+    val groupId: Int = 0,
 )

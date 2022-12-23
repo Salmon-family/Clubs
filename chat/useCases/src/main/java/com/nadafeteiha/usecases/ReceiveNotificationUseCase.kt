@@ -5,11 +5,11 @@ import javax.inject.Inject
 
 class ReceiveNotificationUseCase @Inject constructor(
     private val chatRepository: ChatRepository,
+    private val getChatWithFriend: GetChatWithFriendUseCase,
 ) {
-    suspend operator fun invoke(){
-         chatRepository.onReceiveMessage().filterNot { it.friendId==0 }.collect{
-             chatRepository.insertMessage(it)
-             chatRepository.updateRecentMessage(it.friendId,it.message)
-        }
+    suspend operator fun invoke(userID:Int){
+         chatRepository.onReceiveMessage().filterNot { it==0 }.collect{
+             getChatWithFriend.refreshMessages(userID = userID, friendID = it,1)
+         }
     }
 }

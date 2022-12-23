@@ -2,6 +2,7 @@ package com.devfalah.usecases
 
 import com.devfalah.entities.Post
 import com.devfalah.usecases.repository.ClubRepository
+import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import javax.inject.Inject
 
 class GetHomePostUseCase @Inject constructor(
@@ -30,7 +31,7 @@ class GetHomePostUseCase @Inject constructor(
     }
 
     private suspend fun getSavedPostsIds() {
-        return clubRepository.getSavedPostedIds().collect {
+        return clubRepository.getSavedPostedIds(HOME_GROUP_ID).collect {
             savedPosts = it
         }
     }

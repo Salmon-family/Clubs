@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
+import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -33,7 +34,6 @@ class ProfileViewModel @Inject constructor(
     private val args = ProfileArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
-
 
     init {
         getUserID()
@@ -94,7 +94,11 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update {
-                    it.copy(posts = getProfilePostUseCase(userID, profileOwnerID).toUIState())
+                    it.copy(
+                        posts = getProfilePostUseCase(userID, profileOwnerID).toUIState(
+                            HOME_GROUP_ID
+                        )
+                    )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(minorError = t.message.toString()) }
@@ -189,7 +193,7 @@ class ProfileViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        posts = (it.posts + posts.toUIState()),
+                        posts = (it.posts + posts.toUIState(HOME_GROUP_ID)),
                         isEndOfPager = posts.isEmpty()
                     )
                 }

@@ -16,5 +16,4 @@ object Constants {
 
     const val PRIVATE_PRIVACY = "Private"
     const val PUBLIC_PRIVACY = "Public"
-
 }

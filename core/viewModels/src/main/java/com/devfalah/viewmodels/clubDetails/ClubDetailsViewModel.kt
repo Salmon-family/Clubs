@@ -11,7 +11,6 @@ import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
-import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +25,6 @@ class ClubDetailsViewModel @Inject constructor(
     private val getClubMembersUseCase: GetClubMembersUseCase,
     private val getGroupWallUseCase: GetGroupWallUseCase,
     private val likeUseCase: SetLikeUseCase,
-    private val getProfilePostUseCase: GetProfilePostsUseCase,
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
@@ -42,35 +40,36 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(userId = getUser()) }
-                getData()
+                getGroupWallUseCase(args.groupId)
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
             }
         }
+        getData()
     }
 
     fun getData() {
         getClubDetails()
         getMemberCount()
-        getPostCount()
         getMembers()
-        getClubPost()
+        swipeToRefresh()
     }
 
 
-    fun swipeToRefresh(type: Int) {
+    fun swipeToRefresh(type: Int = 0) {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                val posts =
-                    getProfilePostUseCase.loadMore(uiState.value.userId, _uiState.value.ownerId)
+                val posts = getGroupWallUseCase.loadMore(args.userID, args.groupId)
+                val ll = posts.toUIState(args.groupId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        posts = (it.posts + posts.toUIState()),
+                        posts = (it.posts + ll),
                         isEndOfPager = posts.isEmpty()
                     )
                 }
+                getPostCount()
             } catch (t: Throwable) {
                 Log.e("TESTTEST", t.message.toString())
                 _uiState.update { it.copy(isLoading = false, errorMessage = t.message.toString()) }
@@ -85,7 +84,7 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 val clubDetails =
                     getClubDetailsUseCase(userID = args.userID, groupID = args.groupId)
-
+                    Log.e("TEST TESt", clubDetails.toString())
                 _uiState.update {
                     it.copy(
                         clubId = clubDetails.id,
@@ -131,8 +130,7 @@ class ClubDetailsViewModel @Inject constructor(
     private fun getPostCount() {
         viewModelScope.launch {
             try {
-                val postCount =
-                    getGroupWallUseCase(args.userID, args.groupId).count
+                val postCount = getGroupWallUseCase.getPostsCount()
                 _uiState.update { it.copy(postCount = postCount) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
@@ -152,23 +150,6 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 val members = getClubMembersUseCase(args.groupId).toUserUIState()
                 _uiState.update { it.copy(members = members) }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(errorMessage = t.message.toString()) }
-            }
-        }
-    }
-
-    private fun getClubPost() {
-        viewModelScope.launch {
-            try {
-                _uiState.update {
-                    it.copy(
-                        posts = getGroupWallUseCase(
-                            args.userID,
-                            args.groupId
-                        ).post.toUIState()
-                    )
-                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(errorMessage = t.message.toString()) }
             }
@@ -210,7 +191,7 @@ class ClubDetailsViewModel @Inject constructor(
                         posts = _uiState.value.posts
                             .map {
                                 if (it.postId == post.postId) {
-                                    it.copy(isSaved = true)
+                                    it.copy(isSaved = !post.isSaved)
                                 } else {
                                     it
                                 }
@@ -222,7 +203,6 @@ class ClubDetailsViewModel @Inject constructor(
             }
         }
     }
-
 
     fun joinClubs() {
         viewModelScope.launch {

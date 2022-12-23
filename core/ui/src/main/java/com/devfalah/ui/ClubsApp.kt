@@ -22,8 +22,18 @@ import com.devfalah.ui.theme.LightTernaryBlackColor
 @Composable
 fun ClubsApp() {
     val navController = rememberNavController()
+
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = {
+            val visibility = currentRoute(navController) in listOf(
+                Screen.Home.screen_route,
+                Screen.Search.screen_route,
+                Screen.Clubs.screen_route,
+                Screen.Notification.screen_route,
+                Screen.Menu.screen_route
+            )
+            BottomBar(navController = navController, visibility)
+        }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             ClubsNavGraph(navController = navController)
@@ -32,7 +42,13 @@ fun ClubsApp() {
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
+}
+
+@Composable
+fun BottomBar(navController: NavHostController, visibility: Boolean) {
     val items = listOf(
         Screen.Home,
         Screen.Search,
@@ -43,15 +59,17 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination
 
-    BottomNavigation(
-        backgroundColor = LightCardBackgroundColor
-    ) {
-        items.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentRoute,
-                navController = navController
-            )
+    if (visibility) {
+        BottomNavigation(
+            backgroundColor = LightCardBackgroundColor
+        ) {
+            items.forEach { screen ->
+                AddItem(
+                    screen = screen,
+                    currentDestination = currentRoute,
+                    navController = navController
+                )
+            }
         }
     }
 

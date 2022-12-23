@@ -18,6 +18,18 @@ interface ClubService {
     @POST("user_details")
     suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
 
+    @FormUrlEncoded
+    @POST("user_edit")
+    suspend fun editUserDetails(
+        @Field("guid") userID: Int,
+        @Field("new_full_name") name: String,
+        @Field("new_job_title") title: String,
+        @Field("new_email") email: String,
+        @Field("current_password") currentPassword: String,
+        @Field("new_password") newPassword: String = "",
+    ): Response<BaseResponse<UserDTO>>
+
+
     /**
      * Friends
      * */
@@ -126,7 +138,7 @@ interface ClubService {
     suspend fun getGroupWallList(
         @Field("group_guid") groupID: Int,
         @Field("guid") userID: Int,
-        @Field("offset") page: Int? = null
+        @Field("offset") page: Int,
     ): Response<BaseResponse<GroupWallDto>>
 
     @FormUrlEncoded
@@ -144,8 +156,8 @@ interface ClubService {
         @Field("group_guid") groupID: Int,
         @Field("uguid") groupOwnerID: Int,
         @Field("groupname") groupName: String,
-        @Field("groupdesc") groupDescription: String? = null,
-        @Field("membership") groupPrivacy: Int? = null
+        @Field("membership") groupPrivacy: Int,
+        @Field("groupdesc") groupDescription: String,
     ): Response<BaseResponse<Boolean>>
 
     @GET("groups_user_memberof")
@@ -297,19 +309,29 @@ interface ClubService {
         @Field("post_guid") postID: Int
     ): Response<BaseResponse<Boolean>>
 
+    @Multipart
+    @POST("wall_add")
+    suspend fun addPostWithImage(
+        @Part("poster_guid") userId: RequestBody,
+        @Part("owner_guid") friendOrGroupID: RequestBody,
+        @Part("type") type: RequestBody,
+        @Part("post") post: RequestBody,
+        @Part("privacy") privacy: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): Response<BaseResponse<WallPostDTO>>
+
     @FormUrlEncoded
     @POST("wall_add")
     suspend fun addPostOnWallFriendOrGroup(
         @Field("poster_guid") userId: Int,
         @Field("owner_guid") friendOrGroupID: Int,
-        @Field("type") type: PostType,
-        @Field("post") post: String?,
-        @Field("friends") taggedFriends: List<Int>,
-        @Field("location") location: String,
-        //3 for Friends only, 2 for public.
+        @Field("type") type: String,
+        @Field("post") post: String,
+        @Field("friends") taggedFriends: List<Int> = emptyList(),
+        @Field("location") location: String = "",
         @Field("privacy") privacy: Int = 2,
         @Field("ossn_photo") photo: String? = null
-    )
+    ): Response<BaseResponse<WallPostDTO>>
 
     @GET("wall_view")
     suspend fun getWallPost(

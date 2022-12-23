@@ -5,5 +5,5 @@ data class GroupWallPost(
     val location: String,
     val post: Post,
     val text: String,
-    val user: User
+    val user: User,
 )

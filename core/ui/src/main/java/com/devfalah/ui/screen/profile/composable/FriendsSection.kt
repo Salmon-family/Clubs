@@ -63,11 +63,13 @@ fun FriendsSection(
                 )
             }
 
-            Friend(
-                painter = painterResource(id = R.drawable.ic_more),
-                text = stringResource(R.string.more),
-                textColor = LightPrimaryBrandColor
-            )
+            if (friends.size > 4) {
+                Friend(
+                    painter = painterResource(id = R.drawable.ic_more),
+                    text = stringResource(R.string.more),
+                    textColor = LightPrimaryBrandColor
+                )
+            }
         }
 
     }

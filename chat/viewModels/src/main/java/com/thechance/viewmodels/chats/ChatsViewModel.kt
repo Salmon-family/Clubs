@@ -1,5 +1,6 @@
 package com.thechance.viewmodels.chats
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
@@ -25,13 +26,13 @@ class ChatsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(ChatsUiState())
     val uiState = _uiState.asStateFlow()
-    val id = 10
+    val id = 3
 
 
     init {
         initChats(id)
         viewModelScope.launch {
-            receiveNotificationUseCase()
+            receiveNotificationUseCase(id)
         }
     }
 
@@ -56,6 +57,7 @@ class ChatsViewModel @Inject constructor(
                 val count = getChats.getChats(userID, 1)
                 _uiState.update { it.copy(chatsCount = count) }
             } catch (e: Exception) {
+                Log.e("DEVFALAH",e.message.toString())
                 _uiState.update {
                     it.copy(isLoading = false, error = e.message.toString())
                 }

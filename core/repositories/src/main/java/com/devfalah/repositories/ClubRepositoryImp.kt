@@ -2,6 +2,7 @@ package com.devfalah.repositories
 
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
+import com.devfalah.repositories.mappers.toUserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -83,8 +84,8 @@ class ClubRepositoryImp @Inject constructor(
         return localDataSource.isPostFound(postId)
     }
 
-    override suspend fun getSavedPostedIds(): Flow<List<Int>> {
-        return localDataSource.getPostsIds()
+    override suspend fun getSavedPostedIds(groupId: Int): Flow<List<Int>> {
+        return localDataSource.getPostsIds(groupId)
     }
 
     override suspend fun getSavedPosted(): Flow<List<Post>> {
@@ -92,7 +93,8 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun savedPosted(post: Post) {
-        localDataSource.insertPost(post.toEntity())
+        val x = post.toEntity()
+        localDataSource.insertPost(x)
     }
 
     override suspend fun deletePost(userId: Int, postId: Int): Boolean {
@@ -125,8 +127,9 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getGroupMembers(groupID).toEntity()
     }
 
-    override suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWall {
-        return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID).toEntity()
+    override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall {
+        return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID, page = page)
+            .toEntity(groupID)
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): Club {
@@ -139,6 +142,20 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean {
         return remoteDataSource.declineClub(clubId, memberId, userId)
+    }
+
+    override suspend fun editUserInformation(user: UserInformation): User {
+        return remoteDataSource.editUserInformation(user.toUserInfo()).toEntity()
+    }
+
+    override suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean {
+        return remoteDataSource.editClub(clubId, userID, clubName, description, clubPrivacy)
     }
 
     override suspend fun getRequestsToClub(clubId: Int): List<User> {
@@ -159,4 +176,23 @@ class ClubRepositoryImp @Inject constructor(
         localDataSource.deletePostById(postId)
     }
 
+    override suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): Post {
+        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy).toEntity()
+            ?: throw Throwable("null data")
+    }
+
+    override suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): Post {
+        return remoteDataSource.publishPostWithImage(
+            userId,
+            publishOnId,
+            postContent,
+            privacy,
+            imageFile
+        )
+            .toEntity() ?: throw Throwable("null data")
+    }
 }

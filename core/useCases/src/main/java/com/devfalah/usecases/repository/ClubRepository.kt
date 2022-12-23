@@ -38,7 +38,7 @@ interface ClubRepository {
 
     suspend fun isPostSavedLocally(postId: Int): Boolean
 
-    suspend fun getSavedPostedIds(): Flow<List<Int>>
+    suspend fun getSavedPostedIds(groupId: Int): Flow<List<Int>>
 
     suspend fun getSavedPosted(): Flow<List<Post>>
 
@@ -56,18 +56,11 @@ interface ClubRepository {
 
     suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
 
-    suspend fun createClub(
-        userID: Int,
-        groupName: String,
-        description: String,
-        groupPrivacy: Int
-    ): Club
-
     suspend fun getGroupDetails(userID: Int, groupID: Int): Club
 
     suspend fun getGroupMembers(groupID: Int): List<User>
 
-    suspend fun getGroupWallList(userID: Int, groupID: Int): GroupWall
+    suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall
 
     suspend fun joinClub(clubId: Int, userId: Int): Club
 
@@ -75,4 +68,24 @@ interface ClubRepository {
 
     suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean
 
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int)
+            : Club
+
+    suspend fun editUserInformation(user: UserInformation): User
+
+    suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): Post
+
+    suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): Post
+
+    suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean
 }

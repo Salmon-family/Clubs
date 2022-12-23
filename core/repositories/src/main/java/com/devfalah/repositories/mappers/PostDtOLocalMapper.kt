@@ -15,7 +15,8 @@ fun Post.toEntity(): PostLocalDto {
         publisher = publisher,
         publisherId = publisherId,
         publisherImageUrl = publisherImageUrl,
-        isLiked = isLiked
+        isLiked = isLiked,
+        groupId = groupId
     )
 }
 
@@ -33,7 +34,8 @@ fun PostLocalDto.toEntity(): Post {
         publisherImageUrl = publisherImageUrl,
         isLiked = isLiked,
         isSaved = true,
-        posterGuid = ""
+        posterGuid = "",
+        groupId = groupId
     )
 }
 

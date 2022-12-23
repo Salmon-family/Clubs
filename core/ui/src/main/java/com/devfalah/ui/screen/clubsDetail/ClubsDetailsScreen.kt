@@ -22,7 +22,6 @@ import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.RoundButton
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.screen.clubCreation.ROUTE
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
@@ -50,7 +49,7 @@ fun ClubsDetailsScreen(
         onBack = { navController.popBackStack() },
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { navController.navigate(ROUTE) },
+        onClickComment = { },
         onClickSave = viewModel::onClickSave,
         onAddPost = { },
         onClickFriends = { navController.navigateToFriends(it) },
