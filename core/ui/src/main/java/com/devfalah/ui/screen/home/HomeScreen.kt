@@ -49,6 +49,7 @@ fun HomeScreen(
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,
+        onDeletePost= viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }
     )
@@ -69,7 +70,8 @@ fun HomeContent(
     onClickSave: (PostUIState) -> Unit,
     onRefresh: (Int) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onDeletePost: (PostUIState) -> Unit
 ) {
     Column {
 
@@ -99,7 +101,7 @@ fun HomeContent(
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },
                     onClickProfile = onClickProfile,
-                    onClickPostSetting = { },
+                    onClickPostSetting = onDeletePost,
                     onOpenLinkClick = onOpenLinkClick
                 )
             }
