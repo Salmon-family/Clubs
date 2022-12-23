@@ -201,6 +201,22 @@ class RemoteDataSourceImp @Inject constructor(
 
     }
 
+    override suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean {
+        return wrap { apiService.editGroups(
+            groupID = clubId,
+            groupName = clubName,
+            groupOwnerID = userID,
+            groupDescription = description,
+            groupPrivacy = clubPrivacy
+        ) }
+    }
+
     //region postComments
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto> {

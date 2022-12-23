@@ -39,4 +39,5 @@
     <string name="navigate_to_signup">Don’t have an account? </string>
     <string name="navigate_to_login">Already have an account? </string>
     <string name="success_message">Done…</string>
+    <string name="not_exist_email">you don`t have an email app</string>
 </resources>

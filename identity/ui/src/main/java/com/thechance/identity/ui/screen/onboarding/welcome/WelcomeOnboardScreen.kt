@@ -2,11 +2,10 @@ package com.thechance.identity.ui.screen.onboarding.welcome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,8 +19,6 @@ import com.thechance.identity.ui.screen.onboarding.composable.WelcomeOnBoardImag
 import com.thechance.identity.ui.screen.onboarding.pager.navigateToOnBoardingPager
 import com.thechance.identity.ui.spacer.SpacerVertical16
 import com.thechance.identity.ui.spacer.SpacerVertical8
-import com.thechance.identity.ui.theme.LightPrimaryBlackColor
-import com.thechance.identity.ui.theme.LightTernaryBlackColor
 import com.thechance.identity.ui.theme.Typography
 
 @Composable
@@ -40,8 +37,8 @@ fun WelcomeOnboardContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colors.background)
+            .padding(vertical = 16.dp)
     ) {
 
         Box(Modifier.weight(1f)) {
@@ -76,12 +73,11 @@ fun WelcomeOnboardContent(
             text = stringResource(id = R.string.lets_do),
             buttonModifier = Modifier
                 .wrapContentSize()
-                .padding(start = 24.dp),
+                .align(Alignment.End)
+                .padding(horizontal = 24.dp),
             textModifier = Modifier
                 .padding(vertical = 8.dp, horizontal = 24.dp)
         )
-
-        SpacerVertical16()
     }
 }
 

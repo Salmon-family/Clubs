@@ -78,4 +78,12 @@ interface ClubRepository {
     suspend fun getPostByID(postId: Int, userID: Int): Post
 
     suspend fun addComment(userId: Int, postId: Int, comment: String): Comment
+
+    suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean
 }

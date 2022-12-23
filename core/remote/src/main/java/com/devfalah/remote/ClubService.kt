@@ -148,8 +148,8 @@ interface ClubService {
         @Field("group_guid") groupID: Int,
         @Field("uguid") groupOwnerID: Int,
         @Field("groupname") groupName: String,
-        @Field("groupdesc") groupDescription: String? = null,
-        @Field("membership") groupPrivacy: Int? = null
+        @Field("membership") groupPrivacy: Int,
+        @Field("groupdesc") groupDescription: String,
     ): Response<BaseResponse<Boolean>>
 
     @GET("groups_user_memberof")

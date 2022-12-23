@@ -4,6 +4,7 @@ import com.devfalah.repository.ChatRemoteDataSource
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ConversationDTO
 import com.devfalah.repository.models.NotificationDto
+import com.devfalah.repository.models.UserDTO
 import com.thechance.remote.api.ChatService
 import com.thechance.remote.api.CloudMessagingService
 import com.thechance.remote.response.BaseResponse
@@ -15,11 +16,15 @@ class ChatDataSourceImp @Inject constructor(
     private val cloudMessagingService: CloudMessagingService,
 ) : ChatRemoteDataSource {
 
-    override suspend fun getChats(userID: Int,page: Int): ConversationDTO {
-        return wrap { chatService.getRecentMessages(userID,page) }
+    override suspend fun getChats(userID: Int, page: Int): ConversationDTO {
+        return wrap { chatService.getRecentMessages(userID, page) }
     }
 
-    override suspend fun getMessagesWithFriend(userID: Int, friendID: Int, page: Int): ConversationDTO {
+    override suspend fun getMessagesWithFriend(
+        userID: Int,
+        friendID: Int,
+        page: Int,
+    ): ConversationDTO {
         return wrap { chatService.getConversationWithFriend(userID, friendID, page = page) }
     }
 
@@ -30,7 +35,10 @@ class ChatDataSourceImp @Inject constructor(
     override suspend fun postNotification(notification: NotificationDto): Boolean {
         return cloudMessagingService.postNotification(notification).isSuccessful
 
+    }
 
+    override suspend fun getUserDetails(userID: Int): UserDTO {
+        return wrap { chatService.getUserDetails(userID) }
     }
 
 
