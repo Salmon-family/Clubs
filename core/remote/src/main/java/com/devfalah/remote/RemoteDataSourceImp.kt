@@ -85,7 +85,11 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun removeLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
         return wrap {
-            apiService.removeLike(userID = userID, postID = commentId, type = LikeType.annotation.name)
+            apiService.removeLike(
+                userID = userID,
+                postID = commentId,
+                type = LikeType.annotation.name
+            )
         }
     }
 
@@ -208,13 +212,24 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         clubPrivacy: Int,
     ): Boolean {
-        return wrap { apiService.editGroups(
-            groupID = clubId,
-            groupName = clubName,
-            groupOwnerID = userID,
-            groupDescription = description,
-            groupPrivacy = clubPrivacy
-        ) }
+        return wrap {
+            apiService.editGroups(
+                groupID = clubId,
+                groupName = clubName,
+                groupOwnerID = userID,
+                groupDescription = description,
+                groupPrivacy = clubPrivacy
+            )
+        }
+    }
+
+    override suspend fun deleteComment(userId: Int, commentId: Int): Boolean {
+        return wrap { apiService.deleteComment(userID = userId, commentID = commentId) }
+    }
+
+    override suspend fun editComment(commentId: Int, comment: String): Boolean {
+        val response = wrap { apiService.editComment(commentID = commentId, comment = comment) }
+        return !response.success.isNullOrEmpty()
     }
 
     //region postComments
@@ -234,6 +249,7 @@ class RemoteDataSourceImp @Inject constructor(
             apiService.addComment(userID = userId, postID = postId, comment = comment)
         }.comment ?: throw Throwable("Error")
     }
+
 
     //endregion
 

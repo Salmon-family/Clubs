@@ -86,4 +86,9 @@ interface ClubRepository {
         description: String,
         clubPrivacy: Int,
     ): Boolean
+
+    suspend fun deleteComment(userId: Int, commentId: Int): Boolean
+
+    suspend fun editComment(commentId: Int, comment: String): Boolean
+
 }

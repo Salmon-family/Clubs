@@ -53,6 +53,7 @@ fun PostDetailsScreen(
         onClickSendComment = viewModel::onClickSendComment,
         onCommentValueChanged = viewModel::onCommentValueChanged,
         onDeletePost = viewModel::onDeletePost,
+        onClickDeleteComment= viewModel::onClickDeleteComment,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickCommentLike = viewModel::onClickLikeComment
@@ -78,6 +79,7 @@ fun PostDetailsContent(
     onCommentValueChanged: (String) -> Unit,
     onClickCommentLike: (CommentUIState) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
+    onClickDeleteComment: (CommentUIState) -> Unit
 ) {
     Column(Modifier.fillMaxSize()) {
 
@@ -128,7 +130,8 @@ fun PostDetailsContent(
                 CommentItem(
                     modifier = Modifier.fillMaxWidth(),
                     state = it,
-                    onClickLike = { onClickCommentLike(it) }
+                    onClickLike = { onClickCommentLike(it) },
+                    onClickDeleteComment = onClickDeleteComment
                 )
             }
         }

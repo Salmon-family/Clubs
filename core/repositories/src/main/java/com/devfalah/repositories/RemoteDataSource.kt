@@ -75,10 +75,12 @@ interface RemoteDataSource {
     suspend fun addComment(userId: Int, postId: Int, comment: String): CommentDto
 
     suspend fun editClub(
-        clubId: Int,
-        userID: Int,
-        clubName: String,
-        description: String,
-        clubPrivacy: Int,
+        clubId: Int, userID: Int, clubName: String, description: String, clubPrivacy: Int,
     ): Boolean
+
+
+    suspend fun deleteComment(userId: Int, commentId: Int): Boolean
+
+    suspend fun editComment(commentId: Int, comment: String): Boolean
+
 }

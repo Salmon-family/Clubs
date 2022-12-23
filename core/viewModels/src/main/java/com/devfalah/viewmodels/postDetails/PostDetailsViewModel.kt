@@ -56,6 +56,7 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
+    //region Post
     private fun getPostDetails() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
@@ -69,77 +70,6 @@ class PostDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
-            }
-        }
-    }
-
-    fun onCommentValueChanged(comment: String) {
-        _uiState.update { it.copy(commentText = comment) }
-    }
-
-    fun onClickLikeComment(comment: CommentUIState) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(minorError = "") }
-            try {
-                val totalLike = commentLike(
-                    userId = uiState.value.id,
-                    commentId = comment.id,
-                    isLiked = comment.isLikedByUser
-                )
-                val comments = uiState.value.comments.map {
-                    if (it.id == comment.id) {
-                        comment.copy(totalLikes = totalLike, isLikedByUser = !it.isLikedByUser)
-                    } else {
-                        it
-                    }
-                }
-                _uiState.update {
-                    it.copy(comments = comments)
-                }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
-            }
-        }
-    }
-
-    //need add loading on button like editProfile...
-    fun onClickSendComment() {
-        val commentText = _uiState.value.commentText
-        _uiState.update { it.copy(commentText = "") }
-        viewModelScope.launch {
-            try {
-                val comment = mangeComment(uiState.value.id, args.postId, commentText)
-                _uiState.update {
-                    it.copy(
-                        commentText = "",
-                        post = it.post.copy(totalComments = it.post.totalComments + 1),
-                        comments = it.comments + comment.toUIState(uiState.value.id)
-                    )
-                }
-            } catch (t: Throwable) {
-                Log.e("Erorrrrrr", t.message.toString())
-            }
-        }
-    }
-
-    // need to remove type..
-    fun getPostComments(type: Int = 0) {
-        viewModelScope.launch {
-            try {
-                if (!uiState.value.isEndOfPager) {
-                    val comments = getPostCommentsUseCase(args.postId, uiState.value.id)
-                    if (comments.isNotEmpty()) {
-                        _uiState.update {
-                            it.copy(
-                                comments = (it.comments + comments.toUIState(uiState.value.id)).distinctBy { it.id },
-                                isEndOfPager = comments.isEmpty()
-                            )
-                        }
-                    }
-
-                }
-            } catch (t: Throwable) {
-
             }
         }
     }
@@ -186,4 +116,100 @@ class PostDetailsViewModel @Inject constructor(
             }
         }
     }
+    //endregion
+
+    //region Comment
+    fun onCommentValueChanged(comment: String) {
+        _uiState.update { it.copy(commentText = comment) }
+    }
+
+    fun onClickLikeComment(comment: CommentUIState) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(minorError = "") }
+            try {
+                val totalLike = commentLike(
+                    userId = uiState.value.id,
+                    commentId = comment.id,
+                    isLiked = comment.isLikedByUser
+                )
+                val comments = uiState.value.comments.map {
+                    if (it.id == comment.id) {
+                        comment.copy(totalLikes = totalLike, isLikedByUser = !it.isLikedByUser)
+                    } else {
+                        it
+                    }
+                }
+                _uiState.update {
+                    it.copy(comments = comments)
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(minorError = t.message.toString()) }
+            }
+        }
+    }
+
+    //need add loading on button like editProfile...
+    fun onClickSendComment() {
+        val commentText = _uiState.value.commentText
+        _uiState.update { it.copy(commentText = "") }
+        viewModelScope.launch {
+            try {
+                val comment = mangeComment.addComment(uiState.value.id, args.postId, commentText)
+                _uiState.update {
+                    it.copy(
+                        commentText = "",
+                        post = it.post.copy(totalComments = it.post.totalComments + 1),
+                        comments = it.comments + comment.toUIState(uiState.value.id)
+                    )
+                }
+            } catch (t: Throwable) {
+                Log.e("Erorrrrrr", t.message.toString())
+            }
+        }
+    }
+
+    // need to remove type..
+    fun getPostComments(type: Int = 0) {
+        viewModelScope.launch {
+            try {
+                if (!uiState.value.isEndOfPager) {
+                    val comments = getPostCommentsUseCase(args.postId, uiState.value.id)
+                    if (comments.isNotEmpty()) {
+                        _uiState.update {
+                            it.copy(
+                                comments = (it.comments + comments.toUIState(uiState.value.id)).distinctBy { it.id },
+                                isEndOfPager = comments.isEmpty()
+                            )
+                        }
+                    }
+
+                }
+            } catch (t: Throwable) {
+
+            }
+        }
+    }
+
+    fun onClickDeleteComment(comment: CommentUIState) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(minorError = "") }
+            try {
+                val isDeleted =
+                    mangeComment.deleteComment(userId = uiState.value.id, commentId = comment.id)
+                if (isDeleted) {
+                    _uiState.update {
+                        it.copy(
+                            comments = it.comments.filterNot { it.id == comment.id },
+                            post = it.post.copy(totalComments = (it.post.totalComments - 1))
+                        )
+                    }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(minorError = t.message.toString()) }
+            }
+        }
+    }
+    //endregion
+
+
 }

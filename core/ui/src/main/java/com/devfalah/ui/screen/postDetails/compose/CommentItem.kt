@@ -17,12 +17,13 @@ import com.devfalah.viewmodels.postDetails.CommentUIState
 fun CommentItem(
     modifier: Modifier = Modifier,
     state: CommentUIState,
-    onClickLike: () -> Unit
+    onClickLike: () -> Unit,
+    onClickDeleteComment: (CommentUIState) -> Unit
 ) {
-   val itemModifier = if (state.isOwnerComment){
-       modifier.padding(start = 30.dp)
-    }else{
-       modifier.padding(end = 30.dp)
+    val itemModifier = if (state.isOwnerComment) {
+        modifier.padding(start = 30.dp)
+    } else {
+        modifier.padding(end = 30.dp)
     }
     Box(
         modifier = itemModifier.fillMaxWidth(),
@@ -37,7 +38,7 @@ fun CommentItem(
             elevation = 0.dp,
         ) {
             Column(modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                CommentHeader(state = state)
+                CommentHeader(state = state, onClickDeleteComment = onClickDeleteComment)
                 CommentBody(
                     state = state,
                     onClickLike = onClickLike

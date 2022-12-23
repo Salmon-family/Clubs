@@ -4,7 +4,6 @@ import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.repositories.mappers.toPostEntity
 import com.devfalah.repositories.mappers.toUserInfo
-import com.devfalah.repositories.models.CommentDto
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -64,7 +63,8 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun removeLikeOnComment(userID: Int, commentId: Int): Int {
-        return remoteDataSource.removeLikeOnComment(userID = userID, commentId = commentId).toEntity()
+        return remoteDataSource.removeLikeOnComment(userID = userID, commentId = commentId)
+            .toEntity()
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip {
@@ -190,7 +190,17 @@ class ClubRepositoryImp @Inject constructor(
     }
 
 
-    override suspend fun addComment(userId: Int, postId: Int, comment: String): Comment{
-        return remoteDataSource.addComment(userId = userId, postId = postId, comment = comment).toEntity()
+    override suspend fun addComment(userId: Int, postId: Int, comment: String): Comment {
+        return remoteDataSource.addComment(userId = userId, postId = postId, comment = comment)
+            .toEntity()
     }
+
+    override suspend fun deleteComment(userId: Int, commentId: Int): Boolean {
+        return remoteDataSource.deleteComment(userId = userId, commentId = commentId)
+    }
+
+    override suspend fun editComment(commentId: Int, comment: String): Boolean {
+        return remoteDataSource.editComment(commentId = commentId, comment = comment)
+    }
+
 }

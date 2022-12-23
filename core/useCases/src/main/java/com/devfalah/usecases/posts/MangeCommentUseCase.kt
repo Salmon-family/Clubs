@@ -7,18 +7,16 @@ import javax.inject.Inject
 class MangeCommentUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
-
-    suspend operator fun invoke(userId: Int, postId: Int, comment: String): Comment {
+    suspend fun addComment(userId: Int, postId: Int, comment: String): Comment {
         return clubRepository.addComment(userId = userId, postId = postId, comment = comment)
     }
 
-
-    fun deleteComment() {
-
+    suspend fun deleteComment(userId: Int, commentId: Int): Boolean {
+        return clubRepository.deleteComment(userId = userId, commentId = commentId)
     }
 
-    fun editComment() {
-
+    suspend fun editComment(commentId: Int, comment: String): Boolean {
+        return clubRepository.editComment(commentId = commentId, comment = comment)
     }
 
 }
