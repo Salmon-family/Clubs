@@ -1,6 +1,5 @@
 package com.thechance.viewmodels.conversation
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,8 +7,8 @@ import com.nadafeteiha.usecases.GetChatWithFriendUseCase
 import com.nadafeteiha.usecases.GetUserDetailUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SendMessageUseCase
-import com.thechance.viewmodels.conversation.uiStates.toUiState
 import com.thechance.viewmodels.conversation.uiStates.ConversationUIState
+import com.thechance.viewmodels.conversation.uiStates.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,45 +32,64 @@ class ConversationViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch { receiveNotification(args.id) }
+        receiveNotification()
         getListMessages(args.id, args.friendId)
+        getUser()
+
+    }
+
+    private fun receiveNotification() {
+        viewModelScope.launch { receiveNotification(args.id) }
+
+    }
+
+    private fun getUser() {
         viewModelScope.launch {
-            val friend = getUserDetail(args.friendId)
-            _uiState.update {
-                it.copy(
-                    appBar = it.appBar.copy(userName = friend.name, icon = friend.profileUrl),
-                    fcmToken = friend.fcmToken,
-                )
+            try {
+                val friend = getUserDetail(args.friendId)
+                _uiState.update {
+                    it.copy(
+                        appBar = it.appBar.copy(userName = friend.name, icon = friend.profileUrl),
+                        fcmToken = friend.fcmToken,
+                    )
+                }
+            } catch (e: Throwable) {
+                _uiState.update {
+                    it.copy(error = e.message, isLoading = false)
+                }
             }
         }
-
     }
 
     private fun getListMessages(userId: Int, friendId: Int) {
         viewModelScope.launch {
-            refreshMessages(userId, friendId)
-            getMessages(friendId).collect {
-                _uiState.update { uiState ->
-                    uiState.copy(
-                        messages = it.map { it.toUiState() },
-                        isLoading = false
-                    )
+            try {
+                refreshMessages(userId, friendId)
+                getMessages(friendId).collect {
+                    _uiState.update { uiState ->
+                        uiState.copy(
+                            messages = it.map { it.toUiState() },
+                            isLoading = false
+                        )
+                    }
+                }
+            }catch (e:Throwable){
+                _uiState.update {
+                    it.copy(error = e.message, isLoading = false)
                 }
             }
         }
     }
 
     private fun sendMessage(message: String) {
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             try {
-                sendMessageUseCase(args.id, args.friendId, message,_uiState.value.fcmToken)
-            } catch (e: Exception) {
-                Log.e("DEVFALAH",e.message.toString())
+                sendMessageUseCase(args.id, args.friendId, message, _uiState.value.fcmToken)
+            } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
             }
-
         }
     }
 
@@ -91,7 +109,7 @@ class ConversationViewModel @Inject constructor(
                 val messagesCount = getMessages.refreshMessages(userId, friendId, 1)
                 getMessages.refreshMessages(userId, friendId, 2)
                 _uiState.update { it.copy(messagesCount = messagesCount) }
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
