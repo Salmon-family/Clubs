@@ -5,6 +5,7 @@ import com.devfalah.repository.models.UserDTO
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -60,6 +61,12 @@ class ChatRepositoryImp @Inject constructor(
 
     override suspend fun getUserDetail(userID: Int): User {
         return chatRemoteDataSource.getUserDetails(userID).toEntity()
+    }
+
+    override suspend fun saveToken() {
+        firebaseDataSource.getToken().collect{
+            chatLocalDataSource.saveToken(it)
+        }
     }
 
     override suspend fun getMessages(friendId: Int): Flow<List<Message>> {

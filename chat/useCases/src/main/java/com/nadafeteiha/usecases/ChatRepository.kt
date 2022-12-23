@@ -31,4 +31,6 @@ interface ChatRepository {
     suspend fun updateRecentMessage(id: Int, recentMessage: String)
 
     suspend fun getUserDetail(userID: Int): User
+
+    suspend fun saveToken()
 }

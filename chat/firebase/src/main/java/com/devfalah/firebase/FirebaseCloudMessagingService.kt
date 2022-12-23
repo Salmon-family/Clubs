@@ -1,6 +1,5 @@
 package com.devfalah.firebase
 
-import android.util.Log
 import com.devfalah.repository.models.NotificationDataModel
 import com.devfalah.repository.models.NotificationKeys
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -32,11 +31,16 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Log.v("DEVFALAHMESSAGE", token)
+        GlobalScope.launch {
+            newToken.emit(
+                token
+            )
+        }
     }
 
     companion object{
         val events = MutableSharedFlow<NotificationDataModel>()
+        val newToken = MutableSharedFlow<String>()
     }
 
 }

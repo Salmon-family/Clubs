@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.devfalah.local.ChatDao
 import com.devfalah.local.ChatDataBase
+import com.devfalah.local.ChatDataStorePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,4 +31,11 @@ object DataBaseModule {
     fun provideChatDao(chatDataBase: ChatDataBase): ChatDao {
         return chatDataBase.chatDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideChatDataStorePreferences(@ApplicationContext context: Context): ChatDataStorePreferences {
+        return ChatDataStorePreferences(context)
+    }
+
 }

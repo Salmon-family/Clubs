@@ -20,4 +20,6 @@ interface ChatLocalDataSource {
 
     suspend fun updateRecentMessage(id: Int, recentMessage: String)
 
+    suspend fun saveToken(token: String)
+
 }

@@ -10,4 +10,9 @@ class ChatFirebaseDataSourceImp @Inject constructor() : ChatFirebaseDataSource {
     override fun onReceiveNotification(): Flow<NotificationDataModel> {
         return FirebaseCloudMessagingService.events
     }
+
+    override suspend fun getToken(): Flow<String> {
+        return FirebaseCloudMessagingService.newToken
+    }
+
 }

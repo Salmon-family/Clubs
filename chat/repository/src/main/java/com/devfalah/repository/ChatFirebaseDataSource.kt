@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface ChatFirebaseDataSource {
 
     fun onReceiveNotification(): Flow<NotificationDataModel>
+
+    suspend fun getToken(): Flow<String>
 }
