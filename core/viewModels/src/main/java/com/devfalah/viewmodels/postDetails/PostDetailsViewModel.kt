@@ -155,6 +155,9 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val comment = mangeComment.addComment(uiState.value.id, args.postId, commentText)
+                Log.e("TEST", comment.toString())
+                Log.e("TEST", comment.toUIState(4).toString())
+
                 _uiState.update {
                     it.copy(
                         commentText = "",

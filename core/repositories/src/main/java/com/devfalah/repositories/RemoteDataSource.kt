@@ -72,12 +72,11 @@ interface RemoteDataSource {
 
     suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO
 
-    suspend fun addComment(userId: Int, postId: Int, comment: String): CommentDto
+    suspend fun addComment(userId: Int, postId: Int, comment: String): AddedCommentDTO
 
     suspend fun editClub(
         clubId: Int, userID: Int, clubName: String, description: String, clubPrivacy: Int,
     ): Boolean
-
 
     suspend fun deleteComment(userId: Int, commentId: Int): Boolean
 

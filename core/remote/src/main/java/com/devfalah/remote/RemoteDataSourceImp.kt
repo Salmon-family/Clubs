@@ -244,12 +244,9 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getWallPost(userID = userID, postID = postId) }
     }
 
-    override suspend fun addComment(userId: Int, postId: Int, comment: String): CommentDto {
-        return wrap {
-            apiService.addComment(userID = userId, postID = postId, comment = comment)
-        }.comment ?: throw Throwable("Error")
+    override suspend fun addComment(userId: Int, postId: Int, comment: String): AddedCommentDTO {
+        return wrap { apiService.addComment(userID = userId, postID = postId, comment = comment) }
     }
-
 
     //endregion
 

@@ -96,7 +96,7 @@ interface ClubService {
         @Field("comment") comment: String,
         @Field("type") type: String = "post",
         @Field("image_file") imageFile: Array<String>? = arrayOf(""),
-    ): Response<BaseResponse<CommentResponse>>
+    ): Response<BaseResponse<AddedCommentDTO>>
 
     @FormUrlEncoded
     @POST("comment_delete")
