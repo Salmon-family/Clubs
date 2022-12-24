@@ -9,6 +9,7 @@ fun UserInformation.toUserInfo(): UserInfo {
         name = name,
         title = title,
         email = email,
-        password = password
+        password = password,
+        newPassword = newPassword
     )
 }

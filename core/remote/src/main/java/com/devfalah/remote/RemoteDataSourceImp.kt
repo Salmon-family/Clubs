@@ -202,6 +202,7 @@ class RemoteDataSourceImp @Inject constructor(
                 title = user.title,
                 email = user.email,
                 currentPassword = user.password,
+                newPassword = user.newPassword
             )
         }
     }

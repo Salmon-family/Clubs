@@ -56,14 +56,12 @@
     <string name="private_privacy">Private</string>
     <string name="people">People</string>
     <string name="users_requests">Join Requests</string>
-
     <string name="clubs_member">Club Members</string>
     <string name="join_club">Join Club</string>
     <string name="request_to_join">Request to join</string>
     <string name="joined">Joined</string>
     <string name="retry">Retry</string>
     <string name="club_dialog">Club Description</string>
-
     <string name="name">Name</string>
     <string name="bio">Bio</string>
     <string name="edit_info">Edit Profile</string>
@@ -80,6 +78,7 @@
     <string name="post_details">Thread</string>
     <string name="replies">Replies</string>
     <string name="edit">Edit</string>
-
+    <string name="email">Email</string>
+    <string name="new_password">New Password</string>
 
 </resources>

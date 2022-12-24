@@ -1,10 +1,7 @@
 package com.devfalah.ui.screen.menu
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -89,8 +86,8 @@ fun MenuContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor)
-                .padding(16.dp),
+                .background(LightBackgroundColor),
+            contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
