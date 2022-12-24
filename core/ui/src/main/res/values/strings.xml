@@ -69,6 +69,6 @@
     <string name="edit_club">Edit</string>
     <string name="cancel">Cancel</string>
     <string name="club_edited_successfully">Club edited successfully</string>
-    <string name="app_version">Version %1$d</string>
+    <string name="app_version">Version %1$s</string>
     <string name="menu">Menu</string>
 </resources>
