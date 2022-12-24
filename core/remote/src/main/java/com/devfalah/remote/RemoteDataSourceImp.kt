@@ -144,7 +144,7 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getAllComments(userID: Int, postID: Int, page: Int): List<CommentDto> {
-        return wrap { apiService.getComments(userID, postID, page = page) }.comments
+        return wrap { apiService.getComments(userID, postID, page = page) }.comments ?: emptyList()
             ?: throw Throwable("Mapping Error")
     }
 
