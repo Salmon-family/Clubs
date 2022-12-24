@@ -22,7 +22,7 @@ class ConversationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getMessages: GetChatWithFriendUseCase,
     private val sendMessageUseCase: SendMessageUseCase,
-    private val receiveNotification: ReceiveNotificationUseCase,
+    private val receiveNotificationUseCase: ReceiveNotificationUseCase,
     private val getUserDetail: GetUserDetailUseCase,
 ) : ViewModel() {
 
@@ -38,7 +38,7 @@ class ConversationViewModel @Inject constructor(
     }
 
     private fun receiveNotification() {
-        viewModelScope.launch { receiveNotification() }
+        viewModelScope.launch { receiveNotificationUseCase() }
 
     }
 
@@ -72,7 +72,7 @@ class ConversationViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (e:Throwable){
+            } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
                 }
@@ -81,7 +81,7 @@ class ConversationViewModel @Inject constructor(
     }
 
     private fun sendMessage(message: String) {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 sendMessageUseCase(args.id, args.friendId, message, _uiState.value.fcmToken)
             } catch (e: Throwable) {

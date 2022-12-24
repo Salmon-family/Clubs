@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -57,7 +55,7 @@ fun HomeScreen(
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,
-        onDeletePost= viewModel::onDeletePost,
+        onDeletePost = viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickChat = {
@@ -102,7 +100,8 @@ fun HomeContent(
                 IconButton(onClick = onClickChat) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.send),
-                        contentDescription = "" )
+                        contentDescription = ""
+                    )
                 }
             }
         )
