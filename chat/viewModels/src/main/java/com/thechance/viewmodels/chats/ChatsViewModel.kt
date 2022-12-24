@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nadafeteiha.usecases.GetChatsUseCase
+import com.nadafeteiha.usecases.GetUserIdUseCase
 import com.nadafeteiha.usecases.ReceiveNotificationUseCase
 import com.nadafeteiha.usecases.SearchForChatsUseCase
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
@@ -22,23 +23,23 @@ class ChatsViewModel @Inject constructor(
     private val getChats: GetChatsUseCase,
     private val searchForChats: SearchForChatsUseCase,
     private val receiveNotificationUseCase: ReceiveNotificationUseCase,
+    private val getUserId: GetUserIdUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatsUiState())
     val uiState = _uiState.asStateFlow()
-    val id = 3
-
+    val id = getUserId()
 
     init {
-        initChats(id)
+        initChats()
         viewModelScope.launch {
-            receiveNotificationUseCase(id)
+            receiveNotificationUseCase()
         }
     }
 
-    private fun initChats(userID: Int) {
+    private fun initChats() {
         viewModelScope.launch {
-            refreshChats(userID)
+            refreshChats()
             getChats().filterNot { it.isEmpty() }.collect { chats ->
                 _uiState.update { chatsUiState ->
                     chatsUiState.copy(
@@ -50,11 +51,11 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
-    private fun refreshChats(userID: Int) {
+    private fun refreshChats() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                val count = getChats.getChats(userID, 1)
+                val count = getChats.getChats( 1)
                 _uiState.update { it.copy(chatsCount = count) }
             } catch (e: Exception) {
                 Log.e("DEVFALAH",e.message.toString())
@@ -85,7 +86,6 @@ class ChatsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val isLastPage = getChats.loadingMoreChats(
-                    userID = id,
                     chatsCount = _uiState.value.chatsCount,
                     chatsCountLocally= _uiState.value.chats.size,
                 )

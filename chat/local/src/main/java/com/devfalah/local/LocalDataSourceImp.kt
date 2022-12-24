@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSourceImp @Inject constructor(
-    private val chatDao: ChatDao
+    private val chatDao: ChatDao,
+    private val chatDataStorePreferences: ChatDataStorePreferences,
 ) : ChatLocalDataSource {
 
     override suspend fun insertChats(chats: List<ChatLocalDto>) {
@@ -36,5 +37,13 @@ class LocalDataSourceImp @Inject constructor(
 
     override suspend fun updateRecentMessage(id: Int, recentMessage: String) {
         chatDao.updateRecentMessage(id, recentMessage)
+    }
+
+    override fun getUserId(): String? {
+        return chatDataStorePreferences.readString(SIGN_UP_STATE_KEY)
+    }
+
+    companion object DataStorePreferencesKeys {
+        const val SIGN_UP_STATE_KEY = "sign_up_state_key"
     }
 }

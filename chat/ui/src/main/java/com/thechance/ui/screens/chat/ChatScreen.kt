@@ -1,5 +1,6 @@
 package com.thechance.ui.screens.chat
 
+import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -34,6 +36,7 @@ fun ChatsScreen(
     viewModel: ChatsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val activity = (LocalContext.current as? Activity)
     ChatsContent(
         state = state,
         onValueChanged = viewModel::onSearchTextChange,
@@ -43,7 +46,9 @@ fun ChatsScreen(
                 friendId = it.guid,
             )
         },
-        onCLickBack = {},
+        onCLickBack = {
+            activity?.finish()
+        },
         onLoadingMoreChats = viewModel::onLoadingMore,
     )
 }

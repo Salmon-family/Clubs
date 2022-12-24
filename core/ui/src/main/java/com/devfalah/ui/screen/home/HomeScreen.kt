@@ -3,20 +3,28 @@ package com.devfalah.ui.screen.home
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
@@ -36,7 +44,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -51,7 +59,19 @@ fun HomeScreen(
         onRefresh = viewModel::swipeToRefresh,
         onDeletePost= viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) }
+        onOpenLinkClick = { openBrowser(context, it) },
+        onClickChat = {
+            try {
+                val intent = Intent(
+                    context,
+                    Class.forName("com.thechance.ui.ChatActivity")
+                )
+                startActivity(context, intent, Bundle())
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            }
+
+        }
     )
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -71,11 +91,21 @@ fun HomeContent(
     onRefresh: (Int) -> Unit,
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
-    onDeletePost: (PostUIState) -> Unit
+    onDeletePost: (PostUIState) -> Unit,
+    onClickChat: () -> Unit,
 ) {
     Column {
-
-        AppBar(title = Screen.Home.title, navHostController = navController)
+        AppBar(
+            title = Screen.Home.title,
+            navHostController = navController,
+            actions = {
+                IconButton(onClick = onClickChat) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.send),
+                        contentDescription = "" )
+                }
+            }
+        )
 
         ManualPager(
             onRefresh = onRefresh,
