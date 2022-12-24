@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CommentsResponse(
     @SerializedName("comments")
-    val comments: List<CommentDto?>?,
+    val comments: List<CommentDto>?,
     @SerializedName("count")
     val count: Int?,
     @SerializedName("offset")

@@ -77,6 +77,23 @@ class RemoteDataSourceImp @Inject constructor(
         }
     }
 
+
+    override suspend fun setLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
+        return wrap {
+            apiService.addLike(userID = userID, postID = commentId, type = LikeType.annotation.name)
+        }
+    }
+
+    override suspend fun removeLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
+        return wrap {
+            apiService.removeLike(
+                userID = userID,
+                postID = commentId,
+                type = LikeType.annotation.name
+            )
+        }
+    }
+
     override suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO {
         return wrap { apiService.isFriendWith(userID = userID, otherUserID = friendID) }
     }
@@ -234,14 +251,43 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         clubPrivacy: Int,
     ): Boolean {
-        return wrap { apiService.editGroups(
-            groupID = clubId,
-            groupName = clubName,
-            groupOwnerID = userID,
-            groupDescription = description,
-            groupPrivacy = clubPrivacy
-        ) }
+        return wrap {
+            apiService.editGroups(
+                groupID = clubId,
+                groupName = clubName,
+                groupOwnerID = userID,
+                groupDescription = description,
+                groupPrivacy = clubPrivacy
+            )
+        }
     }
+
+    override suspend fun deleteComment(userId: Int, commentId: Int): Boolean {
+        return wrap { apiService.deleteComment(userID = userId, commentID = commentId) }
+    }
+
+    override suspend fun editComment(commentId: Int, comment: String): Boolean {
+        val response = wrap { apiService.editComment(commentID = commentId, comment = comment) }
+        return !response.success.isNullOrEmpty()
+    }
+
+    //region postComments
+
+    override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto> {
+        return wrap {
+            apiService.getComments(userID = userId, postID = postId, type = "post", page = page)
+        }.comments ?: throw Throwable("Error")
+    }
+
+    override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {
+        return wrap { apiService.getWallPost(userID = userID, postID = postId) }
+    }
+
+    override suspend fun addComment(userId: Int, postId: Int, comment: String): AddedCommentDTO {
+        return wrap { apiService.addComment(userID = userId, postID = postId, comment = comment) }
+    }
+
+    //endregion
 
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()

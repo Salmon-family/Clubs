@@ -2,6 +2,7 @@ package com.devfalah.repositories
 
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
+import com.devfalah.repositories.mappers.toPostEntity
 import com.devfalah.repositories.mappers.toUserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
@@ -53,8 +54,17 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.setLikeOnPost(userID = userID, postId = postId).toEntity()
     }
 
+    override suspend fun setLikeOnComment(userID: Int, commentId: Int): Int {
+        return remoteDataSource.setLikeOnComment(userID = userID, commentId = commentId).toEntity()
+    }
+
     override suspend fun removeLikeOnPost(userID: Int, postId: Int): Int {
         return remoteDataSource.removeLikeOnPost(userID = userID, postId = postId).toEntity()
+    }
+
+    override suspend fun removeLikeOnComment(userID: Int, commentId: Int): Int {
+        return remoteDataSource.removeLikeOnComment(userID = userID, commentId = commentId)
+            .toEntity()
     }
 
     override suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip {
@@ -195,4 +205,28 @@ class ClubRepositoryImp @Inject constructor(
         )
             .toEntity() ?: throw Throwable("null data")
     }
+
+    override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<Comment> {
+        return remoteDataSource.getPostComments(postId = postId, userId = userId, page = page)
+            .toEntity()
+    }
+
+    override suspend fun getPostByID(postId: Int, userID: Int): Post {
+        return remoteDataSource.getPostByID(postId = postId, userID = userID).toPostEntity()
+    }
+
+
+    override suspend fun addComment(userId: Int, postId: Int, comment: String): Comment {
+        return remoteDataSource.addComment(userId = userId, postId = postId, comment = comment)
+            .toEntity()
+    }
+
+    override suspend fun deleteComment(userId: Int, commentId: Int): Boolean {
+        return remoteDataSource.deleteComment(userId = userId, commentId = commentId)
+    }
+
+    override suspend fun editComment(commentId: Int, comment: String): Boolean {
+        return remoteDataSource.editComment(commentId = commentId, comment = comment)
+    }
+
 }

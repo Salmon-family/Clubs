@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetHomePostUseCase
@@ -20,10 +21,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    val likeUseCase: SetLikeUseCase,
+    val likeUseCase: SetPostLikeUseCase,
     val allPosts: GetHomePostUseCase,
     val getUser: GetUserIdUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
+    val deletePostUseCase: DeletePostUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUIState())
@@ -115,6 +117,21 @@ class HomeViewModel @Inject constructor(
                         isPagerLoading = false, isLoading = false, pagerError = t.message.toString()
                     )
                 }
+            }
+        }
+    }
+
+    fun onDeletePost(post: PostUIState) {
+        viewModelScope.launch {
+            try {
+                if (deletePostUseCase(_uiState.value.id, post.postId)) {
+                    _uiState.update {
+                        it.copy(posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                    }
+                }
+            } catch (t: Throwable) {
+                Log.e("Test", t.message.toString())
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }

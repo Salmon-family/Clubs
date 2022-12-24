@@ -22,8 +22,8 @@ import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.screen.postCreation.CREATE_POST_SCREEN
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
+import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -45,19 +45,17 @@ fun HomeScreen(
         navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
-        // should navigate to post screen details.
-        onClickComment = { navController.navigate(CREATE_POST_SCREEN) },
+        onClickComment = { navController.navigateToPostDetails(it.postId, it.isSaved) },
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
         onRefresh = viewModel::swipeToRefresh,
+        onDeletePost= viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }
     )
     LaunchedEffect(true) {
         setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
         )
     }
 }
@@ -72,7 +70,8 @@ fun HomeContent(
     onClickSave: (PostUIState) -> Unit,
     onRefresh: (Int) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onDeletePost: (PostUIState) -> Unit
 ) {
     Column {
 
@@ -102,7 +101,7 @@ fun HomeContent(
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },
                     onClickProfile = onClickProfile,
-                    onClickPostSetting = { },
+                    onClickPostSetting = onDeletePost,
                     onOpenLinkClick = onOpenLinkClick
                 )
             }
@@ -116,3 +115,4 @@ fun openBrowser(context: Context, url: String) {
     openURL.data = Uri.parse(url)
     startActivity(context, openURL, null)
 }
+

@@ -77,4 +77,9 @@
     <string name="edit_club">Edit</string>
     <string name="cancel">Cancel</string>
     <string name="club_edited_successfully">Club edited successfully</string>
+    <string name="post_details">Thread</string>
+    <string name="replies">Replies</string>
+    <string name="edit">Edit</string>
+
+
 </resources>

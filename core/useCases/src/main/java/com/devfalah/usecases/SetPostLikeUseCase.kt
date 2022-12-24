@@ -3,7 +3,7 @@ package com.devfalah.usecases
 import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
-class SetLikeUseCase @Inject constructor(
+class SetPostLikeUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
 

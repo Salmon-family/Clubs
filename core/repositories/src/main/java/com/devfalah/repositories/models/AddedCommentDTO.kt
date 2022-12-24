@@ -1,11 +1,9 @@
-package com.devfalah.remote.response
+package com.devfalah.repositories.models
 
 
-import com.devfalah.repositories.models.CommentDto
-import com.devfalah.repositories.models.UserDTO
 import com.google.gson.annotations.SerializedName
 
-data class CommentResponse(
+data class AddedCommentDTO(
     @SerializedName("comment")
     val comment: CommentDto?,
     @SerializedName("user")

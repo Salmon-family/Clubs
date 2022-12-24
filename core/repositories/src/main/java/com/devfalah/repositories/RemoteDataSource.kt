@@ -29,6 +29,10 @@ interface RemoteDataSource {
 
     suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO
 
+    suspend fun setLikeOnComment(userID: Int, commentId: Int): ReactionDTO
+
+    suspend fun removeLikeOnComment(userID: Int, commentId: Int): ReactionDTO
+
     suspend fun getFriendShipStatus(userID: Int, friendID: Int): FriendshipDTO
 
     suspend fun addProfilePicture(userID: Int, file: File): UserDTO
@@ -77,11 +81,18 @@ interface RemoteDataSource {
 
     suspend fun getUserGroups(userId: Int): List<GroupDTO>
 
+    suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto>
+
+    suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO
+
+    suspend fun addComment(userId: Int, postId: Int, comment: String): AddedCommentDTO
+
     suspend fun editClub(
-        clubId: Int,
-        userID: Int,
-        clubName: String,
-        description: String,
-        clubPrivacy: Int,
+        clubId: Int, userID: Int, clubName: String, description: String, clubPrivacy: Int,
     ): Boolean
+
+    suspend fun deleteComment(userId: Int, commentId: Int): Boolean
+
+    suspend fun editComment(commentId: Int, comment: String): Boolean
+
 }

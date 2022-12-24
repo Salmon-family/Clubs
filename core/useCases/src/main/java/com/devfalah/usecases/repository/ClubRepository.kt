@@ -24,7 +24,11 @@ interface ClubRepository {
 
     suspend fun setLikeOnPost(userID: Int, postId: Int): Int
 
+    suspend fun setLikeOnComment(userID: Int, commentId: Int): Int
+
     suspend fun removeLikeOnPost(userID: Int, postId: Int): Int
+
+    suspend fun removeLikeOnComment(userID: Int, commentId: Int): Int
 
     suspend fun checkFriendShip(userID: Int, friendID: Int): FriendShip
 
@@ -81,6 +85,12 @@ interface ClubRepository {
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): Post
 
+    suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<Comment>
+
+    suspend fun getPostByID(postId: Int, userID: Int): Post
+
+    suspend fun addComment(userId: Int, postId: Int, comment: String): Comment
+
     suspend fun editClub(
         clubId: Int,
         userID: Int,
@@ -88,4 +98,9 @@ interface ClubRepository {
         description: String,
         clubPrivacy: Int,
     ): Boolean
+
+    suspend fun deleteComment(userId: Int, commentId: Int): Boolean
+
+    suspend fun editComment(commentId: Int, comment: String): Boolean
+
 }
