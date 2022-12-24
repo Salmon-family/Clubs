@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChatActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val id = intent.getIntExtra("id",0)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContent {
             ClubsTheme {

@@ -17,11 +17,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
@@ -63,7 +66,6 @@ fun HomeScreen(
                     context,
                     Class.forName("com.thechance.ui.ChatActivity")
                 )
-                intent.putExtra("id",state.id)
                 startActivity(context, intent, Bundle())
             } catch (e: ClassNotFoundException) {
                 e.printStackTrace()
@@ -99,7 +101,9 @@ fun HomeContent(
             navHostController = navController,
             actions = {
                 IconButton(onClick = onClickChat) {
-                    Icon(Icons.Rounded.Send, contentDescription = "")
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.send),
+                        contentDescription = "" )
                 }
             }
         )

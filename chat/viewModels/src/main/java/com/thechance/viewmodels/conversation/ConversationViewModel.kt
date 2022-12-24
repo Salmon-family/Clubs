@@ -25,15 +25,14 @@ class ConversationViewModel @Inject constructor(
     private val sendMessageUseCase: SendMessageUseCase,
     private val receiveNotification: ReceiveNotificationUseCase,
     private val getUserDetail: GetUserDetailUseCase,
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val args = ConversationArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(ConversationUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch { receiveNotification(args.id) }
+        viewModelScope.launch { receiveNotification() }
         getListMessages(args.id, args.friendId)
         viewModelScope.launch {
             val friend = getUserDetail(args.friendId)

@@ -26,7 +26,7 @@ abstract class RepositoryModule {
     @ViewModelScoped
     @Binds
     abstract fun bindChatRepository(
-        chatRepositoryImp: com.devfalah.repository.ChatRepositoryImp
+        chatRepositoryImp: ChatRepositoryImp
     ): ChatRepository
 
     @ViewModelScoped
