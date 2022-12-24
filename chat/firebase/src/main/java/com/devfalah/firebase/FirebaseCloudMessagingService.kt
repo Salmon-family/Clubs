@@ -17,16 +17,13 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
             if (data.isNotEmpty()) {
                 val id = (data[NotificationKeys.ID_KEY]?.toInt() ?: 0)
                 val friendId = (data[NotificationKeys.FRIEND_ID_KEY]?.toInt() ?: 0)
-                val messageText = (data[NotificationKeys.MESSAGE_TEXT_KEY]).toString()
-                val time = (data[NotificationKeys.TIME_KEY]).toString()
+
 
                 GlobalScope.launch {
                     events.emit(
                         NotificationDataModel(
                             id = id,
                             friendId = friendId,
-                            messageText = messageText,
-                            time = time,
                         )
                     )
                 }

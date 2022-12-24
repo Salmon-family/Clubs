@@ -116,7 +116,7 @@ fun ProfileDetailsSection(
             ) {
 
                 Text(
-                    text = userDetails.bio,
+                    text = "",
                     color = LightPrimaryBlackColor,
                     fontFamily = PlusJakartaSans,
                     fontSize = 14.sp,

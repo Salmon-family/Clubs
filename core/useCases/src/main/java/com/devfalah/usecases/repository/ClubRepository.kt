@@ -56,7 +56,10 @@ interface ClubRepository {
 
     suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
 
-    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : Club
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int)
+            : Club
+
+    suspend fun editUserInformation(user: UserInformation): User
 
 
     suspend fun getPostDetails(userID: Int, postID: Int): Post
@@ -68,4 +71,19 @@ interface ClubRepository {
     suspend fun deleteComment(userID: Int, commentID: Int): Boolean
 
     suspend fun editComment(commentID: Int, content: String): Success
+    suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): Post
+
+    suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): Post
+
+    suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean
 }

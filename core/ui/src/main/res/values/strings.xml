@@ -32,6 +32,9 @@
     <string name="search">Search</string>
 
     <string name="home">Home</string>
+    <string name="search_for_club">Search for a club</string>
+    <string name="my_special_clubs">My Special Clubs</string>
+    <string name="my_clubs">My Clubs</string>
     <string name="clubs">Clubs</string>
     <string name="account_settings">Account Settings</string>
     <string name="friends_requests">Friends Requests</string>
@@ -53,5 +56,17 @@
     <string name="private_privacy">Private</string>
     <string name="people">People</string>
     <string name="users_requests">Join Requests</string>
-
+    <string name="name">Name</string>
+    <string name="bio">Bio</string>
+    <string name="edit_info">Edit Profile</string>
+    <string name="title">Title</string>
+    <string name="save_button">Save</string>
+    <string name="password">Current password to confirm</string>
+    <string name="user_update_successfully">information updated successfully</string>
+    <string name="create_thread_title">Create Thread</string>
+    <string name="post_button">Publish Thread</string>
+    <string name="special_clubs">Special Clubs</string>
+    <string name="edit_club">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="club_edited_successfully">Club edited successfully</string>
 </resources>

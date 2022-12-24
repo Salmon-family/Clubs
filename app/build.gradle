@@ -22,6 +22,7 @@ android {
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
         buildConfigField "String", "BASE_URL", "\"https://club.the-chance.org/api/v1.0/\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -107,5 +108,7 @@ dependencies {
     implementation "io.coil-kt:coil-compose:$coil_version"
 
     implementation "androidx.navigation:navigation-compose:2.6.0-alpha04"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
 }

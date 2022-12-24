@@ -1,6 +1,7 @@
 package com.thechance.identity.ui.screen.activation
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -37,10 +38,14 @@ fun AccountActivationScreen(
     AccountActivationContent(
         onclickBack = { onBack() },
         onClickOpenEmail = {
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.addCategory(Intent.CATEGORY_APP_EMAIL)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+            try {
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }catch (e: Exception){
+                Toast.makeText(context, R.string.not_exist_email, Toast.LENGTH_SHORT).show()
+            }
         },
         navigateToLoginScreen = {
             navController.navigateToLogInUserName()

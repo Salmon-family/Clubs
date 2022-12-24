@@ -48,7 +48,11 @@ interface RemoteDataSource {
 
     suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean
 
-    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int) : GroupDTO
+    suspend fun createClub(
+        userID: Int, groupName: String, description: String, groupPrivacy: Int
+    ): GroupDTO
+
+    suspend fun editUserInformation(user: UserInfo): UserDTO
 
     suspend fun getPostDetails(userID: Int, postID: Int): WallPostDTO
 
@@ -60,4 +64,22 @@ interface RemoteDataSource {
 
     suspend fun editComment(userID: Int, comment: String): SuccessDTO
 
+    suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): WallPostDTO
+
+    suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): WallPostDTO
+
+
+    suspend fun getUserGroups(userId: Int): List<GroupDTO>
+
+    suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean
 }

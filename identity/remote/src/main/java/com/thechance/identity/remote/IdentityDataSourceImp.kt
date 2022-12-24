@@ -1,8 +1,6 @@
 package com.thechance.identity.remote
 
-import android.util.Log
 import com.thechance.identity.remote.response.IdentityBaseResponse
-import com.thechance.identity.repositories.LocalIdentityDataSource
 import com.thechance.identity.repositories.RemoteIdentityDataSource
 import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.ClubDto
@@ -38,6 +36,10 @@ class IdentityDataSourceImp @Inject constructor(
 
     override suspend fun joinClub(clubId: Int, userId: Int): ClubDto {
         return wrap { service.joinClub(clubId, userId) }
+    }
+
+    override suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean {
+        return wrap { service.acceptJoiningRequest(clubId, userId, clubOwnerId) }
     }
 
 

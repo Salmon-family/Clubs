@@ -1,10 +1,8 @@
 package com.devfalah.repositories.mappers
 
 import com.devfalah.entities.Notification
-import com.devfalah.entities.User
 import com.devfalah.repositories.ConvertDate
 import com.devfalah.repositories.NotificationType
-import com.devfalah.repositories.models.FriendDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
 
 fun NotificationsDTO.toEntity(): Notification {
@@ -26,7 +24,7 @@ fun NotificationsDTO.toEntity(): Notification {
         type = notificationType?.value ?: -1,
         viewed = this.notification?.viewed != null,
         posterID = this.notification?.posterGuid ?: 0,
-        posterName = poster?.fullname ?: "",
+        posterName = poster?.fullname?.substringBefore("##") ?: "",
         posterImage = poster?.icon ?: ""
     )
 }

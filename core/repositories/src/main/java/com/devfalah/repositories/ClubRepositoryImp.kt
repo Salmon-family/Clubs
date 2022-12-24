@@ -3,6 +3,7 @@ package com.devfalah.repositories
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntities
 import com.devfalah.repositories.mappers.toEntity
+import com.devfalah.repositories.mappers.toUserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -118,6 +119,20 @@ class ClubRepositoryImp @Inject constructor(
         ).toEntity()
     }
 
+    override suspend fun editUserInformation(user: UserInformation): User {
+        return remoteDataSource.editUserInformation(user.toUserInfo()).toEntity()
+    }
+
+    override suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean {
+        return remoteDataSource.editClub(clubId, userID, clubName, description, clubPrivacy)
+    }
+
     override suspend fun getRequestsToClub(clubId: Int): List<User> {
         return remoteDataSource.getRequestsToClub(clubId).toEntity()
     }
@@ -156,4 +171,17 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.editComment(commentID, content).toEntity()
     }
 
+    override suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): Post {
+        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
+            .toEntity() ?: throw Throwable("null data")
+    }
+
+    override suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): Post {
+        return remoteDataSource.publishPostWithImage(userId, publishOnId, postContent, privacy, imageFile)
+            .toEntity() ?: throw Throwable("null data")
+    }
 }

@@ -37,7 +37,7 @@ fun PostCreatingSection(
             .fillMaxWidth()
             .clip(CircleShape)
             .background(WhiteColor)
-            .requiredHeight(40.dp),
+            .requiredHeight(60.dp),
     ) {
         IconIndicator(
             modifier = Modifier.align(Alignment.CenterStart),
@@ -65,7 +65,7 @@ fun PostCreatingSection(
             fontFamily = PlusJakartaSans,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 56.dp)
+                .padding(start = 65.dp)
         )
     }
 }

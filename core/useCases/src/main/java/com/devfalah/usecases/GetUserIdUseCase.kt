@@ -4,6 +4,6 @@ import javax.inject.Inject
 
 class GetUserIdUseCase @Inject constructor() {
     suspend operator fun invoke(): Int {
-        return 5
+        return 4
     }
 }

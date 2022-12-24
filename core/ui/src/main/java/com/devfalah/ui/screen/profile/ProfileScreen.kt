@@ -22,11 +22,12 @@ import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.screen.createPost.CREATE_POST_SCREEN
-import com.devfalah.ui.screen.createPost.navigateToCreatePost
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
+import com.devfalah.ui.screen.postCreation.CREATE_POST_SCREEN
+import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.profile.composable.*
+import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
@@ -68,7 +69,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigateToCreatePost(state.userDetails.userID) },
+        onCreatePost = { navController.navigateToPostCreation(PROFILE_SCREEN) },
         onClickProfile = {
             if (!state.isMyProfile) {
                 navController.navigateToProfile(it)
@@ -77,6 +78,9 @@ fun ProfileScreen(
         onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) },
+        onEditUserInformation = {
+            navController.navigateToEditUserInformation()
+        }
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -108,72 +112,67 @@ fun ProfileContent(
     onClickProfile: (Int) -> Unit,
     onRetry: () -> Unit,
     onClickFriends: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onEditUserInformation: () -> Unit
 ) {
-    if (state.majorError.isNotEmpty()) {
-        Box(modifier = Modifier.fillMaxSize())
-        Button(
-            onClick = onRetry
-        ) {
-            Text(text = "Retry")
+
+    ManualPager(
+        onRefresh = onRefresh,
+        contentPadding = PaddingValues(bottom = 16.dp),
+        isLoading = state.loading,
+        error = state.minorError,
+        isEndOfPager = state.isEndOfPager
+    ) {
+
+        item(key = state.userDetails.userID) {
+            ProfileDetailsSection(
+                state.userDetails,
+                modifier = Modifier.nonRippleEffect { onEditUserInformation() },
+                onChangeProfileImage = onChangeProfileImage,
+                onSendRequestClick = onClickAddFriend
+            )
         }
-    } else {
-        ManualPager(
-            onRefresh = onRefresh,
-            contentPadding = PaddingValues(bottom = 16.dp),
-            isLoading = state.loading,
-            error = state.minorError,
-            isEndOfPager = state.isEndOfPager
-        ) {
-            item(key = state.userDetails.userID) {
-                ProfileDetailsSection(
-                    state.userDetails,
-                    onChangeProfileImage = onChangeProfileImage,
-                    onSendRequestClick = onClickAddFriend
-                )
-            }
+        item(key = state.friends) {
+            FriendsSection(
+                state.friends,
+                totalFriends = state.totalFriends,
+                modifier = Modifier
+                    .nonRippleEffect { onClickFriends(state.userDetails.userID) }
+                    .padding(horizontal = 16.dp)
+            )
+        }
+        if (state.isMyProfile || state.userDetails.areFriends) {
             item {
-                FriendsSection(
-                    state.friends,
-                    totalFriends = state.totalFriends,
-                    modifier = Modifier
-                        .nonRippleEffect { onClickFriends(state.userDetails.userID) }
-                        .padding(horizontal = 16.dp)
+                PostCreatingSection(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onCreatePost = if (state.isMyProfile) {
+                        onCreatePost
+                    } else {
+                        onClickSendMessage
+                    },
+                    isMyProfile = state.isMyProfile
                 )
             }
-            if (state.isMyProfile || state.userDetails.areFriends) {
-                item {
-                    PostCreatingSection(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        onCreatePost = if (state.isMyProfile) {
-                            onCreatePost
-                        } else {
-                            onClickSendMessage
-                        },
-                        isMyProfile = state.isMyProfile
-                    )
-                }
-            }
-            items(state.posts) {
-                PostItem(
-                    state = it,
-                    isMyPost = true,
-                    isContentExpandable = true,
-                    onClickLike = onClickLike,
-                    onClickComment = onClickComment,
-                    onClickSave = onClickSave,
-                    onClickPostSetting = onClickPostSetting,
-                    onClickProfile = onClickProfile,
-                    onOpenLinkClick = onOpenLinkClick,
-                )
-            }
+        }
+        items(state.posts) {
+            PostItem(
+                state = it,
+                isMyPost = true,
+                isContentExpandable = true,
+                onClickLike = onClickLike,
+                onClickComment = onClickComment,
+                onClickSave = onClickSave,
+                onClickPostSetting = onClickPostSetting,
+                onClickProfile = onClickProfile,
+                onOpenLinkClick = onOpenLinkClick,
+            )
         }
     }
 }
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-private fun createFileFromContentUri(fileUri: Uri, context: Context): File {
+fun createFileFromContentUri(fileUri: Uri, context: Context): File {
     var fileName = ""
     fileUri.let { returnUri ->
         context.contentResolver.query(returnUri, null, null, null)

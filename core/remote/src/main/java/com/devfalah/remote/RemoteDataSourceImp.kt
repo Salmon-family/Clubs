@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import java.io.File
 import javax.inject.Inject
@@ -127,12 +128,13 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         groupPrivacy: Int,
     ): GroupDTO {
-        return wrap { apiService.addGroups(
-            userID = userID,
-            groupName = groupName,
-            groupPrivacy = groupPrivacy,
-            description = description
-        )
+        return wrap {
+            apiService.addGroups(
+                userID = userID,
+                groupName = groupName,
+                groupPrivacy = groupPrivacy,
+                description = description
+            )
         }
     }
 
@@ -163,6 +165,72 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.editComment(userID, comment) }
     }
 
+    override suspend fun editUserInformation(user: UserInfo): UserDTO {
+        return wrap {
+            apiService.editUserDetails(
+                userID = user.id,
+                name = user.name,
+                title = user.title,
+                email = user.email,
+                currentPassword = user.password,
+            )
+        }
+    }
+
+    override suspend fun publishPostUserWall(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int
+    ): WallPostDTO {
+        return wrap {
+            apiService.addPostOnWallFriendOrGroup(
+                userId = userId,
+                friendOrGroupID = publishOnId,
+                type = "user",
+                post = postContent,
+                privacy = privacy
+            )
+        }
+    }
+
+    override suspend fun publishPostWithImage(
+        userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
+    ): WallPostDTO {
+        val requestBody =
+            imageFile.asRequestBody("image/${imageFile.extension}".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("ossn_photo", imageFile.name, requestBody)
+
+        val id = userId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val publishOn = publishOnId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val type = "user".toRequestBody("text/plain".toMediaTypeOrNull())
+        val postPrivacy = privacy.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val postText = postContent.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        return apiService.addPostWithImage(
+            userId = id,
+            friendOrGroupID = publishOn,
+            type = type,
+            privacy = postPrivacy,
+            post = postText,
+            file = part
+        ).body()?.payload ?: throw Throwable("Error")
+
+    }
+
+    override suspend fun editClub(
+        clubId: Int,
+        userID: Int,
+        clubName: String,
+        description: String,
+        clubPrivacy: Int,
+    ): Boolean {
+        return wrap { apiService.editGroups(
+            groupID = clubId,
+            groupName = clubName,
+            groupOwnerID = userID,
+            groupDescription = description,
+            groupPrivacy = clubPrivacy
+        ) }
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {
@@ -173,6 +241,11 @@ class RemoteDataSourceImp @Inject constructor(
         } else {
             throw Throwable("Network Error")
         }
+    }
+
+    override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
+        return apiService.getAllUserGroups(userId).body()?.payload?.groups
+            ?: throw Throwable("empty groups")
     }
 
 }

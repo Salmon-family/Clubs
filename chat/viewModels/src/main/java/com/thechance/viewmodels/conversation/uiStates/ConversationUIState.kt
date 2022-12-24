@@ -9,6 +9,7 @@ data class ConversationUIState(
     val isLastPage: Boolean = false,
     val messagesCount: Int = 0,
     val isLoadingMore: Boolean = false,
+    val fcmToken:String = "",
 )
 
 
