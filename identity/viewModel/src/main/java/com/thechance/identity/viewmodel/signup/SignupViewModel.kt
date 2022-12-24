@@ -39,7 +39,7 @@ class SignupViewModel @Inject constructor(
             val state = _uiState.value
             val userData = UserData(
                 fullName = state.firstName,
-                jobTitle = "_",
+                jobTitle = state.jobTitle,
                 fcmToken = "_",
                 email = state.email,
                 reEmail = state.email,
@@ -132,6 +132,10 @@ class SignupViewModel @Inject constructor(
 
     fun onChangeGender(gender: String) {
         _uiState.update { it.copy(gender = gender) }
+    }
+
+    fun onChangeJobTitle(jobTitle: String){
+        _uiState.update { it.copy(jobTitle = jobTitle) }
     }
 
 }

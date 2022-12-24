@@ -31,6 +31,7 @@ fun SignUpFullNameScreen(
         state,
         onChangeFullName = viewModel::onChangeFullName,
         onChangeUserName = viewModel::onChangeUserName,
+        onChangeJobTitle = viewModel::onChangeJobTitle,
         onValidate = viewModel::onValidateName,
         onClickBack = { navController.navigateUp() },
         onClickUserNameScreen = { navController.navigateToBirthdateAndGander() },
@@ -45,6 +46,7 @@ private fun SignUpFullNameContent(
     onClickUserNameScreen: () -> Unit,
     onChangeFullName: (String) -> Unit,
     onChangeUserName: (String) -> Unit,
+    onChangeJobTitle: (String) -> Unit,
     onValidate: () -> Boolean,
     onNavigate: () -> Unit
 ) {
@@ -82,7 +84,7 @@ private fun SignUpFullNameContent(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.name_hint),
             text = state.firstName,
-            onTextChange = onChangeFullName
+            onTextChange = onChangeFullName,
         )
 
         SpacerVertical24()
@@ -102,6 +104,22 @@ private fun SignUpFullNameContent(
         )
 
         SpacerVertical24()
+        Text(
+            text = stringResource(id = R.string.job_title),
+            style = Typography.body2,
+            color = MaterialTheme.colors.onSecondary,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+
+        Spacer(Modifier.height(14.dp))
+        InputText(
+            type = KeyboardType.Text,
+            placeHolder = stringResource(id = R.string.job_hint),
+            text = state.jobTitle,
+            onTextChange = onChangeJobTitle
+        )
+
+        SpacerVertical24()
         AuthButton(
             onClick = onClickUserNameScreen,
             buttonModifier = Modifier
@@ -116,7 +134,6 @@ private fun SignUpFullNameContent(
             navigateText = R.string.log_in,
             onNavigate = onNavigate
         )
-        SpacerVertical24()
     }
 
 }
