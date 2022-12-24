@@ -3,10 +3,7 @@ package com.devfalah.viewmodels.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetHomePostUseCase
-import com.devfalah.usecases.GetUserIdUseCase
-import com.devfalah.usecases.SetFavoritePostUseCase
-import com.devfalah.usecases.SetLikeUseCase
+import com.devfalah.usecases.*
 import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import com.devfalah.viewmodels.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState

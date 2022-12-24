@@ -2,7 +2,6 @@ package com.devfalah.repositories
 
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
-import com.devfalah.repositories.mappers.toPostEntity
 import com.devfalah.repositories.mappers.toUserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
@@ -212,7 +211,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): Post {
-        return remoteDataSource.getPostByID(postId = postId, userID = userID).toPostEntity()
+        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity()
     }
 
 

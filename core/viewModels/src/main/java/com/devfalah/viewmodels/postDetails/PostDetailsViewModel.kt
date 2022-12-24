@@ -11,6 +11,7 @@ import com.devfalah.usecases.posts.GetPostCommentsUseCase
 import com.devfalah.usecases.posts.GetPostDetailsUseCase
 import com.devfalah.usecases.posts.MangeCommentUseCase
 import com.devfalah.usecases.posts.SetCommentLikeUseCase
+import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import com.devfalah.viewmodels.postDetails.mapper.toUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -63,7 +64,7 @@ class PostDetailsViewModel @Inject constructor(
                 val post = getPostDetailsUseCase(args.postId, uiState.value.id)
                 _uiState.update {
                     it.copy(
-                        post = post.toUIState().copy(isSaved = args.isSaved),
+                        post = post.toUIState(HOME_GROUP_ID).copy(isSaved = args.isSaved),
                         isLoading = false
                     )
                 }

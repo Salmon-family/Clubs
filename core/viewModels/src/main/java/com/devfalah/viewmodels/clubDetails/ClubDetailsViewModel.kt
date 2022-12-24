@@ -24,7 +24,7 @@ class ClubDetailsViewModel @Inject constructor(
     private val getClubDetailsUseCase: GetClubDetailsUseCase,
     private val getClubMembersUseCase: GetClubMembersUseCase,
     private val getGroupWallUseCase: GetGroupWallUseCase,
-    private val likeUseCase: SetLikeUseCase,
+    private val likeUseCase: SetPostLikeUseCase,
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
@@ -84,7 +84,6 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 val clubDetails =
                     getClubDetailsUseCase(userID = args.userID, groupID = args.groupId)
-                    Log.e("TEST TESt", clubDetails.toString())
                 _uiState.update {
                     it.copy(
                         clubId = clubDetails.id,
