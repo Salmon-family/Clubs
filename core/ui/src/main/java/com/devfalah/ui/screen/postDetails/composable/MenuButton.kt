@@ -12,7 +12,7 @@ import com.devfalah.ui.R
 @Composable
 fun MenuButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Image(
         modifier = modifier.padding(4.dp).clickable { onClick() },

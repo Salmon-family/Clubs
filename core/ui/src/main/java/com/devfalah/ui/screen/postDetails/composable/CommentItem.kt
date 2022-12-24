@@ -12,9 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
-import com.devfalah.viewmodels.postDetails.PostDetailsUIState
 
 @Composable
 fun CommentItem(
@@ -25,17 +23,19 @@ fun CommentItem(
     onClickEditComment: (CommentUIState) -> Unit,
     onValueChanged: (String) -> Unit,
     sendMessage: (CommentUIState) -> Unit,
-    closeDialog: () -> Unit,
+    closeDialog: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxWidth(),
-        contentAlignment = if (state.isOwnerComment) Alignment.TopEnd else Alignment.TopStart) {
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = if (state.isOwnerComment) Alignment.TopEnd else Alignment.TopStart
+    ) {
         Card(
             modifier = modifier
                 .fillMaxWidth(.9f)
                 .padding(horizontal = 16.dp),
-            backgroundColor = MaterialTheme.colors.onSurface,
+            backgroundColor = MaterialTheme.colors.surface,
             shape = RoundedCornerShape(20.dp),
-            elevation = 0.dp,
+            elevation = 0.dp
         ) {
             Column(modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 CommentHeader(state, onClickDeletedComment, onClickEditComment)
@@ -44,7 +44,7 @@ fun CommentItem(
                     onClickLikeComment,
                     onValueChanged,
                     sendMessage,
-                    closeDialog,
+                    closeDialog
                 )
             }
         }
@@ -54,12 +54,13 @@ fun CommentItem(
 @Preview(showBackground = true)
 @Composable
 fun CommentItemPreview() {
-    CommentItem(state = CommentUIState(),
+    CommentItem(
+        state = CommentUIState(),
         onClickLikeComment = {},
         onClickDeletedComment = {},
         onClickEditComment = {},
         onValueChanged = {},
         sendMessage = {},
-        closeDialog = {},
+        closeDialog = {}
     )
 }

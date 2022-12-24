@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
@@ -38,7 +37,7 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 @Composable
 fun PostDetailsScreen(
     navController: NavController,
-    viewModel: PostDetailsViewModel = hiltViewModel(),
+    viewModel: PostDetailsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -62,7 +61,7 @@ fun PostDetailsScreen(
         closeDialog = viewModel::closeDialog,
         onRetry = viewModel::getData,
         onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) },
+        onOpenLinkClick = { openBrowser(context, it) }
     )
 }
 
@@ -86,13 +85,15 @@ fun PostDetailsContent(
     closeDialog: () -> Unit,
     onRetry: () -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit,
+    onOpenLinkClick: (String) -> Unit
 ) {
     if (state.error.isNotEmpty()) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-            contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(onClick = onRetry) {
                     Text(text = "Refresh Screen")
@@ -105,78 +106,61 @@ fun PostDetailsContent(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background),
         ) {
             val (post, comments, textField) = createRefs()
-            if (state.comments.isEmpty()) {
-                LazyColumn {
-                    item {
-                        PostItem(
-                            modifier = Modifier.fillMaxWidth(),
-                            state = state.postDetails,
-                            onClickLike = { onClickLike(it) },
-                            onClickComment = { onClickComment(it) },
-                            onClickSave = { onClickSave(it) },
-                            onClickPostSetting = { onClickPostSetting(it) },
-                            isContentExpandable = true,
-                            maxLineContentExpand = 20,
-                            onClickProfile = onClickProfile,
-                            onOpenLinkClick = onOpenLinkClick,
-                            isMyPost = state.postDetails.publisherId == state.userId,
-                        )
-                    }
+            ManualPager(
+                modifier = Modifier
+                    .constrainAs(comments) {
+                        top.linkTo(post.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                backgroundColor = MaterialTheme.colors.background,
+                onRefresh = onRefresh,
+                contentPadding = PaddingValues(bottom = 64.dp, top = 8.dp),
+                isLoading = state.isPagerLoading,
+                error = state.pagerError,
+                isEndOfPager = state.isEndOfPager
+            ) {
+                item(key = state.postDetails.postId) {
+                    PostItem(
+                        modifier = Modifier
+                            .constrainAs(post) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+                            .fillMaxWidth(),
+                        state = state.postDetails,
+                        onClickLike = { onClickLike(it) },
+                        onClickComment = { onClickComment(it) },
+                        onClickSave = { onClickSave(it) },
+                        onClickPostSetting = { onClickPostSetting(it) },
+                        isContentExpandable = true,
+                        maxLineContentExpand = 20,
+                        onClickProfile = onClickProfile,
+                        onOpenLinkClick = onOpenLinkClick,
+                        isMyPost = state.postDetails.publisherId == state.userId
+                    )
                 }
-            } else {
-                ManualPager(
-                    modifier = Modifier
-                        .constrainAs(comments) {
-                            top.linkTo(post.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        },
-                    onRefresh = onRefresh,
-                    contentPadding = PaddingValues(bottom = 64.dp, top = 8.dp),
-                    isLoading = state.isPagerLoading,
-                    error = state.pagerError,
-                    isEndOfPager = state.isEndOfPager,
-                ) {
-                    item(key = state.postDetails.postId) {
-                        PostItem(
-                            modifier = Modifier
-                                .constrainAs(post) {
-                                    top.linkTo(parent.top)
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                }
-                                .fillMaxWidth(),
-                            state = state.postDetails,
-                            onClickLike = { onClickLike(it) },
-                            onClickComment = { onClickComment(it) },
-                            onClickSave = { onClickSave(it) },
-                            onClickPostSetting = { onClickPostSetting(it) },
-                            isContentExpandable = true,
-                            maxLineContentExpand = 20,
-                            onClickProfile = onClickProfile,
-                            onOpenLinkClick = onOpenLinkClick,
-                            isMyPost = state.postDetails.publisherId == state.userId,
-                        )
-                    }
-                    item {
-                        Text(text = "Comments",
-                            style = AppTypography.body2,
-                            modifier = Modifier.padding(start = 16.dp))
-                    }
-                    items(state.comments) {
-                        CommentItem(
-                            state = it,
-                            onClickLikeComment = onClickLikeComment,
-                            onClickDeletedComment = onClickDeletedComment,
-                            onClickEditComment = onClickEditComment,
-                            onValueChanged = onValueChangedEdited,
-                            sendMessage = sendMessageEdited,
-                            closeDialog = closeDialog,
-                        )
-                    }
+                item {
+                    Text(
+                        text = "Replies",
+                        style = AppTypography.subtitle2,
+                        color = MaterialTheme.colors.onSecondary,
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+                items(state.comments) {
+                    CommentItem(
+                        state = it,
+                        onClickLikeComment = onClickLikeComment,
+                        onClickDeletedComment = onClickDeletedComment,
+                        onClickEditComment = onClickEditComment,
+                        onValueChanged = onValueChangedEdited,
+                        sendMessage = sendMessageEdited,
+                        closeDialog = closeDialog
+                    )
                 }
             }
             CustomTextFiled(
@@ -190,7 +174,7 @@ fun PostDetailsContent(
                 text = commentText,
                 onValueChanged = onValueChanged,
                 sendMessage = sendMessage,
-                isEnabled = state.isSendCommentButtonEnabled(),
+                isEnabled = state.isSendCommentButtonEnabled()
             )
         }
     }

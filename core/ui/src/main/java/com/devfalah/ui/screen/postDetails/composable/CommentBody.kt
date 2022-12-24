@@ -24,14 +24,17 @@ fun CommentBody(
     onClickLikeComment: (CommentUIState) -> Unit,
     onValueChanged: (String) -> Unit,
     sendMessage: (CommentUIState) -> Unit,
-    closeDialog: () -> Unit,
+    closeDialog: () -> Unit
 ) {
-    Column(modifier = Modifier
-        .fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         if (state.isEdited) {
-            InputDialogView(onDismiss = {
-                sendMessage(state)
-            },
+            InputDialogView(
+                onDismiss = {
+                    sendMessage(state)
+                },
                 onExit = { closeDialog() },
                 text = state.content,
                 onValueChanged = onValueChanged,
@@ -41,7 +44,7 @@ fun CommentBody(
             Text(
                 text = state.content,
                 style = AppTypography.body2,
-                color = MaterialTheme.colors.secondary,
+                color = MaterialTheme.colors.onSurface
             )
         }
         HeightSpacer8()
@@ -76,8 +79,8 @@ fun CommentBody(
             Text(
                 text = state.time,
                 style = AppTypography.caption,
-                color = MaterialTheme.colors.secondaryVariant,
-                )
+                color = MaterialTheme.colors.onSurface
+            )
         }
     }
 }

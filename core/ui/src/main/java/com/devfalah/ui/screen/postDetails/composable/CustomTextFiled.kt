@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -13,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.WhiteColor
 
 @Composable
@@ -22,15 +22,15 @@ fun CustomTextFiled(
     isEnabled: Boolean = true,
     text: String,
     onValueChanged: (String) -> Unit,
-    sendMessage: () -> Unit,
+    sendMessage: () -> Unit
 ) {
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().shadow(elevation = 4.dp),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = MaterialTheme.colors.background,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
         ),
         maxLines = 3,
         value = text,
@@ -38,8 +38,8 @@ fun CustomTextFiled(
         onValueChange = onValueChanged,
         placeholder = {
             Text(
-                text = "Enter your comment...",
-                color = LightTernaryBlackColor,
+                text = "Add a comment...",
+                color = MaterialTheme.colors.secondaryVariant,
                 style = AppTypography.body1
             )
         },
@@ -52,25 +52,28 @@ fun CustomTextFiled(
 @Composable
 fun ButtonSend(
     onClickAction: () -> Unit,
-    isEnabled: Boolean = true,
+    isEnabled: Boolean = true
 ) {
     Button(
         modifier = Modifier
             .width(40.dp)
             .padding(2.dp),
-        colors = ButtonDefaults.buttonColors(LightPrimaryBrandColor,
-            disabledBackgroundColor = Color.Transparent),
+        colors = ButtonDefaults
+            .buttonColors(
+                LightPrimaryBrandColor,
+                disabledBackgroundColor = MaterialTheme.colors.secondary
+            ),
         shape = RoundedCornerShape(100.dp),
         elevation = ButtonDefaults.elevation(0.dp),
         enabled = isEnabled,
         contentPadding = PaddingValues(0.dp),
-        onClick = onClickAction,
+        onClick = onClickAction
     ) {
         Icon(
             modifier = Modifier.size(20.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.paper_airplane),
             contentDescription = "back button",
-            tint = if (isEnabled) WhiteColor else Color.Gray,
+            tint = if (isEnabled) WhiteColor else Color.Gray
         )
     }
 }

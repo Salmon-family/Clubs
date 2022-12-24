@@ -7,7 +7,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -22,31 +21,36 @@ fun InputDialogView(
     onDismiss: () -> Unit,
     onExit: () -> Unit,
     text: String,
-    onValueChanged: (String) -> Unit,
+    onValueChanged: (String) -> Unit
 ) {
-    Dialog(onDismissRequest = { onDismiss() }) {
+    Dialog(
+        onDismissRequest = { onDismiss() }
+    ) {
         Card(
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier.padding(8.dp),
+            backgroundColor = MaterialTheme.colors.surface,
             elevation = 8.dp
         ) {
             Column(
                 Modifier
-                    .background(Color.White)
+                    .background(MaterialTheme.colors.surface)
                     .padding(16.dp)
             ) {
                 Text(
                     text = "Edit Comment",
                     modifier = Modifier.padding(8.dp),
-                    fontSize = 20.sp
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colors.onSurface
                 )
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
                     colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = LightBackgroundColor,
-                        focusedIndicatorColor = WhiteColor,
-                        unfocusedIndicatorColor = WhiteColor,
+                        backgroundColor = MaterialTheme.colors.background,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
                     ),
                     value = text,
                     maxLines = 6,
@@ -57,18 +61,19 @@ fun InputDialogView(
                             color = LightTernaryBlackColor,
                             style = AppTypography.body1
                         )
-                    },
+                    }
                 )
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     CustomButtonDialog(
                         modifier = Modifier.weight(1f),
                         titleButton = "Cancel",
-                        titleColor = LightSecondaryBlackColor,
-                        backgroundColor = LightBackgroundColor,
+                        titleColor = MaterialTheme.colors.primaryVariant,
+                        backgroundColor = MaterialTheme.colors.onBackground,
                         onClick = onExit
                     )
                     WidthSpacer8()
@@ -92,7 +97,7 @@ fun CustomButtonDialog(
     titleColor: Color = WhiteColor,
     backgroundColor: Color,
     isEnabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier

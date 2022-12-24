@@ -11,30 +11,32 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.composable.WidthSpacer8
-import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.theme.AppTypography
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
 fun CommentHeader(
     state: CommentUIState,
     onClickDeletedComment: (CommentUIState) -> Unit,
-    onClickEditComment: (CommentUIState) -> Unit,
+    onClickEditComment: (CommentUIState) -> Unit
 ) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 8.dp),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween) {
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         if (state.isOwnerComment) {
-            PopupMenu(user = state,
+            PopupMenu(
+                user = state,
                 onClickDeletedComment = onClickDeletedComment,
-                onClickEditComment)
+                onClickEditComment
+            )
             Spacer(modifier = Modifier.weight(1f))
             UserIdentity(user = state)
         } else {
@@ -46,7 +48,7 @@ fun CommentHeader(
 
 @Composable
 fun UserIdentity(
-    user: CommentUIState,
+    user: CommentUIState
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (user.isOwnerComment) {
@@ -58,34 +60,30 @@ fun UserIdentity(
             WidthSpacer8()
             TextUserName(user = user)
         }
-
-
     }
 }
 
 @Composable
 fun ImageAvatar(
-    user: CommentUIState,
+    user: CommentUIState
 ) {
     Image(
         painter = rememberAsyncImagePainter(model = user.userImage),
         contentDescription = null,
         Modifier
             .size(40.dp)
-            .clip(CircleShape),
+            .clip(CircleShape)
     )
 }
 
 @Composable
 fun TextUserName(
-    user: CommentUIState,
+    user: CommentUIState
 ) {
     Text(
         text = user.userName,
-        fontSize = 14.sp,
-        fontFamily = PlusJakartaSans,
-        fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colors.primaryVariant,
+        style = AppTypography.subtitle2,
+        color = MaterialTheme.colors.onSurface
     )
 }
 
@@ -93,7 +91,7 @@ fun TextUserName(
 fun PopupMenu(
     user: CommentUIState,
     onClickDeletedComment: (CommentUIState) -> Unit,
-    onClickEditComment: (CommentUIState) -> Unit,
+    onClickEditComment: (CommentUIState) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
@@ -128,7 +126,6 @@ fun CommentHeaderPreview() {
             isEdited = false
         ),
         onClickDeletedComment = {},
-        onClickEditComment = {},
+        onClickEditComment = {}
     )
 }
-
