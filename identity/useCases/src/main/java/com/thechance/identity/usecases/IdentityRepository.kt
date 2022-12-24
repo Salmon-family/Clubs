@@ -1,6 +1,5 @@
 package com.thechance.identity.usecases
 
-import com.thechance.identity.entities.Account
 import com.thechance.identity.entities.Club
 import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
@@ -24,4 +23,8 @@ interface IdentityRepository {
     fun getClubs(): List<Club>
 
     suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
+
+    suspend fun updateFcmToken(userData: UserData): User
+
+    fun getFcmToken(): String
 }

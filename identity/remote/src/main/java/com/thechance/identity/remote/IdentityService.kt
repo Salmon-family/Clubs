@@ -44,4 +44,16 @@ interface IdentityService {
         @Query("guid") userId: Int,
         @Query("uguid") clubOwnerId: Int
     ): Response<IdentityBaseResponse<Boolean>>
+
+    @FormUrlEncoded
+    @POST("user_edit")
+    suspend fun updateFcmToken(
+        @Field("guid") userId: Int,
+        @Field("new_email") email: String,
+        @Field("new_gender") gender: String,
+        @Field("current_password") password: String,
+        @Field("new_full_name") fullName: String,
+        @Field("new_fcm_token") fcmToken: String,
+        @Field("new_job_title") jobTitle: String
+    ): Response<IdentityBaseResponse<UserDTO>>
 }

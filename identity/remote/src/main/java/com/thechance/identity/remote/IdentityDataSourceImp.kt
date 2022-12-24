@@ -2,7 +2,6 @@ package com.thechance.identity.remote
 
 import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.RemoteIdentityDataSource
-import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.ClubDto
 import com.thechance.identity.repositories.models.UserDTO
 import com.thechance.identity.repositories.models.UserDataDTO
@@ -31,6 +30,20 @@ class IdentityDataSourceImp @Inject constructor(
                 birthdate = userDataDTO.birthdate,
                 username = userDataDTO.username,
                 password = userDataDTO.password
+            )
+        }
+    }
+
+    override suspend fun updateFcmToken(userDataDto: UserDataDTO): UserDTO {
+        return wrap {
+            service.updateFcmToken(
+                userId = userDataDto.userId,
+                email = userDataDto.newEmail,
+                gender = userDataDto.newGender,
+                password = userDataDto.currentPassword,
+                fullName = userDataDto.newFullName,
+                fcmToken = userDataDto.newFcmToken,
+                jobTitle = userDataDto.newJobTitle
             )
         }
     }

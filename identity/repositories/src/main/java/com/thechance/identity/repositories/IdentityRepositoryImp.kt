@@ -1,6 +1,5 @@
 package com.thechance.identity.repositories
 
-import com.thechance.identity.entities.Account
 import com.thechance.identity.entities.Club
 import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
@@ -49,5 +48,13 @@ class IdentityRepositoryImp @Inject constructor(
 
     override suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean {
         return remoteDataSource.acceptJoiningRequest(clubId, userId, clubOwnerId)
+    }
+
+    override suspend fun updateFcmToken(userData: UserData): User {
+        return remoteDataSource.updateFcmToken(mapperUserDataDTOToUserData.map(userData)).toEntity()
+    }
+
+    override fun getFcmToken(): String {
+        return ""
     }
 }

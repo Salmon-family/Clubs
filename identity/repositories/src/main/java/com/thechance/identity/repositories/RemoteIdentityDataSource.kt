@@ -15,4 +15,6 @@ interface RemoteIdentityDataSource {
 
     suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
 
+    suspend fun updateFcmToken(userDataDto: UserDataDTO): UserDTO
+
 }
