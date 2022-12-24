@@ -66,5 +66,9 @@
     <string name="create_thread_title">Create Thread</string>
     <string name="post_button">Publish Thread</string>
     <string name="special_clubs">Special Clubs</string>
+    <string name="email">Email</string>
+    <string name="edit">Edit</string>
+    <string name="new_password">New Password</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

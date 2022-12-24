@@ -5,5 +5,6 @@ data class UserInformation(
     val name: String,
     val title: String,
     val email: String,
-    val password: String
+    val password: String,
+    val newPassword: String = ""
 )

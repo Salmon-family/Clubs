@@ -14,4 +14,6 @@ object Constants {
     const val SEARCH_CLUB = 1
     const val SEARCH_USER = 2
 
+    const val MAX_PASSWORD_LENGTH = 6
+
 }
