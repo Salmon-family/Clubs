@@ -3,8 +3,8 @@ package com.devfalah.ui.screen.menu
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -48,6 +49,8 @@ fun MenuScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
+    val context = LocalContext.current
+    val version = viewModel.getAppVersion(context)
 
     MenuContent(
         navController = navController,
@@ -58,7 +61,8 @@ fun MenuScreen(
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
-        onClickReportBug = {}
+        onClickReportBug = {},
+        appVersion = version
     )
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -79,18 +83,19 @@ fun MenuContent(
     onClickFriendsRequests: () -> Unit,
     onClickTheme: () -> Unit,
     onClickLanguage: () -> Unit,
-    onClickReportBug: () -> Unit
+    onClickReportBug: () -> Unit,
+    appVersion: String
 ) {
 
     Column {
 
-        AppBar(title = "Menu", navHostController = navController)
+        AppBar(title = stringResource(id = R.string.menu), navHostController = navController)
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor)
-                .padding(16.dp),
+                .background(LightBackgroundColor),
+            contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -127,7 +132,7 @@ fun MenuContent(
 
             item {
                 Text(
-                    text = "version would be shown here",
+                    text = stringResource(R.string.app_version, appVersion),
                     style = TextStyle(
                         fontSize = 12.sp,
                         color = LightTernaryBlackColor,
@@ -144,5 +149,5 @@ fun MenuContent(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewMenu() {
-    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {})
+    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, "")
 }
