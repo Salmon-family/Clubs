@@ -30,7 +30,7 @@ class PostDetailsViewModel @Inject constructor(
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val deletePostUseCase: DeletePostUseCase,
     private val getUser: GetUserIdUseCase,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PostDetailsUIState())
@@ -68,7 +68,6 @@ class PostDetailsViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
-
         }
     }
 
@@ -102,7 +101,6 @@ class PostDetailsViewModel @Inject constructor(
                         error = t.message.toString(),
                         pagerError = t.message.toString()
                     )
-
                 }
             }
         }
@@ -116,13 +114,12 @@ class PostDetailsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        comments = it.comments + newComment.toUIState(),
+                        comments = it.comments + newComment.toUIState()
                     )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
-
         }
     }
 
@@ -142,7 +139,6 @@ class PostDetailsViewModel @Inject constructor(
             } catch (e: Exception) {
                 _uiState.update { it.copy(isLoading = false, error = e.message.toString()) }
             }
-
         }
     }
 
@@ -153,13 +149,12 @@ class PostDetailsViewModel @Inject constructor(
                 setEditCommentUseCase(comment.id, comment.content)
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
+                        isLoading = false
                     )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
-
         }
     }
 
@@ -167,11 +162,13 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val totalLikes = setLikeUseCase(
-                    postID = post.postId, userId = _uiState.value.userId,
+                    postID = post.postId,
+                    userId = _uiState.value.userId,
                     isLiked = post.isLikedByUser
                 )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = totalLikes
                 )
                 _uiState.update {
                     it.copy(
@@ -189,20 +186,23 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val totalLikes = setLikeUseCase(
-                    postID = comment.id, userId = _uiState.value.userId,
+                    postID = comment.id,
+                    userId = _uiState.value.userId,
                     isLiked = comment.isLikedByUser
                 )
                 val updatedPost = comment.copy(
-                    isLikedByUser = !comment.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !comment.isLikedByUser,
+                    totalLikes = totalLikes
                 )
                 _uiState.update { it ->
-                    it.copy(comments = _uiState.value.comments.map {
-                        if (it.id == comment.id) {
-                            updatedPost
-                        } else {
-                            it
+                    it.copy(
+                        comments = _uiState.value.comments.map {
+                            if (it.id == comment.id) {
+                                updatedPost
+                            } else {
+                                it
+                            }
                         }
-                    }
                     )
                 }
             } catch (t: Throwable) {
@@ -217,13 +217,15 @@ class PostDetailsViewModel @Inject constructor(
             try {
                 val isEdited = !comment.isEdited
                 _uiState.update { it ->
-                    it.copy(comments = _uiState.value.comments.map {
-                        if (it.id == comment.id) {
-                            it.copy(isEdited = isEdited)
-                        } else {
-                            it
+                    it.copy(
+                        comments = _uiState.value.comments.map {
+                            if (it.id == comment.id) {
+                                it.copy(isEdited = isEdited)
+                            } else {
+                                it
+                            }
                         }
-                    })
+                    )
                 }
             } catch (t: Throwable) {
                 Log.e("Test", t.message.toString())
@@ -277,8 +279,10 @@ class PostDetailsViewModel @Inject constructor(
                 _uiState.update { it.copy(isLoading = true) }
                 if (deletePostUseCase(_uiState.value.userId, post.postId)) {
                     _uiState.update {
-                        it.copy(postDetails = _uiState.value.postDetails,
-                            isLoading = false)
+                        it.copy(
+                            postDetails = _uiState.value.postDetails,
+                            isLoading = false
+                        )
                     }
                 }
             } catch (t: Throwable) {
@@ -312,5 +316,4 @@ class PostDetailsViewModel @Inject constructor(
             )
         }
     }
-
 }

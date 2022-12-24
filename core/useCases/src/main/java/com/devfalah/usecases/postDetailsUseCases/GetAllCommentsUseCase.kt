@@ -5,7 +5,7 @@ import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class GetAllCommentsUseCase @Inject constructor(
-    private val clubRepository: ClubRepository,
+    private val clubRepository: ClubRepository
 ) {
     private var page = 1
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
@@ -108,6 +109,17 @@ fun PostDetailsContent(
                 .fillMaxSize()
         ) {
             val (post, comments, textField) = createRefs()
+            AppBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .constrainAs(post) {
+                        top.linkTo(parent.top)
+                    },
+                title = "Threads",
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.primaryVariant,
+                navHostController = navController
+            )
             ManualPager(
                 modifier = Modifier
                     .constrainAs(comments) {
