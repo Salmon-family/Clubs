@@ -52,7 +52,7 @@ fun PasswordInputText(
             visualTransformation = if (passwordVisible) {
                 VisualTransformation.None
             } else {
-                PasswordVisualTransformation('\u2731')
+                PasswordVisualTransformation()
             },
             trailingIcon = {
                 Icon(
