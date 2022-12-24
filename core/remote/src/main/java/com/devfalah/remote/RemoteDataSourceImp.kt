@@ -145,9 +145,13 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getGroupMembers(groupID: Int): List<UserDTO> {
-        return wrap {
-            apiService.getGroupMembers(groupID)
-        }.members ?: throw Throwable("Error")
+        val members = wrap { apiService.getGroupMembers(groupID) }.members
+        return if (members is Boolean) {
+            emptyList()
+        } else {
+            members as List<UserDTO>
+        }
+
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto {
