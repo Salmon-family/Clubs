@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.myClubs
 
+import com.devfalah.entities.Club
 import com.devfalah.viewmodels.search.ClubUIState
 
 data class MyClubsUiState(
@@ -16,3 +17,11 @@ data class SpecialClubsUIState(
     val name: String = "",
     val image: Int = 0
 )
+
+fun Club.toSpecialClubUiState() = SpecialClubsUIState(
+    id = id,
+    name = name,
+    image = specialClubs[id]?.iconId ?: 0
+)
+
+fun List<Club>.toSpecialClubUiState() = map { it.toSpecialClubUiState() }
