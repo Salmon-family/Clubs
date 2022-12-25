@@ -127,6 +127,7 @@ fun HomeContent(
                     state = it,
                     isContentExpandable = true,
                     isMyPost = it.publisherId == state.id,
+                    isClubPost = false,
                     onClickLike = { onClickLike(it) },
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },

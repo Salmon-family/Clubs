@@ -23,6 +23,7 @@ fun Post.toSavedUIState(): PostUIState {
         totalLikes = totalLikes,
         totalComments = totalComments,
         isSaved = true,
+        isFromClub = false,
         isLikedByUser = isLiked,
         postImage = imageUrl,
         postContent = content,

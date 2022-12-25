@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.CreateThreadUseCase
 import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +29,12 @@ class PostCreationViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.update { it.copy(id = getUserIdUseCase(), clubId = args.clubId) }
+            _uiState.update {
+                it.copy(
+                    id = getUserIdUseCase(), clubId = args.clubId,
+                    isClub = args.clubId != HOME_CLUB_ID && args.clubId != PROFILE_CLUB_ID
+                )
+            }
         }
     }
 

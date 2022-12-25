@@ -35,6 +35,7 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun PostHeader(
     post: PostUIState,
     isMyProfile: Boolean,
+    isClubPost: Boolean,
     onClickPostSetting: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit
 ) {
@@ -60,25 +61,27 @@ fun PostHeader(
                 color = LightPrimaryBlackColor
             )
             Row {
-                Icon(
-                    painter = getPrivacyIcon(post.privacy),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(top = 4.dp)
-                )
-                WidthSpacer8()
-                Text(
-                    text = getPrivacyText(post.privacy),
-                    fontSize = 12.sp,
-                    fontFamily = PlusJakartaSans,
-                    fontWeight = FontWeight.SemiBold,
-                    color = LightTernaryBlackColor,
-                )
+                if (!isClubPost) {
+                    Icon(
+                        painter = getPrivacyIcon(post.privacy),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(top = 4.dp)
+                    )
+                    WidthSpacer8()
+                    Text(
+                        text = "${getPrivacyText(post.privacy)}  | ",
+                        fontSize = 12.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.SemiBold,
+                        color = LightTernaryBlackColor,
+                    )
 
-                WidthSpacer8()
+                    WidthSpacer8()
+                }
                 Text(
-                    text = " |  ${post.createdData}",
+                    text = "${post.createdData}",
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,

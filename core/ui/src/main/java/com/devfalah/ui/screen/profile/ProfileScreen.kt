@@ -159,6 +159,7 @@ fun ProfileContent(
                 state = it,
                 isMyPost = true,
                 isContentExpandable = true,
+                isClubPost = false,
                 onClickLike = onClickLike,
                 onClickComment = onClickComment,
                 onClickSave = onClickSave,

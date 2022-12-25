@@ -170,6 +170,7 @@ private fun ClubsDetailsContent(
                             state = it,
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
+                            isClubPost = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },
@@ -208,11 +209,13 @@ private fun ClubsDetailsContent(
                                 .padding(horizontal = 16.dp))
                     }
 
+                    // why this screen has 2 of below item ????!!!!!!
                     items(state.posts) {
                         PostItem(
                             state = it,
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
+                            isClubPost = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },

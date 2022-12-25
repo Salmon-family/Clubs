@@ -98,20 +98,22 @@ fun PostCreationContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
 
-            SegmentControlsWithIcon(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.End),
-                items = listOf(
-                    stringResource(R.string.public_privacy),
-                    stringResource(R.string.private_privacy)
-                ),
-                icons = listOf(
-                    painterResource(id = R.drawable.ic_menu_language),
-                    painterResource(id = R.drawable.ic_clubs_filled),
-                ),
-                onItemSelection = onPrivacyChange,
-            )
+            if (!state.isClub) {
+                SegmentControlsWithIcon(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(align = Alignment.End),
+                    items = listOf(
+                        stringResource(R.string.public_privacy),
+                        stringResource(R.string.private_privacy)
+                    ),
+                    icons = listOf(
+                        painterResource(id = R.drawable.ic_menu_language),
+                        painterResource(id = R.drawable.ic_clubs_filled),
+                    ),
+                    onItemSelection = onPrivacyChange,
+                )
+            }
 
             PostContent(
                 value = state.postContent,
@@ -126,17 +128,26 @@ fun PostCreationContent(
 
         val context = LocalContext.current
         LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
-            if (state.isSuccess) { goBack(state, navController) }
-            else if (state.error.isNotBlank()) { showToastMessage(context, state.error) }
+            if (state.isSuccess) {
+                goBack(state, navController)
+            } else if (state.error.isNotBlank()) {
+                showToastMessage(context, state.error)
+            }
         }
     }
 }
 
 private fun goBack(state: PostCreationUIState, navController: NavController) {
     when (state.clubId) {
-        HOME_CLUB_ID -> { navController.navigateHome() }
-        PROFILE_CLUB_ID -> { navController.navigateToProfile(state.id) }
-        else -> { navController.navigateToClubDetails(userId = state.id, groupId = state.clubId) }
+        HOME_CLUB_ID -> {
+            navController.navigateHome()
+        }
+        PROFILE_CLUB_ID -> {
+            navController.navigateToProfile(state.id)
+        }
+        else -> {
+            navController.navigateToClubDetails(userId = state.id, groupId = state.clubId)
+        }
     }
 }
 

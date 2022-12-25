@@ -48,4 +48,5 @@ data class PostUIState(
     val postImage: String = "",
     val postContent: String = "",
     val groupId: Int = 0,
+    val isFromClub: Boolean = false,
 )

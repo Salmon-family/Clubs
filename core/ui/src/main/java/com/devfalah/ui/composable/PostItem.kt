@@ -21,6 +21,7 @@ fun PostItem(
     maxLineContentExpand: Int = 2,
     isContentExpandable: Boolean,
     isMyPost: Boolean,
+    isClubPost: Boolean,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -45,7 +46,8 @@ fun PostItem(
                 state,
                 onClickPostSetting = onClickPostSetting,
                 onClickProfile = onClickProfile,
-                isMyProfile = isMyPost
+                isMyProfile = isMyPost,
+                isClubPost = isClubPost
             )
 
             PostContent(

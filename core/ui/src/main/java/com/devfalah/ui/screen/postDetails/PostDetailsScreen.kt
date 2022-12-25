@@ -53,7 +53,7 @@ fun PostDetailsScreen(
         onClickSendComment = viewModel::onClickSendComment,
         onCommentValueChanged = viewModel::onCommentValueChanged,
         onDeletePost = viewModel::onDeletePost,
-        onClickDeleteComment= viewModel::onClickDeleteComment,
+        onClickDeleteComment = viewModel::onClickDeleteComment,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickCommentLike = viewModel::onClickLikeComment
@@ -100,6 +100,7 @@ fun PostDetailsContent(
                 PostItem(
                     state = state.post,
                     isContentExpandable = true,
+                    isClubPost = state.isFromClub,
                     isMyPost = state.post.publisherId == state.id,
                     onClickLike = onClickLike,
                     onClickComment = { },

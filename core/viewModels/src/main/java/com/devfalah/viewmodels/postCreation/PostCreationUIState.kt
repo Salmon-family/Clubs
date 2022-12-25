@@ -6,6 +6,7 @@ import java.io.File
 data class PostCreationUIState(
     val id: Int = 0,
     val clubId: Int = 0,
+    val isClub: Boolean = false,
     val postContent: String = "",
     val privacy: Int = 2,
     val imageFile: File? = null,
