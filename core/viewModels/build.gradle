@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -38,6 +39,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_kotlin_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.activity:activity-compose:$activity_compose_version"
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
 
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

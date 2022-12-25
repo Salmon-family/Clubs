@@ -1,7 +1,10 @@
 package com.devfalah.ui.screen.menu
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +33,7 @@ import com.devfalah.ui.screen.menu.composable.MenuItem
 import com.devfalah.ui.screen.menu.composable.PreferencesSection
 import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.reportBug.ROUTE_REPORT_BUG
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -55,7 +59,7 @@ fun MenuScreen(
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
-        onClickReportBug = {}
+        onClickReportBug = { navController.navigate(route = ROUTE_REPORT_BUG) }
     )
     LaunchedEffect(true) {
         setStatusBarColor(
