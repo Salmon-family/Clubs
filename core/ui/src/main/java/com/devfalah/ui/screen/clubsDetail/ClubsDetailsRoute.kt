@@ -8,17 +8,16 @@ import androidx.navigation.navArgument
 import com.devfalah.ui.Screen
 import com.devfalah.viewmodels.clubDetails.ClubDetailsArgs
 
-fun NavController.navigateToClubDetails(userId: Int, groupId: Int) {
+fun NavController.navigateToClubDetails(groupId: Int) {
     popBackStack(Screen.Clubs.screen_route, false)
-    navigate("${ROUTE_CLUBS_DETAILS}/${userId}/${groupId}")
+    navigate("${ROUTE_CLUBS_DETAILS}/${groupId}")
 }
 
 private const val ROUTE_CLUBS_DETAILS = "clubsDetails"
 fun NavGraphBuilder.clubsDetailsRoute(navController: NavController) {
     composable(
-        route = "${ROUTE_CLUBS_DETAILS}/{${ClubDetailsArgs.USER_ID_ARG}}/{${ClubDetailsArgs.GROUP_ID_ARG}}",
+        route = "${ROUTE_CLUBS_DETAILS}/{${ClubDetailsArgs.GROUP_ID_ARG}}",
         arguments = listOf(
-            navArgument(ClubDetailsArgs.USER_ID_ARG) { NavType.IntType },
             navArgument(ClubDetailsArgs.GROUP_ID_ARG) { NavType.IntType },
         )
     ) {

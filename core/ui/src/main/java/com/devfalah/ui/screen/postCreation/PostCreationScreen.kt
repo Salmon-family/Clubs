@@ -145,7 +145,7 @@ private fun goBack(state: PostCreationUIState, navController: NavController) {
             navController.navigateToProfile(state.id)
         }
         else -> {
-            navController.navigateToClubDetails(userId = state.id, groupId = state.clubId)
+            navController.navigateToClubDetails(groupId = state.clubId)
         }
     }
 }

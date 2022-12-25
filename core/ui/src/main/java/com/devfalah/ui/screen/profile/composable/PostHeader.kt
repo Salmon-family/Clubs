@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -106,7 +107,8 @@ fun PostHeader(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 16.dp),
+                    .padding(end = 16.dp)
+                    .clip(RoundedCornerShape(16.dp)),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Icon(

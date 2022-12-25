@@ -22,10 +22,12 @@ import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.RoundButton
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
+import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -64,7 +66,21 @@ fun ClubsDetailsScreen(
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
         isMyPost = viewModel::isMyPost,
-        onRetry = viewModel::getData
+        onRetry = viewModel::getData,
+        onClickJoinRequestClub = {
+            navController.navigateToClubRequests(
+                clubId = state.clubId,
+                ownerId = state.ownerId
+            )
+        },
+        onClickEditClub = {
+            navController.navigateToEditClub(
+                clubId = state.clubId,
+                clubName = state.name,
+                clubDescription = state.description,
+                clubPrivacy = state.membership
+            )
+        }
     )
 }
 
@@ -82,7 +98,9 @@ private fun ClubsDetailsContent(
     onUnJoinClubs: () -> Unit,
     onDeclineClub: () -> Unit,
     isMyPost: (Int) -> Boolean,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onClickJoinRequestClub: () -> Unit,
+    onClickEditClub: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -91,7 +109,7 @@ private fun ClubsDetailsContent(
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
-        if (state.errorMessage.isNotEmpty()) {
+        if (state.pagerError.isNotEmpty()) {
             Box(modifier = Modifier.fillMaxSize())
             Button(
                 onClick = onRetry
@@ -111,6 +129,8 @@ private fun ClubsDetailsContent(
                     ClubHeaderDetails(
                         state = state,
                         onBack = onBack,
+                        onClickJoinRequestClub = onClickJoinRequestClub,
+                        onClickEditClub = onClickEditClub
                     )
                 }
 
@@ -237,9 +257,9 @@ private fun ClubsDetailsContent(
         }
     }
 
-    LaunchedEffect(key1 = state.errorMessage) {
-        if (state.errorMessage.isNotEmpty()) {
-            Toast.makeText(context, state.errorMessage, Toast.LENGTH_LONG).show()
+    LaunchedEffect(key1 = state.pagerError) {
+        if (state.pagerError.isNotEmpty()) {
+            Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
     LaunchedEffect(true) {
