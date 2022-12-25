@@ -1,9 +1,13 @@
 package com.devfalah.viewmodels
 
 object Constants {
+
     const val LIKE_PHOTO = 1
     const val LIKE_POST = 2
     const val REQUEST_GROUP = 3
+    const val COMMENT_POST = 4
+    const val LIKE_COMMENT_POST = 5
+
     const val NOTHING = -1
 
 

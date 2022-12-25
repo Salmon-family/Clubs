@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetNotificationsUseCase
 import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.usecases.MarkNotificationAsViewedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class NotificationsViewModel @Inject constructor(
     private val getNotifications: GetNotificationsUseCase,
     val getUser: GetUserIdUseCase,
+    private val markNotificationAsViewed: MarkNotificationAsViewedUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NotificationsUIState())
@@ -37,7 +39,7 @@ class NotificationsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {
-                val notifications = getNotifications(6)
+                val notifications = getNotifications(4)
                 _uiState.update { it.copy(notifications = notifications.toUIState()) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
@@ -45,7 +47,9 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    fun onNotificationClick(notification: NotificationState) {
+    fun markNotificationAsViewed(notification: NotificationState) {
+        viewModelScope.launch { markNotificationAsViewed(notification.id) }
+
         Log.e("TEST", "Open notification ${notification.posterName}")
     }
 

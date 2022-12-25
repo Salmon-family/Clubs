@@ -95,4 +95,6 @@ interface RemoteDataSource {
 
     suspend fun editComment(commentId: Int, comment: String): Boolean
 
+    suspend fun markNotificationMarkedAsViewed(notificationId: Int)
+
 }

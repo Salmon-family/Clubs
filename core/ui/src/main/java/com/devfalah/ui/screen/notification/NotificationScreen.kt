@@ -14,11 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
+import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.notifications.NotificationState
 import com.devfalah.viewmodels.notifications.NotificationsUIState
 import com.devfalah.viewmodels.notifications.NotificationsViewModel
@@ -32,7 +35,23 @@ fun NotificationScreen(
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
-    NotificationContent(navController, state, viewModel::onNotificationClick)
+    NotificationContent(
+        navController = navController,
+        state = state
+    ) {
+        viewModel.markNotificationAsViewed(it)
+
+        when (it.type) {
+            Constants.REQUEST_GROUP ->
+                navController.navigateToClubRequests(state.userId, state.userId)
+
+            Constants.LIKE_POST,
+            Constants.COMMENT_POST,
+            Constants.LIKE_COMMENT_POST ->
+                navController.navigateToPostDetails(it.subjectId, false)
+        }
+    }
+
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,

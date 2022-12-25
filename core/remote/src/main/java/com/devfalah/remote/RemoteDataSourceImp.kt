@@ -272,6 +272,10 @@ class RemoteDataSourceImp @Inject constructor(
         return !response.success.isNullOrEmpty()
     }
 
+    override suspend fun markNotificationMarkedAsViewed(notificationId: Int) {
+        wrap { apiService.markNotificationsAsViewed(notificationId) }
+    }
+
     //region postComments
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto> {

@@ -103,4 +103,6 @@ interface ClubRepository {
 
     suspend fun editComment(commentId: Int, comment: String): Boolean
 
+    suspend fun markNotificationAsViewed(notificationId: Int)
+
 }
