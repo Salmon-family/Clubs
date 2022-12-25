@@ -213,7 +213,7 @@ class RemoteDataSourceImp @Inject constructor(
             apiService.addPostOnWallFriendOrGroup(
                 userId = userId,
                 friendOrGroupID = publishOnId,
-                type = "user",
+                type = getPublishType(userId = userId, publishOnId = publishOnId),
                 post = postContent,
                 privacy = privacy
             )
@@ -229,7 +229,7 @@ class RemoteDataSourceImp @Inject constructor(
 
         val id = userId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val publishOn = publishOnId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val type = "user".toRequestBody("text/plain".toMediaTypeOrNull())
+        val type = getPublishType(userId, publishOnId).toRequestBody("text/plain".toMediaTypeOrNull())
         val postPrivacy = privacy.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val postText = postContent.toRequestBody("text/plain".toMediaTypeOrNull())
 
@@ -242,6 +242,11 @@ class RemoteDataSourceImp @Inject constructor(
             file = part
         ).body()?.payload ?: throw Throwable("Error")
 
+    }
+
+    private fun getPublishType(userId: Int, publishOnId: Int): String {
+        return if (userId == publishOnId) { "user" }
+        else { "group" }
     }
 
     override suspend fun editClub(

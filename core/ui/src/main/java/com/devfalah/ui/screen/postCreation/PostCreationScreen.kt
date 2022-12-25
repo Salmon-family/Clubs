@@ -20,11 +20,15 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
+import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.screen.profile.createFileFromContentUri
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.postCreation.PostCreationViewModel
+import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
+import com.devfalah.viewmodels.postCreation.PostCreationViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -112,26 +116,27 @@ fun PostCreationContent(
             PostContent(
                 value = state.postContent,
                 modifier = Modifier.weight(1f),
-
                 hint = stringResource(id = R.string.what_are_you_thinking_about),
                 image = state.imageBitmap,
                 onValueChange = onPostChange,
                 onRemoveImage = onRemoveImage
             )
-
             PostFooter(onSelectImage = onSelectImage, onClickPost = onClickPost)
-
         }
 
         val context = LocalContext.current
         LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
-            if (state.isSuccess) {
-                navController.navigateHome()
-            } else if (state.error.isNotBlank()) {
-                showToastMessage(context, state.error)
-            }
+            if (state.isSuccess) { goBack(state, navController) }
+            else if (state.error.isNotBlank()) { showToastMessage(context, state.error) }
         }
     }
 }
 
+private fun goBack(state: PostCreationUIState, navController: NavController) {
+    when (state.clubId) {
+        HOME_CLUB_ID -> { navController.navigateHome() }
+        PROFILE_CLUB_ID -> { navController.navigateToProfile(state.id) }
+        else -> { navController.navigateToClubDetails(userId = state.id, groupId = state.clubId) }
+    }
+}
 

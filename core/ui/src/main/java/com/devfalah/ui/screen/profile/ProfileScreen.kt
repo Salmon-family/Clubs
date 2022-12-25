@@ -29,6 +29,7 @@ import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
@@ -68,7 +69,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigateToPostCreation() },
+        onCreatePost = { navController.navigateToPostCreation(PROFILE_CLUB_ID) },
         onClickProfile = {
             if (!state.isMyProfile) {
                 navController.navigateToProfile(it)

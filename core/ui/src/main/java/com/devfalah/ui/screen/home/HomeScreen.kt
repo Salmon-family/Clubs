@@ -33,6 +33,7 @@ import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -53,7 +54,7 @@ fun HomeScreen(
         onClickLike = viewModel::onClickLike,
         onClickComment = { navController.navigateToPostDetails(it.postId, it.isSaved) },
         onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigateToPostCreation() },
+        onCreatePost = { navController.navigateToPostCreation(HOME_CLUB_ID) },
         onRefresh = viewModel::swipeToRefresh,
         onDeletePost = viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },

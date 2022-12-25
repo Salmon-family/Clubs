@@ -27,7 +27,7 @@ class PostCreationViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.update { it.copy(id = getUserIdUseCase()) }
+            _uiState.update { it.copy(id = getUserIdUseCase(), clubId = args.clubId) }
         }
     }
 
@@ -56,8 +56,9 @@ class PostCreationViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val post = createThreadUseCase(
+                createThreadUseCase(
                     userId = uiState.value.id,
+                    clubId = args.clubId,
                     postContent = uiState.value.postContent,
                     privacy = uiState.value.privacy,
                     imageFile = uiState.value.imageFile
