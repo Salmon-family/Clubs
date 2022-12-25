@@ -49,7 +49,7 @@ fun NotificationScreen(
 
         when (it.type) {
             Constants.REQUEST_GROUP ->
-                navController.navigateToClubRequests(state.userId, state.userId)
+                navController.navigateToClubRequests(it.subjectId, state.userId)
 
             Constants.LIKE_POST,
             Constants.COMMENT_POST,
