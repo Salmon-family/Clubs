@@ -1,7 +1,5 @@
 package com.devfalah.ui.screen.postDetails
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -14,19 +12,18 @@ import java.nio.charset.StandardCharsets
 
 const val POST_DETAILS_SCREEN = "POST_DETAILS_SCREEN"
 fun NavController.navigateToPostDetails(
-    id: Int, isSaved: Boolean, publisherId: Int, publisherName: String, publisherUrl: String
+    id: Int, publisherId: Int, publisherName: String, publisherUrl: String
 ) {
     val encodedPublisherImageUrl =
         URLEncoder.encode(publisherUrl, StandardCharsets.UTF_8.toString())
-    navigate("${POST_DETAILS_SCREEN}/${id}/${isSaved}/${publisherId}/${publisherName}/${encodedPublisherImageUrl}")
+    navigate("${POST_DETAILS_SCREEN}/${id}/${publisherId}/${publisherName}/${encodedPublisherImageUrl}")
 }
 
 fun NavGraphBuilder.postDetailsRoute(navController: NavController) {
     composable(
-        route = "${POST_DETAILS_SCREEN}/{${PostDetailsArgs.POST_ID}}/{${PostDetailsArgs.POST_SAVED}}/{${PostDetailsArgs.PUBLISHER_ID}}/{${PostDetailsArgs.PUBLISHER_NAME}}/{${PostDetailsArgs.PUBLISHER_IMAGE_URL}}",
+        route = "${POST_DETAILS_SCREEN}/{${PostDetailsArgs.POST_ID}}/{${PostDetailsArgs.PUBLISHER_ID}}/{${PostDetailsArgs.PUBLISHER_NAME}}/{${PostDetailsArgs.PUBLISHER_IMAGE_URL}}",
         arguments = listOf(
             navArgument(PostDetailsArgs.POST_ID) { NavType.IntType },
-            navArgument(PostDetailsArgs.POST_SAVED) { NavType.BoolType },
             navArgument(PostDetailsArgs.PUBLISHER_ID) { NavType.IntType },
             navArgument(PostDetailsArgs.PUBLISHER_NAME) { NavType.StringType },
             navArgument(PostDetailsArgs.PUBLISHER_IMAGE_URL) { NavType.StringType },

@@ -54,7 +54,6 @@ fun ClubsDetailsScreen(
         onClickComment = {
             navController.navigateToPostDetails(
                 id = it.postId,
-                isSaved = it.isSaved,
                 publisherId = it.publisherId,
                 publisherName = it.publisherName,
                 publisherUrl = it.publisherImage

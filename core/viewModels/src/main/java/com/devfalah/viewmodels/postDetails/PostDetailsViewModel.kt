@@ -66,7 +66,6 @@ class PostDetailsViewModel @Inject constructor(
                     it.copy(
                         post = post.toUIState()
                             .copy(
-                                isSaved = args.isSaved,
                                 publisherId = args.publisherId,
                                 publisherImage = args.publisherImageUrl,
                                 publisherName = args.publisherName

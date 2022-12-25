@@ -47,7 +47,6 @@ fun SavedPostsScreen(
         onClickComment = {
             navController.navigateToPostDetails(
                 id = it.postId,
-                isSaved = true,
                 publisherId = it.publisherId,
                 publisherName = it.publisherName,
                 publisherUrl = it.publisherImage
