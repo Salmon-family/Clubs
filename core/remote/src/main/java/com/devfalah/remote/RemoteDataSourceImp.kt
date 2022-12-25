@@ -2,6 +2,12 @@ package com.devfalah.remote
 
 
 import com.devfalah.remote.response.BaseResponse
+import com.devfalah.remote.util.Constants.IMAGE_FILE
+import com.devfalah.remote.util.Constants.POST_IMAGE_DESCRIPTION
+import com.devfalah.remote.util.Constants.PROFILE_IMAGE_DESCRIPTION
+import com.devfalah.remote.util.Constants.TYPE
+import com.devfalah.remote.util.LikeType
+import com.devfalah.remote.util.PostType
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
@@ -67,20 +73,20 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun setLikeOnPost(userID: Int, postId: Int): ReactionDTO {
         return wrap {
-            apiService.addLike(userID = userID, postID = postId, type = LikeType.post.name)
+            apiService.addLike(userID = userID, postID = postId, type = LikeType.POST.value)
         }
     }
 
     override suspend fun removeLikeOnPost(userID: Int, postId: Int): ReactionDTO {
         return wrap {
-            apiService.removeLike(userID = userID, postID = postId, type = LikeType.post.name)
+            apiService.removeLike(userID = userID, postID = postId, type = LikeType.POST.value)
         }
     }
 
 
     override suspend fun setLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
         return wrap {
-            apiService.addLike(userID = userID, postID = commentId, type = LikeType.annotation.name)
+            apiService.addLike(userID = userID, postID = commentId, type = LikeType.ANNOTATION.value)
         }
     }
 
@@ -89,7 +95,7 @@ class RemoteDataSourceImp @Inject constructor(
             apiService.removeLike(
                 userID = userID,
                 postID = commentId,
-                type = LikeType.annotation.name
+                type = LikeType.ANNOTATION.value
             )
         }
     }
@@ -99,9 +105,9 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {
-        val requestBody = file.asRequestBody("image/${file.extension}".toMediaTypeOrNull())
-        val part = MultipartBody.Part.createFormData("userphoto", file.name, requestBody)
-        val id = RequestBody.create("text/plain".toMediaTypeOrNull(), userID.toString())
+        val requestBody = file.asRequestBody("$IMAGE_FILE/${file.extension}".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
+        val id = RequestBody.create(TYPE.toMediaTypeOrNull(), userID.toString())
         return apiService.addProfilePicture(userId = id, file = part).body()?.payload
             ?: throw Throwable("Error")
     }
@@ -141,10 +147,7 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun createClub(
-        userID: Int,
-        groupName: String,
-        description: String,
-        groupPrivacy: Int,
+        userID: Int, groupName: String, description: String, groupPrivacy: Int,
     ): GroupDTO {
         return wrap {
             apiService.addGroups(
@@ -157,9 +160,8 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getGroupDetails(userID: Int, groupID: Int): GroupDTO {
-        return wrap {
-            apiService.getGroupDetails(userID = userID, groupID = groupID)
-        }.group ?: throw Throwable("Error")
+        return wrap { apiService.getGroupDetails(userID = userID, groupID = groupID) }.group
+            ?: throw Throwable("Error")
     }
 
     override suspend fun getGroupMembers(groupID: Int): List<UserDTO> {
@@ -213,7 +215,7 @@ class RemoteDataSourceImp @Inject constructor(
             apiService.addPostOnWallFriendOrGroup(
                 userId = userId,
                 friendOrGroupID = publishOnId,
-                type = getPublishType(userId = userId, publishOnId = publishOnId),
+                type = getPublishType(userId = userId, publishOnId = publishOnId).value,
                 post = postContent,
                 privacy = privacy
             )
@@ -224,14 +226,15 @@ class RemoteDataSourceImp @Inject constructor(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): WallPostDTO {
         val requestBody =
-            imageFile.asRequestBody("image/${imageFile.extension}".toMediaTypeOrNull())
-        val part = MultipartBody.Part.createFormData("ossn_photo", imageFile.name, requestBody)
+            imageFile.asRequestBody("$IMAGE_FILE/${imageFile.extension}".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData(POST_IMAGE_DESCRIPTION, imageFile.name, requestBody)
 
-        val id = userId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val publishOn = publishOnId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val type = getPublishType(userId, publishOnId).toRequestBody("text/plain".toMediaTypeOrNull())
-        val postPrivacy = privacy.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val postText = postContent.toRequestBody("text/plain".toMediaTypeOrNull())
+        val id = userId.toString().toRequestBody(TYPE.toMediaTypeOrNull())
+        val publishOn = publishOnId.toString().toRequestBody(TYPE.toMediaTypeOrNull())
+        val type =
+            getPublishType(userId, publishOnId).value.toRequestBody(TYPE.toMediaTypeOrNull())
+        val postPrivacy = privacy.toString().toRequestBody(TYPE.toMediaTypeOrNull())
+        val postText = postContent.toRequestBody(TYPE.toMediaTypeOrNull())
 
         return apiService.addPostWithImage(
             userId = id,
@@ -244,9 +247,12 @@ class RemoteDataSourceImp @Inject constructor(
 
     }
 
-    private fun getPublishType(userId: Int, publishOnId: Int): String {
-        return if (userId == publishOnId) { "user" }
-        else { "group" }
+    private fun getPublishType(userId: Int, publishOnId: Int): PostType {
+        return if (userId == publishOnId) {
+            PostType.USER
+        } else {
+            PostType.GROUP
+        }
     }
 
     override suspend fun editClub(
@@ -280,7 +286,12 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto> {
         return wrap {
-            apiService.getComments(userID = userId, postID = postId, type = "post", page = page)
+            apiService.getComments(
+                userID = userId,
+                postID = postId,
+                type = LikeType.POST.value,
+                page = page
+            )
         }.comments ?: throw Throwable("Error")
     }
 
@@ -294,6 +305,11 @@ class RemoteDataSourceImp @Inject constructor(
 
     //endregion
 
+    override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
+        return apiService.getAllUserGroups(userId).body()?.payload?.groups
+            ?: throw Throwable("empty groups")
+    }
+
     private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {
@@ -304,11 +320,6 @@ class RemoteDataSourceImp @Inject constructor(
         } else {
             throw Throwable("Network Error")
         }
-    }
-
-    override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
-        return apiService.getAllUserGroups(userId).body()?.payload?.groups
-            ?: throw Throwable("empty groups")
     }
 
 }
