@@ -22,16 +22,15 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.home.navigateHome
-import com.devfalah.ui.screen.profile.createFileFromContentUri
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PostCreationScreen(
     navController: NavController,

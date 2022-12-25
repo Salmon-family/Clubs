@@ -29,6 +29,7 @@ import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
@@ -179,40 +180,3 @@ fun ProfileContent(
         }
     }
 }
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun createFileFromContentUri(fileUri: Uri, context: Context): File {
-    var fileName = ""
-    fileUri.let { returnUri ->
-        context.contentResolver.query(returnUri, null, null, null)
-    }?.use { cursor ->
-        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-        cursor.moveToFirst()
-        fileName = cursor.getString(nameIndex)
-    }
-
-    val iStream = context.contentResolver.openInputStream(fileUri)!!
-    val outputDir = context.cacheDir!!
-
-    val outputFile = File(outputDir, fileName)
-    copyStreamToFile(iStream, outputFile)
-    iStream.close()
-    return outputFile
-}
-
-private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
-    inputStream.use { input ->
-        val outputStream = FileOutputStream(outputFile)
-        outputStream.use { output ->
-            val buffer = ByteArray(4 * 1024)
-            while (true) {
-                val byteCount = input.read(buffer)
-                if (byteCount < 0) break
-                output.write(buffer, 0, byteCount)
-            }
-            output.flush()
-        }
-    }
-}
-

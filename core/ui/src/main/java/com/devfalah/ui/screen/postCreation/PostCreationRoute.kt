@@ -15,7 +15,6 @@ fun NavController.navigateToPostCreation(clubId: Int) {
     navigate("$CREATE_POST_SCREEN/${clubId}")
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.createPostRoute(navController: NavController) {
     composable(route = "$CREATE_POST_SCREEN/{${PostCreationArgs.GROUP_ID}}",
         arguments = listOf(

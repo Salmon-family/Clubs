@@ -1,7 +1,5 @@
 package com.devfalah.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -26,7 +24,6 @@ import com.devfalah.ui.screen.search.searchRoute
 import com.devfalah.ui.screen.userInformation.editUserInformationRoute
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ClubsNavGraph(navController: NavHostController) {
     NavHost(
