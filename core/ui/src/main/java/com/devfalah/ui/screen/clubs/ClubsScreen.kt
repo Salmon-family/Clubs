@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -43,7 +44,7 @@ fun ClubsScreen(
     ClubsContent(
         navController = navController,
         state = state,
-        onClubClick = { navController.navigateToClubDetails(userId = 6, groupId = 79) }
+        onClubClick = { navController.navigateToClubDetails(it) }
     )
 }
 
@@ -56,17 +57,19 @@ fun ClubsContent(
 ) {
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.clubs),
+            AppBar(
+                title = stringResource(R.string.clubs),
                 navHostController = navController,
                 actions = {
-                    Icon(painter = painterResource(id = R.drawable.create_club),
+                    Icon(
+                        painter = painterResource(id = R.drawable.create_club),
                         contentDescription = "create club icon",
                         modifier = Modifier
                             .padding(end = 16.dp)
                             .nonRippleEffect { navController.navigate(CLUB_CREATION_ROUTE) }
                     )
-
-                })
+                }
+            )
         }
     ) { scaffoldPadding ->
 
@@ -78,7 +81,6 @@ fun ClubsContent(
                 .padding(scaffoldPadding)
                 .background(LightBackgroundColor)
         ) {
-
             SegmentControls(
                 items = listOf(
                     stringResource(id = R.string.my_clubs),
@@ -92,7 +94,8 @@ fun ClubsContent(
 
             HeightSpacer8()
 
-            AnimatedContent(targetState = animationState,
+            AnimatedContent(
+                targetState = animationState,
                 transitionSpec = {
                     slideInHorizontally(tween(300)) with fadeOut(tween(300))
                 }
@@ -105,7 +108,6 @@ fun ClubsContent(
             }
         }
     }
-
 }
 
 @Composable
@@ -120,7 +122,6 @@ fun MyClubsScreen(
         contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-
         item {
             Row(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Icon(
@@ -145,11 +146,13 @@ fun MyClubsScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(9) {
+                items(state.mySpecialClubs) { club ->
                     SpecialClubItem(
-                        iconId = R.drawable.art_icon,
-                        clubTitle = "art",
-                        modifier = Modifier.size(98.dp)
+                        state = club,
+                        iconId = club.image,
+                        clubTitle = club.name,
+                        modifier = Modifier.size(98.dp),
+                        onClick = { onClubClick(club.id) }
                     )
                 }
             }
@@ -187,14 +190,15 @@ fun SpecialClubsScreen(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBackgroundColor),
+            .background(LightBackgroundColor)
     ) {
-
-        items(9) {
+        items(state.specialClubs) { club ->
             SpecialClubItem(
-                iconId = R.drawable.art_icon,
-                clubTitle = "art",
-                modifier = Modifier.aspectRatio(1f)
+                state = club,
+                iconId = club.image,
+                clubTitle = club.name,
+                modifier = Modifier.aspectRatio(1f),
+                onClick = onClubClick
             )
         }
     }
