@@ -1,5 +1,8 @@
 package com.devfalah.ui.screen.menu
 
+import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -50,7 +53,7 @@ fun MenuScreen(
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
     val context = LocalContext.current
-    val version = viewModel.getAppVersion(context)
+    val version = getAppVersion(context)
 
     MenuContent(
         navController = navController,
@@ -130,7 +133,7 @@ fun MenuContent(
                 )
             }
 
-            item {
+            if (appVersion.isNotEmpty()) item {
                 Text(
                     text = stringResource(R.string.app_version, appVersion),
                     style = TextStyle(
@@ -142,6 +145,20 @@ fun MenuContent(
                 )
             }
         }
+    }
+}
+
+
+@Suppress("DEPRECATION")
+fun getAppVersion(context: Context): String {
+    return try {
+        val packageInfo: PackageInfo =
+            context.packageManager.getPackageInfo(context.packageName, 0)
+
+        packageInfo.versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        ""
     }
 }
 

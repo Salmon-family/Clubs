@@ -1,8 +1,5 @@
 package com.devfalah.viewmodels.menu
 
-import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetUserAccountDetailsUseCase
@@ -43,17 +40,6 @@ class MenuViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
-        }
-    }
-
-    fun getAppVersion(context: Context): String {
-        return try {
-            val packageInfo: PackageInfo =
-                context.packageManager.getPackageInfo(context.packageName, 0)
-            packageInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-            ""
         }
     }
 
