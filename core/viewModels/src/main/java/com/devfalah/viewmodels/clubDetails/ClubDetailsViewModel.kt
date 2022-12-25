@@ -42,7 +42,7 @@ class ClubDetailsViewModel @Inject constructor(
                 _uiState.update { it.copy(userId = getUser()) }
                 getGroupWallUseCase(args.groupId)
             } catch (t: Throwable) {
-                _uiState.update { it.copy(errorMessage = t.message.toString()) }
+                _uiState.update { it.copy(pagerError = t.message.toString()) }
             }
         }
         getData()
@@ -70,7 +70,7 @@ class ClubDetailsViewModel @Inject constructor(
                 }
                 getPostCount()
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isLoading = false, errorMessage = t.message.toString()) }
+                _uiState.update { it.copy(isLoading = false, pagerError = t.message.toString()) }
             }
         }
     }
@@ -78,7 +78,7 @@ class ClubDetailsViewModel @Inject constructor(
 
     private fun getClubDetails() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = "") }
+            _uiState.update { it.copy(isLoading = true, pagerError = "") }
             try {
                 val clubDetails =
                     getClubDetailsUseCase(userID = args.userID, groupID = args.groupId)
@@ -87,6 +87,7 @@ class ClubDetailsViewModel @Inject constructor(
                         clubId = clubDetails.id,
                         ownerId = clubDetails.ownerId,
                         name = clubDetails.name,
+                        membership = clubDetails.privacy.toInt(),
                         description = clubDetails.description,
                         privacy = getPrivacy(clubDetails.privacy),
                         requestExists = clubDetails.requestExists,
@@ -95,13 +96,12 @@ class ClubDetailsViewModel @Inject constructor(
                         isSuccessful = true
                     )
                 }
-
             } catch (throwable: Throwable) {
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         isSuccessful = false,
-                        errorMessage = throwable.message.toString()
+                        pagerError = throwable.message.toString()
                     )
                 }
             }
@@ -116,7 +116,7 @@ class ClubDetailsViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        isLoading = false, isSuccessful = false, errorMessage = t.message.toString()
+                        isLoading = false, isSuccessful = false, pagerError = t.message.toString()
                     )
                 }
             }
@@ -130,7 +130,7 @@ class ClubDetailsViewModel @Inject constructor(
                 val postCount = getGroupWallUseCase.getPostsCount()
                 _uiState.update { it.copy(postCount = postCount) }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(errorMessage = t.message.toString()) }
+                _uiState.update { it.copy(pagerError = t.message.toString()) }
             }
         }
     }
@@ -147,8 +147,10 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 val members = getClubMembersUseCase(args.groupId).toUserUIState()
                 _uiState.update { it.copy(members = members) }
+
+                checkIfOwnerOfClub()
             } catch (t: Throwable) {
-                _uiState.update { it.copy(errorMessage = t.message.toString()) }
+                _uiState.update { it.copy(pagerError = t.message.toString()) }
             }
         }
     }
@@ -174,7 +176,7 @@ class ClubDetailsViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 Log.e("Test Test Test", t.message.toString())
-                _uiState.update { it.copy(errorMessage = t.message.toString()) }
+                _uiState.update { it.copy(pagerError = t.message.toString()) }
             }
         }
     }
@@ -238,6 +240,12 @@ class ClubDetailsViewModel @Inject constructor(
             } catch (t: Throwable) {
                 Log.i("error", t.message.toString())
             }
+        }
+    }
+
+    private fun checkIfOwnerOfClub() {
+        if (_uiState.value.ownerId == _uiState.value.userId) {
+            _uiState.update { it.copy(isOwnerOfClub = true) }
         }
     }
 
