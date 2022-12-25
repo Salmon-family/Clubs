@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.viewmodels.Constants
+import com.devfalah.viewmodels.util.Constants
 
 @Composable
 fun NotificationTitle(type: Int, posterName: String) {

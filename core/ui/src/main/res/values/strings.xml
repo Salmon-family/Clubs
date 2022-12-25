@@ -15,6 +15,8 @@
     <string name="delete">Delete</string>
 
     <string name="notification_icon">Notification Icon</string>
+    <string name="notification">Notification</string>
+
     <!--   notification -->
     <string name="like_photo">liked your photo</string>
     <string name="like_post">liked your post</string>
@@ -80,5 +82,6 @@
     <string name="edit">Edit</string>
     <string name="email">Email</string>
     <string name="new_password">New Password</string>
+    <string name="menu">Menu</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.devfalah.viewmodels
+package com.devfalah.viewmodels.util
 
 object Constants {
     const val LIKE_PHOTO = 1

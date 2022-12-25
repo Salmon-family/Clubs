@@ -1,7 +1,7 @@
 package com.devfalah.viewmodels.savedPosts
 
 import com.devfalah.entities.Post
-import com.devfalah.viewmodels.ConvertDate
+import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 data class SavedPostUIState(

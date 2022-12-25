@@ -1,11 +1,9 @@
 package com.devfalah.viewmodels.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
-import com.devfalah.viewmodels.Constants.FIRST_TIME
+import com.devfalah.viewmodels.util.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState

@@ -1,7 +1,7 @@
 package com.devfalah.viewmodels.clubDetails.mapper
 
 import com.devfalah.entities.GroupWallPost
-import com.devfalah.viewmodels.ConvertDate
+import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 fun List<GroupWallPost>.toUIState(groupId: Int, groupName: String): List<PostUIState> =

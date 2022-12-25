@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetSearchUseCase
 import com.devfalah.usecases.GetUserIdUseCase
-import com.devfalah.viewmodels.Constants.SEARCH_CLUB
+import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.search.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel

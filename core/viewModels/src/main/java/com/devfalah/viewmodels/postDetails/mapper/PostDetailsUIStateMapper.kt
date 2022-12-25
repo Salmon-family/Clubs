@@ -1,7 +1,7 @@
 package com.devfalah.viewmodels.postDetails.mapper
 
 import com.devfalah.entities.Comment
-import com.devfalah.viewmodels.ConvertDate
+import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 fun Comment.toUIState(mainUserId: Int): CommentUIState {

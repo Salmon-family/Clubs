@@ -5,8 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.viewmodels.Constants.PRIVATE_PRIVACY
-import com.devfalah.viewmodels.Constants.PUBLIC_PRIVACY
+import com.devfalah.viewmodels.util.Constants.PRIVATE_PRIVACY
+import com.devfalah.viewmodels.util.Constants.PUBLIC_PRIVACY
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState

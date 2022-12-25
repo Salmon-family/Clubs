@@ -23,8 +23,8 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.allSearchResultScreen.navigateToAllSearchResult
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.Constants.SEARCH_CLUB
-import com.devfalah.viewmodels.Constants.SEARCH_USER
+import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
+import com.devfalah.viewmodels.util.Constants.SEARCH_USER
 import com.devfalah.viewmodels.search.SearchUIState
 import com.devfalah.viewmodels.search.SearchViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController

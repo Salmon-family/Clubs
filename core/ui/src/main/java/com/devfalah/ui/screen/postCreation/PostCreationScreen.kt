@@ -25,8 +25,8 @@ import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.screen.profile.createFileFromContentUri
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
-import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
+import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
