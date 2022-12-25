@@ -1,5 +1,6 @@
 package com.devfalah.repositories.models
 
+import com.devfalah.repositories.models.group.GroupDTO
 import com.google.gson.annotations.SerializedName
 
 data class WallPostDTO(
@@ -17,4 +18,6 @@ data class WallPostDTO(
     val text: String?,
     @SerializedName("user")
     val user: UserDTO?,
+    @SerializedName("group")
+    val group: GroupDTO?
 )

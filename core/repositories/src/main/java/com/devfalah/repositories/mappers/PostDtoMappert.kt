@@ -24,8 +24,8 @@ fun WallPostDTO.toEntity(groupId: Int = 0): Post {
         isLiked = post?.isLikedByUser ?: false,
         isSaved = false,
         posterGuid = "",
-        groupId = groupId,
-        groupName = ""
+        groupId = group?.guid ?: groupId,
+        groupName = group?.title ?: ""
     )
 }
 

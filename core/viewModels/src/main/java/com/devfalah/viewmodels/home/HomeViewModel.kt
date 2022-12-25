@@ -106,7 +106,7 @@ class HomeViewModel @Inject constructor(
                         isPagerLoading = false,
                         isLoading = false,
                         isEndOfPager = homePosts.isNotEmpty(),
-                        posts = it.posts + homePosts.toUIState(groupId = HOME_GROUP_ID)
+                        posts = it.posts + homePosts.toUIState()
                     )
                 }
             } catch (t: Throwable) {
