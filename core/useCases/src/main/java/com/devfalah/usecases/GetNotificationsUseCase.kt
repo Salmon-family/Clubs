@@ -5,11 +5,12 @@ import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
 class GetNotificationsUseCase @Inject constructor(
-    private val clubRepository: ClubRepository
+    private val clubRepository: ClubRepository,
+    private val getUserId: GetUserIdUseCase
 ) {
 
-    suspend operator fun invoke(userId: Int): List<Notification> {
-        return clubRepository.getNotifications(userId)
+    suspend operator fun invoke(): List<Notification> {
+        return clubRepository.getNotifications(getUserId())
     }
 
 }
