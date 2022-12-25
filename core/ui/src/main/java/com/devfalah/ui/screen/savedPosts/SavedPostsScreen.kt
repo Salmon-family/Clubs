@@ -48,8 +48,6 @@ fun SavedPostsScreen(
             navController.navigateToPostDetails(
                 id = it.postId,
                 publisherId = it.publisherId,
-                publisherName = it.publisherName,
-                publisherUrl = it.publisherImage
             )
         },
         onClickRemoveSavedPost = viewModel::onClickRemoveSavedPost,

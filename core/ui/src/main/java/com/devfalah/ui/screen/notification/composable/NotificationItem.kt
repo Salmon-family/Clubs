@@ -38,7 +38,7 @@ fun NotificationItem(
     ) {
 
         CircleImage(
-            painter = rememberAsyncImagePainter(model = notification.posterPhoto),
+            painter = rememberAsyncImagePainter(model = notification.publisherImageUrl),
             size = 56
         )
         WidthSpacer16()
@@ -49,7 +49,7 @@ fun NotificationItem(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
 
-            NotificationTitle(notification.type, notification.posterName)
+            NotificationTitle(notification.type, notification.publisherName)
             HeightSpacer8()
             Text(
                 text = notification.timeCreated,
@@ -73,12 +73,12 @@ fun NotificationItemPreview() {
     NotificationItem(
         notification = NotificationState(
             id = 1,
-            posterID = 0,
-            posterName = "John Doe",
+            publisherId = 0,
+            publisherName = "John Doe",
             timeCreated = "1 hour ago",
             type = 0,
             viewed = false,
-            posterPhoto = "https://i.pravatar.cc/300"
+            publisherImageUrl = "https://i.pravatar.cc/300"
         ),
         onNotificationClick = {}
     )

@@ -26,10 +26,10 @@ import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.viewmodels.Constants
 import com.devfalah.viewmodels.notifications.NotificationState
 import com.devfalah.viewmodels.notifications.NotificationsUIState
 import com.devfalah.viewmodels.notifications.NotificationsViewModel
+import com.devfalah.viewmodels.util.Constants
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -54,7 +54,10 @@ fun NotificationScreen(
             Constants.LIKE_POST,
             Constants.COMMENT_POST,
             Constants.LIKE_COMMENT_POST ->
-                navController.navigateToPostDetails(it.subjectId, false)
+                navController.navigateToPostDetails(
+                    id = it.subjectId,
+                    publisherId = it.publisherId,
+                )
         }
     }
 
@@ -75,7 +78,10 @@ fun NotificationContent(
     onNotificationClick: (NotificationState) -> Unit
 ) {
     Column {
-        AppBar(title = stringResource(id = Screen.Notification.title), navHostController =navController )
+        AppBar(
+            title = stringResource(id = Screen.Notification.title),
+            navHostController = navController
+        )
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -117,7 +123,6 @@ private fun NotificationsStatusItem(
             Button(onClick = { onClickTryAgain() }) {
                 Text(text = stringResource(id = R.string.try_again))
             }
-
         }
     }
 }

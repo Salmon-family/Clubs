@@ -8,17 +8,15 @@ class PostDetailsArgs(savedStateHandle: SavedStateHandle) {
 
     val postId: Int = checkNotNull(savedStateHandle[POST_ID]).toString().toInt()
     val publisherId: Int = checkNotNull(savedStateHandle[PUBLISHER_ID]).toString().toInt()
-    val publisherName: String = checkNotNull(savedStateHandle[PUBLISHER_NAME]).toString()
-    val publisherImageUrl: String = URLDecoder.decode(
-        checkNotNull(savedStateHandle[PUBLISHER_IMAGE_URL]).toString(),
-        StandardCharsets.UTF_8.toString()
-    )
+//    val publisherName: String = checkNotNull(savedStateHandle[PUBLISHER_NAME]).toString()
+//    val publisherImageUrl: String = URLDecoder.decode(
+//        checkNotNull(savedStateHandle[PUBLISHER_IMAGE_URL]).toString(),
+//        StandardCharsets.UTF_8.toString()
+//    )
 
 
     companion object {
         const val POST_ID = "POST_ID"
         const val PUBLISHER_ID = "PUBLISHER_ID"
-        const val PUBLISHER_IMAGE_URL = "PUBLISHER_IMAGE_URL"
-        const val PUBLISHER_NAME = "PUBLISHER_NAME"
     }
 }

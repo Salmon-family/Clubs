@@ -3,15 +3,12 @@ package com.devfalah.viewmodels.postDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.DeletePostUseCase
-import com.devfalah.usecases.GetUserIdUseCase
-import com.devfalah.usecases.SetFavoritePostUseCase
-import com.devfalah.usecases.SetPostLikeUseCase
+import com.devfalah.usecases.*
 import com.devfalah.usecases.posts.GetPostCommentsUseCase
 import com.devfalah.usecases.posts.GetPostDetailsUseCase
 import com.devfalah.usecases.posts.MangeCommentUseCase
 import com.devfalah.usecases.posts.SetCommentLikeUseCase
-import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
+import com.devfalah.viewmodels.friendRequest.toUserUIState
 import com.devfalah.viewmodels.postDetails.mapper.toUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -33,6 +30,7 @@ class PostDetailsViewModel @Inject constructor(
     val favoritePostUseCase: SetFavoritePostUseCase,
     val postLike: SetPostLikeUseCase,
     val deletePostUseCase: DeletePostUseCase,
+    val publisherDetails: GetUserAccountDetailsUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -57,6 +55,25 @@ class PostDetailsViewModel @Inject constructor(
     }
 
     //region Post
+    private fun getPublisherDetails(publisherId: Int) {
+        viewModelScope.launch {
+            try {
+                val user = publisherDetails(publisherId, publisherId).toUserUIState()
+                _uiState.update {
+                    it.copy(
+                        post = it.post.copy(
+                            publisherId = publisherId,
+                            publisherName = user.name,
+                            publisherImage = user.profileImage
+                        )
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(minorError = t.message.toString()) }
+            }
+        }
+    }
+
     private fun getPostDetails() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
@@ -64,15 +81,11 @@ class PostDetailsViewModel @Inject constructor(
                 val post = getPostDetailsUseCase(args.postId, uiState.value.id)
                 _uiState.update {
                     it.copy(
-                        post = post.toUIState()
-                            .copy(
-                                publisherId = args.publisherId,
-                                publisherImage = args.publisherImageUrl,
-                                publisherName = args.publisherName
-                            ),
+                        post = post.toUIState(),
                         isLoading = false
                     )
                 }
+                getPublisherDetails(args.publisherId)
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }

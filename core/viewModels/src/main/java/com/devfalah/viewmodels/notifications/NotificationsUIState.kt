@@ -12,9 +12,9 @@ data class NotificationsUIState(
 
 data class NotificationState(
     val id: Int = 0,
-    val posterID: Int = 0,
-    val posterName: String = "",
-    val posterPhoto: String,
+    val publisherId: Int = 0,
+    val publisherName: String = "",
+    val publisherImageUrl: String,
     val timeCreated: String = "",
     val type: Int = 0,
     val viewed: Boolean = false,
@@ -28,9 +28,9 @@ fun Notification.toUIState(): NotificationState {
         timeCreated = timeCreated,
         type = type,
         viewed = viewed,
-        posterID = posterID,
-        posterName = posterName,
-        posterPhoto = posterImage,
+        publisherId = ownerGuid,
+        publisherName = posterName,
+        publisherImageUrl = posterImage,
         subjectId = subjectGuid
     )
 }

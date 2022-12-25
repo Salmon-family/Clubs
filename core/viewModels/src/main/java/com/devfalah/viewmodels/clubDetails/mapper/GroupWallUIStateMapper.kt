@@ -13,7 +13,7 @@ fun GroupWallPost.toUIState(groupId: Int, groupName: String): PostUIState {
         postId = post.id,
         publisherName = user.name,
         publisherImage = user.profileUrl,
-        publisherId = post.publisherId,
+        publisherId = user.id,
         privacy = post.privacy,
         createdData = ConvertDate().convertTime(post.createdTime),
         createdDataValue = post.createdTime,

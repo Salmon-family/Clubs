@@ -55,8 +55,6 @@ fun ClubsDetailsScreen(
             navController.navigateToPostDetails(
                 id = it.postId,
                 publisherId = it.publisherId,
-                publisherName = it.publisherName,
-                publisherUrl = it.publisherImage
             )
         },
         onClickSave = viewModel::onClickSave,
