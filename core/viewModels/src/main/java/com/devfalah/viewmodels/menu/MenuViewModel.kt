@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     val getUserId: GetUserIdUseCase,
-    val getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
+    val getUserAccountDetails: GetUserAccountDetailsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUiState())
@@ -34,7 +34,7 @@ class MenuViewModel @Inject constructor(
 
     private fun getUserPhotoUrl(userId: Int) {
         viewModelScope.launch {
-            val userPhotoUrl = getUserAccountDetailsUseCase(userId, userId).profileUrl
+            val userPhotoUrl = getUserAccountDetails(userId, userId).profileUrl
             try {
                 _uiState.update { it.copy(profilePhotoUrl = userPhotoUrl) }
             } catch (t: Throwable) {

@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountSettingsViewModel @Inject constructor(
-    private val getUserIdUseCase: GetUserIdUseCase,
-    private val getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase,
-    private val editUserInformationUseCase: EditUserInformationUseCase
+    private val getUserId: GetUserIdUseCase,
+    private val getUserAccountDetails: GetUserAccountDetailsUseCase,
+    private val editUserInformation: EditUserInformationUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AccountSettingsUiState())
@@ -30,9 +30,9 @@ class AccountSettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {
-                val id = getUserIdUseCase()
+                val id = getUserId()
                 _uiState.update {
-                    getUserAccountDetailsUseCase(
+                    getUserAccountDetails(
                         userId = id,
                         profileOwnerId = id
                     ).toAccountSettingsUiState()
@@ -61,7 +61,7 @@ class AccountSettingsViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true, error = "") }
         viewModelScope.launch {
             try {
-                editUserInformationUseCase(user = uiState.value.toEntity())
+                editUserInformation(user = uiState.value.toEntity())
                 _uiState.update { it.copy(isLoading = false, isSuccessful = true) }
 
             } catch (t: Throwable) {
