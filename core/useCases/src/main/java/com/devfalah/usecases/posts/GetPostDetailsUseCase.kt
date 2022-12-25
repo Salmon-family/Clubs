@@ -10,4 +10,6 @@ class GetPostDetailsUseCase @Inject constructor(
     suspend operator fun invoke(postId: Int, userID: Int): Post {
         return clubRepository.getPostByID(postId = postId, userID = userID)
     }
+
+
 }

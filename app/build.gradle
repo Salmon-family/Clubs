@@ -113,4 +113,7 @@ dependencies {
 
     implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
+    // delay in interceptor
+    implementation 'com.github.pawel-schmidt:okhttp-delay-interceptor:0.0.1'
+
 }

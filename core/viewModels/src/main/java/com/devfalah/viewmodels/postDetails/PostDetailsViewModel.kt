@@ -64,7 +64,13 @@ class PostDetailsViewModel @Inject constructor(
                 val post = getPostDetailsUseCase(args.postId, uiState.value.id)
                 _uiState.update {
                     it.copy(
-                        post = post.toUIState(HOME_GROUP_ID).copy(isSaved = args.isSaved),
+                        post = post.toUIState(HOME_GROUP_ID)
+                            .copy(
+                                isSaved = args.isSaved,
+                                publisherId = args.publisherId,
+                                publisherImage = args.publisherImageUrl,
+                                publisherName = args.publisherName
+                            ),
                         isLoading = false
                     )
                 }
