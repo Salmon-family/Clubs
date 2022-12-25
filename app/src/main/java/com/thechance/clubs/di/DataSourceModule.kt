@@ -11,6 +11,8 @@ import com.devfalah.repository.ChatRemoteDataSource
 import com.thechance.identity.remote.IdentityDataSourceImp
 import com.thechance.identity.repositories.RemoteIdentityDataSource
 import com.club.local.ClubLocalDataSourceImp
+import com.devfalah.firebase.IdentityFirebaseDataSourceImp
+import com.thechance.identity.repositories.IdentityFirebaseDataSource
 import com.thechance.remote.ChatDataSourceImp
 import dagger.Binds
 import dagger.Module
@@ -50,4 +52,12 @@ abstract class DataSourceModule {
     abstract fun bindClubLocalDataSource(
         localDataSourceImp: ClubLocalDataSourceImp
     ): ClubLocalDataSource
+
+
+    @Binds
+    abstract fun bindIdentityFirebaseDataSource(
+        identityFirebaseDataSource: IdentityFirebaseDataSourceImp
+    ): IdentityFirebaseDataSource
+
+
 }

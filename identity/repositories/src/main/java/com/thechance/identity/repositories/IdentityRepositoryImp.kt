@@ -7,12 +7,14 @@ import com.thechance.identity.entities.UserData
 import com.thechance.identity.repositories.mappers.MapperUserDataDTOToUserData
 import com.thechance.identity.repositories.mappers.toEntity
 import com.thechance.identity.usecases.IdentityRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class IdentityRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteIdentityDataSource,
     private val localIdentityDataSource: LocalIdentityDataSource,
     private val mapperUserDataDTOToUserData: MapperUserDataDTOToUserData,
+    private val identityFirebaseDataSource: IdentityFirebaseDataSource,
 ) : IdentityRepository {
 
     override fun getStartInstallState(): Boolean? {
@@ -49,5 +51,14 @@ class IdentityRepositoryImp @Inject constructor(
 
     override suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean {
         return remoteDataSource.acceptJoiningRequest(clubId, userId, clubOwnerId)
+    }
+
+    override suspend fun getToken(): String {
+        val oldToken = localIdentityDataSource.getToken()
+        val token = identityFirebaseDataSource.getToken()
+        return oldToken.ifEmpty {
+            localIdentityDataSource.saveToken(token)
+            token
+        }
     }
 }
