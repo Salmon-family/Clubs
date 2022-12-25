@@ -52,7 +52,7 @@ fun ProfileDetailsSection(
                     error = painterResource(id = R.drawable.test_image)
                 ),
                 contentDescription = null,
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
             Box(
