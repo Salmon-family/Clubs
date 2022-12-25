@@ -43,7 +43,7 @@ fun ClubsScreen(
     ClubsContent(
         navController = navController,
         state = state,
-        onClubClick = { navController.navigateToClubDetails(userId = 6, groupId = 79) }
+        onClubClick = { navController.navigateToClubDetails(userId = 6, groupId = 5) }
     )
 }
 

@@ -3,17 +3,25 @@ package com.devfalah.ui.screen.clubsDetail.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.devfalah.ui.R
+import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -29,6 +37,7 @@ fun ClubHeaderDetails(
     maxLineContentExpand: Int = 2,
 ) {
 
+    var expanded by remember { mutableStateOf(false) }
     var popupController by remember { mutableStateOf(false) }
 
     ConstraintLayout(
@@ -50,6 +59,50 @@ fun ClubHeaderDetails(
                 },
             tint = WhiteColor
         )
+
+        if (state.ownerId == state.userId) {
+
+            Box(
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .clip(RoundedCornerShape(16.dp)),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Icon(
+                    modifier = Modifier.nonRippleEffect { expanded = true },
+                    painter = painterResource(R.drawable.ic_setting),
+                    contentDescription = null
+                )
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.background(WhiteColor),
+                offset = DpOffset(50.dp, 0.dp)
+            ) {
+                DropdownMenuItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        expanded = false
+//                        onClickPostSetting(post)
+                    }
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.users_requests),
+                        textAlign = TextAlign.Center
+                    )
+                    HeightSpacer8()
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = stringResource(id = R.string.edit_club),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+        }
 
         Text(
             text = state.name,
