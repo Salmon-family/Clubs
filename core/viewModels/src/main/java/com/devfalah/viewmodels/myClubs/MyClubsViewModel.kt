@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetUserClubsUseCase
-import com.devfalah.viewmodels.search.ClubUIState
 import com.devfalah.viewmodels.search.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,27 +15,44 @@ import javax.inject.Inject
 @HiltViewModel
 class MyClubsViewModel @Inject constructor(
     private val getUserClubs: GetUserClubsUseCase,
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MyClubsUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val myGuid = 2
-
     init {
-        getMyGroups()
+        getData()
     }
 
-    private fun getMyGroups() {
+    private fun getData() {
+        viewModelScope.launch {
+            val myLocalClubs = specialClubs.map {
+                SpecialClubsUIState(
+                    id = it.key,
+                    name = it.value.name,
+                    image = it.value.iconId
+                )
+            }
+            _uiState.update { it.copy(specialClubs = myLocalClubs) }
+            getMyClubs()
+        }
+    }
+
+    private fun getMyClubs() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(isLoading = true) }
-                val myClubs = getUserClubs(myGuid)
-                _uiState.update { it.copy(myClubs = myClubs.map { club -> club.toUIState() }) }
-            } catch (e: Throwable) {
-                _uiState.update { it.copy(error = e.message.toString()) }
-                Log.e("getMyGroups", e.message.toString())
+                val myClubs = getUserClubs(specialClubs.map { it.key })
+                _uiState.update {
+                    it.copy(
+                        myClubs = myClubs.myClubs.toUIState(),
+                        mySpecialClubs = myClubs.mySpecialClubs.toSpecialClubUiState()
+                    )
+                }
+            } catch (t: Throwable) {
+                Log.e("clubsError", t.message.toString())
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
+
         }
     }
 
