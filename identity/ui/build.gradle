@@ -84,4 +84,7 @@ dependencies {
     def accompanist_version = "0.28.0"
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
 
+    // Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+
 }
