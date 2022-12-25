@@ -77,6 +77,7 @@ fun SavedPostsContent(
                 isContentExpandable = true,
                 isMyPost = it.publisherId == state.userId,
                 isClubPost = it.isFromClub,
+                showGroupName = true,
                 onClickLike = { onClickLike(it) },
                 onClickComment = { onClickComment(it) },
                 onClickSave = { onClickRemoveSavedPost(it) },

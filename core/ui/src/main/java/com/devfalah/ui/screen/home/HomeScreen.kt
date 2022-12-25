@@ -128,6 +128,7 @@ fun HomeContent(
                     isContentExpandable = true,
                     isMyPost = it.publisherId == state.id,
                     isClubPost = false,
+                    showGroupName = false,
                     onClickLike = { onClickLike(it) },
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },

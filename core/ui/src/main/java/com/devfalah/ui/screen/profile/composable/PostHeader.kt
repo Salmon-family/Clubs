@@ -35,7 +35,8 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun PostHeader(
     post: PostUIState,
     isMyProfile: Boolean,
-    isClubPost: Boolean,
+    hidePrivacy: Boolean,
+    showGroupName: Boolean,
     onClickPostSetting: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit
 ) {
@@ -61,7 +62,7 @@ fun PostHeader(
                 color = LightPrimaryBlackColor
             )
             Row {
-                if (!isClubPost) {
+                if (!hidePrivacy) {
                     Icon(
                         painter = getPrivacyIcon(post.privacy),
                         contentDescription = null,
@@ -80,8 +81,19 @@ fun PostHeader(
 
                     WidthSpacer8()
                 }
+                if (hidePrivacy && showGroupName) {
+                    Text(
+                        text = "${post.groupName}  | ",
+                        fontSize = 12.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.SemiBold,
+                        color = LightTernaryBlackColor,
+                    )
+
+                    WidthSpacer8()
+                }
                 Text(
-                    text = "${post.createdData}",
+                    text = post.createdData,
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,

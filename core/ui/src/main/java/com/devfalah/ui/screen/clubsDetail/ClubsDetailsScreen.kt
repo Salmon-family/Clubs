@@ -171,6 +171,7 @@ private fun ClubsDetailsContent(
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             isClubPost = true,
+                            showGroupName = false,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },

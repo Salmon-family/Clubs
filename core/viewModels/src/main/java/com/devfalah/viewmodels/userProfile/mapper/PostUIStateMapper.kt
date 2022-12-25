@@ -21,7 +21,7 @@ fun Post.toUIState(groupId: Int): PostUIState {
         postImage = imageUrl,
         postContent = content,
         createdDataValue = createdTime,
-        groupId = groupId
+        groupId = groupId,
     )
 }
 
@@ -42,6 +42,7 @@ fun PostUIState.toEntity(): Post {
         isSaved = isSaved,
         posterGuid = "",
         groupId = groupId,
+        groupName = groupName
     )
 }
 

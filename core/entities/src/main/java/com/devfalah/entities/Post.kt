@@ -15,4 +15,5 @@ data class Post(
     val isLiked: Boolean,
     val isSaved: Boolean,
     val groupId: Int,
+    val groupName: String,
 )

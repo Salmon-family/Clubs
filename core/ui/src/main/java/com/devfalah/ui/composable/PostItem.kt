@@ -22,12 +22,13 @@ fun PostItem(
     isContentExpandable: Boolean,
     isMyPost: Boolean,
     isClubPost: Boolean,
+    showGroupName: Boolean = false,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onClickPostSetting: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -47,7 +48,8 @@ fun PostItem(
                 onClickPostSetting = onClickPostSetting,
                 onClickProfile = onClickProfile,
                 isMyProfile = isMyPost,
-                isClubPost = isClubPost
+                hidePrivacy = isClubPost,
+                showGroupName = showGroupName,
             )
 
             PostContent(

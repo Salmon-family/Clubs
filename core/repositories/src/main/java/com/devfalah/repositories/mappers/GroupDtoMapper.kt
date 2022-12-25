@@ -60,7 +60,8 @@ fun PostDTO.toEntity(groupId: Int): Post {
         publisherId = 0,
         publisher = "",
         publisherImageUrl = profileImage ?: "",
-        groupId = groupId
+        groupId = groupId,
+        groupName = ""
     )
 
 }

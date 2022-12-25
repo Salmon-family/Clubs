@@ -55,23 +55,21 @@ class ClubDetailsViewModel @Inject constructor(
         swipeToRefresh()
     }
 
-
     fun swipeToRefresh(type: Int = 0) {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 val posts = getGroupWallUseCase.loadMore(args.userID, args.groupId)
-                val ll = posts.toUIState(args.groupId)
+                    .toUIState(args.groupId, uiState.value.name)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        posts = (it.posts + ll),
+                        posts = (it.posts + posts),
                         isEndOfPager = posts.isEmpty()
                     )
                 }
                 getPostCount()
             } catch (t: Throwable) {
-                Log.e("TESTTEST", t.message.toString())
                 _uiState.update { it.copy(isLoading = false, errorMessage = t.message.toString()) }
             }
         }

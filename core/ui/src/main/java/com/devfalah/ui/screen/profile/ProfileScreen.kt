@@ -160,6 +160,7 @@ fun ProfileContent(
                 isMyPost = true,
                 isContentExpandable = true,
                 isClubPost = false,
+                showGroupName = false,
                 onClickLike = onClickLike,
                 onClickComment = onClickComment,
                 onClickSave = onClickSave,

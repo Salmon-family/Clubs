@@ -23,10 +23,12 @@ fun Post.toSavedUIState(): PostUIState {
         totalLikes = totalLikes,
         totalComments = totalComments,
         isSaved = true,
-        isFromClub = false,
+        isFromClub = groupName.isNotEmpty(),
         isLikedByUser = isLiked,
         postImage = imageUrl,
         postContent = content,
-        createdDataValue = createdTime
+        createdDataValue = createdTime,
+        groupName = groupName,
+        groupId = groupId
     )
 }
