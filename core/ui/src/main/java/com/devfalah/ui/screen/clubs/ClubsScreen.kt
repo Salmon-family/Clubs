@@ -22,10 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ClubItem
-import com.devfalah.ui.composable.HeightSpacer8
-import com.devfalah.ui.composable.SegmentControls
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubCreation.CLUB_CREATION_ROUTE
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
@@ -36,6 +33,7 @@ import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ClubsScreen(
@@ -43,12 +41,21 @@ fun ClubsScreen(
     viewModel: MyClubsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
 
     ClubsContent(
         navController = navController,
         state = state,
         onClubClick = { navController.navigateToClubDetails(it) }
     )
+
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightBackgroundColor,
+            darkIcons = true
+        )
+    }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
