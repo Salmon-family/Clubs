@@ -27,6 +27,8 @@ import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.friends.navigateToFriends
+import com.devfalah.ui.screen.postCreation.navigateToPostCreation
+import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
@@ -49,9 +51,17 @@ fun ClubsDetailsScreen(
         onBack = { navController.popBackStack() },
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { },
+        onClickComment = {
+            navController.navigateToPostDetails(
+                id = it.postId,
+                isSaved = it.isSaved,
+                publisherId = it.publisherId,
+                publisherName = it.publisherName,
+                publisherUrl = it.publisherImage
+            )
+        },
         onClickSave = viewModel::onClickSave,
-        onAddPost = { },
+        onAddPost = { navController.navigateToPostCreation(state.clubId) },
         onClickFriends = { navController.navigateToFriends(it) },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
@@ -169,6 +179,8 @@ private fun ClubsDetailsContent(
                             state = it,
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
+                            isClubPost = true,
+                            showGroupName = false,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },
@@ -207,11 +219,13 @@ private fun ClubsDetailsContent(
                                 .padding(horizontal = 16.dp))
                     }
 
+                    // why this screen has 2 of below item ????!!!!!!
                     items(state.posts) {
                         PostItem(
                             state = it,
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
+                            isClubPost = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },

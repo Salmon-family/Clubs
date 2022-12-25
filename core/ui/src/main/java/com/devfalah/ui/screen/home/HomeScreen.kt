@@ -33,6 +33,7 @@ import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -51,9 +52,17 @@ fun HomeScreen(
         navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { navController.navigateToPostDetails(it.postId, it.isSaved) },
+        onClickComment = {
+            navController.navigateToPostDetails(
+                id = it.postId,
+                isSaved = it.isSaved,
+                publisherId = it.publisherId,
+                publisherName = it.publisherName,
+                publisherUrl = it.publisherImage
+            )
+        },
         onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
+        onCreatePost = { navController.navigateToPostCreation(HOME_CLUB_ID) },
         onRefresh = viewModel::swipeToRefresh,
         onDeletePost = viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
@@ -126,6 +135,8 @@ fun HomeContent(
                     state = it,
                     isContentExpandable = true,
                     isMyPost = it.publisherId == state.id,
+                    isClubPost = false,
+                    showGroupName = false,
                     onClickLike = { onClickLike(it) },
                     onClickComment = { onClickComment(it) },
                     onClickSave = { onClickSave(it) },

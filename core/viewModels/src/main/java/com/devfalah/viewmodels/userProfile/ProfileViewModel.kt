@@ -95,9 +95,7 @@ class ProfileViewModel @Inject constructor(
             try {
                 _uiState.update {
                     it.copy(
-                        posts = getProfilePostUseCase(userID, profileOwnerID).toUIState(
-                            HOME_GROUP_ID
-                        )
+                        posts = getProfilePostUseCase(userID, profileOwnerID).toUIState()
                     )
                 }
             } catch (t: Throwable) {
@@ -193,12 +191,11 @@ class ProfileViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        posts = (it.posts + posts.toUIState(HOME_GROUP_ID)),
+                        posts = (it.posts + posts.toUIState()),
                         isEndOfPager = posts.isEmpty()
                     )
                 }
             } catch (t: Throwable) {
-                Log.e("TESTTEST", t.message.toString())
                 _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
             }
         }

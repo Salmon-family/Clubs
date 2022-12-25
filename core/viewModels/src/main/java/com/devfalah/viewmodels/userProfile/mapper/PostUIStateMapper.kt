@@ -4,9 +4,9 @@ import com.devfalah.entities.Post
 import com.devfalah.viewmodels.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
-fun List<Post>.toUIState(groupId: Int) = map { it.toUIState(groupId) }
+fun List<Post>.toUIState() = map { it.toUIState() }
 
-fun Post.toUIState(groupId: Int): PostUIState {
+fun Post.toUIState(): PostUIState {
     return PostUIState(
         postId = id,
         publisherId = publisherId,
@@ -21,7 +21,8 @@ fun Post.toUIState(groupId: Int): PostUIState {
         postImage = imageUrl,
         postContent = content,
         createdDataValue = createdTime,
-        groupId = groupId
+        groupId = groupId,
+        groupName = groupName
     )
 }
 
@@ -42,6 +43,7 @@ fun PostUIState.toEntity(): Post {
         isSaved = isSaved,
         posterGuid = "",
         groupId = groupId,
+        groupName = groupName
     )
 }
 

@@ -201,8 +201,7 @@ class ClubRepositoryImp @Inject constructor(
             postContent,
             privacy,
             imageFile
-        )
-            .toEntity() ?: throw Throwable("null data")
+        ).toEntity() ?: throw Throwable("null data")
     }
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<Comment> {

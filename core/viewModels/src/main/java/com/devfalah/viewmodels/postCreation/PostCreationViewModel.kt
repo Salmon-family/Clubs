@@ -1,11 +1,13 @@
-package com.devfalah.viewmodels.createPost
+package com.devfalah.viewmodels.postCreation
 
 import android.graphics.BitmapFactory
-import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.CreateThreadUseCase
 import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,20 +17,23 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class CreatePostViewModel @Inject constructor(
+class PostCreationViewModel @Inject constructor(
     val createThreadUseCase: CreateThreadUseCase,
     val getUserIdUseCase: GetUserIdUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    private val args = PostCreationArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(PostCreationUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(id = getUserIdUseCase()) }
-            } catch (t: Throwable) {
-
+            _uiState.update {
+                it.copy(
+                    id = getUserIdUseCase(), clubId = args.clubId,
+                    isClub = args.clubId != HOME_CLUB_ID && args.clubId != PROFILE_CLUB_ID
+                )
             }
         }
     }
@@ -50,7 +55,7 @@ class CreatePostViewModel @Inject constructor(
         }
     }
 
-    fun onRemoveImage(){
+    fun onRemoveImage() {
         _uiState.update { it.copy(imageFile = null, imageBitmap = null) }
     }
 
@@ -58,17 +63,16 @@ class CreatePostViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val post = createThreadUseCase(
+                createThreadUseCase(
                     userId = uiState.value.id,
+                    clubId = args.clubId,
                     postContent = uiState.value.postContent,
                     privacy = uiState.value.privacy,
                     imageFile = uiState.value.imageFile
                 )
-                Log.e("TEST", post.toString())
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }
 
             } catch (t: Throwable) {
-                Log.e("Test", t.message.toString())
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
         }

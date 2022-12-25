@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class PostLocalDto(
     @PrimaryKey(autoGenerate = false) val id: Int,
     val groupId: Int,
+    val groupName: String,
     val privacy: Boolean,
     val createdTime: Long,
     val content: String,

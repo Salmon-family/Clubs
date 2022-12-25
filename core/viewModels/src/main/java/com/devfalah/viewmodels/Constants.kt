@@ -18,4 +18,7 @@ object Constants {
     const val PUBLIC_PRIVACY = "Public"
     const val MAX_PASSWORD_LENGTH = 6
 
+    const val PROFILE_CLUB_ID = -1
+    const val HOME_CLUB_ID = 0
+
 }

@@ -20,19 +20,22 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
+import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.screen.profile.createFileFromContentUri
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.createPost.CreatePostViewModel
-import com.devfalah.viewmodels.createPost.PostCreationUIState
+import com.devfalah.viewmodels.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
+import com.devfalah.viewmodels.postCreation.PostCreationUIState
+import com.devfalah.viewmodels.postCreation.PostCreationViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PostCreationScreen(
     navController: NavController,
-    viewModel: CreatePostViewModel = hiltViewModel()
+    viewModel: PostCreationViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
@@ -95,39 +98,38 @@ fun PostCreationContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
 
-            SegmentControlsWithIcon(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.End),
-                items = listOf(
-                    stringResource(R.string.public_privacy),
-                    stringResource(R.string.private_privacy)
-                ),
-                icons = listOf(
-                    painterResource(id = R.drawable.ic_menu_language),
-                    painterResource(id = R.drawable.ic_clubs_filled),
-                ),
-                onItemSelection = onPrivacyChange,
-            )
+            if (!state.isClub) {
+                SegmentControlsWithIcon(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(align = Alignment.End),
+                    items = listOf(
+                        stringResource(R.string.public_privacy),
+                        stringResource(R.string.private_privacy)
+                    ),
+                    icons = listOf(
+                        painterResource(id = R.drawable.ic_menu_language),
+                        painterResource(id = R.drawable.ic_clubs_filled),
+                    ),
+                    onItemSelection = onPrivacyChange,
+                )
+            }
 
             PostContent(
                 value = state.postContent,
                 modifier = Modifier.weight(1f),
-
                 hint = stringResource(id = R.string.what_are_you_thinking_about),
                 image = state.imageBitmap,
                 onValueChange = onPostChange,
                 onRemoveImage = onRemoveImage
             )
-
             PostFooter(onSelectImage = onSelectImage, onClickPost = onClickPost)
-
         }
 
         val context = LocalContext.current
         LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
             if (state.isSuccess) {
-                navController.navigateHome()
+                goBack(state, navController)
             } else if (state.error.isNotBlank()) {
                 showToastMessage(context, state.error)
             }
@@ -135,4 +137,17 @@ fun PostCreationContent(
     }
 }
 
+private fun goBack(state: PostCreationUIState, navController: NavController) {
+    when (state.clubId) {
+        HOME_CLUB_ID -> {
+            navController.navigateHome()
+        }
+        PROFILE_CLUB_ID -> {
+            navController.navigateToProfile(state.id)
+        }
+        else -> {
+            navController.navigateToClubDetails(userId = state.id, groupId = state.clubId)
+        }
+    }
+}
 
