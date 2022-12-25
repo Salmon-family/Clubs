@@ -41,16 +41,18 @@ class MyClubsViewModel @Inject constructor(
     private fun getMyClubs() {
         viewModelScope.launch {
             try {
+                _uiState.update { it.copy(isLoading = true) }
                 val myClubs = getUserClubs(specialClubs.map { it.key })
                 _uiState.update {
                     it.copy(
                         myClubs = myClubs.myClubs.toUIState(),
-                        mySpecialClubs = myClubs.mySpecialClubs.toSpecialClubUiState()
+                        mySpecialClubs = myClubs.mySpecialClubs.toSpecialClubUiState(),
+                        isLoading = false
                     )
                 }
             } catch (t: Throwable) {
                 Log.e("clubsError", t.message.toString())
-                _uiState.update { it.copy(error = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
 
         }

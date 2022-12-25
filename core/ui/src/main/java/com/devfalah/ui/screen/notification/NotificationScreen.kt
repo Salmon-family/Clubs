@@ -51,10 +51,10 @@ fun NotificationScreen(
             Constants.REQUEST_GROUP ->
                 navController.navigateToClubRequests(it.subjectId, state.userId)
 
-            Constants.LIKE_POST,
-            Constants.COMMENT_POST,
-            Constants.LIKE_COMMENT_POST ->
-                navController.navigateToPostDetails(it.subjectId, false)
+//            Constants.LIKE_POST,
+//            Constants.COMMENT_POST,
+//            Constants.LIKE_COMMENT_POST ->
+//                navController.navigateToPostDetails(it.subjectId, false)
         }
     }
 
