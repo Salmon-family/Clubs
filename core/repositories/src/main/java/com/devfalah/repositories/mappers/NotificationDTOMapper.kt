@@ -10,6 +10,8 @@ fun NotificationsDTO.toEntity(): Notification {
         "like:entity:file:ossn:aphoto" -> NotificationType.LIKE_PHOTO
         "like:post" -> NotificationType.LIKE_POST
         "group:joinrequest" -> NotificationType.REQUEST_GROUP
+        "comments:post" -> NotificationType.COMMENT_POST
+        "like:annotation:comments:post" -> NotificationType.LIKE_COMMENT_POST
         else -> null
     }
 
