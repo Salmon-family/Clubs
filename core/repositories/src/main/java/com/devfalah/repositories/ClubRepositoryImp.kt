@@ -138,7 +138,7 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall {
         return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID, page = page)
-            .toEntity(groupID)
+            .toEntity()
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): Club {

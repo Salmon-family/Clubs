@@ -86,7 +86,11 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun setLikeOnComment(userID: Int, commentId: Int): ReactionDTO {
         return wrap {
-            apiService.addLike(userID = userID, postID = commentId, type = LikeType.ANNOTATION.value)
+            apiService.addLike(
+                userID = userID,
+                postID = commentId,
+                type = LikeType.ANNOTATION.value
+            )
         }
     }
 
@@ -106,7 +110,8 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {
         val requestBody = file.asRequestBody("$IMAGE_FILE/${file.extension}".toMediaTypeOrNull())
-        val part = MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
+        val part =
+            MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
         val id = RequestBody.create(TYPE.toMediaTypeOrNull(), userID.toString())
         return apiService.addProfilePicture(userId = id, file = part).body()?.payload
             ?: throw Throwable("Error")
@@ -227,7 +232,8 @@ class RemoteDataSourceImp @Inject constructor(
     ): WallPostDTO {
         val requestBody =
             imageFile.asRequestBody("$IMAGE_FILE/${imageFile.extension}".toMediaTypeOrNull())
-        val part = MultipartBody.Part.createFormData(POST_IMAGE_DESCRIPTION, imageFile.name, requestBody)
+        val part =
+            MultipartBody.Part.createFormData(POST_IMAGE_DESCRIPTION, imageFile.name, requestBody)
 
         val id = userId.toString().toRequestBody(TYPE.toMediaTypeOrNull())
         val publishOn = publishOnId.toString().toRequestBody(TYPE.toMediaTypeOrNull())
@@ -306,7 +312,7 @@ class RemoteDataSourceImp @Inject constructor(
     //endregion
 
     override suspend fun getUserGroups(userId: Int): List<GroupDTO> {
-        return apiService.getAllUserGroups(userId).body()?.payload?.groups
+        return wrap { apiService.getAllUserGroups(userId) }.groups
             ?: throw Throwable("empty groups")
     }
 

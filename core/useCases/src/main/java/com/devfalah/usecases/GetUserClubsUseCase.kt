@@ -4,7 +4,7 @@ import com.devfalah.entities.Club
 import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
-class GetUserClubsUseCase @Inject constructor (
+class GetUserClubsUseCase @Inject constructor(
     private val repository: ClubRepository
 ) {
 
