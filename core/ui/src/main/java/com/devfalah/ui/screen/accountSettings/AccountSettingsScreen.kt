@@ -80,7 +80,8 @@ fun AccountSettingsContent(
             PasswordInputText(
                 title = stringResource(R.string.password),
                 password = state.currentPassword,
-                onTextChange = onCurrentPasswordChange
+                onTextChange = onCurrentPasswordChange,
+                isErrorTextShown = state.error.isNotEmpty()
             )
 
             Row(

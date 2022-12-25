@@ -80,5 +80,6 @@
     <string name="edit">Edit</string>
     <string name="email">Email</string>
     <string name="new_password">New Password</string>
+    <string name="wrong_password_message">You entered a wrong password, please try again.</string>
 
 </resources>
