@@ -49,6 +49,7 @@ class MyClubsViewModel @Inject constructor(
                             SpecialClubsUIState(
                                 id = it.id,
                                 name = it.name,
+                                // I think this is the problem because image is local
                                 image = _uiState.value.specialClubs.first { it.id == it.id }.image
                             )
                         }
