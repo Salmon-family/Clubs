@@ -44,20 +44,20 @@ fun PostDetailsScreen(
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
 
-    PostDetailsContent(
-        navController = navController,
-        state = state,
-        onClickLike = viewModel::onClickLikePost,
-        onClickSave = viewModel::onClickSavePost,
-        onRefresh = viewModel::getPostComments,
-        onClickSendComment = viewModel::onClickSendComment,
-        onCommentValueChanged = viewModel::onCommentValueChanged,
-        onDeletePost = viewModel::onDeletePost,
-        onClickDeleteComment = viewModel::onClickDeleteComment,
-        onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) },
-        onClickCommentLike = viewModel::onClickLikeComment
-    )
+//    PostDetailsContent(
+//        navController = navController,
+//        state = state,
+//        onClickLike = viewModel::onClickLikePost,
+//        onClickSave = viewModel::onClickSavePost,
+//        onRefresh = viewModel::getPostComments,
+//        onClickSendComment = viewModel::onClickSendComment,
+//        onCommentValueChanged = viewModel::onCommentValueChanged,
+//        onDeletePost = viewModel::onDeletePost,
+//        onClickDeleteComment = viewModel::onClickDeleteComment,
+//        onClickProfile = { navController.navigateToProfile(it) },
+//        onOpenLinkClick = { openBrowser(context, it) },
+//        onClickCommentLike = viewModel::onClickLikeComment
+//    )
 
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -102,6 +102,9 @@ fun PostDetailsContent(
                     isContentExpandable = true,
                     isClubPost = state.isFromClub,
                     isMyPost = state.post.publisherId == state.id,
+                   //////////
+                    showGroupName= false,
+
                     onClickLike = onClickLike,
                     onClickComment = { },
                     onClickSave = onClickSave,
