@@ -3,25 +3,19 @@ package com.thechance.identity.viewmodel.clubs
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thechance.identity.usecases.AcceptJoiningRequestUseCase
 import com.thechance.identity.usecases.GetClubsUseCaase
-import com.thechance.identity.usecases.GetUserIdUseCase
 import com.thechance.identity.usecases.JoinClubUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class ClubsViewModel @Inject constructor(
     private val getClubsUseCase: GetClubsUseCaase,
     private val joinClubUseCase: JoinClubUseCase,
-    private val getUserIdUseCase: GetUserIdUseCase,
-    private val acceptJoiningRequestUseCase: AcceptJoiningRequestUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ClubsUIState())
     val uiState = _uiState.asStateFlow()
@@ -47,24 +41,39 @@ class ClubsViewModel @Inject constructor(
         _uiState.update { it.copy(selectedClubs = selectedClubs) }
         Log.i("selected", _uiState.value.selectedClubs.size.toString())
     }
-    
-    fun joinClubs(){
-        val userId = getUserIdUseCase()?.toInt() ?: 0
+
+    fun onJoin(){
+        onLoading()
+        joinClubs()
+    }
+
+    private fun joinClubs(){
         viewModelScope.launch {
             try {
-                withContext(Dispatchers.IO){
-                    _uiState.value.selectedClubs.forEach { club ->
-                        joinClubUseCase(club.id, userId)
-                        acceptJoiningRequestUseCase(club.id, userId, OWNER_ID)
-                    }
-                }
+                val clubs = _uiState.value.selectedClubs.toEntity()
+                joinClubUseCase(clubs)
+                onSuccess()
             }catch (t: Throwable) {
-                Log.i("error", t.message.toString())
+                onError(errorMessage = t)
             }
         }
     }
 
-    companion object{
-        private const val OWNER_ID = 3
+    private fun onLoading() {
+        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
+    }
+
+    private fun onSuccess() {
+        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
+    }
+
+    private fun onError(errorMessage: Throwable) {
+        _uiState.update {
+            it.copy(
+                errorMessage = errorMessage.message.toString(),
+                isSuccess = false,
+                isLoading = false
+            )
+        }
     }
 }

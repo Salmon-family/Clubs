@@ -227,4 +227,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.editComment(commentId = commentId, comment = comment)
     }
 
+    override suspend fun markNotificationAsViewed(notificationId: Int) {
+        remoteDataSource.markNotificationMarkedAsViewed(notificationId)
+    }
+
 }

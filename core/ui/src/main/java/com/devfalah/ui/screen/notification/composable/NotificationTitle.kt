@@ -22,6 +22,8 @@ fun NotificationTitle(type: Int, posterName: String) {
         Constants.LIKE_PHOTO -> stringResource(id = R.string.like_photo)
         Constants.LIKE_POST -> stringResource(id = R.string.like_post)
         Constants.REQUEST_GROUP -> stringResource(id = R.string.request_group)
+        Constants.COMMENT_POST -> stringResource(R.string.commented_on_your_post)
+        Constants.LIKE_COMMENT_POST -> stringResource(R.string.liked_your_comment_on_a_post)
         else -> ""
     }
 

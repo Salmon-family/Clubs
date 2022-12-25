@@ -2,7 +2,6 @@ package com.thechance.identity.remote
 
 import com.thechance.identity.remote.response.IdentityBaseResponse
 import com.thechance.identity.repositories.RemoteIdentityDataSource
-import com.thechance.identity.repositories.models.AccountDTO
 import com.thechance.identity.repositories.models.ClubDto
 import com.thechance.identity.repositories.models.UserDTO
 import com.thechance.identity.repositories.models.UserDataDTO
@@ -19,17 +18,32 @@ class IdentityDataSourceImp @Inject constructor(
         }
     }
 
-    override suspend fun signup(userDataDTO: UserDataDTO): AccountDTO {
+    override suspend fun signup(userDataDTO: UserDataDTO): String {
         return wrap {
             service.addUser(
-                firstname = userDataDTO.firstname,
-                lastname = userDataDTO.lastname,
+                fullName = userDataDTO.fullName,
+                jobTitle = userDataDTO.jobTitle,
+                fcmToken = userDataDTO.fcmToken,
                 email = userDataDTO.email,
                 reEmail = userDataDTO.email,
                 gender = userDataDTO.gender,
                 birthdate = userDataDTO.birthdate,
                 username = userDataDTO.username,
                 password = userDataDTO.password
+            )
+        }
+    }
+
+    override suspend fun updateFcmToken(userDataDto: UserDataDTO): UserDTO {
+        return wrap {
+            service.updateFcmToken(
+                userId = userDataDto.userId,
+                email = userDataDto.newEmail,
+                gender = userDataDto.newGender,
+                password = userDataDto.currentPassword,
+                fullName = userDataDto.newFullName,
+                fcmToken = userDataDto.newFcmToken,
+                jobTitle = userDataDto.newJobTitle
             )
         }
     }

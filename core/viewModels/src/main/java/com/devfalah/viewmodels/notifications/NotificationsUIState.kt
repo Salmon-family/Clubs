@@ -18,6 +18,7 @@ data class NotificationState(
     val timeCreated: String = "",
     val type: Int = 0,
     val viewed: Boolean = false,
+    val subjectId: Int = 0,
 )
 
 //mapper
@@ -30,6 +31,7 @@ fun Notification.toUIState(): NotificationState {
         posterID = posterID,
         posterName = posterName,
         posterPhoto = posterImage,
+        subjectId = subjectGuid
     )
 }
 

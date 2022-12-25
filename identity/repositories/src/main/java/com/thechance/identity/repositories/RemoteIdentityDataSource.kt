@@ -9,10 +9,12 @@ interface RemoteIdentityDataSource {
 
     suspend fun login(userName: String, password: String): UserDTO
 
-    suspend fun signup(userDataDTO: UserDataDTO): AccountDTO
+    suspend fun signup(userDataDTO: UserDataDTO): String
 
     suspend fun joinClub(clubId: Int, userId: Int): ClubDto
 
     suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
+
+    suspend fun updateFcmToken(userDataDto: UserDataDTO): UserDTO
 
 }

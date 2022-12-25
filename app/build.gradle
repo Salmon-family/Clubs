@@ -74,7 +74,7 @@ dependencies {
     api(project(":chat:repository"))
     api(project(":chat:remote"))
     api(project(":chat:local"))
-    api(project(":chat:firebase"))
+    api(project(":common:firebase"))
     //endregion
 
     //region identity

@@ -14,9 +14,7 @@ import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
-import com.thechance.identity.ui.screen.signup.birthdate.navigateToBirthdateAndGander
-import com.thechance.identity.ui.spacer.SpacerVertical24
-import com.thechance.identity.ui.spacer.SpacerVertical8
+import com.thechance.identity.ui.screen.signup.jobtitle.navigateToJobTitle
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
@@ -33,7 +31,7 @@ fun SignUpFullNameScreen(
         onChangeUserName = viewModel::onChangeUserName,
         onValidate = viewModel::onValidateName,
         onClickBack = { navController.navigateUp() },
-        onClickUserNameScreen = { navController.navigateToBirthdateAndGander() },
+        onClickUserNameScreen = { navController.navigateToJobTitle() },
         onNavigate = {navController.navigateToLogInUserName()}
     )
 }
@@ -56,44 +54,38 @@ private fun SignUpFullNameContent(
 
         BackButton(onClick = onClickBack)
 
-        SpacerVertical24()
         Text(
             text = stringResource(id = R.string.sign_up),
             style = Typography.h1,
             color = MaterialTheme.colors.primaryVariant,
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 8.dp),
         )
 
-        SpacerVertical8()
         EmailDescriptionText(
             email = state.email,
         )
 
-        SpacerVertical24()
         Text(
             text = stringResource(id = R.string.full_naame),
             style = Typography.body2,
             color = MaterialTheme.colors.onSecondary,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 14.dp)
         )
 
-        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.name_hint),
             text = state.firstName,
-            onTextChange = onChangeFullName
+            onTextChange = onChangeFullName,
         )
 
-        SpacerVertical24()
         Text(
             text = stringResource(id = R.string.user_name),
             style = Typography.body2,
             color = MaterialTheme.colors.onSecondary,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 14.dp)
         )
 
-        Spacer(Modifier.height(14.dp))
         InputText(
             type = KeyboardType.Text,
             placeHolder = stringResource(id = R.string.user_name_hint),
@@ -101,11 +93,10 @@ private fun SignUpFullNameContent(
             onTextChange = onChangeUserName
         )
 
-        SpacerVertical24()
         AuthButton(
             onClick = onClickUserNameScreen,
             buttonModifier = Modifier
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 24.dp)
                 .fillMaxWidth(),
             isEnabled = onValidate.invoke(),
             text = stringResource(id = R.string.continue_label),
@@ -116,7 +107,6 @@ private fun SignUpFullNameContent(
             navigateText = R.string.log_in,
             onNavigate = onNavigate
         )
-        SpacerVertical24()
     }
 
 }

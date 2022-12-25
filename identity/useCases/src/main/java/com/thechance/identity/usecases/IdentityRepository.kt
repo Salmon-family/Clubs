@@ -1,9 +1,9 @@
 package com.thechance.identity.usecases
 
-import com.thechance.identity.entities.Account
 import com.thechance.identity.entities.Club
 import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
+import kotlinx.coroutines.flow.Flow
 
 interface IdentityRepository {
 
@@ -13,7 +13,7 @@ interface IdentityRepository {
 
     suspend fun login(userName: String, password: String): User
 
-    suspend fun signup(userData: UserData): Account
+    suspend fun signup(userData: UserData): String
 
     fun getUserId(): String?
 
@@ -24,4 +24,9 @@ interface IdentityRepository {
     fun getClubs(): List<Club>
 
     suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
+
+    suspend fun getToken(): String
+
+    suspend fun updateFcmToken(userData: UserData): User
+
 }

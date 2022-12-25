@@ -82,6 +82,8 @@
     <string name="edit">Edit</string>
     <string name="email">Email</string>
     <string name="new_password">New Password</string>
+    <string name="commented_on_your_post">commented on your post</string>
+    <string name="liked_your_comment_on_a_post">liked your comment on a post</string>
     <string name="menu">Menu</string>
 
 </resources>
