@@ -1,6 +1,9 @@
-package com.thechance.identity.ui.screen.signup.name
+package com.thechance.identity.ui.screen.signup.jobtitle
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,61 +15,50 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
-import com.thechance.identity.ui.composable.*
+import com.thechance.identity.ui.composable.AuthButton
+import com.thechance.identity.ui.composable.BackButton
+import com.thechance.identity.ui.composable.InputText
+import com.thechance.identity.ui.composable.NavigateToAnotherScreen
 import com.thechance.identity.ui.screen.login.username.navigateToLogInUserName
-import com.thechance.identity.ui.screen.signup.jobtitle.navigateToJobTitle
+import com.thechance.identity.ui.screen.signup.birthdate.navigateToBirthdateAndGander
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
 
 @Composable
-fun SignUpFullNameScreen(
+fun JobTitleScreen(
     navController: NavController,
-    viewModel: SignupViewModel,
-) {
+    viewModel: SignupViewModel
+){
     val state by viewModel.uiState.collectAsState()
-    SignUpFullNameContent(
-        state,
-        onChangeFullName = viewModel::onChangeFullName,
-        onChangeUserName = viewModel::onChangeUserName,
-        onValidate = viewModel::onValidateName,
+    JobTitleContent(
+        state = state,
         onClickBack = { navController.navigateUp() },
-        onClickUserNameScreen = { navController.navigateToJobTitle() },
+        onClickContinue = { navController.navigateToBirthdateAndGander() },
+        onChangeJobTitle = viewModel::onChangeJobTitle,
+        onValidate = viewModel::onValidateJobTitle,
         onNavigate = {navController.navigateToLogInUserName()}
     )
 }
 
 @Composable
-private fun SignUpFullNameContent(
+private fun JobTitleContent(
     state: UserUIState,
     onClickBack: () -> Unit,
-    onClickUserNameScreen: () -> Unit,
-    onChangeFullName: (String) -> Unit,
-    onChangeUserName: (String) -> Unit,
+    onClickContinue: () -> Unit,
+    onChangeJobTitle: (String) -> Unit,
     onValidate: () -> Boolean,
     onNavigate: () -> Unit
-) {
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
     ) {
-
-        BackButton(onClick = onClickBack)
-
-        Text(
-            text = stringResource(id = R.string.sign_up),
-            style = Typography.h1,
-            color = MaterialTheme.colors.primaryVariant,
-            modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 8.dp),
-        )
-
-        EmailDescriptionText(
-            email = state.email,
-        )
+        BackButton(onClickBack)
 
         Text(
-            text = stringResource(id = R.string.full_naame),
+            text = stringResource(id = R.string.job_title),
             style = Typography.body2,
             color = MaterialTheme.colors.onSecondary,
             modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 14.dp)
@@ -74,27 +66,13 @@ private fun SignUpFullNameContent(
 
         InputText(
             type = KeyboardType.Text,
-            placeHolder = stringResource(id = R.string.name_hint),
-            text = state.firstName,
-            onTextChange = onChangeFullName,
-        )
-
-        Text(
-            text = stringResource(id = R.string.user_name),
-            style = Typography.body2,
-            color = MaterialTheme.colors.onSecondary,
-            modifier = Modifier.padding(start = 8.dp, top = 24.dp, bottom = 14.dp)
-        )
-
-        InputText(
-            type = KeyboardType.Text,
-            placeHolder = stringResource(id = R.string.user_name_hint),
-            text = state.username,
-            onTextChange = onChangeUserName
+            placeHolder = stringResource(id = R.string.job_hint),
+            text = state.jobTitle,
+            onTextChange = onChangeJobTitle,
         )
 
         AuthButton(
-            onClick = onClickUserNameScreen,
+            onClick = onClickContinue,
             buttonModifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 24.dp)
                 .fillMaxWidth(),
@@ -108,5 +86,4 @@ private fun SignUpFullNameContent(
             onNavigate = onNavigate
         )
     }
-
 }

@@ -138,4 +138,8 @@ class SignupViewModel @Inject constructor(
         _uiState.update { it.copy(jobTitle = jobTitle) }
     }
 
+    fun onValidateJobTitle(): Boolean{
+        return accountValidationUseCase.validateJobTitle(_uiState.value.jobTitle)
+    }
+
 }
