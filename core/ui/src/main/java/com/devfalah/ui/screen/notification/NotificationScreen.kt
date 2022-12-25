@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.notification
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -73,7 +74,9 @@ fun NotificationContent(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = LightBackgroundColor),
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+
         ) {
             items(state.notifications) {
                 NotificationItem(notification = it, onNotificationClick)
