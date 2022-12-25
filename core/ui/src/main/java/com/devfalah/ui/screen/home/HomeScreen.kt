@@ -53,7 +53,7 @@ fun HomeScreen(
         onClickLike = viewModel::onClickLike,
         onClickComment = { navController.navigateToPostDetails(it.postId, it.isSaved) },
         onClickSave = viewModel::onClickSave,
-        onCreatePost = { navController.navigateToPostCreation(Screen.Home.screen_route) },
+        onCreatePost = { navController.navigateToPostCreation() },
         onRefresh = viewModel::swipeToRefresh,
         onDeletePost = viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },

@@ -146,12 +146,13 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         groupPrivacy: Int,
     ): GroupDTO {
-        return wrap { apiService.addGroups(
-            userID = userID,
-            groupName = groupName,
-            groupPrivacy = groupPrivacy,
-            description = description
-        )
+        return wrap {
+            apiService.addGroups(
+                userID = userID,
+                groupName = groupName,
+                groupPrivacy = groupPrivacy,
+                description = description
+            )
         }
     }
 
@@ -162,13 +163,11 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getGroupMembers(groupID: Int): List<UserDTO> {
-        val members = wrap { apiService.getGroupMembers(groupID) }.members
-        return if (members is Boolean) {
+        return try {
+            wrap { apiService.getGroupMembers(groupID) }.members ?: emptyList()
+        } catch (t: Throwable) {
             emptyList()
-        } else {
-            members as List<UserDTO>
         }
-
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto {

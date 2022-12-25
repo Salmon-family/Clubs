@@ -27,6 +27,7 @@ import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.friends.navigateToFriends
+import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
@@ -51,7 +52,7 @@ fun ClubsDetailsScreen(
         onClickLike = viewModel::onClickLike,
         onClickComment = { },
         onClickSave = viewModel::onClickSave,
-        onAddPost = { },
+        onAddPost = { navController.navigateToPostCreation(state.clubId) },
         onClickFriends = { navController.navigateToFriends(it) },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,

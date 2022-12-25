@@ -22,17 +22,16 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.screen.profile.createFileFromContentUri
-import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.createPost.CreatePostViewModel
-import com.devfalah.viewmodels.createPost.PostCreationUIState
+import com.devfalah.viewmodels.postCreation.PostCreationViewModel
+import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PostCreationScreen(
     navController: NavController,
-    viewModel: CreatePostViewModel = hiltViewModel()
+    viewModel: PostCreationViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()

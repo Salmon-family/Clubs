@@ -1,7 +1,6 @@
-package com.devfalah.viewmodels.createPost
+package com.devfalah.viewmodels.postCreation
 
 import android.graphics.Bitmap
-import android.net.Uri
 import java.io.File
 
 data class PostCreationUIState(
