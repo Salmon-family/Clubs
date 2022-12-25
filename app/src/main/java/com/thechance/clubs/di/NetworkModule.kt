@@ -5,9 +5,9 @@ import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
+import com.thechance.local.DataStorePreferences
 import com.thechance.remote.api.ChatService
 import com.thechance.remote.api.CloudMessagingService
-import com.thechance.local.DataStorePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -25,36 +26,54 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideClubsService(retrofit: Retrofit): ClubService {
+    fun provideClubsService(
+        @RetrofitClubService retrofit: Retrofit
+    ): ClubService {
         return retrofit.create(ClubService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideChatService(retrofit: Retrofit): ChatService {
+    fun provideChatService(
+        @RetrofitClubService retrofit: Retrofit
+    ): ChatService {
         return retrofit.create(ChatService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideIdentityService(retrofit: Retrofit): IdentityService {
+    fun provideIdentityService(
+        @RetrofitClubService retrofit: Retrofit
+    ): IdentityService {
         return retrofit.create(IdentityService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideFirebaseCloudMessagingApi(factory: GsonConverterFactory): CloudMessagingService =
-        Retrofit.Builder()
-            .baseUrl(CloudMessagingService.BASE_URL)
-            .addConverterFactory(factory)
-            .build()
-            .create(CloudMessagingService::class.java)
+    fun provideFirebaseCloudMessagingApi(
+        @RetrofitCloudMessagingService retrofit: Retrofit
+    ): CloudMessagingService =
+        retrofit.create(CloudMessagingService::class.java)
 
+
+    @RetrofitCloudMessagingService
     @Singleton
     @Provides
-    fun provideRetrofit(
+    fun provideRetrofitCloudMessagingService(
+        gsonConverterFactory: GsonConverterFactory,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(CloudMessagingService.BASE_URL)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
+    @RetrofitClubService
+    @Singleton
+    @Provides
+    fun provideRetrofitClubService(
         client: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
+        gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
@@ -84,4 +103,13 @@ object NetworkModule {
     @Provides
     fun provideDataStorePreferences(@ApplicationContext context: Context) =
         DataStorePreferences(context)
+
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class RetrofitClubService
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class RetrofitCloudMessagingService
 }

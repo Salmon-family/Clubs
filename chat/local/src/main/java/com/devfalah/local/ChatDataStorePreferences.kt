@@ -18,11 +18,11 @@ class ChatDataStorePreferences @Inject constructor(context: Context) {
     private val prefDataStore = context.preferencesDataStore
 
 
-    companion object {
-        private const val PREFERENCES_FILE_NAME = "clubs"
-    }
-
     fun readString(key: String): String? {
         return runBlocking { prefDataStore.data.map { it[stringPreferencesKey(key)] }.first() }
+    }
+
+    companion object {
+        private const val PREFERENCES_FILE_NAME = "clubs"
     }
 }
