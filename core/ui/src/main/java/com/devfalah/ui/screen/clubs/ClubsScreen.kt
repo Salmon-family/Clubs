@@ -30,14 +30,17 @@ import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubCreation.CLUB_CREATION_ROUTE
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
-import com.devfalah.ui.theme.*
+import com.devfalah.ui.theme.AppTypography
+import com.devfalah.ui.theme.LightBackgroundColor
+import com.devfalah.ui.theme.LightPrimaryBlackColor
+import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
 
 @Composable
 fun ClubsScreen(
     navController: NavController,
-    viewModel: MyClubsViewModel = hiltViewModel()
+    viewModel: MyClubsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -53,7 +56,7 @@ fun ClubsScreen(
 fun ClubsContent(
     navController: NavController,
     state: MyClubsUiState,
-    onClubClick: (Int) -> Unit
+    onClubClick: (Int) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -113,30 +116,32 @@ fun ClubsContent(
 @Composable
 fun MyClubsScreen(
     state: MyClubsUiState,
-    onClubClick: (Int) -> Unit
+    onClubClick: (Int) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(LightBackgroundColor),
-        contentPadding = PaddingValues(vertical = 16.dp),
+        contentPadding = if (state.mySpecialClubs.isNotEmpty())
+            PaddingValues(vertical = 16.dp) else PaddingValues(vertical = 0.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        item {
-            Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Icon(
-                    painter = painterResource(id = R.drawable.star),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp),
-                    tint = LightPrimaryBrandColor
-                )
-
-                Text(
-                    text = stringResource(R.string.my_special_clubs),
-                    modifier = Modifier.padding(start = 8.dp),
-                    style = AppTypography.subtitle1,
-                    color = LightPrimaryBlackColor
-                )
+        if (state.mySpecialClubs.isNotEmpty()) {
+            item {
+                Row(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.star),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint = LightPrimaryBrandColor
+                    )
+                    Text(
+                        text = stringResource(R.string.my_special_clubs),
+                        modifier = Modifier.padding(start = 8.dp),
+                        style = AppTypography.subtitle1,
+                        color = LightPrimaryBlackColor
+                    )
+                }
             }
         }
 
@@ -157,7 +162,6 @@ fun MyClubsScreen(
                 }
             }
         }
-
         item {
             Text(
                 text = stringResource(R.string.my_clubs),
@@ -181,7 +185,7 @@ fun MyClubsScreen(
 @Composable
 fun SpecialClubsScreen(
     state: MyClubsUiState,
-    onClubClick: (Int) -> Unit
+    onClubClick: (Int) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 3),
