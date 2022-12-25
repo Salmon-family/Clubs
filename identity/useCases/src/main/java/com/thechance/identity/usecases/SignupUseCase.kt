@@ -8,6 +8,7 @@ class SignupUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(userData: UserData): String {
-        return identityRepository.signup(userData).substringAfter(delimiter = ":").trim()
+        val user = userData.copy(fcmToken = identityRepository.getToken())
+        return identityRepository.signup(user).substringAfter(delimiter = ":").trim()
     }
 }

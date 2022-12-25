@@ -29,5 +29,4 @@ interface IdentityRepository {
 
     suspend fun updateFcmToken(userData: UserData): User
 
-    fun getFcmToken(): String
 }

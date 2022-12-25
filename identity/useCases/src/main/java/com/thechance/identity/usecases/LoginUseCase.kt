@@ -11,7 +11,6 @@ class LoginUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(userName: String, password: String): User {
-        println("DEVFALAH ${getTokenUseCase()}")
         val user = identityRepository.login(userName, password)
         saveUserId(user.guid.toString())
         updateFcmToken(user, password)
@@ -31,7 +30,7 @@ class LoginUseCase @Inject constructor(
         identityRepository.updateFcmToken(updatedUser)
     }
 
-    private fun getFcmToken(): String{
-        return identityRepository.getFcmToken()
+    private suspend fun getFcmToken(): String{
+        return identityRepository.getToken()
     }
 }

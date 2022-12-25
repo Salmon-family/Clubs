@@ -65,7 +65,4 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.updateFcmToken(mapperUserDataDTOToUserData.map(userData)).toEntity()
     }
 
-    override fun getFcmToken(): String {
-        return ""
-    }
 }

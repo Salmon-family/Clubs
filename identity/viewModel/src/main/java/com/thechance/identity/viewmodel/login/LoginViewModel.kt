@@ -1,6 +1,5 @@
 package com.thechance.identity.viewmodel.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.AccountValidationUseCase
@@ -33,8 +32,7 @@ class LoginViewModel @Inject constructor(
     private fun makeLoginRequest() {
         viewModelScope.launch {
             try {
-                val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
-                Log.i("userName", login.username)
+                loginUseCase(_uiState.value.userName, _uiState.value.password)
                 onSuccess()
             } catch (t: Throwable) {
                 onError(errorMessage = t)
