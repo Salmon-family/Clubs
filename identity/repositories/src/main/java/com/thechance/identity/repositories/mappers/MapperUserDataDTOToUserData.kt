@@ -11,10 +11,18 @@ class MapperUserDataDTOToUserData @Inject constructor() : Mapper<UserData, UserD
             email = input.email,
             reemail = input.reEmail,
             username = input.username,
-            firstname = input.firstname,
-            lastname = input.lastname,
+            fullName = input.fullName,
+            jobTitle = input.jobTitle,
+            fcmToken = input.fcmToken,
             gender = input.gender,
             password = input.password,
+            userId = input.userId,
+            newEmail = input.newEmail,
+            newGender = input.newGender,
+            currentPassword = input.currentPassword,
+            newFullName = input.newFullName,
+            newFcmToken = input.newFcmToken,
+            newJobTitle = input.newJobTitle
         )
     }
 }

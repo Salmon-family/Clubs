@@ -15,4 +15,8 @@ class AccountValidationUseCase @Inject constructor() {
     fun checkPasswordMatching(password: String, confirmPassword: String): Boolean{
         return password == confirmPassword && password.isNotEmpty()
     }
+
+    fun validateJobTitle(jobTitle: String): Boolean{
+        return jobTitle.isNotEmpty()
+    }
 }

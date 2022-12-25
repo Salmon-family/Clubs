@@ -9,8 +9,6 @@ data class UserDTO(
     val coverUrl: Boolean?,
     @SerializedName("email")
     val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
     @SerializedName("fullname")
     val fullName: String?,
     @SerializedName("gender")
@@ -21,8 +19,10 @@ data class UserDTO(
     val icon: IconDto?,
     @SerializedName("language")
     val language: String?,
-    @SerializedName("last_name")
-    val lastName: String?,
+    @SerializedName("job_title")
+    val jobTitle: String?,
+    @SerializedName("fcm_token")
+    val fcmToken: String,
     @SerializedName("username")
     val username: String?
 )

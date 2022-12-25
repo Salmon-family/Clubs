@@ -3,20 +3,36 @@ package com.thechance.identity.repositories.models
 import com.google.gson.annotations.SerializedName
 
 data class UserDataDTO(
-    @SerializedName("firstname")
-    var firstname: String,
-    @SerializedName("lastname")
-    var lastname: String,
+    @SerializedName("fullname")
+    val fullName: String,
+    @SerializedName("job_title")
+    val jobTitle: String,
+    @SerializedName("fcm_token")
+    val fcmToken: String,
     @SerializedName("email")
-    var email: String,
+    val email: String,
     @SerializedName("reemail")
-    var reemail: String,
+    val reemail: String,
     @SerializedName("gender")
-    var gender: String,
+    val gender: String,
     @SerializedName("birthdate")
-    var birthdate: String,
+    val birthdate: String,
     @SerializedName("username")
-    var username: String,
+    val username: String,
     @SerializedName("password")
-    var password: String
+    val password: String,
+    @SerializedName("guid")
+    val userId: Int = 0,
+    @SerializedName("new_email")
+    val newEmail: String = "",
+    @SerializedName("new_gender")
+    val newGender: String = "",
+    @SerializedName("current_password")
+    val currentPassword: String = "",
+    @SerializedName("new_full_name")
+    val newFullName: String = "",
+    @SerializedName("new_fcm_token")
+    val newFcmToken: String = "",
+    @SerializedName("new_job_title")
+    val newJobTitle: String = ""
 )

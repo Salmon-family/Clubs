@@ -1,6 +1,5 @@
 package com.thechance.identity.repositories
 
-import com.thechance.identity.entities.Account
 import com.thechance.identity.entities.Club
 import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
@@ -29,8 +28,8 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.login(userName, password).toEntity()
     }
 
-    override suspend fun signup(userData: UserData): Account {
-        return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData)).toEntity()
+    override suspend fun signup(userData: UserData): String {
+        return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData))
     }
 
     override fun getUserId(): String? {
@@ -60,5 +59,13 @@ class IdentityRepositoryImp @Inject constructor(
             localIdentityDataSource.saveToken(token)
             token
         }
+    }
+
+    override suspend fun updateFcmToken(userData: UserData): User {
+        return remoteDataSource.updateFcmToken(mapperUserDataDTOToUserData.map(userData)).toEntity()
+    }
+
+    override fun getFcmToken(): String {
+        return ""
     }
 }

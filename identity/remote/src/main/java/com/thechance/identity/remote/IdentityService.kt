@@ -21,15 +21,16 @@ interface IdentityService {
     @FormUrlEncoded
     @POST("user_add")
     suspend fun addUser(
-        @Field("firstname") firstname: String,
-        @Field("lastname") lastname: String,
+        @Field("fullname") fullName: String,
+        @Field("job_title") jobTitle: String,
+        @Field("fcm_token") fcmToken: String,
         @Field("email") email: String,
         @Field("reemail") reEmail: String,
         @Field("gender") gender: String,
         @Field("birthdate") birthdate: String,
         @Field("username") username: String,
         @Field("password") password: String
-    ): Response<IdentityBaseResponse<AccountDTO>>
+    ): Response<IdentityBaseResponse<String>>
 
     @POST("groups_join")
     suspend fun joinClub(
@@ -43,4 +44,16 @@ interface IdentityService {
         @Query("guid") userId: Int,
         @Query("uguid") clubOwnerId: Int
     ): Response<IdentityBaseResponse<Boolean>>
+
+    @FormUrlEncoded
+    @POST("user_edit")
+    suspend fun updateFcmToken(
+        @Field("guid") userId: Int,
+        @Field("new_email") email: String,
+        @Field("new_gender") gender: String,
+        @Field("current_password") password: String,
+        @Field("new_full_name") fullName: String,
+        @Field("new_fcm_token") fcmToken: String,
+        @Field("new_job_title") jobTitle: String
+    ): Response<IdentityBaseResponse<UserDTO>>
 }
