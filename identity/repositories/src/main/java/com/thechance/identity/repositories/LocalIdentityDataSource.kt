@@ -11,4 +11,8 @@ interface LocalIdentityDataSource {
     suspend fun saveUserId(id: String)
 
     fun getClubs(): List<Club>
+
+    suspend fun saveToken(token: String)
+
+    fun getToken(): String
 }

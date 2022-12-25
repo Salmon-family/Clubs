@@ -4,6 +4,7 @@ import com.thechance.identity.entities.Account
 import com.thechance.identity.entities.Club
 import com.thechance.identity.entities.User
 import com.thechance.identity.entities.UserData
+import kotlinx.coroutines.flow.Flow
 
 interface IdentityRepository {
 
@@ -24,4 +25,6 @@ interface IdentityRepository {
     fun getClubs(): List<Club>
 
     suspend fun acceptJoiningRequest(clubId: Int, userId: Int, clubOwnerId: Int): Boolean
+
+    suspend fun getToken(): String
 }
