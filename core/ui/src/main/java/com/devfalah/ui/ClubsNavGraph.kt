@@ -19,7 +19,6 @@ import com.devfalah.ui.screen.home.homeRoute
 import com.devfalah.ui.screen.menu.menuRoute
 import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.postCreation.createPostRoute
-import com.devfalah.ui.screen.postCreation.createPostRoute
 import com.devfalah.ui.screen.postDetails.postDetailsRoute
 import com.devfalah.ui.screen.profile.profileRoute
 import com.devfalah.ui.screen.savedPosts.savedPostsRoute

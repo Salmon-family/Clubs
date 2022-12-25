@@ -56,12 +56,15 @@ fun ClubMembers(
             }
 
             WidthSpacer12()
-            Members(
-                modifier = Modifier.padding(top = 8.dp, end = 8.dp, bottom = 8.dp),
-                painter = painterResource(id = R.drawable.ic_more),
-                text = stringResource(R.string.more),
-                textColor = LightPrimaryBrandColor
-            )
+
+            if (friends.size > 4) {
+                Members(
+                    modifier = Modifier.padding(top = 8.dp, end = 8.dp, bottom = 8.dp),
+                    painter = painterResource(id = R.drawable.ic_more),
+                    text = stringResource(R.string.more),
+                    textColor = LightPrimaryBrandColor
+                )
+            }
         }
 
     }

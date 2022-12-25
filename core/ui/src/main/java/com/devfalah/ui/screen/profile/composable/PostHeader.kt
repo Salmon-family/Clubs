@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -35,6 +36,8 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun PostHeader(
     post: PostUIState,
     isMyProfile: Boolean,
+    hidePrivacy: Boolean,
+    showGroupName: Boolean,
     onClickPostSetting: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit
 ) {
@@ -60,25 +63,38 @@ fun PostHeader(
                 color = LightPrimaryBlackColor
             )
             Row {
-                Icon(
-                    painter = getPrivacyIcon(post.privacy),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(top = 4.dp)
-                )
-                WidthSpacer8()
-                Text(
-                    text = getPrivacyText(post.privacy),
-                    fontSize = 12.sp,
-                    fontFamily = PlusJakartaSans,
-                    fontWeight = FontWeight.SemiBold,
-                    color = LightTernaryBlackColor,
-                )
+                if (!hidePrivacy) {
+                    Icon(
+                        painter = getPrivacyIcon(post.privacy),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(top = 4.dp)
+                    )
+                    WidthSpacer8()
+                    Text(
+                        text = "${getPrivacyText(post.privacy)}  | ",
+                        fontSize = 12.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.SemiBold,
+                        color = LightTernaryBlackColor,
+                    )
 
-                WidthSpacer8()
+                    WidthSpacer8()
+                }
+                if (hidePrivacy && showGroupName) {
+                    Text(
+                        text = "${post.groupName}  | ",
+                        fontSize = 12.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.SemiBold,
+                        color = LightTernaryBlackColor,
+                    )
+
+                    WidthSpacer8()
+                }
                 Text(
-                    text = " |  ${post.createdData}",
+                    text = post.createdData,
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,
@@ -91,7 +107,8 @@ fun PostHeader(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 16.dp),
+                    .padding(end = 16.dp)
+                    .clip(RoundedCornerShape(16.dp)),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Icon(

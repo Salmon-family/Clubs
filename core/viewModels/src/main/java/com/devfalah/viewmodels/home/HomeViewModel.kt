@@ -99,13 +99,14 @@ class HomeViewModel @Inject constructor(
                 _uiState.update { it.copy(isPagerLoading = true) }
             }
             try {
+
                 val homePosts = allPosts.loadData(uiState.value.id)
                 _uiState.update {
                     it.copy(
                         isPagerLoading = false,
                         isLoading = false,
                         isEndOfPager = homePosts.isNotEmpty(),
-                        posts = it.posts + homePosts.toUIState(groupId = HOME_GROUP_ID)
+                        posts = it.posts + homePosts.toUIState()
                     )
                 }
             } catch (t: Throwable) {
@@ -127,7 +128,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
-                Log.e("Test", t.message.toString())
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
         }

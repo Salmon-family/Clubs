@@ -146,12 +146,13 @@ class RemoteDataSourceImp @Inject constructor(
         description: String,
         groupPrivacy: Int,
     ): GroupDTO {
-        return wrap { apiService.addGroups(
-            userID = userID,
-            groupName = groupName,
-            groupPrivacy = groupPrivacy,
-            description = description
-        )
+        return wrap {
+            apiService.addGroups(
+                userID = userID,
+                groupName = groupName,
+                groupPrivacy = groupPrivacy,
+                description = description
+            )
         }
     }
 
@@ -162,13 +163,11 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getGroupMembers(groupID: Int): List<UserDTO> {
-        val members = wrap { apiService.getGroupMembers(groupID) }.members
-        return if (members is Boolean) {
+        return try {
+            wrap { apiService.getGroupMembers(groupID) }.members ?: emptyList()
+        } catch (t: Throwable) {
             emptyList()
-        } else {
-            members as List<UserDTO>
         }
-
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto {
@@ -214,7 +213,7 @@ class RemoteDataSourceImp @Inject constructor(
             apiService.addPostOnWallFriendOrGroup(
                 userId = userId,
                 friendOrGroupID = publishOnId,
-                type = "user",
+                type = getPublishType(userId = userId, publishOnId = publishOnId),
                 post = postContent,
                 privacy = privacy
             )
@@ -230,7 +229,7 @@ class RemoteDataSourceImp @Inject constructor(
 
         val id = userId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val publishOn = publishOnId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val type = "user".toRequestBody("text/plain".toMediaTypeOrNull())
+        val type = getPublishType(userId, publishOnId).toRequestBody("text/plain".toMediaTypeOrNull())
         val postPrivacy = privacy.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val postText = postContent.toRequestBody("text/plain".toMediaTypeOrNull())
 
@@ -243,6 +242,11 @@ class RemoteDataSourceImp @Inject constructor(
             file = part
         ).body()?.payload ?: throw Throwable("Error")
 
+    }
+
+    private fun getPublishType(userId: Int, publishOnId: Int): String {
+        return if (userId == publishOnId) { "user" }
+        else { "group" }
     }
 
     override suspend fun editClub(

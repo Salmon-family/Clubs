@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import com.devfalah.ui.Screen
 
 fun NavController.navigateHome() {
-    popBackStack(Screen.Home.screen_route, false)
+    popBackStack(Screen.Home.screen_route, true)
     navigate(ROUTE_HOME)
 }
 

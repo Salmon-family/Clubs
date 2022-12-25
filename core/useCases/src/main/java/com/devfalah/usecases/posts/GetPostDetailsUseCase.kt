@@ -8,6 +8,10 @@ class GetPostDetailsUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
     suspend operator fun invoke(postId: Int, userID: Int): Post {
-        return clubRepository.getPostByID(postId = postId, userID = userID)
+        val post = clubRepository.getPostByID(postId = postId, userID = userID)
+        println("Testttttt $post")
+        return post
     }
+
+
 }

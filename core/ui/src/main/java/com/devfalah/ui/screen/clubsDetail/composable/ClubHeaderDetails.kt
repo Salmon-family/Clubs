@@ -27,7 +27,10 @@ fun ClubHeaderDetails(
     state: ClubDetailsUiState,
     onBack: () -> Unit,
     maxLineContentExpand: Int = 2,
+    onClickJoinRequestClub: () -> Unit,
+    onClickEditClub: () -> Unit
 ) {
+
 
     var popupController by remember { mutableStateOf(false) }
 
@@ -37,7 +40,7 @@ fun ClubHeaderDetails(
             .background(LightPrimaryBrandColor)
     ) {
 
-        val (backButton, textDescription, textName, readMore, cover) = createRefs()
+        val (backButton, textDescription, textName, cover, dropDownMenu) = createRefs()
 
         BackButton(
             modifier = Modifier
@@ -50,6 +53,19 @@ fun ClubHeaderDetails(
                 },
             tint = WhiteColor
         )
+
+        if (state.isOwnerOfClub) {
+            DropDownOwner(
+                modifier = Modifier
+                    .padding(top = 16.dp, end = 16.dp)
+                    .constrainAs(dropDownMenu) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                    },
+                onClickJoinRequestClub = onClickJoinRequestClub,
+                onClickEditClub = onClickEditClub
+            )
+        }
 
         Text(
             text = state.name,

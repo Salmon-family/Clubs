@@ -29,6 +29,7 @@ import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.viewmodels.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
@@ -55,7 +56,15 @@ fun ProfileScreen(
     ProfileContent(
         state,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { navController.navigateToPostDetails(it.postId, it.isSaved) },
+        onClickComment = {
+            navController.navigateToPostDetails(
+                id = it.postId,
+                isSaved = it.isSaved,
+                publisherId = it.publisherId,
+                publisherName = it.publisherName,
+                publisherUrl = it.publisherImage
+            )
+        },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
@@ -68,7 +77,7 @@ fun ProfileScreen(
             )
         },
         onRefresh = viewModel::swipeToRefresh,
-        onCreatePost = { navController.navigateToPostCreation(PROFILE_SCREEN) },
+        onCreatePost = { navController.navigateToPostCreation(PROFILE_CLUB_ID) },
         onClickProfile = {
             if (!state.isMyProfile) {
                 navController.navigateToProfile(it)
@@ -158,6 +167,8 @@ fun ProfileContent(
                 state = it,
                 isMyPost = true,
                 isContentExpandable = true,
+                isClubPost = false,
+                showGroupName = false,
                 onClickLike = onClickLike,
                 onClickComment = onClickComment,
                 onClickSave = onClickSave,
