@@ -8,6 +8,7 @@ import com.devfalah.usecases.*
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
+import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -192,7 +193,8 @@ class ProfileViewModel @Inject constructor(
                     it.copy(
                         loading = false,
                         posts = (it.posts + posts.toUIState()),
-                        isEndOfPager = posts.isEmpty()
+                        isPagerLoading = false,
+                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
                     )
                 }
             } catch (t: Throwable) {
