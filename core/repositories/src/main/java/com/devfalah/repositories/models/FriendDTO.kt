@@ -25,5 +25,7 @@ data class FriendDTO(
     @SerializedName("last_name")
     val lastName: String?,
     @SerializedName("username")
-    val username: String?
+    val username: String?,
+    @SerializedName("job_title")
+    val jobTitle: String?
 )
