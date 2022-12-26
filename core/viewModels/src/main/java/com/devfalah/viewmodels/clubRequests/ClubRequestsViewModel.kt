@@ -25,14 +25,14 @@ class ClubRequestsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getData(args.clubID)
+        getData()
     }
 
-    fun getData(clubId: Int) {
+    fun getData() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val requests = getClubRequestsUseCase(clubId)
+                val requests = getClubRequestsUseCase(args.clubID)
                 _uiState.update { it.copy(isLoading = false, users = requests.listToUserUiState()) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }

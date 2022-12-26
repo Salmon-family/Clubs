@@ -14,6 +14,8 @@ class GetClubMembersUseCase @Inject constructor(
         return if (members.isNotEmpty()) {
             page += 1
             members
+        } else if (page == 1) {
+            throw Throwable("error")
         } else {
             emptyList()
         }

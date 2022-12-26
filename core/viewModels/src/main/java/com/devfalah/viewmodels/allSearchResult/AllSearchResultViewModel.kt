@@ -32,7 +32,7 @@ class AllSearchResultViewModel @Inject constructor(
 
     fun getData() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val userId = getUserIdUseCase()
                 val result = getSearchUseCase(userId, args.keyword)

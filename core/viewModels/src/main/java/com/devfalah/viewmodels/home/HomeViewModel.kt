@@ -25,12 +25,21 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
 
-
     init {
+        getUserId()
+        getData()
+    }
+
+    fun onRetry() {
+        _uiState.update { it.copy(error = "", isLoading = true) }
+        getUserId()
+        swipeToRefresh()
+    }
+
+    private fun getUserId() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(id = getUser()) }
-                getData()
+                _uiState.update { it.copy(isLoading = true, id = getUser()) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
@@ -90,9 +99,8 @@ class HomeViewModel @Inject constructor(
 
     fun swipeToRefresh() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isPagerLoading = true) }
+            _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
             try {
-
                 val homePosts = allPosts.loadData(uiState.value.id)
                 _uiState.update {
                     it.copy(
@@ -105,7 +113,18 @@ class HomeViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        isPagerLoading = false, isLoading = false, pagerError = t.message.toString()
+                        isPagerLoading = false,
+                        isLoading = false,
+                        pagerError = if (_uiState.value.posts.isNotEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        },
+                        error = if (_uiState.value.posts.isEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        }
                     )
                 }
             }

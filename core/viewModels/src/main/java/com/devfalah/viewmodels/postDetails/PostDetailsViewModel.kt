@@ -13,6 +13,7 @@ import com.devfalah.viewmodels.postDetails.mapper.toUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
+import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,13 +44,14 @@ class PostDetailsViewModel @Inject constructor(
     }
 
     fun getData() {
+        _uiState.update { it.copy(isLoading = true, error = "") }
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(id = getUserIdUseCase()) }
                 getPostDetails()
                 getPostComments()
             } catch (t: Throwable) {
-
+                _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
         }
     }
@@ -187,6 +189,7 @@ class PostDetailsViewModel @Inject constructor(
     }
 
     fun getPostComments() {
+        _uiState.update { it.copy(isPagerLoading = true, minorError = "", error = "") }
         viewModelScope.launch {
             try {
                 if (!uiState.value.isEndOfPager) {
@@ -195,14 +198,22 @@ class PostDetailsViewModel @Inject constructor(
                         _uiState.update {
                             it.copy(
                                 comments = (it.comments + comments.toUIState(uiState.value.id)).distinctBy { it.id },
-                                isEndOfPager = comments.isEmpty()
+                                isEndOfPager = (comments.isEmpty() || comments.size < MAX_PAGE_ITEM),
+                                isPagerLoading = false,
+                                isLoading = false
                             )
                         }
                     }
 
                 }
             } catch (t: Throwable) {
-
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        minorError = t.message.toString()
+                    )
+                }
             }
         }
     }

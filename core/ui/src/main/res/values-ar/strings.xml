@@ -89,4 +89,6 @@
     <string name="enter_your_comment">اضف تعليقك…</string>
     <string name="password_place_holder">ادخل اكثر من ستة احرف او ارقام</string>
 
+    <string name="version">الإصدار</string>
+
 </resources>

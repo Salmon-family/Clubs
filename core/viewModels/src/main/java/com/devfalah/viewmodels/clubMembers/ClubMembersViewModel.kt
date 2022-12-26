@@ -24,21 +24,40 @@ class ClubMembersViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(FriendsUIState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        getClubMembers()
+    }
 
     fun getClubMembers() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = "") }
+            _uiState.update {
+                it.copy(
+                    isLoading = uiState.value.friends.isEmpty(),
+                    isPagerLoading = true,
+                    error = "",
+                    minorError = ""
+                )
+            }
             try {
                 val members = getClubMembersUseCase(args.clubId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
+                        isPagerLoading = false,
                         isPagerEnd = (members.isEmpty() || members.size < MAX_PAGE_ITEM),
                         friends = (uiState.value.friends + members.toFriendsUIState())
                     )
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
+                _uiState.update {
+                    it.copy(
+                        error = if (_uiState.value.friends.isEmpty()) { t.message.toString() }
+                        else { "" },
+                        isLoading = false,
+                        isPagerLoading = false,
+                        minorError = t.message.toString()
+                    )
+                }
             }
         }
     }

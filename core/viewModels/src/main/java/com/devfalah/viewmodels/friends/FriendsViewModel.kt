@@ -1,12 +1,12 @@
 package com.devfalah.viewmodels.friends
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetUserFriendsUseCase
 import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.RemoveFriendRequestUseCase
+import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,39 +27,49 @@ class FriendsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getUserID()
+        getData()
     }
 
-    private fun getUserID() {
+    fun getData() {
+        getUser()
+        getUserFriends()
+    }
+
+    private fun getUser() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val userId = userId()
                 _uiState.update { it.copy(isMyProfile = userId == args.ownerId, id = userId) }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
         }
     }
 
     fun getUserFriends() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = "") }
+            _uiState.update { it.copy(isPagerLoading = true, minorError = "") }
             try {
                 val friends = getUserFriendsUseCase(args.ownerId)
-                if (friends.friends.isNotEmpty()) {
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            totalFriends = friends.total,
-                            friends = (_uiState.value.friends + friends.friends.toFriendsUIState())
-                        )
-                    }
-                }else{
-                    _uiState.update { it.copy(isLoading = false, isPagerEnd = true) }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isPagerLoading = false,
+                        isPagerEnd = (friends.friends.isEmpty() || friends.friends.size < MAX_PAGE_ITEM),
+                        totalFriends = friends.total,
+                        friends = (_uiState.value.friends + friends.friends.toFriendsUIState())
+                    )
                 }
             } catch (t: Throwable) {
-                Log.e("TEST", t.message.toString())
-                _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
+                _uiState.update {
+                    it.copy(
+                        minorError = if (uiState.value.friends.isNotEmpty()) { t.message.toString() } else { "" },
+                        isLoading = false,
+                        isPagerLoading = false,
+                        error = if (uiState.value.friends.isEmpty()) { t.message.toString() } else { "" }
+                    )
+                }
             }
         }
     }

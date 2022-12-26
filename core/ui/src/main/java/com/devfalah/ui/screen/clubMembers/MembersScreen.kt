@@ -34,6 +34,7 @@ fun MembersScreen(
         navController = navController,
         onRefresh = viewModel::getClubMembers,
         onClickProfile = { navController.navigateToProfile(it) },
+        onRetry = viewModel::getClubMembers,
         onRemoveFriend = {}
     )
     LaunchedEffect(true) {
@@ -53,35 +54,43 @@ fun ClubMembersContent(
     onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRemoveFriend: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
     Column(Modifier.fillMaxSize()) {
-
         AppBar(
             title = stringResource(id = R.string.members),
             navHostController = navController
         )
-        ManualPager(
-            onRefresh = onRefresh,
-            contentPadding = PaddingValues(16.dp),
-            isLoading = state.isLoading,
-            error = state.error,
-            isEndOfPager = state.isPagerEnd,
-        ) {
+        if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.friends.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        } else {
+            ManualPager(
+                onRefresh = onRefresh,
+                contentPadding = PaddingValues(16.dp),
+                isLoading = state.isPagerLoading,
+                error = state.minorError,
+                isEndOfPager = state.isPagerEnd,
+            ) {
 
-            if (state.isMyProfile) {
-                items(state.friends) {
-                    FriendRemoveItem(
-                        state = it,
-                        onClickOpenProfile = onClickProfile,
-                        onRemoveFriend = onRemoveFriend
-                    )
-                }
-            } else {
-                items(state.friends) {
-                    FriendItem(
-                        state = it,
-                        onOpenProfileClick = onClickProfile
-                    )
+                if (state.isMyProfile) {
+                    items(state.friends) {
+                        FriendRemoveItem(
+                            state = it,
+                            onClickOpenProfile = onClickProfile,
+                            onRemoveFriend = onRemoveFriend
+                        )
+                    }
+                } else {
+                    items(state.friends) {
+                        FriendItem(
+                            state = it,
+                            onOpenProfileClick = onClickProfile
+                        )
+                    }
                 }
             }
         }

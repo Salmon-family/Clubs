@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.search
 
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,12 +20,13 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.allSearchResultScreen.navigateToAllSearchResult
+import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
-import com.devfalah.viewmodels.util.Constants.SEARCH_USER
 import com.devfalah.viewmodels.search.SearchUIState
 import com.devfalah.viewmodels.search.SearchViewModel
+import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
+import com.devfalah.viewmodels.util.Constants.SEARCH_USER
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -37,29 +36,26 @@ fun SearchScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
-    val context = LocalContext.current
+
+    val clubTitle = stringResource(id = R.string.clubs)
+    val peopleTitle = stringResource(id = R.string.people)
 
     SearchContent(
         state = state,
         onSearchValueChanged = viewModel::onSearchTextChange,
-        onClubSelected = {
-            Toast.makeText(
-                context,
-                "Should Navigate to Club Id = $it",
-                Toast.LENGTH_LONG
-            ).show()
-        },
+        onClubSelected = { navController.navigateToClubDetails(it) },
         OnUserClick = { navController.navigateToProfile(it) },
         onClickSeeAllClubs = {
             navController.navigateToAllSearchResult(
-                title = "Clubs", keyword = state.keyword, searchType = SEARCH_CLUB
+                title = clubTitle, keyword = state.keyword, searchType = SEARCH_CLUB
             )
         },
         onClickSeeAllPeople = {
             navController.navigateToAllSearchResult(
-                title = "People", keyword = state.keyword, searchType = SEARCH_USER
+                title = peopleTitle, keyword = state.keyword, searchType = SEARCH_USER
             )
-        }
+        },
+        onRetry = viewModel::onSearch
     )
 }
 
@@ -71,9 +67,9 @@ fun SearchContent(
     onClubSelected: (Int) -> Unit,
     OnUserClick: (Int) -> Unit,
     onClickSeeAllClubs: () -> Unit,
-    onClickSeeAllPeople: () -> Unit
+    onClickSeeAllPeople: () -> Unit,
+    onRetry: () -> Unit,
 ) {
-
     LazyColumn(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -87,6 +83,16 @@ fun SearchContent(
                 onValueChanged = onSearchValueChanged,
                 modifier = Modifier.background(MaterialTheme.colors.background)
             )
+        }
+
+        item("state") {
+            if (state.error.isNotBlank()) {
+                ErrorItem(onClickRetry = onRetry)
+            } else if (state.isLoading) {
+                LottieItem(LottieResource = R.raw.loading)
+            } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
+                LottieItem(LottieResource = R.raw.no_data)
+            }
         }
 
         if (state.users.isNotEmpty()) {

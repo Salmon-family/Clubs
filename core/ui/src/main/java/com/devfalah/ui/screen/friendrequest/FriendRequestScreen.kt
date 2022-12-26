@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +20,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.ErrorItem
+import com.devfalah.ui.composable.LottieItem
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -39,17 +41,18 @@ fun FriendRequestScreen(
 
     FriendRequestsContent(
         navController,
-        friendRequestUiState = state,
+        state = state,
         onAcceptButtonClick = viewModel::acceptFriendRequest,
         onDeleteButtonClick = viewModel::deniedFriendRequest,
-        onClickOpenProfile = { navController.navigateToProfile(it) }
+        onRetry = viewModel::getData,
+        onClickOpenProfile = { navController.navigateToProfile(it) },
     )
     LaunchedEffect(true) {
-//        StatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightBackgroundColor,
-//            darkIcons = true
-//        )
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightBackgroundColor,
+            darkIcons = true
+        )
     }
 }
 
@@ -58,33 +61,41 @@ fun FriendRequestScreen(
 @Composable
 fun FriendRequestsContent(
     navController: NavController,
-    friendRequestUiState: FriendRequestUiState,
+    state: FriendRequestUiState,
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
     Column {
         AppBar(title = stringResource(R.string.friends_request), navHostController = navController)
-        LazyColumn(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .background(MaterialTheme.colors.background)
-                .fillMaxSize(),
-        ) {
-            items(
-                items = friendRequestUiState.friendRequests,
-                key = { currentRequest -> currentRequest.userID }
-            ) { userState ->
-                FriendRequestItem(
-                    userState = userState,
-                    onClickOpenProfile = onClickOpenProfile,
-                    onAcceptButtonClick = onAcceptButtonClick,
-                    onDeleteButtonClick = onDeleteButtonClick,
-                    modifier = Modifier.animateItemPlacement()
-                )
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else if (state.friendRequests.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        } else {
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .background(LightBackgroundColor)
+                    .fillMaxSize(),
+            ) {
+                items(
+                    items = state.friendRequests,
+                    key = { currentRequest -> currentRequest.userID }
+                ) { userState ->
+                    FriendRequestItem(
+                        userState = userState,
+                        onClickOpenProfile = onClickOpenProfile,
+                        onAcceptButtonClick = onAcceptButtonClick,
+                        onDeleteButtonClick = onDeleteButtonClick,
+                        modifier = Modifier.animateItemPlacement()
+                    )
+                }
             }
         }
-
     }
 }

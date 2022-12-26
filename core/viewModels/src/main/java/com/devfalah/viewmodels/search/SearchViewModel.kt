@@ -26,11 +26,18 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onSearchTextChange(keyword: String) {
+        _uiState.update { it.copy(keyword = keyword) }
+        if (_uiState.value.keyword.isNotEmpty()) {
+            onSearch()
+        }
+    }
+
+    fun onSearch() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, keyword = keyword) }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                if (keyword.isNotBlank()) {
-                    val searchResult = getSearchUseCase(uiState.value.userId, keyword)
+                if (uiState.value.keyword.isNotBlank()) {
+                    val searchResult = getSearchUseCase(uiState.value.userId, uiState.value.keyword)
                     _uiState.update {
                         it.copy(
                             isLoading = false,
@@ -46,7 +53,14 @@ class SearchViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = t.message.toString(),
+                        users = emptyList(),
+                        clubs = emptyList()
+                    )
+                }
             }
         }
     }

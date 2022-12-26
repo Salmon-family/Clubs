@@ -9,6 +9,7 @@ import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
+import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import com.devfalah.viewmodels.util.Constants.PRIVATE_PRIVACY
 import com.devfalah.viewmodels.util.Constants.PUBLIC_PRIVACY
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,19 +59,26 @@ class ClubDetailsViewModel @Inject constructor(
     fun swipeToRefresh() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(isLoading = true) }
+                _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
                 val posts = getGroupWallUseCase.loadMore(_uiState.value.userId, args.groupId)
                     .toUIState(args.groupId, uiState.value.name)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
+                        isPagerLoading = false,
                         posts = (it.posts + posts),
-                        isEndOfPager = posts.isEmpty()
+                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
                     )
                 }
                 getPostCount()
             } catch (t: Throwable) {
-                _uiState.update { it.copy(isLoading = false, pagerError = t.message.toString()) }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isPagerLoading = false,
+                        pagerError = t.message.toString()
+                    )
+                }
             }
         }
     }
@@ -78,7 +86,7 @@ class ClubDetailsViewModel @Inject constructor(
 
     private fun getClubDetails() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, pagerError = "") }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val clubDetails =
                     getClubDetailsUseCase(userID = _uiState.value.userId, groupID = args.groupId)
@@ -101,7 +109,7 @@ class ClubDetailsViewModel @Inject constructor(
                     it.copy(
                         isLoading = false,
                         isSuccessful = false,
-                        pagerError = throwable.message.toString()
+                        error = throwable.message.toString()
                     )
                 }
             }

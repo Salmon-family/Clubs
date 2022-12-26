@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +20,9 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.ErrorItem
+import com.devfalah.ui.composable.LottieItem
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -38,11 +40,13 @@ fun NotificationScreen(
     viewModel: NotificationsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
 
     NotificationContent(
         navController = navController,
         state = state,
-        onClickTryAgain = viewModel::getUserNotifications
+        onClickTryAgain = viewModel::getUserNotifications,
+        onRetry = viewModel::getUserNotifications
     ) {
         viewModel.markNotificationAsViewed(it)
 
@@ -60,6 +64,13 @@ fun NotificationScreen(
         }
     }
 
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightBackgroundColor,
+            darkIcons = true
+        )
+    }
 }
 
 @Composable
@@ -67,17 +78,27 @@ fun NotificationContent(
     navController: NavController,
     state: NotificationsUIState,
     onClickTryAgain: () -> Unit,
-    onNotificationClick: (NotificationState) -> Unit
+    onRetry: () -> Unit,
+    onNotificationClick: (NotificationState) -> Unit,
 ) {
     Column {
         AppBar(
             title = stringResource(id = Screen.Notification.title),
             navHostController = navController
         )
+
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else if (state.notifications.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colors.background),
+                .background(color = LightBackgroundColor),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
 

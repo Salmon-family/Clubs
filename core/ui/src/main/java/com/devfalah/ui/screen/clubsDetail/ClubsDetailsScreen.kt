@@ -17,9 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.ManualPager
-import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.RoundButton
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
@@ -28,9 +26,11 @@ import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
+import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.util.Constants
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
@@ -107,17 +107,14 @@ private fun ClubsDetailsContent(
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
-        if (state.pagerError.isNotEmpty()) {
-            Box(modifier = Modifier.fillMaxSize())
-            Button(
-                onClick = onRetry
-            ) {
-                Text(text = stringResource(id = R.string.retry))
-            }
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
         } else {
             ManualPager(
                 onRefresh = onRefresh,
-                isLoading = state.isLoading,
+                isLoading = state.isPagerLoading,
                 error = state.pagerError,
                 isEndOfPager = state.isEndOfPager,
                 contentPadding = PaddingValues(bottom = 16.dp)
@@ -192,7 +189,7 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = false,
+                            isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             isClubPost = true,
                             showGroupName = false,
@@ -238,7 +235,7 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = false,
+                            isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             isClubPost = true,
                             onClickLike = onClickLike,
@@ -260,11 +257,11 @@ private fun ClubsDetailsContent(
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
-//    LaunchedEffect(true) {
-//        StatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightPrimaryBrandColor,
-//            darkIcons = false
-//        )
-//    }
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = LightPrimaryBrandColor,
+            darkIcons = false
+        )
+    }
 }

@@ -6,12 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,13 +26,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ManualPager
-import com.devfalah.ui.composable.PostItem
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -46,6 +46,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+    val systemUIController = rememberSystemUiController()
 
     HomeContent(
         navController = navController,
@@ -60,20 +61,14 @@ fun HomeScreen(
         onDeletePost = viewModel::onDeletePost,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
-        onClickChat = {
-            try {
-                val intent = Intent(
-                    context,
-                    Class.forName("com.thechance.ui.ChatActivity")
-                )
-                startActivity(context, intent, Bundle())
-            } catch (e: ClassNotFoundException) {
-                e.printStackTrace()
-            }
-
-        }
+        onClickChat = { goToChat(context) },
+        onRetry = viewModel::onRetry
     )
-
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+        )
+    }
 }
 
 @Composable
@@ -89,8 +84,9 @@ fun HomeContent(
     onOpenLinkClick: (String) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
     onClickChat: () -> Unit,
+    onRetry: () -> Unit
 ) {
-    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = stringResource(id = Screen.Home.title),
             navHostController = navController,
@@ -103,6 +99,12 @@ fun HomeContent(
                 }
             }
         )
+
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        }
 
         ManualPager(
             onRefresh = onRefresh,
@@ -120,28 +122,40 @@ fun HomeContent(
             }
 
             items(state.posts) {
-                PostItem(
-                    state = it,
-                    isContentExpandable = true,
-                    isMyPost = it.publisherId == state.id,
-                    isClubPost = false,
-                    showGroupName = false,
-                    onClickLike = { onClickLike(it) },
-                    onClickComment = { onClickComment(it) },
-                    onClickSave = { onClickSave(it) },
-                    onClickProfile = onClickProfile,
-                    onClickPostSetting = onDeletePost,
-                    onOpenLinkClick = onOpenLinkClick
-                )
+                if (state.error.isEmpty()) {
+                    PostItem(
+                        state = it,
+                        isContentExpandable = true,
+                        isMyPost = it.publisherId == state.id,
+                        isClubPost = false,
+                        showGroupName = false,
+                        onClickLike = onClickLike,
+                        onClickComment = onClickComment,
+                        onClickSave = onClickSave,
+                        onClickProfile = onClickProfile,
+                        onClickPostSetting = onDeletePost,
+                        onOpenLinkClick = onOpenLinkClick
+                    )
+                }
             }
         }
-    }
 
+    }
 }
+
 
 fun openBrowser(context: Context, url: String) {
     val openURL = Intent(Intent.ACTION_VIEW)
     openURL.data = Uri.parse(url)
     startActivity(context, openURL, null)
+}
+
+private fun goToChat(context: Context) {
+    try {
+        val intent = Intent(context, Class.forName("com.thechance.ui.ChatActivity"))
+        startActivity(context, intent, Bundle())
+    } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
+    }
 }
 
