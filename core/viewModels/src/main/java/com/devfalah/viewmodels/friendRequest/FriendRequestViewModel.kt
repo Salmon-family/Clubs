@@ -25,30 +25,41 @@ class FriendRequestViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        getData()
+    }
+
+    fun getData() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 _uiState.update { it.copy(userId = getUser()) }
                 fetchFriendsRequest()
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
+                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
         }
     }
 
     private fun fetchFriendsRequest() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
+                val friendRequests =
+                    friendRequestsUseCase(userID = uiState.value.userId).listToUserUiState()
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        friendRequests = friendRequestsUseCase(userID = uiState.value.userId).listToUserUiState()
+                        friendRequests = friendRequests
                     )
                 }
             } catch (t: Throwable) {
-                _uiState.update {
-                    it.copy(isLoading = false, error = t.message.toString())
+                if (t.message.toString().contains("mapping error", true)) {
+                    _uiState.emit(FriendRequestUiState())
+                } else {
+                    _uiState.update {
+                        it.copy(isLoading = false, error = t.message.toString())
+                    }
                 }
+
             }
         }
     }
