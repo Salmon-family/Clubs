@@ -51,13 +51,14 @@ fun ClubsScreen(
         onRetry = viewModel::getData
     )
 
-//    LaunchedEffect(true) {
-//        setStatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightBackgroundColor,
-//            darkIcons = true
-//        )
-//    }
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @OptIn(ExperimentalAnimationApi::class)

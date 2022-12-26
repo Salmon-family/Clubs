@@ -9,6 +9,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ErrorItem
 import com.devfalah.ui.composable.LottieItem
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -62,13 +64,14 @@ fun NotificationScreen(
         }
     }
 
-//    LaunchedEffect(true) {
-//        setStatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightBackgroundColor,
-//            darkIcons = true
-//        )
-//    }
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable

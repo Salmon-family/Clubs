@@ -22,6 +22,7 @@ import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.accountSettings.AccountSettingsUiState
 import com.devfalah.viewmodels.accountSettings.AccountSettingsViewModel
 import com.devfalah.viewmodels.accountSettings.isEditButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun AccountSettingsScreen(
@@ -29,6 +30,7 @@ fun AccountSettingsScreen(
     viewModel: AccountSettingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
 
     AccountSettingsContent(
         navController = navController,
@@ -38,6 +40,15 @@ fun AccountSettingsScreen(
         onCurrentPasswordChange = viewModel::onCurrentPasswordChange,
         onClickEdit = viewModel::onClickEdit
     )
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

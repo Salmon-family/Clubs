@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.postDetails
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,11 +57,14 @@ fun PostDetailsScreen(
         onRetry = viewModel::getData
     )
 
-//    LaunchedEffect(true) {
-//        setStatusBarColor(
-//            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-//        )
-//    }
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable

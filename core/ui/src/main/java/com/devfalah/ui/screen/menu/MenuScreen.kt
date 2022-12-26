@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
@@ -64,13 +65,15 @@ fun MenuScreen(
         onClickReportBug = {},
         onClickLogOut = viewModel::onClickLogOut
     )
-//    LaunchedEffect(true) {
-//        setStatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightBackgroundColor,
-//            darkIcons = true
-//        )
-//    }
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
     LaunchedEffect(key1 = state.logout) {
         if (state.logout) {
             (context as Activity).finish()

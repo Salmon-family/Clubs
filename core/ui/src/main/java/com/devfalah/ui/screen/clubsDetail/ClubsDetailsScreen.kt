@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +46,7 @@ fun ClubsDetailsScreen(
     viewModel: ClubDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
 
     ClubsDetailsContent(
         state = state,
@@ -80,6 +82,15 @@ fun ClubsDetailsScreen(
             )
         }
     )
+
+    val color = MaterialTheme.colors.onBackground
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable
@@ -102,7 +113,6 @@ private fun ClubsDetailsContent(
 ) {
 
     val context = LocalContext.current
-    val systemUIController = rememberSystemUiController()
 
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -257,11 +267,4 @@ private fun ClubsDetailsContent(
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
-//    LaunchedEffect(true) {
-//        setStatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightPrimaryBrandColor,
-//            darkIcons = false
-//        )
-//    }
 }

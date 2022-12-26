@@ -38,7 +38,7 @@ fun ClubHeaderDetails(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightPrimaryBrandColor)
+            .background(MaterialTheme.colors.onBackground)
     ) {
 
         val (backButton, textDescription, textName, cover, dropDownMenu) = createRefs()

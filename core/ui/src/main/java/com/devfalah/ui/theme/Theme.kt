@@ -15,6 +15,7 @@ private val DarkColorPalette = darkColors(
     surface = DarkCardColor,
     onSecondary = DarkTernaryWhiteColor,
     onSurface = DarkSecondaryWhiteColor,
+    onBackground = LightPrimaryGrayColor
 )
 
 private val LightColorPalette = lightColors(
@@ -26,8 +27,10 @@ private val LightColorPalette = lightColors(
     surface = WhiteColor,
     onSecondary = LightQuaternaryBlackColor,
     onSurface = LightSecondaryBlackColor,
+    onBackground = LightPrimaryBrandColor
 
-    )
+)
+
 @Composable
 fun ClubsTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {

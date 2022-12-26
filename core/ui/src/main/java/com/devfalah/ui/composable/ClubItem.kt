@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.*
+import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.search.ClubUIState
 
 @Composable
@@ -70,7 +71,7 @@ fun ClubItem(
             )
             HeightSpacer4()
             Text(
-                text = state.description,
+                text = state.description.htmlText(),
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
                 color =  MaterialTheme.colors.secondaryVariant,

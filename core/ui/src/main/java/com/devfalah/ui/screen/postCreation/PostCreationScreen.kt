@@ -59,12 +59,13 @@ fun PostCreationScreen(
 
     )
 
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
-//        StatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightBackgroundColor,
-//            darkIcons = true
-//        )
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
     }
 }
 

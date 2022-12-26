@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -64,11 +65,14 @@ fun HomeScreen(
         onClickChat = { goToChat(context) },
         onRetry = viewModel::onRetry
     )
-//    LaunchedEffect(true) {
-//        setStatusBarColor(
-//            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-//        )
-//    }
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable
