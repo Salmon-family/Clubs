@@ -76,7 +76,8 @@ fun UserInformationContent(
             PasswordInputText(
                 title = stringResource(R.string.password),
                 password = state.password,
-                onTextChange = onPasswordChange
+                onTextChange = onPasswordChange,
+                isErrorTextShown = state.error.isNotEmpty()
             )
             HeightSpacer24()
 
@@ -97,5 +98,3 @@ fun UserInformationContent(
     }
 
 }
-
-
