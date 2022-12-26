@@ -19,9 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.composable.ManualPager
-import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.R
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
@@ -79,7 +78,7 @@ fun ProfileScreen(
                 navController.navigateToProfile(it)
             }
         },
-        onRetry = viewModel::getData,
+        onRetry = viewModel::getUserID,
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onEditUserInformation = {
@@ -120,58 +119,66 @@ fun ProfileContent(
     onEditUserInformation: () -> Unit
 ) {
 
-    ManualPager(
-        onRefresh = onRefresh,
-        contentPadding = PaddingValues(bottom = 16.dp),
-        isLoading = state.loading,
-        error = state.minorError,
-        isEndOfPager = state.isEndOfPager
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (state.majorError.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.loading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else {
+            ManualPager(
+                onRefresh = onRefresh,
+                contentPadding = PaddingValues(bottom = 16.dp),
+                isLoading = state.isPagerLoading,
+                error = state.minorError,
+                isEndOfPager = state.isEndOfPager
+            ) {
 
-        item(key = state.userDetails.userID) {
-            ProfileDetailsSection(
-                state.userDetails,
-                modifier = Modifier.nonRippleEffect { onEditUserInformation() },
-                onChangeProfileImage = onChangeProfileImage,
-                onSendRequestClick = onClickAddFriend
-            )
-        }
-        item(key = state.friends) {
-            FriendsSection(
-                state.friends,
-                totalFriends = state.totalFriends,
-                modifier = Modifier
-                    .nonRippleEffect { onClickFriends(state.userDetails.userID) }
-                    .padding(horizontal = 16.dp)
-            )
-        }
-        if (state.isMyProfile || state.userDetails.areFriends) {
-            item {
-                PostCreatingSection(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    onCreatePost = if (state.isMyProfile) {
-                        onCreatePost
-                    } else {
-                        onClickSendMessage
-                    },
-                    isMyProfile = state.isMyProfile
-                )
+                item(key = state.userDetails.userID) {
+                    ProfileDetailsSection(
+                        state.userDetails,
+                        modifier = Modifier.nonRippleEffect { onEditUserInformation() },
+                        onChangeProfileImage = onChangeProfileImage,
+                        onSendRequestClick = onClickAddFriend
+                    )
+                }
+                item(key = state.friends) {
+                    FriendsSection(
+                        state.friends,
+                        totalFriends = state.totalFriends,
+                        modifier = Modifier
+                            .nonRippleEffect { onClickFriends(state.userDetails.userID) }
+                            .padding(horizontal = 16.dp)
+                    )
+                }
+                if (state.isMyProfile || state.userDetails.areFriends) {
+                    item {
+                        PostCreatingSection(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            onCreatePost = if (state.isMyProfile) {
+                                onCreatePost
+                            } else {
+                                onClickSendMessage
+                            },
+                            isMyProfile = state.isMyProfile
+                        )
+                    }
+                }
+                items(state.posts) {
+                    PostItem(
+                        state = it,
+                        isMyPost = true,
+                        isContentExpandable = true,
+                        isClubPost = false,
+                        showGroupName = false,
+                        onClickLike = onClickLike,
+                        onClickComment = onClickComment,
+                        onClickSave = onClickSave,
+                        onClickPostSetting = onClickPostSetting,
+                        onClickProfile = onClickProfile,
+                        onOpenLinkClick = onOpenLinkClick,
+                    )
+                }
             }
-        }
-        items(state.posts) {
-            PostItem(
-                state = it,
-                isMyPost = true,
-                isContentExpandable = true,
-                isClubPost = false,
-                showGroupName = false,
-                onClickLike = onClickLike,
-                onClickComment = onClickComment,
-                onClickSave = onClickSave,
-                onClickPostSetting = onClickPostSetting,
-                onClickProfile = onClickProfile,
-                onOpenLinkClick = onOpenLinkClick,
-            )
         }
     }
 }
