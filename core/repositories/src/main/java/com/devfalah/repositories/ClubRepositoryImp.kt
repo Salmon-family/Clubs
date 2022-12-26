@@ -241,4 +241,8 @@ class ClubRepositoryImp @Inject constructor(
         appConfigurator.saveUserId(userId)
     }
 
+    override suspend fun deleteUserId() {
+        appConfigurator.deleteUserId()
+    }
+
 }

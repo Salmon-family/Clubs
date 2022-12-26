@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.thechance.ui.screens.conversation.navigateToConversation
 import com.thechance.ui.theme.ClubsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,10 +24,15 @@ class ChatActivity : ComponentActivity() {
         val userId = intent.extras?.getInt("USER_ID", -1) ?: -1
         setContent {
             ClubsTheme {
+                val systemUIController = rememberSystemUiController()
+                systemUIController.setNavigationBarColor(color = MaterialTheme.colors.background)
+                systemUIController.setStatusBarColor(MaterialTheme.colors.background, darkIcons = true)
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+
                     val navController = rememberNavController()
                     ChatNavGraph(navController = navController, START_DESTINATION)
                     if (friendId != -1 && userId != -1) {

@@ -9,6 +9,7 @@ data class PostDetailsUIState(
     val commentText: String = "",
     val isFromClub: Boolean = false,
     val isLoading: Boolean = false,
+    val isPagerLoading:Boolean = false,
     val isEndOfPager: Boolean = false,
     val isPostDeleted: Boolean = false,
     val error: String = "",

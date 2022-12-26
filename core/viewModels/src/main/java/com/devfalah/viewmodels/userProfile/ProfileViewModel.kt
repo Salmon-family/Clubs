@@ -5,10 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
+import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,13 +39,14 @@ class ProfileViewModel @Inject constructor(
         getUserID()
     }
 
-    fun getData() {
+    private fun getData() {
         getUserDetails(uiState.value.id, args.ownerId)
         getProfilePost(uiState.value.id, args.ownerId)
         getUserFriends(args.ownerId)
+        swipeToRefresh()
     }
 
-    private fun getUserID() {
+    fun getUserID() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(id = getUser()) }
@@ -186,17 +187,20 @@ class ProfileViewModel @Inject constructor(
     fun swipeToRefresh() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(loading = true) }
+                _uiState.update { it.copy(isPagerLoading = true, minorError = "") }
                 val posts = getProfilePostUseCase.loadMore(uiState.value.id, args.ownerId)
                 _uiState.update {
                     it.copy(
                         loading = false,
                         posts = (it.posts + posts.toUIState()),
-                        isEndOfPager = posts.isEmpty()
+                        isPagerLoading = false,
+                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
                     )
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(loading = false, minorError = t.message.toString()) }
+                _uiState.update {
+                    it.copy(isPagerLoading = false, minorError = t.message.toString())
+                }
             }
         }
     }

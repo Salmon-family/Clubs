@@ -46,7 +46,8 @@ fun ClubsScreen(
     ClubsContent(
         navController = navController,
         state = state,
-        onClubClick = { navController.navigateToClubDetails(it) }
+        onClubClick = { navController.navigateToClubDetails(it) },
+        onRetry = viewModel::getData
     )
 
     LaunchedEffect(true) {
@@ -64,6 +65,7 @@ fun ClubsContent(
     navController: NavController,
     state: MyClubsUiState,
     onClubClick: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -112,7 +114,7 @@ fun ClubsContent(
 
             ) {
                 when (it) {
-                    0 -> MyClubsScreen(state = state, onClubClick = onClubClick)
+                    0 -> MyClubsScreen(state = state, onClubClick = onClubClick, onRetry = onRetry)
                     1 -> SpecialClubsScreen(state = state, onClubClick = onClubClick)
                 }
             }
@@ -124,67 +126,78 @@ fun ClubsContent(
 fun MyClubsScreen(
     state: MyClubsUiState,
     onClubClick: (Int) -> Unit,
+    onRetry: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(LightBackgroundColor),
-        contentPadding = if (state.mySpecialClubs.isNotEmpty())
-            PaddingValues(vertical = 16.dp) else PaddingValues(vertical = 0.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        if (state.mySpecialClubs.isNotEmpty()) {
-            item {
-                Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.star),
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp),
-                        tint = LightPrimaryBrandColor
-                    )
-                    Text(
-                        text = stringResource(R.string.my_special_clubs),
-                        modifier = Modifier.padding(start = 8.dp),
-                        style = AppTypography.subtitle1,
-                        color = LightPrimaryBlackColor
-                    )
-                }
-            }
-        }
-
-        item {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(state.mySpecialClubs) { club ->
-                    SpecialClubItem(
-                        state = club,
-                        iconId = club.image,
-                        clubTitle = club.name,
-                        modifier = Modifier.size(98.dp),
-                        onClick = { onClubClick(club.id) }
-                    )
-                }
-            }
-        }
-        item {
-            Text(
-                text = stringResource(R.string.my_clubs),
-                style = AppTypography.subtitle1,
-                color = LightPrimaryBlackColor,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
-
-        items(state.myClubs) {
-            ClubItem(
-                state = it,
-                onClubSelected = onClubClick,
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else if (state.myClubs.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        } else {
+            LazyColumn(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            )
+                    .fillMaxSize()
+                    .background(LightBackgroundColor),
+                contentPadding = if (state.mySpecialClubs.isNotEmpty())
+                    PaddingValues(vertical = 16.dp) else PaddingValues(vertical = 0.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                if (state.mySpecialClubs.isNotEmpty()) {
+                    item {
+                        Row(modifier = Modifier.padding(horizontal = 16.dp)) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.star),
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp),
+                                tint = LightPrimaryBrandColor
+                            )
+                            Text(
+                                text = stringResource(R.string.my_special_clubs),
+                                modifier = Modifier.padding(start = 8.dp),
+                                style = AppTypography.subtitle1,
+                                color = LightPrimaryBlackColor
+                            )
+                        }
+                    }
+                }
+
+                item {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(state.mySpecialClubs) { club ->
+                            SpecialClubItem(
+                                state = club,
+                                iconId = club.image,
+                                clubTitle = club.name,
+                                modifier = Modifier.size(98.dp),
+                                onClick = { onClubClick(club.id) }
+                            )
+                        }
+                    }
+                }
+                item {
+                    Text(
+                        text = stringResource(R.string.my_clubs),
+                        style = AppTypography.subtitle1,
+                        color = LightPrimaryBlackColor,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                }
+
+                items(state.myClubs) {
+                    ClubItem(
+                        state = it,
+                        onClubSelected = onClubClick,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                    )
+                }
+            }
         }
     }
 }

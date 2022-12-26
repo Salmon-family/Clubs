@@ -5,4 +5,5 @@ data class UserUiState(
     val profilePhotoUrl: String = "",
     val loading: Boolean = false,
     val error: String = "",
+    val logout: Boolean = false,
 )

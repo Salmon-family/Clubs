@@ -1,8 +1,10 @@
 package com.devfalah.ui.screen.menu
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -23,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection
@@ -45,7 +49,7 @@ fun MenuScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
-
+    val context = LocalContext.current
     MenuContent(
         navController = navController,
         state = state,
@@ -55,7 +59,8 @@ fun MenuScreen(
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
-        onClickReportBug = {}
+        onClickReportBug = {},
+        onClickLogOut = viewModel::onClickLogOut
     )
     LaunchedEffect(true) {
         setStatusBarColor(
@@ -63,6 +68,11 @@ fun MenuScreen(
             color = LightBackgroundColor,
             darkIcons = true
         )
+    }
+    LaunchedEffect(key1 = state.logout) {
+        if (state.logout) {
+            (context as Activity).finish()
+        }
     }
 }
 
@@ -76,12 +86,24 @@ fun MenuContent(
     onClickFriendsRequests: () -> Unit,
     onClickTheme: () -> Unit,
     onClickLanguage: () -> Unit,
-    onClickReportBug: () -> Unit
+    onClickReportBug: () -> Unit,
+    onClickLogOut: () -> Unit
 ) {
 
     Column {
 
-        AppBar(title = "Menu", navHostController = navController)
+        AppBar(
+            title = stringResource(id = R.string.menu),
+            navHostController = navController,
+            actions = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_logout),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .nonRippleEffect { onClickLogOut() }
+                )
+            })
 
         LazyColumn(
             modifier = Modifier
@@ -141,5 +163,5 @@ fun MenuContent(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewMenu() {
-    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {})
+    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
 }

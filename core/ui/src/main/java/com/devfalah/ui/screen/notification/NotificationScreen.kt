@@ -20,6 +20,8 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.ErrorItem
+import com.devfalah.ui.composable.LottieItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
@@ -43,7 +45,8 @@ fun NotificationScreen(
     NotificationContent(
         navController = navController,
         state = state,
-        onClickTryAgain = viewModel::getUserNotifications
+        onClickTryAgain = viewModel::getUserNotifications,
+        onRetry = viewModel::getUserNotifications
     ) {
         viewModel.markNotificationAsViewed(it)
 
@@ -75,13 +78,23 @@ fun NotificationContent(
     navController: NavController,
     state: NotificationsUIState,
     onClickTryAgain: () -> Unit,
-    onNotificationClick: (NotificationState) -> Unit
+    onRetry: () -> Unit,
+    onNotificationClick: (NotificationState) -> Unit,
 ) {
     Column {
         AppBar(
             title = stringResource(id = Screen.Notification.title),
             navHostController = navController
         )
+
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else if (state.notifications.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

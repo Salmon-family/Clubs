@@ -2,6 +2,7 @@ package com.devfalah.viewmodels.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.DeleteUserUseCase
 import com.devfalah.usecases.GetUserAccountDetailsUseCase
 import com.devfalah.usecases.GetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     val getUserId: GetUserIdUseCase,
+    val deleteUser: DeleteUserUseCase,
     val getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
 ) : ViewModel() {
 
@@ -40,6 +42,13 @@ class MenuViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
+        }
+    }
+
+    fun onClickLogOut() {
+        viewModelScope.launch {
+            deleteUser()
+            _uiState.update { it.copy(logout = true) }
         }
     }
 
