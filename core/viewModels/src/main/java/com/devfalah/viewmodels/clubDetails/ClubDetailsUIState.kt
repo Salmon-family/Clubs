@@ -12,7 +12,7 @@ data class ClubDetailsUiState(
     val name: String = "",
     val description: String = "",
     val privacy: String = "",
-    val membership : Int = 2,
+    val membership: Int = 2,
     val membersCount: Int = 0,
     val postCount: Int = 0,
     val members: List<MembersUIState> = emptyList(),
@@ -25,6 +25,7 @@ data class ClubDetailsUiState(
     val isLoading: Boolean = false,
     val isPagerLoading: Boolean = false,
     val isSuccessful: Boolean = false,
+    val error: String = "",
     val pagerError: String = "",
 )
 
