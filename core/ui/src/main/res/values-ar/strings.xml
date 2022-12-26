@@ -87,4 +87,6 @@
     <string name="day">قبل يوم</string>
     <string name="just_now">الان</string>
     <string name="enter_your_comment">اضف تعليقك...</string>
+    <string name="version">الإصدار</string>
+
 </resources>

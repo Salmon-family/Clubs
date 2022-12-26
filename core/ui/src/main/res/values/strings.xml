@@ -92,5 +92,6 @@
     <string name="just_now">Just now</string>
     <string name="wrong_password_message">You entered a wrong password, please try again.</string>
     <string name="enter_your_comment">Enter your comment...</string>
+    <string name="version">Version </string>
 
 </resources>

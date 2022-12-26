@@ -1,6 +1,9 @@
 package com.devfalah.ui.screen.menu
 
 import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -146,7 +149,7 @@ fun MenuContent(
 
             item {
                 Text(
-                    text = "version would be shown here",
+                    text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
                     style = TextStyle(
                         fontSize = 12.sp,
                         color = LightTernaryBlackColor,
@@ -159,6 +162,16 @@ fun MenuContent(
     }
 }
 
+private fun getVersion(context: Context): String {
+    return try {
+        val pInfo: PackageInfo =
+            context.packageManager.getPackageInfo(context.packageName, 0)
+        pInfo.versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        ""
+    }
+}
 
 @Preview(showSystemUi = true)
 @Composable
