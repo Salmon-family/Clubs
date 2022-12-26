@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.friends
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,7 +18,6 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.FriendItem
 import com.devfalah.ui.composable.FriendRemoveItem
 import com.devfalah.ui.composable.ManualPager
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
@@ -41,11 +41,11 @@ fun FriendsScreen(
         onRemoveFriend = viewModel::removeFriend
     )
     LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
+//        StatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
     }
 }
 
@@ -68,7 +68,7 @@ fun FriendsContent(
                 text = "${state.totalFriends} " + stringResource(id = R.string.friends),
                 fontFamily = PlusJakartaSans,
                 fontSize = 18.sp,
-                color = LightSecondaryBlackColor,
+                color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold
             )
         }

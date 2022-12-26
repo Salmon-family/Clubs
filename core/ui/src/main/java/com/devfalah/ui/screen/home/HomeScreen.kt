@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,16 +28,14 @@ import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
+import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -48,13 +46,13 @@ fun HomeScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    val systemUIController = rememberSystemUiController()
+
     HomeContent(
         navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
         },
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(HOME_CLUB_ID) },
@@ -75,11 +73,7 @@ fun HomeScreen(
 
         }
     )
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-        )
-    }
+
 }
 
 @Composable

@@ -7,17 +7,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBrandColor
 import com.devfalah.viewmodels.myClubs.SpecialClubsUIState
 
 @Composable
@@ -33,8 +35,8 @@ fun SpecialClubItem(
         modifier = modifier
             .clickable { onClick(state.id) }
             .clip(CircleShape)
-            .background(LightSecondaryBrandColor)
-            .padding(vertical = 16.dp),
+            .background(MaterialTheme.colors.secondary)
+            .padding(vertical = 16.dp, horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
 
@@ -49,7 +51,13 @@ fun SpecialClubItem(
             tint = LightPrimaryBrandColor
         )
 
-        Text(text = clubTitle)
+        Text(
+            text = clubTitle,
+            style = TextStyle(
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.primaryVariant,
+            )
+        )
     }
 }
 

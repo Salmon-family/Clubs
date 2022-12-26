@@ -86,5 +86,7 @@
     <string name="hour">قبل ساعة</string>
     <string name="day">قبل يوم</string>
     <string name="just_now">الان</string>
-    <string name="enter_your_comment">اضف تعليقك...</string>
+    <string name="enter_your_comment">اضف تعليقك…</string>
+    <string name="password_place_holder">ادخل اكثر من ستة احرف او ارقام</string>
+
 </resources>

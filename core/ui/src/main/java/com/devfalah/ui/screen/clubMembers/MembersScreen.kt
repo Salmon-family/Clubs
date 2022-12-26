@@ -37,11 +37,11 @@ fun MembersScreen(
         onRemoveFriend = {}
     )
     LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
+//        StatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
     }
 }
 

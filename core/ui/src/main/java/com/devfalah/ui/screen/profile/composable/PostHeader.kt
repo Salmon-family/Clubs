@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,10 +23,7 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.ui.util.getDataDescription
 import com.devfalah.viewmodels.userProfile.PostUIState
 
@@ -61,16 +55,19 @@ fun PostHeader(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = LightPrimaryBlackColor
+                color = MaterialTheme.colors.onSurface
             )
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 if (!hidePrivacy) {
                     Icon(
                         painter = getPrivacyIcon(post.privacy),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxHeight()
-                            .padding(top = 4.dp)
+                            .padding(top = 4.dp),
+                        tint = MaterialTheme.colors.secondaryVariant
                     )
                     WidthSpacer8()
                     Text(
@@ -78,7 +75,7 @@ fun PostHeader(
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.SemiBold,
-                        color = LightTernaryBlackColor,
+                        color = MaterialTheme.colors.onSecondary,
                     )
 
                     WidthSpacer8()
@@ -89,7 +86,7 @@ fun PostHeader(
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.SemiBold,
-                        color = LightTernaryBlackColor,
+                        color = MaterialTheme.colors.onSecondary,
                     )
 
                     WidthSpacer8()
@@ -99,7 +96,7 @@ fun PostHeader(
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,
-                    color = LightTernaryBlackColor
+                    color = MaterialTheme.colors.onSecondary
                 )
             }
         }
@@ -109,21 +106,22 @@ fun PostHeader(
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 16.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+                    .clip(RoundedCornerShape(20.dp)),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Icon(
                     modifier = Modifier.nonRippleEffect { expanded = true },
                     painter = painterResource(R.drawable.ic_setting),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.secondaryVariant
                 )
             }
 
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.background(WhiteColor),
-                offset = DpOffset(250.dp, 0.dp)
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                offset = DpOffset(235.dp, (-18).dp)
             ) {
                 DropdownMenuItem(
                     modifier = Modifier.fillMaxWidth(),

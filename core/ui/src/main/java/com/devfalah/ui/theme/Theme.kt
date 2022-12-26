@@ -8,18 +8,26 @@ import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
     primary = LightPrimaryBrandColor,
-    primaryVariant = LightPrimaryBrandColor,
-    secondary = LightSecondaryBrandColor,
-    onSurface = LightCardColor
+    primaryVariant = DarkPrimaryWhiteColor,
+    secondaryVariant = DarkTernaryWhiteColor,
+    secondary = LightTernaryBrandColor,
+    background = DarkBackground,
+    surface = DarkCardColor,
+    onSecondary = DarkTernaryWhiteColor,
+    onSurface = DarkSecondaryWhiteColor,
 )
 
 private val LightColorPalette = lightColors(
     primary = LightPrimaryBrandColor,
-    primaryVariant = LightPrimaryBrandColor,
+    primaryVariant = LightPrimaryBlackColor,
+    secondaryVariant = LightTernaryBlackColor,
     secondary = LightSecondaryBrandColor,
-    background = LightBackgroundColor,
-)
+    background = LightBackground,
+    surface = WhiteColor,
+    onSecondary = LightQuaternaryBlackColor,
+    onSurface = LightSecondaryBlackColor,
 
+    )
 @Composable
 fun ClubsTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {

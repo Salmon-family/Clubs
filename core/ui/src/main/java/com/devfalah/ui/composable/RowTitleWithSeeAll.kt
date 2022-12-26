@@ -3,6 +3,7 @@ package com.devfalah.ui.composable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +38,7 @@ fun RowTitleWithSeeAll(
             fontSize = 18.sp,
             fontFamily = PlusJakartaSans,
             fontWeight = FontWeight.SemiBold,
-            color = LightPrimaryBlackColor
+            color = MaterialTheme.colors.onSurface
         )
 
         if (showSeeAll) {
@@ -46,12 +47,13 @@ fun RowTitleWithSeeAll(
                 fontSize = 12.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = LightTernaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
             )
 
             Icon(
                 painter = painterResource(id = R.drawable.arrow),
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colors.secondaryVariant
             )
         }
     }

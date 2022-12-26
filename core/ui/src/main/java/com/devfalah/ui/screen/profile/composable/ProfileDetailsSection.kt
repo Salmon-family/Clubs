@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +20,10 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.theme.*
+import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.theme.LightPrimaryBrandTransparentColor
+import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
 @Composable
@@ -111,13 +115,13 @@ fun ProfileDetailsSection(
                     .align(Alignment.BottomCenter)
                     .height(120.dp)
                     .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
-                    .background(LightBackgroundColor),
+                    .background(MaterialTheme.colors.background),
                 contentAlignment = Alignment.Center
             ) {
 
                 Text(
                     text = "",
-                    color = LightPrimaryBlackColor,
+                    color = MaterialTheme.colors.primaryVariant,
                     fontFamily = PlusJakartaSans,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,

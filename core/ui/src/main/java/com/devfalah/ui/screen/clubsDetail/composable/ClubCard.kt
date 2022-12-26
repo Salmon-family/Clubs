@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +38,7 @@ fun ClubCard(
             )
             .width(80.dp)
             .background(
-                shape = RoundedCornerShape(16.dp), color = WhiteColor
+                shape = RoundedCornerShape(16.dp), color = MaterialTheme.colors.surface
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -51,7 +52,7 @@ fun ClubCard(
             Icon(
                 imageVector = ImageVector.vectorResource(id = imageVector),
                 contentDescription = "imageVector",
-                tint = LightTernaryBlackColor
+                tint = MaterialTheme.colors.onSurface
             )
 
             Text(

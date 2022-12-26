@@ -20,7 +20,6 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.ManualPager
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.RoundButton
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
@@ -29,11 +28,9 @@ import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
-import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.util.Constants
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
@@ -195,7 +192,7 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = isMyPost.invoke(it.postId),
+                            isMyPost = false,
                             isContentExpandable = true,
                             isClubPost = true,
                             showGroupName = false,
@@ -241,7 +238,7 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = isMyPost.invoke(it.postId),
+                            isMyPost = false,
                             isContentExpandable = true,
                             isClubPost = true,
                             onClickLike = onClickLike,
@@ -263,11 +260,11 @@ private fun ClubsDetailsContent(
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightPrimaryBrandColor,
-            darkIcons = false
-        )
-    }
+//    LaunchedEffect(true) {
+//        StatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightPrimaryBrandColor,
+//            darkIcons = false
+//        )
+//    }
 }

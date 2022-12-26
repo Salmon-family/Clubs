@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.accountSettings
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,7 +61,7 @@ fun AccountSettingsContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor)
+                .background(MaterialTheme.colors.background)
                 .padding(vertical = 16.dp, horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {

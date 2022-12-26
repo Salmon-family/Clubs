@@ -36,7 +36,7 @@ fun AppBar(
                 IconButton(onClick =navHostController::popBackStack) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }

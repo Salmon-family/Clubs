@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +34,7 @@ fun ClubItem(
             .nonRippleEffect { onClubSelected(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(LightCardBackgroundColor)
+            .background(MaterialTheme.colors.surface)
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -41,7 +42,7 @@ fun ClubItem(
         Box(
             modifier = Modifier
                 .clip(shape = CircleShape)
-                .background(LightSecondaryBrandColor)
+                .background(MaterialTheme.colors.secondary)
                 .size(56.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -63,7 +64,7 @@ fun ClubItem(
                 text = state.title,
                 textAlign = TextAlign.Start,
                 fontSize = 12.sp,
-                color = LightPrimaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
@@ -72,7 +73,7 @@ fun ClubItem(
                 text = state.description,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = LightTernaryBlackColor,
+                color =  MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.Normal,
                 maxLines = 2
             )

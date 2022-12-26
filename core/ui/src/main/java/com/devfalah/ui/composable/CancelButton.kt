@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +27,7 @@ fun CancelButton(
     text: String = stringResource(R.string.cancel),
     shape: Shape = RoundedCornerShape(100.dp),
     height: Dp = 48.dp,
-    buttonColor: Color = LightSecondaryBrandColor,
+    buttonColor: Color = MaterialTheme.colors.secondary,
     contentColor: Color = LightPrimaryBrandColor,
     onClick: () -> Unit
 ) {

@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.menu
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +23,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection
@@ -44,7 +44,6 @@ fun MenuScreen(
     viewModel: MenuViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    val systemUIController = rememberSystemUiController()
 
     MenuContent(
         navController = navController,
@@ -57,13 +56,6 @@ fun MenuScreen(
         onClickLanguage = {},
         onClickReportBug = {}
     )
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
 }
 
 @Composable
@@ -86,7 +78,7 @@ fun MenuContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor),
+                .background(MaterialTheme.colors.background),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -127,7 +119,7 @@ fun MenuContent(
                     text = "version would be shown here",
                     style = TextStyle(
                         fontSize = 12.sp,
-                        color = LightTernaryBlackColor,
+                        color = MaterialTheme.colors.onSurface,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Normal
                     )

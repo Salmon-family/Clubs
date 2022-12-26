@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.clubsDetail.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -54,7 +55,7 @@ fun ClubHeaderDetails(
             tint = WhiteColor
         )
 
-        if (state.isOwnerOfClub) {
+        if (state.ownerId == state.userId) {
             DropDownOwner(
                 modifier = Modifier
                     .padding(top = 16.dp, end = 16.dp)
@@ -130,7 +131,7 @@ fun ClubHeaderDetails(
                     .align(Alignment.BottomCenter)
                     .wrapContentHeight()
                     .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
-                    .background(LightBackgroundColor),
+                    .background(MaterialTheme.colors.background),
                 contentAlignment = Alignment.Center
             ) {
 

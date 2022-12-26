@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,8 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
@@ -46,11 +45,11 @@ fun FriendRequestScreen(
         onClickOpenProfile = { navController.navigateToProfile(it) }
     )
     LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
+//        StatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
     }
 }
 
@@ -70,7 +69,7 @@ fun FriendRequestsContent(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .background(LightBackgroundColor)
+                .background(MaterialTheme.colors.background)
                 .fillMaxSize(),
         ) {
             items(

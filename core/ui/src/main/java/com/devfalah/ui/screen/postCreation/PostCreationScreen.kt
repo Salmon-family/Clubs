@@ -1,11 +1,9 @@
 package com.devfalah.ui.screen.postCreation
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -62,11 +60,11 @@ fun PostCreationScreen(
     )
 
     LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
+//        StatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
     }
 }
 

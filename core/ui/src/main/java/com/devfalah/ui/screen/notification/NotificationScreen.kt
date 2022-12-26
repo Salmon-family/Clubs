@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,7 +21,6 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -38,7 +38,6 @@ fun NotificationScreen(
     viewModel: NotificationsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    val systemUIController = rememberSystemUiController()
 
     NotificationContent(
         navController = navController,
@@ -61,13 +60,6 @@ fun NotificationScreen(
         }
     }
 
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
 }
 
 @Composable
@@ -85,7 +77,7 @@ fun NotificationContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = LightBackgroundColor),
+                .background(color = MaterialTheme.colors.background),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
 

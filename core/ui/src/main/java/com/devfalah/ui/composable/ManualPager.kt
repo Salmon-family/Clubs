@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,14 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 
 @Composable
 fun ManualPager(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = LightBackgroundColor,
+    backgroundColor: Color = MaterialTheme.colors.background,
     onRefresh: () -> Unit,
     isLoading: Boolean,
     error: String,
@@ -105,7 +105,10 @@ fun PagerStatusItem(
         } else if (error.isNotEmpty()) {
             Text(modifier = Modifier.weight(1f), text = error)
             Button(onClick = { onClickTryAgain() }) {
-                Text(text = stringResource(id = R.string.try_again))
+                Text(
+                    text = stringResource(id = R.string.try_again),
+                    color = MaterialTheme.colors.primaryVariant
+                )
             }
 
         } else if (isEndOfPager) {

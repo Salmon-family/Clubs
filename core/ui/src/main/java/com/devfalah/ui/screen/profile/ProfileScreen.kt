@@ -92,13 +92,13 @@ fun ProfileScreen(
             Toast.makeText(context, state.minorError, Toast.LENGTH_LONG).show()
         }
     }
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightPrimaryBrandColor,
-            darkIcons = false
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightPrimaryBrandColor,
+//            darkIcons = false
+//        )
+//    }
 }
 
 @Composable
