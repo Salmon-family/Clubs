@@ -23,7 +23,6 @@ import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.postDetails.CommentUIState
@@ -57,11 +56,11 @@ fun PostDetailsScreen(
         onRetry = viewModel::getData
     )
 
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+//        )
+//    }
 }
 
 @Composable

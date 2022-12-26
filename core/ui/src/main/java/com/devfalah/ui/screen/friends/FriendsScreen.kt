@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,7 +15,6 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.friends.FriendsUIState
 import com.devfalah.viewmodels.friends.FriendsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -37,13 +35,13 @@ fun FriendsScreen(
         onRemoveFriend = viewModel::removeFriend,
         onRetry = viewModel::getData,
     )
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
+//    }
 }
 
 @Composable

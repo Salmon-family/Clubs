@@ -46,7 +46,7 @@ fun ProfileImageWithIcon(
                     .nonRippleEffect { onClickIcon() }
                     .align(Alignment.BottomEnd)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colors.secondary)
+                    .background(MaterialTheme.colors.surface)
                     .border(4.dp, MaterialTheme.colors.background, CircleShape)
                     .align(Alignment.BottomEnd),
                 contentAlignment = Alignment.Center

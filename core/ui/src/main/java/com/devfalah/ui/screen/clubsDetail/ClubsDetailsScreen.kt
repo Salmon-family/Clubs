@@ -257,11 +257,11 @@ private fun ClubsDetailsContent(
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightPrimaryBrandColor,
-            darkIcons = false
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightPrimaryBrandColor,
+//            darkIcons = false
+//        )
+//    }
 }

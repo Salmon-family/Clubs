@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,11 +22,9 @@ import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ErrorItem
 import com.devfalah.ui.composable.LottieItem
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.notifications.NotificationState
 import com.devfalah.viewmodels.notifications.NotificationsUIState
@@ -64,13 +62,13 @@ fun NotificationScreen(
         }
     }
 
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
+//    }
 }
 
 @Composable
@@ -98,7 +96,7 @@ fun NotificationContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = LightBackgroundColor),
+                .background(color = MaterialTheme.colors.background),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
 

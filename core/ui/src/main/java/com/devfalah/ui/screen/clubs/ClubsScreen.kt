@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -50,13 +51,13 @@ fun ClubsScreen(
         onRetry = viewModel::getData
     )
 
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
+//    }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -91,7 +92,7 @@ fun ClubsContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(scaffoldPadding)
-                .background(LightBackgroundColor)
+                .background(MaterialTheme.colors.background)
         ) {
             SegmentControls(
                 items = listOf(
@@ -139,7 +140,7 @@ fun MyClubsScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(LightBackgroundColor),
+                    .background(MaterialTheme.colors.background),
                 contentPadding = if (state.mySpecialClubs.isNotEmpty())
                     PaddingValues(vertical = 16.dp) else PaddingValues(vertical = 0.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -157,7 +158,7 @@ fun MyClubsScreen(
                                 text = stringResource(R.string.my_special_clubs),
                                 modifier = Modifier.padding(start = 8.dp),
                                 style = AppTypography.subtitle1,
-                                color = LightPrimaryBlackColor
+                                color = MaterialTheme.colors.primaryVariant
                             )
                         }
                     }
@@ -184,7 +185,7 @@ fun MyClubsScreen(
                     Text(
                         text = stringResource(R.string.my_clubs),
                         style = AppTypography.subtitle1,
-                        color = LightPrimaryBlackColor,
+                        color = MaterialTheme.colors.primaryVariant,
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                 }
@@ -214,7 +215,7 @@ fun SpecialClubsScreen(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBackgroundColor)
+            .background(MaterialTheme.colors.background)
     ) {
         items(state.specialClubs) { club ->
             SpecialClubItem(

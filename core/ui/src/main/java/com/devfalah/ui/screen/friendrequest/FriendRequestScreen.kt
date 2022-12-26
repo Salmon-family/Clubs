@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -22,7 +21,6 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ErrorItem
 import com.devfalah.ui.composable.LottieItem
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.LightBackgroundColor
@@ -47,13 +45,13 @@ fun FriendRequestScreen(
         onRetry = viewModel::getData,
         onClickOpenProfile = { navController.navigateToProfile(it) },
     )
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
+//    }
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

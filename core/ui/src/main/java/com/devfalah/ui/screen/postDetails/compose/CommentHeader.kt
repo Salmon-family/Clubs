@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +48,7 @@ fun CommentHeader(
                 text = state.userName,
                 textAlign = TextAlign.End,
                 fontSize = 14.sp,
-                color = LightPrimaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
@@ -82,7 +79,7 @@ fun CommentHeader(
                 text = state.userName,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = LightPrimaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
@@ -115,7 +112,7 @@ fun CommentSetting(
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { expanded = false },
-        modifier = Modifier.background(WhiteColor),
+        modifier = Modifier.background(MaterialTheme.colors.background),
     ) {
         DropdownMenuItem(
             modifier = Modifier.fillMaxWidth(),

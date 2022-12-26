@@ -64,11 +64,11 @@ fun HomeScreen(
         onClickChat = { goToChat(context) },
         onRetry = viewModel::onRetry
     )
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+//        )
+//    }
 }
 
 @Composable

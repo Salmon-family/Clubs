@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +29,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
@@ -38,7 +38,6 @@ import com.devfalah.ui.screen.menu.composable.PreferencesSection
 import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
@@ -65,13 +64,13 @@ fun MenuScreen(
         onClickReportBug = {},
         onClickLogOut = viewModel::onClickLogOut
     )
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
+//    }
     LaunchedEffect(key1 = state.logout) {
         if (state.logout) {
             (context as Activity).finish()
@@ -111,7 +110,7 @@ fun MenuContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor),
+                .background(MaterialTheme.colors.background),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally

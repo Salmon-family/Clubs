@@ -42,11 +42,11 @@ fun AllSearchResultScreenScreen(
         OnUserClick = { navController.navigateToProfile(it) },
     )
 
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-        )
-    }
+//    LaunchedEffect(true) {
+//        setStatusBarColor(
+//            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+//        )
+//    }
 }
 
 @Composable
