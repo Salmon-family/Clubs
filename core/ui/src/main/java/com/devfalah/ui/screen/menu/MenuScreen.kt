@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,7 +31,6 @@ import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection
@@ -97,16 +98,8 @@ fun MenuContent(
 
         AppBar(
             title = stringResource(id = R.string.menu),
-            navHostController = navController,
-            actions = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_logout),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .nonRippleEffect { onClickLogOut() }
-                )
-            })
+            navHostController = navController
+        )
 
         LazyColumn(
             modifier = Modifier
@@ -144,6 +137,14 @@ fun MenuContent(
                     text = stringResource(R.string.report_bugs),
                     painter = painterResource(id = R.drawable.ic_menu_bug),
                     onClickItem = onClickReportBug
+                )
+            }
+
+            item {
+                MenuItem(
+                    text = "Logout",
+                    painter = painterResource(id = R.drawable.ic_menu_logout),
+                    onClickItem = onClickLogOut
                 )
             }
 
