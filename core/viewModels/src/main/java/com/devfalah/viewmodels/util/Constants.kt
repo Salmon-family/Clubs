@@ -25,4 +25,6 @@ object Constants {
     const val PROFILE_CLUB_ID = -1
     const val HOME_CLUB_ID = 0
 
+    const val MAX_PAGE_ITEM = 10
+
 }

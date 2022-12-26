@@ -52,7 +52,7 @@ fun FriendsScreen(
 @Composable
 fun FriendsContent(
     state: FriendsUIState,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRemoveFriend: (Int) -> Unit
 ) {

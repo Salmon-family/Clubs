@@ -3,7 +3,6 @@ package com.devfalah.viewmodels.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.viewmodels.util.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -89,13 +88,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun swipeToRefresh(type: Int) {
+    fun swipeToRefresh() {
         viewModelScope.launch {
-            if (type == FIRST_TIME) {
-                _uiState.update { it.copy(isLoading = true) }
-            } else {
-                _uiState.update { it.copy(isPagerLoading = true) }
-            }
+            _uiState.update { it.copy(isPagerLoading = true) }
             try {
 
                 val homePosts = allPosts.loadData(uiState.value.id)

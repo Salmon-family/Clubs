@@ -22,6 +22,7 @@ import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.RoundButton
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
@@ -61,7 +62,7 @@ fun ClubsDetailsScreen(
         },
         onClickSave = viewModel::onClickSave,
         onAddPost = { navController.navigateToPostCreation(state.clubId) },
-        onClickFriends = { navController.navigateToFriends(it) },
+        onClickMembers = { navController.navigateToMembers(it) },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
@@ -88,12 +89,12 @@ fun ClubsDetailsScreen(
 private fun ClubsDetailsContent(
     state: ClubDetailsUiState,
     onBack: () -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onAddPost: () -> Unit,
-    onClickFriends: (Int) -> Unit,
+    onClickMembers: (Int) -> Unit,
     onJoinClub: () -> Unit,
     onUnJoinClubs: () -> Unit,
     onDeclineClub: () -> Unit,
@@ -187,7 +188,7 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickFriends(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
@@ -232,7 +233,7 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickFriends(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 

@@ -5,12 +5,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.viewmodels.util.Constants.PRIVATE_PRIVACY
-import com.devfalah.viewmodels.util.Constants.PUBLIC_PRIVACY
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
+import com.devfalah.viewmodels.util.Constants.PRIVATE_PRIVACY
+import com.devfalah.viewmodels.util.Constants.PUBLIC_PRIVACY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -55,7 +55,7 @@ class ClubDetailsViewModel @Inject constructor(
         swipeToRefresh()
     }
 
-    fun swipeToRefresh(type: Int = 0) {
+    fun swipeToRefresh() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }

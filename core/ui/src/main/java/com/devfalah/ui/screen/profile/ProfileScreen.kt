@@ -109,7 +109,7 @@ fun ProfileContent(
     onClickAddFriend: () -> Unit,
     onClickSendMessage: () -> Unit,
     onChangeProfileImage: () -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickPostSetting: (PostUIState) -> Unit,
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,

@@ -132,8 +132,8 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getGroupDetails(userID, groupID).toEntity()
     }
 
-    override suspend fun getGroupMembers(groupID: Int): List<User> {
-        return remoteDataSource.getGroupMembers(groupID).toEntity()
+    override suspend fun getGroupMembers(groupID: Int, page: Int): List<User> {
+        return remoteDataSource.getGroupMembers(groupID, page).toEntity()
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall {
@@ -188,7 +188,8 @@ class ClubRepositoryImp @Inject constructor(
     override suspend fun publishPostUserWall(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int
     ): Post {
-        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy).toEntity()
+        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
+            .toEntity()
             ?: throw Throwable("null data")
     }
 

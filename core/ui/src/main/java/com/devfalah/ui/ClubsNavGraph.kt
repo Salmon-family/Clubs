@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.devfalah.ui.screen.accountSettings.accountSettingsRoute
 import com.devfalah.ui.screen.allSearchResultScreen.allSearchResultRoute
 import com.devfalah.ui.screen.clubCreation.clubCreationRoute
+import com.devfalah.ui.screen.clubMembers.membersRoute
 import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.clubsDetail.clubsDetailsRoute
@@ -49,6 +50,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         editUserInformationRoute(navController = navController)
         postDetailsRoute(navController = navController)
         editClubRoute(navController = navController)
+        membersRoute(navController= navController)
     }
 }
 
