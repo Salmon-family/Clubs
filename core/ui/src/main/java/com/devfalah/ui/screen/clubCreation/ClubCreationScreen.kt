@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubCreation.ClubCreationUiState
 import com.devfalah.viewmodels.clubCreation.ClubCreationViewModel
 import com.devfalah.viewmodels.clubCreation.isCreateClubButtonEnabled
@@ -96,10 +97,12 @@ fun ClubCreationContent(
                 modifier = Modifier.fillMaxWidth(),
             )
         }
+
         val successMessage = stringResource(id = R.string.clubـcreated_successfully)
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
                 showToastMessage(context, successMessage)
+                navController.popBackStack()
             }
         }
     }
