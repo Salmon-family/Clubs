@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.ErrorItem
+import com.devfalah.ui.composable.LottieItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
@@ -43,6 +45,7 @@ fun ClubRequestsScreen(
         state = state,
         onAcceptButtonClick = viewModel::acceptRequest,
         onDeleteButtonClick = viewModel::declineRequest,
+        onRetry = viewModel::getData,
         onClickOpenProfile = { navController.navigateToProfile(it) }
     )
     LaunchedEffect(true) {
@@ -63,29 +66,38 @@ fun ClubRequestsContent(
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
+    onRetry: () -> Unit
 ) {
     Column {
         AppBar(title = stringResource(R.string.users_requests), navHostController = navController)
-        LazyColumn(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .background(LightBackgroundColor)
-                .fillMaxSize(),
-        ) {
-            items(
-                items = state.users,
-                key = { currentRequest -> currentRequest.userID }
-            ) { userState ->
-                FriendRequestItem(
-                    userState = userState,
-                    onClickOpenProfile = onClickOpenProfile,
-                    onAcceptButtonClick = onAcceptButtonClick,
-                    onDeleteButtonClick = onDeleteButtonClick,
-                    modifier = Modifier.animateItemPlacement()
-                )
+
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else if (state.users.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        } else {
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .background(LightBackgroundColor)
+                    .fillMaxSize(),
+            ) {
+                items(
+                    items = state.users,
+                    key = { currentRequest -> currentRequest.userID }
+                ) { userState ->
+                    FriendRequestItem(
+                        userState = userState,
+                        onClickOpenProfile = onClickOpenProfile,
+                        onAcceptButtonClick = onAcceptButtonClick,
+                        onDeleteButtonClick = onDeleteButtonClick,
+                        modifier = Modifier.animateItemPlacement()
+                    )
+                }
             }
         }
-
     }
 }
