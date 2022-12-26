@@ -183,7 +183,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun swipeToRefresh(type: Int) {
+    fun swipeToRefresh() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(loading = true) }

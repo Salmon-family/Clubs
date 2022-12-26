@@ -72,7 +72,7 @@ fun PostDetailsContent(
     state: PostDetailsUIState,
     onClickLike: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onClickSendComment: () -> Unit,

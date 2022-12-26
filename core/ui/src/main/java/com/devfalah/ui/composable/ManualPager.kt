@@ -22,13 +22,12 @@ import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.viewmodels.util.Constants
 
 @Composable
 fun ManualPager(
     modifier: Modifier = Modifier,
     backgroundColor: Color = LightBackgroundColor,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     isLoading: Boolean,
     error: String,
     isEndOfPager: Boolean,
@@ -58,8 +57,8 @@ fun ManualPager(
 
     if (!scrollState.isScrollingUp() || !isEndOfPager) {
         LaunchedEffect(key1 = scrollState.isScrollInProgress) {
-            if (!isLoading && !isEndOfPager){
-                onRefresh(Constants.SWIPE_DOWN)
+            if (!isLoading && !isEndOfPager) {
+                onRefresh()
             }
         }
     }
@@ -90,7 +89,7 @@ fun PagerStatusItem(
     isLoading: Boolean,
     error: String,
     isEndOfPager: Boolean,
-    onClickTryAgain: (Int) -> Unit
+    onClickTryAgain: () -> Unit
 ) {
     Row(
         modifier = modifier.padding(horizontal = 16.dp),
@@ -105,7 +104,7 @@ fun PagerStatusItem(
             }
         } else if (error.isNotEmpty()) {
             Text(modifier = Modifier.weight(1f), text = error)
-            Button(onClick = { onClickTryAgain(Constants.SWIPE_DOWN) }) {
+            Button(onClick = { onClickTryAgain() }) {
                 Text(text = stringResource(id = R.string.try_again))
             }
 

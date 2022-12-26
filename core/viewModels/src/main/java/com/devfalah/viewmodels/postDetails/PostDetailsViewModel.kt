@@ -186,8 +186,7 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
-    // need to remove type..
-    fun getPostComments(type: Int = 0) {
+    fun getPostComments() {
         viewModelScope.launch {
             try {
                 if (!uiState.value.isEndOfPager) {

@@ -169,9 +169,9 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Error")
     }
 
-    override suspend fun getGroupMembers(groupID: Int): List<UserDTO> {
+    override suspend fun getGroupMembers(groupID: Int, page: Int): List<UserDTO> {
         return try {
-            wrap { apiService.getGroupMembers(groupID) }.members ?: emptyList()
+            wrap { apiService.getGroupMembers(groupID, page = page) }.members ?: emptyList()
         } catch (t: Throwable) {
             emptyList()
         }

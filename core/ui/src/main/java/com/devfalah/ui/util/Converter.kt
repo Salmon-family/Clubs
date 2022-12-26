@@ -4,6 +4,13 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.provider.OpenableColumns
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.devfalah.ui.R
+import com.devfalah.viewmodels.util.DateConverterConstants.DAY_AGO
+import com.devfalah.viewmodels.util.DateConverterConstants.HOUR_AGO
+import com.devfalah.viewmodels.util.DateConverterConstants.JUST_NOW
+import com.devfalah.viewmodels.util.DateConverterConstants.MINUTES_AGO
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -46,3 +53,13 @@ private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
     }
 }
 
+@Composable
+fun getDataDescription(type: Int): String {
+    return when (type) {
+        JUST_NOW -> stringResource(id = R.string.just_now)
+        MINUTES_AGO -> stringResource(id = R.string.minutes)
+        HOUR_AGO -> stringResource(id = R.string.hour)
+        DAY_AGO -> stringResource(id = R.string.day)
+        else -> ""
+    }
+}

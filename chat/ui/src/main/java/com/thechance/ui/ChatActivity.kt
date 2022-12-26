@@ -1,7 +1,6 @@
 package com.thechance.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.thechance.ui.screens.conversation.navigateToConversation
 import com.thechance.ui.theme.ClubsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +18,9 @@ class ChatActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        val friendId = intent.extras?.getInt("FRIEND_ID", -1) ?: -1
+        val userId = intent.extras?.getInt("USER_ID", -1) ?: -1
         setContent {
             ClubsTheme {
                 Surface(
@@ -25,7 +28,10 @@ class ChatActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    ChatNavGraph(navController = navController)
+                    ChatNavGraph(navController = navController, START_DESTINATION)
+                    if (friendId != -1 && userId != -1) {
+                        navController.navigateToConversation(userId, friendId)
+                    }
                 }
             }
         }

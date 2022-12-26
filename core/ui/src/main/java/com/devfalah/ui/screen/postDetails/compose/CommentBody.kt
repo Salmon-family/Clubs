@@ -25,6 +25,7 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryGrayColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.util.getDataDescription
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
@@ -61,7 +62,7 @@ fun CommentBody(
         ) {
 
             Text(
-                text = state.timeCreate,
+                text = "${state.timeCreate.value} ${getDataDescription(state.timeCreate.description)} ",
                 fontSize = 12.sp,
                 color = LightSecondaryGrayColor,
                 fontWeight = FontWeight.Normal
@@ -116,3 +117,4 @@ fun LikeCommentIcon(
         )
     }
 }
+

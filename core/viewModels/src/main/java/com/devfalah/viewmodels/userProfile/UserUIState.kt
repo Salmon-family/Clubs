@@ -1,6 +1,7 @@
 package com.devfalah.viewmodels.userProfile
 
 import com.devfalah.viewmodels.friends.FriendUIState
+import com.devfalah.viewmodels.postDetails.PublishTimeUIState
 
 data class UserUIState(
     val id: Int = 0,
@@ -39,7 +40,7 @@ data class PostUIState(
     val publisherImage: String = "",
     val publisherId: Int = 0,
     val privacy: Boolean = false,
-    val createdData: String = "",
+    val createdData: PublishTimeUIState = PublishTimeUIState(),
     val createdDataValue: Long = 0L,
     val totalLikes: Int = 0,
     val totalComments: Int = 0,

@@ -41,7 +41,7 @@ class FriendsViewModel @Inject constructor(
         }
     }
 
-    fun getUserFriends(type: Int) {
+    fun getUserFriends() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {

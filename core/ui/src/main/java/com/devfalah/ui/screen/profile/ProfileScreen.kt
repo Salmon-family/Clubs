@@ -1,9 +1,9 @@
 package com.devfalah.ui.screen.profile
 
 import android.content.Context
-import android.net.Uri
+import android.content.Intent
 import android.os.Build
-import android.provider.OpenableColumns
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.composable.ManualPager
@@ -30,14 +31,14 @@ import com.devfalah.ui.screen.profile.composable.*
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.util.createFileFromContentUri
-import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
+import com.devfalah.viewmodels.util.ChatNavigation.FRIEND_ID
+import com.devfalah.viewmodels.util.ChatNavigation.PACKAGE_CHAT_NAME
+import com.devfalah.viewmodels.util.ChatNavigation.USER_ID
+import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -58,13 +59,13 @@ fun ProfileScreen(
         state,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
         },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
-            Toast.makeText(context, "not done yet.. ", Toast.LENGTH_LONG).show()
+            navigateToConversation(context = context, state.id, state.userDetails.userID)
         },
         onChangeProfileImage = {
             singlePhotoPickerLauncher.launch(
@@ -109,7 +110,7 @@ fun ProfileContent(
     onClickAddFriend: () -> Unit,
     onClickSendMessage: () -> Unit,
     onChangeProfileImage: () -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickPostSetting: (PostUIState) -> Unit,
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,
@@ -172,5 +173,16 @@ fun ProfileContent(
                 onOpenLinkClick = onOpenLinkClick,
             )
         }
+    }
+}
+
+private fun navigateToConversation(context: Context, userId: Int, friendId: Int) {
+    try {
+        val intent = Intent(context, Class.forName(PACKAGE_CHAT_NAME))
+        intent.putExtra(FRIEND_ID, friendId)
+        intent.putExtra(USER_ID, userId)
+        ContextCompat.startActivity(context, intent, Bundle())
+    } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
     }
 }

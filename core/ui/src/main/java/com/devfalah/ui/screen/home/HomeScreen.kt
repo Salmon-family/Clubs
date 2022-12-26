@@ -90,7 +90,7 @@ fun HomeContent(
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
