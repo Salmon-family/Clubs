@@ -29,7 +29,7 @@ object Constants {
 
 }
 
-object DateConverterConstants{
+object DateConverterConstants {
     const val JUST_NOW = 0
     const val MINUTES_AGO = 1
     const val HOUR_AGO = 2
@@ -37,4 +37,10 @@ object DateConverterConstants{
     const val FULL_DATE = 4
 
     const val DATA_PATTERN = "MMM dd,yyyy HH:mm aa"
+}
+
+object ChatNavigation {
+    const val PACKAGE_CHAT_NAME = "com.thechance.ui.ChatActivity"
+    const val FRIEND_ID = "FRIEND_ID"
+    const val USER_ID = "USER_ID"
 }
