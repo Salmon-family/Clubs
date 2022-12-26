@@ -21,6 +21,7 @@
         <activity
             android:name="com.devfalah.ui.main.MainActivity"
             android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
