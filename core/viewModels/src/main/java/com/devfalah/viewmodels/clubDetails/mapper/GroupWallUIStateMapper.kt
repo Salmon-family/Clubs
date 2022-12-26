@@ -1,6 +1,7 @@
 package com.devfalah.viewmodels.clubDetails.mapper
 
 import com.devfalah.entities.GroupWallPost
+import com.devfalah.viewmodels.postDetails.mapper.toUIState
 import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
@@ -15,7 +16,7 @@ fun GroupWallPost.toUIState(groupId: Int, groupName: String): PostUIState {
         publisherImage = user.profileUrl,
         publisherId = user.id,
         privacy = post.privacy,
-        createdData = ConvertDate().convertTime(post.createdTime),
+        createdData = ConvertDate().convertTime(post.createdTime).toUIState(),
         createdDataValue = post.createdTime,
         totalLikes = post.totalLikes,
         totalComments = post.totalComments,
