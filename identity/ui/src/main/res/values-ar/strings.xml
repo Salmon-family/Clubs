@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">النوادي</string>
+    <string name="welcome">مرحبا</string>
+    <string name="club">النادي</string>
+    <string name="have_fun">استمتع مع الكثير من النوادي المميزة</string>
+    <string name="onboard_body">انت تاخذ خطوتك الاولى نحو تغير حياتك. دعنا نرشدك</string>
+    <string name="lets_do">هيا لنفعلها</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="register">أنشاء حساب</string>
+    <string name="footer_first_text">بمتابعتك انت توافق على شروط الاستخدام</string>
+    <string name="footer_second_text">شروط \nالخدمات &amp; سياسة الخصوصية</string>
+    <string name="sign_up">انشاء حساب</string>
+    <string name="user_name_question">ما هو \n اسم المستخدم الخاص بك</string>
+    <string name="email_label">الايميل الخاص بك</string>
+    <string name="email_place_holder">example@email.com</string>
+    <string name="continue_label">متابعة</string>
+    <string name="email">الايميل</string>
+    <string name="your_password">الرمز السري الخاص بك</string>
+    <string name="confirm_password">اعادة ادخال الرمز السري</string>
+    <string name="full_naame">الاسم الكامل</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="birth_date">تاريخ الميلاد</string>
+    <string name="gender">النوع</string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="password_place_holder">اكثر من 6 حروف</string>
+    <string name="using">يستخدم&#160;</string>
+    <string name="to_sign_up">&#160;لانشاء حساب</string>
+    <string name="user_name_place_holder">محمد</string>
+    <string name="pick_user_name">Pick your \\nusername</string>
+    <string name="user_name_hint">ali44</string>
+    <string name="account_activation_title">تفعيل الحساب</string>We just sent you an activation email. Please check \n it out before you trying to log in.
+    <string name="account_activation_body">لقد ارسلنا لك رسالة التفعيل. الرجاء \n التاكد من الرسالة قبل محاولة تسجيل الدخول</string>
+    <string name="open_email">افتح برنامج الايميل</string>
+    <string name="create_account_label">انشاء حساب</string>
+    <string name="name_hint">محمد</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثى</string>
+    <string name="your_label">الخاص بك</string>
+    <string name="navigate_to_signup">ليس لديك حساب ؟</string>
+    <string name="navigate_to_login">هل لديك حساب ؟</string>
+    <string name="success_message">تم...</string>
+    <string name="not_exist_email">ليس لديك برنامج ايميل</string>
+    <string name="job_title">عنوان المهنة</string>
+    <string name="job_hint">مبرمج اندرويد</string>
+</resources>

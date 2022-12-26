@@ -47,7 +47,7 @@ fun SegmentControls(
             )
             .clickable {
                 index.value = 0
-                onChangeGander(genderItems[index.value])
+                onChangeGander("male")
             }) {
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
@@ -66,7 +66,7 @@ fun SegmentControls(
                 )
                 .clickable {
                     index.value = 1
-                    onChangeGander(genderItems[index.value])
+                    onChangeGander("female")
                 }) {
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),

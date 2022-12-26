@@ -20,7 +20,7 @@
     <!--   notification -->
     <string name="like_photo">liked your photo</string>
     <string name="like_post">liked your post</string>
-    <string name="request_group">request to join your group</string>
+    <string name="request_group">request to join your club</string>
     <string name="see_all">See All</string>
     <string name="albums">Albums</string>
     <string name="friends_privacy">Friends</string>
@@ -91,5 +91,6 @@
     <string name="day"> day ago</string>
     <string name="just_now">Just now</string>
     <string name="wrong_password_message">You entered a wrong password, please try again.</string>
+    <string name="enter_your_comment">Enter your comment...</string>
 
 </resources>
