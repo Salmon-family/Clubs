@@ -28,3 +28,13 @@ object Constants {
     const val MAX_PAGE_ITEM = 10
 
 }
+
+object DateConverterConstants{
+    const val JUST_NOW = 0
+    const val MINUTES_AGO = 1
+    const val HOUR_AGO = 2
+    const val DAY_AGO = 3
+    const val FULL_DATE = 4
+
+    const val DATA_PATTERN = "MMM dd,yyyy HH:mm aa"
+}

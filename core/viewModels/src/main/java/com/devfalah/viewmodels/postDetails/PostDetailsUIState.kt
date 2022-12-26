@@ -21,10 +21,15 @@ data class CommentUIState(
     val userId: Int = 0,
     val userName: String = "",
     val userPictureUrl: String = "",
-    val timeCreate: String = "",
+    val timeCreate: PublishTimeUIState = PublishTimeUIState(),
     val totalLikes: Int = 0,
     val isOwnerComment: Boolean = false,
     val isLikedByUser: Boolean = false,
 )
 
+
+data class PublishTimeUIState(
+    val value: String = "",
+    val description: Int = 0
+)
 

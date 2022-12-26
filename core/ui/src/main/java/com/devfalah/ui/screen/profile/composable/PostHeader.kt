@@ -30,6 +30,7 @@ import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
+import com.devfalah.ui.util.getDataDescription
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 @Composable
@@ -94,7 +95,7 @@ fun PostHeader(
                     WidthSpacer8()
                 }
                 Text(
-                    text = post.createdData,
+                    text = "${post.createdData.value} ${getDataDescription(post.createdData.description)} ",
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,

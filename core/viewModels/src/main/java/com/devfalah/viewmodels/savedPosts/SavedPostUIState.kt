@@ -1,6 +1,7 @@
 package com.devfalah.viewmodels.savedPosts
 
 import com.devfalah.entities.Post
+import com.devfalah.viewmodels.postDetails.mapper.toUIState
 import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
@@ -19,7 +20,7 @@ fun Post.toSavedUIState(): PostUIState {
         publisherImage = publisherImageUrl,
         publisherName = publisher,
         privacy = privacy,
-        createdData = ConvertDate().convertTime(createdTime),
+        createdData = ConvertDate().convertTime(createdTime).toUIState(),
         totalLikes = totalLikes,
         totalComments = totalComments,
         isSaved = true,

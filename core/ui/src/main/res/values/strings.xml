@@ -87,4 +87,9 @@
     <string name="menu">Menu</string>
     <string name="members">Club Members</string>
 
+    <string name="minutes"> minutes ago</string>
+    <string name="hour"> hour ago</string>
+    <string name="day"> day ago</string>
+    <string name="just_now">Just now</string>
+
 </resources>

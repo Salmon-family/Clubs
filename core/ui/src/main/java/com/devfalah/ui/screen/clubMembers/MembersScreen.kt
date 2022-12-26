@@ -34,7 +34,6 @@ fun MembersScreen(
         navController = navController,
         onRefresh = viewModel::getClubMembers,
         onClickProfile = { navController.navigateToProfile(it) },
-        // is there remove member from club ?!!
         onRemoveFriend = {}
     )
     LaunchedEffect(true) {
