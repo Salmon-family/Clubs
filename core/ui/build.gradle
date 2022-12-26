@@ -72,7 +72,7 @@ dependencies {
     def coil_version = '2.2.2'
     implementation "io.coil-kt:coil-compose:$coil_version"
 
-    def accompanist_version ="0.27.0"
+    def accompanist_version = "0.27.0"
     // swipe
     implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
 
@@ -80,5 +80,7 @@ dependencies {
 
     //web-view
     implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
+
+    implementation("com.airbnb.android:lottie-compose:4.0.0")
 
 }
