@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.myClubs
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetUserClubsUseCase
@@ -24,7 +23,7 @@ class MyClubsViewModel @Inject constructor(
         getData()
     }
 
-    private fun getData() {
+    fun getData() {
         viewModelScope.launch {
             val myLocalClubs = specialClubs.map {
                 SpecialClubsUIState(
@@ -41,7 +40,7 @@ class MyClubsViewModel @Inject constructor(
     private fun getMyClubs() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(isLoading = true) }
+                _uiState.update { it.copy(isLoading = true, error = "") }
                 val myClubs = getUserClubs(specialClubs.map { it.key })
                 _uiState.update {
                     it.copy(
@@ -51,7 +50,6 @@ class MyClubsViewModel @Inject constructor(
                     )
                 }
             } catch (t: Throwable) {
-                Log.e("clubsError", t.message.toString())
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
 
