@@ -32,7 +32,8 @@ class LoginViewModel @Inject constructor(
     private fun makeLoginRequest() {
         viewModelScope.launch {
             try {
-                loginUseCase(_uiState.value.userName, _uiState.value.password)
+                val user = loginUseCase(_uiState.value.userName, _uiState.value.password)
+                _uiState.update { it.copy(userId = user.guid) }
                 onSuccess()
             } catch (t: Throwable) {
                 onError(errorMessage = t)

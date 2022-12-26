@@ -236,4 +236,8 @@ class ClubRepositoryImp @Inject constructor(
         return appConfigurator.getUserId()?.toInt() ?: -1
     }
 
+    override suspend fun saveUserId(userId: Int) {
+        appConfigurator.saveUserId(userId)
+    }
+
 }

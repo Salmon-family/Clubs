@@ -11,6 +11,10 @@ class AppConfiguratorImp @Inject constructor(
         return clubDataStorePreferences.readString(SIGN_UP_STATE_KEY)
     }
 
+    override suspend fun saveUserId(userId: Int) {
+        clubDataStorePreferences.writeString(SIGN_UP_STATE_KEY, userId.toString())
+    }
+
     companion object{
         const val SIGN_UP_STATE_KEY = "sign_up_state_key"
     }

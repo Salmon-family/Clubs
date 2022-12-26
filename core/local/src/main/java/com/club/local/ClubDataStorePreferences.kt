@@ -40,6 +40,6 @@ class ClubDataStorePreferences @Inject constructor(context: Context) {
     }
 
     companion object {
-        private const val PREFERENCES_FILE_NAME = "clubs"
+        private const val PREFERENCES_FILE_NAME = "core"
     }
 }
