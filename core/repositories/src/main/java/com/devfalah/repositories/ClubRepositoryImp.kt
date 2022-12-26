@@ -12,6 +12,7 @@ import javax.inject.Inject
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: ClubLocalDataSource,
+    private val appConfigurator: AppConfigurator,
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -229,6 +230,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun markNotificationAsViewed(notificationId: Int) {
         remoteDataSource.markNotificationMarkedAsViewed(notificationId)
+    }
+
+    override fun getUserId(): Int {
+        return appConfigurator.getUserId()?.toInt() ?: -1
     }
 
 }

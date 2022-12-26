@@ -105,4 +105,6 @@ interface ClubRepository {
 
     suspend fun markNotificationAsViewed(notificationId: Int)
 
+    fun getUserId(): Int
+
 }
