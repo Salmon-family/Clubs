@@ -31,9 +31,9 @@ fun SpecialClubItem(
 
     Column(
         modifier = modifier
-            .clickable { onClick(state.id) }
             .clip(CircleShape)
             .background(LightSecondaryBrandColor)
+            .clickable { onClick(state.id) }
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
