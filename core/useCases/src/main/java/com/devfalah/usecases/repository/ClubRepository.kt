@@ -109,4 +109,6 @@ interface ClubRepository {
 
     suspend fun saveUserId(userId: Int)
 
+    suspend fun deleteUserId()
+
 }

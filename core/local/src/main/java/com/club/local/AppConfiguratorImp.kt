@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class AppConfiguratorImp @Inject constructor(
     private val clubDataStorePreferences: ClubDataStorePreferences
-): AppConfigurator {
+) : AppConfigurator {
 
     override fun getUserId(): String? {
         return clubDataStorePreferences.readString(SIGN_UP_STATE_KEY)
@@ -15,7 +15,12 @@ class AppConfiguratorImp @Inject constructor(
         clubDataStorePreferences.writeString(SIGN_UP_STATE_KEY, userId.toString())
     }
 
-    companion object{
+    override suspend fun deleteUserId() {
+        clubDataStorePreferences.writeString(SIGN_UP_STATE_KEY, "-1")
+
+    }
+
+    companion object {
         const val SIGN_UP_STATE_KEY = "sign_up_state_key"
     }
 }

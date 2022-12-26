@@ -4,4 +4,6 @@ interface AppConfigurator {
     fun getUserId(): String?
 
     suspend fun saveUserId(userId: Int)
+
+    suspend fun deleteUserId()
 }
