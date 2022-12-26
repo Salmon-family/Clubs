@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,7 +35,9 @@ fun SearchScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
-    val context = LocalContext.current
+
+    val clubTitle = stringResource(id = R.string.clubs)
+    val peopleTitle = stringResource(id = R.string.people)
 
     SearchContent(
         state = state,
@@ -45,12 +46,12 @@ fun SearchScreen(
         OnUserClick = { navController.navigateToProfile(it) },
         onClickSeeAllClubs = {
             navController.navigateToAllSearchResult(
-                title = "Clubs", keyword = state.keyword, searchType = SEARCH_CLUB
+                title = clubTitle, keyword = state.keyword, searchType = SEARCH_CLUB
             )
         },
         onClickSeeAllPeople = {
             navController.navigateToAllSearchResult(
-                title = "People", keyword = state.keyword, searchType = SEARCH_USER
+                title = peopleTitle, keyword = state.keyword, searchType = SEARCH_USER
             )
         },
         onRetry = viewModel::onSearch
