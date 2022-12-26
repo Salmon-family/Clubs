@@ -25,7 +25,7 @@ fun LottieItem(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AndroidView({ customView }) { view ->
+        AndroidView({ customView }, modifier = modifier) { view ->
             with(view) {
                 setAnimation(LottieResource)
                 playAnimation()

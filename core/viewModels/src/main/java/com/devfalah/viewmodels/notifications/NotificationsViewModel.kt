@@ -30,7 +30,7 @@ class NotificationsViewModel @Inject constructor(
 
     fun getUserNotifications() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 _uiState.update { it.copy(userId = getUserId()) }
                 val notifications = getNotifications()
