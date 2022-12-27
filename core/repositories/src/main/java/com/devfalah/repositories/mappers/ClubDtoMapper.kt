@@ -19,9 +19,13 @@ fun GroupDTO.toEntity(): Club {
         description = description ?: "",
         privacy = membership ?: "1",
         isMember = ismember ?: false,
-        requestExists = requestExists ?: false
+        requestExists = requestExists ?: false,
+        isClubPublic = isMemberShip(membership)
     )
 }
+
+fun isMemberShip(value: String?) = value == "2"
+
 
 fun GroupWallDto.toEntity(): GroupWall {
     return GroupWall(

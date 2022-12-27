@@ -97,13 +97,15 @@ class ClubDetailsViewModel @Inject constructor(
                         name = clubDetails.name,
                         membership = clubDetails.privacy.toInt(),
                         description = clubDetails.description,
-                        privacy = getPrivacy(clubDetails.privacy),
+                        privacy = getPrivacy(clubDetails.isClubPublic),
                         requestExists = clubDetails.requestExists,
                         isMember = clubDetails.isMember,
+                        isClubPublic = clubDetails.isClubPublic,
                         isLoading = false,
                         isSuccessful = true
                     )
                 }
+                Log.i("lllllllllll", clubDetails.isClubPublic.toString())
             } catch (throwable: Throwable) {
                 _uiState.update {
                     it.copy(
@@ -143,10 +145,10 @@ class ClubDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun getPrivacy(value: String): String {
+    private fun getPrivacy(value: Boolean): String {
         return when (value) {
-            "1" -> PRIVATE_PRIVACY
-            else -> PUBLIC_PRIVACY
+            true -> PUBLIC_PRIVACY
+            else -> PRIVATE_PRIVACY
         }
     }
 

@@ -25,6 +25,7 @@ data class ClubDetailsUiState(
     val isLoading: Boolean = false,
     val isPagerLoading: Boolean = false,
     val isSuccessful: Boolean = false,
+    val isClubPublic: Boolean = true,
     val error: String = "",
     val pagerError: String = "",
 )

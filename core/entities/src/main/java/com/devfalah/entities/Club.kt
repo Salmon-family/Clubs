@@ -7,5 +7,6 @@ data class Club(
     val privacy: String,
     val description: String,
     val isMember: Boolean,
+    val isClubPublic: Boolean,
     val requestExists: Boolean,
 )

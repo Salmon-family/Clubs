@@ -74,12 +74,12 @@ fun ClubsDetailsScreen(
             )
         },
         onClickEditClub = {
-            navController.navigateToEditClub(
-                clubId = state.clubId,
-                clubName = state.name,
-                clubDescription = state.description,
-                clubPrivacy = state.membership
-            )
+//            navController.navigateToEditClub(
+//                clubId = state.clubId,
+//                clubName = state.name,
+//                clubDescription = state.description,
+//                clubPrivacy = state.membership
+//            )
         }
     )
 
@@ -139,7 +139,7 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember) {
+                if (!state.isClubPublic && !state.isMember) {
                     if (state.requestExists) {
                         item {
                             RoundButton(
