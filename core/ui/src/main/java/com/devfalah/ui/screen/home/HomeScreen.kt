@@ -32,7 +32,6 @@ import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -130,7 +129,7 @@ fun HomeContent(
                     PostItem(
                         state = it,
                         isContentExpandable = true,
-                        isMyPost = it.publisherId == state.id,
+                        isMyPost = it.isMyPost,
                         isClubPost = false,
                         showGroupName = false,
                         onClickLike = onClickLike,

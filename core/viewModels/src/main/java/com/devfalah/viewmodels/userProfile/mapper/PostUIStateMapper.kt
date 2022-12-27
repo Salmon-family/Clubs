@@ -15,6 +15,7 @@ fun Post.toUIState(): PostUIState {
         publisherImage = publisherImageUrl,
         publisherName = publisher,
         privacy = privacy,
+        isMyPost = isMyPost,
         createdData = ConvertDate().convertTime(createdTime).toUIState(),
         totalLikes = totalLikes,
         totalComments = totalComments,
@@ -24,7 +25,7 @@ fun Post.toUIState(): PostUIState {
         postContent = content,
         createdDataValue = createdTime,
         groupId = groupId,
-        groupName = groupName
+        groupName = groupName,
     )
 }
 
@@ -45,7 +46,8 @@ fun PostUIState.toEntity(): Post {
         isSaved = isSaved,
         posterGuid = "",
         groupId = groupId,
-        groupName = groupName
+        groupName = groupName,
+        isMyPost = isMyPost
     )
 }
 

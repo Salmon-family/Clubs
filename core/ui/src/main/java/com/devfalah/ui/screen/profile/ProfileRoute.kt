@@ -1,7 +1,5 @@
 package com.devfalah.ui.screen.profile
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType

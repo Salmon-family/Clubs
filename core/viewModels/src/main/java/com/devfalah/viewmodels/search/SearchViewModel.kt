@@ -3,9 +3,9 @@ package com.devfalah.viewmodels.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetSearchUseCase
-import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -14,22 +14,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    val getUserIdUseCase: GetUserIdUseCase,
     val getSearchUseCase: GetSearchUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUIState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        viewModelScope.launch { _uiState.update { it.copy(userId = getUserIdUseCase()) } }
-    }
-
     fun onSearchTextChange(keyword: String) {
         _uiState.update { it.copy(keyword = keyword) }
-        if (_uiState.value.keyword.isNotEmpty()) {
-            onSearch()
-        }
+        onSearch()
     }
 
     fun onSearch() {
@@ -37,7 +30,8 @@ class SearchViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 if (uiState.value.keyword.isNotBlank()) {
-                    val searchResult = getSearchUseCase(uiState.value.userId, uiState.value.keyword)
+                    delay(2000)
+                    val searchResult = getSearchUseCase(uiState.value.keyword)
                     _uiState.update {
                         it.copy(
                             isLoading = false,

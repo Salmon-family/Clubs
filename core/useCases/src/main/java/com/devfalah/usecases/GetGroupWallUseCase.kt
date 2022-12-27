@@ -10,12 +10,13 @@ class GetGroupWallUseCase @Inject constructor(
     private var page = 1
     private var count = 0
     private lateinit var savedPosts: List<Int>
+    private val userId: Int = clubRepository.getUserId()
 
     suspend operator fun invoke(groupID: Int) {
         getSavedPostsIds(groupID)
     }
 
-    suspend fun loadMore(userId: Int, groupID: Int): List<GroupWallPost> {
+    suspend fun loadMore(groupID: Int): List<GroupWallPost> {
         val clubPosts = clubRepository.getGroupWallList(userID = userId, groupID = groupID, page)
         count = clubPosts.count
         return if (clubPosts.post.isNotEmpty()) {

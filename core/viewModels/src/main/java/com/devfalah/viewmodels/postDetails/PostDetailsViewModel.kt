@@ -3,10 +3,13 @@ package com.devfalah.viewmodels.postDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.*
+import com.devfalah.usecases.DeletePostUseCase
+import com.devfalah.usecases.GetUserAccountDetailsUseCase
+import com.devfalah.usecases.SetFavoritePostUseCase
+import com.devfalah.usecases.SetPostLikeUseCase
 import com.devfalah.usecases.posts.GetPostCommentsUseCase
 import com.devfalah.usecases.posts.GetPostDetailsUseCase
-import com.devfalah.usecases.posts.MangeCommentUseCase
+import com.devfalah.usecases.posts.ManageCommentUseCase
 import com.devfalah.usecases.posts.SetCommentLikeUseCase
 import com.devfalah.viewmodels.friendRequest.toUserUIState
 import com.devfalah.viewmodels.postDetails.mapper.toUIState
@@ -23,10 +26,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailsViewModel @Inject constructor(
-    val getUserIdUseCase: GetUserIdUseCase,
     val getPostCommentsUseCase: GetPostCommentsUseCase,
     val getPostDetailsUseCase: GetPostDetailsUseCase,
-    val mangeComment: MangeCommentUseCase,
+    val manageComment: ManageCommentUseCase,
     val commentLike: SetCommentLikeUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val postLike: SetPostLikeUseCase,
@@ -47,7 +49,6 @@ class PostDetailsViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true, error = "") }
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(id = getUserIdUseCase()) }
                 getPostDetails()
                 getPostComments()
             } catch (t: Throwable) {
@@ -60,7 +61,7 @@ class PostDetailsViewModel @Inject constructor(
     private fun getPublisherDetails(publisherId: Int) {
         viewModelScope.launch {
             try {
-                val user = publisherDetails(publisherId, publisherId).toUserUIState()
+                val user = publisherDetails(publisherId).toUserUIState()
                 _uiState.update {
                     it.copy(
                         post = it.post.copy(
@@ -83,8 +84,7 @@ class PostDetailsViewModel @Inject constructor(
                 val post = getPostDetailsUseCase(args.postId, uiState.value.id)
                 _uiState.update {
                     it.copy(
-                        post = post.toUIState(),
-                        isLoading = false
+                        post = post.toUIState(), isLoading = false
                     )
                 }
                 getPublisherDetails(args.publisherId)
@@ -98,12 +98,11 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(error = "") }
             try {
-                val totalLikes = postLike(uiState.value.id, args.postId, post.isLikedByUser)
+                val totalLikes = postLike(args.postId, post.isLikedByUser)
                 _uiState.update {
                     it.copy(
                         post = post.copy(
-                            isLikedByUser = !post.isLikedByUser,
-                            totalLikes = totalLikes
+                            isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
                         )
                     )
                 }
@@ -128,7 +127,7 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                if (deletePostUseCase(_uiState.value.id, post.postId)) {
+                if (deletePostUseCase(post.postId)) {
                     _uiState.update { it.copy(isPostDeleted = true) }
                 }
             } catch (t: Throwable) {
@@ -174,7 +173,7 @@ class PostDetailsViewModel @Inject constructor(
         _uiState.update { it.copy(commentText = "", minorError = "") }
         viewModelScope.launch {
             try {
-                val comment = mangeComment.addComment(uiState.value.id, args.postId, commentText)
+                val comment = manageComment.addComment(uiState.value.id, args.postId, commentText)
                 _uiState.update {
                     it.copy(
                         commentText = "",
@@ -209,9 +208,7 @@ class PostDetailsViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        minorError = t.message.toString()
+                        isPagerLoading = false, isLoading = false, minorError = t.message.toString()
                     )
                 }
             }
@@ -223,7 +220,7 @@ class PostDetailsViewModel @Inject constructor(
             _uiState.update { it.copy(minorError = "") }
             try {
                 val isDeleted =
-                    mangeComment.deleteComment(userId = uiState.value.id, commentId = comment.id)
+                    manageComment.deleteComment(userId = uiState.value.id, commentId = comment.id)
                 if (isDeleted) {
                     _uiState.update {
                         it.copy(

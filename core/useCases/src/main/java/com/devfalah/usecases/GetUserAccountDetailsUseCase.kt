@@ -10,8 +10,9 @@ class GetUserAccountDetailsUseCase @Inject constructor(
     private val friendShip: CheckFriendShipUseCase
 ) {
 
-    suspend operator fun invoke(userId: Int, profileOwnerId: Int): User {
+    suspend operator fun invoke(profileOwnerId: Int): User {
         val userDetails = clubRepository.getUserAccountDetails(userID = profileOwnerId)
+        val userId = clubRepository.getUserId()
         val friendShip = if (userId != profileOwnerId) {
             friendShip(userId, profileOwnerId)
         } else {

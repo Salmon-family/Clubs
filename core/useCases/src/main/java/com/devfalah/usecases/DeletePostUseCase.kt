@@ -7,7 +7,7 @@ class DeletePostUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
 
-    suspend operator fun invoke(userId: Int, postId: Int): Boolean {
-        return clubRepository.deletePost(userId, postId)
+    suspend operator fun invoke(postId: Int): Boolean {
+        return clubRepository.deletePost(clubRepository.getUserId(), postId)
     }
 }

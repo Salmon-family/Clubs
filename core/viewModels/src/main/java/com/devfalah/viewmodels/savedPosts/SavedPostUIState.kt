@@ -6,7 +6,6 @@ import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 data class SavedPostUIState(
-    val userId: Int = 0,
     val posts: List<PostUIState> = emptyList(),
     val error: String = "",
 )

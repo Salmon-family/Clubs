@@ -19,7 +19,8 @@ fun GroupDTO.toEntity(): Club {
         description = description ?: "",
         privacy = membership ?: "1",
         isMember = ismember ?: false,
-        requestExists = requestExists ?: false
+        requestExists = requestExists ?: false,
+        isOwner = false
     )
 }
 
@@ -42,7 +43,6 @@ fun GroupPostDto.toEntity(): GroupWallPost {
         text = text ?: "",
         user = user.toEntity(),
     )
-
 }
 
 fun PostDTO.toEntity(): Post {
@@ -61,7 +61,7 @@ fun PostDTO.toEntity(): Post {
         publisher = "",
         publisherImageUrl = profileImage ?: "",
         groupId = 0,
-        groupName = ""
+        groupName = "",
+        isMyPost = false
     )
-
 }

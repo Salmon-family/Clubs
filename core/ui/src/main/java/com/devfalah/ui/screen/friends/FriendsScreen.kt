@@ -35,7 +35,7 @@ fun FriendsScreen(
         onRefresh = viewModel::getUserFriends,
         onClickProfile = { navController.navigateToProfile(it) },
         onRemoveFriend = viewModel::removeFriend,
-        onRetry = viewModel::getData,
+        onRetry = viewModel::getUserFriends,
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {

@@ -8,8 +8,12 @@ class GetSearchUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
 
-    suspend operator fun invoke(userId: Int, keyword: String): SearchResult {
-        return clubRepository.getSearch(userID = userId, keyword = keyword)
+    suspend operator fun invoke(keyword: String): SearchResult {
+        return if (keyword.isNotEmpty()) {
+            clubRepository.getSearch(userID = clubRepository.getUserId(), keyword = keyword)
+        } else {
+            SearchResult(emptyList(), emptyList())
+        }
     }
 
 }

@@ -4,10 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetSearchUseCase
-import com.devfalah.usecases.GetUserIdUseCase
-import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.search.toUIState
+import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +16,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllSearchResultViewModel @Inject constructor(
-    val getUserIdUseCase: GetUserIdUseCase,
     val getSearchUseCase: GetSearchUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -34,8 +32,7 @@ class AllSearchResultViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val userId = getUserIdUseCase()
-                val result = getSearchUseCase(userId, args.keyword)
+                val result = getSearchUseCase(args.keyword)
                 _uiState.update {
                     it.copy(
                         isLoading = false,

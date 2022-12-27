@@ -4,7 +4,6 @@ import com.devfalah.entities.Notification
 
 
 data class NotificationsUIState(
-    val userId: Int = 0,
     val notifications: List<NotificationState> = emptyList(),
     val isLoading: Boolean = false,
     val error: String = ""

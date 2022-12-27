@@ -7,7 +7,9 @@ import javax.inject.Inject
 class GetClubDetailsUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    suspend operator fun invoke(userID: Int, groupID: Int): Club {
-        return clubRepository.getGroupDetails(userID = userID, groupID = groupID)
+    suspend operator fun invoke(groupID: Int): Club {
+        val userID = clubRepository.getUserId()
+        val club = clubRepository.getGroupDetails(userID = userID, groupID = groupID)
+        return club.copy(isOwner = userID == club.ownerId)
     }
 }

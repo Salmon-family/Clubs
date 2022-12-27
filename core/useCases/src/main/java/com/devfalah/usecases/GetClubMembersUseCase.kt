@@ -9,11 +9,11 @@ class GetClubMembersUseCase @Inject constructor(
 ) {
     var page = 1
 
-    suspend operator fun invoke(groupID: Int): List<User> {
+    suspend operator fun invoke(ownerId: Int, groupID: Int): List<User> {
         val members = clubRepository.getGroupMembers(groupID, page)
         return if (members.isNotEmpty()) {
             page += 1
-            members
+            members.filterNot { it.id == ownerId }
         } else if (page == 1) {
             throw Throwable("error")
         } else {

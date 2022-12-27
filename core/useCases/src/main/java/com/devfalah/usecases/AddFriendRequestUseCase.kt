@@ -6,9 +6,9 @@ import javax.inject.Inject
 class AddFriendRequestUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    suspend operator fun invoke(userID: Int, friendRequestId: Int): Boolean {
+    suspend operator fun invoke( friendRequestId: Int): Boolean {
         return if (!clubRepository.addFriendRequest(
-                userID = userID,
+                userID = clubRepository.getUserId(),
                 friendRequestID = friendRequestId
             )
         ) {

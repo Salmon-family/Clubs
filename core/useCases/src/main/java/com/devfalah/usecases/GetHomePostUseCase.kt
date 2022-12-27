@@ -10,17 +10,18 @@ class GetHomePostUseCase @Inject constructor(
 ) {
     private var page = 1
     private lateinit var savedPosts: List<Int>
+    private val userId: Int = clubRepository.getUserId()
 
     suspend operator fun invoke() {
         getSavedPostsIds()
     }
 
-    suspend fun loadData(userId: Int): List<Post> {
+    suspend fun loadData(): List<Post> {
         val homePosts = clubRepository.getUserHomePosts(userId, page).map { post ->
             if (post.id in savedPosts) {
-                post.copy(isSaved = true)
+                post.copy(isSaved = true, isMyPost = userId == post.publisherId)
             } else {
-                post
+                post.copy(isMyPost = userId == post.publisherId)
             }
         }
 

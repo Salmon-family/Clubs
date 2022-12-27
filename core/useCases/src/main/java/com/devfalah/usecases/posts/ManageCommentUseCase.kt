@@ -4,7 +4,7 @@ import com.devfalah.entities.Comment
 import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
-class MangeCommentUseCase @Inject constructor(
+class ManageCommentUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
     suspend fun addComment(userId: Int, postId: Int, comment: String): Comment {

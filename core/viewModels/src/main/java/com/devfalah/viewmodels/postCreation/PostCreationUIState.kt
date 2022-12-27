@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import java.io.File
 
 data class PostCreationUIState(
-    val id: Int = 0,
     val clubId: Int = 0,
     val isClub: Boolean = false,
     val postContent: String = "",

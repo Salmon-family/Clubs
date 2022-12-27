@@ -37,7 +37,8 @@ fun PostLocalDto.toEntity(): Post {
         isSaved = true,
         posterGuid = "",
         groupId = groupId,
-        groupName = groupName
+        groupName = groupName,
+        isMyPost = false
     )
 }
 

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class UnJoinClubUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    suspend operator fun invoke(clubId: Int, userId: Int): Club {
-        return clubRepository.unJoinClub(clubId, userId)
+    suspend operator fun invoke(clubId: Int): Club {
+        return clubRepository.unJoinClub(clubId, clubRepository.getUserId())
     }
 }

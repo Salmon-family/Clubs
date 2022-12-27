@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.AddFriendRequestUseCase
 import com.devfalah.usecases.GetUserFriendRequestsUseCase
-import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.RemoveFriendRequestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,6 @@ import javax.inject.Inject
 class FriendRequestViewModel @Inject constructor(
     private val friendRequestsUseCase: GetUserFriendRequestsUseCase,
     private val addFriendRequestUseCase: AddFriendRequestUseCase,
-    val getUser: GetUserIdUseCase,
     private val removeFriendRequestUseCase: RemoveFriendRequestUseCase
 ) : ViewModel() {
 
@@ -32,7 +30,6 @@ class FriendRequestViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                _uiState.update { it.copy(userId = getUser()) }
                 fetchFriendsRequest()
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
@@ -44,7 +41,7 @@ class FriendRequestViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val friendRequests =
-                    friendRequestsUseCase(userID = uiState.value.userId).listToUserUiState()
+                    friendRequestsUseCase().listToUserUiState()
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -68,10 +65,7 @@ class FriendRequestViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, minorError = "") }
             try {
-                if (addFriendRequestUseCase(
-                        userID = uiState.value.userId,
-                        friendRequestId = friendRequestId
-                    )
+                if (addFriendRequestUseCase(friendRequestId = friendRequestId)
                 ) {
                     updateFriendRequestList(friendRequestId)
                 }
@@ -87,10 +81,7 @@ class FriendRequestViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, minorError = "") }
             try {
-                if (removeFriendRequestUseCase(
-                        userID = uiState.value.userId, friendRequestId = friendRequestId
-                    )
-                ) {
+                if (removeFriendRequestUseCase(friendRequestId = friendRequestId)) {
                     updateFriendRequestList(friendRequestId)
                 }
             } catch (t: Throwable) {
