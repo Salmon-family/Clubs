@@ -42,7 +42,7 @@ fun PostContent(
         hint = hint,
         isSingleLine = isSingleLine)
     if (isKeyboardOpen == Keyboard.Closed) PostImage(image = image,
-        onRemoveImage = onRemoveImage) else Spacer(modifier = Modifier.height(8.dp))
+        onRemoveImage = onRemoveImage) else Spacer(modifier = Modifier.height(0.dp))
 
 
 }
