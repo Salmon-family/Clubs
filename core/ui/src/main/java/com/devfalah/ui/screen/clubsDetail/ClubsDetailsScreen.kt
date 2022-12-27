@@ -50,10 +50,7 @@ fun ClubsDetailsScreen(
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(
-                id = it.postId,
-                publisherId = it.publisherId,
-            )
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
         },
         onClickSave = viewModel::onClickSave,
         onAddPost = { navController.navigateToPostCreation(state.clubId) },

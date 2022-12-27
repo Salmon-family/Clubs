@@ -7,16 +7,19 @@ import javax.inject.Inject
 class ManageCommentUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
-    suspend fun addComment(userId: Int, postId: Int, comment: String): Comment {
-        return clubRepository.addComment(userId = userId, postId = postId, comment = comment)
+    private val userId = clubRepository.getUserId()
+
+    suspend fun addComment(postId: Int, comment: String): Comment {
+        val result = clubRepository.addComment(userId = userId, postId = postId, comment = comment)
+        return result.copy(isMyComment = true)
     }
 
-    suspend fun deleteComment(userId: Int, commentId: Int): Boolean {
+    suspend fun deleteComment(commentId: Int): Boolean {
         return clubRepository.deleteComment(userId = userId, commentId = commentId)
     }
 
-    suspend fun editComment(commentId: Int, comment: String): Boolean {
-        return clubRepository.editComment(commentId = commentId, comment = comment)
+    suspend fun editComment(comment: String): Boolean {
+        return clubRepository.editComment(commentId = userId, comment = comment)
     }
 
 }

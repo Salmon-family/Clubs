@@ -17,9 +17,7 @@ fun NavController.navigateToMembers(clubId: Int, ownerId: Int) {
 fun NavGraphBuilder.membersRoute(navController: NavController) {
     composable(
         route = "${CLUB_MEMBERS_SCREEN}/{${ClubMembersArgs.CLUB_ID}}/{${ClubMembersArgs.OWNER_ID}}",
-        arguments = listOf(
-            navArgument(ClubMembersArgs.CLUB_ID) { NavType.IntType }
-        )
+        arguments = listOf(navArgument(ClubMembersArgs.CLUB_ID) { NavType.IntType })
     ) {
         MembersScreen(navController)
     }

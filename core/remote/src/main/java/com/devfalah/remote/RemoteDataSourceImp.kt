@@ -295,14 +295,12 @@ class RemoteDataSourceImp @Inject constructor(
     //region postComments
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<CommentDto> {
-        return wrap {
-            apiService.getComments(
-                userID = userId,
-                postID = postId,
-                type = LikeType.POST.value,
-                page = page
-            )
-        }.comments ?: throw Throwable("Error")
+        return apiService.getComments(
+            userID = userId,
+            postID = postId,
+            type = LikeType.POST.value,
+            page = page
+        ).body()?.payload?.comments ?: emptyList()
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {

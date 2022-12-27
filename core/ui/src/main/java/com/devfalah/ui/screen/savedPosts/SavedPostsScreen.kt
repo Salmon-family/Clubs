@@ -45,10 +45,7 @@ fun SavedPostsScreen(
         navController = navController,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(
-                id = it.postId,
-                publisherId = it.publisherId,
-            )
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
         },
         onClickRemoveSavedPost = viewModel::onClickRemoveSavedPost,
         onClickProfile = { navController.navigateToProfile(it) },

@@ -17,9 +17,7 @@ fun NavController.navigateToProfile(id: Int) {
 fun NavGraphBuilder.profileRoute(navController: NavController) {
     composable(
         route = "${PROFILE_SCREEN}/{${ProfileArgs.PROFILE_OWNER_ID_ARG}}",
-        arguments = listOf(
-            navArgument(ProfileArgs.PROFILE_OWNER_ID_ARG) { NavType.IntType }
-        )
+        arguments = listOf(navArgument(ProfileArgs.PROFILE_OWNER_ID_ARG) { NavType.IntType })
     ) {
         ProfileScreen(navController)
     }
