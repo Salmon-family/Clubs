@@ -1,7 +1,7 @@
 package com.devfalah.repositories
 
 interface CoreFireStoreDataSource {
-    fun addBugReport(
+    suspend fun addBugReport(
         userId: Int,
         message: String,
         onSuccess: () -> Unit,

@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,7 +20,6 @@ import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ButtonWithLoading
 import com.devfalah.ui.composable.CustomTextField
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.reportBug.ReportBugUiState
 import com.devfalah.viewmodels.reportBug.ReportBugViewModel
@@ -59,9 +57,6 @@ fun MenuContent(
 ) {
     Column {
 
-        val context = LocalContext.current
-        val errorMessage = stringResource(R.string.bug_report_error_message)
-
         AppBar(title = stringResource(R.string.report_bugs), navHostController = navController)
 
         LazyColumn(
@@ -86,18 +81,14 @@ fun MenuContent(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.send),
                     onClick = onClickSend,
-                    isLoading = state.isLoading
+                    isLoading = false
                 )
             }
 
         }
 
         LaunchedEffect(key1 = state.isSuccessful) {
-            if (state.isSuccessful) {
-                navController.popBackStack()
-            } else if (state.error.isNotEmpty()) {
-                showToastMessage(context, errorMessage)
-            }
+            if (state.isSuccessful) navController.popBackStack()
         }
 
     }

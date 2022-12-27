@@ -246,7 +246,7 @@ class ClubRepositoryImp @Inject constructor(
         appConfigurator.deleteUserId()
     }
 
-    override fun addBugReport(
+    override suspend fun addBugReport(
         userId: Int,
         message: String,
         onSuccess: () -> Unit,

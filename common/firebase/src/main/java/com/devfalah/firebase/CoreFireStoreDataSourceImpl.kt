@@ -8,7 +8,7 @@ class CoreFireStoreDataSourceImpl @Inject constructor(
     private val firebaseFireStore: FirebaseFirestore
 ) : CoreFireStoreDataSource {
 
-    override fun addBugReport(
+    override suspend fun addBugReport(
         userId: Int,
         message: String,
         onSuccess: () -> Unit,

@@ -6,12 +6,11 @@ import javax.inject.Inject
 class AddBugReportUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    operator fun invoke(
-        userId: Int,
+    suspend operator fun invoke(
         message: String,
         onSuccess: () -> Unit,
         onFail: (Exception) -> Unit
     ) {
-        return clubRepository.addBugReport(userId, message, onSuccess, onFail)
+        return clubRepository.addBugReport(clubRepository.getUserId(), message, onSuccess, onFail)
     }
 }
