@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.postDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,7 +46,6 @@ class PostDetailsViewModel @Inject constructor(
 
     fun getData() {
         getPostDetails(args.postId)
-        getPublisherDetails(args.publisherId)
         getPostComments()
     }
 
@@ -78,6 +76,7 @@ class PostDetailsViewModel @Inject constructor(
             try {
                 val post = getPostDetailsUseCase(postId)
                 _uiState.update { it.copy(post = post.toUIState(), isLoading = false) }
+                getPublisherDetails(args.publisherId)
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
@@ -137,8 +136,7 @@ class PostDetailsViewModel @Inject constructor(
             _uiState.update { it.copy(minorError = "") }
             try {
                 val totalLike = commentLike(
-                    commentId = comment.id,
-                    isLiked = comment.isLikedByUser
+                    commentId = comment.id, isLiked = comment.isLikedByUser
                 )
                 val comments = uiState.value.comments.map {
                     if (it.id == comment.id) {
@@ -182,15 +180,15 @@ class PostDetailsViewModel @Inject constructor(
             try {
                 if (!uiState.value.isEndOfPager) {
                     val comments = getPostCommentsUseCase(args.postId)
-                        _uiState.update {
-                            it.copy(
-                                comments = (it.comments + comments.toUIState().distinctBy { it.id }),
-                                isEndOfPager = (comments.isEmpty() || comments.size < MAX_PAGE_ITEM),
-                                isPagerLoading = false,
-                                isLoading = false
-                            )
-                        }
+                    _uiState.update {
+                        it.copy(
+                            comments = (it.comments + comments.toUIState().distinctBy { it.id }),
+                            isEndOfPager = (comments.isEmpty() || comments.size < MAX_PAGE_ITEM),
+                            isPagerLoading = false,
+                            isLoading = false
+                        )
                     }
+                }
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
@@ -205,8 +203,7 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(minorError = "") }
             try {
-                val isDeleted =
-                    mangeComment.deleteComment(commentId = comment.id)
+                val isDeleted = mangeComment.deleteComment(commentId = comment.id)
                 if (isDeleted) {
                     _uiState.update {
                         it.copy(
