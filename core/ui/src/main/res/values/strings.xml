@@ -91,7 +91,8 @@
     <string name="day"> day ago</string>
     <string name="just_now">Just now</string>
     <string name="wrong_password_message">You entered a wrong password, please try again.</string>
-    <string name="enter_your_comment">Enter your comment...</string>
+    <string name="enter_your_comment">Enter your comment…</string>
+    <string name="password_place_holder">More than 6 character</string>
     <string name="version">Version </string>
 
 </resources>

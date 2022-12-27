@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,7 +40,6 @@ import com.devfalah.ui.screen.menu.composable.PreferencesSection
 import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
@@ -66,11 +66,13 @@ fun MenuScreen(
         onClickReportBug = {},
         onClickLogOut = viewModel::onClickLogOut
     )
+
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            color = color,
+            darkIcons = false
         )
     }
     LaunchedEffect(key1 = state.logout) {
@@ -104,7 +106,7 @@ fun MenuContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor),
+                .background(MaterialTheme.colors.background),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally

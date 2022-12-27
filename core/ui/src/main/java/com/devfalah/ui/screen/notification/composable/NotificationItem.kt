@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.notification.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +32,7 @@ fun NotificationItem(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(LightCardBackgroundColor)
+            .background(MaterialTheme.colors.surface)
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .nonRippleEffect { onNotificationClick(notification) },
         verticalAlignment = Alignment.CenterVertically,
@@ -54,7 +55,7 @@ fun NotificationItem(
             Text(
                 text = notification.timeCreated,
                 fontSize = 12.sp,
-                color = LightTernaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 lineHeight = 20.sp,
                 fontFamily = PlusJakartaSans
             )

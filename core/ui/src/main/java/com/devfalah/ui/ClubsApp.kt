@@ -3,10 +3,7 @@ package com.devfalah.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -66,7 +63,7 @@ fun BottomBar(navController: NavHostController, visibility: Boolean) {
 
     if (visibility) {
         BottomNavigation(
-            backgroundColor = LightCardBackgroundColor
+            backgroundColor = MaterialTheme.colors.background
         ) {
             items.forEach { screen ->
                 AddItem(
@@ -102,7 +99,7 @@ fun RowScope.AddItem(
         },
         selected = selected,
         selectedContentColor = LightPrimaryBrandColor,
-        unselectedContentColor = LightTernaryBlackColor,
+        unselectedContentColor = MaterialTheme.colors.secondaryVariant,
         onClick = {
             navController.navigate(screen.screen_route) {
                 navController.graph.startDestinationRoute?.let { screen_route ->

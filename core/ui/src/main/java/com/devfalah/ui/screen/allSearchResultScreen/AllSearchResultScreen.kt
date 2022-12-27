@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,9 +43,12 @@ fun AllSearchResultScreenScreen(
         OnUserClick = { navController.navigateToProfile(it) },
     )
 
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
         )
     }
 }
@@ -69,7 +73,7 @@ fun AllSearchResultScreenContent(
         } else {
             LazyColumn(
                 modifier = Modifier
-                    .background(LightBackgroundColor)
+                    .background(MaterialTheme.colors.background)
                     .fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)

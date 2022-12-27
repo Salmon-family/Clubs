@@ -59,7 +59,7 @@ fun PostContent(
                         Text(
                             text = it,
                             textAlign = TextAlign.Center,
-                            color = LightTernaryBlackColor
+                            color =  MaterialTheme.colors.onSurface
                         )
                     }
                 },

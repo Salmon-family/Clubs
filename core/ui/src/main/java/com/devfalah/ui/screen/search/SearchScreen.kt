@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -56,12 +57,6 @@ fun SearchScreen(
         },
         onRetry = viewModel::onSearch
     )
-
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
-        )
-    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -77,7 +72,7 @@ fun SearchContent(
 ) {
     LazyColumn(
         modifier = Modifier
-            .background(LightBackgroundColor)
+            .background(MaterialTheme.colors.background)
             .fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -86,7 +81,7 @@ fun SearchContent(
             SearchTextField(
                 text = state.keyword,
                 onValueChanged = onSearchValueChanged,
-                modifier = Modifier.background(LightBackgroundColor)
+                modifier = Modifier.background(MaterialTheme.colors.background)
             )
         }
 

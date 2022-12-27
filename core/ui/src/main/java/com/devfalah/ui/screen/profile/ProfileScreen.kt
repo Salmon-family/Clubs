@@ -91,13 +91,16 @@ fun ProfileScreen(
             Toast.makeText(context, state.minorError, Toast.LENGTH_LONG).show()
         }
     }
+
+    val color = MaterialTheme.colors.onBackground
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightPrimaryBrandColor,
+            color = color,
             darkIcons = false
         )
     }
+
 }
 
 @Composable

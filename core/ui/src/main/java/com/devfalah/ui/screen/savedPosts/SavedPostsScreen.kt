@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -20,7 +21,6 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
@@ -55,11 +55,11 @@ fun SavedPostsScreen(
         onOpenLinkClick = { openBrowser(context, it) }
     )
     LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
-        )
+//        StatusBarColor(
+//            systemUIController = systemUIController,
+//            color = LightBackgroundColor,
+//            darkIcons = true
+//        )
     }
 }
 
@@ -82,7 +82,7 @@ fun SavedPostsContent(
 
         LazyColumn(
             modifier = Modifier
-                .background(LightBackgroundColor)
+                .background(MaterialTheme.colors.background)
                 .fillMaxSize(),
             contentPadding = PaddingValues(vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)

@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +34,7 @@ fun MenuItem(
             .fillMaxWidth()
             .height(56.dp)
             .clip(RoundedCornerShape(28.dp))
-            .background(LightCardBackgroundColor)
+            .background(MaterialTheme.colors.surface)
             .clickable { onClickItem() }
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -44,14 +46,14 @@ fun MenuItem(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = LightPrimaryBlackColor
+                color = MaterialTheme.colors.primaryVariant
             )
         )
 
         Icon(
             modifier = Modifier.size(24.dp),
             painter = painter,
-            tint = LightSecondaryBlackColor,
+            tint = MaterialTheme.colors.primaryVariant,
             contentDescription = null
         )
     }

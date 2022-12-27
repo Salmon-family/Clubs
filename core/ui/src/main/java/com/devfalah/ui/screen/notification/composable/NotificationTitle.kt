@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.notification.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -40,6 +41,6 @@ fun NotificationTitle(type: Int, posterName: String) {
                 append(" $notificationType")
             }
         },
-        modifier = Modifier.fillMaxWidth(), lineHeight = 20.sp, color = LightPrimaryBlackColor
+        modifier = Modifier.fillMaxWidth(), lineHeight = 20.sp, color = MaterialTheme.colors.onSurface
     )
 }

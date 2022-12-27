@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -37,11 +38,13 @@ fun MembersScreen(
         onRetry = viewModel::getClubMembers,
         onRemoveFriend = {}
     )
+
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            color = color,
+            darkIcons = false
         )
     }
 }

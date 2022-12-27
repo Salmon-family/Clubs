@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.theme.DarkSecondaryWhiteColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -43,13 +45,23 @@ fun PostBottomAction(
                     R.drawable.like_icon
                 }
             ),
-            tint = if (post.isLikedByUser) { LightPrimaryBrandColor } else { Color.Unspecified },
+            tint = if (post.isLikedByUser) {
+                LightPrimaryBrandColor
+            } else {
+                MaterialTheme.colors.secondaryVariant
+            },
             onClick = { onClickLike(post) }
         )
 
         WidthSpacer8()
 
-        PostTextValue(if (post.totalLikes > 0) { "${post.totalLikes}" } else { "" }.take(3))
+        PostTextValue(
+            if (post.totalLikes > 0) {
+                "${post.totalLikes}"
+            } else {
+                ""
+            }.take(3)
+        )
 
         WidthSpacer24()
 
@@ -60,12 +72,22 @@ fun PostBottomAction(
 
         WidthSpacer4()
 
-        PostTextValue(if (post.totalComments > 0) { "${post.totalComments}" } else { "" })
+        PostTextValue(
+            if (post.totalComments > 0) {
+                "${post.totalComments}"
+            } else {
+                ""
+            }
+        )
 
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd) {
             PostActionIcon(
                 painter = painterResource(
-                    id = if (post.isSaved) { R.drawable.save_full } else { R.drawable.save_icon }
+                    id = if (post.isSaved) {
+                        R.drawable.save_full
+                    } else {
+                        R.drawable.save_icon
+                    }
                 ),
                 onClick = { onClickSave(post) }
             )
@@ -82,7 +104,7 @@ private fun PostTextValue(text: String) {
         fontSize = 14.sp,
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.Normal,
-        color = LightSecondaryBlackColor
+        color = MaterialTheme.colors.onSurface
     )
 }
 
@@ -91,7 +113,7 @@ private fun PostTextValue(text: String) {
 fun PostActionIcon(
     onClick: () -> Unit,
     painter: Painter,
-    tint: Color = Color.Unspecified
+    tint: Color = MaterialTheme.colors.secondaryVariant
 ) {
     Icon(
         modifier = Modifier.nonRippleEffect { onClick() },

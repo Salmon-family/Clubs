@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.postDetails
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +24,6 @@ import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.postDetails.CommentUIState
@@ -57,9 +57,12 @@ fun PostDetailsScreen(
         onRetry = viewModel::getData
     )
 
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
         )
     }
 }

@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,7 +21,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBrandColor
 
 @Composable
 fun ProfileImageWithIcon(
@@ -36,7 +35,7 @@ fun ProfileImageWithIcon(
             modifier = Modifier
                 .size(112.dp)
                 .clip(CircleShape)
-                .border(4.dp, Color.White, CircleShape),
+                .border(4.dp, MaterialTheme.colors.background, CircleShape),
         )
 
         painter?.let {
@@ -47,8 +46,8 @@ fun ProfileImageWithIcon(
                     .nonRippleEffect { onClickIcon() }
                     .align(Alignment.BottomEnd)
                     .clip(CircleShape)
-                    .background(LightSecondaryBrandColor)
-                    .border(4.dp, Color.White, CircleShape)
+                    .background(MaterialTheme.colors.surface)
+                    .border(4.dp, MaterialTheme.colors.background, CircleShape)
                     .align(Alignment.BottomEnd),
                 contentAlignment = Alignment.Center
             ) {

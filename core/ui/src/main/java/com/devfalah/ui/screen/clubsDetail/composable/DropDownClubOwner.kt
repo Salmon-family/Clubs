@@ -3,11 +3,7 @@ package com.devfalah.ui.screen.clubsDetail.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -43,8 +39,7 @@ fun DropDownOwner(
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .background(
-                    color = WhiteColor,
-                    shape = RoundedCornerShape(16.dp)
+                    color = MaterialTheme.colors.background,
                 ),
             offset = DpOffset(8.dp, 0.dp)
         ) {
@@ -60,7 +55,8 @@ fun DropDownOwner(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.users_requests),
                     style = TextStyle(
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colors.onSurface
                     )
                 )
             }
@@ -72,7 +68,8 @@ fun DropDownOwner(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.edit_club),
                     style = TextStyle(
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colors.onSurface
                     )
                 )
 

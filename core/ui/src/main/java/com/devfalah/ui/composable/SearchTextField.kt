@@ -11,8 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.R
+import com.devfalah.ui.theme.PlusJakartaSans
 
 
 @Composable
@@ -44,6 +44,7 @@ fun SearchTextField(
         leadingIcon = {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.search_icon),
+                tint = MaterialTheme.colors.secondaryVariant,
                 contentDescription = "searchIcon",
             )
         },

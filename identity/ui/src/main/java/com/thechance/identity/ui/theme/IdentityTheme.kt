@@ -14,7 +14,6 @@ private val DarkColorPalette = darkColors(
     background = DarkBackground,
     surface = DarkCardColor,
     onSecondary = DarkTernaryWhiteColor,
-//    onPrimary = Color.Black,
     onSurface = DarkSecondaryWhiteColor,
 )
 
@@ -26,9 +25,6 @@ private val LightColorPalette = lightColors(
     background = LightBackground,
     surface = WhiteColor,
     onSecondary = LightSecondaryBlackColor,
-//    onPrimary = Color.White,
-//    onSecondary = Color.Black,
-//    onBackground = Color.Black,
     onSurface = LightSecondaryBlackColor,
 
 )

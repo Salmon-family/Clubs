@@ -3,10 +3,7 @@ package com.devfalah.ui.screen.editclubscreen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,11 +45,12 @@ fun EditClubScreen(
             navController.popBackStack()
         })
 
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            color = color,
+            darkIcons = false
         )
     }
 }
@@ -115,7 +113,7 @@ private fun EditClubContent(
                             .height(48.dp),
                         shape = RoundedCornerShape(100.dp),
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = LightSecondaryBrandColor,
+                            backgroundColor = MaterialTheme.colors.secondary,
                             contentColor = LightPrimaryBrandColor,
                         ),
                         elevation = ButtonDefaults.elevation(0.dp)

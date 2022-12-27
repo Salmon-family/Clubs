@@ -6,9 +6,9 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material.MaterialTheme
 import com.devfalah.ui.ClubsApp
 import com.devfalah.ui.theme.ClubsTheme
-import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.viewmodels.main.MainViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,13 +24,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             ClubsTheme {
                 val systemUIController = rememberSystemUiController()
-                systemUIController.setNavigationBarColor(color = LightCardBackgroundColor)
+                systemUIController.setNavigationBarColor(color = MaterialTheme.colors.background)
+                systemUIController.setStatusBarColor(color = MaterialTheme.colors.background)
 
-                if (userId != -1){
+                if (userId != -1) {
                     viewModel.saveUserId(userId)
                     ClubsApp()
 
-                } else if (viewModel.getUserId() != -1){
+                } else if (viewModel.getUserId() != -1) {
                     ClubsApp()
                 } else {
                     navigateToIdentity()

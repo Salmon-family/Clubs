@@ -2,7 +2,11 @@ package com.devfalah.ui.screen.clubCreation
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +25,7 @@ import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubCreation.ClubCreationUiState
 import com.devfalah.viewmodels.clubCreation.ClubCreationViewModel
 import com.devfalah.viewmodels.clubCreation.isCreateClubButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ClubCreationScreen(
@@ -28,6 +33,8 @@ fun ClubCreationScreen(
     viewModel: ClubCreationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
+
     ClubCreationContent(
         navController = navController,
         state = state,
@@ -36,6 +43,15 @@ fun ClubCreationScreen(
         onPrivacyChange = viewModel::onPrivacyChange,
         onClickCreateClub = viewModel::onClickCreateClub,
     )
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 
 }
 

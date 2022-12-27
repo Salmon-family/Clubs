@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,7 +26,6 @@ import com.devfalah.ui.composable.LottieItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.clubRequests.ClubRequestsUIState
 import com.devfalah.viewmodels.clubRequests.ClubRequestsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -48,11 +48,12 @@ fun ClubRequestsScreen(
         onRetry = viewModel::getData,
         onClickOpenProfile = { navController.navigateToProfile(it) }
     )
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            color = color,
+            darkIcons = false
         )
     }
 }
@@ -82,7 +83,7 @@ fun ClubRequestsContent(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .background(LightBackgroundColor)
+                    .background(MaterialTheme.colors.background)
                     .fillMaxSize(),
             ) {
                 items(

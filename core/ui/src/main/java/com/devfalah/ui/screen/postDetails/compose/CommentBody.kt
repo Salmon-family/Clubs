@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +44,7 @@ fun CommentBody(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = LightSecondaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 textAlign = if (state.isOwnerComment) {
                     TextAlign.End
                 } else {
@@ -64,7 +65,7 @@ fun CommentBody(
             Text(
                 text = "${state.timeCreate.value} ${getDataDescription(state.timeCreate.description)} ",
                 fontSize = 12.sp,
-                color = LightSecondaryGrayColor,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.Normal
             )
 
@@ -79,7 +80,7 @@ fun CommentBody(
                 tint = if (state.isLikedByUser) {
                     LightPrimaryBrandColor
                 } else {
-                    LightSecondaryGrayColor
+                    MaterialTheme.colors.secondaryVariant
                 },
                 onClick = onClickLike,
                 totalLikes = state.totalLikes

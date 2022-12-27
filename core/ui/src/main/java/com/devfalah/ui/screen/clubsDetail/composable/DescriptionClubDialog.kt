@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,7 +39,7 @@ fun DescriptionClubDialog(
                 .wrapContentHeight()
                 .fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
-            backgroundColor = WhiteColor
+            backgroundColor = MaterialTheme.colors.surface
         ) {
 
             Column(
@@ -49,12 +50,12 @@ fun DescriptionClubDialog(
                 HeightSpacer16()
                 Text(
                     text = stringResource(id = R.string.club_dialog),
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(horizontal = 14.dp),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 18.sp,
                     fontFamily = PlusJakartaSans,
-                    color = LightPrimaryBlackColor,
+                    color = MaterialTheme.colors.primaryVariant,
                 )
 
                 Text(
@@ -64,7 +65,7 @@ fun DescriptionClubDialog(
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
                     fontFamily = PlusJakartaSans,
-                    color = LightSecondaryBlackColor,
+                    color = MaterialTheme.colors.onSurface,
                 )
                 HeightSpacer8()
             }
