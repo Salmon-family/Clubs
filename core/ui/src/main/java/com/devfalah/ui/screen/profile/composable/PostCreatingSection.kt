@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,7 +37,7 @@ fun PostCreatingSection(
             .nonRippleEffect { onCreatePost() }
             .fillMaxWidth()
             .clip(CircleShape)
-            .background(WhiteColor)
+            .background(MaterialTheme.colors.surface)
             .requiredHeight(60.dp),
     ) {
         IconIndicator(
@@ -57,7 +58,7 @@ fun PostCreatingSection(
                     R.string.send_message
                 }
             ),
-            color = LightTernaryBlackColor,
+            color = MaterialTheme.colors.secondaryVariant,
             fontSize = 14.sp,
             maxLines = 1,
             fontWeight = FontWeight.Normal,

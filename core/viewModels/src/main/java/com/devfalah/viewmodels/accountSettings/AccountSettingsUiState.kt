@@ -2,7 +2,7 @@ package com.devfalah.viewmodels.accountSettings
 
 import com.devfalah.entities.User
 import com.devfalah.entities.UserInformation
-import com.devfalah.viewmodels.Constants.MAX_PASSWORD_LENGTH
+import com.devfalah.viewmodels.util.Constants.MAX_PASSWORD_LENGTH
 
 data class AccountSettingsUiState(
     val userId: Int = 0,

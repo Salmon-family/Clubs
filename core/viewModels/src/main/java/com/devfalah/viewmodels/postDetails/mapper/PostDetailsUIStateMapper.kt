@@ -1,8 +1,10 @@
 package com.devfalah.viewmodels.postDetails.mapper
 
 import com.devfalah.entities.Comment
-import com.devfalah.viewmodels.ConvertDate
+import com.devfalah.entities.PublishTime
+import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.postDetails.CommentUIState
+import com.devfalah.viewmodels.postDetails.PublishTimeUIState
 
 fun Comment.toUIState(mainUserId: Int): CommentUIState {
     return CommentUIState(
@@ -12,11 +14,17 @@ fun Comment.toUIState(mainUserId: Int): CommentUIState {
         userName = user.name,
         userId = user.id,
         isOwnerComment = mainUserId == user.id,
-        timeCreate = ConvertDate().convertTime(timeCreated),
+        timeCreate = ConvertDate().convertTime(timeCreated).toUIState(),
         totalLikes = totalLikes,
         isLikedByUser = isLikedByUser
     )
 }
 
+fun PublishTime.toUIState(): PublishTimeUIState {
+    return PublishTimeUIState(
+        value = value,
+        description = description
+    )
+}
 
 fun List<Comment>.toUIState(mainUserId: Int) = map { it.toUIState(mainUserId) }

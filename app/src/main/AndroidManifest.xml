@@ -14,20 +14,21 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Clubs"
+        android:theme="@style/Theme.App.Staring"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <activity
             android:name="com.devfalah.ui.main.MainActivity"
             android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustResize">
-
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
 
         </activity>
 
@@ -42,7 +43,7 @@
         <activity
             android:name="com.thechance.identity.ui.main.AuthenticationActivity"
             android:exported="true"
-            android:theme="@style/Theme.Clubs">
+            android:theme="@style/Theme.App.Staring">
 
 
         </activity>

@@ -61,7 +61,7 @@ interface RemoteDataSource {
 
     suspend fun editUserInformation(user: UserInfo): UserDTO
 
-    suspend fun getGroupMembers(groupID: Int): List<UserDTO>
+    suspend fun getGroupMembers(groupID: Int, page: Int): List<UserDTO>
 
     suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto
 
@@ -94,5 +94,7 @@ interface RemoteDataSource {
     suspend fun deleteComment(userId: Int, commentId: Int): Boolean
 
     suspend fun editComment(commentId: Int, comment: String): Boolean
+
+    suspend fun markNotificationMarkedAsViewed(notificationId: Int)
 
 }

@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.accountSettings
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +22,7 @@ import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.accountSettings.AccountSettingsUiState
 import com.devfalah.viewmodels.accountSettings.AccountSettingsViewModel
 import com.devfalah.viewmodels.accountSettings.isEditButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun AccountSettingsScreen(
@@ -28,6 +30,7 @@ fun AccountSettingsScreen(
     viewModel: AccountSettingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
 
     AccountSettingsContent(
         navController = navController,
@@ -37,6 +40,15 @@ fun AccountSettingsScreen(
         onCurrentPasswordChange = viewModel::onCurrentPasswordChange,
         onClickEdit = viewModel::onClickEdit
     )
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -60,7 +72,7 @@ fun AccountSettingsContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor)
+                .background(MaterialTheme.colors.background)
                 .padding(vertical = 16.dp, horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
@@ -80,7 +92,8 @@ fun AccountSettingsContent(
             PasswordInputText(
                 title = stringResource(R.string.password),
                 password = state.currentPassword,
-                onTextChange = onCurrentPasswordChange
+                onTextChange = onCurrentPasswordChange,
+                isErrorTextShown = state.error.isNotEmpty()
             )
 
             Row(

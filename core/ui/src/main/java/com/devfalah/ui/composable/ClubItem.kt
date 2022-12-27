@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.*
+import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.search.ClubUIState
 
 @Composable
@@ -33,7 +35,7 @@ fun ClubItem(
             .nonRippleEffect { onClubSelected(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(LightCardBackgroundColor)
+            .background(MaterialTheme.colors.surface)
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -41,7 +43,7 @@ fun ClubItem(
         Box(
             modifier = Modifier
                 .clip(shape = CircleShape)
-                .background(LightSecondaryBrandColor)
+                .background(MaterialTheme.colors.secondary)
                 .size(56.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -63,16 +65,16 @@ fun ClubItem(
                 text = state.title,
                 textAlign = TextAlign.Start,
                 fontSize = 12.sp,
-                color = LightPrimaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
             HeightSpacer4()
             Text(
-                text = state.description,
+                text = state.description.htmlText(),
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = LightTernaryBlackColor,
+                color =  MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.Normal,
                 maxLines = 2
             )

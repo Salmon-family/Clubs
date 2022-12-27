@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +35,7 @@ fun FriendItem(
             .nonRippleEffect { onOpenProfileClick(state.id) }
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(LightCardBackgroundColor)
+            .background(MaterialTheme.colors.surface)
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -52,7 +53,7 @@ fun FriendItem(
                 text = state.name,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = LightPrimaryBlackColor,
+                color = MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )

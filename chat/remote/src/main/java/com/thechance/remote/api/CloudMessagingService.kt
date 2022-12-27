@@ -1,6 +1,7 @@
 package com.thechance.remote.api
 
 import com.devfalah.repository.models.NotificationDto
+import com.thechance.remote.BuildConfig
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,7 +13,7 @@ interface CloudMessagingService {
     companion object {
         const val BASE_URL = "https://fcm.googleapis.com"
         private const val CONTENT_TYPE = "application/json"
-        private const val key = "AAAABftyyQ4:APA91bFX_vdfUmXtDmlYhojZd58codLEKM2XusxkLL4Wp8RclgiDuo2SfyiefaVncXdMOO5fTrnF4roQz4jw0rKw-fV_c9Iqso8ceOuQH14WAkp5brSRD03IT-wamq09yzlLxvCw4JN7"
+        private const val key = BuildConfig.FIREBASE_API_KEY
     }
 
     @POST("fcm/send")

@@ -1,6 +1,5 @@
 package com.thechance.identity.viewmodel.signup
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
@@ -39,8 +38,9 @@ class SignupViewModel @Inject constructor(
         viewModelScope.launch {
             val state = _uiState.value
             val userData = UserData(
-                firstname = state.firstName,
-                lastname = "_",
+                fullName = state.firstName,
+                jobTitle = state.jobTitle,
+                fcmToken = "_",
                 email = state.email,
                 reEmail = state.email,
                 gender = state.gender,
@@ -49,10 +49,9 @@ class SignupViewModel @Inject constructor(
                 password = state.password,
             )
             try {
-                val userId = signupUseCase(userData).guid.toString()
-                onSuccess()
+                val userId = signupUseCase(userData)
                 saveUserId(userId)
-                Log.i("userName", userId)
+                onSuccess()
             } catch (t: Throwable) {
                 onError(errorMessage = t)
             }
@@ -133,6 +132,14 @@ class SignupViewModel @Inject constructor(
 
     fun onChangeGender(gender: String) {
         _uiState.update { it.copy(gender = gender) }
+    }
+
+    fun onChangeJobTitle(jobTitle: String){
+        _uiState.update { it.copy(jobTitle = jobTitle) }
+    }
+
+    fun onValidateJobTitle(): Boolean{
+        return accountValidationUseCase.validateJobTitle(_uiState.value.jobTitle)
     }
 
 }

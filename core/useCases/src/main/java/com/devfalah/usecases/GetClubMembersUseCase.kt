@@ -7,7 +7,17 @@ import javax.inject.Inject
 class GetClubMembersUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
+    var page = 1
+
     suspend operator fun invoke(groupID: Int): List<User> {
-        return clubRepository.getGroupMembers(groupID)
+        val members = clubRepository.getGroupMembers(groupID, page)
+        return if (members.isNotEmpty()) {
+            page += 1
+            members
+        } else if (page == 1) {
+            throw Throwable("error")
+        } else {
+            emptyList()
+        }
     }
 }

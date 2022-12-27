@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,20 +18,22 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.ManualPager
-import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.RoundButton
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.screen.clubMembers.navigateToMembers
+import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
 import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
+import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
 import com.devfalah.ui.screen.friends.navigateToFriends
+import com.devfalah.ui.screen.postCreation.navigateToPostCreation
+import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
-import com.devfalah.viewmodels.Constants
+import com.devfalah.viewmodels.util.Constants
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
@@ -43,58 +46,85 @@ fun ClubsDetailsScreen(
     viewModel: ClubDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
 
     ClubsDetailsContent(
         state = state,
         onBack = { navController.popBackStack() },
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
-        onClickComment = { },
+        onClickComment = {
+            navController.navigateToPostDetails(
+                id = it.postId,
+                publisherId = it.publisherId,
+            )
+        },
         onClickSave = viewModel::onClickSave,
-        onAddPost = { },
-        onClickFriends = { navController.navigateToFriends(it) },
+        onAddPost = { navController.navigateToPostCreation(state.clubId) },
+        onClickMembers = { navController.navigateToMembers(it) },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
         isMyPost = viewModel::isMyPost,
-        onRetry = viewModel::getData
+        onRetry = viewModel::getData,
+        onClickJoinRequestClub = {
+            navController.navigateToClubRequests(
+                clubId = state.clubId,
+                ownerId = state.ownerId
+            )
+        },
+        onClickEditClub = {
+            navController.navigateToEditClub(
+                clubId = state.clubId,
+                clubName = state.name,
+                clubDescription = state.description,
+                clubPrivacy = state.membership
+            )
+        }
     )
+
+    val color = MaterialTheme.colors.onBackground
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @Composable
 private fun ClubsDetailsContent(
     state: ClubDetailsUiState,
     onBack: () -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onAddPost: () -> Unit,
-    onClickFriends: (Int) -> Unit,
+    onClickMembers: (Int) -> Unit,
     onJoinClub: () -> Unit,
     onUnJoinClubs: () -> Unit,
     onDeclineClub: () -> Unit,
     isMyPost: (Int) -> Boolean,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onClickJoinRequestClub: () -> Unit,
+    onClickEditClub: () -> Unit
 ) {
 
     val context = LocalContext.current
-    val systemUIController = rememberSystemUiController()
 
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
-        if (state.errorMessage.isNotEmpty()) {
-            Box(modifier = Modifier.fillMaxSize())
-            Button(
-                onClick = onRetry
-            ) {
-                Text(text = stringResource(id = R.string.retry))
-            }
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
         } else {
             ManualPager(
                 onRefresh = onRefresh,
-                isLoading = state.isLoading,
+                isLoading = state.isPagerLoading,
                 error = state.pagerError,
                 isEndOfPager = state.isEndOfPager,
                 contentPadding = PaddingValues(bottom = 16.dp)
@@ -104,6 +134,8 @@ private fun ClubsDetailsContent(
                     ClubHeaderDetails(
                         state = state,
                         onBack = onBack,
+                        onClickJoinRequestClub = onClickJoinRequestClub,
+                        onClickEditClub = onClickEditClub
                     )
                 }
 
@@ -160,7 +192,7 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickFriends(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
@@ -169,6 +201,8 @@ private fun ClubsDetailsContent(
                             state = it,
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
+                            isClubPost = true,
+                            showGroupName = false,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },
@@ -203,15 +237,17 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickFriends(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
+                    // why this screen has 2 of below item ????!!!!!!
                     items(state.posts) {
                         PostItem(
                             state = it,
                             isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
+                            isClubPost = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },
@@ -226,16 +262,9 @@ private fun ClubsDetailsContent(
         }
     }
 
-    LaunchedEffect(key1 = state.errorMessage) {
-        if (state.errorMessage.isNotEmpty()) {
-            Toast.makeText(context, state.errorMessage, Toast.LENGTH_LONG).show()
+    LaunchedEffect(key1 = state.pagerError) {
+        if (state.pagerError.isNotEmpty()) {
+            Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
-    }
-    LaunchedEffect(true) {
-        setStatusBarColor(
-            systemUIController = systemUIController,
-            color = LightPrimaryBrandColor,
-            darkIcons = false
-        )
     }
 }

@@ -1,6 +1,8 @@
 package com.thechance.identity.ui.screen.login.password
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -11,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
@@ -26,9 +29,7 @@ fun LogInPasswordScreen(
     navController: NavController,
     viewModel: LoginViewModel
 ) {
-    val context = LocalContext.current
     val state by viewModel.uiState.collectAsState()
-    val scope = rememberCoroutineScope()
 
     LogInPasswordContent(
         state = state,
@@ -37,20 +38,8 @@ fun LogInPasswordScreen(
         onLogin = viewModel::onLogin,
         onClickBack = { navController.navigateUp() },
         onNavigate = { navController.navigateToSignupEmail() },
-        navController = navController
     )
 
-}
-
-private fun checkLogin(state: LoginUIState, context: Context, navController: NavController) {
-    if (!state.isSuccess) {
-        Toast.makeText(context, state.errorMessage, Toast.LENGTH_SHORT).show()
-    } else {
-        navController.navigateToHome()
-        Toast.makeText(
-            context, context.getString(R.string.success_message), Toast.LENGTH_SHORT
-        ).show()
-    }
 }
 
 @Composable
@@ -61,7 +50,6 @@ fun LogInPasswordContent(
     onLogin: () -> Unit,
     onClickBack: () -> Unit,
     onNavigate: () -> Unit,
-    navController: NavController
 ) {
     val context = LocalContext.current
 
@@ -132,8 +120,21 @@ fun LogInPasswordContent(
 
     LaunchedEffect(key1 = state.isLoading) {
         if (state.isSuccess) {
-            navController.navigateToHome()
-            Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
+            navigateToHome(context, state.userId)
         }
+    }
+}
+
+private fun navigateToHome(context : Context, userId: Int) {
+    try {
+        val intent = Intent(
+            context,
+            Class.forName("com.devfalah.ui.main.MainActivity")
+        )
+        intent.putExtra("userId", userId)
+        ContextCompat.startActivity(context, intent, null)
+        (context as? Activity)?.finish()
+    } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
     }
 }

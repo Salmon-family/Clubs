@@ -237,11 +237,6 @@ interface ClubService {
     ): Response<BaseResponse<AlbumsResponse>>
 
 
-    @GET("photos_list_profile_cover")
-    suspend fun getUserProfileAlbum(
-        @Query("guid") userId: Int,
-        @Query("type") userPictureType: UserPictureType
-    ): Response<BaseResponse<UserPicture>>
 
     @GET("photos_list")
     suspend fun getAllPhotosInAlbum(

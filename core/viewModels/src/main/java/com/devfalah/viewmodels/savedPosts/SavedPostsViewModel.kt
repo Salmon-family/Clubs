@@ -3,6 +3,7 @@ package com.devfalah.viewmodels.savedPosts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetUserFavoritePostsUseCase
+import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.usecases.SetFavoritePostUseCase
 import com.devfalah.usecases.SetPostLikeUseCase
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -18,6 +19,7 @@ class SavedPostsViewModel @Inject constructor(
     val savedPosts: GetUserFavoritePostsUseCase,
     private val removeFavoritePost: SetFavoritePostUseCase,
     val likeUseCase: SetPostLikeUseCase,
+    private val getUserId: GetUserIdUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SavedPostUIState())
@@ -25,7 +27,7 @@ class SavedPostsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.update { it.copy(userId = 6) }
+            _uiState.update { it.copy(userId = getUserId()) }
             savedPosts().collect { posts ->
                 _uiState.update { it.copy(posts = posts.toSavedUIState()) }
             }

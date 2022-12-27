@@ -1,12 +1,12 @@
 package com.devfalah.ui.screen.clubCreation
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +24,7 @@ import com.devfalah.ui.composable.*
 import com.devfalah.viewmodels.clubCreation.ClubCreationUiState
 import com.devfalah.viewmodels.clubCreation.ClubCreationViewModel
 import com.devfalah.viewmodels.clubCreation.isCreateClubButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ClubCreationScreen(
@@ -31,6 +32,8 @@ fun ClubCreationScreen(
     viewModel: ClubCreationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
+
     ClubCreationContent(
         navController = navController,
         state = state,
@@ -40,9 +43,17 @@ fun ClubCreationScreen(
         onClickCreateClub = viewModel::onClickCreateClub,
     )
 
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
+
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ClubCreationContent(
     navController: NavController,
@@ -57,9 +68,12 @@ fun ClubCreationContent(
         topBar = {
             AppBar(title = stringResource(R.string.create_club), navHostController = navController)
         }
-    ) {
+    ) { scaffoldPadding ->
         Column(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp)
+            modifier = Modifier
+                .padding(scaffoldPadding)
+                .padding(horizontal = 24.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
 
         ) {
             CustomTextField(
@@ -68,7 +82,7 @@ fun ClubCreationContent(
                 onValueChange = onNameChange,
                 singleLine = true,
             )
-            HeightSpacer16()
+
             CustomTextField(
                 title = stringResource(R.string.description),
                 hint = stringResource(R.string.description_hint),
@@ -77,7 +91,7 @@ fun ClubCreationContent(
                 maxChar = 500,
                 showTextCount = true,
             )
-            HeightSpacer16()
+
             Column {
                 Text(text = stringResource(R.string.privacy))
                 HeightSpacer8()
@@ -89,13 +103,13 @@ fun ClubCreationContent(
                     onItemSelection = onPrivacyChange,
                 )
             }
-            Spacer(modifier = Modifier.weight(1f))
+
             ButtonWithLoading(
                 text = stringResource(id = R.string.create_club),
                 onClick = onClickCreateClub,
                 isLoading = state.isLoading,
                 isEnabled = state.isCreateClubButtonEnabled(),
-                modifier = Modifier.height(50.dp),
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         val successMessage = stringResource(id = R.string.clubـcreated_successfully)

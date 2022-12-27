@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,14 +38,14 @@ fun FriendsSection(
             Text(
                 text = stringResource(R.string.friends),
                 fontFamily = PlusJakartaSans,
-                color = LightPrimaryBlackColor,
+                color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp
             )
             Text(
                 text = "$totalFriends ${stringResource(id = R.string.friends)}",
                 fontFamily = PlusJakartaSans,
-                color = LightTernaryBlackColor,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontSize = 12.sp
             )
         }
@@ -53,7 +54,7 @@ fun FriendsSection(
 
         Row(
             Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             friends.take(4).forEach {

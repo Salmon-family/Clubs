@@ -62,7 +62,7 @@ interface ClubRepository {
 
     suspend fun getGroupDetails(userID: Int, groupID: Int): Club
 
-    suspend fun getGroupMembers(groupID: Int): List<User>
+    suspend fun getGroupMembers(groupID: Int, page: Int): List<User>
 
     suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall
 
@@ -102,5 +102,13 @@ interface ClubRepository {
     suspend fun deleteComment(userId: Int, commentId: Int): Boolean
 
     suspend fun editComment(commentId: Int, comment: String): Boolean
+
+    suspend fun markNotificationAsViewed(notificationId: Int)
+
+    fun getUserId(): Int
+
+    suspend fun saveUserId(userId: Int)
+
+    suspend fun deleteUserId()
 
 }

@@ -12,6 +12,7 @@ import javax.inject.Inject
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: ClubLocalDataSource,
+    private val appConfigurator: AppConfigurator,
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -132,13 +133,13 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getGroupDetails(userID, groupID).toEntity()
     }
 
-    override suspend fun getGroupMembers(groupID: Int): List<User> {
-        return remoteDataSource.getGroupMembers(groupID).toEntity()
+    override suspend fun getGroupMembers(groupID: Int, page: Int): List<User> {
+        return remoteDataSource.getGroupMembers(groupID, page).toEntity()
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall {
         return remoteDataSource.getGroupWallList(userID = userID, groupID = groupID, page = page)
-            .toEntity(groupID)
+            .toEntity()
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): Club {
@@ -188,7 +189,8 @@ class ClubRepositoryImp @Inject constructor(
     override suspend fun publishPostUserWall(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int
     ): Post {
-        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy).toEntity()
+        return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
+            .toEntity()
             ?: throw Throwable("null data")
     }
 
@@ -201,8 +203,7 @@ class ClubRepositoryImp @Inject constructor(
             postContent,
             privacy,
             imageFile
-        )
-            .toEntity() ?: throw Throwable("null data")
+        ).toEntity() ?: throw Throwable("null data")
     }
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<Comment> {
@@ -226,6 +227,22 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun editComment(commentId: Int, comment: String): Boolean {
         return remoteDataSource.editComment(commentId = commentId, comment = comment)
+    }
+
+    override suspend fun markNotificationAsViewed(notificationId: Int) {
+        remoteDataSource.markNotificationMarkedAsViewed(notificationId)
+    }
+
+    override fun getUserId(): Int {
+        return appConfigurator.getUserId()?.toInt() ?: -1
+    }
+
+    override suspend fun saveUserId(userId: Int) {
+        appConfigurator.saveUserId(userId)
+    }
+
+    override suspend fun deleteUserId() {
+        appConfigurator.deleteUserId()
     }
 
 }

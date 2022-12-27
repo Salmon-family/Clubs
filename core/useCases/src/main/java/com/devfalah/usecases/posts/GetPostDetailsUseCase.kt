@@ -8,6 +8,13 @@ class GetPostDetailsUseCase @Inject constructor(
     private val clubRepository: ClubRepository,
 ) {
     suspend operator fun invoke(postId: Int, userID: Int): Post {
-        return clubRepository.getPostByID(postId = postId, userID = userID)
+        val isPostSaved = isSavedInDataBase(postId = postId)
+        val post = clubRepository.getPostByID(postId = postId, userID = userID)
+        return post.copy(isSaved = isPostSaved)
     }
+
+    private suspend fun isSavedInDataBase(postId: Int): Boolean {
+        return clubRepository.isPostSavedLocally(postId)
+    }
+
 }

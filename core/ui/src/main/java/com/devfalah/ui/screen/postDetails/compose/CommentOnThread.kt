@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
@@ -45,7 +46,7 @@ fun CommentOnThread(
             ),
             placeholder = {
                 Text(
-                    text = "Enter your comment...",
+                    text = stringResource(R.string.enter_your_comment),
                     color = LightTernaryBlackColor,
                     style = AppTypography.body1
                 )

@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.devfalah.ui.composable.MarqueeText
 import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
@@ -61,7 +63,7 @@ fun BottomBar(navController: NavHostController, visibility: Boolean) {
 
     if (visibility) {
         BottomNavigation(
-            backgroundColor = LightCardBackgroundColor
+            backgroundColor = MaterialTheme.colors.background
         ) {
             items.forEach { screen ->
                 AddItem(
@@ -83,20 +85,21 @@ fun RowScope.AddItem(
 ) {
     val selected = currentDestination?.hierarchy?.any { it.route == screen.screen_route } == true
     BottomNavigationItem(
-        label = { Text(text = screen.title, softWrap = false) },
+        label = {
+            MarqueeText(title = stringResource(id = screen.title))
+        },
         alwaysShowLabel = false,
         icon = {
             Icon(
                 painterResource(
-                    id =
-                    if (selected) screen.iconSelected else screen.iconUnselected
+                    id = if (selected) screen.iconSelected else screen.iconUnselected
                 ),
-                contentDescription = screen.title
+                contentDescription = stringResource(id = screen.title)
             )
         },
         selected = selected,
         selectedContentColor = LightPrimaryBrandColor,
-        unselectedContentColor = LightTernaryBlackColor,
+        unselectedContentColor = MaterialTheme.colors.secondaryVariant,
         onClick = {
             navController.navigate(screen.screen_route) {
                 navController.graph.startDestinationRoute?.let { screen_route ->
@@ -111,3 +114,4 @@ fun RowScope.AddItem(
     )
 
 }
+

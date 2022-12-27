@@ -4,10 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,16 +23,16 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
+import com.devfalah.ui.util.getDataDescription
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 @Composable
 fun PostHeader(
     post: PostUIState,
     isMyProfile: Boolean,
+    hidePrivacy: Boolean,
+    showGroupName: Boolean,
     onClickPostSetting: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit
 ) {
@@ -57,32 +55,48 @@ fun PostHeader(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = LightPrimaryBlackColor
+                color = MaterialTheme.colors.onSurface
             )
-            Row {
-                Icon(
-                    painter = getPrivacyIcon(post.privacy),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(top = 4.dp)
-                )
-                WidthSpacer8()
-                Text(
-                    text = getPrivacyText(post.privacy),
-                    fontSize = 12.sp,
-                    fontFamily = PlusJakartaSans,
-                    fontWeight = FontWeight.SemiBold,
-                    color = LightTernaryBlackColor,
-                )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (!hidePrivacy) {
+                    Icon(
+                        painter = getPrivacyIcon(post.privacy),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(top = 4.dp),
+                        tint = MaterialTheme.colors.secondaryVariant
+                    )
+                    WidthSpacer8()
+                    Text(
+                        text = "${getPrivacyText(post.privacy)}  | ",
+                        fontSize = 12.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.onSecondary,
+                    )
 
-                WidthSpacer8()
+                    WidthSpacer8()
+                }
+                if (hidePrivacy && showGroupName) {
+                    Text(
+                        text = "${post.groupName}  | ",
+                        fontSize = 12.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.onSecondary,
+                    )
+
+                    WidthSpacer8()
+                }
                 Text(
-                    text = " |  ${post.createdData}",
+                    text = "${post.createdData.value} ${getDataDescription(post.createdData.description)} ",
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,
-                    color = LightTernaryBlackColor
+                    color = MaterialTheme.colors.onSecondary
                 )
             }
         }
@@ -91,21 +105,23 @@ fun PostHeader(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 16.dp),
+                    .padding(end = 16.dp)
+                    .clip(RoundedCornerShape(20.dp)),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Icon(
                     modifier = Modifier.nonRippleEffect { expanded = true },
                     painter = painterResource(R.drawable.ic_setting),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.secondaryVariant
                 )
             }
 
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.background(WhiteColor),
-                offset = DpOffset(250.dp, 0.dp)
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                offset = DpOffset(235.dp, (-18).dp)
             ) {
                 DropdownMenuItem(
                     modifier = Modifier.fillMaxWidth(),

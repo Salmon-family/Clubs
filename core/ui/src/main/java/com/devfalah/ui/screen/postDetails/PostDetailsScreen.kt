@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.postDetails
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,16 +18,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ManualPager
-import com.devfalah.ui.composable.PostItem
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.postDetails.CommentUIState
@@ -53,15 +50,19 @@ fun PostDetailsScreen(
         onClickSendComment = viewModel::onClickSendComment,
         onCommentValueChanged = viewModel::onCommentValueChanged,
         onDeletePost = viewModel::onDeletePost,
-        onClickDeleteComment= viewModel::onClickDeleteComment,
+        onClickDeleteComment = viewModel::onClickDeleteComment,
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
-        onClickCommentLike = viewModel::onClickLikeComment
+        onClickCommentLike = viewModel::onClickLikeComment,
+        onRetry = viewModel::getData
     )
 
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
-            systemUIController = systemUIController, color = LightBackgroundColor, darkIcons = true
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
         )
     }
 }
@@ -72,14 +73,15 @@ fun PostDetailsContent(
     state: PostDetailsUIState,
     onClickLike: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
-    onRefresh: (Int) -> Unit,
+    onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onClickSendComment: () -> Unit,
     onCommentValueChanged: (String) -> Unit,
     onClickCommentLike: (CommentUIState) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
-    onClickDeleteComment: (CommentUIState) -> Unit
+    onClickDeleteComment: (CommentUIState) -> Unit,
+    onRetry: () -> Unit
 ) {
     Column(Modifier.fillMaxSize()) {
 
@@ -87,62 +89,68 @@ fun PostDetailsContent(
             title = stringResource(id = R.string.post_details),
             navHostController = navController
         )
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            LottieItem(LottieResource = R.raw.loading)
+        } else {
+            ManualPager(
+                modifier = Modifier.weight(1f),
+                onRefresh = onRefresh,
+                contentPadding = PaddingValues(top = 16.dp),
+                isLoading = state.isPagerLoading,
+                error = state.minorError,
+                isEndOfPager = state.isEndOfPager,
+            ) {
+                item("PostDetails") {
+                    PostItem(
+                        state = state.post,
+                        isContentExpandable = true,
+                        isClubPost = state.post.groupName.isNotEmpty(),
+                        isMyPost = state.post.publisherId == state.id,
+                        showGroupName = state.post.groupName.isNotEmpty(),
+                        onClickLike = onClickLike,
+                        onClickComment = { },
+                        onClickSave = onClickSave,
+                        onClickProfile = onClickProfile,
+                        onClickPostSetting = onDeletePost,
+                        onOpenLinkClick = onOpenLinkClick
+                    )
+                }
 
-        ManualPager(
-            modifier = Modifier.weight(1f),
-            onRefresh = onRefresh,
-            contentPadding = PaddingValues(top = 16.dp),
-            isLoading = state.isLoading,
-            error = state.error,
-            isEndOfPager = state.isEndOfPager,
-        ) {
-            item("PostDetails") {
-                PostItem(
-                    state = state.post,
-                    isContentExpandable = true,
-                    isMyPost = state.post.publisherId == state.id,
-                    onClickLike = onClickLike,
-                    onClickComment = { },
-                    onClickSave = onClickSave,
-                    onClickProfile = onClickProfile,
-                    onClickPostSetting = onDeletePost,
-                    onOpenLinkClick = onOpenLinkClick
-                )
-            }
+                item("commentTitle") {
+                    if (state.comments.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            text = stringResource(id = R.string.replies),
+                            textAlign = TextAlign.Start,
+                            color = LightSecondaryBlackColor,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = PlusJakartaSans
+                        )
+                    }
+                }
 
-            item("commentTitle") {
-                if (state.comments.isNotEmpty()) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        text = stringResource(id = R.string.replies),
-                        textAlign = TextAlign.Start,
-                        color = LightSecondaryBlackColor,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        fontFamily = PlusJakartaSans
+                items(state.comments) {
+                    CommentItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        state = it,
+                        onClickLike = { onClickCommentLike(it) },
+                        onClickDeleteComment = onClickDeleteComment
                     )
                 }
             }
-
-            items(state.comments) {
-                CommentItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = it,
-                    onClickLike = { onClickCommentLike(it) },
-                    onClickDeleteComment = onClickDeleteComment
-                )
-            }
+            CommentOnThread(
+                isEnabled = state.commentText.isNotEmpty(),
+                text = state.commentText,
+                onClickSendComment = onClickSendComment,
+                onValueChanged = onCommentValueChanged
+            )
         }
-        CommentOnThread(
-            isEnabled = state.commentText.isNotEmpty(),
-            text = state.commentText,
-            onClickSendComment = onClickSendComment,
-            onValueChanged = onCommentValueChanged
-        )
     }
-
     val context = LocalContext.current
     LaunchedEffect(key1 = state.isPostDeleted) {
         if (state.isPostDeleted) {

@@ -1,11 +1,17 @@
 package com.devfalah.ui.screen.menu
 
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -26,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection
@@ -35,7 +43,6 @@ import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.screen.reportBug.ROUTE_REPORT_BUG
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
@@ -49,6 +56,7 @@ fun MenuScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
+    val context = LocalContext.current
 
     MenuContent(
         navController = navController,
@@ -60,13 +68,21 @@ fun MenuScreen(
         onClickTheme = {},
         onClickLanguage = {},
         onClickReportBug = { navController.navigate(route = ROUTE_REPORT_BUG) }
+                onClickLogOut = viewModel ::onClickLogOut
     )
+
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            color = color,
+            darkIcons = false
         )
+    }
+    LaunchedEffect(key1 = state.logout) {
+        if (state.logout) {
+            (context as Activity).finish()
+        }
     }
 }
 
@@ -80,17 +96,29 @@ fun MenuContent(
     onClickFriendsRequests: () -> Unit,
     onClickTheme: () -> Unit,
     onClickLanguage: () -> Unit,
-    onClickReportBug: () -> Unit
+    onClickReportBug: () -> Unit,
+    onClickLogOut: () -> Unit
 ) {
 
     Column {
 
-        AppBar(title = "Menu", navHostController = navController)
+        AppBar(
+            title = stringResource(id = R.string.menu),
+            navHostController = navController,
+            actions = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_logout),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .nonRippleEffect { onClickLogOut() }
+                )
+            })
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightBackgroundColor),
+                .background(MaterialTheme.colors.background),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -128,7 +156,7 @@ fun MenuContent(
 
             item {
                 Text(
-                    text = "version would be shown here",
+                    text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
                     style = TextStyle(
                         fontSize = 12.sp,
                         color = LightTernaryBlackColor,
@@ -141,9 +169,19 @@ fun MenuContent(
     }
 }
 
+private fun getVersion(context: Context): String {
+    return try {
+        val pInfo: PackageInfo =
+            context.packageManager.getPackageInfo(context.packageName, 0)
+        pInfo.versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+        ""
+    }
+}
 
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewMenu() {
-    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {})
+    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
 }

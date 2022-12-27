@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.clubsDetail.composable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -23,11 +24,11 @@ fun OutlineButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onClick() },
-        border = BorderStroke(1.dp, LightQuaternaryBlackColor),
+        border = BorderStroke(1.dp, MaterialTheme.colors.onSecondary),
         shape = RoundedCornerShape(100),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = LightSecondaryBlackColor,
-            backgroundColor = LightBackgroundColor
+            contentColor = MaterialTheme.colors.onSurface,
+            backgroundColor = MaterialTheme.colors.background
         ),
     ) {
         Text(text = stringResource(id = R.string.joined))

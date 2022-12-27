@@ -1,6 +1,5 @@
 package com.thechance.identity.viewmodel.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.AccountValidationUseCase
@@ -15,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    private val accountValidationUseCase: AccountValidationUseCase
+    private val accountValidationUseCase: AccountValidationUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUIState())
@@ -33,9 +32,9 @@ class LoginViewModel @Inject constructor(
     private fun makeLoginRequest() {
         viewModelScope.launch {
             try {
-                val login = loginUseCase(_uiState.value.userName, _uiState.value.password)
+                val user = loginUseCase(_uiState.value.userName, _uiState.value.password)
+                _uiState.update { it.copy(userId = user.guid) }
                 onSuccess()
-                Log.i("userName", login.guid.toString())
             } catch (t: Throwable) {
                 onError(errorMessage = t)
             }

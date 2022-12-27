@@ -9,8 +9,10 @@ import com.thechance.ui.screens.conversation.conversationRoute
 const val START_DESTINATION = "chat"
 
 @Composable
-fun ChatNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = START_DESTINATION) {
+fun ChatNavGraph(
+    navController: NavHostController, startDestination: String
+) {
+    NavHost(navController = navController, startDestination = startDestination) {
         chatRoute(navController)
         conversationRoute(navController)
     }

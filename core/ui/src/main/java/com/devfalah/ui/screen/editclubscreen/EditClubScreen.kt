@@ -3,10 +3,7 @@ package com.devfalah.ui.screen.editclubscreen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,11 +20,13 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
+import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryBrandColor
 import com.devfalah.viewmodels.editclub.EditClubUiState
 import com.devfalah.viewmodels.editclub.EditClubViewModel
 import com.devfalah.viewmodels.editclub.isCreateClubButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun EditClubScreen(
@@ -35,6 +34,8 @@ fun EditClubScreen(
     editClubViewModel: EditClubViewModel = hiltViewModel(),
 ) {
     val state by editClubViewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
+
     EditClubContent(navController = navController,
         uiState = state,
         onNameChanged = editClubViewModel::onChangedClubName,
@@ -43,6 +44,15 @@ fun EditClubScreen(
         onClickEditClub = editClubViewModel::onClickEditClub, onClickCancel = {
             navController.popBackStack()
         })
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+            darkIcons = false
+        )
+    }
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -63,7 +73,8 @@ private fun EditClubContent(
         }
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp)
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CustomTextField(
                 title = stringResource(R.string.club_name),
@@ -71,7 +82,7 @@ private fun EditClubContent(
                 onValueChange = onNameChanged,
                 singleLine = true,
             )
-            HeightSpacer16()
+
             Column {
                 Text(text = stringResource(R.string.privacy))
                 HeightSpacer8()
@@ -83,7 +94,7 @@ private fun EditClubContent(
                     onItemSelection = onPrivacyChanged,
                 )
             }
-            HeightSpacer16()
+
             CustomTextField(
                 title = stringResource(R.string.description),
                 hint = stringResource(R.string.description_hint),
@@ -92,17 +103,17 @@ private fun EditClubContent(
                 maxChar = 500,
                 showTextCount = true,
             )
-            Spacer(modifier = Modifier.weight(1f))
+
             Row(modifier = Modifier.fillMaxWidth()) {
                 Box(modifier = Modifier.weight(1f)) {
                     Button(
                         onClick = onClickCancel,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(50.dp),
+                            .height(48.dp),
                         shape = RoundedCornerShape(100.dp),
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = LightSecondaryBrandColor,
+                            backgroundColor = MaterialTheme.colors.secondary,
                             contentColor = LightPrimaryBrandColor,
                         ),
                         elevation = ButtonDefaults.elevation(0.dp)
@@ -122,7 +133,7 @@ private fun EditClubContent(
                         onClick = onClickEditClub,
                         isLoading = uiState.isLoading,
                         isEnabled = uiState.isCreateClubButtonEnabled(),
-                        modifier = Modifier.height(50.dp),
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }

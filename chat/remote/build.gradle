@@ -17,6 +17,7 @@ android {
         targetSdk 33
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
+        buildConfigField "String", "FIREBASE_API_KEY", localProperties['firebaseKey']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

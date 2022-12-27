@@ -1,7 +1,5 @@
 package com.devfalah.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -9,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.devfalah.ui.screen.accountSettings.accountSettingsRoute
 import com.devfalah.ui.screen.allSearchResultScreen.allSearchResultRoute
 import com.devfalah.ui.screen.clubCreation.clubCreationRoute
+import com.devfalah.ui.screen.clubMembers.membersRoute
 import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.clubsDetail.clubsDetailsRoute
@@ -19,7 +18,6 @@ import com.devfalah.ui.screen.home.homeRoute
 import com.devfalah.ui.screen.menu.menuRoute
 import com.devfalah.ui.screen.notification.notificationRoute
 import com.devfalah.ui.screen.postCreation.createPostRoute
-import com.devfalah.ui.screen.postCreation.createPostRoute
 import com.devfalah.ui.screen.postDetails.postDetailsRoute
 import com.devfalah.ui.screen.profile.profileRoute
 import com.devfalah.ui.screen.reportBug.reportBugRoute
@@ -28,7 +26,6 @@ import com.devfalah.ui.screen.search.searchRoute
 import com.devfalah.ui.screen.userInformation.editUserInformationRoute
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ClubsNavGraph(navController: NavHostController) {
     NavHost(
@@ -55,6 +52,7 @@ fun ClubsNavGraph(navController: NavHostController) {
         editUserInformationRoute(navController = navController)
         postDetailsRoute(navController = navController)
         editClubRoute(navController = navController)
+        membersRoute(navController= navController)
     }
 }
 

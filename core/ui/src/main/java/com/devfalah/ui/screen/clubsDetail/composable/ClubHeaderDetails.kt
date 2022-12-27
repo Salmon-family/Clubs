@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.clubsDetail.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,17 +28,20 @@ fun ClubHeaderDetails(
     state: ClubDetailsUiState,
     onBack: () -> Unit,
     maxLineContentExpand: Int = 2,
+    onClickJoinRequestClub: () -> Unit,
+    onClickEditClub: () -> Unit
 ) {
+
 
     var popupController by remember { mutableStateOf(false) }
 
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightPrimaryBrandColor)
+            .background(MaterialTheme.colors.onBackground)
     ) {
 
-        val (backButton, textDescription, textName, readMore, cover) = createRefs()
+        val (backButton, textDescription, textName, cover, dropDownMenu) = createRefs()
 
         BackButton(
             modifier = Modifier
@@ -50,6 +54,19 @@ fun ClubHeaderDetails(
                 },
             tint = WhiteColor
         )
+
+        if (state.ownerId == state.userId) {
+            DropDownOwner(
+                modifier = Modifier
+                    .padding(top = 16.dp, end = 16.dp)
+                    .constrainAs(dropDownMenu) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                    },
+                onClickJoinRequestClub = onClickJoinRequestClub,
+                onClickEditClub = onClickEditClub
+            )
+        }
 
         Text(
             text = state.name,
@@ -114,7 +131,7 @@ fun ClubHeaderDetails(
                     .align(Alignment.BottomCenter)
                     .wrapContentHeight()
                     .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
-                    .background(LightBackgroundColor),
+                    .background(MaterialTheme.colors.background),
                 contentAlignment = Alignment.Center
             ) {
 

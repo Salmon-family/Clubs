@@ -2,6 +2,7 @@ package com.devfalah.viewmodels.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.DeleteUserUseCase
 import com.devfalah.usecases.GetUserAccountDetailsUseCase
 import com.devfalah.usecases.GetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     val getUserId: GetUserIdUseCase,
-    val getUserAccountDetails: GetUserAccountDetailsUseCase
+    val deleteUser: DeleteUserUseCase,
+    val getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUiState())
@@ -34,12 +36,19 @@ class MenuViewModel @Inject constructor(
 
     private fun getUserPhotoUrl(userId: Int) {
         viewModelScope.launch {
-            val userPhotoUrl = getUserAccountDetails(userId, userId).profileUrl
+            val userPhotoUrl = getUserAccountDetailsUseCase(userId, userId).profileUrl
             try {
                 _uiState.update { it.copy(profilePhotoUrl = userPhotoUrl) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
+        }
+    }
+
+    fun onClickLogOut() {
+        viewModelScope.launch {
+            deleteUser()
+            _uiState.update { it.copy(logout = true) }
         }
     }
 

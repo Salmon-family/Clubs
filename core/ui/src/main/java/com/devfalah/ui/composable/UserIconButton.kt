@@ -3,6 +3,7 @@ package com.devfalah.ui.composable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -17,7 +18,7 @@ fun UserIconButton(
     iconsSize: Dp,
     painter: Painter
 ) {
-    androidx.compose.material.IconButton(
+    IconButton(
         modifier = modifier.size(iconsSize),
         onClick = { onButtonClick(userState.userID) },
     ) {

@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -31,6 +32,7 @@ fun PasswordInputText(
     title: String,
     password: String,
     onTextChange: (String) -> Unit,
+    isErrorTextShown: Boolean = false
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column {
@@ -40,7 +42,7 @@ fun PasswordInputText(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = LightSecondaryBlackColor
+                color = MaterialTheme.colors.primaryVariant
             )
         )
         HeightSpacer8()
@@ -65,7 +67,18 @@ fun PasswordInputText(
                         }
                     ),
                     contentDescription = null,
-                    tint = LightTernaryBlackColor
+                    tint = MaterialTheme.colors.secondaryVariant
+                )
+            },
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.password_place_holder),
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colors.secondaryVariant
+                    )
                 )
             },
             colors = TextFieldDefaults.textFieldColors(
@@ -79,5 +92,17 @@ fun PasswordInputText(
                 keyboardType = KeyboardType.Password
             )
         )
+
+        if (isErrorTextShown) {
+            Text(
+                text = stringResource(R.string.wrong_password_message),
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = PlusJakartaSans,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Red
+                )
+            )
+        }
     }
 }

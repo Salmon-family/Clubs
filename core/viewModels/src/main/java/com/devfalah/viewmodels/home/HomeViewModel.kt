@@ -1,11 +1,8 @@
 package com.devfalah.viewmodels.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.*
-import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
-import com.devfalah.viewmodels.Constants.FIRST_TIME
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -28,12 +25,21 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
 
-
     init {
+        getUserId()
+        getData()
+    }
+
+    fun onRetry() {
+        _uiState.update { it.copy(error = "", isLoading = true) }
+        getUserId()
+        swipeToRefresh()
+    }
+
+    private fun getUserId() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(id = getUser()) }
-                getData()
+                _uiState.update { it.copy(isLoading = true, id = getUser()) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
@@ -91,13 +97,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun swipeToRefresh(type: Int) {
+    fun swipeToRefresh() {
         viewModelScope.launch {
-            if (type == FIRST_TIME) {
-                _uiState.update { it.copy(isLoading = true) }
-            } else {
-                _uiState.update { it.copy(isPagerLoading = true) }
-            }
+            _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
             try {
                 val homePosts = allPosts.loadData(uiState.value.id)
                 _uiState.update {
@@ -105,13 +107,24 @@ class HomeViewModel @Inject constructor(
                         isPagerLoading = false,
                         isLoading = false,
                         isEndOfPager = homePosts.isNotEmpty(),
-                        posts = it.posts + homePosts.toUIState(groupId = HOME_GROUP_ID)
+                        posts = it.posts + homePosts.toUIState()
                     )
                 }
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        isPagerLoading = false, isLoading = false, pagerError = t.message.toString()
+                        isPagerLoading = false,
+                        isLoading = false,
+                        pagerError = if (_uiState.value.posts.isNotEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        },
+                        error = if (_uiState.value.posts.isEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        }
                     )
                 }
             }
@@ -127,7 +140,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
-                Log.e("Test", t.message.toString())
                 _uiState.update { it.copy(error = t.message.toString()) }
             }
         }

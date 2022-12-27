@@ -44,7 +44,7 @@ fun CustomTextField(
                     fontSize = 14.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.Normal,
-                    color = LightSecondaryBlackColor
+                    color = MaterialTheme.colors.primaryVariant
                 )
             )
             if (showTextCount)
@@ -76,7 +76,7 @@ fun CustomTextField(
                     Text(
                         text = it,
                         textAlign = TextAlign.Center,
-                        color = LightTernaryBlackColor
+                        color = MaterialTheme.colors.onSurface
                     )
                 }
             },

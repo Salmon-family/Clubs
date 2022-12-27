@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetSearchUseCase
 import com.devfalah.usecases.GetUserIdUseCase
-import com.devfalah.viewmodels.Constants.SEARCH_CLUB
+import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.search.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +32,7 @@ class AllSearchResultViewModel @Inject constructor(
 
     fun getData() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 val userId = getUserIdUseCase()
                 val result = getSearchUseCase(userId, args.keyword)
