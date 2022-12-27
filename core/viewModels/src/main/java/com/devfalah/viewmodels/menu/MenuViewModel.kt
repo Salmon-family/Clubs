@@ -52,4 +52,12 @@ class MenuViewModel @Inject constructor(
         }
     }
 
+    fun onChangeLanguage(selectedItemIndex: Int){
+        val language = when(selectedItemIndex){
+            0 -> AppLanguage.ENGLISH
+            1 -> AppLanguage.ARABIC
+            else -> AppLanguage.ENGLISH
+        }
+        _uiState.update { it.copy(language = language) }
+    }
 }

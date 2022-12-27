@@ -91,4 +91,7 @@
 
     <string name="version">الإصدار</string>
 
+    <string name="app_language">اللغة</string>
+    <string name="arabic">عربى</string>
+    <string name="english">إنجليزى</string>
 </resources>

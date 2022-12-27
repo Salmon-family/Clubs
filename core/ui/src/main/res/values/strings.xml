@@ -94,5 +94,7 @@
     <string name="enter_your_comment">Enter your comment…</string>
     <string name="password_place_holder">More than 6 character</string>
     <string name="version">Version </string>
-
+    <string name="app_language">App Language</string>
+    <string name="arabic">Arabic</string>
+    <string name="english">English</string>
 </resources>
