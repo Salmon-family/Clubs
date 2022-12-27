@@ -187,7 +187,6 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = it.isMyPost,
                             isContentExpandable = true,
                             isClubPost = true,
                             showGroupName = false,
@@ -233,7 +232,6 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = it.isMyPost,
                             isContentExpandable = true,
                             isClubPost = true,
                             onClickLike = onClickLike,

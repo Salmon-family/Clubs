@@ -129,7 +129,6 @@ fun HomeContent(
                     PostItem(
                         state = it,
                         isContentExpandable = true,
-                        isMyPost = it.isMyPost,
                         isClubPost = false,
                         showGroupName = false,
                         onClickLike = onClickLike,

@@ -20,7 +20,6 @@ fun PostItem(
     state: PostUIState,
     maxLineContentExpand: Int = 2,
     isContentExpandable: Boolean,
-    isMyPost: Boolean,
     isClubPost: Boolean,
     showGroupName: Boolean = false,
     onClickLike: (PostUIState) -> Unit,
@@ -47,7 +46,7 @@ fun PostItem(
                 state,
                 onClickPostSetting = onClickPostSetting,
                 onClickProfile = onClickProfile,
-                isMyProfile = isMyPost,
+                isMyProfile = state.isMyPost,
                 hidePrivacy = isClubPost,
                 showGroupName = showGroupName,
             )

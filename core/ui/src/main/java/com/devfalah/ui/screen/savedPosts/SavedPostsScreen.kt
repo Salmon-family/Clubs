@@ -89,7 +89,6 @@ fun SavedPostsContent(
                 PostItem(
                     state = it,
                     isContentExpandable = true,
-                    isMyPost = it.isMyPost,
                     isClubPost = it.isFromClub,
                     showGroupName = true,
                     onClickLike = onClickLike,

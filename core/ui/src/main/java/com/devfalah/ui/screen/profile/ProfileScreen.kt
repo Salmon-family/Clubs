@@ -174,7 +174,6 @@ fun ProfileContent(
                 items(state.posts) {
                     PostItem(
                         state = it,
-                        isMyPost = it.isMyPost,
                         isContentExpandable = true,
                         isClubPost = false,
                         showGroupName = false,

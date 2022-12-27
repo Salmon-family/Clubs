@@ -107,7 +107,6 @@ fun PostDetailsContent(
                         state = state.post,
                         isContentExpandable = true,
                         isClubPost = state.post.groupName.isNotEmpty(),
-                        isMyPost = state.post.isMyPost,
                         showGroupName = state.post.groupName.isNotEmpty(),
                         onClickLike = onClickLike,
                         onClickComment = { },
