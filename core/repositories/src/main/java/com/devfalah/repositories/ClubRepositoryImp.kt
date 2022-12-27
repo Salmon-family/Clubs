@@ -13,6 +13,7 @@ class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: ClubLocalDataSource,
     private val appConfigurator: AppConfigurator,
+    private val coreFireStoreDataSource: CoreFireStoreDataSource
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -243,6 +244,15 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun deleteUserId() {
         appConfigurator.deleteUserId()
+    }
+
+    override fun addBugReport(
+        userId: Int,
+        message: String,
+        onSuccess: () -> Unit,
+        onFail: (Exception) -> Unit
+    ) {
+        coreFireStoreDataSource.addBugReport(userId, message, onSuccess, onFail)
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.club.local.ClubDao
 import com.club.local.ClubDataBase
 import com.club.local.ClubDataStorePreferences
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,5 +37,11 @@ object ClubDataBaseModule {
     fun provideClubDataStorePreferences(@ApplicationContext context: Context)
     : ClubDataStorePreferences {
         return ClubDataStorePreferences(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseFireStore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 }

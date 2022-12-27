@@ -2,8 +2,8 @@ package com.devfalah.viewmodels.reportBug
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devfalah.usecases.AddBugReportUseCase
 import com.devfalah.usecases.GetUserIdUseCase
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportBugViewModel @Inject constructor(
-    private val getUserId: GetUserIdUseCase
+    private val getUserId: GetUserIdUseCase,
+    private val addBugReport: AddBugReportUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReportBugUiState())
@@ -41,25 +42,20 @@ class ReportBugViewModel @Inject constructor(
 
     fun onClickSend() {
         _uiState.update { it.copy(isLoading = true) }
-        sendBugMessage()
+        addBugReport()
     }
 
-    private fun sendBugMessage() {
-        val database = FirebaseFirestore.getInstance()
-        val bugMessage: MutableMap<String, Any> = HashMap()
-
-        bugMessage["userId"] = uiState.value.userId
-        bugMessage["message"] = uiState.value.bugMessage
-
-        database
-            .collection("bugMessages")
-            .add(bugMessage)
-            .addOnSuccessListener {
+    private fun addBugReport() {
+        addBugReport(
+            userId = uiState.value.userId,
+            message = uiState.value.bugMessage,
+            onSuccess = {
                 _uiState.update { it.copy(isSuccessful = true, isLoading = false) }
-            }
-            .addOnFailureListener { e ->
+            },
+            onFail = { e ->
                 _uiState.update { it.copy(error = e.message.toString(), isLoading = false) }
             }
+        )
     }
 
 }
