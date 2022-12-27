@@ -97,7 +97,6 @@ fun ProfileScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 

@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.showingBack
-import com.devfalah.ui.theme.LightBackgroundColor
 
 @Composable
 fun AppBar(
@@ -22,7 +21,7 @@ fun AppBar(
     modifier: Modifier = Modifier,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.background,
-    contentColor: Color = contentColorFor(backgroundColor),
+    contentColor: Color = MaterialTheme.colors.primaryVariant,
     elevation: Dp = 0.dp
 ) {
     TopAppBar(
@@ -33,10 +32,11 @@ fun AppBar(
         },
         navigationIcon = if (navHostController.showingBack()) {
             {
-                IconButton(onClick =navHostController::popBackStack) {
+                IconButton(onClick = navHostController::popBackStack) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
                         contentDescription = null,
+                        tint = MaterialTheme.colors.primaryVariant
                     )
                 }
             }

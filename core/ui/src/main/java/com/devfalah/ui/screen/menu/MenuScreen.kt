@@ -71,7 +71,6 @@ fun MenuScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
     LaunchedEffect(key1 = state.logout) {
@@ -106,7 +105,7 @@ fun MenuContent(
                     contentDescription = null,
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .nonRippleEffect { onClickLogOut() }
+                        .nonRippleEffect { onClickLogOut() },
                 )
             })
 
@@ -154,7 +153,7 @@ fun MenuContent(
                     text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
                     style = TextStyle(
                         fontSize = 12.sp,
-                        color = LightTernaryBlackColor,
+                        color = MaterialTheme.colors.secondaryVariant,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Normal
                     )

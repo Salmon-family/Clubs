@@ -48,7 +48,6 @@ fun ClubCreationScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 

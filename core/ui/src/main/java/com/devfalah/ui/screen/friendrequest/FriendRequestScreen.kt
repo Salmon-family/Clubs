@@ -53,7 +53,6 @@ fun FriendRequestScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

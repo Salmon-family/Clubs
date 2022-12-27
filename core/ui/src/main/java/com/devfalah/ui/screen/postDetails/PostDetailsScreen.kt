@@ -62,7 +62,6 @@ fun PostDetailsScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

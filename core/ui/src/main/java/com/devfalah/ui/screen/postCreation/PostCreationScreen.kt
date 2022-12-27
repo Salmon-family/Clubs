@@ -64,7 +64,6 @@ fun PostCreationScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

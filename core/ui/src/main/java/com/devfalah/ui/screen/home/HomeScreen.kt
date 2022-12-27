@@ -70,7 +70,6 @@ fun HomeScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }
@@ -98,7 +97,8 @@ fun HomeContent(
                 IconButton(onClick = onClickChat) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.send),
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = MaterialTheme.colors.primaryVariant
                     )
                 }
             }

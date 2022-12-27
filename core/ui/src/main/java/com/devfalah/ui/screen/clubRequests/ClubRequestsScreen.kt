@@ -53,7 +53,6 @@ fun ClubRequestsScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

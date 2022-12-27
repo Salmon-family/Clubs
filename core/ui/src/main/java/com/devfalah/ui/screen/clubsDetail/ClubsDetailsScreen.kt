@@ -88,7 +88,6 @@ fun ClubsDetailsScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

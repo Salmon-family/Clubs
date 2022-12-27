@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.PostItem
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
@@ -54,12 +55,13 @@ fun SavedPostsScreen(
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) }
     )
+
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
-//        StatusBarColor(
-//            systemUIController = systemUIController,
-//            color = LightBackgroundColor,
-//            darkIcons = true
-//        )
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+        )
     }
 }
 

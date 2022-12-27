@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,10 +22,11 @@ fun BackButton(
         modifier = Modifier.wrapContentSize(),
         horizontalAlignment = Alignment.Start
     ) {
-        Image(
+        Icon(
             painter = painterResource(id = R.drawable.ic_back_arrow),
             contentDescription = null,
-            modifier = Modifier.clickable(onClick = onClick)
+            modifier = Modifier.clickable(onClick = onClick),
+            tint = MaterialTheme.colors.primaryVariant
         )
     }
 }
