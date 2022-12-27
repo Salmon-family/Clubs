@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +32,6 @@ import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection
@@ -38,6 +39,7 @@ import com.devfalah.ui.screen.menu.composable.MenuItem
 import com.devfalah.ui.screen.menu.composable.PreferencesSection
 import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.reportBug.ROUTE_REPORT_BUG
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -53,6 +55,7 @@ fun MenuScreen(
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
     val context = LocalContext.current
+
     MenuContent(
         navController = navController,
         state = state,
@@ -62,7 +65,7 @@ fun MenuScreen(
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
-        onClickReportBug = {},
+        onClickReportBug = { navController.navigate(route = ROUTE_REPORT_BUG) },
         onClickLogOut = viewModel::onClickLogOut
     )
 
@@ -99,16 +102,8 @@ fun MenuContent(
 
         AppBar(
             title = stringResource(id = R.string.menu),
-            navHostController = navController,
-            actions = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_logout),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .nonRippleEffect { onClickLogOut() }
-                )
-            })
+            navHostController = navController
+        )
 
         LazyColumn(
             modifier = Modifier
@@ -146,6 +141,14 @@ fun MenuContent(
                     text = stringResource(R.string.report_bugs),
                     painter = painterResource(id = R.drawable.ic_menu_bug),
                     onClickItem = onClickReportBug
+                )
+            }
+
+            item {
+                MenuItem(
+                    text = "Logout",
+                    painter = painterResource(id = R.drawable.ic_menu_logout),
+                    onClickItem = onClickLogOut
                 )
             }
 

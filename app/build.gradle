@@ -116,4 +116,6 @@ dependencies {
     // delay in interceptor
     implementation 'com.github.pawel-schmidt:okhttp-delay-interceptor:0.0.1'
 
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
+
 }
