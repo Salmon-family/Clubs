@@ -39,9 +39,4 @@ object ClubDataBaseModule {
         return ClubDataStorePreferences(context)
     }
 
-    @Singleton
-    @Provides
-    fun provideFirebaseFireStore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
 }
