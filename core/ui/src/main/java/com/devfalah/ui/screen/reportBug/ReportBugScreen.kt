@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.reportBug
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,11 +40,13 @@ fun ReportBugScreen(
         onMessageChange = viewModel::onMessageChange,
         onClickSend = viewModel::onClickSend
     )
+
+    val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
-            color = LightBackgroundColor,
-            darkIcons = true
+            color = color,
+            darkIcons = false
         )
     }
 }
