@@ -3,6 +3,7 @@ package com.thechance.clubs.di
 import android.content.Context
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
+import com.google.firebase.firestore.FirebaseFirestore
 import com.simplemented.okdelay.DelayInterceptor
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
@@ -115,4 +116,11 @@ object NetworkModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class RetrofitCloudMessagingService
+
+    @Singleton
+    @Provides
+    fun provideFirebaseFireStore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
 }

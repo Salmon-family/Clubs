@@ -12,6 +12,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,6 +34,7 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     singleLine: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    shape: Shape = RoundedCornerShape(100.dp)
 ) {
     Column {
         Row {
@@ -78,7 +80,7 @@ fun CustomTextField(
                     )
                 }
             },
-            shape = RoundedCornerShape(100.dp),
+            shape = shape,
             singleLine = singleLine,
             visualTransformation = visualTransformation,
         )

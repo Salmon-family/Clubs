@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.club.local.ClubDao
 import com.club.local.ClubDataBase
 import com.club.local.ClubDataStorePreferences
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,4 +38,5 @@ object ClubDataBaseModule {
     : ClubDataStorePreferences {
         return ClubDataStorePreferences(context)
     }
+
 }

@@ -111,4 +111,11 @@ interface ClubRepository {
 
     suspend fun deleteUserId()
 
+    suspend fun addBugReport(
+        userId: Int,
+        message: String,
+        onSuccess: () -> Unit,
+        onFail: (Exception) -> Unit
+    )
+
 }

@@ -90,5 +90,8 @@
     <string name="password_place_holder">ادخل اكثر من ستة احرف او ارقام</string>
 
     <string name="version">الإصدار</string>
+    <string name="bug_message">رسالة الإبلاغ</string>
+    <string name="send">إرسال</string>
+    <string name="bug_report_error_message">حصل خطأ، ترجى إعادة المحاولة في وقت لاحق.</string>
 
 </resources>
