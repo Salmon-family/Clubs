@@ -35,6 +35,7 @@ fun AccountSettingsScreen(
     AccountSettingsContent(
         navController = navController,
         state = state,
+        onBackClick = { navController.popBackStack() },
         onEmailChange = viewModel::onEmailChange,
         onNewPasswordChange = viewModel::onNewPasswordChange,
         onCurrentPasswordChange = viewModel::onCurrentPasswordChange,
@@ -54,6 +55,7 @@ fun AccountSettingsScreen(
 @Composable
 fun AccountSettingsContent(
     navController: NavController,
+    onBackClick: () -> Unit,
     state: AccountSettingsUiState,
     onEmailChange: (String) -> Unit,
     onNewPasswordChange: (String) -> Unit,
@@ -64,7 +66,7 @@ fun AccountSettingsContent(
         topBar = {
             AppBar(
                 title = stringResource(id = R.string.account_settings),
-                navHostController = navController
+                onBackButton = onBackClick
             )
         }
     ) {
@@ -133,6 +135,7 @@ fun PreviewMenu() {
         onEmailChange = {},
         onNewPasswordChange = {},
         onCurrentPasswordChange = {},
-        onClickEdit = {}
+        onClickEdit = {},
+        onBackClick = {}
     )
 }

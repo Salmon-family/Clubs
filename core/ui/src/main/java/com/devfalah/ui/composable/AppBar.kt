@@ -17,7 +17,8 @@ import com.devfalah.ui.showingBack
 @Composable
 fun AppBar(
     title: String,
-    navHostController: NavController,
+    onBackButton: () -> Unit,
+    showBackButton: Boolean = true,
     modifier: Modifier = Modifier,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.background,
@@ -30,9 +31,9 @@ fun AppBar(
                 text = title,
             )
         },
-        navigationIcon = if (navHostController.showingBack()) {
+        navigationIcon = if (showBackButton) {
             {
-                IconButton(onClick = navHostController::popBackStack) {
+                IconButton(onClick = onBackButton) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
                         contentDescription = null,
