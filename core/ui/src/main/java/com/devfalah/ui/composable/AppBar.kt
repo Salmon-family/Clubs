@@ -17,7 +17,7 @@ import com.devfalah.ui.showingBack
 @Composable
 fun AppBar(
     title: String,
-    onBackButton: () -> Unit,
+    onBackButton: () -> Unit = {},
     showBackButton: Boolean = true,
     modifier: Modifier = Modifier,
     actions: @Composable RowScope.() -> Unit = {},
