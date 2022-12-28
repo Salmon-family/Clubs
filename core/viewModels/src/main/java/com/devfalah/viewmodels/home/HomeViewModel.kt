@@ -2,8 +2,8 @@ package com.devfalah.viewmodels.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.posts.DeletePostUseCase
 import com.devfalah.usecases.GetHomeThreadsUseCase
+import com.devfalah.usecases.posts.DeletePostUseCase
 import com.devfalah.usecases.posts.SetFavoritePostUseCase
 import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -33,12 +33,17 @@ class HomeViewModel @Inject constructor(
 
     fun onRetry() {
         _uiState.update { it.copy(error = "", isLoading = true) }
-        swipeToRefresh()
+        viewModelScope.launch {
+            getHomeThreads()
+            swipeToRefresh()
+        }
     }
 
-
     private fun getData() {
-        viewModelScope.launch { getHomeThreads() }
+        viewModelScope.launch {
+            getHomeThreads()
+            swipeToRefresh()
+        }
     }
 
     fun onClickLike(post: PostUIState) {

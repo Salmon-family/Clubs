@@ -10,10 +10,15 @@ class GetHomeThreadsUseCase @Inject constructor(
 ) {
     private var page = 1
     private lateinit var savedPosts: List<Int>
-    private val userId: Int = clubRepository.getUserId()
+    private var userId: Int
+
+    init {
+        userId = clubRepository.getUserId()
+    }
 
     suspend operator fun invoke() {
         getSavedPostsIds()
+        userId = clubRepository.getUserId()
     }
 
     suspend fun loadData(): List<Post> {
