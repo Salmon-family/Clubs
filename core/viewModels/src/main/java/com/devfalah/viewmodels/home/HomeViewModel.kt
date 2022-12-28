@@ -97,7 +97,7 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         isPagerLoading = false,
                         isLoading = false,
-                        isEndOfPager = homePosts.isNotEmpty(),
+                        isEndOfPager = homePosts.isEmpty(),
                         posts = it.posts + homePosts.toUIState()
                     )
                 }
