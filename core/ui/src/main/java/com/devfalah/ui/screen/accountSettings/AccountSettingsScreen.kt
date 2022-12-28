@@ -10,7 +10,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.accountSettings.AccountSettingsUiState
 import com.devfalah.viewmodels.accountSettings.AccountSettingsViewModel
 import com.devfalah.viewmodels.accountSettings.isEditButtonEnabled
@@ -33,7 +31,6 @@ fun AccountSettingsScreen(
     val systemUIController = rememberSystemUiController()
 
     AccountSettingsContent(
-        navController = navController,
         state = state,
         onClickBack = { navController.popBackStack() },
         onEmailChange = viewModel::onEmailChange,
@@ -54,9 +51,8 @@ fun AccountSettingsScreen(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AccountSettingsContent(
-    navController: NavController,
-    onClickBack: () -> Unit,
     state: AccountSettingsUiState,
+    onClickBack: () -> Unit,
     onEmailChange: (String) -> Unit,
     onNewPasswordChange: (String) -> Unit,
     onCurrentPasswordChange: (String) -> Unit,
@@ -103,7 +99,7 @@ fun AccountSettingsContent(
             ) {
                 CancelButton(
                     modifier = Modifier.weight(1f),
-                    onClick = { navController.popBackStack() }
+                    onClick = onClickBack
                 )
 
                 ButtonWithLoading(
@@ -118,7 +114,7 @@ fun AccountSettingsContent(
         }
 
         LaunchedEffect(key1 = state.isSuccessful) {
-            if (state.isSuccessful) navController.popBackStack()
+            if (state.isSuccessful) onClickBack()
         }
     }
 
@@ -130,7 +126,6 @@ fun AccountSettingsContent(
 @Composable
 fun PreviewMenu() {
     AccountSettingsContent(
-        navController = NavController(LocalContext.current),
         state = AccountSettingsUiState(),
         onEmailChange = {},
         onNewPasswordChange = {},
