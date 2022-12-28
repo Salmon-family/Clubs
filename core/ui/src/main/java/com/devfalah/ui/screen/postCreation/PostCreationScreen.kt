@@ -20,13 +20,12 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.home.navigateHome
-import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.util.createFileFromContentUri
-import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
-import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
+import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.util.Constants.MAX_IMAGE_POST_SIZE
+import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -41,7 +40,15 @@ fun PostCreationScreen(
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            uri?.let { viewModel.onClickSelectImage(createFileFromContentUri(it, context)) }
+            uri?.let {
+                viewModel.onClickSelectImage(
+                    createFileFromContentUri(
+                        it,
+                        context,
+                        MAX_IMAGE_POST_SIZE
+                    )
+                )
+            }
         }
     )
     PostCreationContent(

@@ -230,8 +230,13 @@ class RemoteDataSourceImp @Inject constructor(
     override suspend fun publishPostWithImage(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): WallPostDTO {
+        val extension = if (imageFile.extension.equals("jpg", true)) {
+            "jpeg"
+        } else {
+            imageFile.extension
+        }
         val requestBody =
-            imageFile.asRequestBody("$IMAGE_FILE/${imageFile.extension}".toMediaTypeOrNull())
+            imageFile.asRequestBody("$IMAGE_FILE/${extension}".toMediaTypeOrNull())
         val part =
             MultipartBody.Part.createFormData(POST_IMAGE_DESCRIPTION, imageFile.name, requestBody)
 
@@ -242,14 +247,16 @@ class RemoteDataSourceImp @Inject constructor(
         val postPrivacy = privacy.toString().toRequestBody(TYPE.toMediaTypeOrNull())
         val postText = postContent.toRequestBody(TYPE.toMediaTypeOrNull())
 
-        return apiService.addPostWithImage(
+        val x = apiService.addPostWithImage(
             userId = id,
             friendOrGroupID = publishOn,
             type = type,
             privacy = postPrivacy,
             post = postText,
             file = part
-        ).body()?.payload ?: throw Throwable("Error")
+        )
+        println("TESTTTT " + x.body()?.payload.toString())
+        return x.body()?.payload ?: throw Throwable("Error")
 
     }
 

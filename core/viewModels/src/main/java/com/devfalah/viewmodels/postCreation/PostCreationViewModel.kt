@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.postCreation
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -74,4 +75,7 @@ class PostCreationViewModel @Inject constructor(
             }
         }
     }
+
+
+
 }

@@ -2,6 +2,7 @@ package com.devfalah.ui.util
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.OpenableColumns
@@ -12,11 +13,16 @@ import com.devfalah.viewmodels.util.DateConverterConstants.DAY_AGO
 import com.devfalah.viewmodels.util.DateConverterConstants.HOUR_AGO
 import com.devfalah.viewmodels.util.DateConverterConstants.JUST_NOW
 import com.devfalah.viewmodels.util.DateConverterConstants.MINUTES_AGO
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 
-fun createFileFromContentUri(fileUri: Uri, context: Context): File {
+
+fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize:Int): File {
+    val imageStream = context.contentResolver.openInputStream(fileUri)
+    val selectedImage = BitmapFactory.decodeStream(imageStream)
+    val resizedImage = getResizedBitmap(selectedImage, maxSize)
+
     var fileName = ""
     fileUri.let { returnUri ->
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -30,28 +36,24 @@ fun createFileFromContentUri(fileUri: Uri, context: Context): File {
         fileName = cursor.getString(nameIndex)
     }
 
-    val iStream = context.contentResolver.openInputStream(fileUri)!!
-    val outputDir = context.cacheDir!!
-
-    val outputFile = File(outputDir, fileName)
-    copyStreamToFile(iStream, outputFile)
-    iStream.close()
+    val bos = ByteArrayOutputStream()
+    resizedImage.compress(Bitmap.CompressFormat.PNG, 0, bos)
+    val bitmapdata = bos.toByteArray()
+    val outputFile = File(context.cacheDir, fileName)
+    outputFile.createNewFile()
+    val fos = FileOutputStream(outputFile)
+    fos.write(bitmapdata)
+    fos.flush()
+    fos.close()
     return outputFile
 }
 
-private fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
-    inputStream.use { input ->
-        val outputStream = FileOutputStream(outputFile)
-        outputStream.use { output ->
-            val buffer = ByteArray(4 * 1024)
-            while (true) {
-                val byteCount = input.read(buffer)
-                if (byteCount < 0) break
-                output.write(buffer, 0, byteCount)
-            }
-            output.flush()
-        }
-    }
+private fun getResizedBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
+    val actualWidth = bitmap.width
+    val actualHeight = bitmap.height
+    val aspRat = actualWidth / actualHeight
+    val height = maxSize * aspRat
+    return Bitmap.createScaledBitmap(bitmap, maxSize, height, false)
 }
 
 @Composable
@@ -63,15 +65,4 @@ fun getDataDescription(type: Int): String {
         DAY_AGO -> stringResource(id = R.string.day)
         else -> ""
     }
-}
-
-
-fun resizePhoto(bitmap: Bitmap): Bitmap {
-    val actualWidth = bitmap.width
-    val actualHeight = bitmap.height
-    val aspRat = actualWidth / actualHeight
-    val width = 400
-    val height = width * aspRat
-    val b = Bitmap.createScaledBitmap(bitmap, width, height, false)
-    return b
 }
