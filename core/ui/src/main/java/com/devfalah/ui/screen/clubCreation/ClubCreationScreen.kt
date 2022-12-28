@@ -36,8 +36,8 @@ fun ClubCreationScreen(
     val systemUIController = rememberSystemUiController()
 
     ClubCreationContent(
-        navController = navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onNameChange = viewModel::onNameTextChange,
         onDescriptionChange = viewModel::onDescriptionTextChange,
         onPrivacyChange = viewModel::onPrivacyChange,
@@ -56,8 +56,8 @@ fun ClubCreationScreen(
 
 @Composable
 fun ClubCreationContent(
-    navController: NavController,
     state: ClubCreationUiState,
+    onClickBack: () -> Unit,
     onNameChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onPrivacyChange: (Int) -> Unit,
@@ -66,7 +66,10 @@ fun ClubCreationContent(
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.create_club), navHostController = navController)
+            AppBar(
+                title = stringResource(R.string.create_club),
+                onBackButton = onClickBack,
+            )
         }
     ) { scaffoldPadding ->
         Column(
@@ -118,7 +121,7 @@ fun ClubCreationContent(
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
                 showToastMessage(context, successMessage)
-                navController.popBackStack()
+                onClickBack()
             }
         }
     }

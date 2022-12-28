@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ButtonWithLoading
@@ -34,8 +33,8 @@ fun ReportBugScreen(
     val systemUIController = rememberSystemUiController()
 
     MenuContent(
-        navController = navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onMessageChange = viewModel::onMessageChange,
         onClickSend = viewModel::onClickSend
     )
@@ -51,14 +50,17 @@ fun ReportBugScreen(
 
 @Composable
 fun MenuContent(
-    navController: NavController,
     state: ReportBugUiState,
+    onClickBack: () -> Unit,
     onMessageChange: (String) -> Unit,
     onClickSend: () -> Unit
 ) {
     Column {
 
-        AppBar(title = stringResource(R.string.report_bugs), navHostController = navController)
+        AppBar(
+            title = stringResource(R.string.report_bugs),
+            onBackButton = onClickBack
+            )
 
         LazyColumn(
             modifier = Modifier
@@ -89,7 +91,7 @@ fun MenuContent(
         }
 
         LaunchedEffect(key1 = state.isSuccessful) {
-            if (state.isSuccessful) navController.popBackStack()
+            if (state.isSuccessful) onClickBack()
         }
 
     }
@@ -100,8 +102,8 @@ fun MenuContent(
 @Composable
 fun PreviewReportBug() {
     MenuContent(
-        rememberNavController(),
         ReportBugUiState(),
+        onClickBack = {},
         {}, {}
     )
 }

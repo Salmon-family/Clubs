@@ -37,13 +37,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun NotificationScreen(
     navController: NavController,
-    viewModel: NotificationsViewModel = hiltViewModel()
+    viewModel: NotificationsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
     NotificationContent(
-        navController = navController,
         state = state,
         onClickTryAgain = viewModel::getUserNotifications,
         onRetry = viewModel::getUserNotifications
@@ -74,7 +73,6 @@ fun NotificationScreen(
 
 @Composable
 fun NotificationContent(
-    navController: NavController,
     state: NotificationsUIState,
     onClickTryAgain: () -> Unit,
     onRetry: () -> Unit,
@@ -83,7 +81,7 @@ fun NotificationContent(
     Column {
         AppBar(
             title = stringResource(id = Screen.Notification.title),
-            navHostController = navController
+            showBackButton = false,
         )
 
         if (state.error.isNotBlank()) {
@@ -117,7 +115,7 @@ fun NotificationContent(
 private fun NotificationsStatusItem(
     modifier: Modifier = Modifier,
     state: NotificationsUIState,
-    onClickTryAgain: () -> Unit
+    onClickTryAgain: () -> Unit,
 ) {
     Row(
         modifier = modifier.padding(horizontal = 16.dp),

@@ -41,8 +41,8 @@ fun FriendRequestScreen(
     val systemUIController = rememberSystemUiController()
 
     FriendRequestsContent(
-        navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onAcceptButtonClick = viewModel::acceptFriendRequest,
         onDeleteButtonClick = viewModel::deniedFriendRequest,
         onRetry = viewModel::getData,
@@ -61,15 +61,18 @@ fun FriendRequestScreen(
 @ExperimentalFoundationApi
 @Composable
 fun FriendRequestsContent(
-    navController: NavController,
     state: FriendRequestUiState,
+    onClickBack: () -> Unit,
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
     Column {
-        AppBar(title = stringResource(R.string.friends_request), navHostController = navController)
+        AppBar(
+            title = stringResource(R.string.friends_request),
+            onBackButton = onClickBack,
+        )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {

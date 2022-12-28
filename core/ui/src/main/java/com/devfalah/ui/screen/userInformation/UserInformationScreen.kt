@@ -33,12 +33,13 @@ fun UserInformationScreen(
     val systemUIController = rememberSystemUiController()
 
     UserInformationContent(
-        navController = navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onNameChange = viewModel::onNameTextChange,
         onTitleChange = viewModel::onTitleChange,
         onPasswordChange = viewModel::onPasswordTextChange,
         onClickSave = viewModel::onClickSave,
+        navigateToProfile = { navController.navigateToProfile(state.id) }
     )
 
     val color = MaterialTheme.colors.background
@@ -54,16 +55,20 @@ fun UserInformationScreen(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun UserInformationContent(
-    navController: NavController,
     state: UserInformationUIState,
+    onClickBack: () -> Unit,
     onNameChange: (String) -> Unit,
     onTitleChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onClickSave: () -> Unit,
+    navigateToProfile: () -> Unit,
 ) {
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.edit_info), navHostController = navController)
+            AppBar(
+                title = stringResource(R.string.edit_info),
+                onBackButton = onClickBack,
+            )
         }
     ) {
         Column(
@@ -104,7 +109,7 @@ fun UserInformationContent(
 
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
-                navController.navigateToProfile(state.id)
+                navigateToProfile()
             }
         }
     }

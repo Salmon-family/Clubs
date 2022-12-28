@@ -29,8 +29,6 @@ import com.devfalah.ui.screen.clubCreation.CLUB_CREATION_ROUTE
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.theme.AppTypography
-import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
@@ -45,8 +43,8 @@ fun ClubsScreen(
     val systemUIController = rememberSystemUiController()
 
     ClubsContent(
-        navController = navController,
         state = state,
+        onClickCreateClub = { navController.navigate(CLUB_CREATION_ROUTE) },
         onClubClick = { navController.navigateToClubDetails(it) },
         onRetry = viewModel::getData
     )
@@ -63,23 +61,23 @@ fun ClubsScreen(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ClubsContent(
-    navController: NavController,
     state: MyClubsUiState,
+    onClickCreateClub: () -> Unit,
     onClubClick: (Int) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             AppBar(
                 title = stringResource(R.string.clubs),
-                navHostController = navController,
+                showBackButton = false,
                 actions = {
                     Icon(
                         painter = painterResource(id = R.drawable.create_club),
                         contentDescription = "create club icon",
                         modifier = Modifier
                             .padding(end = 16.dp)
-                            .nonRippleEffect { navController.navigate(CLUB_CREATION_ROUTE) }
+                            .nonRippleEffect { onClickCreateClub() }
                     )
                 }
             )

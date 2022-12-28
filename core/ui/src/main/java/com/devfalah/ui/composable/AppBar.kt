@@ -10,15 +10,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.showingBack
 
 @Composable
 fun AppBar(
-    title: String,
-    navHostController: NavController,
     modifier: Modifier = Modifier,
+    title: String,
+    onBackButton: () -> Unit = {},
+    showBackButton: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = MaterialTheme.colors.primaryVariant,
@@ -30,9 +29,9 @@ fun AppBar(
                 text = title,
             )
         },
-        navigationIcon = if (navHostController.showingBack()) {
+        navigationIcon = if (showBackButton) {
             {
-                IconButton(onClick = navHostController::popBackStack) {
+                IconButton(onClick = onBackButton) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
                         contentDescription = null,

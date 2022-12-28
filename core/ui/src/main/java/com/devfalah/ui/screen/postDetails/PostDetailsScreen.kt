@@ -41,8 +41,8 @@ fun PostDetailsScreen(
     val systemUIController = rememberSystemUiController()
 
     PostDetailsContent(
-        navController = navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onClickLike = viewModel::onClickLikePost,
         onClickSave = viewModel::onClickSavePost,
         onRefresh = viewModel::getPostComments,
@@ -53,6 +53,7 @@ fun PostDetailsScreen(
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickCommentLike = viewModel::onClickLikeComment,
+        onClickPostDelete = { navController.navigateUp() },
         onRetry = viewModel::getData
     )
 
@@ -67,8 +68,9 @@ fun PostDetailsScreen(
 
 @Composable
 fun PostDetailsContent(
-    navController: NavController,
     state: PostDetailsUIState,
+    onClickBack: () -> Unit,
+    onClickPostDelete: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onRefresh: () -> Unit,
@@ -85,7 +87,7 @@ fun PostDetailsContent(
 
         AppBar(
             title = stringResource(id = R.string.post_details),
-            navHostController = navController
+            onBackButton = onClickBack
         )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
@@ -151,7 +153,7 @@ fun PostDetailsContent(
     val context = LocalContext.current
     LaunchedEffect(key1 = state.isPostDeleted) {
         if (state.isPostDeleted) {
-            navController.navigateUp()
+            onClickPostDelete()
         }
     }
 

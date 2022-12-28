@@ -41,8 +41,8 @@ fun ClubRequestsScreen(
     val systemUIController = rememberSystemUiController()
 
     ClubRequestsContent(
-        navController,
         state = state,
+        onBackClick = { navController.popBackStack() },
         onAcceptButtonClick = viewModel::acceptRequest,
         onDeleteButtonClick = viewModel::declineRequest,
         onRetry = viewModel::getData,
@@ -61,15 +61,18 @@ fun ClubRequestsScreen(
 @ExperimentalFoundationApi
 @Composable
 fun ClubRequestsContent(
-    navController: NavController,
     state: ClubRequestsUIState,
+    onBackClick: () -> Unit,
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
     onRetry: () -> Unit
 ) {
     Column {
-        AppBar(title = stringResource(R.string.users_requests), navHostController = navController)
+        AppBar(
+            title = stringResource(R.string.users_requests),
+            onBackButton = onBackClick,
+        )
 
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)

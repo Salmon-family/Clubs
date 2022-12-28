@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
@@ -48,13 +47,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun MenuScreen(
     navController: NavController,
-    viewModel: MenuViewModel = hiltViewModel()
+    viewModel: MenuViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
     val context = LocalContext.current
     MenuContent(
-        navController = navController,
         state = state,
         onClickProfile = { navController.navigateToProfile(state.id) },
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
@@ -62,7 +60,7 @@ fun MenuScreen(
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
-        onClickReportBug = {navController.navigate(ROUTE_REPORT_BUG)},
+        onClickReportBug = { navController.navigate(ROUTE_REPORT_BUG) },
         onClickLogOut = viewModel::onClickLogOut
     )
 
@@ -82,7 +80,6 @@ fun MenuScreen(
 
 @Composable
 fun MenuContent(
-    navController: NavController,
     state: UserUiState,
     onClickProfile: () -> Unit,
     onClickSavedPosts: () -> Unit,
@@ -91,14 +88,14 @@ fun MenuContent(
     onClickTheme: () -> Unit,
     onClickLanguage: () -> Unit,
     onClickReportBug: () -> Unit,
-    onClickLogOut: () -> Unit
+    onClickLogOut: () -> Unit,
 ) {
 
     Column {
 
         AppBar(
             title = stringResource(id = R.string.menu),
-            navHostController = navController,
+            showBackButton = false,
             actions = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_logout),
@@ -177,5 +174,5 @@ private fun getVersion(context: Context): String {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewMenu() {
-    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
+    MenuContent(UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
 }
