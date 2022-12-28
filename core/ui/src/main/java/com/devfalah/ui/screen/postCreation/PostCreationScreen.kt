@@ -43,11 +43,7 @@ fun PostCreationScreen(
         onResult = { uri ->
             uri?.let {
                 viewModel.onClickSelectImage(
-                    createFileFromContentUri(
-                        it,
-                        context,
-                        MAX_IMAGE_POST_SIZE
-                    )
+                    createFileFromContentUri(it, context, MAX_IMAGE_POST_SIZE)
                 )
             }
         }

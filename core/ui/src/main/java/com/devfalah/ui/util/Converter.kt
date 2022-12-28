@@ -18,7 +18,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 
-fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize:Int): File {
+fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File {
     val imageStream = context.contentResolver.openInputStream(fileUri)
     val selectedImage = BitmapFactory.decodeStream(imageStream)
     val resizedImage = getResizedBitmap(selectedImage, maxSize)
@@ -51,9 +51,16 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize:Int): File 
 private fun getResizedBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
     val actualWidth = bitmap.width
     val actualHeight = bitmap.height
-    val aspRat = actualWidth / actualHeight
-    val height = maxSize * aspRat
-    return Bitmap.createScaledBitmap(bitmap, maxSize, height, false)
+    var aspRat = actualWidth / actualHeight
+
+    return if (aspRat > 0) {
+        var height = maxSize * aspRat
+        Bitmap.createScaledBitmap(bitmap, maxSize, height, false)
+    } else {
+         aspRat = actualHeight / actualWidth
+        val width = maxSize * aspRat
+        Bitmap.createScaledBitmap(bitmap, maxSize, width, false)
+    }
 }
 
 @Composable
