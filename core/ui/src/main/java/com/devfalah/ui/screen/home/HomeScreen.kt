@@ -49,7 +49,6 @@ fun HomeScreen(
     val systemUIController = rememberSystemUiController()
 
     HomeContent(
-        navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
@@ -75,7 +74,6 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    navController: NavController,
     state: HomeUIState,
     onCreatePost: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
@@ -86,12 +84,12 @@ fun HomeContent(
     onOpenLinkClick: (String) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
     onClickChat: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = stringResource(id = Screen.Home.title),
-            navHostController = navController,
+            showBackButton = false,
             actions = {
                 IconButton(onClick = onClickChat) {
                     Icon(
