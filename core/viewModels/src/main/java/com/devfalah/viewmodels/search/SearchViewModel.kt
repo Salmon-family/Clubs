@@ -26,7 +26,7 @@ class SearchViewModel @Inject constructor(
     fun onSearch() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
-            _uiState.debounce { 1500 }.collectLatest {
+            _uiState.debounce(1000).collectLatest {
                 try {
                     val searchResult = getSearchUseCase(uiState.value.keyword, limit = 3)
                     _uiState.emit(searchResult.toUIState().copy(keyword = uiState.value.keyword))
