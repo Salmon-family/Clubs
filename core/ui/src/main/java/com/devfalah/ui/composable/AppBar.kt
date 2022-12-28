@@ -10,16 +10,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.showingBack
 
 @Composable
 fun AppBar(
+    modifier: Modifier = Modifier,
     title: String,
     onBackButton: () -> Unit = {},
     showBackButton: Boolean = true,
-    modifier: Modifier = Modifier,
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = MaterialTheme.colors.primaryVariant,
