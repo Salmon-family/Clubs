@@ -21,7 +21,6 @@ import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.ButtonWithLoading
 import com.devfalah.ui.composable.CustomTextField
 import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.reportBug.ReportBugUiState
 import com.devfalah.viewmodels.reportBug.ReportBugViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -46,7 +45,6 @@ fun ReportBugScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

@@ -38,8 +38,8 @@ import com.devfalah.ui.screen.menu.composable.MenuItem
 import com.devfalah.ui.screen.menu.composable.PreferencesSection
 import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.reportBug.ROUTE_REPORT_BUG
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
 import com.devfalah.viewmodels.menu.UserUiState
@@ -56,13 +56,13 @@ fun MenuScreen(
     MenuContent(
         navController = navController,
         state = state,
-        onClickProfile = { navController.navigateToProfile(state.userId) },
+        onClickProfile = { navController.navigateToProfile(state.id) },
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
         onClickAccountSettings = { navController.navigate(route = ACCOUNT_SETTINGS_SCREEN) },
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
         onClickTheme = {},
         onClickLanguage = {},
-        onClickReportBug = {},
+        onClickReportBug = {navController.navigate(ROUTE_REPORT_BUG)},
         onClickLogOut = viewModel::onClickLogOut
     )
 
