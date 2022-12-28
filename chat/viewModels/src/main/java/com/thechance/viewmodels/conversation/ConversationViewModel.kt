@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -50,6 +51,7 @@ class ConversationViewModel @Inject constructor(
                     it.copy(
                         appBar = it.appBar.copy(userName = friend.name, icon = friend.profileUrl),
                         fcmToken = friend.fcmToken,
+                        isLoading = false
                     )
                 }
             } catch (e: Throwable) {
@@ -61,10 +63,11 @@ class ConversationViewModel @Inject constructor(
     }
 
     private fun getListMessages(userId: Int, friendId: Int) {
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             try {
                 refreshMessages(userId, friendId)
-                getMessages(friendId).collect {
+                getMessages(friendId).filterNot { it.isEmpty() }.collect {
                     _uiState.update { uiState ->
                         uiState.copy(
                             messages = it.map { it.toUiState() },
@@ -102,12 +105,13 @@ class ConversationViewModel @Inject constructor(
     }
 
     private fun refreshMessages(userId: Int, friendId: Int) {
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _uiState.update { it.copy(isLoading = true) }
                 val messagesCount = getMessages.refreshMessages(userId, friendId, 1)
                 getMessages.refreshMessages(userId, friendId, 2)
-                _uiState.update { it.copy(messagesCount = messagesCount) }
+                _uiState.update { it.copy(messagesCount = messagesCount, isLoading = false) }
             } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)

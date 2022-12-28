@@ -4,7 +4,7 @@ import com.club.local.ClubLocalDataSourceImp
 import com.devfalah.firebase.ChatFirebaseDataSourceImp
 import com.devfalah.firebase.CoreFireStoreDataSourceImpl
 import com.devfalah.firebase.IdentityFirebaseDataSourceImp
-import com.devfalah.local.LocalDataSourceImp
+import com.devfalah.local.ChatLocalDataSourceImp
 import com.devfalah.remote.RemoteDataSourceImp
 import com.devfalah.repositories.ClubLocalDataSource
 import com.devfalah.repositories.CoreFireStoreDataSource
@@ -42,7 +42,7 @@ abstract class DataSourceModule {
 
     @Binds
     abstract fun bindLocalDataSource(
-        localDataSourceImp: LocalDataSourceImp
+        localDataSourceImp: ChatLocalDataSourceImp
     ): ChatLocalDataSource
 
     @Binds

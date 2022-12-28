@@ -6,7 +6,7 @@ import com.devfalah.repository.models.ChatLocalDto
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocalDataSourceImp @Inject constructor(
+class ChatLocalDataSourceImp @Inject constructor(
     private val chatDao: ChatDao,
     private val chatDataStorePreferences: ChatDataStorePreferences,
 ) : ChatLocalDataSource {
