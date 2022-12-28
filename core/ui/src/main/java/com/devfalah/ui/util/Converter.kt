@@ -1,6 +1,7 @@
 package com.devfalah.ui.util
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.OpenableColumns
@@ -62,4 +63,15 @@ fun getDataDescription(type: Int): String {
         DAY_AGO -> stringResource(id = R.string.day)
         else -> ""
     }
+}
+
+
+fun resizePhoto(bitmap: Bitmap): Bitmap {
+    val actualWidth = bitmap.width
+    val actualHeight = bitmap.height
+    val aspRat = actualWidth / actualHeight
+    val width = 400
+    val height = width * aspRat
+    val b = Bitmap.createScaledBitmap(bitmap, width, height, false)
+    return b
 }

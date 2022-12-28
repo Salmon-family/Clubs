@@ -4,8 +4,8 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
@@ -14,6 +14,5 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger_version"
 
     //flow
-    def flow_version = "1.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$flow_version"
 }
