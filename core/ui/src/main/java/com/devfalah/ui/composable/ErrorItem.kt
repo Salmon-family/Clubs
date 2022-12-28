@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -16,6 +17,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.devfalah.ui.R
+import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun ErrorItem(
@@ -43,7 +45,10 @@ fun ErrorItem(
         HeightSpacer24()
 
         Button(onClick = onClickRetry) {
-            Text(text = stringResource(id = R.string.retry))
+            Text(
+                text = stringResource(id = R.string.retry),
+                color = WhiteColor
+            )
         }
     }
 }

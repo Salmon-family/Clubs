@@ -1,8 +1,10 @@
 package com.thechance.clubs.di
 
 import android.content.Context
+import android.util.Log
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
+import com.devfalah.remote.DdosInterceptor
 import com.google.firebase.firestore.FirebaseFirestore
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
@@ -85,10 +87,11 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor, ddosInterceptor: DdosInterceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
+            .addInterceptor(ddosInterceptor)
             .addInterceptor(authInterceptor)
             .addInterceptor(logging)
             .build()

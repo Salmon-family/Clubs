@@ -46,7 +46,6 @@ fun AccountSettingsScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

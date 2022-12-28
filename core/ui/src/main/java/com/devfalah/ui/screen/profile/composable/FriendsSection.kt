@@ -68,7 +68,7 @@ fun FriendsSection(
                 Friend(
                     painter = painterResource(id = R.drawable.ic_more),
                     text = stringResource(R.string.more),
-                    textColor = LightPrimaryBrandColor
+                    textColor = MaterialTheme.colors.primaryVariant
                 )
             }
         }
@@ -81,7 +81,7 @@ fun Friend(
     modifier: Modifier = Modifier,
     painter: Painter,
     text: String,
-    textColor: Color = LightPrimaryBlackColor
+    textColor: Color = MaterialTheme.colors.primaryVariant
 ) {
     Column(
         modifier = modifier,

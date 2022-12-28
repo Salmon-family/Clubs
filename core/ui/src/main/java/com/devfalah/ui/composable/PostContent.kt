@@ -53,13 +53,14 @@ fun PostContent(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent,
+                    textColor = MaterialTheme.colors.primaryVariant
                 ),
                 placeholder = {
                     hint?.let {
                         Text(
                             text = it,
                             textAlign = TextAlign.Center,
-                            color =  MaterialTheme.colors.onSurface
+                            color =  MaterialTheme.colors.secondaryVariant
                         )
                     }
                 },

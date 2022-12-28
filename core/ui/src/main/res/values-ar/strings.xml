@@ -46,7 +46,7 @@
     <string name="clubـcreated_successfully">تم أنشاء النادي بنجاح</string>
     <string name="club_name">اسم النادي</string>
     <string name="description">الوصف</string>
-    <string name="description_hint">صف ناديك ببعض الكلمات...</string>
+    <string name="description_hint">صف ناديك ببعض الكلمات…</string>
     <string name="privacy">الخصوصية</string>
     <string name="public_text">عام</string>
     <string name="private_privacy">خاص</string>
@@ -93,5 +93,6 @@
     <string name="bug_message">رسالة الإبلاغ</string>
     <string name="send">إرسال</string>
     <string name="bug_report_error_message">حصل خطأ، ترجى إعادة المحاولة في وقت لاحق.</string>
+    <string name="enter_club_name">آدخل اسم النادي الخاص بك</string>
 
 </resources>

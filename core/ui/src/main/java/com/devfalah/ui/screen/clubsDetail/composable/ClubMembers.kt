@@ -55,6 +55,7 @@ fun ClubMembers(
                     modifier = Modifier.padding(8.dp),
                     painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
                     text = it.name,
+                    textColor = MaterialTheme.colors.primaryVariant
                 )
             }
 

@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.WhiteColor
 
 @Composable
@@ -43,12 +42,13 @@ fun CommentOnThread(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
+                textColor = MaterialTheme.colors.primaryVariant
             ),
             placeholder = {
                 Text(
                     text = stringResource(R.string.enter_your_comment),
-                    color = LightTernaryBlackColor,
-                    style = AppTypography.body1
+                    color = MaterialTheme.colors.secondaryVariant,
+                    style = AppTypography.body1,
                 )
             },
             trailingIcon = {

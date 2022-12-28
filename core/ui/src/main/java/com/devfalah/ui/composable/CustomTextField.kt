@@ -52,6 +52,7 @@ fun CustomTextField(
                     text = "${value.length} / $maxChar",
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.primaryVariant,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(end = 16.dp)
@@ -70,13 +71,14 @@ fun CustomTextField(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
+                textColor = MaterialTheme.colors.primaryVariant
             ),
             placeholder = {
                 hint?.let {
                     Text(
                         text = it,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onSurface
+                        color = MaterialTheme.colors.secondaryVariant
                     )
                 }
             },

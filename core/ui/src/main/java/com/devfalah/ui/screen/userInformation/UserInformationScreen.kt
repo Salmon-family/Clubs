@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +21,7 @@ import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.userInformation.UserInformationUIState
 import com.devfalah.viewmodels.userInformation.UserInformationViewModel
 import com.devfalah.viewmodels.userInformation.isUpdateInformationButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
@@ -28,6 +30,8 @@ fun UserInformationScreen(
     viewModel: UserInformationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
+
     UserInformationContent(
         navController = navController,
         state = state,
@@ -36,6 +40,14 @@ fun UserInformationScreen(
         onPasswordChange = viewModel::onPasswordTextChange,
         onClickSave = viewModel::onClickSave,
     )
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+        )
+    }
 
 }
 

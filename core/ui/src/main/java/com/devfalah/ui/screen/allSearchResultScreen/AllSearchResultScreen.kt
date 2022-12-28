@@ -48,7 +48,6 @@ fun AllSearchResultScreenScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }

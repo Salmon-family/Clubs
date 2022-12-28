@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.menu.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,7 +29,7 @@ fun MenuSection(
                 fontSize = 18.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = LightPrimaryBlackColor
+                color = MaterialTheme.colors.primaryVariant
             )
         )
 

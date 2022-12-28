@@ -3,6 +3,7 @@ package com.devfalah.ui.screen.clubsDetail.composable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -79,7 +80,7 @@ fun ReadMorePopup(
                     color = WhiteColor,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
-                    background = LightPrimaryBrandColor,
+                    background = MaterialTheme.colors.onBackground,
                     fontFamily = PlusJakartaSans
                 ),
                 modifier = Modifier
