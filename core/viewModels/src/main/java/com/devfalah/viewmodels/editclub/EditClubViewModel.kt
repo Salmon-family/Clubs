@@ -30,7 +30,7 @@ class EditClubViewModel @Inject constructor(
                 clubId = args.clubId,
                 clubName = args.clubName,
                 clubDescription = args.clubDescription,
-                privacy = if (args.privacyType) {
+                privacy = if (args.privacyType == "true") {
                     ClubPrivacy.PUBLIC
                 } else {
                     ClubPrivacy.PRIVATE
