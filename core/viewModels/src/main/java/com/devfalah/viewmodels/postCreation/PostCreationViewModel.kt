@@ -1,11 +1,10 @@
 package com.devfalah.viewmodels.postCreation
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.CreateThreadUseCase
+import com.devfalah.usecases.posts.CreateThreadUseCase
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -3,8 +3,8 @@ package com.devfalah.viewmodels.clubRequests
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetClubRequestsUseCase
-import com.devfalah.usecases.MangeClubRequestsUseCase
+import com.devfalah.usecases.club.GetClubRequestsUseCase
+import com.devfalah.usecases.club.ManageClubRequestsUseCase
 import com.devfalah.viewmodels.friendRequest.listToUserUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClubRequestsViewModel @Inject constructor(
     val getClubRequestsUseCase: GetClubRequestsUseCase,
-    private val mangeClubRequestsUseCase: MangeClubRequestsUseCase,
+    private val mangeClubRequestsUseCase: ManageClubRequestsUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
