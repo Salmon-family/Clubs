@@ -1,6 +1,6 @@
 package com.devfalah.repositories
 
-interface AppConfigurator {
+interface CoreDataStoreDataSource {
     fun getUserId(): String?
 
     suspend fun saveUserId(userId: Int)

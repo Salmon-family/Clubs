@@ -4,15 +4,15 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.devfalah.repositories.AppConfigurator
+import com.devfalah.repositories.CoreDataStoreDataSource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class AppConfiguratorImp @Inject constructor(
+class CoreDataStoreDataSourceImp @Inject constructor(
     private val userDataStore: DataStore<Preferences>,
-) : AppConfigurator {
+) : CoreDataStoreDataSource {
 
     override fun getUserId(): String? {
         return runBlocking {

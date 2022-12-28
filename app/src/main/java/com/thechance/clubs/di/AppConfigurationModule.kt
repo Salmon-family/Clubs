@@ -1,7 +1,7 @@
 package com.thechance.clubs.di
 
-import com.club.local.AppConfiguratorImp
-import com.devfalah.repositories.AppConfigurator
+import com.club.local.CoreDataStoreDataSourceImp
+import com.devfalah.repositories.CoreDataStoreDataSource
 import com.thechance.identity.repositories.LocalIdentityDataSource
 import com.thechance.local.AppConfiguratorImpl
 import dagger.Binds
@@ -23,6 +23,6 @@ abstract class AppConfigurationModule {
     @Singleton
     @Binds
     abstract fun bindAppConfigurator(
-        appConfiguratorImp: AppConfiguratorImp
-    ): AppConfigurator
+        coreDataStoreDataSourceImp: CoreDataStoreDataSourceImp
+    ): CoreDataStoreDataSource
 }
