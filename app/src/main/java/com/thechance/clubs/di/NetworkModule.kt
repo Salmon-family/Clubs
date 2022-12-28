@@ -4,7 +4,6 @@ import android.content.Context
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.google.firebase.firestore.FirebaseFirestore
-import com.simplemented.okdelay.DelayInterceptor
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
 import com.thechance.local.DataStorePreferences
@@ -19,7 +18,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -93,7 +91,6 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(logging)
-            .addInterceptor(DelayInterceptor(1500L, TimeUnit.MILLISECONDS))
             .build()
     }
 
