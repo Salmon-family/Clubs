@@ -2,9 +2,8 @@ package com.devfalah.viewmodels.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.DeleteUserUseCase
-import com.devfalah.usecases.GetMyAccountProfileDetailsUseCase
-import com.devfalah.usecases.GetUserAccountDetailsUseCase
+import com.devfalah.usecases.user.DeleteUserUseCase
+import com.devfalah.usecases.user.GetMyAccountProfileDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

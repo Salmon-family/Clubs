@@ -25,7 +25,10 @@ object Constants {
     const val PROFILE_CLUB_ID = -1
     const val HOME_CLUB_ID = 0
 
-    const val MAX_PAGE_ITEM = 10
+    const val MAX_PAGE_ITEM = 9
+
+    const val MAX_IMAGE_POST_SIZE = 700
+    const val MAX_IMAGE_PROFILE_SIZE = 256
 
 }
 

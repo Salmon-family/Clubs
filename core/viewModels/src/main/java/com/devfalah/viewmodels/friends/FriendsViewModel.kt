@@ -3,8 +3,8 @@ package com.devfalah.viewmodels.friends
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetUserFriendsUseCase
-import com.devfalah.usecases.RemoveFriendRequestUseCase
+import com.devfalah.usecases.friend.GetUserFriendsUseCase
+import com.devfalah.usecases.friend.RemoveFriendRequestUseCase
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

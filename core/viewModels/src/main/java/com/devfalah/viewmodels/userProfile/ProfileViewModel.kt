@@ -3,7 +3,14 @@ package com.devfalah.viewmodels.userProfile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.*
+import com.devfalah.usecases.friend.AddFriendUseCase
+import com.devfalah.usecases.friend.GetUserFriendsUseCase
+import com.devfalah.usecases.posts.DeletePostUseCase
+import com.devfalah.usecases.posts.SetFavoritePostUseCase
+import com.devfalah.usecases.posts.SetPostLikeUseCase
+import com.devfalah.usecases.user.ChangeProfileImageUseCase
+import com.devfalah.usecases.user.GetProfilePostsUseCase
+import com.devfalah.usecases.user.GetUserAccountDetailsUseCase
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState

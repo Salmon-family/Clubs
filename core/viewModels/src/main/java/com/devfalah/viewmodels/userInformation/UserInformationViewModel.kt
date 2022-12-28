@@ -2,8 +2,8 @@ package com.devfalah.viewmodels.userInformation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.EditUserInformationUseCase
-import com.devfalah.usecases.GetMyAccountProfileDetailsUseCase
+import com.devfalah.usecases.user.EditUserInformationUseCase
+import com.devfalah.usecases.user.GetMyAccountProfileDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

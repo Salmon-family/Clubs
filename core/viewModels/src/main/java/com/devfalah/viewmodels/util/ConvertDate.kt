@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.util
 
-import android.annotation.SuppressLint
 import com.devfalah.entities.PublishTime
 import com.devfalah.viewmodels.util.DateConverterConstants.DATA_PATTERN
 import com.devfalah.viewmodels.util.DateConverterConstants.DAY_AGO

@@ -3,7 +3,7 @@ package com.devfalah.viewmodels.clubMembers
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetClubMembersUseCase
+import com.devfalah.usecases.club.GetClubMembersUseCase
 import com.devfalah.viewmodels.friends.FriendsUIState
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM

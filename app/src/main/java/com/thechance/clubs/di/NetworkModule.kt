@@ -6,7 +6,6 @@ import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.devfalah.remote.DdosInterceptor
 import com.google.firebase.firestore.FirebaseFirestore
-import com.simplemented.okdelay.DelayInterceptor
 import com.thechance.clubs.BuildConfig
 import com.thechance.identity.remote.IdentityService
 import com.thechance.local.DataStorePreferences

@@ -3,8 +3,8 @@ package com.devfalah.viewmodels.notifications
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetNotificationsUseCase
-import com.devfalah.usecases.MarkNotificationAsViewedUseCase
+import com.devfalah.usecases.notification.GetNotificationsUseCase
+import com.devfalah.usecases.notification.MarkNotificationAsViewedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.*
+import com.devfalah.usecases.club.*
+import com.devfalah.usecases.posts.SetFavoritePostUseCase
+import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.userProfile.PostUIState

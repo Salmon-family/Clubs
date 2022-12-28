@@ -14,3 +14,7 @@ data class PostCreationUIState(
     val isSuccess: Boolean = false,
     val error: String = ""
 )
+
+fun PostCreationUIState.isEnabled(): Boolean {
+    return !isLoading && (postContent.isNotEmpty() || imageFile != null)
+}

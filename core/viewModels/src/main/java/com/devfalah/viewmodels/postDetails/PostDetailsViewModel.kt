@@ -3,10 +3,10 @@ package com.devfalah.viewmodels.postDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.DeletePostUseCase
-import com.devfalah.usecases.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.SetFavoritePostUseCase
-import com.devfalah.usecases.SetPostLikeUseCase
+import com.devfalah.usecases.posts.DeletePostUseCase
+import com.devfalah.usecases.user.GetUserAccountDetailsUseCase
+import com.devfalah.usecases.posts.SetFavoritePostUseCase
+import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.usecases.posts.GetPostCommentsUseCase
 import com.devfalah.usecases.posts.GetPostDetailsUseCase
 import com.devfalah.usecases.posts.ManageCommentUseCase

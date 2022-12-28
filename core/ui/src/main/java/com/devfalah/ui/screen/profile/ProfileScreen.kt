@@ -40,6 +40,7 @@ import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
 import com.devfalah.viewmodels.util.ChatNavigation.FRIEND_ID
 import com.devfalah.viewmodels.util.ChatNavigation.PACKAGE_CHAT_NAME
+import com.devfalah.viewmodels.util.Constants.MAX_IMAGE_PROFILE_SIZE
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -54,7 +55,15 @@ fun ProfileScreen(
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            uri?.let { viewModel.onClickChangeImage(createFileFromContentUri(it, context)) }
+            uri?.let {
+                viewModel.onClickChangeImage(
+                    createFileFromContentUri(
+                        it,
+                        context,
+                        MAX_IMAGE_PROFILE_SIZE
+                    )
+                )
+            }
         }
     )
     ProfileContent(

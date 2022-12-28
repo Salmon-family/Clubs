@@ -2,10 +2,10 @@ package com.devfalah.viewmodels.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.DeletePostUseCase
-import com.devfalah.usecases.GetHomePostUseCase
-import com.devfalah.usecases.SetFavoritePostUseCase
-import com.devfalah.usecases.SetPostLikeUseCase
+import com.devfalah.usecases.posts.DeletePostUseCase
+import com.devfalah.usecases.GetHomeThreadsUseCase
+import com.devfalah.usecases.posts.SetFavoritePostUseCase
+import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val likeUseCase: SetPostLikeUseCase,
-    val allPosts: GetHomePostUseCase,
+    val getHomeThreads: GetHomeThreadsUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val deletePostUseCase: DeletePostUseCase,
 ) : ViewModel() {
@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
 
 
     private fun getData() {
-        viewModelScope.launch { allPosts() }
+        viewModelScope.launch { getHomeThreads() }
     }
 
     fun onClickLike(post: PostUIState) {
@@ -92,12 +92,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
             try {
-                val homePosts = allPosts.loadData()
+                val homePosts = getHomeThreads.loadData()
                 _uiState.update {
                     it.copy(
                         isPagerLoading = false,
                         isLoading = false,
-                        isEndOfPager = homePosts.isNotEmpty(),
+                        isEndOfPager = homePosts.isEmpty(),
                         posts = it.posts + homePosts.toUIState()
                     )
                 }

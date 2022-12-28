@@ -2,9 +2,9 @@ package com.devfalah.viewmodels.friendRequest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.AddFriendRequestUseCase
-import com.devfalah.usecases.GetUserFriendRequestsUseCase
-import com.devfalah.usecases.RemoveFriendRequestUseCase
+import com.devfalah.usecases.friend.AddFriendRequestUseCase
+import com.devfalah.usecases.friend.GetUserFriendRequestsUseCase
+import com.devfalah.usecases.friend.RemoveFriendRequestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

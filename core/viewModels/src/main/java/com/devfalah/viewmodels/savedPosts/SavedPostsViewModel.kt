@@ -2,9 +2,9 @@ package com.devfalah.viewmodels.savedPosts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetUserFavoritePostsUseCase
-import com.devfalah.usecases.SetFavoritePostUseCase
-import com.devfalah.usecases.SetPostLikeUseCase
+import com.devfalah.usecases.user.GetUserFavoritePostsUseCase
+import com.devfalah.usecases.posts.SetFavoritePostUseCase
+import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.userProfile.PostUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
