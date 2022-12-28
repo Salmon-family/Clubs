@@ -27,7 +27,9 @@ import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryGrayColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.util.getDataDescription
+import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.postDetails.CommentUIState
+import okhttp3.HttpUrl.Companion.toHttpUrl
 
 @Composable
 fun CommentBody(
@@ -38,7 +40,7 @@ fun CommentBody(
     Column(modifier = modifier.fillMaxWidth()) {
         ExpandableText(
             modifier = Modifier.fillMaxWidth(),
-            text = state.text,
+            text = state.text.htmlText(),
             minimizedMaxLines = 2,
             style = TextStyle(
                 fontSize = 14.sp,
