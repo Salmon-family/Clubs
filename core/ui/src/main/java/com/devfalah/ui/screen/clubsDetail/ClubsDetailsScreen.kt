@@ -50,7 +50,7 @@ fun ClubsDetailsScreen(
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
         },
         onClickSave = viewModel::onClickSave,
         onAddPost = { navController.navigateToPostCreation(state.clubId) },
@@ -60,7 +60,7 @@ fun ClubsDetailsScreen(
         onDeclineClub = viewModel::declineRequestOfClub,
         onRetry = viewModel::getData,
         onClickJoinRequestClub = {
-            navController.navigateToClubRequests(clubId = state.clubId)
+            navController.navigateToClubRequests(clubId = state.clubId, ownerId = state.ownerId)
         },
         onClickEditClub = {
             navController.navigateToEditClub(
