@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Clubs" parent="android:Theme.Material.Light.NoActionBar">
-    </style>
+
+    <style name="Theme.Clubs" parent="android:Theme.Material.Light.NoActionBar"></style>
 
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
