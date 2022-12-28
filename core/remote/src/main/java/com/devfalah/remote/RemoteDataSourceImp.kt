@@ -109,7 +109,12 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun addProfilePicture(userID: Int, file: File): UserDTO {
-        val requestBody = file.asRequestBody("$IMAGE_FILE/${file.extension}".toMediaTypeOrNull())
+        val extension = if (file.extension.equals("jpg", true)) {
+            "jpeg"
+        } else {
+            file.extension
+        }
+        val requestBody = file.asRequestBody("$IMAGE_FILE/${extension}".toMediaTypeOrNull())
         val part =
             MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
         val id = RequestBody.create(TYPE.toMediaTypeOrNull(), userID.toString())
