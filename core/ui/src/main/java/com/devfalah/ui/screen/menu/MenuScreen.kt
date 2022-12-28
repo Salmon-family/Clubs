@@ -59,7 +59,7 @@ fun MenuScreen(
     MenuContent(
         navController = navController,
         state = state,
-        onClickProfile = { navController.navigateToProfile(state.userId) },
+        onClickProfile = { navController.navigateToProfile(state.id) },
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
         onClickAccountSettings = { navController.navigate(route = ACCOUNT_SETTINGS_SCREEN) },
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },

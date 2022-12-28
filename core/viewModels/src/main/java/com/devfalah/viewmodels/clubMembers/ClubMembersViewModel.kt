@@ -39,7 +39,7 @@ class ClubMembersViewModel @Inject constructor(
                 )
             }
             try {
-                val members = getClubMembersUseCase(args.clubId)
+                val members = getClubMembersUseCase(args.ownerId, args.clubId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -51,8 +51,11 @@ class ClubMembersViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        error = if (_uiState.value.friends.isEmpty()) { t.message.toString() }
-                        else { "" },
+                        error = if (_uiState.value.friends.isEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        },
                         isLoading = false,
                         isPagerLoading = false,
                         minorError = t.message.toString()

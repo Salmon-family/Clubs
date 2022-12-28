@@ -6,7 +6,7 @@ import javax.inject.Inject
 class GetClubDeclineUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    suspend operator fun invoke(clubId: Int, memberId: Int, userId: Int): Boolean {
-        return clubRepository.declineClub(clubId, memberId, userId)
+    suspend operator fun invoke(clubId: Int, memberId: Int): Boolean {
+        return clubRepository.declineClub(clubId, memberId, clubRepository.getUserId())
     }
 }

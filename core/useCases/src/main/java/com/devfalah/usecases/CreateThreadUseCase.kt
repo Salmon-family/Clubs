@@ -9,8 +9,9 @@ class CreateThreadUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
     suspend operator fun invoke(
-        userId: Int, clubId: Int, postContent: String, privacy: Int, imageFile: File?
+        clubId: Int, postContent: String, privacy: Int, imageFile: File?
     ): Post {
+        val userId = clubRepository.getUserId()
         val publisherWall = getPublishPlace(clubId = clubId, userId = userId)
         val post = if (imageFile != null) {
             clubRepository.publishPostWithImage(
@@ -27,7 +28,10 @@ class CreateThreadUseCase @Inject constructor(
     }
 
     private fun getPublishPlace(clubId: Int, userId: Int): Int {
-        return if (clubId == 0 || clubId == -1) { userId }
-        else { clubId }
+        return if (clubId == 0 || clubId == -1) {
+            userId
+        } else {
+            clubId
+        }
     }
 }

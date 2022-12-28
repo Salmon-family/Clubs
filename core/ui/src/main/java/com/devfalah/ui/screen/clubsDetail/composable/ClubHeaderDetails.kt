@@ -31,8 +31,6 @@ fun ClubHeaderDetails(
     onClickJoinRequestClub: () -> Unit,
     onClickEditClub: () -> Unit
 ) {
-
-
     var popupController by remember { mutableStateOf(false) }
 
     ConstraintLayout(
@@ -55,7 +53,7 @@ fun ClubHeaderDetails(
             tint = WhiteColor
         )
 
-        if (state.ownerId == state.userId) {
+        if (state.isOwner) {
             DropDownOwner(
                 modifier = Modifier
                     .padding(top = 16.dp, end = 16.dp)

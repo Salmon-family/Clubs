@@ -11,6 +11,7 @@ fun AddedCommentDTO.toEntity(): Comment {
         content = comment?.commentsPost ?: "",
         totalLikes = comment?.totalLikes ?: 0,
         isLikedByUser = comment?.isLikedByUser ?: false,
-        user = user?.toEntity() ?: User()
+        user = user?.toEntity() ?: User(),
+        isMyComment = true
     )
 }

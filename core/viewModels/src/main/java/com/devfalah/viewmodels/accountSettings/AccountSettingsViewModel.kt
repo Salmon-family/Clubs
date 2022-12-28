@@ -3,8 +3,7 @@ package com.devfalah.viewmodels.accountSettings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.EditUserInformationUseCase
-import com.devfalah.usecases.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.usecases.GetMyAccountProfileDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,9 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountSettingsViewModel @Inject constructor(
-    private val getUserId: GetUserIdUseCase,
-    private val getUserAccountDetails: GetUserAccountDetailsUseCase,
-    private val editUserInformation: EditUserInformationUseCase
+    private val myAccountProfileDetails: GetMyAccountProfileDetailsUseCase,
+    private val editUserInformationUseCase: EditUserInformationUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AccountSettingsUiState())
@@ -30,13 +28,7 @@ class AccountSettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {
-                val id = getUserId()
-                _uiState.update {
-                    getUserAccountDetails(
-                        userId = id,
-                        profileOwnerId = id
-                    ).toAccountSettingsUiState()
-                }
+                _uiState.update { myAccountProfileDetails().toAccountSettingsUiState() }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }
@@ -61,7 +53,7 @@ class AccountSettingsViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true, error = "") }
         viewModelScope.launch {
             try {
-                editUserInformation(user = uiState.value.toEntity())
+                editUserInformationUseCase(user = uiState.value.toEntity())
                 _uiState.update { it.copy(isLoading = false, isSuccessful = true) }
 
             } catch (t: Throwable) {

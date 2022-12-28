@@ -5,7 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.CreateThreadUseCase
-import com.devfalah.usecases.GetUserIdUseCase
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class PostCreationViewModel @Inject constructor(
     val createThreadUseCase: CreateThreadUseCase,
-    val getUserIdUseCase: GetUserIdUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -31,7 +29,7 @@ class PostCreationViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    id = getUserIdUseCase(), clubId = args.clubId,
+                    clubId = args.clubId,
                     isClub = args.clubId != HOME_CLUB_ID && args.clubId != PROFILE_CLUB_ID
                 )
             }
@@ -64,7 +62,6 @@ class PostCreationViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
                 createThreadUseCase(
-                    userId = uiState.value.id,
                     clubId = args.clubId,
                     postContent = uiState.value.postContent,
                     privacy = uiState.value.privacy,

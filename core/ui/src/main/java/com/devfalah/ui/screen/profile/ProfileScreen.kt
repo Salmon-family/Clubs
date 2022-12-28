@@ -2,17 +2,21 @@ package com.devfalah.ui.screen.profile
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -26,20 +30,19 @@ import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
-import com.devfalah.ui.screen.profile.composable.*
+import com.devfalah.ui.screen.profile.composable.FriendsSection
+import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.screen.profile.composable.ProfileDetailsSection
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
 import com.devfalah.viewmodels.util.ChatNavigation.FRIEND_ID
 import com.devfalah.viewmodels.util.ChatNavigation.PACKAGE_CHAT_NAME
-import com.devfalah.viewmodels.util.ChatNavigation.USER_ID
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
     navController: NavController,
@@ -64,7 +67,7 @@ fun ProfileScreen(
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
-            navigateToConversation(context = context, state.id, state.userDetails.userID)
+            navigateToConversation(context = context, state.userDetails.userID)
         },
         onChangeProfileImage = {
             singlePhotoPickerLauncher.launch(
@@ -74,15 +77,17 @@ fun ProfileScreen(
         onRefresh = viewModel::swipeToRefresh,
         onCreatePost = { navController.navigateToPostCreation(PROFILE_CLUB_ID) },
         onClickProfile = {
-            if (!state.isMyProfile) {
+            if (!state.userDetails.isMyProfile) {
                 navController.navigateToProfile(it)
             }
         },
-        onRetry = viewModel::getUserID,
+        onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onEditUserInformation = {
-            navController.navigateToEditUserInformation()
+            if (state.userDetails.isMyProfile) {
+                navController.navigateToEditUserInformation()
+            }
         }
     )
 
@@ -153,23 +158,22 @@ fun ProfileContent(
                             .padding(horizontal = 16.dp)
                     )
                 }
-                if (state.isMyProfile || state.userDetails.areFriends) {
+                if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
                     item {
                         PostCreatingSection(
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            onCreatePost = if (state.isMyProfile) {
+                            onCreatePost = if (state.userDetails.isMyProfile) {
                                 onCreatePost
                             } else {
                                 onClickSendMessage
                             },
-                            isMyProfile = state.isMyProfile
+                            isMyProfile = state.userDetails.isMyProfile
                         )
                     }
                 }
                 items(state.posts) {
                     PostItem(
                         state = it,
-                        isMyPost = true,
                         isContentExpandable = true,
                         isClubPost = false,
                         showGroupName = false,
@@ -186,11 +190,10 @@ fun ProfileContent(
     }
 }
 
-private fun navigateToConversation(context: Context, userId: Int, friendId: Int) {
+private fun navigateToConversation(context: Context, friendId: Int) {
     try {
         val intent = Intent(context, Class.forName(PACKAGE_CHAT_NAME))
         intent.putExtra(FRIEND_ID, friendId)
-        intent.putExtra(USER_ID, userId)
         ContextCompat.startActivity(context, intent, Bundle())
     } catch (e: ClassNotFoundException) {
         e.printStackTrace()

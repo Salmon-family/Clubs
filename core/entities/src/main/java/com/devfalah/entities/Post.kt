@@ -16,4 +16,5 @@ data class Post(
     val isSaved: Boolean,
     val groupId: Int,
     val groupName: String,
+    val isMyPost: Boolean
 )

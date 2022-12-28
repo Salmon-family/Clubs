@@ -45,10 +45,7 @@ fun SavedPostsScreen(
         navController = navController,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(
-                id = it.postId,
-                publisherId = it.publisherId,
-            )
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
         },
         onClickRemoveSavedPost = viewModel::onClickRemoveSavedPost,
         onClickProfile = { navController.navigateToProfile(it) },
@@ -92,12 +89,11 @@ fun SavedPostsContent(
                 PostItem(
                     state = it,
                     isContentExpandable = true,
-                    isMyPost = it.publisherId == state.userId,
                     isClubPost = it.isFromClub,
                     showGroupName = true,
-                    onClickLike = { onClickLike(it) },
-                    onClickComment = { onClickComment(it) },
-                    onClickSave = { onClickRemoveSavedPost(it) },
+                    onClickLike = onClickLike,
+                    onClickComment = onClickComment,
+                    onClickSave = onClickRemoveSavedPost,
                     onClickProfile = onClickProfile,
                     onOpenLinkClick = onOpenLinkClick,
                     onClickPostSetting = { },

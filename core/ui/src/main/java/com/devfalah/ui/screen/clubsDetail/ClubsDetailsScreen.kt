@@ -3,9 +3,7 @@ package com.devfalah.ui.screen.clubsDetail
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,17 +25,15 @@ import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
-import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
-import com.devfalah.viewmodels.util.Constants
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
 import com.devfalah.viewmodels.userProfile.PostUIState
+import com.devfalah.viewmodels.util.Constants
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -54,24 +50,17 @@ fun ClubsDetailsScreen(
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(
-                id = it.postId,
-                publisherId = it.publisherId,
-            )
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
         },
         onClickSave = viewModel::onClickSave,
         onAddPost = { navController.navigateToPostCreation(state.clubId) },
-        onClickMembers = { navController.navigateToMembers(it) },
+        onClickMembers = { navController.navigateToMembers(clubId = it, ownerId = state.ownerId) },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
-        isMyPost = viewModel::isMyPost,
         onRetry = viewModel::getData,
         onClickJoinRequestClub = {
-            navController.navigateToClubRequests(
-                clubId = state.clubId,
-                ownerId = state.ownerId
-            )
+            navController.navigateToClubRequests(clubId = state.clubId)
         },
         onClickEditClub = {
             navController.navigateToEditClub(
@@ -106,7 +95,6 @@ private fun ClubsDetailsContent(
     onJoinClub: () -> Unit,
     onUnJoinClubs: () -> Unit,
     onDeclineClub: () -> Unit,
-    isMyPost: (Int) -> Boolean,
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
     onClickEditClub: () -> Unit
@@ -199,7 +187,6 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             isClubPost = true,
                             showGroupName = false,
@@ -245,12 +232,11 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isMyPost = isMyPost.invoke(it.postId),
                             isContentExpandable = true,
                             isClubPost = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
-                            onClickSave = { onClickSave(it) },
+                            onClickSave = onClickSave,
                             onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},

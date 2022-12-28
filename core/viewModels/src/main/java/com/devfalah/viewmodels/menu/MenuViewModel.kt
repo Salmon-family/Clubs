@@ -3,8 +3,8 @@ package com.devfalah.viewmodels.menu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.DeleteUserUseCase
+import com.devfalah.usecases.GetMyAccountProfileDetailsUseCase
 import com.devfalah.usecases.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.GetUserIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,31 +14,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MenuViewModel @Inject constructor(
-    val getUserId: GetUserIdUseCase,
     val deleteUser: DeleteUserUseCase,
-    val getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase
+    val myAccountProfileDetails: GetMyAccountProfileDetailsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            _uiState.update { it.copy(loading = true) }
-            try {
-                _uiState.update { it.copy(userId = getUserId()) }
-                getUserPhotoUrl(_uiState.value.userId)
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
-            }
-        }
+        getUserPhotoUrl()
     }
 
-    private fun getUserPhotoUrl(userId: Int) {
+    private fun getUserPhotoUrl() {
+        _uiState.update { it.copy(loading = true) }
         viewModelScope.launch {
-            val userPhotoUrl = getUserAccountDetailsUseCase(userId, userId).profileUrl
             try {
-                _uiState.update { it.copy(profilePhotoUrl = userPhotoUrl) }
+                val user = myAccountProfileDetails()
+                _uiState.update { it.copy(profilePhotoUrl = user.profileUrl, id = user.id) }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }

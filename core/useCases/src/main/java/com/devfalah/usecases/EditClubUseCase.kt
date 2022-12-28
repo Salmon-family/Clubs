@@ -5,11 +5,10 @@ import javax.inject.Inject
 
 class EditClubUseCase @Inject constructor(
     private val repository: ClubRepository,
-    private val getUserId: GetUserIdUseCase
 ){
     suspend operator fun invoke(
         clubId: Int, clubName: String, description: String, clubPrivacy: Int,
     ): Boolean {
-        return repository.editClub(clubId, getUserId(), clubName, description, clubPrivacy)
+        return repository.editClub(clubId, repository.getUserId(), clubName, description, clubPrivacy)
     }
 }
