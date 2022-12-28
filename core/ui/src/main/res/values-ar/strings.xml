@@ -94,5 +94,7 @@
     <string name="send">إرسال</string>
     <string name="bug_report_error_message">حصل خطأ، ترجى إعادة المحاولة في وقت لاحق.</string>
     <string name="enter_club_name">آدخل اسم النادي الخاص بك</string>
+    <string name="nothing_to_show">لا شيء للعرض</string>
+    <string name="saved_threads_text">قم بحفظ منشوراتك المفضّلة لتعرضها في وقت لاحق</string>
 
 </resources>

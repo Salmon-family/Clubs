@@ -98,5 +98,7 @@
     <string name="version">Version </string>
     <string name="bug_report_error_message">An error occurred, please rey again later.</string>
     <string name="enter_club_name">Enter Your Club Name</string>
+    <string name="nothing_to_show">Nothing to show</string>
+    <string name="saved_threads_text">Save your favorite threads to show them here later</string>
 
 </resources>
