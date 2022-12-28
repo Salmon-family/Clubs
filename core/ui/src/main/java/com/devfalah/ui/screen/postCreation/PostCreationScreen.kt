@@ -23,6 +23,7 @@ import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
+import com.devfalah.viewmodels.postCreation.isEnabled
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.util.Constants.MAX_IMAGE_POST_SIZE
 import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
@@ -128,7 +129,12 @@ fun PostCreationContent(
                 onValueChange = onPostChange,
                 onRemoveImage = onRemoveImage
             )
-            PostFooter(onSelectImage = onSelectImage, onClickPost = onClickPost)
+            PostFooter(
+                onSelectImage = onSelectImage,
+                onClickPost = onClickPost,
+                isLoading = state.isLoading,
+                isEnabled = state.isEnabled()
+            )
         }
 
         val context = LocalContext.current
