@@ -1,16 +1,21 @@
 package com.thechance.clubs.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.devfalah.local.ChatDao
 import com.devfalah.local.ChatDataBase
-import com.devfalah.local.ChatDataStorePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "com.thechance.clubs.user_preferences"
+)
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -32,9 +37,13 @@ object DataBaseModule {
         return chatDataBase.chatDao()
     }
 
-    @Singleton
+
+
     @Provides
-    fun provideChatDataStorePreferences(@ApplicationContext context: Context): ChatDataStorePreferences{
-        return ChatDataStorePreferences(context)
+    @Singleton
+    fun provideUserDataStorePreferences(
+        @ApplicationContext applicationContext: Context
+    ): DataStore<Preferences> {
+        return applicationContext.userDataStore
     }
 }

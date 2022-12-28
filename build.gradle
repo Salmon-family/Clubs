@@ -17,6 +17,7 @@ buildscript {
         accompanist_version = "0.13.0"
         firebase_version = "24.4.1"
         flow_version = "1.6.1"
+        data_store_version = "1.0.0"
     }
 
     dependencies {
