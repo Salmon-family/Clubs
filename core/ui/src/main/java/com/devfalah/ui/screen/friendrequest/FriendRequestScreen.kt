@@ -42,7 +42,7 @@ fun FriendRequestScreen(
 
     FriendRequestsContent(
         state = state,
-        onBackClick = { navController.popBackStack() },
+        onClickBack = { navController.popBackStack() },
         onAcceptButtonClick = viewModel::acceptFriendRequest,
         onDeleteButtonClick = viewModel::deniedFriendRequest,
         onRetry = viewModel::getData,
@@ -62,7 +62,7 @@ fun FriendRequestScreen(
 @Composable
 fun FriendRequestsContent(
     state: FriendRequestUiState,
-    onBackClick: () -> Unit,
+    onClickBack: () -> Unit,
     onAcceptButtonClick: (Int) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
@@ -71,7 +71,7 @@ fun FriendRequestsContent(
     Column {
         AppBar(
             title = stringResource(R.string.friends_request),
-            onBackButton = onBackClick,
+            onBackButton = onClickBack,
         )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)

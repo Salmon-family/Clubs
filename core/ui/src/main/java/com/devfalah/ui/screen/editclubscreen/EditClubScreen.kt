@@ -36,7 +36,7 @@ fun EditClubScreen(
 
     EditClubContent(
         uiState = state,
-        onBackClick = { navController.popBackStack() },
+        onClickBack = { navController.popBackStack() },
         onNameChanged = editClubViewModel::onChangedClubName,
         onDescriptionChanged = editClubViewModel::onDescriptionChanged,
         onPrivacyChanged = editClubViewModel::onPrivacyChanged,
@@ -57,7 +57,7 @@ fun EditClubScreen(
 @Composable
 private fun EditClubContent(
     uiState: EditClubUiState,
-    onBackClick: () -> Unit,
+    onClickBack: () -> Unit,
     onNameChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onPrivacyChanged: (Int) -> Unit,
@@ -69,7 +69,7 @@ private fun EditClubContent(
         topBar = {
             AppBar(
                 title = stringResource(R.string.edit_club),
-                onBackButton = onBackClick,
+                onBackButton = onClickBack,
             )
         }
     ) {

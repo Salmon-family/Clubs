@@ -31,7 +31,7 @@ fun FriendsScreen(
 
     FriendsContent(
         state = state,
-        onBackClick = { navController.popBackStack() },
+        onClickBack = { navController.popBackStack() },
         onRefresh = viewModel::getUserFriends,
         onClickProfile = { navController.navigateToProfile(it) },
         onRemoveFriend = viewModel::removeFriend,
@@ -49,7 +49,7 @@ fun FriendsScreen(
 @Composable
 fun FriendsContent(
     state: FriendsUIState,
-    onBackClick: () -> Unit,
+    onClickBack: () -> Unit,
     onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRemoveFriend: (Int) -> Unit,
@@ -59,7 +59,7 @@ fun FriendsContent(
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = "${state.totalFriends} " + stringResource(id = R.string.friends),
-            onBackButton = onBackClick,
+            onBackButton = onClickBack,
         )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
