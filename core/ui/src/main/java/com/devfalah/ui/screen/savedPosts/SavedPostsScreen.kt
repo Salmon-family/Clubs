@@ -25,7 +25,6 @@ import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.savedPosts.SavedPostUIState
 import com.devfalah.viewmodels.savedPosts.SavedPostsViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -35,7 +34,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun SavedPostsScreen(
     navController: NavController,
-    viewModel: SavedPostsViewModel = hiltViewModel()
+    viewModel: SavedPostsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -43,10 +42,10 @@ fun SavedPostsScreen(
 
     SavedPostsContent(
         state = state,
-        navController = navController,
+        onClickBack = { navController.popBackStack() },
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId,)
+            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
         },
         onClickRemoveSavedPost = viewModel::onClickRemoveSavedPost,
         onClickProfile = { navController.navigateToProfile(it) },
@@ -65,18 +64,18 @@ fun SavedPostsScreen(
 @Composable
 fun SavedPostsContent(
     state: SavedPostUIState,
-    navController: NavController,
+    onClickBack: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickRemoveSavedPost: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
 
         AppBar(
             title = stringResource(id = R.string.saved_threads),
-            navHostController = navController
+            onBackButton = onClickBack
         )
 
         LazyColumn(
