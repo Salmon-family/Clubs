@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.clubDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,9 +45,7 @@ class ClubDetailsViewModel @Inject constructor(
                     getGroupWallUseCase(args.groupId)
                 }
             },
-            onFailure = { throwable ->
-                _uiState.update { it.copy(pagerError = throwable.message.toString()) }
-            }
+            onFailure = ::onFailure
         )
         getDetailsOfClubs()
     }
@@ -77,151 +74,156 @@ class ClubDetailsViewModel @Inject constructor(
                     getPostCount()
                 }
             },
-            onFailure = { throwable ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        isPagerLoading = false,
-                        pagerError = throwable.message.toString()
-                    )
-                }
-            }
+            onFailure = ::onFailure
         )
     }
 
+
     private fun getClubDetails() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = "") }
-            try {
-                val clubDetails =
-                    getClubDetailsUseCase(groupID = args.groupId)
-                _uiState.update {
-                    it.copy(
-                        detailsUiState = clubDetails.toClubDetailsUIState(),
-                        requestExists = clubDetails.requestExists,
-                        isMember = clubDetails.isMember,
-                        isLoading = false,
-                        isSuccessful = true
-                    )
+        makeRequest(
+            onSuccess = {
+                viewModelScope.launch {
+                    val clubDetails =
+                        getClubDetailsUseCase(groupID = args.groupId)
+                    _uiState.update {
+                        it.copy(
+                            detailsUiState = clubDetails.toClubDetailsUIState(),
+                            requestExists = clubDetails.requestExists,
+                            isMember = clubDetails.isMember,
+                            isLoading = false,
+                            isSuccessful = true
+                        )
+                    }
                 }
-            } catch (throwable: Throwable) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        isSuccessful = false,
-                        error = throwable.message.toString()
-                    )
-                }
-            }
-        }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     private fun getPostCount() {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                val postCount = getGroupWallUseCase.getPostsCount()
-                _uiState.update { it.copy(postCount = postCount) }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(pagerError = t.message.toString()) }
-            }
-        }
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    val postCount = getGroupWallUseCase.getPostsCount()
+                    _uiState.update { it.copy(postCount = postCount) }
+                }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     private fun getMembers() {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                val members =
-                    getClubMembersUseCase(
-                        uiState.value.detailsUiState.ownerId,
-                        args.groupId
-                    ).toUserUIState()
-                _uiState.update { it.copy(membersCount = members.size, members = members) }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(pagerError = t.message.toString()) }
-            }
-        }
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    val members =
+                        getClubMembersUseCase(
+                            uiState.value.detailsUiState.ownerId,
+                            args.groupId
+                        ).toUserUIState()
+                    _uiState.update { it.copy(membersCount = members.size, members = members) }
+                }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     fun onClickLike(post: PostUIState) {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                val totalLikes = likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
-                val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
-                )
-                _uiState.update {
-                    it.copy(posts = _uiState.value.posts.map {
-                        if (it.postId == post.postId) {
-                            updatedPost
-                        } else {
-                            it
-                        }
-                    })
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    val totalLikes = likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
+                    val updatedPost = post.copy(
+                        isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    )
+                    _uiState.update {
+                        it.copy(posts = _uiState.value.posts.map {
+                            if (it.postId == post.postId) {
+                                updatedPost
+                            } else {
+                                it
+                            }
+                        })
+                    }
                 }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(pagerError = t.message.toString()) }
-            }
-        }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     fun onClickSave(post: PostUIState) {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                favoritePostUseCase(post.toEntity())
-                _uiState.update {
-                    it.copy(
-                        posts = _uiState.value.posts
-                            .map {
-                                if (it.postId == post.postId) {
-                                    it.copy(isSaved = !post.isSaved)
-                                } else {
-                                    it
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    favoritePostUseCase(post.toEntity())
+                    _uiState.update {
+                        it.copy(
+                            posts = _uiState.value.posts
+                                .map {
+                                    if (it.postId == post.postId) {
+                                        it.copy(isSaved = !post.isSaved)
+                                    } else {
+                                        it
+                                    }
                                 }
-                            }
-                    )
+                        )
+                    }
                 }
-            } catch (t: Throwable) {
-                t.message.toString()
-            }
-        }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     fun joinClubs() {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                joinClubUseCase(clubId = args.groupId)
-                _uiState.update { it.copy(requestExists = true) }
-            } catch (t: Throwable) {
-                Log.i("error", t.message.toString())
-            }
-        }
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    joinClubUseCase(clubId = args.groupId)
+                    _uiState.update { it.copy(requestExists = true) }
+                }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     fun unJoinClubs() {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                unJoinClubUseCase(clubId = args.groupId)
-                _uiState.update { it.copy(requestExists = false) }
-            } catch (t: Throwable) {
-                Log.i("error", t.message.toString())
-            }
-        }
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    unJoinClubUseCase(clubId = args.groupId)
+                    _uiState.update { it.copy(requestExists = false) }
+                }
+            },
+            onFailure = ::onFailure
+        )
     }
 
     fun declineRequestOfClub() {
         gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(isMember = false, requestExists = false) }
-            } catch (t: Throwable) {
-                Log.i("error", t.message.toString())
-            }
+        makeRequest(
+            onSuccess = {
+                gettingDetailsClubsJob = viewModelScope.launch {
+                    _uiState.update { it.copy(isMember = false, requestExists = false) }
+                }
+            },
+            onFailure = ::onFailure
+        )
+    }
+
+    private fun onFailure(throwable: Throwable) {
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                isPagerLoading = false,
+                isSuccessful = false,
+                error = throwable.message.toString()
+            )
         }
     }
 
