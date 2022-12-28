@@ -9,7 +9,7 @@ private const val ROUTE = "EditClub"
 fun NavController.navigateToEditClub(
     clubId: Int,
     clubName: String,
-    clubPrivacy: Int,
+    clubPrivacy: Boolean,
     clubDescription: String,
 ) {
     navigate("$ROUTE/$clubId/$clubName/$clubPrivacy/$clubDescription")
@@ -21,7 +21,7 @@ fun NavGraphBuilder.editClubRoute(navController: NavHostController) {
         arguments = listOf(
             navArgument(EditClubArgs.CLUB_ID_ARG) { NavType.IntType },
             navArgument(EditClubArgs.CLUB_NAME_ARG) { NavType.StringType },
-            navArgument(EditClubArgs.PRIVACY_ARG) { NavType.IntType },
+            navArgument(EditClubArgs.PRIVACY_ARG) { NavType.BoolType },
             navArgument(EditClubArgs.CLUB_DESCRIPTION) { NavType.StringType },
         )
     ) {

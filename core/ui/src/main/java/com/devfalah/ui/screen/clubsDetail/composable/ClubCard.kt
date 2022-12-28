@@ -13,15 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun ClubCard(
@@ -56,7 +56,17 @@ fun ClubCard(
             )
 
             Text(
-                text = text,
+                text = when (text) {
+                    "true" -> {
+                        stringResource(id = R.string.public_privacy)
+                    }
+                    "false" -> {
+                        stringResource(id = R.string.private_privacy)
+                    }
+                    else -> {
+                        text
+                    }
+                },
                 modifier = Modifier.padding(top = 4.dp),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.SemiBold,

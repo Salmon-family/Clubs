@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 class EditClubArgs(savedStateHandle: SavedStateHandle) {
     val clubId: Int = checkNotNull(savedStateHandle[CLUB_ID_ARG]).toString().toInt()
     val clubName: String = checkNotNull(savedStateHandle[CLUB_NAME_ARG]).toString()
-    val privacyType: Int = checkNotNull(savedStateHandle[PRIVACY_ARG]).toString().toInt()
+    val privacyType: Boolean = checkNotNull(savedStateHandle[PRIVACY_ARG])
     val clubDescription: String = checkNotNull(savedStateHandle[CLUB_DESCRIPTION]).toString()
 
     companion object {

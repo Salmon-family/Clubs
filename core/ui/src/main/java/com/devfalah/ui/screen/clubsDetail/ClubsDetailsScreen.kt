@@ -33,7 +33,6 @@ import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
 import com.devfalah.viewmodels.userProfile.PostUIState
-import com.devfalah.viewmodels.util.Constants
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -53,21 +52,29 @@ fun ClubsDetailsScreen(
             navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
         },
         onClickSave = viewModel::onClickSave,
-        onAddPost = { navController.navigateToPostCreation(state.clubId) },
-        onClickMembers = { navController.navigateToMembers(clubId = it, ownerId = state.ownerId) },
+        onAddPost = { navController.navigateToPostCreation(state.detailsUiState.clubId) },
+        onClickMembers = {
+            navController.navigateToMembers(
+                clubId = it,
+                ownerId = state.detailsUiState.ownerId
+            )
+        },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
-        onRetry = viewModel::getData,
+        onRetry = viewModel::getDetailsOfClubs,
         onClickJoinRequestClub = {
-            navController.navigateToClubRequests(clubId = state.clubId, ownerId = state.ownerId)
+            navController.navigateToClubRequests(
+                clubId = state.detailsUiState.clubId,
+                ownerId = state.detailsUiState.ownerId
+            )
         },
         onClickEditClub = {
             navController.navigateToEditClub(
-                clubId = state.clubId,
-                clubName = state.name,
-                clubDescription = state.description,
-                clubPrivacy = state.membership
+                clubId = state.detailsUiState.clubId,
+                clubName = state.detailsUiState.name,
+                clubDescription = state.detailsUiState.description,
+                clubPrivacy = state.detailsUiState.isClubPublic
             )
         }
     )
@@ -126,7 +133,7 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember) {
+                if (!state.detailsUiState.isClubPublic && !state.isMember) {
                     if (state.requestExists) {
                         item {
                             RoundButton(
@@ -179,7 +186,7 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.detailsUiState.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
@@ -223,7 +230,7 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.detailsUiState.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
