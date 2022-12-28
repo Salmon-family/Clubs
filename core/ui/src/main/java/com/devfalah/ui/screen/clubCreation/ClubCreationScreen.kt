@@ -38,6 +38,7 @@ fun ClubCreationScreen(
     ClubCreationContent(
         navController = navController,
         state = state,
+        onBackClick = { navController.popBackStack() },
         onNameChange = viewModel::onNameTextChange,
         onDescriptionChange = viewModel::onDescriptionTextChange,
         onPrivacyChange = viewModel::onPrivacyChange,
@@ -58,6 +59,7 @@ fun ClubCreationScreen(
 fun ClubCreationContent(
     navController: NavController,
     state: ClubCreationUiState,
+    onBackClick: () -> Unit,
     onNameChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onPrivacyChange: (Int) -> Unit,
@@ -66,7 +68,10 @@ fun ClubCreationContent(
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.create_club), navHostController = navController)
+            AppBar(
+                title = stringResource(R.string.create_club),
+                onBackButton = onBackClick,
+            )
         }
     ) { scaffoldPadding ->
         Column(
