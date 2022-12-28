@@ -1,15 +1,21 @@
 package com.devfalah.local
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.devfalah.repository.ChatLocalDataSource
 import com.devfalah.repository.models.MessageEntityLocalDTO
 import com.devfalah.repository.models.ChatLocalDto
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class LocalDataSourceImp @Inject constructor(
     private val chatDao: ChatDao,
-    private val chatDataStorePreferences: ChatDataStorePreferences,
-) : ChatLocalDataSource {
+    private val userDataStore: DataStore<Preferences>,
+    ) : ChatLocalDataSource {
 
     override suspend fun insertChats(chats: List<ChatLocalDto>) {
         return chatDao.insertChats(chats)
@@ -40,7 +46,11 @@ class LocalDataSourceImp @Inject constructor(
     }
 
     override fun getUserId(): String? {
-        return chatDataStorePreferences.readString(SIGN_UP_STATE_KEY)
+        return runBlocking {
+            userDataStore.data.map {
+                it[stringPreferencesKey(SIGN_UP_STATE_KEY)]
+            }.first()
+        }
     }
 
     companion object DataStorePreferencesKeys {

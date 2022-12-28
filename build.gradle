@@ -19,6 +19,7 @@ buildscript {
         flow_version = "1.6.1"
 
         splash_version = "1.0.0"
+        data_store_version = "1.0.0"
     }
 
     dependencies {
