@@ -53,7 +53,7 @@ fun MenuItem(
         Icon(
             modifier = Modifier.size(24.dp),
             painter = painter,
-            tint = MaterialTheme.colors.primaryVariant,
+            tint = MaterialTheme.colors.onSurface,
             contentDescription = null
         )
     }

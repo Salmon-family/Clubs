@@ -7,8 +7,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 fun setStatusBarColor(
     color: Color = LightBackgroundColor,
-    darkIcons: Boolean = true,
     systemUIController: SystemUiController
 ) {
-    systemUIController.setStatusBarColor(color, darkIcons = darkIcons)
+    systemUIController.setStatusBarColor(color)
 }

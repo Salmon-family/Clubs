@@ -49,7 +49,6 @@ fun ClubCreationScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 
@@ -82,6 +81,7 @@ fun ClubCreationContent(
                 value = state.name,
                 onValueChange = onNameChange,
                 singleLine = true,
+                hint = stringResource(id = R.string.enter_club_name)
             )
 
             CustomTextField(
@@ -94,7 +94,7 @@ fun ClubCreationContent(
             )
 
             Column {
-                Text(text = stringResource(R.string.privacy))
+                Text(text = stringResource(R.string.privacy), color = MaterialTheme.colors.primaryVariant)
                 HeightSpacer8()
                 SegmentControls(
                     items = listOf(

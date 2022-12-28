@@ -97,12 +97,11 @@ fun ProfileScreen(
         }
     }
 
-    val color = MaterialTheme.colors.onBackground
+    val color = MaterialTheme.colors.primary
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 
