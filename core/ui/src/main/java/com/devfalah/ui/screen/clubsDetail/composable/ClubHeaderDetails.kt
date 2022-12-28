@@ -68,6 +68,7 @@ fun ClubHeaderDetails(
             text = state.detailsUiState.name,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .constrainAs(textName) {
                     top.linkTo(backButton.bottom)
                     start.linkTo(parent.start)
@@ -75,7 +76,7 @@ fun ClubHeaderDetails(
                 },
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
+            fontSize = 24.sp,
             fontFamily = PlusJakartaSans,
             color = WhiteColor,
             maxLines = 1

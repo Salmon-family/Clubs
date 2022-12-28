@@ -79,11 +79,12 @@ private fun EditClubContent(
                 title = stringResource(R.string.club_name),
                 value = uiState.clubName,
                 onValueChange = onNameChanged,
+                maxChar = 30,
                 singleLine = true,
             )
 
             Column {
-                Text(text = stringResource(R.string.privacy))
+                Text(text = stringResource(R.string.privacy), color = MaterialTheme.colors.onSurface)
                 HeightSpacer8()
                 SegmentControls(
                     items = listOf(

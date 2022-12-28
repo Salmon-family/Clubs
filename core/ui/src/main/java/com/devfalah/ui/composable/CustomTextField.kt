@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.util.htmlText
 
 @Composable
 fun CustomTextField(
@@ -56,7 +57,7 @@ fun CustomTextField(
         }
         HeightSpacer8()
         TextField(
-            value = value,
+            value = value.htmlText(),
             onValueChange = {
                 if (it.length <= maxChar)
                     onValueChange(it)

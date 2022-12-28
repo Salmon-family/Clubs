@@ -62,7 +62,7 @@ fun ClubItem(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = state.title,
+                text = state.title.htmlText(),
                 textAlign = TextAlign.Start,
                 fontSize = 12.sp,
                 color = MaterialTheme.colors.onSurface,

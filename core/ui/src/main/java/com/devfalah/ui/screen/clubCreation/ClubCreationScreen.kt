@@ -81,6 +81,7 @@ fun ClubCreationContent(
                 value = state.name,
                 onValueChange = onNameChange,
                 singleLine = true,
+                maxChar = 30,
                 hint = stringResource(id = R.string.enter_club_name)
             )
 
