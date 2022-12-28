@@ -1,8 +1,10 @@
 package com.thechance.clubs.di
 
 import android.content.Context
+import android.util.Log
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
+import com.devfalah.remote.DdosInterceptor
 import com.google.firebase.firestore.FirebaseFirestore
 import com.simplemented.okdelay.DelayInterceptor
 import com.thechance.clubs.BuildConfig
@@ -19,7 +21,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -87,13 +88,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor, ddosInterceptor: DdosInterceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
+            .addInterceptor(ddosInterceptor)
             .addInterceptor(authInterceptor)
             .addInterceptor(logging)
-            .addInterceptor(DelayInterceptor(1500L, TimeUnit.MILLISECONDS))
             .build()
     }
 
