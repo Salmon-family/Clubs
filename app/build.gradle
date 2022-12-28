@@ -116,4 +116,6 @@ dependencies {
 
     implementation "com.google.firebase:firebase-firestore-ktx:$firebase_version"
 
+    implementation "androidx.datastore:datastore-preferences:$data_store_version"
+
 }

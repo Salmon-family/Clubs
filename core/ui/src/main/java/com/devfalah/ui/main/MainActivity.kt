@@ -2,7 +2,6 @@ package com.devfalah.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -20,18 +19,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userId = intent.extras?.getInt("userId") ?: -1
         setContent {
             ClubsTheme {
                 val systemUIController = rememberSystemUiController()
                 systemUIController.setNavigationBarColor(color = MaterialTheme.colors.background)
                 systemUIController.setStatusBarColor(color = MaterialTheme.colors.background)
 
-                if (userId != -1) {
-                    viewModel.saveUserId(userId)
-                    ClubsApp()
-
-                } else if (viewModel.getUserId() != -1) {
+                if (viewModel.checkIfLoggedIn()) {
                     ClubsApp()
                 } else {
                     navigateToIdentity()

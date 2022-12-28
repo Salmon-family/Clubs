@@ -1,10 +1,13 @@
 package com.thechance.clubs.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.devfalah.local.ChatDao
 import com.devfalah.local.ChatDataBase
-import com.devfalah.local.ChatDataStorePreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,9 +35,14 @@ object DataBaseModule {
         return chatDataBase.chatDao()
     }
 
-    @Singleton
+
     @Provides
-    fun provideChatDataStorePreferences(@ApplicationContext context: Context): ChatDataStorePreferences{
-        return ChatDataStorePreferences(context)
+    @Singleton
+    fun provideUserDataStorePreferences(
+        @ApplicationContext applicationContext: Context
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create {
+            applicationContext.preferencesDataStoreFile("com.thechance.clubs.user_preferences")
+        }
     }
 }

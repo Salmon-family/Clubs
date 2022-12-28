@@ -120,18 +120,17 @@ fun LogInPasswordContent(
 
     LaunchedEffect(key1 = state.isLoading) {
         if (state.isSuccess) {
-            navigateToHome(context, state.userId)
+            navigateToHome(context)
         }
     }
 }
 
-private fun navigateToHome(context : Context, userId: Int) {
+private fun navigateToHome(context : Context) {
     try {
         val intent = Intent(
             context,
             Class.forName("com.devfalah.ui.main.MainActivity")
         )
-        intent.putExtra("userId", userId)
         ContextCompat.startActivity(context, intent, null)
         (context as? Activity)?.finish()
     } catch (e: ClassNotFoundException) {
