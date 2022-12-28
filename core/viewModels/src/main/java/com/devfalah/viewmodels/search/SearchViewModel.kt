@@ -30,7 +30,7 @@ class SearchViewModel @Inject constructor(
             try {
                 delay(2000)
                 val searchResult = getSearchUseCase(uiState.value.keyword, limit = 3)
-                _uiState.emit(searchResult.toUIState())
+                _uiState.emit(searchResult.toUIState().copy(keyword = uiState.value.keyword))
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
