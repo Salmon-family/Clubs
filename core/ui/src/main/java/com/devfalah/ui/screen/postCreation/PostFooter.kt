@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +32,8 @@ fun PostFooter(
         Icon(
             modifier = Modifier.nonRippleEffect { onSelectImage() },
             painter = painterResource(id = R.drawable.ic_gallery_add),
-            contentDescription = null
+            contentDescription = null,
+            tint = MaterialTheme.colors.secondaryVariant
         )
 
 //        Button(

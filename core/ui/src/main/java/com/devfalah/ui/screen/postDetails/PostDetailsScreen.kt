@@ -24,7 +24,6 @@ import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.postDetails.CommentUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsUIState
@@ -124,7 +123,7 @@ fun PostDetailsContent(
                                 .padding(horizontal = 16.dp),
                             text = stringResource(id = R.string.replies),
                             textAlign = TextAlign.Start,
-                            color = LightSecondaryBlackColor,
+                            color = MaterialTheme.colors.onSurface,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = PlusJakartaSans
