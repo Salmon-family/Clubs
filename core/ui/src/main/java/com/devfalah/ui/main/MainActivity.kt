@@ -2,6 +2,7 @@ package com.devfalah.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.LocaleList
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

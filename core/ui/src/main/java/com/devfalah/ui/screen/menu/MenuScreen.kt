@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,8 +30,11 @@ import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.*
+import com.devfalah.ui.screen.menu.composable.language.LanguageBottomSheet
+import com.devfalah.ui.screen.menu.composable.theme.ThemeBottomSheet
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
+import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
@@ -55,11 +57,10 @@ fun MenuScreen(
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
         onClickAccountSettings = { navController.navigate(route = ACCOUNT_SETTINGS_SCREEN) },
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
-        onClickTheme = {},
-        onClickLanguage = {},
         onClickReportBug = {},
         onClickLogOut = viewModel::onClickLogOut,
-        onChangeLanguage = viewModel::onChangeLanguage
+        onChangeLanguage = viewModel::onChangeLanguage,
+        onChangeTheme = viewModel::onChangeTheme
     )
 
     val color = MaterialTheme.colors.background
@@ -86,30 +87,31 @@ fun MenuContent(
     onClickSavedPosts: () -> Unit,
     onClickAccountSettings: () -> Unit,
     onClickFriendsRequests: () -> Unit,
-    onClickTheme: () -> Unit,
-    onClickLanguage: () -> Unit,
     onClickReportBug: () -> Unit,
     onClickLogOut: () -> Unit,
-    onChangeLanguage: (Int) -> Unit
+    onChangeLanguage: (Int) -> Unit,
+    onChangeTheme: (Int) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded}
+        initialValue = ModalBottomSheetValue.Hidden
     )
 
     val scope = rememberCoroutineScope()
 
-    BackHandler(sheetState.isVisible) {
-        scope.launch { sheetState.hide() }
-    }
-
     var switch by remember {
-        mutableStateOf(true)
+        mutableStateOf(Preferences.THEME)
     }
     ModalBottomSheetLayout(
         sheetState = sheetState,
-        sheetContent = { LanguageBottomSheet(onChangeLanguage = onChangeLanguage) },
-        sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
+        sheetContent = {
+            if(switch == Preferences.LANGUAGE){
+                LanguageBottomSheet(onChangeLanguage = onChangeLanguage)
+            }else{
+                ThemeBottomSheet(onChangeTheme = onChangeTheme)
+            }
+        },
+        sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+        sheetBackgroundColor = LightBackgroundColor
         ){
         Column {
 
@@ -152,14 +154,16 @@ fun MenuContent(
 
                 item {
                     PreferencesSection(
-                        onClickTheme = {},
+                        onClickTheme = {
+                            scope.launch {
+                                switch = Preferences.THEME
+                                setSheetVisibility(sheetState)
+                            }
+                        },
                         onClickLanguage = {
                             scope.launch {
-                                if(sheetState.isVisible){
-                                    sheetState.hide()
-                                }else{
-                                    sheetState.show()
-                                }
+                                switch = Preferences.LANGUAGE
+                                setSheetVisibility(sheetState)
                             }
                         }
                     )
@@ -200,8 +204,19 @@ private fun getVersion(context: Context): String {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
+private suspend fun setSheetVisibility(
+    sheetState: ModalBottomSheetState
+){
+    if(sheetState.isVisible){
+        sheetState.hide()
+    }else{
+        sheetState.show()
+    }
+}
+
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewMenu() {
-    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {}, {})
+    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
 }

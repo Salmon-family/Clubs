@@ -60,4 +60,13 @@ class MenuViewModel @Inject constructor(
         }
         _uiState.update { it.copy(language = language) }
     }
+
+    fun onChangeTheme(selectedItemIndex: Int){
+        val theme = when(selectedItemIndex){
+            0 -> ThemeType.LIGHT
+            1 -> ThemeType.DARK
+            else -> ThemeType.LIGHT
+        }
+        _uiState.update { it.copy(theme = theme) }
+    }
 }
