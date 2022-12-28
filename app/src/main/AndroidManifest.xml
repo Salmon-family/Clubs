@@ -35,6 +35,7 @@
 
         <activity
             android:name="com.thechance.ui.ChatActivity"
+            android:theme="@style/Theme.SplashScreenAndroid"
             android:exported="true">
 
         </activity>
@@ -42,6 +43,7 @@
 
         <activity
             android:name="com.thechance.identity.ui.main.AuthenticationActivity"
+            android:theme="@style/Theme.SplashScreenAndroid"
             android:exported="true">
 
         </activity>

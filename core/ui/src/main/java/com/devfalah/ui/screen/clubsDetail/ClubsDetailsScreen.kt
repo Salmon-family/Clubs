@@ -165,14 +165,20 @@ private fun ClubsDetailsContent(
                     }
 
                 } else if (state.isMember) {
-                    item {
-                        OutlineButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            onClick = onDeclineClub
-                        )
+                    if (!state.detailsUiState.isOwner){
+                        item {
+                            OutlineButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp),
+                                onClick = onDeclineClub
+                            )
 
+                        }
+                    }else{
+                        item {
+                            HeightSpacer16()
+                        }
                     }
 
                     item {
