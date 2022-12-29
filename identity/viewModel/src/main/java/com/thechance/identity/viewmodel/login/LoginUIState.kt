@@ -8,3 +8,8 @@ data class LoginUIState(
     val isLoading: Boolean = false,
     val userId: Int = 0
 )
+
+
+fun LoginUIState.isEnabled(): Boolean {
+    return !isLoading && password.length > 6
+}
