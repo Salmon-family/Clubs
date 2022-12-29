@@ -37,7 +37,7 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File
     }
 
     val bos = ByteArrayOutputStream()
-    resizedImage.compress(Bitmap.CompressFormat.PNG, 0, bos)
+    resizedImage.compress(Bitmap.CompressFormat.JPEG, 100, bos)
     val bitmapdata = bos.toByteArray()
     val outputFile = File(context.cacheDir, fileName)
     outputFile.createNewFile()
