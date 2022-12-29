@@ -1,15 +1,16 @@
 package com.thechance.ui.screens.chat
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,9 +18,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.thechance.ui.R
 import com.thechance.ui.composable.FriendChat
 import com.thechance.ui.composable.Loading
 import com.thechance.ui.composable.SearchTextField
@@ -29,6 +32,7 @@ import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
+import com.thechance.viewmodels.chats.uiStates.isEmpty
 
 @Composable
 fun ChatsScreen(
@@ -52,6 +56,7 @@ fun ChatsScreen(
     )
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChatsContent(
@@ -62,14 +67,18 @@ private fun ChatsContent(
     onLoadingMoreChats: () -> Unit,
 ) {
     val listState = rememberLazyListState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background),
-    ) {
-        TopBarChats(onCLickBack)
+    Scaffold(topBar = {TopBarChats(onCLickBack)}) {
         if (state.isLoading) {
-            Loading(modifier = Modifier.align(Alignment.CenterHorizontally))
+            Loading()
+        }
+        if (state.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(text = stringResource(R.string.no_chats))
+            }
+
         } else {
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
@@ -111,13 +120,14 @@ private fun ChatsContent(
                 }
             }
         }
+    }
+
 
         LaunchedEffect(key1 = listState.isScrolledToTheEnd()) {
             if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
                 onLoadingMoreChats()
             }
         }
-    }
 }
 
 fun LazyListState.isScrolledToTheEnd(): Boolean {

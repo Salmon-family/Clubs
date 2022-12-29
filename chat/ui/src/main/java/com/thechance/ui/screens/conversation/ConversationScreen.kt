@@ -11,10 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.thechance.ui.composable.AppBar
-import com.thechance.ui.composable.BackgroundChatScreen
-import com.thechance.ui.composable.ListOfChat
-import com.thechance.ui.composable.SendTextField
+import com.thechance.ui.composable.*
 import com.thechance.viewmodels.conversation.ConversationViewModel
 import com.thechance.viewmodels.conversation.uiStates.ConversationUIState
 
@@ -53,6 +50,9 @@ fun ChatContent(
             contentAlignment = Alignment.BottomCenter
         ) {
             BackgroundChatScreen()
+            if (state.isLoading){
+                Loading()
+            }
             ListOfChat(state, onLoadMoreMessages)
             SendTextField(
                 text = messageText,

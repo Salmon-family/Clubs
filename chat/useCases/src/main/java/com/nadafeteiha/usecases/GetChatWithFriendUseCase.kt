@@ -9,9 +9,6 @@ class GetChatWithFriendUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(friendId: Int): Flow<List<Message>> {
-        println("DEVFALAH WORKKKKKKK")
-        println("DEVFALAH"+chatRepository.getUserId().toString())
-
         return chatRepository.getMessages(friendId)
     }
 

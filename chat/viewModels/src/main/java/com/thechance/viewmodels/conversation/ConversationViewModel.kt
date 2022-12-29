@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -64,7 +65,7 @@ class ConversationViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 refreshMessages(friendId)
-                getMessages(friendId).collect {
+                getMessages(friendId).filterNot { it.isEmpty() }.collect {
                     _uiState.update { uiState ->
                         uiState.copy(
                             messages = it.map { it.toUiState() },
@@ -107,7 +108,7 @@ class ConversationViewModel @Inject constructor(
                 _uiState.update { it.copy(isLoading = true) }
                 val messagesCount = getMessages.refreshMessages( friendId, 1)
                 getMessages.refreshMessages( friendId, 2)
-                _uiState.update { it.copy(messagesCount = messagesCount) }
+                _uiState.update { it.copy(messagesCount = messagesCount, isLoading = false) }
             } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)

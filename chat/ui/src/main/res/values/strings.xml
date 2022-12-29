@@ -6,4 +6,5 @@
     <string name="search">Search</string>
     <string name="search_text">Search for a friend</string>
     <string name="enter_your_message">Enter your message…</string>
+    <string name="no_chats">No Chats</string>
 </resources>
