@@ -88,7 +88,7 @@ private fun ChatsContent(
                 Text(text = stringResource(R.string.no_chats))
             }
 
-        } else {
+        }
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -128,7 +128,7 @@ private fun ChatsContent(
                     }
                 }
             }
-        }
+
     }
 
 
