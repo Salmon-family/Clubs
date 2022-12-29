@@ -12,22 +12,21 @@ class GetChatWithFriendUseCase @Inject constructor(
         return chatRepository.getMessages(friendId)
     }
 
-    suspend fun refreshMessages(userID: Int, friendID: Int, page: Int): Int {
-        val messages = chatRepository.getMessages(userID, friendID, page)
+    suspend fun refreshMessages(friendID: Int, page: Int): Int {
+        val messages = chatRepository.getMessages(chatRepository.getUserId(), friendID, page)
         chatRepository.insertMessages(messages.messages)
         chatRepository.updateRecentMessage(friendID,messages.messages.last().message)
         return messages.count
     }
 
     suspend fun loadingMoreMessages(
-        userID: Int,
         friendId: Int,
         messagesCount: Int,
         messagesCountLocally: Int,
     ): Boolean {
         return if (messagesCount > messagesCountLocally) {
             val nextPage = messagesCountLocally / 10 + 1
-            refreshMessages(userID, friendId, nextPage)
+            refreshMessages(friendId, nextPage)
             false
         } else {
             true

@@ -9,3 +9,6 @@ data class ChatsUiState(
     val isLoadingMore: Boolean = false,
     val isLastPage: Boolean = false,
 )
+
+
+fun ChatsUiState.isEmpty() = chats.isEmpty()

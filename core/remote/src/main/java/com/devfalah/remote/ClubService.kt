@@ -237,7 +237,6 @@ interface ClubService {
     ): Response<BaseResponse<AlbumsResponse>>
 
 
-
     @GET("photos_list")
     suspend fun getAllPhotosInAlbum(
         @Query("album_guid") albumID: Int
@@ -337,7 +336,7 @@ interface ClubService {
 
     @GET("wall_list_user")
     suspend fun getAllWallPosts(
-        @Query("guid") userID: Int,
+        @Query("guid") userId: Int,
         @Query("uguid") friendID: Int,
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null

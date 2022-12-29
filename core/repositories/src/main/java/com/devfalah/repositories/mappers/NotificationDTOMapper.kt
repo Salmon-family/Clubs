@@ -5,7 +5,7 @@ import com.devfalah.repositories.ConvertDate
 import com.devfalah.repositories.NotificationType
 import com.devfalah.repositories.models.notification.NotificationsDTO
 
-fun NotificationsDTO.toEntity(): Notification {
+internal fun NotificationsDTO.toEntity(): Notification {
     val notificationType = when (this.notification?.type) {
         "like:entity:file:ossn:aphoto" -> NotificationType.LIKE_PHOTO
         "like:post" -> NotificationType.LIKE_POST
@@ -31,4 +31,4 @@ fun NotificationsDTO.toEntity(): Notification {
     )
 }
 
-fun List<NotificationsDTO>.toEntity():List<Notification> = map { it.toEntity() }
+internal fun List<NotificationsDTO>.toEntity():List<Notification> = map { it.toEntity() }

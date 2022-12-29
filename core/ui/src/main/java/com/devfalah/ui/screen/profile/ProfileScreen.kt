@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
@@ -167,7 +168,7 @@ fun ProfileContent(
                     )
                 }
                 if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
-                    item {
+                    item("profileDetails") {
                         PostCreatingSection(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             onCreatePost = if (state.userDetails.isMyProfile) {
@@ -202,7 +203,7 @@ private fun navigateToConversation(context: Context, friendId: Int) {
     try {
         val intent = Intent(context, Class.forName(PACKAGE_CHAT_NAME))
         intent.putExtra(FRIEND_ID, friendId)
-        ContextCompat.startActivity(context, intent, Bundle())
+        startActivity(context, intent, Bundle())
     } catch (e: ClassNotFoundException) {
         e.printStackTrace()
     }

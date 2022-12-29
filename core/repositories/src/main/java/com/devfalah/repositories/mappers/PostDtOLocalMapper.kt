@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.Post
 import com.devfalah.repositories.models.PostLocalDto
 
-fun Post.toEntity(): PostLocalDto {
+internal fun Post.toEntity(): PostLocalDto {
     return PostLocalDto(
         id = id,
         privacy = privacy,
@@ -21,7 +21,7 @@ fun Post.toEntity(): PostLocalDto {
     )
 }
 
-fun PostLocalDto.toEntity(): Post {
+internal fun PostLocalDto.toEntity(): Post {
     return Post(
         id = id,
         privacy = privacy,
@@ -42,4 +42,4 @@ fun PostLocalDto.toEntity(): Post {
     )
 }
 
-fun List<PostLocalDto>.toEntity() = map { it.toEntity() }
+internal fun List<PostLocalDto>.toEntity() = map { it.toEntity() }

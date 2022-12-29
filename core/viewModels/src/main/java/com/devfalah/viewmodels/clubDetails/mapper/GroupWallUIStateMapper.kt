@@ -25,6 +25,7 @@ fun GroupWallPost.toUIState(groupId: Int, groupName: String): PostUIState {
         postImage = post.imageUrl,
         postContent = text,
         groupId = groupId,
-        groupName = groupName
+        groupName = groupName,
+        isMyPost = post.isMyPost
     )
 }
