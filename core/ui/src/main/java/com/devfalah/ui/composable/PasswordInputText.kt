@@ -50,6 +50,12 @@ fun PasswordInputText(
             modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = onTextChange,
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = PlusJakartaSans,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colors.primaryVariant
+            ),
             shape = RoundedCornerShape(size = 100.dp),
             visualTransformation = if (passwordVisible) {
                 VisualTransformation.None
