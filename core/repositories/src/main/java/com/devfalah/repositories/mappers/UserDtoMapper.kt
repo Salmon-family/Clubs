@@ -4,7 +4,7 @@ import com.devfalah.entities.User
 import com.devfalah.repositories.models.UserDTO
 
 
-fun UserDTO.toEntity(): User {
+internal fun UserDTO.toEntity(): User {
     return User(
         birthdate = this.birthdate ?: "",
         coverUrl = this.coverUrl ?: "",
@@ -22,4 +22,4 @@ fun UserDTO.toEntity(): User {
     )
 }
 
-fun List<UserDTO>.toEntity() = map { it.toEntity() }
+internal fun List<UserDTO>.toEntity() = map { it.toEntity() }

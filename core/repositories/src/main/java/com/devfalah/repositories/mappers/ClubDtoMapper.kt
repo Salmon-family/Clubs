@@ -9,9 +9,9 @@ import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupPostDto
 import com.devfalah.repositories.models.group.GroupWallDto
 
-fun List<GroupDTO>.toEntity(): List<Club> = map { it.toEntity() }
+internal fun List<GroupDTO>.toEntity(): List<Club> = map { it.toEntity() }
 
-fun GroupDTO.toEntity(): Club {
+internal fun GroupDTO.toEntity(): Club {
     return Club(
         id = guid ?: 0,
         ownerId = ownerGuid ?: 0,
@@ -24,7 +24,7 @@ fun GroupDTO.toEntity(): Club {
     )
 }
 
-fun GroupWallDto.toEntity(): GroupWall {
+internal fun GroupWallDto.toEntity(): GroupWall {
     return GroupWall(
         count = count ?: 0,
         post = posts?.toGroupWallPostEntity() ?: emptyList(),
@@ -32,10 +32,10 @@ fun GroupWallDto.toEntity(): GroupWall {
     )
 }
 
-fun List<GroupPostDto>.toGroupWallPostEntity(): List<GroupWallPost> =
+internal fun List<GroupPostDto>.toGroupWallPostEntity(): List<GroupWallPost> =
     map { it.toEntity() }
 
-fun GroupPostDto.toEntity(): GroupWallPost {
+internal fun GroupPostDto.toEntity(): GroupWallPost {
     return GroupWallPost(
         friends = friends ?: emptyList(),
         location = location ?: "",
@@ -49,7 +49,7 @@ fun GroupPostDto.toEntity(): GroupWallPost {
     )
 }
 
-fun PostDTO.toEntity(): Post {
+internal fun PostDTO.toEntity(): Post {
     return Post(
         id = guid ?: 0,
         privacy = access == "1",

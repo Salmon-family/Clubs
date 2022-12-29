@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.Post
 import com.devfalah.repositories.models.WallPostDTO
 
-fun WallPostDTO.toEntity(groupId: Int = 0): Post {
+internal fun WallPostDTO.toEntity(groupId: Int = 0): Post {
     return Post(
         id = post?.guid ?: 0,
         privacy = post?.access == "3",
@@ -30,4 +30,4 @@ fun WallPostDTO.toEntity(groupId: Int = 0): Post {
     )
 }
 
-fun List<WallPostDTO>.toEntity(groupID: Int = 0): List<Post> = mapNotNull { it.toEntity(groupID) }
+internal fun List<WallPostDTO>.toEntity(groupID: Int = 0): List<Post> = mapNotNull { it.toEntity(groupID) }
