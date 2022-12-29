@@ -19,8 +19,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 
 @Composable
@@ -78,7 +76,12 @@ fun CustomTextField(
                     Text(
                         text = it,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.secondaryVariant
+                        style = TextStyle(
+                            color = MaterialTheme.colors.secondaryVariant,
+                            fontFamily = PlusJakartaSans,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp
+                        )
                     )
                 }
             },

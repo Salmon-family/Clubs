@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -16,12 +17,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.clubCreation.ClubCreationUiState
 import com.devfalah.viewmodels.clubCreation.ClubCreationViewModel
 import com.devfalah.viewmodels.clubCreation.isCreateClubButtonEnabled
@@ -94,10 +98,19 @@ fun ClubCreationContent(
                 onValueChange = onDescriptionChange,
                 maxChar = 500,
                 showTextCount = true,
+                shape = RoundedCornerShape(16.dp)
             )
 
             Column {
-                Text(text = stringResource(R.string.privacy), color = MaterialTheme.colors.primaryVariant)
+                Text(
+                    text = stringResource(R.string.privacy),
+                    style = TextStyle(
+                        color = MaterialTheme.colors.primaryVariant,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp
+                    )
+                )
                 HeightSpacer8()
                 SegmentControls(
                     items = listOf(
