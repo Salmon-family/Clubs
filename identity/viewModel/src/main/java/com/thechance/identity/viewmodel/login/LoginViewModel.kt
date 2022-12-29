@@ -60,7 +60,9 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onChangePassword(password: String) {
-        _uiState.update { it.copy(password = password) }
+        if (!uiState.value.isLoading) {
+            _uiState.update { it.copy(password = password) }
+        }
     }
 
     fun onValidatePassword(): Boolean {

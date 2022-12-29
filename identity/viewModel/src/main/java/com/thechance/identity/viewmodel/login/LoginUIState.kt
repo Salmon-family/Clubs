@@ -13,3 +13,7 @@ data class LoginUIState(
 fun LoginUIState.isEnabled(): Boolean {
     return !isLoading && password.length > 6
 }
+
+fun LoginUIState.isEnabledChangePassword(): Boolean {
+    return !isLoading
+}

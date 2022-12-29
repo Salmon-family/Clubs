@@ -25,6 +25,7 @@ import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 import com.thechance.identity.viewmodel.login.isEnabled
+import com.thechance.identity.viewmodel.login.isEnabledChangePassword
 
 @Composable
 fun LogInPasswordScreen(
@@ -66,7 +67,9 @@ fun LogInPasswordContent(
 
         ) {
 
-            BackButton(onClick = onClickBack)
+            BackButton(
+                onClick = onClickBack, isEnabled = !state.isLoading,
+            )
 
             SpacerVertical24()
             Text(
@@ -88,7 +91,7 @@ fun LogInPasswordContent(
             PasswordInputText(
                 placeHolder = stringResource(id = R.string.password_place_holder),
                 text = state.password,
-                onTextChange = onChangePassword
+                onTextChange = onChangePassword,
             )
 
             SpacerVertical24()
