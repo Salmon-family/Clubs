@@ -194,7 +194,6 @@ class ProfileViewModel @Inject constructor(
     fun onClickPostSetting(post: PostUIState) {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(loading = true) }
                 if (deletePostUseCase(post.postId)) {
                     _uiState.update {
                         it.copy(
