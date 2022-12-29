@@ -92,7 +92,7 @@ fun PostHeader(
                     WidthSpacer8()
                 }
                 Text(
-                    text = "${post.createdData.value} ${getDataDescription(post.createdData.description)} ",
+                    text = getDataDescription(post.createdData.description, post.createdData.value),
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
                     fontWeight = FontWeight.SemiBold,
