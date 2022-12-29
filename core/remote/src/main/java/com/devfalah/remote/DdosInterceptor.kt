@@ -17,8 +17,13 @@ class DdosInterceptor @Inject constructor(): Interceptor {
                 delay(DELAY_PERIOD)
             }
         }
-        return chain.proceed(request).also {
+        return try {
+            chain.proceed(request).also {
+                requestsHashCodeBuffer.removeLast()
+            }
+        }catch (e: Exception) {
             requestsHashCodeBuffer.removeLast()
+            chain.proceed(request)
         }
     }
 

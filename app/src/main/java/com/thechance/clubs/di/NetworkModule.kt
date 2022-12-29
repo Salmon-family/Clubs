@@ -12,7 +12,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -84,23 +83,14 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpDispatcher(): Dispatcher {
-        val dispatcher = Dispatcher()
-        dispatcher.maxRequests = 1
-        return dispatcher
-    }
-
-    @Singleton
-    @Provides
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
         ddosInterceptor: DdosInterceptor,
-        dispatcher: Dispatcher
     ): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .dispatcher(dispatcher)
+            .addInterceptor(ddosInterceptor)
             .addInterceptor(authInterceptor)
             .addInterceptor(logging)
             .build()
