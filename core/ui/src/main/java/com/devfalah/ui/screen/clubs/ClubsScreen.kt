@@ -10,21 +10,19 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubCreation.CLUB_CREATION_ROUTE
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
@@ -72,13 +70,13 @@ fun ClubsContent(
                 title = stringResource(R.string.clubs),
                 showBackButton = false,
                 actions = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.create_club),
-                        contentDescription = "create club icon",
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .nonRippleEffect { onClickCreateClub() }
-                    )
+                    IconButton(onClick = onClickCreateClub) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.create_club),
+                            contentDescription = "create club icon",
+                            tint = MaterialTheme.colors.primaryVariant
+                        )
+                    }
                 }
             )
         }
@@ -141,7 +139,7 @@ fun MyClubsScreen(
                     .background(MaterialTheme.colors.background),
                 contentPadding = if (state.mySpecialClubs.isNotEmpty())
                     PaddingValues(vertical = 16.dp) else PaddingValues(vertical = 0.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 if (state.mySpecialClubs.isNotEmpty()) {
                     item {
