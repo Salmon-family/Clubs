@@ -15,9 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.ui.util.htmlText
@@ -26,10 +25,11 @@ import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 @Composable
 fun ClubHeaderDetails(
     state: ClubDetailsUiState,
+    modifier: Modifier = Modifier,
     onBack: () -> Unit,
     maxLineContentExpand: Int = 2,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit
+    onClickEditClub: () -> Unit,
 ) {
     var popupController by remember { mutableStateOf(false) }
 
@@ -65,16 +65,10 @@ fun ClubHeaderDetails(
                 onClickEditClub = onClickEditClub
             )
         }
-
         Text(
             text = state.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(textName) {
-                    top.linkTo(backButton.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
+            modifier = modifier
+                .fillMaxWidth(),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
             fontSize = 30.sp,
@@ -135,17 +129,17 @@ fun ClubHeaderDetails(
 
                 Row {
                     ClubCard(
-                        imageVector = com.devfalah.ui.R.drawable.ic_menu_language,
+                        imageVector = R.drawable.ic_menu_language,
                         text = state.privacy
                     )
 
                     ClubCard(
-                        imageVector = com.devfalah.ui.R.drawable.ic_people,
+                        imageVector = R.drawable.ic_people,
                         text = state.membersCount.toString()
                     )
 
                     ClubCard(
-                        imageVector = com.devfalah.ui.R.drawable.ic_comment,
+                        imageVector = R.drawable.ic_comment,
                         text = state.postCount.toString()
                     )
 
@@ -153,6 +147,5 @@ fun ClubHeaderDetails(
 
             }
         }
-
     }
 }

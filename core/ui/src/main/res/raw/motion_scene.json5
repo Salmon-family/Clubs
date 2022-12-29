@@ -1,0 +1,31 @@
+{
+  ConstraintSets: {
+    start: {
+      nameClub: {
+        width: 256,
+        height: 96,
+        top: [ 'parent', 'top', 0 ],
+        start: [ 'parent', 'start', 0 ],
+      },
+    },
+    end: {
+      nameClub: {
+        width: 256,
+        height: 256,
+        top: [ 'parent', 'top', 100 ],
+        start: [ 'parent', 'start', 100 ],
+      },
+    },
+    Transitions: {
+      default: {
+        from: 'start',
+        to: 'end',
+        onSwipe: {
+          anchor: 'nameClub',
+          side: 'bottom',
+          direction: 'up',
+        },
+      }
+    }
+  }
+}

@@ -1,18 +1,21 @@
 package com.devfalah.ui.screen.clubsDetail
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
@@ -81,6 +84,7 @@ fun ClubsDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalMotionApi::class)
 @Composable
 private fun ClubsDetailsContent(
     state: ClubDetailsUiState,
@@ -96,10 +100,17 @@ private fun ClubsDetailsContent(
     onDeclineClub: () -> Unit,
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit
+    onClickEditClub: () -> Unit,
 ) {
 
     val context = LocalContext.current
+
+    val motionSceneContent = remember {
+        context.resources
+            .openRawResource(R.raw.motion_scene)
+            .readBytes()
+            .decodeToString()
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -109,141 +120,149 @@ private fun ClubsDetailsContent(
         } else if (state.isLoading) {
             LottieItem(LottieResource = R.raw.loading)
         } else {
-            ManualPager(
-                onRefresh = onRefresh,
-                isLoading = state.isPagerLoading,
-                error = state.pagerError,
-                isEndOfPager = state.isEndOfPager,
-                contentPadding = PaddingValues(bottom = 16.dp)
+            MotionLayout(
+                motionScene = MotionScene(motionSceneContent),
+                modifier = Modifier.fillMaxSize(),
             ) {
+                Box(modifier = Modifier
+                    .background(Color.White)
+                    .layoutId("nameClub"))
+                ManualPager(
+                    onRefresh = onRefresh,
+                    isLoading = state.isPagerLoading,
+                    error = state.pagerError,
+                    isEndOfPager = state.isEndOfPager,
+                    contentPadding = PaddingValues(bottom = 16.dp)
+                ) {
 
-                item {
-                    ClubHeaderDetails(
-                        state = state,
-                        onBack = onBack,
-                        onClickJoinRequestClub = onClickJoinRequestClub,
-                        onClickEditClub = onClickEditClub
-                    )
-                }
+                    item {
+                        ClubHeaderDetails(
+                            state = state,
+                            modifier = Modifier.layoutId("nameClub"),
+                            onBack = onBack,
+                            onClickJoinRequestClub = onClickJoinRequestClub,
+                            onClickEditClub = onClickEditClub
+                        )
+                    }
 
-                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember) {
-                    if (state.requestExists) {
+                    if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember) {
+                        if (state.requestExists) {
+                            item {
+                                RoundButton(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    userState = UserState(),
+                                    text = stringResource(id = R.string.request_to_join),
+                                    textColor = WhiteColor,
+                                    onButtonClick = onUnJoinClubs,
+                                )
+                            }
+                        } else {
+                            item {
+                                RoundButton(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    userState = UserState(),
+                                    text = stringResource(id = R.string.join_club),
+                                    textColor = WhiteColor,
+                                    onButtonClick = onJoinClub,
+                                )
+                            }
+                        }
+
                         item {
-                            RoundButton(
+                            PrivateClubsBox(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(24.dp)
+                            )
+                        }
+
+                    } else if (state.isMember) {
+                        item {
+                            OutlineButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp),
+                                onClick = onDeclineClub
+                            )
+
+                        }
+
+                        item {
+                            PostCreatingSection(
                                 modifier = Modifier.padding(horizontal = 16.dp),
-                                userState = UserState(),
-                                text = stringResource(id = R.string.request_to_join),
-                                textColor = WhiteColor,
-                                onButtonClick = onUnJoinClubs,
+                                onCreatePost = onAddPost,
+                                isMyProfile = true
+                            )
+                        }
+
+                        item {
+                            ClubMembers(friends = state.members,
+                                modifier = Modifier
+                                    .nonRippleEffect { onClickMembers(state.clubId) }
+                                    .padding(horizontal = 16.dp))
+                        }
+
+                        items(state.posts) {
+                            PostItem(
+                                state = it,
+                                isContentExpandable = true,
+                                isClubPost = true,
+                                showGroupName = false,
+                                onClickLike = onClickLike,
+                                onClickComment = onClickComment,
+                                onClickSave = { onClickSave(it) },
+                                onClickPostSetting = {},
+                                onClickProfile = {},
+                                onOpenLinkClick = {},
                             )
                         }
                     } else {
+                        if (state.requestExists) {
+                            item {
+                                RoundButton(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    userState = UserState(),
+                                    text = stringResource(id = R.string.request_to_join),
+                                    textColor = WhiteColor,
+                                    onButtonClick = onUnJoinClubs,
+                                )
+                            }
+                        } else {
+                            item {
+                                RoundButton(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    userState = UserState(),
+                                    text = stringResource(id = R.string.join_club),
+                                    textColor = WhiteColor,
+                                    onButtonClick = onJoinClub,
+                                )
+                            }
+                        }
+
                         item {
-                            RoundButton(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                userState = UserState(),
-                                text = stringResource(id = R.string.join_club),
-                                textColor = WhiteColor,
-                                onButtonClick = onJoinClub,
+                            ClubMembers(friends = state.members,
+                                modifier = Modifier
+                                    .nonRippleEffect { onClickMembers(state.clubId) }
+                                    .padding(horizontal = 16.dp))
+                        }
+
+                        // why this screen has 2 of below item ????!!!!!!
+                        items(state.posts) {
+                            PostItem(
+                                state = it,
+                                isContentExpandable = true,
+                                isClubPost = true,
+                                onClickLike = onClickLike,
+                                onClickComment = onClickComment,
+                                onClickSave = onClickSave,
+                                onClickPostSetting = {},
+                                onClickProfile = {},
+                                onOpenLinkClick = {},
                             )
                         }
-                    }
-
-                    item {
-                        PrivateClubsBox(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(24.dp)
-                        )
-                    }
-
-                } else if (state.isMember) {
-                    item {
-                        OutlineButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            onClick = onDeclineClub
-                        )
-
-                    }
-
-                    item {
-                        PostCreatingSection(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            onCreatePost = onAddPost,
-                            isMyProfile = true
-                        )
-                    }
-
-                    item {
-                        ClubMembers(friends = state.members,
-                            modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.clubId) }
-                                .padding(horizontal = 16.dp))
-                    }
-
-                    items(state.posts) {
-                        PostItem(
-                            state = it,
-                            isContentExpandable = true,
-                            isClubPost = true,
-                            showGroupName = false,
-                            onClickLike = onClickLike,
-                            onClickComment = onClickComment,
-                            onClickSave = { onClickSave(it) },
-                            onClickPostSetting = {},
-                            onClickProfile = {},
-                            onOpenLinkClick = {},
-                        )
-                    }
-                } else {
-                    if (state.requestExists) {
-                        item {
-                            RoundButton(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                userState = UserState(),
-                                text = stringResource(id = R.string.request_to_join),
-                                textColor = WhiteColor,
-                                onButtonClick = onUnJoinClubs,
-                            )
-                        }
-                    } else {
-                        item {
-                            RoundButton(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                userState = UserState(),
-                                text = stringResource(id = R.string.join_club),
-                                textColor = WhiteColor,
-                                onButtonClick = onJoinClub,
-                            )
-                        }
-                    }
-
-                    item {
-                        ClubMembers(friends = state.members,
-                            modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.clubId) }
-                                .padding(horizontal = 16.dp))
-                    }
-
-                    // why this screen has 2 of below item ????!!!!!!
-                    items(state.posts) {
-                        PostItem(
-                            state = it,
-                            isContentExpandable = true,
-                            isClubPost = true,
-                            onClickLike = onClickLike,
-                            onClickComment = onClickComment,
-                            onClickSave = onClickSave,
-                            onClickPostSetting = {},
-                            onClickProfile = {},
-                            onOpenLinkClick = {},
-                        )
                     }
                 }
             }
-
         }
     }
 
