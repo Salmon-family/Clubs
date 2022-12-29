@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class ConversationViewModel @Inject constructor(
 
     init {
         receiveNotification()
-        getListMessages(args.id, args.friendId)
+        getListMessages(args.friendId)
         getUser()
 
     }
@@ -60,11 +61,11 @@ class ConversationViewModel @Inject constructor(
         }
     }
 
-    private fun getListMessages(userId: Int, friendId: Int) {
+    private fun getListMessages(friendId: Int) {
         viewModelScope.launch {
             try {
-                refreshMessages(userId, friendId)
-                getMessages(friendId).collect {
+                refreshMessages(friendId)
+                getMessages(friendId).filterNot { it.isEmpty() }.collect {
                     _uiState.update { uiState ->
                         uiState.copy(
                             messages = it.map { it.toUiState() },
@@ -83,7 +84,7 @@ class ConversationViewModel @Inject constructor(
     private fun sendMessage(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                sendMessageUseCase(args.id, args.friendId, message, _uiState.value.fcmToken)
+                sendMessageUseCase(args.friendId, message, _uiState.value.fcmToken)
             } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
@@ -101,13 +102,13 @@ class ConversationViewModel @Inject constructor(
         _uiState.update { it.copy(message = "") }
     }
 
-    private fun refreshMessages(userId: Int, friendId: Int) {
+    private fun refreshMessages(friendId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _uiState.update { it.copy(isLoading = true) }
-                val messagesCount = getMessages.refreshMessages(userId, friendId, 1)
-                getMessages.refreshMessages(userId, friendId, 2)
-                _uiState.update { it.copy(messagesCount = messagesCount) }
+                val messagesCount = getMessages.refreshMessages( friendId, 1)
+                getMessages.refreshMessages( friendId, 2)
+                _uiState.update { it.copy(messagesCount = messagesCount, isLoading = false) }
             } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)
@@ -121,7 +122,6 @@ class ConversationViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val isLastPage = getMessages.loadingMoreMessages(
-                    userID = args.id,
                     friendId = args.friendId,
                     messagesCount = _uiState.value.messagesCount,
                     messagesCountLocally = _uiState.value.messages.size,

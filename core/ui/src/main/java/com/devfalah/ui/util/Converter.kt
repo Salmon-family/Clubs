@@ -37,7 +37,7 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File
     }
 
     val bos = ByteArrayOutputStream()
-    resizedImage.compress(Bitmap.CompressFormat.PNG, 0, bos)
+    resizedImage.compress(Bitmap.CompressFormat.JPEG, 100, bos)
     val bitmapdata = bos.toByteArray()
     val outputFile = File(context.cacheDir, fileName)
     outputFile.createNewFile()
@@ -57,19 +57,29 @@ private fun getResizedBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
         var height = maxSize * aspRat
         Bitmap.createScaledBitmap(bitmap, maxSize, height, false)
     } else {
-         aspRat = actualHeight / actualWidth
+        aspRat = actualHeight / actualWidth
         val width = maxSize * aspRat
         Bitmap.createScaledBitmap(bitmap, maxSize, width, false)
     }
 }
 
 @Composable
-fun getDataDescription(type: Int): String {
+fun getDataDescription(type: Int, value: String): String {
+    val number = value.toIntOrNull() ?: 0
     return when (type) {
         JUST_NOW -> stringResource(id = R.string.just_now)
-        MINUTES_AGO -> stringResource(id = R.string.minutes)
-        HOUR_AGO -> stringResource(id = R.string.hour)
-        DAY_AGO -> stringResource(id = R.string.day)
-        else -> ""
+        MINUTES_AGO -> {
+            if (number == 1) { stringResource(id = R.string.minute) }
+            else { stringResource(id = R.string.minutes, number) }
+        }
+        HOUR_AGO -> {
+            if (number == 1) { stringResource(id = R.string.one_day) }
+            else { stringResource(id = R.string.hour, value) }
+        }
+        DAY_AGO -> {
+            if (number == 1) { stringResource(id = R.string.one_day) }
+            else { stringResource(id = R.string.day, value) }
+        }
+        else -> value
     }
 }

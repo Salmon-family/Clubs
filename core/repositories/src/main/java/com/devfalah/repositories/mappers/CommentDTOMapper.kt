@@ -4,7 +4,7 @@ import com.devfalah.entities.Comment
 import com.devfalah.entities.User
 import com.devfalah.repositories.models.CommentDto
 
-fun CommentDto.toEntity(): Comment {
+internal fun CommentDto.toEntity(): Comment {
     return Comment(
         id = id ?: 0,
         timeCreated = timeCreated ?: 0L,
@@ -17,6 +17,6 @@ fun CommentDto.toEntity(): Comment {
 }
 
 
-fun List<CommentDto>.toEntity() = map { it.toEntity() }
+internal fun List<CommentDto>.toEntity() = map { it.toEntity() }
 
 

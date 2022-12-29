@@ -9,7 +9,6 @@ class SetPostLikeUseCase @Inject constructor(
 
     suspend operator fun invoke(postID: Int, isLiked: Boolean): Int {
         val userId = clubRepository.getUserId()
-
         return if (isLiked) {
             clubRepository.removeLikeOnPost(userID = userId, postId = postID)
         } else {

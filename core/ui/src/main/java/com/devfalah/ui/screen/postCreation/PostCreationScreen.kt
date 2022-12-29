@@ -27,13 +27,14 @@ import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.home.navigateHome
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
-import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
-import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.postCreation.isEnabled
+import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.util.Constants.MAX_IMAGE_POST_SIZE
+import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -67,10 +68,7 @@ fun PostCreationScreen(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
         },
-        navToHome = { navController.navigateHome() },
-        navToClubDetails = { navController.navigateToClubDetails(groupId = state.clubId) },
-
-        )
+    )
 
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
@@ -78,6 +76,19 @@ fun PostCreationScreen(
             systemUIController = systemUIController,
             color = color,
         )
+    }
+
+    LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
+        if (state.isSuccess) {
+            goBack(
+                state,
+                navToHome = { navController.navigateHome() },
+                navToClubDetails = { navController.navigateToClubDetails(groupId = state.clubId) },
+                navController = navController
+            )
+        } else if (state.error.isNotBlank()) {
+            showToastMessage(context, state.error)
+        }
     }
 }
 
@@ -92,8 +103,6 @@ fun PostCreationContent(
     onClickPost: () -> Unit,
     onSelectImage: () -> Unit,
     onRemoveImage: () -> Unit,
-    navToHome: () -> Unit,
-    navToClubDetails: (Int) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -142,19 +151,6 @@ fun PostCreationContent(
                 isEnabled = state.isEnabled()
             )
         }
-
-        val context = LocalContext.current
-        LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
-            if (state.isSuccess) {
-                goBack(
-                    state,
-                    navToHome = { navToHome() },
-                    navToClubDetails = { navToClubDetails(state.clubId) }
-                )
-            } else if (state.error.isNotBlank()) {
-                showToastMessage(context, state.error)
-            }
-        }
     }
 }
 
@@ -162,13 +158,14 @@ private fun goBack(
     state: PostCreationUIState,
     navToHome: () -> Unit,
     navToClubDetails: (Int) -> Unit,
+    navController: NavController
 ) {
     when (state.clubId) {
         HOME_CLUB_ID -> {
             navToHome()
         }
         PROFILE_CLUB_ID -> {
-//            navController.navigateToProfile(state.id)
+            navController.navigateToProfile(-1)
         }
         else -> {
             navToClubDetails(state.clubId)

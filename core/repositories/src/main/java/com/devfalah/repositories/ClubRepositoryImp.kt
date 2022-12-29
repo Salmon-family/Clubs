@@ -213,7 +213,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): Post {
-        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity()
+        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity() ?: Post()
     }
 
 

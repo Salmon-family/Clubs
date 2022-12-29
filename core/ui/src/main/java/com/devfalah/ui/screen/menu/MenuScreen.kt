@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.menu
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.background
@@ -78,7 +79,16 @@ fun MenuScreen(
     }
     LaunchedEffect(key1 = state.logout) {
         if (state.logout) {
-            (context as Activity).finish()
+            try {
+                val intent = Intent(
+                    context,
+                    Class.forName("com.thechance.identity.ui.main.AuthenticationActivity")
+                )
+                (context as Activity).startActivity(intent)
+                context.finish()
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            }
         }
     }
 }

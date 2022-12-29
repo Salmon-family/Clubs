@@ -61,7 +61,7 @@ fun HomeScreen(
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickChat = { goToChat(context) },
-        onRetry = viewModel::onRetry
+        onRetry = viewModel::getData
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {

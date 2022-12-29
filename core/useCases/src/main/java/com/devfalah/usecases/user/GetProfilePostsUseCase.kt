@@ -19,18 +19,25 @@ class GetProfilePostsUseCase @Inject constructor(
 
     suspend operator fun invoke(profileUserID: Int): List<Post> {
         getSavedPostsIds()
-        return clubRepository.getProfilePostsPager(userId, profileUserID, page = page)
+
+        val profileId = if (profileUserID == -1) { userId }
+        else { profileUserID }
+
+        return clubRepository.getProfilePostsPager(profileId, profileUserID, page = page)
     }
 
     suspend fun loadMore(profileUserID: Int): List<Post> {
-        val posts = clubRepository.getProfilePostsPager(userId, profileUserID, page = page)
+        val profileId = if (profileUserID == -1) {userId }
+        else { profileUserID }
+
+        val posts = clubRepository.getProfilePostsPager(userId, profileId, page = page)
         return if (posts.isNotEmpty()) {
             page += 1
             posts.map { post ->
                 if (post.id in savedPosts) {
-                    post.copy(isSaved = true, isMyPost = userId == profileUserID)
+                    post.copy(isSaved = true, isMyPost = userId == profileId)
                 } else {
-                    post.copy(isMyPost = userId == profileUserID)
+                    post.copy(isMyPost = userId == profileId)
                 }
             }
         } else {
