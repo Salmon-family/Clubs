@@ -104,7 +104,7 @@ fun HomeContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         }
 
         ManualPager(
