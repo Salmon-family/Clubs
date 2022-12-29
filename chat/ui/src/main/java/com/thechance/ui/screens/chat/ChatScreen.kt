@@ -42,7 +42,6 @@ fun ChatsScreen(
         onValueChanged = viewModel::onSearchTextChange,
         onClickChat = {
             navController.navigateToConversation(
-                id = viewModel.id,
                 friendId = it.guid,
             )
         },
