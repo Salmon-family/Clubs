@@ -27,8 +27,8 @@ object Constants {
 
     const val MAX_PAGE_ITEM = 9
 
-    const val MAX_IMAGE_POST_SIZE = 700
-    const val MAX_IMAGE_PROFILE_SIZE = 256
+    const val MAX_IMAGE_POST_SIZE = 1024
+    const val MAX_IMAGE_PROFILE_SIZE = 512
 
 }
 

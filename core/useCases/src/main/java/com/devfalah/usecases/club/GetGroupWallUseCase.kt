@@ -23,9 +23,13 @@ class GetGroupWallUseCase @Inject constructor(
             page += 1
             clubPosts.post.map { clubPost ->
                 if (clubPost.post.id in savedPosts) {
-                    clubPost.copy(post = clubPost.post.copy(isSaved = true))
+                    clubPost.copy(
+                        post = clubPost.post.copy(
+                            isSaved = true, isMyPost = userId == clubPost.post.publisherId
+                        )
+                    )
                 } else {
-                    clubPost
+                    clubPost.copy(post = clubPost.post.copy(isMyPost = userId == clubPost.post.publisherId))
                 }
             }
         } else {

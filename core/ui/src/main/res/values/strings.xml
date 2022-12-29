@@ -88,9 +88,12 @@
     <string name="liked_your_comment_on_a_post">liked your comment on a post</string>
     <string name="menu">Menu</string>
     <string name="members">Club Members</string>
-    <string name="minutes"> minutes ago</string>
-    <string name="hour"> hour ago</string>
-    <string name="day"> day ago</string>
+    <string name="minute">one minute ago</string>
+    <string name="minutes">%s"&#x20;" minutes ago</string>
+    <string name="hour">one hour ago</string>
+    <string name="hours">%s"&#x20;" hours ago</string>
+    <string name="day">%s"&#x20;" days ago</string>
+    <string name="one_day"> one day ago</string>
     <string name="just_now">Just now</string>
     <string name="wrong_password_message">You entered a wrong password, please try again.</string>
     <string name="enter_your_comment">Enter your comment…</string>

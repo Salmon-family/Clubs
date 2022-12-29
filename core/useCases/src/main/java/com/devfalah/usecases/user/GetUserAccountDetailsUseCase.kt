@@ -12,15 +12,21 @@ class GetUserAccountDetailsUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(profileOwnerId: Int): User {
-        val userDetails = clubRepository.getUserAccountDetails(userID = profileOwnerId)
+        val profileId = if (profileOwnerId == -1) {
+            clubRepository.getUserId()
+        } else {
+            profileOwnerId
+        }
+
+        val userDetails = clubRepository.getUserAccountDetails(userID = profileId)
         val userId = clubRepository.getUserId()
-        val friendShip = if (userId != profileOwnerId) {
-            friendShip(userId, profileOwnerId)
+        val friendShip = if (userId != profileId) {
+            friendShip(userId, profileId)
         } else {
             FriendShip()
         }
         return userDetails.copy(
-            isMyProfile = userId == profileOwnerId,
+            isMyProfile = userId == profileId,
             isFriend = friendShip.isFriend,
             isRequestExists = friendShip.requestExists && !friendShip.isFriend
         )

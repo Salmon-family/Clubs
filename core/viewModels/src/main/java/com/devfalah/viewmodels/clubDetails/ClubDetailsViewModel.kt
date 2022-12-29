@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.club.*
+import com.devfalah.usecases.posts.DeletePostUseCase
 import com.devfalah.usecases.posts.SetFavoritePostUseCase
 import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
@@ -30,6 +31,7 @@ class ClubDetailsViewModel @Inject constructor(
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
+    val deletePostUseCase: DeletePostUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -85,8 +87,7 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = "") }
             try {
-                val clubDetails =
-                    getClubDetailsUseCase(groupID = args.groupId)
+                val clubDetails = getClubDetailsUseCase(groupID = args.groupId)
                 _uiState.update {
                     it.copy(
                         clubId = clubDetails.id,
@@ -215,6 +216,20 @@ class ClubDetailsViewModel @Inject constructor(
                 _uiState.update { it.copy(isMember = false, requestExists = false) }
             } catch (t: Throwable) {
                 Log.i("error", t.message.toString())
+            }
+        }
+    }
+
+    fun onDeletePost(post: PostUIState) {
+        viewModelScope.launch {
+            try {
+                if (deletePostUseCase(post.postId)) {
+                    _uiState.update {
+                        it.copy(posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                    }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }

@@ -168,7 +168,7 @@ fun ProfileContent(
                     )
                 }
                 if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
-                    item {
+                    item("profileDetails") {
                         PostCreatingSection(
                             modifier = Modifier.padding(horizontal = 16.dp),
                             onCreatePost = if (state.userDetails.isMyProfile) {

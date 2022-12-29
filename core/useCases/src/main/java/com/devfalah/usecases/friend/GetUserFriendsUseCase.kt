@@ -9,8 +9,11 @@ class GetUserFriendsUseCase @Inject constructor(
 ) {
     private var page = 1
 
-    suspend operator fun invoke(userId: Int): Friends {
-        val friends = authRepository.getUserFriends(userId, page = page)
+    suspend operator fun invoke(profileUserID: Int): Friends {
+        val profileId = if (profileUserID == -1) { authRepository.getUserId() }
+        else { profileUserID }
+
+        val friends = authRepository.getUserFriends(profileId, page = page)
         if (friends.friends.isNotEmpty()) {
             page = friends.page + 1
         }
