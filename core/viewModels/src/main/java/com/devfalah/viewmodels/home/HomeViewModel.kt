@@ -31,15 +31,8 @@ class HomeViewModel @Inject constructor(
         getData()
     }
 
-    fun onRetry() {
+    fun getData() {
         _uiState.update { it.copy(error = "", isLoading = true) }
-        viewModelScope.launch {
-            getHomeThreads()
-            swipeToRefresh()
-        }
-    }
-
-    private fun getData() {
         viewModelScope.launch {
             getHomeThreads()
             swipeToRefresh()
