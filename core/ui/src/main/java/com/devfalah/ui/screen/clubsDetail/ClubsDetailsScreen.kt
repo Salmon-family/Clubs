@@ -69,7 +69,8 @@ fun ClubsDetailsScreen(
                 clubDescription = state.description,
                 clubPrivacy = state.membership
             )
-        }
+        },
+        onClickDeletePost = viewModel::onDeletePost
     )
 
     val color = MaterialTheme.colors.onBackground
@@ -96,7 +97,8 @@ private fun ClubsDetailsContent(
     onDeclineClub: () -> Unit,
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit
+    onClickEditClub: () -> Unit,
+    onClickDeletePost: (PostUIState) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -192,7 +194,7 @@ private fun ClubsDetailsContent(
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },
-                            onClickPostSetting = {},
+                            onClickPostSetting = onClickDeletePost,
                             onClickProfile = {},
                             onOpenLinkClick = {},
                         )
@@ -236,7 +238,7 @@ private fun ClubsDetailsContent(
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = onClickSave,
-                            onClickPostSetting = {},
+                            onClickPostSetting = onClickDeletePost,
                             onClickProfile = {},
                             onOpenLinkClick = {},
                         )
