@@ -63,14 +63,14 @@ fun SegmentControlsWithIcon(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = items.first(),
                     textAlign = TextAlign.Center,
-                    color = if (index.value == 0) WhiteColor else MaterialTheme.colors.primaryVariant,
+                    color = if (index.value == 0) WhiteColor else MaterialTheme.colors.primary,
                     style = AppTypography.body2
                 )
 
                 Icon(
                     painter = icons.first(),
                     contentDescription = null,
-                    tint = if (index.value == 0) WhiteColor else MaterialTheme.colors.primaryVariant
+                    tint = if (index.value == 0) WhiteColor else MaterialTheme.colors.primary
                 )
             }
         }
@@ -95,14 +95,14 @@ fun SegmentControlsWithIcon(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = items.last(),
                     textAlign = TextAlign.Center,
-                    color = if (index.value == 1) WhiteColor else MaterialTheme.colors.primaryVariant,
+                    color = if (index.value == 1) WhiteColor else MaterialTheme.colors.primary,
                     style = AppTypography.body2,
                 )
 
                 Icon(
                     painter = icons.last(),
                     contentDescription = null,
-                    tint = if (index.value == 1) WhiteColor else MaterialTheme.colors.primaryVariant
+                    tint = if (index.value == 1) WhiteColor else MaterialTheme.colors.primary
                 )
             }
         }

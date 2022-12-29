@@ -14,19 +14,19 @@ private val DarkColorPalette = darkColors(
     background = DarkBackground,
     surface = DarkCardColor,
     onSecondary = DarkTernaryWhiteColor,
-    onSurface = DarkSecondaryWhiteColor,
+    onSurface = DarkQuaternaryWhiteColor,
     onBackground = LightPrimaryGrayColor
 )
 
 private val LightColorPalette = lightColors(
     primary = LightPrimaryBrandColor,
     primaryVariant = LightPrimaryBlackColor,
-    secondaryVariant = LightTernaryBlackColor,
+    secondaryVariant = LightSecondaryBlackColor,
     secondary = LightSecondaryBrandColor,
     background = LightBackground,
     surface = WhiteColor,
-    onSecondary = LightQuaternaryBlackColor,
-    onSurface = LightSecondaryBlackColor,
+    onSecondary = LightTernaryBlackColor,
+    onSurface = LightQuaternaryBlackColor,
     onBackground = LightPrimaryBrandColor
 
 )

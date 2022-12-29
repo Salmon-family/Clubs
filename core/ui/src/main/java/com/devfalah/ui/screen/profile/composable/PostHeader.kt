@@ -55,7 +55,7 @@ fun PostHeader(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colors.primaryVariant
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically

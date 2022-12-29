@@ -19,9 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun ClubCard(
@@ -52,7 +50,7 @@ fun ClubCard(
             Icon(
                 imageVector = ImageVector.vectorResource(id = imageVector),
                 contentDescription = "imageVector",
-                tint = MaterialTheme.colors.onSurface
+                tint = MaterialTheme.colors.onSecondary
             )
 
             Text(

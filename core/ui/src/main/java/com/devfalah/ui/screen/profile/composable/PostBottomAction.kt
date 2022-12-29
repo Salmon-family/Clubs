@@ -19,9 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.DarkSecondaryWhiteColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.userProfile.PostUIState
 
@@ -104,7 +102,7 @@ private fun PostTextValue(text: String) {
         fontSize = 14.sp,
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.Normal,
-        color = MaterialTheme.colors.onSurface
+        color = MaterialTheme.colors.onSecondary
     )
 }
 
@@ -113,7 +111,7 @@ private fun PostTextValue(text: String) {
 fun PostActionIcon(
     onClick: () -> Unit,
     painter: Painter,
-    tint: Color = MaterialTheme.colors.secondaryVariant
+    tint: Color = MaterialTheme.colors.onSecondary
 ) {
     Icon(
         modifier = Modifier.nonRippleEffect { onClick() },
