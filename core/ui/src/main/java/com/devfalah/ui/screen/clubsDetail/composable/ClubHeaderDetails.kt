@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,7 +35,7 @@ fun ClubHeaderDetails(
     var popupController by remember { mutableStateOf(false) }
 
     ConstraintLayout(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.onBackground)
     ) {
@@ -42,7 +43,8 @@ fun ClubHeaderDetails(
         val (backButton, textDescription, textName, cover, dropDownMenu) = createRefs()
 
         BackButton(
-            modifier = Modifier
+            modifier = modifier
+                .layoutId("backButton")
                 .wrapContentSize()
                 .nonRippleEffect { onBack() }
                 .padding(16.dp)
@@ -55,7 +57,8 @@ fun ClubHeaderDetails(
 
         if (state.isOwner) {
             DropDownOwner(
-                modifier = Modifier
+                modifier = modifier
+                    .layoutId("dropDownMenu")
                     .padding(top = 16.dp, end = 16.dp)
                     .constrainAs(dropDownMenu) {
                         top.linkTo(parent.top)
@@ -68,7 +71,13 @@ fun ClubHeaderDetails(
         Text(
             text = state.name,
             modifier = modifier
-                .fillMaxWidth(),
+                .layoutId("nameClub")
+                .fillMaxWidth()
+                .constrainAs(textName) {
+                    top.linkTo(backButton.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
             fontSize = 30.sp,
@@ -79,7 +88,8 @@ fun ClubHeaderDetails(
 
         ReadMorePopup(
             text = state.description.htmlText(),
-            modifier = Modifier
+            modifier = modifier
+                .layoutId("descriptionClub")
                 .padding(horizontal = 16.dp)
                 .padding(top = 24.dp)
                 .constrainAs(textDescription) {
@@ -107,7 +117,8 @@ fun ClubHeaderDetails(
         }
 
         Box(
-            modifier = Modifier
+            modifier = modifier
+                .layoutId("coverClub")
                 .constrainAs(cover) {
                     top.linkTo(textDescription.bottom)
                     start.linkTo(parent.start)
@@ -118,7 +129,7 @@ fun ClubHeaderDetails(
             contentAlignment = Alignment.TopCenter
         ) {
             Box(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .wrapContentHeight()

@@ -1,14 +1,12 @@
 package com.devfalah.ui.screen.clubsDetail
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -120,14 +118,9 @@ private fun ClubsDetailsContent(
         } else if (state.isLoading) {
             LottieItem(LottieResource = R.raw.loading)
         } else {
-            MotionLayout(
-                motionScene = MotionScene(motionSceneContent),
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Box(modifier = Modifier
-                    .background(Color.White)
-                    .layoutId("nameClub"))
+            MotionLayout(motionScene = MotionScene(motionSceneContent)) {
                 ManualPager(
+                    modifier = Modifier.layoutId("clubColumn"),
                     onRefresh = onRefresh,
                     isLoading = state.isPagerLoading,
                     error = state.pagerError,
@@ -138,7 +131,6 @@ private fun ClubsDetailsContent(
                     item {
                         ClubHeaderDetails(
                             state = state,
-                            modifier = Modifier.layoutId("nameClub"),
                             onBack = onBack,
                             onClickJoinRequestClub = onClickJoinRequestClub,
                             onClickEditClub = onClickEditClub

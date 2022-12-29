@@ -1,31 +1,45 @@
 {
   ConstraintSets: {
     start: {
+      clubColumn: {
+        width: 'spread',
+        height: 'spread',
+        top: ['parent', 'top', ],
+        left: ['parent', 'left', ],
+        right: ['parent', 'right', ],
+      },
+      backButton: {
+        width: 'wrap',
+        height: 'wrap',
+        top: ['parent', 'top', ],
+        left: ['parent', 'left', ],
+      },
       nameClub: {
-        width: 256,
-        height: 96,
-        top: [ 'parent', 'top', 0 ],
-        start: [ 'parent', 'start', 0 ],
+          width: 'spread',
+          height: 'spread',
+          top: ['backButton', 'top', ],
+          left: ['parent', 'left', ],
+          right: ['parent', 'right', ],
+      },
+      descriptionClub: {
+          width: 'spread',
+          height: 'spread',
+          top: ['nameClub', 'top', ],
+          left: ['parent', 'left', ],
+          right: ['parent', 'right', ],
       },
     },
-    end: {
-      nameClub: {
-        width: 256,
-        height: 256,
-        top: [ 'parent', 'top', 100 ],
-        start: [ 'parent', 'start', 100 ],
+    end: {},
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      onSwipe: {
+        anchor: 'clubColumn',
+        side: 'top',
+        direction: 'up',
       },
-    },
-    Transitions: {
-      default: {
-        from: 'start',
-        to: 'end',
-        onSwipe: {
-          anchor: 'nameClub',
-          side: 'bottom',
-          direction: 'up',
-        },
-      }
     }
   }
 }
