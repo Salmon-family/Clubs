@@ -80,7 +80,7 @@ private fun ChatsContent(
         if (state.isLoading) {
             Loading()
         }
-        if (state.isEmpty()) {
+        if (state.isEmpty() && !state.isLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
