@@ -74,7 +74,7 @@ fun PostHeader(
                         text = "${getPrivacyText(post.privacy)}  | ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colors.onSecondary,
                     )
 
@@ -82,10 +82,10 @@ fun PostHeader(
                 }
                 if (hidePrivacy && showGroupName) {
                     Text(
-                        text = "${post.groupName}  | ",
+                        text = "${post.groupName} | ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colors.onSecondary,
                     )
 
@@ -95,7 +95,7 @@ fun PostHeader(
                     text = "${post.createdData.value} ${getDataDescription(post.createdData.description)} ",
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Normal,
                     color = MaterialTheme.colors.onSecondary
                 )
             }

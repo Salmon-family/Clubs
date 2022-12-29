@@ -73,9 +73,11 @@ fun MenuContent(
             item {
                 CustomTextField(
                     title = stringResource(R.string.bug_message),
+                    hint = stringResource(R.string.bug_report_hint),
                     shape = RoundedCornerShape(16.dp),
                     value = state.bugMessage,
                     onValueChange = onMessageChange,
+                    maxLines = 7
                 )
             }
 

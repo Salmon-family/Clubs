@@ -32,7 +32,8 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     singleLine: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    shape: Shape = RoundedCornerShape(100.dp)
+    shape: Shape = RoundedCornerShape(100.dp),
+    maxLines: Int = 1
 ) {
     Column {
         Row {
@@ -88,6 +89,7 @@ fun CustomTextField(
             shape = shape,
             singleLine = singleLine,
             visualTransformation = visualTransformation,
+            maxLines = maxLines
         )
     }
 }

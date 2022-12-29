@@ -64,8 +64,8 @@ fun ClubItem(
             Text(
                 text = state.title,
                 textAlign = TextAlign.Start,
-                fontSize = 12.sp,
-                color = MaterialTheme.colors.onSurface,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
@@ -73,7 +73,7 @@ fun ClubItem(
             Text(
                 text = state.description.htmlText(),
                 textAlign = TextAlign.Start,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color =  MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.Normal,
                 maxLines = 2

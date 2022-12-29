@@ -98,7 +98,8 @@ fun ClubCreationContent(
                 onValueChange = onDescriptionChange,
                 maxChar = 500,
                 showTextCount = true,
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(16.dp),
+                maxLines = 5
             )
 
             Column {
