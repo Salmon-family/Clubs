@@ -16,12 +16,11 @@ fun NavController.navigateToClubRequests(clubId: Int, ownerId: Int) {
 
 fun NavGraphBuilder.clubRequestsRoute(navController: NavController) {
     composable(
-        route = "${CLUB_REQUESTS_SCREEN}/{${ClubRequestsArgs.CLUB_ID_ARG}}/{${ClubRequestsArgs.OWNER_ID_ARG}}",
+        route = "${CLUB_REQUESTS_SCREEN}/{${ClubRequestsArgs.CLUB_ID_ARG}}/{${ClubRequestsArgs.CLUB_OWNER_ID_ARG}}",
         arguments = listOf(
             navArgument(ClubRequestsArgs.CLUB_ID_ARG) { NavType.IntType },
-            navArgument(ClubRequestsArgs.OWNER_ID_ARG) { NavType.IntType },
+            navArgument(ClubRequestsArgs.CLUB_OWNER_ID_ARG) { NavType.IntType },
         )
-
     ) {
         ClubRequestsScreen(navController)
     }

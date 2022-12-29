@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.clubMembers.ClubMembersViewModel
 import com.devfalah.viewmodels.friends.FriendsUIState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -32,7 +31,7 @@ fun MembersScreen(
 
     ClubMembersContent(
         state = state,
-        navController = navController,
+        onBackClick = { navController.popBackStack() },
         onRefresh = viewModel::getClubMembers,
         onClickProfile = { navController.navigateToProfile(it) },
         onRetry = viewModel::getClubMembers,
@@ -44,7 +43,6 @@ fun MembersScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }
@@ -53,7 +51,7 @@ fun MembersScreen(
 @Composable
 fun ClubMembersContent(
     state: FriendsUIState,
-    navController: NavController,
+    onBackClick: () -> Unit,
     onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRemoveFriend: (Int) -> Unit,
@@ -62,7 +60,7 @@ fun ClubMembersContent(
     Column(Modifier.fillMaxSize()) {
         AppBar(
             title = stringResource(id = R.string.members),
-            navHostController = navController
+            onBackButton = onBackClick,
         )
         if (state.isLoading) {
             LottieItem(LottieResource = R.raw.loading)

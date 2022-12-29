@@ -32,7 +32,6 @@ import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -50,7 +49,6 @@ fun HomeScreen(
     val systemUIController = rememberSystemUiController()
 
     HomeContent(
-        navController = navController,
         state = state,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
@@ -63,21 +61,19 @@ fun HomeScreen(
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickChat = { goToChat(context) },
-        onRetry = viewModel::onRetry
+        onRetry = viewModel::getData
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }
 
 @Composable
 fun HomeContent(
-    navController: NavController,
     state: HomeUIState,
     onCreatePost: () -> Unit,
     onClickLike: (PostUIState) -> Unit,
@@ -88,17 +84,18 @@ fun HomeContent(
     onOpenLinkClick: (String) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
     onClickChat: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = stringResource(id = Screen.Home.title),
-            navHostController = navController,
+            showBackButton = false,
             actions = {
                 IconButton(onClick = onClickChat) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.send),
-                        contentDescription = ""
+                        contentDescription = "",
+                        tint = MaterialTheme.colors.primaryVariant
                     )
                 }
             }
@@ -130,7 +127,6 @@ fun HomeContent(
                     PostItem(
                         state = it,
                         isContentExpandable = true,
-                        isMyPost = it.publisherId == state.id,
                         isClubPost = false,
                         showGroupName = false,
                         onClickLike = onClickLike,

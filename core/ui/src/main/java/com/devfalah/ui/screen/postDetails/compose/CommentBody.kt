@@ -23,10 +23,10 @@ import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryGrayColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.util.getDataDescription
+import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
@@ -38,7 +38,7 @@ fun CommentBody(
     Column(modifier = modifier.fillMaxWidth()) {
         ExpandableText(
             modifier = Modifier.fillMaxWidth(),
-            text = state.text,
+            text = state.text.htmlText(),
             minimizedMaxLines = 2,
             style = TextStyle(
                 fontSize = 14.sp,
@@ -63,7 +63,7 @@ fun CommentBody(
         ) {
 
             Text(
-                text = "${state.timeCreate.value} ${getDataDescription(state.timeCreate.description)} ",
+                text = getDataDescription(state.timeCreate.description, state.timeCreate.value),
                 fontSize = 12.sp,
                 color = MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.Normal

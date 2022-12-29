@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubCreation.ClubCreationUiState
 import com.devfalah.viewmodels.clubCreation.ClubCreationViewModel
 import com.devfalah.viewmodels.clubCreation.isCreateClubButtonEnabled
@@ -35,8 +36,8 @@ fun ClubCreationScreen(
     val systemUIController = rememberSystemUiController()
 
     ClubCreationContent(
-        navController = navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onNameChange = viewModel::onNameTextChange,
         onDescriptionChange = viewModel::onDescriptionTextChange,
         onPrivacyChange = viewModel::onPrivacyChange,
@@ -48,7 +49,6 @@ fun ClubCreationScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 
@@ -56,8 +56,8 @@ fun ClubCreationScreen(
 
 @Composable
 fun ClubCreationContent(
-    navController: NavController,
     state: ClubCreationUiState,
+    onClickBack: () -> Unit,
     onNameChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onPrivacyChange: (Int) -> Unit,
@@ -66,7 +66,10 @@ fun ClubCreationContent(
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.create_club), navHostController = navController)
+            AppBar(
+                title = stringResource(R.string.create_club),
+                onBackButton = onClickBack,
+            )
         }
     ) { scaffoldPadding ->
         Column(
@@ -81,6 +84,7 @@ fun ClubCreationContent(
                 value = state.name,
                 onValueChange = onNameChange,
                 singleLine = true,
+                hint = stringResource(id = R.string.enter_club_name)
             )
 
             CustomTextField(
@@ -93,7 +97,7 @@ fun ClubCreationContent(
             )
 
             Column {
-                Text(text = stringResource(R.string.privacy))
+                Text(text = stringResource(R.string.privacy), color = MaterialTheme.colors.primaryVariant)
                 HeightSpacer8()
                 SegmentControls(
                     items = listOf(
@@ -112,10 +116,12 @@ fun ClubCreationContent(
                 modifier = Modifier.fillMaxWidth(),
             )
         }
+
         val successMessage = stringResource(id = R.string.clubـcreated_successfully)
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
                 showToastMessage(context, successMessage)
+                onClickBack()
             }
         }
     }

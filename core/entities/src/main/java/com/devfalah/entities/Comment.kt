@@ -7,4 +7,5 @@ data class Comment(
     val totalLikes: Int,
     val isLikedByUser: Boolean,
     val user: User,
+    val isMyComment:Boolean,
 )

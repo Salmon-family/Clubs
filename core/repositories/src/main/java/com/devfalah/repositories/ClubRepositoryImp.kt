@@ -12,7 +12,8 @@ import javax.inject.Inject
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: ClubLocalDataSource,
-    private val appConfigurator: AppConfigurator,
+    private val coreDataStoreDataSource: CoreDataStoreDataSource,
+    private val coreFireStoreDataSource: CoreFireStoreDataSource
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -212,7 +213,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): Post {
-        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity()
+        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity() ?: Post()
     }
 
 
@@ -234,15 +235,24 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override fun getUserId(): Int {
-        return appConfigurator.getUserId()?.toInt() ?: -1
+        return coreDataStoreDataSource.getUserId()?.toInt() ?: -1
     }
 
     override suspend fun saveUserId(userId: Int) {
-        appConfigurator.saveUserId(userId)
+        coreDataStoreDataSource.saveUserId(userId)
     }
 
     override suspend fun deleteUserId() {
-        appConfigurator.deleteUserId()
+        coreDataStoreDataSource.deleteUserId()
+    }
+
+    override suspend fun addBugReport(
+        userId: Int,
+        message: String,
+        onSuccess: () -> Unit,
+        onFail: (Exception) -> Unit
+    ) {
+        coreFireStoreDataSource.addBugReport(userId, message, onSuccess, onFail)
     }
 
 }

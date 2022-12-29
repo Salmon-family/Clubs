@@ -4,12 +4,10 @@ import com.devfalah.viewmodels.friends.FriendUIState
 import com.devfalah.viewmodels.postDetails.PublishTimeUIState
 
 data class UserUIState(
-    val id: Int = 0,
     val userDetails: UserDetailsUIState = UserDetailsUIState(),
     val friends: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
     val totalFriends: Int = 0,
-    val isMyProfile: Boolean = true,
     val loading: Boolean = false,
     val isPagerLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
@@ -40,6 +38,7 @@ data class PostUIState(
     val publisherName: String = "",
     val publisherImage: String = "",
     val publisherId: Int = 0,
+    val isMyPost:Boolean = false,
     val privacy: Boolean = false,
     val createdData: PublishTimeUIState = PublishTimeUIState(),
     val createdDataValue: Long = 0L,

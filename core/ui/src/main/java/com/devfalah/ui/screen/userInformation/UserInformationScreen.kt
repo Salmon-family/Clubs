@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +21,7 @@ import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.userInformation.UserInformationUIState
 import com.devfalah.viewmodels.userInformation.UserInformationViewModel
 import com.devfalah.viewmodels.userInformation.isUpdateInformationButtonEnabled
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
@@ -28,30 +30,45 @@ fun UserInformationScreen(
     viewModel: UserInformationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val systemUIController = rememberSystemUiController()
+
     UserInformationContent(
-        navController = navController,
         state = state,
+        onClickBack = { navController.popBackStack() },
         onNameChange = viewModel::onNameTextChange,
         onTitleChange = viewModel::onTitleChange,
         onPasswordChange = viewModel::onPasswordTextChange,
         onClickSave = viewModel::onClickSave,
+        navigateToProfile = { navController.navigateToProfile(state.id) }
     )
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+        )
+    }
 
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun UserInformationContent(
-    navController: NavController,
     state: UserInformationUIState,
+    onClickBack: () -> Unit,
     onNameChange: (String) -> Unit,
     onTitleChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onClickSave: () -> Unit,
+    navigateToProfile: () -> Unit,
 ) {
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.edit_info), navHostController = navController)
+            AppBar(
+                title = stringResource(R.string.edit_info),
+                onBackButton = onClickBack,
+            )
         }
     ) {
         Column(
@@ -92,7 +109,7 @@ fun UserInformationContent(
 
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
-                navController.navigateToProfile(state.id)
+                navigateToProfile()
             }
         }
     }

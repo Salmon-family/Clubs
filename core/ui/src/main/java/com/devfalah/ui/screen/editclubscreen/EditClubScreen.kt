@@ -20,9 +20,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.showToastMessage
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBrandColor
 import com.devfalah.viewmodels.editclub.EditClubUiState
 import com.devfalah.viewmodels.editclub.EditClubViewModel
 import com.devfalah.viewmodels.editclub.isCreateClubButtonEnabled
@@ -36,8 +34,9 @@ fun EditClubScreen(
     val state by editClubViewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
-    EditClubContent(navController = navController,
+    EditClubContent(
         uiState = state,
+        onClickBack = { navController.popBackStack() },
         onNameChanged = editClubViewModel::onChangedClubName,
         onDescriptionChanged = editClubViewModel::onDescriptionChanged,
         onPrivacyChanged = editClubViewModel::onPrivacyChanged,
@@ -50,7 +49,6 @@ fun EditClubScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }
@@ -58,8 +56,8 @@ fun EditClubScreen(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun EditClubContent(
-    navController: NavController,
     uiState: EditClubUiState,
+    onClickBack: () -> Unit,
     onNameChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     onPrivacyChanged: (Int) -> Unit,
@@ -69,7 +67,10 @@ private fun EditClubContent(
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            AppBar(title = stringResource(R.string.edit_club), navHostController = navController)
+            AppBar(
+                title = stringResource(R.string.edit_club),
+                onBackButton = onClickBack,
+            )
         }
     ) {
         Column(

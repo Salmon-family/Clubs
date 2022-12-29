@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -81,7 +81,6 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
     //flowRow
-    def accompanist_version = "0.28.0"
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
 
     // Splash Screen

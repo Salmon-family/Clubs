@@ -2,7 +2,10 @@ package com.devfalah.viewmodels.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.*
+import com.devfalah.usecases.GetHomeThreadsUseCase
+import com.devfalah.usecases.posts.DeletePostUseCase
+import com.devfalah.usecases.posts.SetFavoritePostUseCase
+import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
@@ -16,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val likeUseCase: SetPostLikeUseCase,
-    val allPosts: GetHomePostUseCase,
-    val getUser: GetUserIdUseCase,
+    val getHomeThreads: GetHomeThreadsUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val deletePostUseCase: DeletePostUseCase,
 ) : ViewModel() {
@@ -26,35 +28,22 @@ class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getUserId()
         getData()
     }
 
-    fun onRetry() {
+    fun getData() {
         _uiState.update { it.copy(error = "", isLoading = true) }
-        getUserId()
-        swipeToRefresh()
-    }
-
-    private fun getUserId() {
         viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(isLoading = true, id = getUser()) }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
-            }
+            getHomeThreads()
+            swipeToRefresh()
         }
-    }
-
-    private fun getData() {
-        viewModelScope.launch { allPosts() }
     }
 
     fun onClickLike(post: PostUIState) {
         viewModelScope.launch {
             try {
                 val totalLikes = likeUseCase(
-                    postID = post.postId, userId = uiState.value.id,
+                    postID = post.postId,
                     isLiked = post.isLikedByUser
                 )
                 val updatedPost = post.copy(
@@ -101,12 +90,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
             try {
-                val homePosts = allPosts.loadData(uiState.value.id)
+                val homePosts = getHomeThreads.loadData()
                 _uiState.update {
                     it.copy(
                         isPagerLoading = false,
                         isLoading = false,
-                        isEndOfPager = homePosts.isNotEmpty(),
+                        isEndOfPager = homePosts.isEmpty(),
                         posts = it.posts + homePosts.toUIState()
                     )
                 }
@@ -134,7 +123,7 @@ class HomeViewModel @Inject constructor(
     fun onDeletePost(post: PostUIState) {
         viewModelScope.launch {
             try {
-                if (deletePostUseCase(_uiState.value.id, post.postId)) {
+                if (deletePostUseCase(post.postId)) {
                     _uiState.update {
                         it.copy(posts = _uiState.value.posts.filterNot { it.postId == post.postId })
                     }

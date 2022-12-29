@@ -2,9 +2,8 @@ package com.devfalah.viewmodels.accountSettings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.EditUserInformationUseCase
-import com.devfalah.usecases.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.usecases.user.EditUserInformationUseCase
+import com.devfalah.usecases.user.GetMyAccountProfileDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountSettingsViewModel @Inject constructor(
-    private val getUserIdUseCase: GetUserIdUseCase,
-    private val getUserAccountDetailsUseCase: GetUserAccountDetailsUseCase,
+    private val myAccountProfileDetails: GetMyAccountProfileDetailsUseCase,
     private val editUserInformationUseCase: EditUserInformationUseCase
 ) : ViewModel() {
 
@@ -30,13 +28,7 @@ class AccountSettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {
-                val id = getUserIdUseCase()
-                _uiState.update {
-                    getUserAccountDetailsUseCase(
-                        userId = id,
-                        profileOwnerId = id
-                    ).toAccountSettingsUiState()
-                }
+                _uiState.update { myAccountProfileDetails().toAccountSettingsUiState() }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
             }

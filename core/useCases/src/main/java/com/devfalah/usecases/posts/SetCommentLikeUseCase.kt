@@ -7,7 +7,8 @@ class SetCommentLikeUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
 
-    suspend operator fun invoke(userId: Int, commentId: Int, isLiked: Boolean): Int {
+    suspend operator fun invoke(commentId: Int, isLiked: Boolean): Int {
+        val userId = clubRepository.getUserId()
         return if (isLiked) {
             clubRepository.removeLikeOnComment(userID = userId, commentId = commentId)
         } else {

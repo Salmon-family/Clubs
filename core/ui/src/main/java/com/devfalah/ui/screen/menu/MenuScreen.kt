@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.menu
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.compose.foundation.background
@@ -22,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
@@ -35,7 +35,6 @@ import com.devfalah.ui.screen.menu.composable.theme.ThemeBottomSheet
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
 import com.devfalah.viewmodels.menu.UserUiState
@@ -51,13 +50,12 @@ fun MenuScreen(
     val systemUIController = rememberSystemUiController()
     val context = LocalContext.current
     MenuContent(
-        navController = navController,
         state = state,
-        onClickProfile = { navController.navigateToProfile(state.userId) },
+        onClickProfile = { navController.navigateToProfile(state.id) },
         onClickSavedPosts = { navController.navigate(route = SAVED_SCREEN) },
         onClickAccountSettings = { navController.navigate(route = ACCOUNT_SETTINGS_SCREEN) },
         onClickFriendsRequests = { navController.navigate(route = FRIEND_REQUEST_SCREEN) },
-        onClickReportBug = {},
+        onClickReportBug = { navController.navigate(ROUTE_REPORT_BUG) },
         onClickLogOut = viewModel::onClickLogOut,
         onChangeLanguage = viewModel::onChangeLanguage,
         onChangeTheme = viewModel::onChangeTheme
@@ -73,7 +71,16 @@ fun MenuScreen(
     }
     LaunchedEffect(key1 = state.logout) {
         if (state.logout) {
-            (context as Activity).finish()
+            try {
+                val intent = Intent(
+                    context,
+                    Class.forName("com.thechance.identity.ui.main.AuthenticationActivity")
+                )
+                (context as Activity).startActivity(intent)
+                context.finish()
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            }
         }
     }
 }
@@ -81,16 +88,15 @@ fun MenuScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MenuContent(
-    navController: NavController,
     state: UserUiState,
     onClickProfile: () -> Unit,
     onClickSavedPosts: () -> Unit,
     onClickAccountSettings: () -> Unit,
     onClickFriendsRequests: () -> Unit,
     onClickReportBug: () -> Unit,
-    onClickLogOut: () -> Unit,
     onChangeLanguage: (Int) -> Unit,
-    onChangeTheme: (Int) -> Unit
+    onChangeTheme: (Int) -> Unit,
+    onClickLogOut: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
@@ -115,18 +121,18 @@ fun MenuContent(
         ){
         Column {
 
-            AppBar(
-                title = stringResource(id = R.string.menu),
-                navHostController = navController,
-                actions = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_logout),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .nonRippleEffect { onClickLogOut() }
-                    )
-                })
+        AppBar(
+            title = stringResource(id = R.string.menu),
+            showBackButton = false,
+            actions = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_logout),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .nonRippleEffect { onClickLogOut() },
+                )
+            })
 
             LazyColumn(
                 modifier = Modifier
@@ -177,17 +183,16 @@ fun MenuContent(
                     )
                 }
 
-                item {
-                    Text(
-                        text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            color = LightTernaryBlackColor,
-                            fontFamily = PlusJakartaSans,
-                            fontWeight = FontWeight.Normal
-                        )
+            item {
+                Text(
+                    text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colors.secondaryVariant,
+                        fontFamily = PlusJakartaSans,
+                        fontWeight = FontWeight.Normal
                     )
-                }
+                )
             }
         }
     }

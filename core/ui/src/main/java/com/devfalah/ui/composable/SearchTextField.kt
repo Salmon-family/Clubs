@@ -28,8 +28,8 @@ fun SearchTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-
-            ),
+            textColor = MaterialTheme.colors.primaryVariant
+        ),
         value = text,
         shape = RoundedCornerShape(100.dp),
         singleLine = true,
@@ -38,7 +38,8 @@ fun SearchTextField(
             Text(
                 text = stringResource(R.string.search),
                 fontSize = 14.sp,
-                fontFamily = PlusJakartaSans
+                fontFamily = PlusJakartaSans,
+                color = MaterialTheme.colors.onSurface
             )
         },
         leadingIcon = {

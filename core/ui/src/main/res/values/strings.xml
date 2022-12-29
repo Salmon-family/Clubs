@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="add_friend">Add Friend</string>
     <string name="message">Message</string>
     <string name="photo">Photo</string>
@@ -82,13 +82,18 @@
     <string name="edit">Edit</string>
     <string name="email">Email</string>
     <string name="new_password">New Password</string>
+    <string name="bug_message">Bug Message</string>
+    <string name="send">Send</string>
     <string name="commented_on_your_post">commented on your post</string>
     <string name="liked_your_comment_on_a_post">liked your comment on a post</string>
     <string name="menu">Menu</string>
     <string name="members">Club Members</string>
-    <string name="minutes"> minutes ago</string>
-    <string name="hour"> hour ago</string>
-    <string name="day"> day ago</string>
+    <string name="minute">one minute ago</string>
+    <string name="minutes">%s"&#x20;" minutes ago</string>
+    <string name="hour">one hour ago</string>
+    <string name="hours">%s"&#x20;" hours ago</string>
+    <string name="day">%s"&#x20;" days ago</string>
+    <string name="one_day"> one day ago</string>
     <string name="just_now">Just now</string>
     <string name="wrong_password_message">You entered a wrong password, please try again.</string>
     <string name="enter_your_comment">Enter your comment…</string>
@@ -100,4 +105,9 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="choose_theme">Choose your theme</string>
+    <string name="bug_report_error_message">An error occurred, please rey again later.</string>
+    <string name="enter_club_name">Enter Your Club Name</string>
+    <string name="nothing_to_show">Nothing to show</string>
+    <string name="saved_threads_text">Save your favorite threads to show them here later</string>
+
 </resources>

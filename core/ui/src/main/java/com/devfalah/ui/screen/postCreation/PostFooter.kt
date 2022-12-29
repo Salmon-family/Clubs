@@ -3,31 +3,24 @@ package com.devfalah.ui.screen.postCreation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
+import com.devfalah.ui.composable.ButtonWithLoading
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
 
 
 @Composable
 fun PostFooter(
     modifier: Modifier = Modifier,
+    isLoading: Boolean,
+    isEnabled: Boolean,
     onSelectImage: () -> Unit,
     onClickPost: () -> Unit
 ) {
@@ -39,24 +32,32 @@ fun PostFooter(
         Icon(
             modifier = Modifier.nonRippleEffect { onSelectImage() },
             painter = painterResource(id = R.drawable.ic_gallery_add),
-            contentDescription = null
+            contentDescription = null,
+            tint = MaterialTheme.colors.secondaryVariant
         )
 
-        Button(
-            elevation = ButtonDefaults.elevation(0.dp),
-            shape = RoundedCornerShape(100.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = LightPrimaryBrandColor),
+//        Button(
+//            elevation = ButtonDefaults.elevation(0.dp),
+//            shape = RoundedCornerShape(100.dp),
+//            colors = ButtonDefaults.buttonColors(backgroundColor = LightPrimaryBrandColor),
+//            onClick = onClickPost,
+//        ) {
+//            Text(
+//                text = stringResource(id = R.string.post_button),
+//                color = WhiteColor,
+//                textAlign = TextAlign.Center,
+//                fontWeight = FontWeight.SemiBold,
+//                fontFamily = PlusJakartaSans,
+//                fontSize = 14.sp
+//            )
+//        }
+
+        ButtonWithLoading(
+            text = stringResource(id = R.string.post_button),
             onClick = onClickPost,
-        ) {
-            Text(
-                text = stringResource(id = R.string.post_button),
-                color = WhiteColor,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.SemiBold,
-                fontFamily = PlusJakartaSans,
-                fontSize = 14.sp
-            )
-        }
+            isLoading = isLoading,
+            isEnabled = isEnabled,
+        )
     }
 }
 
@@ -66,6 +67,8 @@ fun PostFooter(
 fun PreviewPostFooter() {
     PostFooter(
         onClickPost = {},
-        onSelectImage = {}
+        onSelectImage = {},
+        isLoading = true,
+        isEnabled = false
     )
 }

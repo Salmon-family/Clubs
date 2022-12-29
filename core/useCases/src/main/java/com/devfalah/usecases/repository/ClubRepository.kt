@@ -72,8 +72,7 @@ interface ClubRepository {
 
     suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean
 
-    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int)
-            : Club
+    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int): Club
 
     suspend fun editUserInformation(user: UserInformation): User
 
@@ -110,5 +109,12 @@ interface ClubRepository {
     suspend fun saveUserId(userId: Int)
 
     suspend fun deleteUserId()
+
+    suspend fun addBugReport(
+        userId: Int,
+        message: String,
+        onSuccess: () -> Unit,
+        onFail: (Exception) -> Unit
+    )
 
 }

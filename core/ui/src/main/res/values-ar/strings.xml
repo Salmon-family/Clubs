@@ -46,7 +46,7 @@
     <string name="clubـcreated_successfully">تم أنشاء النادي بنجاح</string>
     <string name="club_name">اسم النادي</string>
     <string name="description">الوصف</string>
-    <string name="description_hint">صف ناديك ببعض الكلمات...</string>
+    <string name="description_hint">صف ناديك ببعض الكلمات…</string>
     <string name="privacy">الخصوصية</string>
     <string name="public_text">عام</string>
     <string name="private_privacy">خاص</string>
@@ -82,14 +82,25 @@
     <string name="liked_your_comment_on_a_post">اعجب بتعليقك على منشور</string>
     <string name="menu">القائمة</string>
     <string name="members">اعضاء النادي</string>
-    <string name="minutes">قبل دقيقة</string>
-    <string name="hour">قبل ساعة</string>
-    <string name="day">قبل يوم</string>
+    <string name="minute">قبل دقيقة</string>
+    <string name="minutes">قبل  %s دقايق</string>
+
+    <string name="hour">قبل ساعة واحده</string>
+    <string name="hours">قبل %s ساعات</string>
+
+    <string name="day">قبل %s ايام</string>
+    <string name="one_day">قبل يوم</string>
     <string name="just_now">الان</string>
     <string name="enter_your_comment">اضف تعليقك…</string>
     <string name="password_place_holder">ادخل اكثر من ستة احرف او ارقام</string>
 
     <string name="version">الإصدار</string>
+    <string name="bug_message">رسالة الإبلاغ</string>
+    <string name="send">إرسال</string>
+    <string name="bug_report_error_message">حصل خطأ، ترجى إعادة المحاولة في وقت لاحق.</string>
+    <string name="enter_club_name">آدخل اسم النادي الخاص بك</string>
+    <string name="nothing_to_show">لا شيء للعرض</string>
+    <string name="saved_threads_text">قم بحفظ منشوراتك المفضّلة لتعرضها في وقت لاحق</string>
 
     <string name="app_language">اللغة</string>
     <string name="arabic">عربى</string>

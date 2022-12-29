@@ -36,8 +36,8 @@ fun AllSearchResultScreenScreen(
     val systemUIController = rememberSystemUiController()
 
     AllSearchResultScreenContent(
-        navController = navController,
         state = state,
+        onBackClick = { navController.popBackStack() },
         onRetry = viewModel::getData,
         onClubSelected = { navController.navigateToClubDetails(it) },
         OnUserClick = { navController.navigateToProfile(it) },
@@ -48,21 +48,23 @@ fun AllSearchResultScreenScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }
 
 @Composable
 fun AllSearchResultScreenContent(
-    navController: NavController,
     state: AllSearchResultUIState,
+    onBackClick: () -> Unit,
     onClubSelected: (Int) -> Unit,
     OnUserClick: (Int) -> Unit,
     onRetry: () -> Unit
 ) {
     Column (modifier = Modifier.fillMaxSize()){
-        AppBar(title = state.title, navHostController = navController)
+        AppBar(
+            title = state.title,
+            onBackButton = onBackClick,
+        )
 
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)

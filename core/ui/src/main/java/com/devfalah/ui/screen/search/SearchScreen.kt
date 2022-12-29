@@ -57,6 +57,14 @@ fun SearchScreen(
         },
         onRetry = viewModel::onSearch
     )
+
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        setStatusBarColor(
+            systemUIController = systemUIController,
+            color = color,
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)

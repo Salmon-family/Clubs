@@ -1,6 +1,5 @@
 package com.thechance.identity.ui.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +47,11 @@ fun PasswordInputText(
                 if (match) {
                     TrailingIconPassword(icon = R.drawable.ic_match)
                 } else {
-                    TrailingIconPassword(icon = R.drawable.ic_hide)
+                    if (passwordVisible) {
+                        TrailingIconPassword(icon = R.drawable.ic_remove_eye)
+                    } else {
+                        TrailingIconPassword(icon = R.drawable.ic_hide)
+                    }
                 }
             }
 
@@ -78,9 +81,10 @@ fun PasswordInputText(
 private fun TrailingIconPassword(
     icon: Int,
 ) {
-    Image(
+    Icon(
         painter = painterResource(id = icon),
-        "password"
+        "password",
+        tint = MaterialTheme.colors.secondaryVariant
     )
 
 }

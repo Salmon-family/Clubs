@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.EditClubUseCase
+import com.devfalah.usecases.club.EditClubUseCase
 import com.devfalah.viewmodels.clubCreation.ClubPrivacy
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

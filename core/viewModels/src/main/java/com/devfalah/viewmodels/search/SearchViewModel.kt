@@ -3,9 +3,9 @@ package com.devfalah.viewmodels.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.GetSearchUseCase
-import com.devfalah.usecases.GetUserIdUseCase
-import com.devfalah.viewmodels.friends.toFriendsUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -14,44 +14,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    val getUserIdUseCase: GetUserIdUseCase,
     val getSearchUseCase: GetSearchUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUIState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        viewModelScope.launch { _uiState.update { it.copy(userId = getUserIdUseCase()) } }
-    }
+    private var searchJob: Job? = null
 
     fun onSearchTextChange(keyword: String) {
         _uiState.update { it.copy(keyword = keyword) }
-        if (_uiState.value.keyword.isNotEmpty()) {
-            onSearch()
-        }
+        onSearch()
     }
 
     fun onSearch() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = "") }
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(1000)
             try {
-                if (uiState.value.keyword.isNotBlank()) {
-                    val searchResult = getSearchUseCase(uiState.value.userId, uiState.value.keyword)
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            clubs = searchResult.clubs.toUIState().take(3),
-                            showSeeAllClubs = searchResult.clubs.size > 3,
-                            users = searchResult.users.toFriendsUIState().take(3),
-                            showSeeAllUsers = searchResult.clubs.size > 3,
-                        )
-                    }
-                } else {
-                    _uiState.update {
-                        it.copy(isLoading = false, clubs = emptyList(), users = emptyList())
-                    }
-                }
+                _uiState.update { it.copy(isLoading = true, error = "") }
+                val searchResult = getSearchUseCase(uiState.value.keyword, limit = 3)
+                _uiState.emit(searchResult.toUIState().copy(keyword = uiState.value.keyword))
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
@@ -62,6 +45,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }
+
         }
     }
 

@@ -24,25 +24,24 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun FriendsScreen(
     navController: NavController,
-    viewModel: FriendsViewModel = hiltViewModel()
+    viewModel: FriendsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
 
     FriendsContent(
         state = state,
-        navController = navController,
+        onClickBack = { navController.popBackStack() },
         onRefresh = viewModel::getUserFriends,
         onClickProfile = { navController.navigateToProfile(it) },
         onRemoveFriend = viewModel::removeFriend,
-        onRetry = viewModel::getData,
+        onRetry = viewModel::getUserFriends,
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
 }
@@ -50,7 +49,7 @@ fun FriendsScreen(
 @Composable
 fun FriendsContent(
     state: FriendsUIState,
-    navController: NavController,
+    onClickBack: () -> Unit,
     onRefresh: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRemoveFriend: (Int) -> Unit,
@@ -60,13 +59,13 @@ fun FriendsContent(
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = "${state.totalFriends} " + stringResource(id = R.string.friends),
-            navHostController = navController,
+            onBackButton = onClickBack,
         )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
             LottieItem(LottieResource = R.raw.loading)
-        }else if(state.friends.isEmpty()){
+        } else if (state.friends.isEmpty()) {
             LottieItem(LottieResource = R.raw.no_data)
         } else {
             ManualPager(

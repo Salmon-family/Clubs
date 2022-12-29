@@ -6,14 +6,13 @@ import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(
     private val chatRepository: ChatRepository,
-    private val getUserId: GetUserIdUseCase,
 ) {
     suspend operator fun invoke(): Flow<List<Chat>> {
         return chatRepository.getChats()
     }
 
     suspend fun getChats(page: Int): Int {
-        val chats = chatRepository.getChats(getUserId(), page)
+        val chats = chatRepository.getChats(chatRepository.getUserId(), page)
         chatRepository.insertChats(chats.chats)
         return chats.count
     }

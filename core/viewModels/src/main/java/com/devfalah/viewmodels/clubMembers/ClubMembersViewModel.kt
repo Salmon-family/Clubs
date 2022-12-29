@@ -3,7 +3,7 @@ package com.devfalah.viewmodels.clubMembers
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.GetClubMembersUseCase
+import com.devfalah.usecases.club.GetClubMembersUseCase
 import com.devfalah.viewmodels.friends.FriendsUIState
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
@@ -39,7 +39,7 @@ class ClubMembersViewModel @Inject constructor(
                 )
             }
             try {
-                val members = getClubMembersUseCase(args.clubId)
+                val members = getClubMembersUseCase(args.ownerId, args.clubId)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
@@ -51,8 +51,11 @@ class ClubMembersViewModel @Inject constructor(
             } catch (t: Throwable) {
                 _uiState.update {
                     it.copy(
-                        error = if (_uiState.value.friends.isEmpty()) { t.message.toString() }
-                        else { "" },
+                        error = if (_uiState.value.friends.isEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        },
                         isLoading = false,
                         isPagerLoading = false,
                         minorError = t.message.toString()

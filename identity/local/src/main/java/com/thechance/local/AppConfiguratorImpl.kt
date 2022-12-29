@@ -1,11 +1,19 @@
 package com.thechance.local
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.thechance.identity.entities.Club
 import com.thechance.identity.repositories.LocalIdentityDataSource
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class AppConfiguratorImpl @Inject constructor(
-    private val dataStorePreferences: DataStorePreferences
+    private val userDataStore: DataStore<Preferences>,
 ) : LocalIdentityDataSource {
 
     companion object DataStorePreferencesKeys {
@@ -15,19 +23,31 @@ class AppConfiguratorImpl @Inject constructor(
     }
 
     override fun getStartInstall(): Boolean? {
-        return dataStorePreferences.readBoolean(START_INSTALL_STATE_KEY)
+        return runBlocking {
+            userDataStore.data.map {
+                it[booleanPreferencesKey(START_INSTALL_STATE_KEY)]
+            }.first()
+        }
     }
 
     override suspend fun setStartInstall(value: Boolean) {
-        return dataStorePreferences.writeBoolean(START_INSTALL_STATE_KEY, value)
+        userDataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(START_INSTALL_STATE_KEY)] = value
+        }
     }
 
     override fun getUserId(): String? {
-        return dataStorePreferences.readString(SIGN_UP_STATE_KEY)
+        return runBlocking {
+            userDataStore.data.map {
+                it[stringPreferencesKey(SIGN_UP_STATE_KEY)]
+            }.first()
+        }
     }
 
     override suspend fun saveUserId(id: String) {
-        return dataStorePreferences.writeString(SIGN_UP_STATE_KEY, id)
+        userDataStore.edit { preferences ->
+            preferences[stringPreferencesKey(SIGN_UP_STATE_KEY)] = id
+        }
     }
 
     override fun getClubs(): List<Club> {
@@ -35,10 +55,16 @@ class AppConfiguratorImpl @Inject constructor(
     }
 
     override suspend fun saveToken(token: String) {
-        dataStorePreferences.writeString(TOKEN_KEY,token)
+        userDataStore.edit { preferences ->
+            preferences[stringPreferencesKey(TOKEN_KEY)] = token
+        }
     }
 
     override fun getToken(): String {
-        return dataStorePreferences.readString(TOKEN_KEY)?: ""
+        return runBlocking {
+            userDataStore.data.map {
+                it[stringPreferencesKey(TOKEN_KEY)]
+            }.first()
+        } ?: ""
     }
 }

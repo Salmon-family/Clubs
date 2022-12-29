@@ -5,8 +5,12 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,23 +20,27 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.*
+import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.PostContent
+import com.devfalah.ui.composable.SegmentControlsWithIcon
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.home.navigateHome
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.util.createFileFromContentUri
-import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
-import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
+import com.devfalah.viewmodels.postCreation.isEnabled
+import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.util.Constants.MAX_IMAGE_POST_SIZE
+import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun PostCreationScreen(
     navController: NavController,
-    viewModel: PostCreationViewModel = hiltViewModel()
+    viewModel: PostCreationViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
@@ -41,12 +49,16 @@ fun PostCreationScreen(
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            uri?.let { viewModel.onClickSelectImage(createFileFromContentUri(it, context)) }
+            uri?.let {
+                viewModel.onClickSelectImage(
+                    createFileFromContentUri(it, context, MAX_IMAGE_POST_SIZE)
+                )
+            }
         }
     )
     PostCreationContent(
         state = state,
-        navController = navController,
+        onBackClick = { navController.popBackStack() },
         onPrivacyChange = viewModel::onPrivacyChange,
         onPostChange = viewModel::onPostChange,
         onClickPost = viewModel::onClickPost,
@@ -55,8 +67,7 @@ fun PostCreationScreen(
             singlePhotoPickerLauncher.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
-        }
-
+        },
     )
 
     val color = MaterialTheme.colors.background
@@ -64,8 +75,20 @@ fun PostCreationScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
+    }
+
+    LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
+        if (state.isSuccess) {
+            goBack(
+                state,
+                navToHome = { navController.navigateHome() },
+                navToClubDetails = { navController.navigateToClubDetails(groupId = state.clubId) },
+                navController = navController
+            )
+        } else if (state.error.isNotBlank()) {
+            showToastMessage(context, state.error)
+        }
     }
 }
 
@@ -74,7 +97,7 @@ fun PostCreationScreen(
 @Composable
 fun PostCreationContent(
     state: PostCreationUIState,
-    navController: NavController,
+    onBackClick: () -> Unit,
     onPrivacyChange: (Int) -> Unit,
     onPostChange: (String) -> Unit,
     onClickPost: () -> Unit,
@@ -85,7 +108,7 @@ fun PostCreationContent(
         topBar = {
             AppBar(
                 title = stringResource(R.string.create_thread_title),
-                navHostController = navController
+                onBackButton = onBackClick
             )
         }
     ) {
@@ -121,30 +144,31 @@ fun PostCreationContent(
                 onValueChange = onPostChange,
                 onRemoveImage = onRemoveImage
             )
-            PostFooter(onSelectImage = onSelectImage, onClickPost = onClickPost)
-        }
-
-        val context = LocalContext.current
-        LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
-            if (state.isSuccess) {
-                goBack(state, navController)
-            } else if (state.error.isNotBlank()) {
-                showToastMessage(context, state.error)
-            }
+            PostFooter(
+                onSelectImage = onSelectImage,
+                onClickPost = onClickPost,
+                isLoading = state.isLoading,
+                isEnabled = state.isEnabled()
+            )
         }
     }
 }
 
-private fun goBack(state: PostCreationUIState, navController: NavController) {
+private fun goBack(
+    state: PostCreationUIState,
+    navToHome: () -> Unit,
+    navToClubDetails: (Int) -> Unit,
+    navController: NavController
+) {
     when (state.clubId) {
         HOME_CLUB_ID -> {
-            navController.navigateHome()
+            navToHome()
         }
         PROFILE_CLUB_ID -> {
-            navController.navigateToProfile(state.id)
+            navController.navigateToProfile(-1)
         }
         else -> {
-            navController.navigateToClubDetails(groupId = state.clubId)
+            navToClubDetails(state.clubId)
         }
     }
 }

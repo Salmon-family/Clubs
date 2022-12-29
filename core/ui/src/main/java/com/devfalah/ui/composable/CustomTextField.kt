@@ -12,6 +12,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,6 +34,7 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     singleLine: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    shape: Shape = RoundedCornerShape(100.dp)
 ) {
     Column {
         Row {
@@ -50,6 +52,7 @@ fun CustomTextField(
                     text = "${value.length} / $maxChar",
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.primaryVariant,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(end = 16.dp)
@@ -68,17 +71,18 @@ fun CustomTextField(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
+                textColor = MaterialTheme.colors.primaryVariant
             ),
             placeholder = {
                 hint?.let {
                     Text(
                         text = it,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.onSurface
+                        color = MaterialTheme.colors.secondaryVariant
                     )
                 }
             },
-            shape = RoundedCornerShape(100.dp),
+            shape = shape,
             singleLine = singleLine,
             visualTransformation = visualTransformation,
         )

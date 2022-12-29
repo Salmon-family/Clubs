@@ -1,11 +1,9 @@
 package com.devfalah.viewmodels.userInformation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.EditUserInformationUseCase
-import com.devfalah.usecases.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.GetUserIdUseCase
+import com.devfalah.usecases.user.EditUserInformationUseCase
+import com.devfalah.usecases.user.GetMyAccountProfileDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,8 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserInformationViewModel @Inject constructor(
     val editUserInformationUseCase: EditUserInformationUseCase,
-    val getUserAccountDetails: GetUserAccountDetailsUseCase,
-    val getUser: GetUserIdUseCase,
+    val getUserAccountDetails: GetMyAccountProfileDetailsUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserInformationUIState())
@@ -32,9 +29,8 @@ class UserInformationViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             try {
-                val id = getUser()
                 _uiState.update {
-                    getUserAccountDetails(userId = id, profileOwnerId = id).toUserInfoUIState()
+                    getUserAccountDetails().toUserInfoUIState()
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString(), isLoading = false) }
@@ -58,10 +54,8 @@ class UserInformationViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true, error = "") }
         viewModelScope.launch {
             try {
-                val user = editUserInformationUseCase(user = uiState.value.toEntity())
-                Log.e("Test Test", user.toString())
+                editUserInformationUseCase(user = uiState.value.toEntity())
                 _uiState.update { it.copy(isLoading = false, isSuccessful = true) }
-
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
