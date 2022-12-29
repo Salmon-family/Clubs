@@ -29,6 +29,7 @@ class ClubDetailsViewModel @Inject constructor(
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
+    private val declineUseCase: GetClubDeclineUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var gettingDetailsClubsJob: Job? = null
@@ -209,6 +210,10 @@ class ClubDetailsViewModel @Inject constructor(
         makeRequest(
             onSuccess = {
                 gettingDetailsClubsJob = viewModelScope.launch {
+                    declineUseCase(
+                        clubId = args.groupId,
+                        ownerId = _uiState.value.detailsUiState.ownerId
+                    )
                     _uiState.update { it.copy(isMember = false, requestExists = false) }
                 }
             },

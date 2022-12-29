@@ -98,5 +98,6 @@
     <string name="version">Version </string>
     <string name="bug_report_error_message">An error occurred, please rey again later.</string>
     <string name="enter_club_name">Enter Your Club Name</string>
-
+    <string name="are_you_sure">Are you sure to leave this club?</string>
+    <string name="confirm">Confirm</string>
 </resources>

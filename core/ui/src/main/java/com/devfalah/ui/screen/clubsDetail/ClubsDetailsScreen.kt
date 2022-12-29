@@ -4,10 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,10 +17,7 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
-import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
-import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
-import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
-import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
+import com.devfalah.ui.screen.clubsDetail.composable.*
 import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -107,6 +101,7 @@ private fun ClubsDetailsContent(
 ) {
 
     val context = LocalContext.current
+    var popupController by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -165,22 +160,22 @@ private fun ClubsDetailsContent(
                     }
 
                 } else if (state.isMember) {
-                    if (!state.detailsUiState.isOwner){
+                    if (!state.detailsUiState.isOwner) {
                         item {
                             OutlineButton(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp),
-                                onClick = onDeclineClub
+                                onClick = {
+                                    popupController = true
+                                }
                             )
-
                         }
-                    }else{
+                    } else {
                         item {
                             HeightSpacer16()
                         }
                     }
-
                     item {
                         PostCreatingSection(
                             modifier = Modifier.padding(horizontal = 16.dp),
@@ -257,6 +252,14 @@ private fun ClubsDetailsContent(
             }
 
         }
+    }
+
+    if (popupController) {
+        LeaveClubDialog(
+            onDeclineClub = onDeclineClub,
+            onPopupDismiss = { popupController = false }
+        )
+
     }
 
     LaunchedEffect(key1 = state.pagerError) {
