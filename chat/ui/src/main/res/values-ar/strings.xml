@@ -6,5 +6,6 @@
     <string name="search">بحث</string>
     <string name="search_text">البحث عن صديق</string>
     <string name="enter_your_message">أدخل رسالتك…</string>
+    <string name="no_chats">لاتوجد محادثات</string>
 
 </resources>

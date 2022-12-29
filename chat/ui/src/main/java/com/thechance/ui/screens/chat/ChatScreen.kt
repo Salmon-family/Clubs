@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,12 +23,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.thechance.ui.R
 import com.thechance.ui.composable.FriendChat
 import com.thechance.ui.composable.Loading
 import com.thechance.ui.composable.SearchTextField
 import com.thechance.ui.composable.TopBarChats
 import com.thechance.ui.screens.conversation.navigateToConversation
+import com.thechance.ui.theme.DarkBackgroundColor
+import com.thechance.ui.theme.LightBackgroundColor
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
@@ -41,6 +45,7 @@ fun ChatsScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val activity = (LocalContext.current as? Activity)
+    val systemUIController = rememberSystemUiController()
     ChatsContent(
         state = state,
         onValueChanged = viewModel::onSearchTextChange,
@@ -54,6 +59,10 @@ fun ChatsScreen(
         },
         onLoadingMoreChats = viewModel::onLoadingMore,
     )
+    val color = MaterialTheme.colors.background
+    LaunchedEffect(true) {
+        systemUIController.setStatusBarColor(color)
+    }
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
