@@ -41,7 +41,8 @@ fun GroupPostDto.toEntity(): GroupWallPost {
         location = location ?: "",
         post = post.toEntity().copy(
             publisherId = user.guid ?: 0,
-            publisher = user.fullName ?: ""
+            publisher = user.fullName ?: "",
+            imageUrl = image?.substringBefore("?") ?: ""
         ),
         text = text ?: "",
         user = user.toEntity(),
@@ -54,12 +55,12 @@ fun PostDTO.toEntity(): Post {
         privacy = access == "1",
         createdTime = timeCreated ?: 0L,
         content = description ?: "",
-        imageUrl = profileImage?.substringBefore("?") ?: "",
+        imageUrl = "",
         totalLikes = totalLikes ?: 0,
         totalComments = totalComments ?: 0,
         publisher = "",
         publisherId = ownerGuid ?: 0,
-        publisherImageUrl = profileImage ?: "",
+        publisherImageUrl = profileImage?.substringBefore("?") ?: "",
         isLiked = isLikedByUser ?: false,
         isSaved = false,
         posterGuid = "",
