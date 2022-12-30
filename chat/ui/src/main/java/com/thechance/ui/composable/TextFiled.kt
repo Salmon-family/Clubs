@@ -33,7 +33,7 @@ fun SendTextField(
         ),
         maxLines = 4,
         value = text,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         onValueChange = onValueChanged,
         placeholder = {
             Text(
