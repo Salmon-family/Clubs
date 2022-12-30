@@ -88,7 +88,7 @@ fun SearchContent(
         } else if (state.isLoading) {
             Loading()
         } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
-            LottieItem(LottieResource = R.raw.no_data)
+            ErrorEmpty()
         } else {
 
             LazyColumn(
@@ -119,7 +119,10 @@ fun SearchContent(
 
                 if (state.clubs.isNotEmpty()) {
                     item("Clubs") {
-                        HeightSpacer24()
+
+                        if (state.users.isNotEmpty()){
+                            HeightSpacer24()
+                        }
 
                         RowTitleWithSeeAll(
                             title = stringResource(id = R.string.clubs),
