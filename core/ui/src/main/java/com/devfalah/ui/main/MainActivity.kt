@@ -8,17 +8,24 @@ import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import com.devfalah.ui.ClubsApp
 import com.devfalah.ui.theme.ClubsTheme
-import com.devfalah.viewmodels.main.MainViewModel
+import com.devfalah.viewmodels.main.CoreViewModel
+import com.devfalah.viewmodels.util.Language
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: CoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Language().updateResources(
+            context = this,
+            language = viewModel.uiState.value
+        )
+
         setContent {
             ClubsTheme {
                 val systemUIController = rememberSystemUiController()

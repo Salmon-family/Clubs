@@ -35,7 +35,22 @@ class CoreDataStoreDataSourceImp @Inject constructor(
 
     }
 
+    override fun getLanguage(): String? {
+        return runBlocking {
+            userDataStore.data.map {
+                it[stringPreferencesKey(LANGUAGE_KEY)]
+            }.first()
+        }
+    }
+
+    override suspend fun saveLanguage(language: String) {
+        userDataStore.edit { preferences ->
+            preferences[stringPreferencesKey(LANGUAGE_KEY)] = language
+        }
+    }
+
     companion object {
         const val SIGN_UP_STATE_KEY = "sign_up_state_key"
+        const val LANGUAGE_KEY = "language_key"
     }
 }

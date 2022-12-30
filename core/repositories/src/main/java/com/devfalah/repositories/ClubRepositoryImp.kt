@@ -18,8 +18,7 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
         return remoteDataSource.removeFriendRequest(
-            userID = userID,
-            friendRequestID = friendRequestID
+            userID = userID, friendRequestID = friendRequestID
         )
     }
 
@@ -174,13 +173,19 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
-        return remoteDataSource
-            .declineClubRequest(userId = userId, memberId = memberId, clubId = clubId)
+        return remoteDataSource.declineClubRequest(
+                userId = userId,
+                memberId = memberId,
+                clubId = clubId
+            )
     }
 
     override suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
-        return remoteDataSource
-            .acceptClubRequest(userId = userId, memberId = memberId, clubId = clubId)
+        return remoteDataSource.acceptClubRequest(
+                userId = userId,
+                memberId = memberId,
+                clubId = clubId
+            )
     }
 
     override suspend fun deletePost(postId: Int) {
@@ -191,19 +196,14 @@ class ClubRepositoryImp @Inject constructor(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int
     ): Post {
         return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
-            .toEntity()
-            ?: throw Throwable("null data")
+            .toEntity() ?: throw Throwable("null data")
     }
 
     override suspend fun publishPostWithImage(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int, imageFile: File
     ): Post {
         return remoteDataSource.publishPostWithImage(
-            userId,
-            publishOnId,
-            postContent,
-            privacy,
-            imageFile
+            userId, publishOnId, postContent, privacy, imageFile
         ).toEntity() ?: throw Throwable("null data")
     }
 
@@ -242,15 +242,20 @@ class ClubRepositoryImp @Inject constructor(
         coreDataStoreDataSource.saveUserId(userId)
     }
 
+    override fun getLanguage(): String? {
+        return coreDataStoreDataSource.getLanguage()
+    }
+
+    override suspend fun saveLanguage(language: String) {
+        return coreDataStoreDataSource.saveLanguage(language)
+    }
+
     override suspend fun deleteUserId() {
         coreDataStoreDataSource.deleteUserId()
     }
 
     override suspend fun addBugReport(
-        userId: Int,
-        message: String,
-        onSuccess: () -> Unit,
-        onFail: (Exception) -> Unit
+        userId: Int, message: String, onSuccess: () -> Unit, onFail: (Exception) -> Unit
     ) {
         coreFireStoreDataSource.addBugReport(userId, message, onSuccess, onFail)
     }

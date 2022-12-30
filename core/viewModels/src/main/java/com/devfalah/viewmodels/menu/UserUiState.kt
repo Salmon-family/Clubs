@@ -10,9 +10,9 @@ data class UserUiState(
     val logout: Boolean = false,
 )
 
-enum class AppLanguage(val value: Int){
-    ENGLISH(1),
-    ARABIC(2)
+enum class AppLanguage(val value: String){
+    ENGLISH("en"),
+    ARABIC("ar")
 }
 
 enum class ThemeType(val value: Int){

@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,21 +34,25 @@ import com.devfalah.ui.screen.menu.composable.*
 import com.devfalah.ui.screen.menu.composable.language.LanguageBottomSheet
 import com.devfalah.ui.screen.menu.composable.theme.ThemeBottomSheet
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.reportBug.ROUTE_REPORT_BUG
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
 import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.menu.MenuViewModel
 import com.devfalah.viewmodels.menu.UserUiState
+import com.devfalah.viewmodels.util.Language
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun MenuScreen(
-    navController: NavController,
-    viewModel: MenuViewModel = hiltViewModel()
+    navController: NavController, viewModel: MenuViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
+//    val language = rememberSaveable { mutableStateOf("en") }
+
     val context = LocalContext.current
     MenuContent(
         state = state,
@@ -66,15 +71,13 @@ fun MenuScreen(
         setStatusBarColor(
             systemUIController = systemUIController,
             color = color,
-            darkIcons = false
         )
     }
     LaunchedEffect(key1 = state.logout) {
         if (state.logout) {
             try {
                 val intent = Intent(
-                    context,
-                    Class.forName("com.thechance.identity.ui.main.AuthenticationActivity")
+                    context, Class.forName("com.thechance.identity.ui.main.AuthenticationActivity")
                 )
                 (context as Activity).startActivity(intent)
                 context.finish()
@@ -83,6 +86,13 @@ fun MenuScreen(
             }
         }
     }
+
+    LaunchedEffect(key1 = state.language) {
+////        updateResources(context = context, language = language.value)
+//            ?.let { updateResources(context = context, language = "ar") }
+        Language().updateResources(context = context, language = state.language.value)
+    }
+
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -107,24 +117,22 @@ fun MenuContent(
     var switch by remember {
         mutableStateOf(Preferences.THEME)
     }
+
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = {
-            if(switch == Preferences.LANGUAGE){
+            if (switch == Preferences.LANGUAGE) {
                 LanguageBottomSheet(onChangeLanguage = onChangeLanguage)
-            }else{
+            } else {
                 ThemeBottomSheet(onChangeTheme = onChangeTheme)
             }
         },
         sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
         sheetBackgroundColor = LightBackgroundColor
-        ){
+    ) {
         Column {
 
-        AppBar(
-            title = stringResource(id = R.string.menu),
-            showBackButton = false,
-            actions = {
+            AppBar(title = stringResource(id = R.string.menu), showBackButton = false, actions = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_logout),
                     contentDescription = null,
@@ -159,20 +167,17 @@ fun MenuContent(
                 }
 
                 item {
-                    PreferencesSection(
-                        onClickTheme = {
-                            scope.launch {
-                                switch = Preferences.THEME
-                                setSheetVisibility(sheetState)
-                            }
-                        },
-                        onClickLanguage = {
-                            scope.launch {
-                                switch = Preferences.LANGUAGE
-                                setSheetVisibility(sheetState)
-                            }
+                    PreferencesSection(onClickTheme = {
+                        scope.launch {
+                            switch = Preferences.THEME
+                            setSheetVisibility(sheetState)
                         }
-                    )
+                    }, onClickLanguage = {
+                        scope.launch {
+                            switch = Preferences.LANGUAGE
+                            setSheetVisibility(sheetState)
+                        }
+                    })
                 }
 
                 item {
@@ -183,16 +188,17 @@ fun MenuContent(
                     )
                 }
 
-            item {
-                Text(
-                    text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colors.secondaryVariant,
-                        fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.Normal
+                item {
+                    Text(
+                        text = "${stringResource(id = R.string.version)}  ${getVersion(context = LocalContext.current)}",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colors.secondaryVariant,
+                            fontFamily = PlusJakartaSans,
+                            fontWeight = FontWeight.Normal
+                        )
                     )
-                )
+                }
             }
         }
     }
@@ -200,8 +206,7 @@ fun MenuContent(
 
 private fun getVersion(context: Context): String {
     return try {
-        val pInfo: PackageInfo =
-            context.packageManager.getPackageInfo(context.packageName, 0)
+        val pInfo: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         pInfo.versionName
     } catch (e: PackageManager.NameNotFoundException) {
         e.printStackTrace()
@@ -212,16 +217,16 @@ private fun getVersion(context: Context): String {
 @OptIn(ExperimentalMaterialApi::class)
 private suspend fun setSheetVisibility(
     sheetState: ModalBottomSheetState
-){
-    if(sheetState.isVisible){
+) {
+    if (sheetState.isVisible) {
         sheetState.hide()
-    }else{
+    } else {
         sheetState.show()
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewMenu() {
-    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun PreviewMenu() {
+//    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
+//}
