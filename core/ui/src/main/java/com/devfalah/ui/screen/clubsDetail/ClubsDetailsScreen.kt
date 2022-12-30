@@ -109,7 +109,7 @@ private fun ClubsDetailsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else {
             ManualPager(
                 onRefresh = onRefresh,
