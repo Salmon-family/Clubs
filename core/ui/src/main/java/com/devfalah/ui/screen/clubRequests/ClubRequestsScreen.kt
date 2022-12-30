@@ -20,10 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ErrorItem
-import com.devfalah.ui.composable.LottieItem
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubRequests.ClubRequestsUIState
@@ -77,7 +74,7 @@ fun ClubRequestsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.users.isEmpty()) {
             LottieItem(LottieResource = R.raw.no_data)
         } else {

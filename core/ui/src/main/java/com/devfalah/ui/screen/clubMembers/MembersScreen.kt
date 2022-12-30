@@ -63,7 +63,7 @@ fun ClubMembersContent(
             onBackButton = onBackClick,
         )
         if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.friends.isEmpty()) {

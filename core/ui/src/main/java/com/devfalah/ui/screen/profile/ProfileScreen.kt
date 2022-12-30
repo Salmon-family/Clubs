@@ -140,7 +140,7 @@ fun ProfileContent(
         if (state.majorError.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.loading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else {
             ManualPager(
                 onRefresh = onRefresh,
