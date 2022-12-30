@@ -20,10 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ErrorItem
-import com.devfalah.ui.composable.LottieItem
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -87,9 +84,9 @@ fun NotificationContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.notifications.isEmpty()) {
-            LottieItem(LottieResource = R.raw.no_data)
+            ErrorEmpty()
         }
 
         LazyColumn(

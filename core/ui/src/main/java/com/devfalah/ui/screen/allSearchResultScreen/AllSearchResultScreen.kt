@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -21,7 +20,6 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.allSearchResult.AllSearchResultUIState
 import com.devfalah.viewmodels.allSearchResult.AllSearchResultViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -69,9 +67,9 @@ fun AllSearchResultScreenContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
-            LottieItem(LottieResource = R.raw.no_data)
+            ErrorEmpty()
         } else {
             LazyColumn(
                 modifier = Modifier

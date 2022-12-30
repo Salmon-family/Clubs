@@ -20,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -140,7 +139,7 @@ fun ProfileContent(
         if (state.majorError.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.loading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else {
             ManualPager(
                 onRefresh = onRefresh,
