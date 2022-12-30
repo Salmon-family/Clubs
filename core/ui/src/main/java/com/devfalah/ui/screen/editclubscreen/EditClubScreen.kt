@@ -81,6 +81,7 @@ private fun EditClubContent(
                 title = stringResource(R.string.club_name),
                 value = uiState.clubName,
                 onValueChange = onNameChanged,
+                maxChar = 30,
                 singleLine = true,
             )
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun ManualPager(
@@ -107,7 +108,7 @@ fun PagerStatusItem(
             Button(onClick = { onClickTryAgain() }) {
                 Text(
                     text = stringResource(id = R.string.try_again),
-                    color = MaterialTheme.colors.primaryVariant
+                    color = WhiteColor
                 )
             }
 

@@ -17,10 +17,10 @@ internal fun GroupDTO.toEntity(): Club {
         ownerId = ownerGuid ?: 0,
         name = title ?: "",
         description = description ?: "",
-        privacy = membership ?: "1",
         isMember = ismember ?: false,
         requestExists = requestExists ?: false,
-        isOwner = false
+        isOwner = false,
+        isClubPublic = membership == "2"
     )
 }
 

@@ -4,10 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,10 +17,7 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
-import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
-import com.devfalah.ui.screen.clubsDetail.composable.ClubMembers
-import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
-import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
+import com.devfalah.ui.screen.clubsDetail.composable.*
 import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
@@ -33,7 +27,6 @@ import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.friendRequest.UserState
 import com.devfalah.viewmodels.userProfile.PostUIState
-import com.devfalah.viewmodels.util.Constants
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -53,24 +46,31 @@ fun ClubsDetailsScreen(
             navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
         },
         onClickSave = viewModel::onClickSave,
-        onAddPost = { navController.navigateToPostCreation(state.clubId) },
-        onClickMembers = { navController.navigateToMembers(clubId = it, ownerId = state.ownerId) },
+        onAddPost = { navController.navigateToPostCreation(state.detailsUiState.clubId) },
+        onClickMembers = {
+            navController.navigateToMembers(
+                clubId = it,
+                ownerId = state.detailsUiState.ownerId
+            )
+        },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onDeclineClub = viewModel::declineRequestOfClub,
-        onRetry = viewModel::getData,
+        onRetry = viewModel::getDetailsOfClubs,
         onClickJoinRequestClub = {
-            navController.navigateToClubRequests(clubId = state.clubId, ownerId = state.ownerId)
+            navController.navigateToClubRequests(
+                clubId = state.detailsUiState.clubId,
+                ownerId = state.detailsUiState.ownerId
+            )
         },
         onClickEditClub = {
             navController.navigateToEditClub(
-                clubId = state.clubId,
-                clubName = state.name,
-                clubDescription = state.description,
-                clubPrivacy = state.membership
+                clubId = state.detailsUiState.clubId,
+                clubName = state.detailsUiState.name,
+                clubDescription = state.detailsUiState.description,
+                clubPrivacy = state.detailsUiState.isClubPublic
             )
-        },
-        onClickDeletePost = viewModel::onDeletePost
+        }
     )
 
     val color = MaterialTheme.colors.onBackground
@@ -97,11 +97,11 @@ private fun ClubsDetailsContent(
     onDeclineClub: () -> Unit,
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit,
-    onClickDeletePost: (PostUIState) -> Unit
+    onClickEditClub: () -> Unit
 ) {
 
     val context = LocalContext.current
+    var popupController by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -109,7 +109,7 @@ private fun ClubsDetailsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            Loading()
+            LottieItem(LottieResource = R.raw.loading)
         } else {
             ManualPager(
                 onRefresh = onRefresh,
@@ -128,7 +128,7 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember && !state.isOwner) {
+                if (!state.detailsUiState.isClubPublic && !state.isMember) {
                     if (state.requestExists) {
                         item {
                             RoundButton(
@@ -160,17 +160,22 @@ private fun ClubsDetailsContent(
                     }
 
                 } else if (state.isMember) {
-                    if (!state.isOwner) {
+                    if (!state.detailsUiState.isOwner) {
                         item {
                             OutlineButton(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp),
-                                onClick = onDeclineClub
+                                onClick = {
+                                    popupController = true
+                                }
                             )
                         }
+                    } else {
+                        item {
+                            HeightSpacer16()
+                        }
                     }
-
                     item {
                         PostCreatingSection(
                             modifier = Modifier.padding(horizontal = 16.dp),
@@ -182,7 +187,7 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.detailsUiState.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
@@ -195,25 +200,30 @@ private fun ClubsDetailsContent(
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = { onClickSave(it) },
-                            onClickPostSetting = onClickDeletePost,
+                            onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},
                         )
                     }
                 } else {
-                    if (!state.isOwner) {
+                    if (state.requestExists) {
                         item {
-                            JoinClubButton(
-                                textResource = if (state.requestExists) {
-                                    R.string.request_to_join
-                                } else {
-                                    R.string.join_club
-                                },
-                                onButtonClick = if (state.requestExists) {
-                                    onUnJoinClubs
-                                } else {
-                                    onJoinClub
-                                }
+                            RoundButton(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                userState = UserState(),
+                                text = stringResource(id = R.string.request_to_join),
+                                textColor = WhiteColor,
+                                onButtonClick = onUnJoinClubs,
+                            )
+                        }
+                    } else {
+                        item {
+                            RoundButton(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                userState = UserState(),
+                                text = stringResource(id = R.string.join_club),
+                                textColor = WhiteColor,
+                                onButtonClick = onJoinClub,
                             )
                         }
                     }
@@ -221,11 +231,10 @@ private fun ClubsDetailsContent(
                     item {
                         ClubMembers(friends = state.members,
                             modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.clubId) }
+                                .nonRippleEffect { onClickMembers(state.detailsUiState.clubId) }
                                 .padding(horizontal = 16.dp))
                     }
 
-                    // why this screen has 2 of below item ????!!!!!!
                     items(state.posts) {
                         PostItem(
                             state = it,
@@ -234,7 +243,7 @@ private fun ClubsDetailsContent(
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = onClickSave,
-                            onClickPostSetting = onClickDeletePost,
+                            onClickPostSetting = {},
                             onClickProfile = {},
                             onOpenLinkClick = {},
                         )
@@ -245,24 +254,17 @@ private fun ClubsDetailsContent(
         }
     }
 
+    if (popupController) {
+        LeaveClubDialog(
+            onDeclineClub = onDeclineClub,
+            onPopupDismiss = { popupController = false }
+        )
+
+    }
+
     LaunchedEffect(key1 = state.pagerError) {
         if (state.pagerError.isNotEmpty()) {
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
-}
-
-@Composable
-fun JoinClubButton(
-    modifier: Modifier = Modifier,
-    textResource: Int,
-    onButtonClick: () -> Unit
-) {
-    RoundButton(
-        modifier = modifier.padding(horizontal = 16.dp),
-        userState = UserState(),
-        text = stringResource(id = textResource),
-        textColor = WhiteColor,
-        onButtonClick = onButtonClick,
-    )
 }

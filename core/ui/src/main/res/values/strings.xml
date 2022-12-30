@@ -104,5 +104,6 @@
     <string name="nothing_to_show">Nothing to show</string>
     <string name="saved_threads_text">Save your favorite threads to show them here later</string>
     <string name="bug_report_hint">Describe your problem in few words…</string>
-
+    <string name="are_you_sure">Are you sure to leave this club?</string>
+    <string name="confirm">Confirm</string>
 </resources>

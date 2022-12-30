@@ -16,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.ui.util.htmlText
@@ -53,7 +51,7 @@ fun ClubHeaderDetails(
             tint = WhiteColor
         )
 
-        if (state.isOwner) {
+        if (state.detailsUiState.isOwner) {
             DropDownOwner(
                 modifier = Modifier
                     .padding(top = 16.dp, end = 16.dp)
@@ -67,9 +65,10 @@ fun ClubHeaderDetails(
         }
 
         Text(
-            text = state.name,
+            text = state.detailsUiState.name,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .constrainAs(textName) {
                     top.linkTo(backButton.bottom)
                     start.linkTo(parent.start)
@@ -77,14 +76,14 @@ fun ClubHeaderDetails(
                 },
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
+            fontSize = 24.sp,
             fontFamily = PlusJakartaSans,
             color = WhiteColor,
             maxLines = 1
         )
 
         ReadMorePopup(
-            text = state.description.htmlText(),
+            text = state.detailsUiState.description.htmlText(),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 24.dp)
@@ -106,7 +105,7 @@ fun ClubHeaderDetails(
 
         if (popupController) {
             DescriptionClubDialog(
-                descriptionClub = state.description.htmlText(),
+                descriptionClub = state.detailsUiState.description.htmlText(),
             ) {
                 popupController = false
             }
@@ -136,7 +135,7 @@ fun ClubHeaderDetails(
                 Row {
                     ClubCard(
                         imageVector = com.devfalah.ui.R.drawable.ic_menu_language,
-                        text = state.privacy
+                        text = state.detailsUiState.isClubPublic.toString()
                     )
 
                     ClubCard(

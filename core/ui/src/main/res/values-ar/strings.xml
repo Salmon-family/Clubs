@@ -84,16 +84,13 @@
     <string name="members">اعضاء النادي</string>
     <string name="minute">قبل دقيقة</string>
     <string name="minutes">قبل  %s دقايق</string>
-
     <string name="hour">قبل ساعة واحده</string>
     <string name="hours">قبل %s ساعات</string>
-
     <string name="day">قبل %s ايام</string>
     <string name="one_day">قبل يوم</string>
     <string name="just_now">الان</string>
     <string name="enter_your_comment">اضف تعليقك…</string>
     <string name="password_place_holder">ادخل اكثر من ستة احرف او ارقام</string>
-
     <string name="version">الإصدار</string>
     <string name="bug_message">رسالة الإبلاغ</string>
     <string name="send">إرسال</string>
@@ -102,5 +99,6 @@
     <string name="bug_report_hint">صف مشكلتك باختصار…</string>
     <string name="nothing_to_show">لا شيء للعرض</string>
     <string name="saved_threads_text">قم بحفظ منشوراتك المفضّلة لتعرضها في وقت لاحق</string>
-
+    <string name="are_you_sure">هل انت متاكد من رغبتك بمغادرة هذا النادي؟</string>
+    <string name="confirm">متآكد</string>
 </resources>

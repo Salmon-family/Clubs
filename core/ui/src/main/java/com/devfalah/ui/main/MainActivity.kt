@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.devfalah.ui.ClubsApp
 import com.devfalah.ui.theme.ClubsTheme
 import com.devfalah.viewmodels.main.MainViewModel
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
             ClubsTheme {
