@@ -46,7 +46,7 @@ fun PostBottomAction(
             tint = if (post.isLikedByUser) {
                 LightPrimaryBrandColor
             } else {
-                MaterialTheme.colors.secondaryVariant
+                MaterialTheme.colors.onSecondary
             },
             onClick = { onClickLike(post) }
         )

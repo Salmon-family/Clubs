@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -61,6 +62,8 @@ fun ClubCard(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 color = LightPrimaryBrandColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
         }

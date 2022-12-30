@@ -67,7 +67,7 @@ fun PostHeader(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(top = 4.dp),
-                        tint = MaterialTheme.colors.secondaryVariant
+                        tint = MaterialTheme.colors.onSecondary
                     )
                     WidthSpacer8()
                     Text(
