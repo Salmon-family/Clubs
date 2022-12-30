@@ -1,7 +1,7 @@
 package com.devfalah.viewmodels.menu
 
 data class UserUiState(
-    val id: Int = 0,
+    val id: Int = -1,
     val profilePhotoUrl: String = "",
     val language: AppLanguage = AppLanguage.ENGLISH,
     val theme: ThemeType = ThemeType.LIGHT,
