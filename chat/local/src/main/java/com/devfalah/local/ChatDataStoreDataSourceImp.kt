@@ -1,10 +1,8 @@
 package com.devfalah.local
 
-import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.devfalah.repository.ChatDataStoreDataSource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -17,9 +15,9 @@ class ChatDataStoreDataSourceImp @Inject constructor(
     override fun getUserId(): Int? {
         return runBlocking {
             userDataStore.data.map {
-                it[stringPreferencesKey(SIGN_UP_STATE_KEY)]
+                it[intPreferencesKey(SIGN_UP_STATE_KEY)]
             }.first()
-        }.toString().toInt()
+        }
     }
 
 

@@ -1,10 +1,7 @@
 package com.thechance.local
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import com.thechance.identity.entities.Club
 import com.thechance.identity.repositories.LocalIdentityDataSource
 import kotlinx.coroutines.flow.first
@@ -36,17 +33,17 @@ class AppConfiguratorImpl @Inject constructor(
         }
     }
 
-    override fun getUserId(): String? {
+    override fun getUserId(): Int? {
         return runBlocking {
             userDataStore.data.map {
-                it[stringPreferencesKey(SIGN_UP_STATE_KEY)]
+                it[intPreferencesKey(SIGN_UP_STATE_KEY)]
             }.first()
         }
     }
 
-    override suspend fun saveUserId(id: String) {
+    override suspend fun saveUserId(id: Int) {
         userDataStore.edit { preferences ->
-            preferences[stringPreferencesKey(SIGN_UP_STATE_KEY)] = id
+            preferences[intPreferencesKey(SIGN_UP_STATE_KEY)] = id
         }
     }
 

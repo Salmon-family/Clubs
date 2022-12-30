@@ -235,7 +235,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override fun getUserId(): Int {
-        return coreDataStoreDataSource.getUserId()?.toInt() ?: -1
+        return coreDataStoreDataSource.getUserId() ?: -1
     }
 
     override suspend fun saveUserId(userId: Int) {

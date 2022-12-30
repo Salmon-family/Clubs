@@ -3,6 +3,7 @@ package com.club.local
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.devfalah.repositories.CoreDataStoreDataSource
 import kotlinx.coroutines.flow.first
@@ -14,17 +15,17 @@ class CoreDataStoreDataSourceImp @Inject constructor(
     private val userDataStore: DataStore<Preferences>,
 ) : CoreDataStoreDataSource {
 
-    override fun getUserId(): String? {
+    override fun getUserId(): Int? {
         return runBlocking {
             userDataStore.data.map {
-                it[stringPreferencesKey(SIGN_UP_STATE_KEY)]
+                it[intPreferencesKey(SIGN_UP_STATE_KEY)]
             }.first()
         }
     }
 
     override suspend fun saveUserId(userId: Int) {
         userDataStore.edit { preferences ->
-            preferences[stringPreferencesKey(SIGN_UP_STATE_KEY)] = userId.toString()
+            preferences[intPreferencesKey(SIGN_UP_STATE_KEY)] = userId
         }
     }
 

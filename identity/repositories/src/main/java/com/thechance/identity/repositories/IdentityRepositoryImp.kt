@@ -33,11 +33,11 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData))
     }
 
-    override fun getUserId(): String? {
-        return localIdentityDataSource.getUserId()
+    override fun getUserId(): Int {
+        return localIdentityDataSource.getUserId()?:0
     }
 
-    override suspend fun saveUserId(id: String) {
+    override suspend fun saveUserId(id: Int) {
         return localIdentityDataSource.saveUserId(id)
     }
 
