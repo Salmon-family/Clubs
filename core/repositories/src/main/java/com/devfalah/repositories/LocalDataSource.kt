@@ -3,7 +3,7 @@ package com.devfalah.repositories
 import com.devfalah.repositories.models.PostLocalDto
 import kotlinx.coroutines.flow.Flow
 
-interface ClubLocalDataSource {
+interface CoreLocalDataSource {
 
     suspend fun insertPost(post: PostLocalDto)
 

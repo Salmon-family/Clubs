@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: ClubLocalDataSource,
+    private val localDataSource: CoreLocalDataSource,
     private val coreDataStoreDataSource: CoreDataStoreDataSource,
     private val coreFireStoreDataSource: CoreFireStoreDataSource
 ) : ClubRepository {

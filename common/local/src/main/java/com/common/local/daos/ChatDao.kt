@@ -1,4 +1,4 @@
-package com.devfalah.local
+package com.common.local.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -20,8 +20,6 @@ interface ChatDao {
     @Query("SELECT * FROM CHATS_TABLE WHERE fullName LIKE '%' || :query || '%' ORDER BY time DESC")
     fun getChats(query: String): Flow<List<ChatLocalDto>>
 
-
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMessages(chats: List<MessageEntityLocalDTO>)
 
@@ -33,7 +31,5 @@ interface ChatDao {
 
     @Query("UPDATE CHATS_TABLE SET recentMessage = :recentMessage WHERE guid = :id")
     suspend fun updateRecentMessage(id: Int, recentMessage: String)
-
-
 
 }
