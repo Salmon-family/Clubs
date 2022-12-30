@@ -87,9 +87,9 @@ fun SearchContent(
             if (state.error.isNotBlank()) {
                 ErrorItem(onClickRetry = onRetry)
             } else if (state.isLoading) {
-                LottieItem(LottieResource = R.raw.loading)
+                Loading()
             } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
-                LottieItem(LottieResource = R.raw.no_data)
+                ErrorEmpty()
             } else {
 
                 LazyColumn(

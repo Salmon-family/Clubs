@@ -92,7 +92,7 @@ fun PostDetailsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else {
             ManualPager(
                 modifier = Modifier.weight(1f),
