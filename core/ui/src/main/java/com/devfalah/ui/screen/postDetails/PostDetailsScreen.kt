@@ -125,7 +125,7 @@ fun PostDetailsContent(
                                 .padding(horizontal = 16.dp),
                             text = stringResource(id = R.string.replies),
                             textAlign = TextAlign.Start,
-                            color = MaterialTheme.colors.onSurface,
+                            color = MaterialTheme.colors.secondaryVariant,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = PlusJakartaSans

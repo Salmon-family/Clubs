@@ -78,7 +78,7 @@ fun CustomTextField(
                         text = it,
                         textAlign = TextAlign.Center,
                         style = TextStyle(
-                            color = MaterialTheme.colors.secondaryVariant,
+                            color = MaterialTheme.colors.onSecondary,
                             fontFamily = PlusJakartaSans,
                             fontWeight = FontWeight.Normal,
                             fontSize = 14.sp

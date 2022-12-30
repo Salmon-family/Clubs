@@ -39,7 +39,7 @@ fun SearchTextField(
                 text = stringResource(R.string.search),
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colors.onSecondary
             )
         },
         leadingIcon = {

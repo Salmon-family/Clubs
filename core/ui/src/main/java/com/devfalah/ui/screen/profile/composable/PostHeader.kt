@@ -55,7 +55,7 @@ fun PostHeader(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colors.primaryVariant
+                color = MaterialTheme.colors.secondaryVariant
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -133,7 +133,8 @@ fun PostHeader(
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(id = R.string.delete),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.secondaryVariant
                     )
                 }
             }

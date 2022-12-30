@@ -20,10 +20,10 @@ fun OutlineButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onClick() },
-        border = BorderStroke(1.dp, MaterialTheme.colors.onSurface),
+        border = BorderStroke(1.dp, MaterialTheme.colors.onSecondary),
         shape = RoundedCornerShape(100),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colors.onSurface,
+            contentColor = MaterialTheme.colors.onSecondary,
             backgroundColor = MaterialTheme.colors.background
         ),
     ) {

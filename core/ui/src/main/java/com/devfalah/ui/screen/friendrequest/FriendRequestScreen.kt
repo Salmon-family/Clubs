@@ -26,7 +26,6 @@ import com.devfalah.ui.composable.LottieItem
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
 import com.devfalah.viewmodels.friendRequest.FriendRequestViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -84,7 +83,7 @@ fun FriendRequestsContent(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .background(LightBackgroundColor)
+                    .background(MaterialTheme.colors.background)
                     .fillMaxSize(),
             ) {
                 items(

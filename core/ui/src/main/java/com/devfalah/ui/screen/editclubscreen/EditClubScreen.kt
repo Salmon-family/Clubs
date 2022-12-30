@@ -85,7 +85,10 @@ private fun EditClubContent(
             )
 
             Column {
-                Text(text = stringResource(R.string.privacy))
+                Text(
+                    text = stringResource(R.string.privacy),
+                    color = MaterialTheme.colors.primaryVariant
+                )
                 HeightSpacer8()
                 SegmentControls(
                     items = listOf(
@@ -103,6 +106,8 @@ private fun EditClubContent(
                 onValueChange = onDescriptionChanged,
                 maxChar = 500,
                 showTextCount = true,
+                maxLines = 5,
+                shape = RoundedCornerShape(16.dp)
             )
 
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -121,9 +126,9 @@ private fun EditClubContent(
                     ) {
                         Text(
                             text = stringResource(id = R.string.cancel),
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
                 }

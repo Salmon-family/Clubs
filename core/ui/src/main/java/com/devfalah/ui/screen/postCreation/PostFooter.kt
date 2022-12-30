@@ -33,7 +33,7 @@ fun PostFooter(
             modifier = Modifier.nonRippleEffect { onSelectImage() },
             painter = painterResource(id = R.drawable.ic_gallery_add),
             contentDescription = null,
-            tint = MaterialTheme.colors.secondaryVariant
+            tint = MaterialTheme.colors.primaryVariant
         )
 
 //        Button(

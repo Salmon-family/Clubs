@@ -44,7 +44,7 @@ fun CommentBody(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.secondaryVariant,
                 textAlign = if (state.isOwnerComment) {
                     TextAlign.End
                 } else {
@@ -65,7 +65,7 @@ fun CommentBody(
             Text(
                 text = getDataDescription(state.timeCreate.description, state.timeCreate.value),
                 fontSize = 12.sp,
-                color = MaterialTheme.colors.secondaryVariant,
+                color = MaterialTheme.colors.onSecondary,
                 fontWeight = FontWeight.Normal
             )
 

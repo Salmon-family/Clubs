@@ -1,10 +1,7 @@
 package com.devfalah.ui.screen.postDetails.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,7 +10,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -21,8 +17,6 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
@@ -48,7 +42,7 @@ fun CommentHeader(
                 text = state.userName,
                 textAlign = TextAlign.End,
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
@@ -79,7 +73,7 @@ fun CommentHeader(
                 text = state.userName,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
@@ -103,9 +97,12 @@ fun CommentSetting(
         contentAlignment = Alignment.CenterStart
     ) {
         Icon(
-            modifier = Modifier.nonRippleEffect { expanded = true },
+            modifier = Modifier
+                .size(20.dp)
+                .nonRippleEffect { expanded = true },
             painter = painterResource(R.drawable.ic_setting),
-            contentDescription = null
+            contentDescription = null,
+            tint = MaterialTheme.colors.secondaryVariant
         )
     }
 
@@ -124,7 +121,8 @@ fun CommentSetting(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(id = R.string.delete),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colors.secondaryVariant
             )
 
         }

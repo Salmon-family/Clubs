@@ -46,7 +46,7 @@ fun PostBottomAction(
             tint = if (post.isLikedByUser) {
                 LightPrimaryBrandColor
             } else {
-                MaterialTheme.colors.onSecondary
+                MaterialTheme.colors.secondaryVariant
             },
             onClick = { onClickLike(post) }
         )
@@ -102,7 +102,7 @@ private fun PostTextValue(text: String) {
         fontSize = 14.sp,
         fontFamily = PlusJakartaSans,
         fontWeight = FontWeight.Normal,
-        color = MaterialTheme.colors.onSecondary
+        color = MaterialTheme.colors.secondaryVariant
     )
 }
 
@@ -111,7 +111,7 @@ private fun PostTextValue(text: String) {
 fun PostActionIcon(
     onClick: () -> Unit,
     painter: Painter,
-    tint: Color = MaterialTheme.colors.onSecondary
+    tint: Color = MaterialTheme.colors.secondaryVariant
 ) {
     Icon(
         modifier = Modifier.nonRippleEffect { onClick() },
