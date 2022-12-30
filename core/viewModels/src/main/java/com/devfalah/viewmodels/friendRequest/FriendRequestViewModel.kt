@@ -63,15 +63,14 @@ class FriendRequestViewModel @Inject constructor(
 
     fun acceptFriendRequest(friendRequestId: Int) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, minorError = "") }
+            _uiState.update { it.copy(minorError = "") }
             try {
-                if (addFriendRequestUseCase(friendRequestId = friendRequestId)
-                ) {
+                if (addFriendRequestUseCase(friendRequestId = friendRequestId)) {
                     updateFriendRequestList(friendRequestId)
                 }
             } catch (t: Throwable) {
                 _uiState.update {
-                    it.copy(isLoading = false, minorError = t.message.toString())
+                    it.copy(minorError = t.message.toString())
                 }
             }
         }
@@ -79,14 +78,14 @@ class FriendRequestViewModel @Inject constructor(
 
     fun deniedFriendRequest(friendRequestId: Int) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, minorError = "") }
+            _uiState.update { it.copy(minorError = "") }
             try {
                 if (removeFriendRequestUseCase(friendRequestId = friendRequestId)) {
                     updateFriendRequestList(friendRequestId)
                 }
             } catch (t: Throwable) {
                 _uiState.update {
-                    it.copy(isLoading = false, minorError = t.message.toString())
+                    it.copy(minorError = t.message.toString())
                 }
             }
         }
