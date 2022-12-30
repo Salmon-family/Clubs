@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
+    id 'com.google.firebase.firebase-perf'
+    id 'com.google.firebase.crashlytics'
 }
 
 def localProperties = new Properties()
@@ -117,5 +119,13 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore-ktx:$firebase_version"
 
     implementation "androidx.datastore:datastore-preferences:$data_store_version"
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+
+    implementation 'com.google.firebase:firebase-perf-ktx'
+
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 }
