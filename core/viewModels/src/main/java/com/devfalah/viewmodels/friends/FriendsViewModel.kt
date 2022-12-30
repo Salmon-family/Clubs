@@ -40,6 +40,7 @@ class FriendsViewModel @Inject constructor(
                         isPagerLoading = false,
                         isPagerEnd = (friends.friends.isEmpty() || friends.friends.size < MAX_PAGE_ITEM),
                         totalFriends = friends.total,
+                        isMyProfile = friends.isMyFriends,
                         friends = (_uiState.value.friends + friends.friends.toFriendsUIState())
                     )
                 }

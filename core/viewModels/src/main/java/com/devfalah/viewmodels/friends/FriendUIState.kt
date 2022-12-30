@@ -29,6 +29,6 @@ fun User.toFriendUIState(): FriendUIState {
         id = id,
         profilePictureUrl = profileUrl,
         name = name,
-        title = title
+        title = title,
     )
 }
