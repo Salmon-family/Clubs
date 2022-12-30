@@ -29,4 +29,6 @@ interface IdentityRepository {
 
     suspend fun updateFcmToken(userData: UserData): User
 
+    fun clearTables()
+
 }

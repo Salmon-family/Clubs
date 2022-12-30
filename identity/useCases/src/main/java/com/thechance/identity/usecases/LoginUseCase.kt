@@ -13,6 +13,7 @@ class LoginUseCase @Inject constructor(
     suspend operator fun invoke(userName: String, password: String): User {
         val user = identityRepository.login(userName, password)
         saveUserId(user.guid.toString())
+        identityRepository.clearTables()
         updateFcmToken(user, password)
         return user
     }
