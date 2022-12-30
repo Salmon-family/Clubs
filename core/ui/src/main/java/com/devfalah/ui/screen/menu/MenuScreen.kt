@@ -5,14 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,11 +35,10 @@ import com.devfalah.ui.screen.menu.composable.theme.ThemeBottomSheet
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.screen.reportBug.ROUTE_REPORT_BUG
 import com.devfalah.ui.screen.savedPosts.SAVED_SCREEN
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.util.Language
 import com.devfalah.viewmodels.menu.MenuViewModel
 import com.devfalah.viewmodels.menu.UserUiState
-import com.devfalah.viewmodels.util.Language
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 import java.util.*
@@ -87,9 +85,7 @@ fun MenuScreen(
         }
     }
 
-    LaunchedEffect(key1 = state.language) {
-////        updateResources(context = context, language = language.value)
-//            ?.let { updateResources(context = context, language = "ar") }
+    LaunchedEffect(key1 = state.language.value) {
         Language().updateResources(context = context, language = state.language.value)
     }
 
@@ -108,6 +104,7 @@ fun MenuContent(
     onChangeTheme: (Int) -> Unit,
     onClickLogOut: () -> Unit,
 ) {
+
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
@@ -118,29 +115,39 @@ fun MenuContent(
         mutableStateOf(Preferences.THEME)
     }
 
+    LaunchedEffect(key1 = state.language) {
+        scope.launch { sheetState.hide() }
+    }
+
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = {
             if (switch == Preferences.LANGUAGE) {
-                LanguageBottomSheet(onChangeLanguage = onChangeLanguage)
+                LanguageBottomSheet(
+                    onChangeLanguage = onChangeLanguage,
+                    language = state.language.value,
+                )
             } else {
                 ThemeBottomSheet(onChangeTheme = onChangeTheme)
             }
         },
         sheetShape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-        sheetBackgroundColor = LightBackgroundColor
+        sheetBackgroundColor = MaterialTheme.colors.background
     ) {
         Column {
 
-            AppBar(title = stringResource(id = R.string.menu), showBackButton = false, actions = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_logout),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .nonRippleEffect { onClickLogOut() },
-                )
-            })
+            AppBar(
+                title = stringResource(id = R.string.menu),
+                showBackButton = false,
+                actions = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_logout),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .nonRippleEffect { onClickLogOut() },
+                    )
+                })
 
             LazyColumn(
                 modifier = Modifier
@@ -202,6 +209,7 @@ fun MenuContent(
             }
         }
     }
+
 }
 
 private fun getVersion(context: Context): String {
@@ -224,9 +232,3 @@ private suspend fun setSheetVisibility(
         sheetState.show()
     }
 }
-
-//@Preview(showSystemUi = true)
-//@Composable
-//fun PreviewMenu() {
-//    MenuContent(rememberNavController(), UserUiState(), {}, {}, {}, {}, {}, {}, {}, {})
-//}

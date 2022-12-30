@@ -51,7 +51,7 @@ class MenuViewModel @Inject constructor(
     fun onChangeLanguage(selectedItemIndex: Int) {
         viewModelScope.launch {
             val language = when (selectedItemIndex) {
-                0 -> {
+                0-> {
                     saveLanguageUseCase(language = AppLanguage.ENGLISH.value)
                     AppLanguage.ENGLISH
                 }

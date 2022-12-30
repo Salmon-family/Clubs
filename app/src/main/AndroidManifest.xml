@@ -35,6 +35,7 @@
 
         <activity
             android:name="com.thechance.ui.ChatActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true">
 
         </activity>
@@ -43,7 +44,7 @@
         <activity
             android:name="com.thechance.identity.ui.main.AuthenticationActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.Staring">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
 
         </activity>

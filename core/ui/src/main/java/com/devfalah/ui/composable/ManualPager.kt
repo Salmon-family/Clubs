@@ -118,7 +118,7 @@ fun PagerStatusItem(
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Normal,
                 fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontSize = 14.sp
             )
         }

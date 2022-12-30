@@ -1,4 +1,4 @@
-package com.devfalah.viewmodels.util
+package com.devfalah.ui.util
 
 import android.content.Context
 import android.content.res.Configuration
@@ -14,8 +14,8 @@ class Language {
             context.createConfigurationContext(configuration)
             Locale.setDefault(locale)
             config.setLocale(locale)
+            config.setLayoutDirection(locale)
             context.resources.updateConfiguration(config, displayMetrics)
         }
     }
-
 }

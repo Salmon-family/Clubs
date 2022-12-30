@@ -23,6 +23,7 @@ class AuthenticationActivity : ComponentActivity() {
             IdentityTheme {
                 val systemUIController = rememberSystemUiController()
                 systemUIController.setStatusBarColor(color = MaterialTheme.colors.background)
+                systemUIController.setNavigationBarColor(color = MaterialTheme.colors.background)
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
