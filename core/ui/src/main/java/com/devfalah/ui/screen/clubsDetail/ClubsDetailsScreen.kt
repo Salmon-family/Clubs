@@ -128,7 +128,7 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember) {
+                if (state.privacy != Constants.PUBLIC_PRIVACY && !state.isMember && !state.isOwner) {
                     if (state.requestExists) {
                         item {
                             RoundButton(
@@ -160,14 +160,15 @@ private fun ClubsDetailsContent(
                     }
 
                 } else if (state.isMember) {
-                    item {
-                        OutlineButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            onClick = onDeclineClub
-                        )
-
+                    if (!state.isOwner) {
+                        item {
+                            OutlineButton(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp),
+                                onClick = onDeclineClub
+                            )
+                        }
                     }
 
                     item {
@@ -200,24 +201,19 @@ private fun ClubsDetailsContent(
                         )
                     }
                 } else {
-                    if (state.requestExists) {
+                    if (!state.isOwner) {
                         item {
-                            RoundButton(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                userState = UserState(),
-                                text = stringResource(id = R.string.request_to_join),
-                                textColor = WhiteColor,
-                                onButtonClick = onUnJoinClubs,
-                            )
-                        }
-                    } else {
-                        item {
-                            RoundButton(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                userState = UserState(),
-                                text = stringResource(id = R.string.join_club),
-                                textColor = WhiteColor,
-                                onButtonClick = onJoinClub,
+                            JoinClubButton(
+                                textResource = if (state.requestExists) {
+                                    R.string.request_to_join
+                                } else {
+                                    R.string.join_club
+                                },
+                                onButtonClick = if (state.requestExists) {
+                                    onUnJoinClubs
+                                } else {
+                                    onJoinClub
+                                }
                             )
                         }
                     }
@@ -254,4 +250,19 @@ private fun ClubsDetailsContent(
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
+}
+
+@Composable
+fun JoinClubButton(
+    modifier: Modifier = Modifier,
+    textResource: Int,
+    onButtonClick: () -> Unit
+) {
+    RoundButton(
+        modifier = modifier.padding(horizontal = 16.dp),
+        userState = UserState(),
+        text = stringResource(id = textResource),
+        textColor = WhiteColor,
+        onButtonClick = onButtonClick,
+    )
 }
