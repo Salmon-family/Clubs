@@ -64,7 +64,7 @@ fun FriendsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.friends.isEmpty()) {
             LottieItem(LottieResource = R.raw.no_data)
         } else {
