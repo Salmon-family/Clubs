@@ -17,6 +17,7 @@ class AppConfiguratorImpl @Inject constructor(
         const val SIGN_UP_STATE_KEY = "sign_up_state_key"
         const val START_INSTALL_STATE_KEY = "start_install_state_key"
         const val TOKEN_KEY = "token_key"
+        const val USER_ID = "user_id"
     }
 
     override fun getStartInstall(): Boolean? {
@@ -36,14 +37,14 @@ class AppConfiguratorImpl @Inject constructor(
     override fun getUserId(): Int? {
         return runBlocking {
             userDataStore.data.map {
-                it[intPreferencesKey(SIGN_UP_STATE_KEY)]
+                it[intPreferencesKey(USER_ID)]
             }.first()
         }
     }
 
     override suspend fun saveUserId(id: Int) {
         userDataStore.edit { preferences ->
-            preferences[intPreferencesKey(SIGN_UP_STATE_KEY)] = id
+            preferences[intPreferencesKey(USER_ID)] = id
         }
     }
 
@@ -64,4 +65,12 @@ class AppConfiguratorImpl @Inject constructor(
             }.first()
         } ?: ""
     }
+
+    override suspend fun saveUserAuthState(isLoggedIn: Boolean) {
+        userDataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(SIGN_UP_STATE_KEY)] = isLoggedIn
+        }
+    }
+
+
 }

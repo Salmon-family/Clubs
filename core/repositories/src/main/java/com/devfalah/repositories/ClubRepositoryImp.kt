@@ -255,4 +255,8 @@ class ClubRepositoryImp @Inject constructor(
         coreFireStoreDataSource.addBugReport(userId, message, onSuccess, onFail)
     }
 
+    override fun isUserLoggedIn(): Boolean {
+        return coreDataStoreDataSource.isUserLoggedIn()
+    }
+
 }

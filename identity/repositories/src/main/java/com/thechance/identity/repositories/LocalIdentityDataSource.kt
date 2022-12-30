@@ -15,4 +15,6 @@ interface LocalIdentityDataSource {
     suspend fun saveToken(token: String)
 
     fun getToken(): String
+
+    suspend fun saveUserAuthState(isLoggedIn: Boolean)
 }

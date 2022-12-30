@@ -117,4 +117,6 @@ interface ClubRepository {
         onFail: (Exception) -> Unit
     )
 
+    fun isUserLoggedIn(): Boolean
+
 }

@@ -70,4 +70,8 @@ class IdentityRepositoryImp @Inject constructor(
         identityLocalDataSource.clearAllTables()
     }
 
+    override suspend fun saveAuthState() {
+        localIdentityDataSource.saveUserAuthState(true)
+    }
+
 }

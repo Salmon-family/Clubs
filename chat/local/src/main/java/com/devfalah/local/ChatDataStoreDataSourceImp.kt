@@ -15,13 +15,14 @@ class ChatDataStoreDataSourceImp @Inject constructor(
     override fun getUserId(): Int? {
         return runBlocking {
             userDataStore.data.map {
-                it[intPreferencesKey(SIGN_UP_STATE_KEY)]
+                it[intPreferencesKey(USER_ID)]
             }.first()
         }
     }
 
 
     companion object {
-        private const val SIGN_UP_STATE_KEY = "sign_up_state_key"
+        private const val USER_ID = "user_id"
     }
+
 }

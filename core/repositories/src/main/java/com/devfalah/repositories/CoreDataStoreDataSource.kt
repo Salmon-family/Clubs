@@ -6,4 +6,6 @@ interface CoreDataStoreDataSource {
     suspend fun saveUserId(userId: Int)
 
     suspend fun deleteUserId()
+
+    fun isUserLoggedIn(): Boolean
 }

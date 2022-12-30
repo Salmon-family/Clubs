@@ -31,4 +31,6 @@ interface IdentityRepository {
 
     fun clearTables()
 
+    suspend fun saveAuthState()
+
 }

@@ -1,10 +1,7 @@
 package com.club.local
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import com.devfalah.repositories.CoreDataStoreDataSource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -18,25 +15,34 @@ class CoreDataStoreDataSourceImp @Inject constructor(
     override fun getUserId(): Int? {
         return runBlocking {
             userDataStore.data.map {
-                it[intPreferencesKey(SIGN_UP_STATE_KEY)]
+                it[intPreferencesKey(USER_ID)]
             }.first()
         }
     }
 
     override suspend fun saveUserId(userId: Int) {
         userDataStore.edit { preferences ->
-            preferences[intPreferencesKey(SIGN_UP_STATE_KEY)] = userId
+            preferences[intPreferencesKey(USER_ID)] = userId
         }
+    }
+
+    override fun isUserLoggedIn(): Boolean {
+        return runBlocking {
+            userDataStore.data.map {
+                it[booleanPreferencesKey(SIGN_UP_STATE_KEY)]
+            }.first()
+        } ?:false
     }
 
     override suspend fun deleteUserId() {
         userDataStore.edit { preferences ->
-            preferences[stringPreferencesKey(SIGN_UP_STATE_KEY)] = "-1"
+            preferences[booleanPreferencesKey(SIGN_UP_STATE_KEY)] = false
         }
 
     }
 
     companion object {
-        const val SIGN_UP_STATE_KEY = "sign_up_state_key"
+        private const val USER_ID = "user_id"
+        private const val SIGN_UP_STATE_KEY = "sign_up_state_key"
     }
 }
