@@ -21,9 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun PostCreatingSection(
@@ -38,7 +36,7 @@ fun PostCreatingSection(
             .fillMaxWidth()
             .clip(CircleShape)
             .background(MaterialTheme.colors.surface)
-            .requiredHeight(60.dp),
+            .requiredHeight(56.dp),
     ) {
         IconIndicator(
             modifier = Modifier.align(Alignment.CenterStart),

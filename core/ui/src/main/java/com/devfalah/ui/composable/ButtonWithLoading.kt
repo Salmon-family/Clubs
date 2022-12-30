@@ -57,6 +57,7 @@ fun ButtonWithLoading(
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.SemiBold,
+                color = WhiteColor
             )
         }
     }

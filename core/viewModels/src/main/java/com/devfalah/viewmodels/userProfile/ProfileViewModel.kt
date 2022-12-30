@@ -126,7 +126,7 @@ class ProfileViewModel @Inject constructor(
                         posts = _uiState.value.posts
                             .map {
                                 if (it.postId == post.postId) {
-                                    it.copy(isSaved = true)
+                                    it.copy(isSaved = !post.isSaved)
                                 } else {
                                     it
                                 }
