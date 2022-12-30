@@ -83,59 +83,57 @@ fun SearchContent(
                 .background(MaterialTheme.colors.background)
         )
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            if (state.error.isNotBlank()) {
-                ErrorItem(onClickRetry = onRetry)
-            } else if (state.isLoading) {
-                Loading()
-            } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
-                ErrorEmpty()
-            } else {
+        if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (state.isLoading) {
+            Loading()
+        } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
+            LottieItem(LottieResource = R.raw.no_data)
+        } else {
 
-                LazyColumn(
-                    modifier = Modifier
-                        .background(MaterialTheme.colors.background)
-                        .fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
+            LazyColumn(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
 
-                    if (state.users.isNotEmpty()) {
-                        item("Users") {
-                            RowTitleWithSeeAll(
-                                title = stringResource(id = R.string.people),
-                                onclickSeeAll = onClickSeeAllPeople,
-                                showSeeAll = state.showSeeAllUsers
-                            )
-                        }
+                if (state.users.isNotEmpty()) {
+                    item("Users") {
+                        RowTitleWithSeeAll(
+                            title = stringResource(id = R.string.people),
+                            onclickSeeAll = onClickSeeAllPeople,
+                            showSeeAll = state.showSeeAllUsers
+                        )
                     }
+                }
 
-                    items(
-                        items = state.users,
-                        key = { it.id }
-                    ) { user ->
-                        FriendItem(state = user, onOpenProfileClick = OnUserClick)
+                items(
+                    items = state.users,
+                    key = { it.id }
+                ) { user ->
+                    FriendItem(state = user, onOpenProfileClick = OnUserClick)
+                }
+
+
+                if (state.clubs.isNotEmpty()) {
+                    item("Clubs") {
+                        HeightSpacer24()
+
+                        RowTitleWithSeeAll(
+                            title = stringResource(id = R.string.clubs),
+                            onclickSeeAll = onClickSeeAllClubs,
+                            showSeeAll = state.showSeeAllClubs
+                        )
                     }
+                }
 
-
-                    if (state.clubs.isNotEmpty()) {
-                        item("Clubs") {
-                            HeightSpacer24()
-
-                            RowTitleWithSeeAll(
-                                title = stringResource(id = R.string.clubs),
-                                onclickSeeAll = onClickSeeAllClubs,
-                                showSeeAll = state.showSeeAllClubs
-                            )
-                        }
-                    }
-
-                    items(
-                        items = state.clubs,
-                        key = { "${it.id} ${it.title}" }
-                    ) { club ->
-                        ClubItem(state = club, onClubSelected = onClubSelected)
-                    }
+                items(
+                    items = state.clubs,
+                    key = { "${it.id} ${it.title}" }
+                ) { club ->
+                    ClubItem(state = club, onClubSelected = onClubSelected)
                 }
             }
         }
