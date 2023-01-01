@@ -12,6 +12,7 @@ class ChatRepositoryImp @Inject constructor(
     private val chatRemoteDataSource: ChatRemoteDataSource,
     private val chatLocalDataSource: ChatLocalDataSource,
     private val firebaseDataSource: ChatFirebaseDataSource,
+    private val chatDataStoreDataSource: ChatDataStoreDataSource,
 ) : ChatRepository {
 
     override suspend fun insertChats(list: List<Chat>) {
@@ -63,7 +64,7 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override fun getUserId(): Int {
-        return chatLocalDataSource.getUserId()?.toInt() ?:0
+        return chatDataStoreDataSource.getUserId() ?:0
     }
 
     override suspend fun getMessages(friendId: Int): Flow<List<Message>> {

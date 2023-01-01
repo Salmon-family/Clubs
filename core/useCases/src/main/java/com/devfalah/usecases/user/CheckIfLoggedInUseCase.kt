@@ -7,6 +7,6 @@ class CheckIfLoggedInUseCase @Inject constructor(
     private val repository: ClubRepository
 ) {
      operator fun invoke(): Boolean {
-        return repository.getUserId() != -1
+        return repository.isUserLoggedIn()
     }
 }

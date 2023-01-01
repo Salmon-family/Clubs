@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: ClubLocalDataSource,
+    private val localDataSource: CoreLocalDataSource,
     private val coreDataStoreDataSource: CoreDataStoreDataSource,
     private val coreFireStoreDataSource: CoreFireStoreDataSource
 ) : ClubRepository {
@@ -235,7 +235,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override fun getUserId(): Int {
-        return coreDataStoreDataSource.getUserId()?.toInt() ?: -1
+        return coreDataStoreDataSource.getUserId() ?: -1
     }
 
     override suspend fun saveUserId(userId: Int) {
@@ -258,6 +258,10 @@ class ClubRepositoryImp @Inject constructor(
         userId: Int, message: String, onSuccess: () -> Unit, onFail: (Exception) -> Unit
     ) {
         coreFireStoreDataSource.addBugReport(userId, message, onSuccess, onFail)
+    }
+
+    override fun isUserLoggedIn(): Boolean {
+        return coreDataStoreDataSource.isUserLoggedIn()
     }
 
 }

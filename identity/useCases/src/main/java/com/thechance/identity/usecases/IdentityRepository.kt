@@ -15,9 +15,9 @@ interface IdentityRepository {
 
     suspend fun signup(userData: UserData): String
 
-    fun getUserId(): String?
+    fun getUserId(): Int
 
-    suspend fun saveUserId(id: String)
+    suspend fun saveUserId(id: Int)
 
     suspend fun joinClub(clubId: Int, userId: Int): Club
 
@@ -28,5 +28,9 @@ interface IdentityRepository {
     suspend fun getToken(): String
 
     suspend fun updateFcmToken(userData: UserData): User
+
+    fun clearTables()
+
+    suspend fun saveAuthState()
 
 }

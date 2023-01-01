@@ -7,12 +7,14 @@ interface LocalIdentityDataSource {
     fun getStartInstall(): Boolean?
     suspend fun setStartInstall(value: Boolean)
 
-    fun getUserId(): String?
-    suspend fun saveUserId(id: String)
+    fun getUserId(): Int?
+    suspend fun saveUserId(id: Int)
 
     fun getClubs(): List<Club>
 
     suspend fun saveToken(token: String)
 
     fun getToken(): String
+
+    suspend fun saveUserAuthState(isLoggedIn: Boolean)
 }

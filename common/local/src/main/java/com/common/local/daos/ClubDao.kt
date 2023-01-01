@@ -1,4 +1,4 @@
-package com.club.local
+package com.common.local.daos
 
 import androidx.room.Dao
 import androidx.room.Insert

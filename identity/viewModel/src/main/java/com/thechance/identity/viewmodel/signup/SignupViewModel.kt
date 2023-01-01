@@ -78,9 +78,6 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    fun getUserId(): String? {
-        return getUserIdUseCase()
-    }
 
     fun onChangeEmail(email: String) {
         _uiState.update { it.copy(email = email) }

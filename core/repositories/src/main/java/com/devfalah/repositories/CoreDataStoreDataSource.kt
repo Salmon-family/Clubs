@@ -1,7 +1,7 @@
 package com.devfalah.repositories
 
 interface CoreDataStoreDataSource {
-    fun getUserId(): String?
+    fun getUserId(): Int?
 
     suspend fun saveUserId(userId: Int)
 
@@ -11,4 +11,5 @@ interface CoreDataStoreDataSource {
 
     suspend fun saveLanguage(language: String)
 
+    fun isUserLoggedIn(): Boolean
 }
