@@ -7,10 +7,16 @@ object NotificationKeys{
 }
 
 data class NotificationDto(
+    val notification: NotificationBody,
     val data: NotificationDataModel = NotificationDataModel(),
-    val to: String = ""
+    val to: String = "",
 )
 
+
+data class NotificationBody(
+    val title: String,
+    val body: String
+)
 data class NotificationDataModel(
     @SerializedName(NotificationKeys.ID_KEY)
     val id: Int = 0,
