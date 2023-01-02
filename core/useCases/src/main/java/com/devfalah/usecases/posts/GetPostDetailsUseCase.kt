@@ -10,14 +10,16 @@ class GetPostDetailsUseCase @Inject constructor(
     suspend operator fun invoke(postId: Int): Post {
         val userId = clubRepository.getUserId()
         val isPostSaved = isSavedInDataBase(postId = postId)
-        return  try {
-            val post = clubRepository.getPostByID(postId = postId, userID = clubRepository.getUserId())
-             post.copy(isSaved = isPostSaved, isMyPost = post.publisherId == userId)
-        }catch (t:Throwable){
-            if (t.message.toString().contains("NotFound",true)){
-                 Post(isFound = false)
-            }else{
-                throw t
+        return try {
+            val post =
+                clubRepository.getPostByID(postId = postId, userID = clubRepository.getUserId())
+            post.copy(isSaved = isPostSaved, isMyPost = post.publisherId == userId)
+        } catch (throwable: Throwable) {
+            if (throwable.message.toString().contains("NotFound", true)) {
+                clubRepository.deleteLocalPost(postId)
+                Post(isFound = false)
+            } else {
+                throw throwable
             }
         }
 
