@@ -104,13 +104,10 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     private fun getPostCount() {
-        gettingDetailsClubsJob?.cancel()
         makeRequest(
             onSuccess = {
-                gettingDetailsClubsJob = viewModelScope.launch {
-                    val postCount = getGroupWallUseCase.getPostsCount()
-                    _uiState.update { it.copy(postCount = postCount) }
-                }
+                val postCount = getGroupWallUseCase.getPostsCount()
+                _uiState.update { it.copy(postCount = postCount) }
             },
             onFailure = ::onFailure
         )

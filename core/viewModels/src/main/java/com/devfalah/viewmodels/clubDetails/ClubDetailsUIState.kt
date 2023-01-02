@@ -37,3 +37,8 @@ data class MembersUIState(
     val name: String = "",
     val title: String
 )
+
+
+fun ClubDetailsUiState.isPostVisible():Boolean{
+   return isMember || detailsUiState.isOwner || detailsUiState.isClubPublic
+}
