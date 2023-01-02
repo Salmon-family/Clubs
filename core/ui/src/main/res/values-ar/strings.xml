@@ -108,4 +108,6 @@
     <string name="light">نهارى</string>
     <string name="dark">ليلى</string>
     <string name="choose_theme">اختر السمات المفضلة</string>
+    <string name="leave_club_title">مغادرة النادي </string>
+
 </resources>

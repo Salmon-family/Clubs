@@ -112,4 +112,5 @@
     <string name="bug_report_hint">Describe your problem in few words…</string>
     <string name="are_you_sure">Are you sure to leave this club?</string>
     <string name="confirm">Confirm</string>
+    <string name="leave_club_title">leave the club </string>
 </resources>
