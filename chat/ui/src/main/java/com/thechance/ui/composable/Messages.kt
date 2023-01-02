@@ -9,15 +9,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.thechance.ui.parseHtml
 import com.thechance.ui.theme.LightPrimaryBrandColor
@@ -30,34 +26,10 @@ private fun TextMessage(
     date: String,
     color: Color,
     textColor: Color,
+    contentAlignment: Alignment,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp)
-        .padding(top = 8.dp),
-        contentAlignment = Alignment.TopEnd
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = date,
-                style = Typography.subtitle2,
-                color = MaterialTheme.colors.onSurface,
-            )
-            SpaceHorizontal(width = 8)
-            Text(
-                modifier = Modifier
-                    .background(
-                        color = color,
-                        shape = RoundedCornerShape(8.dp))
-                    .padding(16.dp),
-                text = text.parseHtml(),
-                style = Typography.body1,
-                textAlign = TextAlign.Start,
-                color = textColor,
-            )
-        }
-    }
+
 }
 
 @Composable
@@ -66,20 +38,34 @@ fun SenderMessage(
     dateMessage: String,
     modifier: Modifier = Modifier,
 ) {
-    CompositionLocalProvider(
-        LocalLayoutDirection.provides(
-            value = if (LocalConfiguration.current.layoutDirection == LayoutDirection.Rtl.ordinal)
-                LayoutDirection.Rtl
-            else LayoutDirection.Ltr
-        )
+
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = 8.dp),
+        contentAlignment = Alignment.TopEnd
     ) {
-        TextMessage(
-            text = text,
-            date = dateMessage,
-            color = LightPrimaryBrandColor,
-            textColor = WhiteColor,
-            modifier = modifier,
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = dateMessage,
+                style = Typography.subtitle2,
+                color = MaterialTheme.colors.onSurface,
+            )
+            SpaceHorizontal(width = 8)
+            Text(
+                modifier = Modifier
+                    .background(
+                        color = LightPrimaryBrandColor,
+                        shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp),
+                text = text.parseHtml(),
+                style = Typography.body1,
+                textAlign = TextAlign.Start,
+                color = WhiteColor,
+            )
+        }
     }
 }
 
@@ -89,22 +75,35 @@ fun ReceiverMessage(
     dateMessage: String,
     modifier: Modifier = Modifier,
 ) {
-    CompositionLocalProvider(
-        LocalLayoutDirection.provides(
-            value = if (LocalConfiguration.current.layoutDirection == LayoutDirection.Rtl.ordinal)
-                LayoutDirection.Ltr
-            else LayoutDirection.Rtl
-        )
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = 8.dp),
+        contentAlignment = Alignment.TopStart
     ) {
-        TextMessage(
-            text = text,
-            date = dateMessage,
-            color = MaterialTheme.colors.surface,
-            textColor = MaterialTheme.colors.onBackground,
-            modifier = modifier,
-        )
-    }
+        Row(verticalAlignment = Alignment.CenterVertically) {
 
+            Text(
+                modifier = Modifier
+                    .background(
+                        color = MaterialTheme.colors.surface,
+                        shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp),
+                text = text.parseHtml(),
+                style = Typography.body1,
+                textAlign = TextAlign.Start,
+                color = MaterialTheme.colors.onBackground,
+            )
+            SpaceHorizontal(width = 8)
+            Text(
+                text = dateMessage,
+                style = Typography.subtitle2,
+                color = MaterialTheme.colors.onSurface,
+            )
+
+        }
+    }
 }
 
 @Preview(showBackground = true)
