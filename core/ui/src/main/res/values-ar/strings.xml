@@ -108,4 +108,7 @@
     <string name="light">نهارى</string>
     <string name="dark">ليلى</string>
     <string name="choose_theme">اختر السمات المفضلة</string>
+    <string name="private_club_description">هذا نادي خاص</string>
+    <string name="private_club_description2">ارسل طلب انضمام وانتظر.</string>
+
 </resources>

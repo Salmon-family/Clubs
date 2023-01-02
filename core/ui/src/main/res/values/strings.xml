@@ -112,4 +112,8 @@
     <string name="bug_report_hint">Describe your problem in few words…</string>
     <string name="are_you_sure">Are you sure to leave this club?</string>
     <string name="confirm">Confirm</string>
+
+    <string name="private_club_description">This club is private</string>
+    <string name="private_club_description2">Ask to join and wait for the acceptation</string>
+
 </resources>
