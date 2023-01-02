@@ -208,7 +208,7 @@ private fun ClubsDetailsContent(
 
     if (popupController) {
         LeaveClubDialog(
-            onDeclineClub = onDeclineClub,
+            onDeclineClub = onUnJoinClubs,
             onPopupDismiss = { popupController = false }
         )
 
