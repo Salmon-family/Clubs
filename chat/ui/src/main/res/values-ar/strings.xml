@@ -7,5 +7,7 @@
     <string name="search_text">البحث عن صديق</string>
     <string name="enter_your_message">أدخل رسالتك…</string>
     <string name="no_chats">لاتوجد محادثات</string>
+    <string name="nothing_to_show">لا شيء للعرض</string>
+    <string name="empty_chat_description">ابدأ محادثة جديدة مع أحد أصدقائك لتعرضها هنا.</string>
 
 </resources>

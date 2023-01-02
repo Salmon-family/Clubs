@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="add_friend">اظافة صديق</string>
     <string name="message">رسالة</string>
     <string name="photo">صورة</string>
@@ -108,4 +108,5 @@
     <string name="light">نهارى</string>
     <string name="dark">ليلى</string>
     <string name="choose_theme">اختر السمات المفضلة</string>
+    <string name="empty_search_description">استعمل كلمات مفتاحيّة صالحة، لتجد النوادي والأشخاص المطلوبين.</string>
 </resources>

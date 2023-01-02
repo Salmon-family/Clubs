@@ -11,27 +11,22 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.thechance.ui.R
 import com.thechance.ui.composable.FriendChat
 import com.thechance.ui.composable.Loading
 import com.thechance.ui.composable.SearchTextField
 import com.thechance.ui.composable.TopBarChats
+import com.thechance.ui.screens.chat.composable.EmptyChatScreen
 import com.thechance.ui.screens.conversation.navigateToConversation
-import com.thechance.ui.theme.DarkBackgroundColor
-import com.thechance.ui.theme.LightBackgroundColor
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
@@ -76,67 +71,61 @@ private fun ChatsContent(
     onLoadingMoreChats: () -> Unit,
 ) {
     val listState = rememberLazyListState()
-    Scaffold(topBar = {TopBarChats(onCLickBack)}) {
+    Scaffold(topBar = { TopBarChats(onCLickBack) }) {
         if (state.isLoading) {
             Loading()
         }
         if (state.isEmpty() && !state.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(text = stringResource(R.string.no_chats))
-            }
-
+            EmptyChatScreen()
         }
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                state = listState,
-            ) {
-                item {
-                    SearchTextField(
-                        text = state.searchText,
-                        onValueChanged = onValueChanged
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn(
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            state = listState,
+        ) {
+            item {
+                SearchTextField(
+                    text = state.searchText,
+                    onValueChanged = onValueChanged
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            items(
+                items = state.chats,
+                key = { chatUiState ->
+                    chatUiState.guid
                 }
-                items(
-                    items = state.chats,
-                    key = { chatUiState ->
-                        chatUiState.guid
-                    }
-                ) { chat ->
-                    FriendChat(
-                        chatUiState = chat,
-                        modifier = Modifier.animateItemPlacement(),
-                        onClick = onClickChat,
-                    )
-                }
-                item {
-                    if (state.isLoadingMore) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CircularProgressIndicator(
-                                color = LightPrimaryBrandColor,
-                            )
-                        }
+            ) { chat ->
+                FriendChat(
+                    chatUiState = chat,
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = onClickChat,
+                )
+            }
+            item {
+                if (state.isLoadingMore) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator(
+                            color = LightPrimaryBrandColor,
+                        )
                     }
                 }
             }
+        }
 
     }
 
 
-        LaunchedEffect(key1 = listState.isScrolledToTheEnd()) {
-            if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
-                onLoadingMoreChats()
-            }
+    LaunchedEffect(key1 = listState.isScrolledToTheEnd()) {
+        if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
+            onLoadingMoreChats()
         }
+    }
 }
 
 fun LazyListState.isScrolledToTheEnd(): Boolean {

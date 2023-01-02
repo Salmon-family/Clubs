@@ -16,6 +16,8 @@ val LightQuaternaryBlackColor = Color(0x2904030A)
 val WhiteColor = Color(0xFFFFFFFF)
 val LightBackgroundColor = Color(0xFFF6F6F7)
 val LightCardColor = Color(0xFFFFFFFF)
+val LightSecondaryBrandColor = Color(0xFFE7E4F8)
+val LightTernaryBrandColor = Color(0x33E7E4F8)
 
 
 //for Dark theme
