@@ -113,7 +113,8 @@ private fun ClubsDetailsContent(
                 isLoading = state.isPagerLoading,
                 error = state.pagerError,
                 isEndOfPager = state.isEndOfPager,
-                contentPadding = PaddingValues(bottom = 16.dp)
+                contentPadding = PaddingValues(bottom = 16.dp),
+                footerVisibility = state.detailsUiState.isClubPublic
             ) {
 
                 item {
