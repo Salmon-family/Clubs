@@ -264,4 +264,8 @@ class ClubRepositoryImp @Inject constructor(
         return coreDataStoreDataSource.isUserLoggedIn()
     }
 
+    override suspend fun deleteLocalPost(postId: Int) {
+        return localDataSource.deletePostById(postId)
+    }
+
 }
