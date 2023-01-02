@@ -110,5 +110,6 @@
     <string name="choose_theme">اختر السمات المفضلة</string>
     <string name="private_club_description">هذا نادي خاص</string>
     <string name="private_club_description2">ارسل طلب انضمام وانتظر.</string>
+    <string name="deleted_post">عذرا، هذا المنشور تم حذفه من قبل الناشر.</string>
 
 </resources>

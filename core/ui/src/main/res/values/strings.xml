@@ -115,5 +115,5 @@
 
     <string name="private_club_description">This club is private</string>
     <string name="private_club_description2">Ask to join and wait for the acceptation</string>
-
+    <string name="deleted_post">Sorry, this thread has been deleted from the publisher!!</string>
 </resources>

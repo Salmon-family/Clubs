@@ -316,7 +316,12 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {
-        return wrap { apiService.getWallPost(userID = userID, postID = postId) }
+        val response = wrap { apiService.getWallPost(userID = userID, postID = postId) }
+        return try {
+            response as WallPostDTO
+        } catch (t: Throwable) {
+            throw Throwable("NotFound")
+        }
     }
 
     override suspend fun addComment(userId: Int, postId: Int, comment: String): AddedCommentDTO {

@@ -38,7 +38,7 @@ data class PostUIState(
     val publisherName: String = "",
     val publisherImage: String = "",
     val publisherId: Int = 0,
-    val isMyPost:Boolean = false,
+    val isMyPost: Boolean = false,
     val privacy: Boolean = false,
     val createdData: PublishTimeUIState = PublishTimeUIState(),
     val createdDataValue: Long = 0L,
@@ -50,5 +50,6 @@ data class PostUIState(
     val postContent: String = "",
     val groupId: Int = 0,
     val isFromClub: Boolean = false,
-    val groupName: String = ""
+    val groupName: String = "",
+    val isFound: Boolean = true
 )
