@@ -244,7 +244,10 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 if (deletePostUseCase(post.postId)) {
                     _uiState.update {
-                        it.copy(posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                        it.copy(
+                            posts = _uiState.value.posts.filterNot { it.postId == post.postId },
+                            postCount = uiState.value.postCount.minus(1)
+                        )
                     }
                 }
             } catch (t: Throwable) {

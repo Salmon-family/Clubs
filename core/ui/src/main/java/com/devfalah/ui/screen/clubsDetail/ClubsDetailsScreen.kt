@@ -55,6 +55,7 @@ fun ClubsDetailsScreen(
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
         onRetry = viewModel::getDetailsOfClubs,
+        onDeletePost = viewModel::onDeletePost,
         onClickJoinRequestClub = {
             navController.navigateToClubRequests(
                 clubId = state.detailsUiState.clubId,
@@ -94,7 +95,8 @@ private fun ClubsDetailsContent(
     onUnJoinClubs: () -> Unit,
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit
+    onClickEditClub: () -> Unit,
+    onDeletePost: (PostUIState) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -194,7 +196,7 @@ private fun ClubsDetailsContent(
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,
                             onClickSave = onClickSave,
-                            onClickPostSetting = {},
+                            onClickPostSetting = onDeletePost,
                             onClickProfile = {},
                             onOpenLinkClick = {},
                         )
