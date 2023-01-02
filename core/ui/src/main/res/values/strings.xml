@@ -113,4 +113,5 @@
     <string name="are_you_sure">Are you sure to leave this club?</string>
     <string name="confirm">Confirm</string>
     <string name="empty_search_description">try valid keywords to find the required clubs and people</string>
+    <string name="empty_members_description">This club has no members.</string>
 </resources>

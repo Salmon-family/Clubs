@@ -109,4 +109,5 @@
     <string name="dark">ليلى</string>
     <string name="choose_theme">اختر السمات المفضلة</string>
     <string name="empty_search_description">استعمل كلمات مفتاحيّة صالحة، لتجد النوادي والأشخاص المطلوبين.</string>
+    <string name="empty_members_description">هذا النادي لا يحتوي على أعضاء</string>
 </resources>
