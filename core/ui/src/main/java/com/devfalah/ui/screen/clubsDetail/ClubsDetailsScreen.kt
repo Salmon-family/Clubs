@@ -54,7 +54,6 @@ fun ClubsDetailsScreen(
         },
         onJoinClub = viewModel::joinClubs,
         onUnJoinClubs = viewModel::unJoinClubs,
-        onDeclineClub = viewModel::declineRequestOfClub,
         onRetry = viewModel::getDetailsOfClubs,
         onClickJoinRequestClub = {
             navController.navigateToClubRequests(
@@ -93,7 +92,6 @@ private fun ClubsDetailsContent(
     onClickMembers: (Int) -> Unit,
     onJoinClub: () -> Unit,
     onUnJoinClubs: () -> Unit,
-    onDeclineClub: () -> Unit,
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
     onClickEditClub: () -> Unit
@@ -114,7 +112,7 @@ private fun ClubsDetailsContent(
                 error = state.pagerError,
                 isEndOfPager = state.isEndOfPager,
                 contentPadding = PaddingValues(bottom = 16.dp),
-                footerVisibility = state.detailsUiState.isClubPublic
+                footerVisibility = state.isPostVisible()
             ) {
 
                 item {
