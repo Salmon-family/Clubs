@@ -1,5 +1,6 @@
 package com.devfalah.viewmodels.menu
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.language.GetLanguageUseCase
@@ -51,19 +52,18 @@ class MenuViewModel @Inject constructor(
     fun onChangeLanguage(selectedItemIndex: Int) {
         viewModelScope.launch {
             val language = when (selectedItemIndex) {
-                0-> {
-                    saveLanguageUseCase(language = AppLanguage.ENGLISH.value)
+                0 -> {
                     AppLanguage.ENGLISH
                 }
                 1 -> {
-                    saveLanguageUseCase(language = AppLanguage.ARABIC.value)
                     AppLanguage.ARABIC
                 }
                 else -> {
-                    saveLanguageUseCase(language = AppLanguage.ENGLISH.value)
                     AppLanguage.ENGLISH
                 }
             }
+
+            saveLanguageUseCase(language = language.value)
             _uiState.update { it.copy(language = language) }
         }
     }
