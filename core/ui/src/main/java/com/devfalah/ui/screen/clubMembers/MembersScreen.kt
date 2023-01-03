@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.clubMembers.comosable.EmptyMembersScreen
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubMembers.ClubMembersViewModel
 import com.devfalah.viewmodels.friends.FriendsUIState
@@ -67,7 +68,7 @@ fun ClubMembersContent(
         } else if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.friends.isEmpty()) {
-            ErrorEmpty()
+            EmptyMembersScreen()
         } else {
             ManualPager(
                 onRefresh = onRefresh,
