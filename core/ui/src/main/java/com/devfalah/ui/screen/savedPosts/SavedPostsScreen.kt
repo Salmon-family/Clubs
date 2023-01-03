@@ -25,7 +25,7 @@ import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.screen.savedPosts.comosable.EmptySavedPostsScreen
+import com.devfalah.ui.screen.savedPosts.comosable.EmptySavedPostsItem
 import com.devfalah.viewmodels.savedPosts.SavedPostUIState
 import com.devfalah.viewmodels.savedPosts.SavedPostsViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -104,7 +104,7 @@ fun SavedPostsContent(
                 }
             }
         } else {
-            EmptySavedPostsScreen()
+            EmptySavedPostsItem()
         }
     }
 }

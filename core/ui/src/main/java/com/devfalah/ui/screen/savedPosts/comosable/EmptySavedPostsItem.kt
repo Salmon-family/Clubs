@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.search.composable
+package com.devfalah.ui.screen.savedPosts.comosable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import com.devfalah.ui.composable.EmptyScreenTexts
 import com.devfalah.ui.composable.HeightSpacer8
 
 @Composable
-fun EmptySearchScreen(
+fun EmptySavedPostsItem(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -23,12 +23,12 @@ fun EmptySearchScreen(
         verticalArrangement = Arrangement.Center
     ) {
         EmptyScreenIcon(
-            painter = painterResource(id = R.drawable.ic_search_filld)
+            painter = painterResource(id = R.drawable.ic_save_mark)
         )
         HeightSpacer8()
         EmptyScreenTexts(
             title = stringResource(R.string.nothing_to_show),
-            description = stringResource(R.string.empty_search_description)
+            description = stringResource(R.string.saved_threads_text)
         )
     }
 }

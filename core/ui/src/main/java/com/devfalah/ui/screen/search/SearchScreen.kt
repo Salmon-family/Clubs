@@ -19,7 +19,7 @@ import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.allSearchResultScreen.navigateToAllSearchResult
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.screen.search.composable.EmptySearchScreen
+import com.devfalah.ui.screen.search.composable.EmptySearchItem
 import com.devfalah.viewmodels.search.SearchUIState
 import com.devfalah.viewmodels.search.SearchViewModel
 import com.devfalah.viewmodels.util.Constants.SEARCH_CLUB
@@ -89,7 +89,7 @@ fun SearchContent(
         } else if (state.isLoading) {
             Loading()
         } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
-            EmptySearchScreen()
+            EmptySearchItem()
         } else {
 
             LazyColumn(

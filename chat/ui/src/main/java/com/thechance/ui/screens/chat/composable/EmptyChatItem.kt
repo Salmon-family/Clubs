@@ -11,7 +11,7 @@ import com.thechance.ui.R
 
 
 @Composable
-fun EmptyChatScreen(
+fun EmptyChatItem(
     modifier: Modifier = Modifier
 ) {
     Column(

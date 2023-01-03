@@ -25,7 +25,7 @@ import com.thechance.ui.composable.FriendChat
 import com.thechance.ui.composable.Loading
 import com.thechance.ui.composable.SearchTextField
 import com.thechance.ui.composable.TopBarChats
-import com.thechance.ui.screens.chat.composable.EmptyChatScreen
+import com.thechance.ui.screens.chat.composable.EmptyChatItem
 import com.thechance.ui.screens.conversation.navigateToConversation
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
@@ -76,7 +76,7 @@ private fun ChatsContent(
             Loading()
         }
         if (state.isEmpty() && !state.isLoading) {
-            EmptyChatScreen()
+            EmptyChatItem()
         }
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
