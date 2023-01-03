@@ -7,9 +7,9 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
+    primary = LightPrimaryBrandColor,
     primaryVariant = Purple700,
-    secondary = Teal200,
+    secondary = LightTernaryBrandColor,
     background = DarkBackgroundColor,
     onBackground = DarkOnBackgroundColor,
     surface = DarkCardColor,
@@ -18,9 +18,9 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
+    primary = LightPrimaryBrandColor,
     primaryVariant = Purple700,
-    secondary = Teal200,
+    secondary = LightSecondaryBrandColor,
     background = LightBackgroundColor,
     surface = LightCardColor,
     onSecondary = LightDateTextColor,
