@@ -14,7 +14,7 @@ import com.devfalah.ui.composable.EmptyScreenTexts
 import com.devfalah.ui.composable.HeightSpacer8
 
 @Composable
-fun EmptyMembersScreen(
+fun EmptyMembersItem(
     modifier: Modifier = Modifier
 ) {
     Column(
