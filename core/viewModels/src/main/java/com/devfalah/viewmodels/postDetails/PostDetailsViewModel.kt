@@ -69,8 +69,10 @@ class PostDetailsViewModel @Inject constructor(
             try {
                 val post = getPostDetailsUseCase(postId)
                 _uiState.update { it.copy(post = post.toUIState(), isLoading = false) }
-                getPublisherDetails(args.publisherId)
-                getPostComments()
+                if (uiState.value.post.isFound) {
+                    getPublisherDetails(args.publisherId)
+                    getPostComments()
+                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }

@@ -93,6 +93,8 @@ fun PostDetailsContent(
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
             Loading()
+        } else if (!state.post.isFound) {
+            ErrorEmpty(text = stringResource(id = R.string.deleted_post))
         } else {
             ManualPager(
                 modifier = Modifier.weight(1f),

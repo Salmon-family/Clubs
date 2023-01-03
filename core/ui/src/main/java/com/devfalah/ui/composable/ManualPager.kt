@@ -33,6 +33,7 @@ fun ManualPager(
     error: String,
     isEndOfPager: Boolean,
     contentPadding: PaddingValues,
+    footerVisibility: Boolean = true,
     content: LazyListScope.() -> Unit,
 ) {
     val scrollState = rememberLazyListState()
@@ -46,13 +47,15 @@ fun ManualPager(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         content()
-        item {
-            PagerStatusItem(
-                isLoading = isLoading,
-                error = error,
-                isEndOfPager = isEndOfPager,
-                onClickTryAgain = onRefresh
-            )
+        if (footerVisibility) {
+            item {
+                PagerStatusItem(
+                    isLoading = isLoading,
+                    error = error,
+                    isEndOfPager = isEndOfPager,
+                    onClickTryAgain = onRefresh
+                )
+            }
         }
     }
 

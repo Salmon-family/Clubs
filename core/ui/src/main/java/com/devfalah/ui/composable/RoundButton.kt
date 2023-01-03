@@ -14,16 +14,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.viewmodels.friendRequest.UserState
+import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun RoundButton(
     modifier: Modifier = Modifier,
-    userState: UserState,
     onButtonClick: () -> Unit,
     buttonColor: Color = LightPrimaryBrandColor,
     text: String,
-    textColor: Color,
+    textColor: Color = WhiteColor,
     roundCorner: Int = 16,
     fontWeight: FontWeight = FontWeight.Normal,
 ) {

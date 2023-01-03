@@ -128,4 +128,5 @@ interface ClubRepository {
 
     fun isUserLoggedIn(): Boolean
 
+    suspend fun deleteLocalPost(postId: Int)
 }
