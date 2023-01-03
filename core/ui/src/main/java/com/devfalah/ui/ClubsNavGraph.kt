@@ -1,10 +1,6 @@
 package com.devfalah.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,7 +11,7 @@ import com.devfalah.ui.screen.clubMembers.membersRoute
 import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.clubsDetail.clubsDetailsRoute
-import com.devfalah.ui.screen.editclubscreen.editClubRoute
+import com.devfalah.ui.screen.editClub.editClubRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
 import com.devfalah.ui.screen.friends.friendsRoute
 import com.devfalah.ui.screen.home.homeRoute

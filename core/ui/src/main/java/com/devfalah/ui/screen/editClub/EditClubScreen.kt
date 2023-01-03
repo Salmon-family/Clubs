@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.editclubscreen
+package com.devfalah.ui.screen.editClub
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -36,6 +36,7 @@ fun EditClubScreen(
 
     EditClubContent(
         uiState = state,
+        navController = navController,
         onClickBack = { navController.popBackStack() },
         onNameChanged = editClubViewModel::onChangedClubName,
         onDescriptionChanged = editClubViewModel::onDescriptionChanged,
@@ -57,6 +58,7 @@ fun EditClubScreen(
 @Composable
 private fun EditClubContent(
     uiState: EditClubUiState,
+    navController: NavController,
     onClickBack: () -> Unit,
     onNameChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
@@ -136,7 +138,7 @@ private fun EditClubContent(
                 Spacer(modifier = Modifier.width(8.dp))
                 Box(modifier = Modifier.weight(1f)) {
                     ButtonWithLoading(
-                        text = stringResource(id = R.string.edit_club),
+                        text = stringResource(id = R.string.edit),
                         onClick = onClickEditClub,
                         isLoading = uiState.isLoading,
                         isEnabled = uiState.isCreateClubButtonEnabled(),
@@ -148,6 +150,7 @@ private fun EditClubContent(
             LaunchedEffect(key1 = uiState.isSuccessful) {
                 if (uiState.isSuccessful) {
                     showToastMessage(context, successMessage)
+                    navController.popBackStack()
                 }
             }
         }
