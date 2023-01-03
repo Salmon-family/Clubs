@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubCreation.CLUB_CREATION_ROUTE
+import com.devfalah.ui.screen.clubs.composable.EmptyClubsItem
 import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.theme.AppTypography
@@ -131,7 +132,7 @@ fun MyClubsScreen(
         } else if (state.isLoading) {
             Loading()
         } else if (state.myClubs.isEmpty()) {
-            ErrorEmpty()
+            EmptyClubsItem()
         } else {
             LazyColumn(
                 modifier = Modifier
