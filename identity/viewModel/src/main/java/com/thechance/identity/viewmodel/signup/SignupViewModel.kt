@@ -94,7 +94,7 @@ class SignupViewModel @Inject constructor(
 
     private fun validDomain(email: String): Boolean {
         val domain = email.substringAfter("@")
-        return (domain in listOf("gmail.com", "yahoo.com", "hotmail.com"))
+        return (domain.lowercase() in listOf("gmail.com", "yahoo.com", "hotmail.com"))
     }
 
     fun onChangePassword(password: String) {
