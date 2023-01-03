@@ -116,4 +116,7 @@
     <string name="empty_members_description">This club has no members.</string>
     <string name="empty_friend_request_description">All your new friend requests will be shown here.</string>
     <string name="empty_notifications_description">All your new notifications will be shown here.</string>
+    <string name="empty_friends_screen">This account has no friends.</string>
+    <string name="empty_clubs_description">You haven\'t joined to any club yet.</string>
+    <string name="empty_club_requests_description">All your new club requests will be shown here.</string>
 </resources>

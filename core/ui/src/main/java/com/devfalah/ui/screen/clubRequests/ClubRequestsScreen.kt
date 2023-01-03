@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.clubRequests.composable.EmptyClubRequestsItem
 import com.devfalah.ui.screen.friendrequest.composable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubRequests.ClubRequestsUIState
@@ -76,7 +77,7 @@ fun ClubRequestsContent(
         } else if (state.isLoading) {
             Loading()
         } else if (state.users.isEmpty()) {
-            ErrorEmpty()
+            EmptyClubRequestsItem()
         } else {
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
