@@ -47,7 +47,7 @@ fun ReceiverMessage(
             Text(
                 text = dateMessage,
                 style = Typography.subtitle2,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.onSecondary,
             )
 
         }
