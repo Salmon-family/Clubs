@@ -14,21 +14,23 @@ fun String.parseHtml(): String {
     }
 }
 
-fun Long.toTime(): String {
+fun Long.toTime(showFullDate: Boolean = false): String {
     val createdTimeDate = Date(this * 1000).time
     val diffInMillisecond: Long = Date().time - createdTimeDate
     val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMillisecond)
 
-
-    return if (diffInDays > 7) {
+    val formattedDate = if (diffInDays > 5) {
         formatDate(createdTimeDate, "d MMM")
-    } else if (diffInDays in 7..364) {
+    } else if (diffInDays in 5..364) {
         formatDate(createdTimeDate, "yy.MM.dd")
-    } else if (diffInDays in 1..7) {
+    } else if (diffInDays in 1..5) {
         formatDate(createdTimeDate, "EEE")
     } else {
         formatDate(createdTimeDate, "h:mm a")
     }
+
+    return formattedDate + if (showFullDate && diffInDays >= 1) formatDate(createdTimeDate,
+        "/h:mm a") else ""
 }
 
 private fun formatDate(time: Long, pattern: String): String {

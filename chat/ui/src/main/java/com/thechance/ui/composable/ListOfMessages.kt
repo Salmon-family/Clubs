@@ -1,6 +1,5 @@
 package com.thechance.ui.composable
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -30,6 +29,7 @@ fun ListOfChat(
     LazyColumn(
         reverseLayout = true,
         state = lazyListState,
+        modifier = Modifier.fillMaxWidth()
     ) {
         item {
             SpaceVertical(height = 64)
@@ -47,11 +47,11 @@ fun ListOfChat(
             }
             if (it.isFromUser) {
                 SenderMessage(it.message,
-                    it.messageDate.toTime(),
+                    it.messageDate.toTime(true),
                     Modifier.animateItemPlacement())
             } else {
                 ReceiverMessage(it.message,
-                    it.messageDate.toTime(),
+                    it.messageDate.toTime(true),
                     Modifier.animateItemPlacement())
             }
         }
