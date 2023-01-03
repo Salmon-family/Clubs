@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
+import com.devfalah.ui.screen.friendrequest.composable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubRequests.ClubRequestsUIState
 import com.devfalah.viewmodels.clubRequests.ClubRequestsViewModel

@@ -114,4 +114,6 @@
     <string name="confirm">Confirm</string>
     <string name="empty_search_description">try valid keywords to find the required clubs and people</string>
     <string name="empty_members_description">This club has no members.</string>
+    <string name="empty_friend_request_description">All your new friend requests will be shown here.</string>
+    <string name="empty_notifications_description">All your new notifications will be shown here.</string>
 </resources>

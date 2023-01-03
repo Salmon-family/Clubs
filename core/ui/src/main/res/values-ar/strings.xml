@@ -110,4 +110,6 @@
     <string name="choose_theme">اختر السمات المفضلة</string>
     <string name="empty_search_description">استعمل كلمات مفتاحيّة صالحة، لتجد النوادي والأشخاص المطلوبين.</string>
     <string name="empty_members_description">هذا النادي لا يحتوي على أعضاء</string>
+    <string name="empty_friend_request_description">ستظهر هنا قائمة بكلّ طلبات الدصاقة الجديدة.</string>
+    <string name="empty_notifications_description">ستظهر هنا كلّ الإشعارات الجديدة.</string>
 </resources>
