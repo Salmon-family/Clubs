@@ -66,6 +66,7 @@ internal fun PostDTO.toEntity(): Post {
         posterGuid = "",
         groupId = 0,
         groupName = "",
-        isMyPost = false
+        isMyPost = false,
+        isFound = true
     )
 }
