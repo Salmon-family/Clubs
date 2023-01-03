@@ -89,6 +89,12 @@ class SignupViewModel @Inject constructor(
 
     private fun String.isEmailValid(): Boolean {
         return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+                && validDomain(this)
+    }
+
+    private fun validDomain(email: String): Boolean {
+        val domain = email.substringAfter("@")
+        return (domain in listOf("gmail.com", "yahoo.com", "hotmail.com"))
     }
 
     fun onChangePassword(password: String) {
@@ -131,11 +137,11 @@ class SignupViewModel @Inject constructor(
         _uiState.update { it.copy(gender = gender) }
     }
 
-    fun onChangeJobTitle(jobTitle: String){
+    fun onChangeJobTitle(jobTitle: String) {
         _uiState.update { it.copy(jobTitle = jobTitle) }
     }
 
-    fun onValidateJobTitle(): Boolean{
+    fun onValidateJobTitle(): Boolean {
         return accountValidationUseCase.validateJobTitle(_uiState.value.jobTitle)
     }
 

@@ -14,8 +14,6 @@ class GetClubMembersUseCase @Inject constructor(
         return if (members.isNotEmpty()) {
             page += 1
             members.filterNot { it.id == ownerId }
-        } else if (page == 1) {
-            throw Throwable("error")
         } else {
             emptyList()
         }
