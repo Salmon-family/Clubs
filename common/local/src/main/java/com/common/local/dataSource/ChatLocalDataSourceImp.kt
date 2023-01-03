@@ -3,6 +3,7 @@ package com.common.local.dataSource
 import com.common.local.daos.ChatDao
 import com.devfalah.repository.ChatLocalDataSource
 import com.devfalah.repository.models.ChatLocalDto
+import com.devfalah.repository.models.FriendDTOLocal
 import com.devfalah.repository.models.MessageEntityLocalDTO
 import kotlinx.coroutines.flow.Flow
 
@@ -38,6 +39,18 @@ class ChatLocalDataSourceImp @Inject constructor(
 
     override suspend fun updateRecentMessage(id: Int, recentMessage: String) {
         chatDao.updateRecentMessage(id, recentMessage)
+    }
+
+    override fun getFriends(): Flow<List<FriendDTOLocal>> {
+        return chatDao.getFriends()
+    }
+
+    override fun getFriends(query: String): Flow<List<FriendDTOLocal>> {
+        return chatDao.getFriends(query)
+    }
+
+    override suspend fun insertFriends(friends: List<FriendDTOLocal>) {
+        chatDao.insertFriends(friends)
     }
 
 }

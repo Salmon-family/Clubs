@@ -30,8 +30,7 @@ import com.thechance.ui.composable.Loading
 import com.thechance.ui.composable.SearchTextField
 import com.thechance.ui.composable.TopBarChats
 import com.thechance.ui.screens.conversation.navigateToConversation
-import com.thechance.ui.theme.DarkBackgroundColor
-import com.thechance.ui.theme.LightBackgroundColor
+import com.thechance.ui.screens.friends.navigateToFriends
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
@@ -58,6 +57,9 @@ fun ChatsScreen(
             activity?.finish()
         },
         onLoadingMoreChats = viewModel::onLoadingMore,
+        onClickNewChat = {
+            navController.navigateToFriends()
+        }
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
@@ -74,9 +76,10 @@ private fun ChatsContent(
     onClickChat: (ChatUiState) -> Unit,
     onCLickBack: () -> Unit,
     onLoadingMoreChats: () -> Unit,
+    onClickNewChat: () -> Unit
 ) {
     val listState = rememberLazyListState()
-    Scaffold(topBar = {TopBarChats(onCLickBack)}) {
+    Scaffold(topBar = {TopBarChats(onCLickBack, onClickNewChat)}) {
         if (state.isLoading) {
             Loading()
         }

@@ -2,7 +2,6 @@ package com.nadafeteiha.usecases
 
 import com.thechance.entities.*
 import kotlinx.coroutines.flow.Flow
-import java.io.File
 
 interface ChatRepository {
 
@@ -33,4 +32,12 @@ interface ChatRepository {
     suspend fun getUserDetail(userID: Int): User
 
     fun getUserId(): Int
+
+    suspend fun getAllFriends(userID: Int, page: Int): Friends
+
+    suspend fun insertFriends(friends: List<Friend>)
+
+    suspend fun getFriends(): Flow<List<Friend>>
+
+    fun getFriends(query: String): Flow<List<Friend>>
 }

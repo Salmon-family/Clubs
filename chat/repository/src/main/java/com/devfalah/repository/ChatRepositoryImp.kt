@@ -1,7 +1,6 @@
 package com.devfalah.repository
 
 import com.devfalah.repository.mappers.*
-import com.devfalah.repository.models.UserDTO
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.*
 import kotlinx.coroutines.flow.Flow
@@ -64,7 +63,23 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override fun getUserId(): Int {
-        return chatDataStoreDataSource.getUserId() ?:0
+        return chatDataStoreDataSource.getUserId() ?: 0
+    }
+
+    override suspend fun getAllFriends(userID: Int, page: Int): Friends {
+        return chatRemoteDataSource.getAllFriends(userID, page).toEntity()
+    }
+
+    override suspend fun insertFriends(friends: List<Friend>) {
+        chatLocalDataSource.insertFriends(friends.map { it.toLocalDTO() })
+    }
+
+    override suspend fun getFriends(): Flow<List<Friend>> {
+        return chatLocalDataSource.getFriends().map { list -> list.map { it.toEntity() } }
+    }
+
+    override fun getFriends(query: String): Flow<List<Friend>> {
+        return chatLocalDataSource.getFriends(query).map { list -> list.map { it.toEntity() } }
     }
 
     override suspend fun getMessages(friendId: Int): Flow<List<Message>> {

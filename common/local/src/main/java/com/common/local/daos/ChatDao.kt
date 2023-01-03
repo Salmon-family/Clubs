@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.devfalah.repository.models.ChatLocalDto
+import com.devfalah.repository.models.FriendDTOLocal
 import com.devfalah.repository.models.MessageEntityLocalDTO
 import kotlinx.coroutines.flow.Flow
 
@@ -32,4 +33,12 @@ interface ChatDao {
     @Query("UPDATE CHATS_TABLE SET recentMessage = :recentMessage WHERE guid = :id")
     suspend fun updateRecentMessage(id: Int, recentMessage: String)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFriends(friends: List<FriendDTOLocal>)
+
+    @Query("SELECT * FROM FRIENDS WHERE NOT EXISTS (SELECT * FROM CHATS_TABLE WHERE CHATS_TABLE.guid = FRIENDS.id)")
+    fun getFriends(): Flow<List<FriendDTOLocal>>
+
+    @Query("SELECT * FROM FRIENDS WHERE name LIKE '%' || :query || '%' AND NOT EXISTS (SELECT * FROM CHATS_TABLE WHERE CHATS_TABLE.guid = FRIENDS.id)")
+    fun getFriends(query: String): Flow<List<FriendDTOLocal>>
 }
