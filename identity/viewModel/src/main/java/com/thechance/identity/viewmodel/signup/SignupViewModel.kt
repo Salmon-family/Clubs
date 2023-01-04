@@ -8,6 +8,7 @@ import com.thechance.identity.usecases.GetUserIdUseCase
 import com.thechance.identity.usecases.SaveUserIdUseCase
 import com.thechance.identity.usecases.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -35,7 +36,7 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun makeSignupRequest() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val state = _uiState.value
             val userData = UserData(
                 fullName = state.firstName,
