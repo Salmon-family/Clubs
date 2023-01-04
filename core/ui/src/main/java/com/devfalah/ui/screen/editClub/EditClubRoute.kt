@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.editclubscreen
+package com.devfalah.ui.screen.editClub
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable

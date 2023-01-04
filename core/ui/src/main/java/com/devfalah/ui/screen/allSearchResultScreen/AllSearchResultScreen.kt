@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.search.composable.EmptySearchItem
 import com.devfalah.viewmodels.allSearchResult.AllSearchResultUIState
 import com.devfalah.viewmodels.allSearchResult.AllSearchResultViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -58,7 +58,7 @@ fun AllSearchResultScreenContent(
     OnUserClick: (Int) -> Unit,
     onRetry: () -> Unit
 ) {
-    Column (modifier = Modifier.fillMaxSize()){
+    Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = state.title,
             onBackButton = onBackClick,
@@ -69,7 +69,7 @@ fun AllSearchResultScreenContent(
         } else if (state.isLoading) {
             Loading()
         } else if (state.users.isEmpty() && state.clubs.isEmpty()) {
-            ErrorEmpty()
+            EmptySearchItem()
         } else {
             LazyColumn(
                 modifier = Modifier
