@@ -1,6 +1,11 @@
 package com.devfalah.firebase
 
 
+
+import android.content.Intent
+import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.devfalah.repository.models.NotificationDataModel
 import com.devfalah.repository.models.NotificationKeys
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -41,12 +46,23 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
         newToken = token
     }
 
+    override fun handleIntent(intent: Intent?) {
+        super.handleIntent(intent)
+        if (isAppOnForeground()){
+            Log.e("DEVFALAH",intent.toString())
+        }else{
+            Log.e("DEVFALAHNOT",intent.toString())
+        }
+
+
+    }
     companion object {
         val events = MutableSharedFlow<NotificationDataModel>()
         var newToken: String = ""
-        const val CHANNEL_ID = "gravity_fcm_channel"
-        const val CHAT_ACTIVITY = "com.thechance.ui.ChatActivity"
-        const val FRIEND_ID = "FRIEND_ID"
     }
 
+    private fun isAppOnForeground(): Boolean {
+        return ProcessLifecycleOwner.get().lifecycle.currentState
+            .isAtLeast(Lifecycle.State.STARTED)
+    }
 }
