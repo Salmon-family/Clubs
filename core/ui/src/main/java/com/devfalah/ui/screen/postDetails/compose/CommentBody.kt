@@ -1,9 +1,6 @@
 package com.devfalah.ui.screen.postDetails.compose
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,7 +12,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.ExpandableText
@@ -45,13 +41,7 @@ fun CommentBody(
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colors.secondaryVariant,
-                textAlign = if (state.isOwnerComment) {
-                    TextAlign.End
-                } else {
-                    TextAlign.Start
-                }
             ),
-            isTextAlignToStart = state.isOwnerComment
         )
 
         HeightSpacer8()
