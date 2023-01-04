@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
-import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.util.Constants
 
@@ -41,6 +40,8 @@ fun NotificationTitle(type: Int, posterName: String) {
                 append(" $notificationType")
             }
         },
-        modifier = Modifier.fillMaxWidth(), lineHeight = 20.sp, color = MaterialTheme.colors.onSurface
+        modifier = Modifier.fillMaxWidth(),
+        lineHeight = 20.sp,
+        color = MaterialTheme.colors.primaryVariant
     )
 }

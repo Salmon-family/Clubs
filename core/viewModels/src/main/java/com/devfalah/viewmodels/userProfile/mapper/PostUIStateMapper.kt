@@ -26,6 +26,7 @@ fun Post.toUIState(): PostUIState {
         createdDataValue = createdTime,
         groupId = groupId,
         groupName = groupName,
+        isFound = isFound
     )
 }
 

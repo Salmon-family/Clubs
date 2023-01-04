@@ -5,8 +5,8 @@ data class Club(
     val ownerId: Int,
     val isOwner: Boolean,
     val name: String,
-    val privacy: String,
     val description: String,
     val isMember: Boolean,
+    val isClubPublic: Boolean,
     val requestExists: Boolean,
 )

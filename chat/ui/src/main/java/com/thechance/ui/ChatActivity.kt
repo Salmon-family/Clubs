@@ -21,7 +21,6 @@ class ChatActivity : ComponentActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         val friendId = intent.extras?.getInt("FRIEND_ID", -1) ?: -1
-        val userId = intent.extras?.getInt("USER_ID", -1) ?: -1
         setContent {
             ClubsTheme {
                 val systemUIController = rememberSystemUiController()
@@ -35,8 +34,8 @@ class ChatActivity : ComponentActivity() {
 
                     val navController = rememberNavController()
                     ChatNavGraph(navController = navController, START_DESTINATION)
-                    if (friendId != -1 && userId != -1) {
-                        navController.navigateToConversation(userId, friendId)
+                    if (friendId != -1 ) {
+                        navController.navigateToConversation(friendId)
                     }
                 }
             }

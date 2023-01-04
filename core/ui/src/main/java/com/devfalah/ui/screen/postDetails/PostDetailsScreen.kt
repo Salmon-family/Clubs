@@ -92,7 +92,9 @@ fun PostDetailsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
+        } else if (!state.post.isFound) {
+            ErrorEmpty(text = stringResource(id = R.string.deleted_post))
         } else {
             ManualPager(
                 modifier = Modifier.weight(1f),
@@ -125,7 +127,7 @@ fun PostDetailsContent(
                                 .padding(horizontal = 16.dp),
                             text = stringResource(id = R.string.replies),
                             textAlign = TextAlign.Start,
-                            color = MaterialTheme.colors.onSurface,
+                            color = MaterialTheme.colors.secondaryVariant,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = PlusJakartaSans

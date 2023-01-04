@@ -18,8 +18,6 @@ import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.NotificationIcon
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.notifications.NotificationState
 
@@ -55,7 +53,7 @@ fun NotificationItem(
             Text(
                 text = notification.timeCreated,
                 fontSize = 12.sp,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.onSecondary,
                 lineHeight = 20.sp,
                 fontFamily = PlusJakartaSans
             )

@@ -15,8 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 
 @Composable
@@ -38,7 +36,7 @@ fun RowTitleWithSeeAll(
             fontSize = 18.sp,
             fontFamily = PlusJakartaSans,
             fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colors.primaryVariant
         )
 
         if (showSeeAll) {
@@ -47,7 +45,7 @@ fun RowTitleWithSeeAll(
                 fontSize = 12.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.onSecondary,
             )
 
             Icon(

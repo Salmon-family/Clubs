@@ -19,8 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.friends.FriendUIState
 
@@ -53,7 +51,7 @@ fun FriendItem(
                 text = state.name,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )

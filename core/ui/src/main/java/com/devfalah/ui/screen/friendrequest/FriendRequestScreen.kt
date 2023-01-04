@@ -20,13 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ErrorItem
-import com.devfalah.ui.composable.LottieItem
-import com.devfalah.ui.composable.setStatusBarColor
-import com.devfalah.ui.screen.friendrequest.friendcomposable.FriendRequestItem
+import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.friendrequest.composable.EmptyFriendRequestItem
+import com.devfalah.ui.screen.friendrequest.composable.FriendRequestItem
 import com.devfalah.ui.screen.profile.navigateToProfile
-import com.devfalah.ui.theme.LightBackgroundColor
 import com.devfalah.viewmodels.friendRequest.FriendRequestUiState
 import com.devfalah.viewmodels.friendRequest.FriendRequestViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -76,15 +73,15 @@ fun FriendRequestsContent(
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.friendRequests.isEmpty()) {
-            LottieItem(LottieResource = R.raw.no_data)
+            EmptyFriendRequestItem()
         } else {
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .background(LightBackgroundColor)
+                    .background(MaterialTheme.colors.background)
                     .fillMaxSize(),
             ) {
                 items(

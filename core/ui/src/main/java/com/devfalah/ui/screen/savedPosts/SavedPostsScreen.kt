@@ -25,6 +25,7 @@ import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.screen.savedPosts.comosable.EmptySavedPostsItem
 import com.devfalah.viewmodels.savedPosts.SavedPostUIState
 import com.devfalah.viewmodels.savedPosts.SavedPostsViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -78,28 +79,32 @@ fun SavedPostsContent(
             onBackButton = onClickBack
         )
 
-        LazyColumn(
-            modifier = Modifier
-                .background(MaterialTheme.colors.background)
-                .fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
+        if (state.posts.isNotEmpty()) {
+            LazyColumn(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
 
-            items(state.posts) {
-                PostItem(
-                    state = it,
-                    isContentExpandable = true,
-                    isClubPost = it.isFromClub,
-                    showGroupName = true,
-                    onClickLike = onClickLike,
-                    onClickComment = onClickComment,
-                    onClickSave = onClickRemoveSavedPost,
-                    onClickProfile = onClickProfile,
-                    onOpenLinkClick = onOpenLinkClick,
-                    onClickPostSetting = { },
-                )
+                items(state.posts) {
+                    PostItem(
+                        state = it,
+                        isContentExpandable = true,
+                        isClubPost = it.isFromClub,
+                        showGroupName = true,
+                        onClickLike = onClickLike,
+                        onClickComment = onClickComment,
+                        onClickSave = onClickRemoveSavedPost,
+                        onClickProfile = onClickProfile,
+                        onOpenLinkClick = onOpenLinkClick,
+                        onClickPostSetting = { },
+                    )
+                }
             }
+        } else {
+            EmptySavedPostsItem()
         }
     }
 }

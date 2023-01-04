@@ -1,11 +1,10 @@
 package com.thechance.identity.ui.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -25,13 +24,11 @@ fun Loading(
     ) {
         SpacerVertical24()
 
-        Box(
-            modifier = modifier
-                .background(
-                    shape = RoundedCornerShape(20.dp),
-                    color = MaterialTheme.colors.surface
-                )
-                .alpha(1f),
+        Card(
+            modifier = modifier.alpha(1f),
+            elevation = 4.dp,
+            shape = RoundedCornerShape(20.dp),
+            backgroundColor = MaterialTheme.colors.surface
         ) {
             CircularProgressIndicator(
                 modifier = Modifier.padding(16.dp)

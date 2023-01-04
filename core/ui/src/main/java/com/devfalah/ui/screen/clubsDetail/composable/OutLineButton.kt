@@ -11,10 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
-import com.devfalah.ui.theme.LightBackgroundColor
-import com.devfalah.ui.theme.LightQuaternaryBlackColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.viewmodels.friendRequest.UserState
 
 @Composable
 fun OutlineButton(
@@ -27,7 +23,7 @@ fun OutlineButton(
         border = BorderStroke(1.dp, MaterialTheme.colors.onSecondary),
         shape = RoundedCornerShape(100),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = MaterialTheme.colors.onSurface,
+            contentColor = MaterialTheme.colors.onSecondary,
             backgroundColor = MaterialTheme.colors.background
         ),
     ) {

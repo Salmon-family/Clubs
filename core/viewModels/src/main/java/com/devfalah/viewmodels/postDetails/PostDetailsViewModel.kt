@@ -3,14 +3,8 @@ package com.devfalah.viewmodels.postDetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.posts.DeletePostUseCase
+import com.devfalah.usecases.posts.*
 import com.devfalah.usecases.user.GetUserAccountDetailsUseCase
-import com.devfalah.usecases.posts.SetFavoritePostUseCase
-import com.devfalah.usecases.posts.SetPostLikeUseCase
-import com.devfalah.usecases.posts.GetPostCommentsUseCase
-import com.devfalah.usecases.posts.GetPostDetailsUseCase
-import com.devfalah.usecases.posts.ManageCommentUseCase
-import com.devfalah.usecases.posts.SetCommentLikeUseCase
 import com.devfalah.viewmodels.postDetails.mapper.toUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -46,7 +40,6 @@ class PostDetailsViewModel @Inject constructor(
 
     fun getData() {
         getPostDetails(args.postId)
-        getPostComments()
     }
 
     //region Post
@@ -76,7 +69,10 @@ class PostDetailsViewModel @Inject constructor(
             try {
                 val post = getPostDetailsUseCase(postId)
                 _uiState.update { it.copy(post = post.toUIState(), isLoading = false) }
-                getPublisherDetails(args.publisherId)
+                if (uiState.value.post.isFound) {
+                    getPublisherDetails(args.publisherId)
+                    getPostComments()
+                }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }

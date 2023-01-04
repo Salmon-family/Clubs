@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.clubMembers.comosable.EmptyMembersItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubMembers.ClubMembersViewModel
 import com.devfalah.viewmodels.friends.FriendsUIState
@@ -63,11 +64,11 @@ fun ClubMembersContent(
             onBackButton = onBackClick,
         )
         if (state.isLoading) {
-            LottieItem(LottieResource = R.raw.loading)
+            Loading()
         } else if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.friends.isEmpty()) {
-            LottieItem(LottieResource = R.raw.no_data)
+            EmptyMembersItem()
         } else {
             ManualPager(
                 onRefresh = onRefresh,

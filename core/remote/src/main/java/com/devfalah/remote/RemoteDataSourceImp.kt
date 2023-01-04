@@ -316,7 +316,11 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {
-        return wrap { apiService.getWallPost(userID = userID, postID = postId) }
+        return try {
+          wrap { apiService.getWallPost(userID = userID, postID = postId) }
+        } catch (t: Throwable) {
+            throw Throwable("NotFound")
+        }
     }
 
     override suspend fun addComment(userId: Int, postId: Int, comment: String): AddedCommentDTO {
@@ -330,7 +334,7 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("empty groups")
     }
 
-    private suspend fun <T> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
+    private suspend fun <T : Any> wrap(function: suspend () -> Response<BaseResponse<T>>): T {
         val response = function()
         return if (response.isSuccessful) {
             when (response.body()?.code) {

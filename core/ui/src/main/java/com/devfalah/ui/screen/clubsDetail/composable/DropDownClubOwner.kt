@@ -56,7 +56,7 @@ fun DropDownOwner(
                     text = stringResource(id = R.string.users_requests),
                     style = TextStyle(
                         fontSize = 14.sp,
-                        color = MaterialTheme.colors.onSurface
+                        color = MaterialTheme.colors.secondaryVariant
                     )
                 )
             }
@@ -69,7 +69,7 @@ fun DropDownOwner(
                     text = stringResource(id = R.string.edit_club),
                     style = TextStyle(
                         fontSize = 14.sp,
-                        color = MaterialTheme.colors.onSurface
+                        color = MaterialTheme.colors.secondaryVariant
                     )
                 )
 

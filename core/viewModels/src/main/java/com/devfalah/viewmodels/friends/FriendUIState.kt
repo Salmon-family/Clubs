@@ -1,6 +1,7 @@
 package com.devfalah.viewmodels.friends
 
 import com.devfalah.entities.User
+import java.io.Serializable
 
 data class FriendsUIState(
     val id: Int = 0,
@@ -19,7 +20,7 @@ data class FriendUIState(
     val profilePictureUrl: String = "",
     val name: String = "",
     val title: String
-)
+): Serializable
 
 fun List<User>.toFriendsUIState() = map { it.toFriendUIState() }
 
@@ -28,6 +29,6 @@ fun User.toFriendUIState(): FriendUIState {
         id = id,
         profilePictureUrl = profileUrl,
         name = name,
-        title = title
+        title = title,
     )
 }

@@ -43,4 +43,6 @@
     <string name="not_exist_email">ليس لديك برنامج ايميل</string>
     <string name="job_title">عنوان المهنة</string>
     <string name="job_hint">مبرمج اندرويد</string>
+    <string name="note_email">ملحوظه: مسموح فقط بالتالي Gmail,Yahoo, Hotmail</string>
+
 </resources>

@@ -18,7 +18,7 @@
     <string name="your_password">Your Password</string>
     <string name="confirm_password">Re-enter Password</string>
     <string name="full_naame">Full Name</string>
-    <string name="user_name">User Name</string>
+    <string name="user_name">Username</string>
     <string name="birth_date">Birthdate</string>
     <string name="gender">Gender</string>
     <string name="log_in">Log In</string>
@@ -42,4 +42,5 @@
     <string name="not_exist_email">you don`t have an email app</string>
     <string name="job_title">Job Title</string>
     <string name="job_hint">android developer</string>
+    <string name="note_email">Note: only Gmail,Yahoo, and Hotmail are allowed </string>
 </resources>

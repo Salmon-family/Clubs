@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.AccountValidationUseCase
 import com.thechance.identity.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -30,7 +31,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun makeLoginRequest() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val user = loginUseCase(_uiState.value.userName, _uiState.value.password)
                 _uiState.update { it.copy(userId = user.guid) }
@@ -60,7 +61,9 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onChangePassword(password: String) {
-        _uiState.update { it.copy(password = password) }
+        if (!uiState.value.isLoading) {
+            _uiState.update { it.copy(password = password) }
+        }
     }
 
     fun onValidatePassword(): Boolean {

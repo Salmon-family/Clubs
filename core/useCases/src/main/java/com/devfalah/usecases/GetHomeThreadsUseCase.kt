@@ -22,6 +22,9 @@ class GetHomeThreadsUseCase @Inject constructor(
     }
 
     suspend fun loadData(): List<Post> {
+        if (userId == 0) {
+            userId = clubRepository.getUserId()
+        }
         val homePosts = clubRepository.getUserHomePosts(userId, page).map { post ->
             if (post.id in savedPosts) {
                 post.copy(isSaved = true, isMyPost = userId == post.publisherId)

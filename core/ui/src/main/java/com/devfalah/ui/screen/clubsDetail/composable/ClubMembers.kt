@@ -1,7 +1,6 @@
 package com.devfalah.ui.screen.clubsDetail.composable
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -9,10 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,7 +35,7 @@ fun ClubMembers(
             Text(
                 text = stringResource(R.string.clubs_member),
                 fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp
             )

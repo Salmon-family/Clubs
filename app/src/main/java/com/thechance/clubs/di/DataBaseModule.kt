@@ -6,8 +6,9 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
-import com.devfalah.local.ChatDao
-import com.devfalah.local.ChatDataBase
+import com.common.local.daos.ChatDao
+import com.common.local.daos.ClubDao
+import com.common.local.ClubDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,20 +20,26 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataBaseModule {
 
+
     @Singleton
     @Provides
-    fun providesChatDataBase(
+    fun providesClubDataBase(
         @ApplicationContext context: Context,
-    ): ChatDataBase {
-        return Room.databaseBuilder(context, ChatDataBase::class.java, "ChatDatabase")
+    ): ClubDataBase {
+        return Room.databaseBuilder(context, ClubDataBase::class.java, "ClubDatabase")
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun provideClubDao(clubDataBase: ClubDataBase): ClubDao {
+        return clubDataBase.clubDao()
+    }
 
     @Singleton
     @Provides
-    fun provideChatDao(chatDataBase: ChatDataBase): ChatDao {
-        return chatDataBase.chatDao()
+    fun provideChatDao(clubDataBase: ClubDataBase): ChatDao {
+        return clubDataBase.chatDao()
     }
 
 

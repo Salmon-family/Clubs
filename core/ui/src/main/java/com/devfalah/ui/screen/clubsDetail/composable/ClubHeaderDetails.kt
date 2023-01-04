@@ -9,14 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
@@ -26,16 +24,15 @@ import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 @Composable
 fun ClubHeaderDetails(
     state: ClubDetailsUiState,
-    modifier: Modifier = Modifier,
     onBack: () -> Unit,
     maxLineContentExpand: Int = 2,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit,
+    onClickEditClub: () -> Unit
 ) {
     var popupController by remember { mutableStateOf(false) }
 
     ConstraintLayout(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.onBackground)
     ) {
@@ -43,8 +40,7 @@ fun ClubHeaderDetails(
         val (backButton, textDescription, textName, cover, dropDownMenu) = createRefs()
 
         BackButton(
-            modifier = modifier
-                .layoutId("backButton")
+            modifier = Modifier
                 .wrapContentSize()
                 .nonRippleEffect { onBack() }
                 .padding(16.dp)
@@ -55,10 +51,9 @@ fun ClubHeaderDetails(
             tint = WhiteColor
         )
 
-        if (state.isOwner) {
+        if (state.detailsUiState.isOwner) {
             DropDownOwner(
-                modifier = modifier
-                    .layoutId("dropDownMenu")
+                modifier = Modifier
                     .padding(top = 16.dp, end = 16.dp)
                     .constrainAs(dropDownMenu) {
                         top.linkTo(parent.top)
@@ -68,11 +63,12 @@ fun ClubHeaderDetails(
                 onClickEditClub = onClickEditClub
             )
         }
+
         Text(
-            text = state.name,
-            modifier = modifier
-                .layoutId("nameClub")
+            text = state.detailsUiState.name,
+            modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 16.dp)
                 .constrainAs(textName) {
                     top.linkTo(backButton.bottom)
                     start.linkTo(parent.start)
@@ -80,16 +76,15 @@ fun ClubHeaderDetails(
                 },
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
+            fontSize = 24.sp,
             fontFamily = PlusJakartaSans,
             color = WhiteColor,
             maxLines = 1
         )
 
         ReadMorePopup(
-            text = state.description.htmlText(),
-            modifier = modifier
-                .layoutId("descriptionClub")
+            text = state.detailsUiState.description.htmlText(),
+            modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 24.dp)
                 .constrainAs(textDescription) {
@@ -110,15 +105,14 @@ fun ClubHeaderDetails(
 
         if (popupController) {
             DescriptionClubDialog(
-                descriptionClub = state.description.htmlText(),
+                descriptionClub = state.detailsUiState.description.htmlText(),
             ) {
                 popupController = false
             }
         }
 
         Box(
-            modifier = modifier
-                .layoutId("coverClub")
+            modifier = Modifier
                 .constrainAs(cover) {
                     top.linkTo(textDescription.bottom)
                     start.linkTo(parent.start)
@@ -129,7 +123,7 @@ fun ClubHeaderDetails(
             contentAlignment = Alignment.TopCenter
         ) {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .wrapContentHeight()
@@ -140,17 +134,17 @@ fun ClubHeaderDetails(
 
                 Row {
                     ClubCard(
-                        imageVector = R.drawable.ic_menu_language,
-                        text = state.privacy
+                        imageVector = com.devfalah.ui.R.drawable.ic_menu_language,
+                        text = state.detailsUiState.isClubPublic.toString()
                     )
 
                     ClubCard(
-                        imageVector = R.drawable.ic_people,
+                        imageVector = com.devfalah.ui.R.drawable.ic_people,
                         text = state.membersCount.toString()
                     )
 
                     ClubCard(
-                        imageVector = R.drawable.ic_comment,
+                        imageVector = com.devfalah.ui.R.drawable.ic_comment,
                         text = state.postCount.toString()
                     )
 
@@ -158,5 +152,6 @@ fun ClubHeaderDetails(
 
             }
         }
+
     }
 }

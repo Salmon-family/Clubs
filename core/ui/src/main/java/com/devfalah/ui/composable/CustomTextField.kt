@@ -1,9 +1,7 @@
 package com.devfalah.ui.composable
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -19,9 +17,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devfalah.ui.theme.LightSecondaryBlackColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.util.htmlText
 
 @Composable
 fun CustomTextField(
@@ -34,7 +31,8 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     singleLine: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    shape: Shape = RoundedCornerShape(100.dp)
+    shape: Shape = RoundedCornerShape(100.dp),
+    maxLines: Int = 1
 ) {
     Column {
         Row {
@@ -60,7 +58,7 @@ fun CustomTextField(
         }
         HeightSpacer8()
         TextField(
-            value = value,
+            value = value.htmlText(),
             onValueChange = {
                 if (it.length <= maxChar)
                     onValueChange(it)
@@ -78,13 +76,19 @@ fun CustomTextField(
                     Text(
                         text = it,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colors.secondaryVariant
+                        style = TextStyle(
+                            color = MaterialTheme.colors.onSecondary,
+                            fontFamily = PlusJakartaSans,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp
+                        )
                     )
                 }
             },
-            shape = shape,
+            shape = if (value.length > 35) RoundedCornerShape(20.dp) else shape,
             singleLine = singleLine,
             visualTransformation = visualTransformation,
+            maxLines = maxLines
         )
     }
 }

@@ -55,10 +55,11 @@ fun PostHeader(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colors.onSurface
+                color = MaterialTheme.colors.secondaryVariant
             )
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
             ) {
                 if (!hidePrivacy) {
                     Icon(
@@ -67,35 +68,31 @@ fun PostHeader(
                         modifier = Modifier
                             .fillMaxHeight()
                             .padding(top = 4.dp),
-                        tint = MaterialTheme.colors.secondaryVariant
+                        tint = MaterialTheme.colors.onSecondary
                     )
                     WidthSpacer8()
                     Text(
-                        text = "${getPrivacyText(post.privacy)}  | ",
+                        text = "${getPrivacyText(post.privacy)}  |  ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colors.onSecondary,
                     )
-
-                    WidthSpacer8()
                 }
                 if (hidePrivacy && showGroupName) {
                     Text(
-                        text = "${post.groupName}  | ",
+                        text = "${post.groupName}  |  ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colors.onSecondary,
                     )
-
-                    WidthSpacer8()
                 }
                 Text(
-                    text = "${post.createdData.value} ${getDataDescription(post.createdData.description)} ",
+                    text = getDataDescription(post.createdData.description, post.createdData.value),
                     fontSize = 12.sp,
                     fontFamily = PlusJakartaSans,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Normal,
                     color = MaterialTheme.colors.onSecondary
                 )
             }
@@ -133,7 +130,8 @@ fun PostHeader(
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(id = R.string.delete),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colors.secondaryVariant
                     )
                 }
             }

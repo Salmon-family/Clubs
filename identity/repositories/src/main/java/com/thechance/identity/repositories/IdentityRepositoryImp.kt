@@ -14,6 +14,7 @@ class IdentityRepositoryImp @Inject constructor(
     private val localIdentityDataSource: LocalIdentityDataSource,
     private val mapperUserDataDTOToUserData: MapperUserDataDTOToUserData,
     private val identityFirebaseDataSource: IdentityFirebaseDataSource,
+    private val identityLocalDataSource: IdentityLocalDataSource,
 ) : IdentityRepository {
 
     override fun getStartInstallState(): Boolean? {
@@ -32,11 +33,11 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData))
     }
 
-    override fun getUserId(): String? {
-        return localIdentityDataSource.getUserId()
+    override fun getUserId(): Int {
+        return localIdentityDataSource.getUserId()?:0
     }
 
-    override suspend fun saveUserId(id: String) {
+    override suspend fun saveUserId(id: Int) {
         return localIdentityDataSource.saveUserId(id)
     }
 
@@ -63,6 +64,14 @@ class IdentityRepositoryImp @Inject constructor(
 
     override suspend fun updateFcmToken(userData: UserData): User {
         return remoteDataSource.updateFcmToken(mapperUserDataDTOToUserData.map(userData)).toEntity()
+    }
+
+    override fun clearTables() {
+        identityLocalDataSource.clearAllTables()
+    }
+
+    override suspend fun saveAuthState() {
+        localIdentityDataSource.saveUserAuthState(true)
     }
 
 }

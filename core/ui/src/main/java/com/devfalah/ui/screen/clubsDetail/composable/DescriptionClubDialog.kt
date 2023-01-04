@@ -20,10 +20,7 @@ import androidx.compose.ui.window.Dialog
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.composable.HeightSpacer8
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
-import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun DescriptionClubDialog(
@@ -65,7 +62,7 @@ fun DescriptionClubDialog(
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp,
                     fontFamily = PlusJakartaSans,
-                    color = MaterialTheme.colors.onSurface,
+                    color = MaterialTheme.colors.secondaryVariant,
                 )
                 HeightSpacer8()
             }

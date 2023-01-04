@@ -17,6 +17,8 @@ buildscript {
         accompanist_version = "0.13.0"
         firebase_version = "24.4.1"
         flow_version = "1.6.1"
+
+        splash_version = "1.0.0"
         data_store_version = "1.0.0"
         constraintlayout_version = "1.1.0-alpha05"
     }
@@ -24,6 +26,8 @@ buildscript {
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath 'com.google.gms:google-services:4.3.14'
+        classpath 'com.google.firebase:perf-plugin:1.4.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
     }
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.

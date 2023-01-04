@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.User
 import com.devfalah.repositories.models.FriendDTO
 
-fun FriendDTO.toEntity(): User {
+internal fun FriendDTO.toEntity(): User {
     return User(
         birthdate = this.birthdate ?: "",
         coverUrl = this.coverUrl ?: "",
@@ -21,4 +21,4 @@ fun FriendDTO.toEntity(): User {
     )
 }
 
-fun List<FriendDTO>.toEntity(): List<User> = map { it.toEntity() }
+internal fun List<FriendDTO>.toEntity(): List<User> = map { it.toEntity() }

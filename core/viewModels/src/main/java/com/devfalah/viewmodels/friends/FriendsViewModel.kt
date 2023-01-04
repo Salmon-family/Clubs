@@ -25,6 +25,7 @@ class FriendsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        _uiState.update { it.copy(isLoading = true) }
         getUserFriends()
     }
 
@@ -39,6 +40,7 @@ class FriendsViewModel @Inject constructor(
                         isPagerLoading = false,
                         isPagerEnd = (friends.friends.isEmpty() || friends.friends.size < MAX_PAGE_ITEM),
                         totalFriends = friends.total,
+                        isMyProfile = friends.isMyFriends,
                         friends = (_uiState.value.friends + friends.friends.toFriendsUIState())
                     )
                 }

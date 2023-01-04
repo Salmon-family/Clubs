@@ -23,13 +23,11 @@ import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.LightSecondaryGrayColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.util.getDataDescription
 import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.postDetails.CommentUIState
-import okhttp3.HttpUrl.Companion.toHttpUrl
 
 @Composable
 fun CommentBody(
@@ -46,7 +44,7 @@ fun CommentBody(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.secondaryVariant,
                 textAlign = if (state.isOwnerComment) {
                     TextAlign.End
                 } else {
@@ -65,9 +63,9 @@ fun CommentBody(
         ) {
 
             Text(
-                text = "${state.timeCreate.value} ${getDataDescription(state.timeCreate.description)} ",
+                text = getDataDescription(state.timeCreate.description, state.timeCreate.value),
                 fontSize = 12.sp,
-                color = MaterialTheme.colors.secondaryVariant,
+                color = MaterialTheme.colors.onSecondary,
                 fontWeight = FontWeight.Normal
             )
 

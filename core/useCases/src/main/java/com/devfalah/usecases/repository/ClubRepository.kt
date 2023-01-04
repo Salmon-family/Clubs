@@ -72,7 +72,12 @@ interface ClubRepository {
 
     suspend fun declineClub(clubId: Int, memberId: Int, userId: Int): Boolean
 
-    suspend fun createClub(userID: Int, groupName: String, description: String, groupPrivacy: Int): Club
+    suspend fun createClub(
+        userID: Int,
+        groupName: String,
+        description: String,
+        groupPrivacy: Int
+    ): Club
 
     suspend fun editUserInformation(user: UserInformation): User
 
@@ -108,6 +113,10 @@ interface ClubRepository {
 
     suspend fun saveUserId(userId: Int)
 
+    fun getLanguage(): String?
+
+    suspend fun saveLanguage(language: String)
+
     suspend fun deleteUserId()
 
     suspend fun addBugReport(
@@ -117,4 +126,7 @@ interface ClubRepository {
         onFail: (Exception) -> Unit
     )
 
+    fun isUserLoggedIn(): Boolean
+
+    suspend fun deleteLocalPost(postId: Int)
 }

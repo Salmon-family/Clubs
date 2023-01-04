@@ -3,11 +3,13 @@ package com.thechance.identity.ui.screen.login.password
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,12 +19,13 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.composable.*
-import com.thechance.identity.ui.screen.home.navigateToHome
 import com.thechance.identity.ui.screen.signup.email.navigateToSignupEmail
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
+import com.thechance.identity.viewmodel.login.isEnabled
+import com.thechance.identity.viewmodel.login.isEnabledChangePassword
 
 @Composable
 fun LogInPasswordScreen(
@@ -64,7 +67,9 @@ fun LogInPasswordContent(
 
         ) {
 
-            BackButton(onClick = onClickBack)
+            BackButton(
+                onClick = onClickBack, isEnabled = !state.isLoading,
+            )
 
             SpacerVertical24()
             Text(
@@ -86,13 +91,13 @@ fun LogInPasswordContent(
             PasswordInputText(
                 placeHolder = stringResource(id = R.string.password_place_holder),
                 text = state.password,
-                onTextChange = onChangePassword
+                onTextChange = onChangePassword,
             )
 
             SpacerVertical24()
             AuthButton(
                 onClick = onLogin,
-                isEnabled = onValidate.invoke(),
+                isEnabled = state.isEnabled(),
                 text = stringResource(id = R.string.log_in),
                 buttonModifier = Modifier
                     .fillMaxWidth()
@@ -125,7 +130,7 @@ fun LogInPasswordContent(
     }
 }
 
-private fun navigateToHome(context : Context) {
+private fun navigateToHome(context: Context) {
     try {
         val intent = Intent(
             context,

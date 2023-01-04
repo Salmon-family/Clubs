@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.theme.WhiteColor
 
 @Composable
 fun ManualPager(
@@ -32,6 +33,7 @@ fun ManualPager(
     error: String,
     isEndOfPager: Boolean,
     contentPadding: PaddingValues,
+    footerVisibility: Boolean = true,
     content: LazyListScope.() -> Unit,
 ) {
     val scrollState = rememberLazyListState()
@@ -45,13 +47,15 @@ fun ManualPager(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         content()
-        item {
-            PagerStatusItem(
-                isLoading = isLoading,
-                error = error,
-                isEndOfPager = isEndOfPager,
-                onClickTryAgain = onRefresh
-            )
+        if (footerVisibility) {
+            item {
+                PagerStatusItem(
+                    isLoading = isLoading,
+                    error = error,
+                    isEndOfPager = isEndOfPager,
+                    onClickTryAgain = onRefresh
+                )
+            }
         }
     }
 
@@ -107,7 +111,7 @@ fun PagerStatusItem(
             Button(onClick = { onClickTryAgain() }) {
                 Text(
                     text = stringResource(id = R.string.try_again),
-                    color = MaterialTheme.colors.primaryVariant
+                    color = WhiteColor
                 )
             }
 
@@ -118,7 +122,7 @@ fun PagerStatusItem(
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Normal,
                 fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontSize = 14.sp
             )
         }
