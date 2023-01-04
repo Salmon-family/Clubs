@@ -2,8 +2,7 @@ package com.devfalah.viewmodels.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.language.GetLanguageUseCase
-import com.devfalah.usecases.language.SaveLanguageUseCase
+import com.devfalah.usecases.language.UpdateLanguageUseCase
 import com.devfalah.usecases.user.DeleteUserUseCase
 import com.devfalah.usecases.user.GetMyAccountProfileDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +16,7 @@ import javax.inject.Inject
 class MenuViewModel @Inject constructor(
     val deleteUser: DeleteUserUseCase,
     val myAccountProfileDetails: GetMyAccountProfileDetailsUseCase,
-    private val getLanguageUseCase: GetLanguageUseCase,
-    private val saveLanguageUseCase: SaveLanguageUseCase,
+    private val updateLanguage: UpdateLanguageUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUiState())
@@ -50,34 +48,23 @@ class MenuViewModel @Inject constructor(
 
     fun onChangeLanguage(selectedItemIndex: Int) {
         viewModelScope.launch {
-            val language = when (selectedItemIndex) {
-                0 -> {
-                    saveLanguageUseCase(language = AppLanguage.ENGLISH.value)
-                    AppLanguage.ENGLISH
-                }
-                1 -> {
-                    saveLanguageUseCase(language = AppLanguage.ARABIC.value)
-                    AppLanguage.ARABIC
-                }
-                else -> {
-                    saveLanguageUseCase(language = AppLanguage.ENGLISH.value)
-                    AppLanguage.ENGLISH
-                }
+            val language = if (selectedItemIndex == 0) {
+                AppLanguage.ENGLISH
+            } else {
+                AppLanguage.ARABIC
             }
+            updateLanguage.changeLanguage(language.value)
             _uiState.update { it.copy(language = language) }
         }
     }
 
+
     private fun onGetLanguage() {
         viewModelScope.launch {
-            try {
-                if (getLanguageUseCase() == AppLanguage.ENGLISH.value) {
-                    _uiState.update { it.copy(language = AppLanguage.ENGLISH) }
-                } else {
-                    _uiState.update { it.copy(language = AppLanguage.ARABIC) }
-                }
-            } catch (t: Throwable) {
-                //default langauge..
+            if (updateLanguage.getAppLanguage() == AppLanguage.ENGLISH.value) {
+                _uiState.update { it.copy(language = AppLanguage.ENGLISH) }
+            } else {
+                _uiState.update { it.copy(language = AppLanguage.ARABIC) }
             }
         }
     }

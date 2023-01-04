@@ -5,21 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -146,19 +137,19 @@ fun MenuContent(
     ) {
         Column {
 
-        AppBar(
-            title = stringResource(id = R.string.menu),
-            showBackButton = false,
-            actions = {
-                IconButton(onClick = onClickLogOut) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
-                        contentDescription = "",
-                        tint = MaterialTheme.colors.primaryVariant
-                    )
+            AppBar(
+                title = stringResource(id = R.string.menu),
+                showBackButton = false,
+                actions = {
+                    IconButton(onClick = onClickLogOut) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
+                            contentDescription = "",
+                            tint = MaterialTheme.colors.primaryVariant
+                        )
+                    }
                 }
-            }
-        )
+            )
 
             LazyColumn(
                 modifier = Modifier

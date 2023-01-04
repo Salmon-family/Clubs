@@ -10,7 +10,6 @@ class Language {
         context.resources.apply {
             val locale = Locale(language)
             val config = Configuration(configuration)
-
             context.createConfigurationContext(configuration)
             Locale.setDefault(locale)
             config.setLocale(locale)
@@ -18,4 +17,6 @@ class Language {
             context.resources.updateConfiguration(config, displayMetrics)
         }
     }
+
+
 }

@@ -2,7 +2,7 @@ package com.devfalah.viewmodels.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devfalah.usecases.language.GetLanguageUseCase
+import com.devfalah.usecases.language.UpdateLanguageUseCase
 import com.devfalah.usecases.user.CheckIfLoggedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,21 +14,24 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val checkIfLoggedInUseCase: CheckIfLoggedInUseCase,
-    private val getLanguageUseCase: GetLanguageUseCase,
+    private val getLanguageUseCase: UpdateLanguageUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow("")
     val uiState = _uiState.asStateFlow()
 
     init {
-        onGetLanguage()
+        viewModelScope.launch {
+            _uiState.update { getLanguageUseCase.getAppLanguage() }
+        }
     }
 
     fun checkIfLoggedIn() = checkIfLoggedInUseCase()
 
-    private fun onGetLanguage() {
+    fun onGetLanguage(defaultLang: String) {
         viewModelScope.launch {
-            _uiState.update { getLanguageUseCase() }
+            val lang = getLanguageUseCase(defaultLang)
+            _uiState.emit(lang)
         }
     }
 

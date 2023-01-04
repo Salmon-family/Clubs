@@ -13,6 +13,7 @@ import com.devfalah.ui.util.Language
 import com.devfalah.viewmodels.main.MainViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -22,12 +23,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
+        viewModel.onGetLanguage(Locale.getDefault().language)
         Language().updateResources(
             context = this,
-            language = viewModel.uiState.value
+            language = viewModel.uiState.value.ifEmpty { Locale.getDefault().language }
         )
-
         setContent {
             ClubsTheme {
                 val systemUIController = rememberSystemUiController()
