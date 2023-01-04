@@ -100,6 +100,7 @@ fun SavedPostsContent(
                         onClickProfile = onClickProfile,
                         onOpenLinkClick = onOpenLinkClick,
                         onClickPostSetting = { },
+                        onImageClick = {}
                     )
                 }
             }

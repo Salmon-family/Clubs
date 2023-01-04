@@ -115,7 +115,8 @@ fun PostDetailsContent(
                         onClickSave = onClickSave,
                         onClickProfile = onClickProfile,
                         onClickPostSetting = onDeletePost,
-                        onOpenLinkClick = onOpenLinkClick
+                        onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = {}
                     )
                 }
 

@@ -199,6 +199,7 @@ private fun ClubsDetailsContent(
                             onClickPostSetting = onDeletePost,
                             onClickProfile = {},
                             onOpenLinkClick = {},
+                            onImageClick = {}
                         )
                     }
                 }

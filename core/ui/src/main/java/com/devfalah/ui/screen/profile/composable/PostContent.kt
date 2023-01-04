@@ -40,7 +40,8 @@ fun PostContent(
     post: PostUIState,
     contentExpandable: Boolean,
     maxLineToExpand: Int,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     if (URLUtil.isValidUrl(post.postContent)) {
         Text(
@@ -78,46 +79,16 @@ fun PostContent(
         if (post.postContent.isNotEmpty()) {
             HeightSpacer16()
         }
-        ZoomableImage(
+        Image(
             painter = rememberAsyncImagePainter(model = post.postImage),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(260.dp),
+                .height(260.dp)
+                .nonRippleEffect { onImageClick(post.postImage) },
             contentScale = ContentScale.Crop
         )
     }
-}
-
-@Composable
-private fun ZoomableImage(
-    modifier: Modifier = Modifier,
-    painter: Painter,
-    contentScale: ContentScale = ContentScale.Fit,
-
-    ) {
-    var scale by remember { mutableStateOf(1f) }
-    var offset by remember { mutableStateOf(Offset.Zero) }
-
-        Image(
-            painter = painter,
-            contentDescription = "A Content description",
-            modifier = modifier
-                .clipToBounds()
-                .graphicsLayer(
-                    scaleX = scale,
-                    scaleY = scale,
-
-                )
-                .pointerInput(Unit) {
-                    detectTransformGestures(
-                        onGesture = { _, pan: Offset, zoom: Float, _ ->
-                            offset += pan
-                            scale = (scale * zoom).coerceIn(1f, 2f)
-                        }
-                    )
-                },
-            contentScale = contentScale
-        )
 }
 
 @Composable

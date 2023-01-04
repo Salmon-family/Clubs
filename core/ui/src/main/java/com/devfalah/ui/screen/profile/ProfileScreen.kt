@@ -191,6 +191,7 @@ fun ProfileContent(
                         onClickPostSetting = onClickPostSetting,
                         onClickProfile = onClickProfile,
                         onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = {}
                     )
                 }
             }
