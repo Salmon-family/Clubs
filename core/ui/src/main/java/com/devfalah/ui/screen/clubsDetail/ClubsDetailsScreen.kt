@@ -18,7 +18,7 @@ import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.*
-import com.devfalah.ui.screen.editclubscreen.navigateToEditClub
+import com.devfalah.ui.screen.editClub.navigateToEditClub
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection

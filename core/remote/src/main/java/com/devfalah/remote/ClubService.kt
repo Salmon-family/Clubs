@@ -332,7 +332,7 @@ interface ClubService {
     suspend fun getWallPost(
         @Query("guid") userID: Int,
         @Query("post_guid") postID: Int
-    ): Response<BaseResponse<Any>>
+    ): Response<BaseResponse<WallPostDTO>>
 
     @GET("wall_list_user")
     suspend fun getAllWallPosts(

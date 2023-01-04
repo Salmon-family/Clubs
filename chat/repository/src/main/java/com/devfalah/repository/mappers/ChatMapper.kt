@@ -1,5 +1,6 @@
 package com.devfalah.repository.mappers
 
+import android.util.Log
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ChatLocalDto
 import com.devfalah.repository.models.ConversationDTO
@@ -7,6 +8,7 @@ import com.thechance.entities.Chat
 import com.thechance.entities.Chats
 
 fun ChatDTO.toLocalDto(userId: Int): Chat {
+
     if (messageFrom?.guid == userId) {
         return Chat(
             fullName = messageTo?.fullname?.substringBefore("##") ?: "",
@@ -17,7 +19,7 @@ fun ChatDTO.toLocalDto(userId: Int): Chat {
         )
     } else {
         return Chat(
-            fullName = messageTo?.fullname?.substringBefore("##") ?: "",
+            fullName = messageFrom?.fullname?.substringBefore("##") ?: "",
             guid = messageFrom?.guid ?: 0,
             icon = messageFrom?.icon?.larger ?: "",
             time = time ?: 0,

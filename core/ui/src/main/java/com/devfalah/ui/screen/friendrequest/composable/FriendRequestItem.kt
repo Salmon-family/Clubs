@@ -1,4 +1,4 @@
-package com.devfalah.ui.screen.friendrequest.friendcomposable
+package com.devfalah.ui.screen.friendrequest.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,8 +25,6 @@ import com.devfalah.ui.composable.HeightSpacer4
 import com.devfalah.ui.composable.UserIconButton
 import com.devfalah.ui.composable.WidthSpacer16
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.theme.LightCardBackgroundColor
-import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.viewmodels.friendRequest.UserState
 

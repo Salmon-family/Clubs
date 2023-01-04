@@ -2,7 +2,7 @@ package com.devfalah.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class BaseResponse<T>(
+data class BaseResponse<T:Any>(
     @SerializedName("code")
     val code: String?,
     @SerializedName("merchant")
