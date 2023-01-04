@@ -23,7 +23,7 @@ fun EmptyFriendRequestItem(
         verticalArrangement = Arrangement.Center
     ) {
         EmptyScreenIcon(
-            painter = painterResource(id = R.drawable.ic_friend_request_filled)
+            painter = painterResource(id = R.drawable.ic_add_user)
         )
         HeightSpacer8()
         EmptyScreenTexts(
