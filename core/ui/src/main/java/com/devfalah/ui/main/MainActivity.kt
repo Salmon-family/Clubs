@@ -23,10 +23,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        Language().updateResources(
-            context = this,
-            language = viewModel.uiState.value
-        )
+        Language().updateResources(context = this, language = viewModel.uiState.value)
 
         setContent {
             ClubsTheme {
