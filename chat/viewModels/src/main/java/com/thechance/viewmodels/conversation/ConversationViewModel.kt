@@ -46,11 +46,13 @@ class ConversationViewModel @Inject constructor(
     private fun getUser() {
         viewModelScope.launch {
             try {
-                val friend = getUserDetail(args.friendId)
+                val user = getUserDetail()
+                val friend = getUserDetail.getFriendDetail(args.friendId)
                 _uiState.update {
                     it.copy(
                         appBar = it.appBar.copy(userName = friend.name, icon = friend.profileUrl),
                         fcmToken = friend.fcmToken,
+                        name = user.name,
                     )
                 }
             } catch (e: Throwable) {
@@ -84,7 +86,7 @@ class ConversationViewModel @Inject constructor(
     private fun sendMessage(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                sendMessageUseCase(args.friendId, message, _uiState.value.fcmToken)
+                sendMessageUseCase(_uiState.value.name,args.friendId, message, _uiState.value.fcmToken)
             } catch (e: Throwable) {
                 _uiState.update {
                     it.copy(error = e.message, isLoading = false)

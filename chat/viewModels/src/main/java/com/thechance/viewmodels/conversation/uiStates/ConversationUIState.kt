@@ -10,6 +10,7 @@ data class ConversationUIState(
     val messagesCount: Int = 0,
     val isLoadingMore: Boolean = false,
     val fcmToken:String = "",
+    val name: String = "",
 )
 
 
