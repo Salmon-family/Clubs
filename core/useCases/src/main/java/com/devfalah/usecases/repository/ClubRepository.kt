@@ -113,7 +113,7 @@ interface ClubRepository {
 
     suspend fun saveUserId(userId: Int)
 
-    fun getLanguage(): String?
+    suspend fun getLanguage(): String?
 
     suspend fun saveLanguage(language: String)
 

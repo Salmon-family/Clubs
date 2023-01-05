@@ -31,7 +31,7 @@ class CoreDataStoreDataSourceImp @Inject constructor(
             userDataStore.data.map {
                 it[booleanPreferencesKey(SIGN_UP_STATE_KEY)]
             }.first()
-        } ?:false
+        } ?: false
     }
 
     override suspend fun deleteUserId() {
@@ -41,12 +41,10 @@ class CoreDataStoreDataSourceImp @Inject constructor(
 
     }
 
-    override fun getLanguage(): String? {
-        return runBlocking {
-            userDataStore.data.map {
-                it[stringPreferencesKey(LANGUAGE_KEY)]
-            }.first()
-        }
+    override suspend fun getLanguage(): String? {
+        return userDataStore.data.map {
+            it[stringPreferencesKey(LANGUAGE_KEY)]
+        }.first()
     }
 
     override suspend fun saveLanguage(language: String) {

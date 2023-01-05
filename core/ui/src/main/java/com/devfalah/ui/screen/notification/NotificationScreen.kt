@@ -22,6 +22,7 @@ import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
+import com.devfalah.ui.screen.notification.composable.EmptyNotificationsItem
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -86,7 +87,7 @@ fun NotificationContent(
         } else if (state.isLoading) {
             Loading()
         } else if (state.notifications.isEmpty()) {
-            ErrorEmpty()
+            EmptyNotificationsItem()
         }
 
         LazyColumn(

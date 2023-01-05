@@ -58,7 +58,8 @@ fun PostHeader(
                 color = MaterialTheme.colors.secondaryVariant
             )
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
             ) {
                 if (!hidePrivacy) {
                     Icon(
@@ -71,25 +72,21 @@ fun PostHeader(
                     )
                     WidthSpacer8()
                     Text(
-                        text = "${getPrivacyText(post.privacy)}  | ",
+                        text = "${getPrivacyText(post.privacy)}  |  ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colors.onSecondary,
                     )
-
-                    WidthSpacer8()
                 }
                 if (hidePrivacy && showGroupName) {
                     Text(
-                        text = "${post.groupName} | ",
+                        text = "${post.groupName}  |  ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colors.onSecondary,
                     )
-
-                    WidthSpacer8()
                 }
                 Text(
                     text = getDataDescription(post.createdData.description, post.createdData.value),

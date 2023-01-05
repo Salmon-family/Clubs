@@ -242,7 +242,7 @@ class ClubRepositoryImp @Inject constructor(
         coreDataStoreDataSource.saveUserId(userId)
     }
 
-    override fun getLanguage(): String? {
+    override suspend fun getLanguage(): String? {
         return coreDataStoreDataSource.getLanguage()
     }
 

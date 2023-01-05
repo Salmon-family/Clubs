@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id "kotlin-kapt"
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -41,5 +43,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.1'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
 }

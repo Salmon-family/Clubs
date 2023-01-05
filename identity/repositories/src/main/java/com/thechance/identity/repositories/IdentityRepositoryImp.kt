@@ -33,7 +33,7 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.signup(mapperUserDataDTOToUserData.map(userData))
     }
 
-    override fun getUserId(): Int {
+    override suspend fun getUserId(): Int {
         return localIdentityDataSource.getUserId()?:0
     }
 
@@ -66,7 +66,7 @@ class IdentityRepositoryImp @Inject constructor(
         return remoteDataSource.updateFcmToken(mapperUserDataDTOToUserData.map(userData)).toEntity()
     }
 
-    override fun clearTables() {
+    override suspend fun clearTables() {
         identityLocalDataSource.clearAllTables()
     }
 

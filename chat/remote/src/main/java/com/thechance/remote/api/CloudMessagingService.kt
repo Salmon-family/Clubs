@@ -19,6 +19,6 @@ interface CloudMessagingService {
     @POST("fcm/send")
     @Headers("Authorization: key=$key", "Content-Type:$CONTENT_TYPE")
     suspend fun postNotification(
-        @Body notification: NotificationDto
+        @Body notification: NotificationDto,
     ): Response<ResponseBody>
 }

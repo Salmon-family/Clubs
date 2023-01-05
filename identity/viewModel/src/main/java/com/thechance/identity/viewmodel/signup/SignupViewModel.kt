@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
 import com.thechance.identity.usecases.AccountValidationUseCase
-import com.thechance.identity.usecases.GetUserIdUseCase
 import com.thechance.identity.usecases.SaveUserIdUseCase
 import com.thechance.identity.usecases.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -18,7 +18,6 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(
     private val signupUseCase: SignupUseCase,
     private val accountValidationUseCase: AccountValidationUseCase,
-    private val getUserIdUseCase: GetUserIdUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel() {
 
@@ -35,7 +34,7 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun makeSignupRequest() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val state = _uiState.value
             val userData = UserData(
                 fullName = state.firstName,
@@ -89,6 +88,12 @@ class SignupViewModel @Inject constructor(
 
     private fun String.isEmailValid(): Boolean {
         return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+                && validDomain(this)
+    }
+
+    private fun validDomain(email: String): Boolean {
+        val domain = email.substringAfter("@")
+        return (domain.lowercase() in listOf("gmail.com", "yahoo.com", "hotmail.com"))
     }
 
     fun onChangePassword(password: String) {
@@ -131,11 +136,11 @@ class SignupViewModel @Inject constructor(
         _uiState.update { it.copy(gender = gender) }
     }
 
-    fun onChangeJobTitle(jobTitle: String){
+    fun onChangeJobTitle(jobTitle: String) {
         _uiState.update { it.copy(jobTitle = jobTitle) }
     }
 
-    fun onValidateJobTitle(): Boolean{
+    fun onValidateJobTitle(): Boolean {
         return accountValidationUseCase.validateJobTitle(_uiState.value.jobTitle)
     }
 

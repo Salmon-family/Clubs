@@ -34,12 +34,8 @@ class AppConfiguratorImpl @Inject constructor(
         }
     }
 
-    override fun getUserId(): Int? {
-        return runBlocking {
-            userDataStore.data.map {
-                it[intPreferencesKey(USER_ID)]
-            }.first()
-        }
+    override suspend fun getUserId(): Int? {
+        return userDataStore.data.map { it[intPreferencesKey(USER_ID)] }.first()
     }
 
     override suspend fun saveUserId(id: Int) {

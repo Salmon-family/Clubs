@@ -9,8 +9,10 @@ fun Notification.toDto(): NotificationDto {
         data = NotificationDataModel(
             id = this.id,
             friendId = this.friendId,
+            title = this.title,
+            description = this.body,
         ),
-        to = this.to
+        to = this.to,
     )
 }
 

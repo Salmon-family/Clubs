@@ -15,7 +15,7 @@ import com.devfalah.ui.screen.clubMembers.membersRoute
 import com.devfalah.ui.screen.clubRequests.clubRequestsRoute
 import com.devfalah.ui.screen.clubs.clubsRoute
 import com.devfalah.ui.screen.clubsDetail.clubsDetailsRoute
-import com.devfalah.ui.screen.editclubscreen.editClubRoute
+import com.devfalah.ui.screen.editClub.editClubRoute
 import com.devfalah.ui.screen.friendrequest.friendRequestRoute
 import com.devfalah.ui.screen.friends.friendsRoute
 import com.devfalah.ui.screen.home.homeRoute

@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.screen.friends.composable.EmptyFriendsItem
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.friends.FriendsUIState
 import com.devfalah.viewmodels.friends.FriendsViewModel
@@ -66,7 +67,7 @@ fun FriendsContent(
         } else if (state.isLoading) {
             Loading()
         } else if (state.friends.isEmpty()) {
-            ErrorEmpty()
+            EmptyFriendsItem()
         } else {
             ManualPager(
                 onRefresh = onRefresh,

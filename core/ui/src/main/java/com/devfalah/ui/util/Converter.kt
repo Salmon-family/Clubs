@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.provider.CallLog
 import android.provider.OpenableColumns
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -28,7 +29,8 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.contentResolver.query(returnUri, null, null, null)
         } else {
-            throw Throwable("Build VERSION CODES NOT SUPPORT")
+            context.getContentResolver()
+                .query(returnUri, null, CallLog.Calls.NUMBER, null, CallLog.Calls.DATE)
         }
     }?.use { cursor ->
         val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
@@ -69,16 +71,25 @@ fun getDataDescription(type: Int, value: String): String {
     return when (type) {
         JUST_NOW -> stringResource(id = R.string.just_now)
         MINUTES_AGO -> {
-            if (number == 1) { stringResource(id = R.string.minute) }
-            else { stringResource(id = R.string.minutes, number) }
+            if (number == 1) {
+                stringResource(id = R.string.minute)
+            } else {
+                stringResource(id = R.string.minutes, number)
+            }
         }
         HOUR_AGO -> {
-            if (number == 1) { stringResource(id = R.string.one_day) }
-            else { stringResource(id = R.string.hour, value) }
+            if (number == 1) {
+                stringResource(id = R.string.one_day)
+            } else {
+                stringResource(id = R.string.hour, value)
+            }
         }
         DAY_AGO -> {
-            if (number == 1) { stringResource(id = R.string.one_day) }
-            else { stringResource(id = R.string.day, value) }
+            if (number == 1) {
+                stringResource(id = R.string.one_day)
+            } else {
+                stringResource(id = R.string.day, value)
+            }
         }
         else -> value
     }
