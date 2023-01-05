@@ -5,6 +5,7 @@ import com.devfalah.repositories.models.album.AlbumDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import com.devfalah.repositories.models.post.WallPostDTO
 import java.io.File
 
 interface RemoteDataSource {

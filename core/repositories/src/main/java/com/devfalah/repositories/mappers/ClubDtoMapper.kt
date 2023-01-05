@@ -4,7 +4,7 @@ import com.devfalah.entities.Club
 import com.devfalah.entities.GroupWall
 import com.devfalah.entities.GroupWallPost
 import com.devfalah.entities.Post
-import com.devfalah.repositories.models.PostDTO
+import com.devfalah.repositories.models.post.PostDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupPostDto
 import com.devfalah.repositories.models.group.GroupWallDto

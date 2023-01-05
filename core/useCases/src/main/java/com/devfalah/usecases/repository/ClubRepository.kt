@@ -129,4 +129,13 @@ interface ClubRepository {
     fun isUserLoggedIn(): Boolean
 
     suspend fun deleteLocalPost(postId: Int)
+
+    suspend fun addHomePosts(posts: List<Post>)
+
+    suspend fun getHomePosts(): Flow<List<Post>>
+
+    suspend fun addHomePost(post: Post)
+
+    suspend fun clearHomePosts()
+
 }

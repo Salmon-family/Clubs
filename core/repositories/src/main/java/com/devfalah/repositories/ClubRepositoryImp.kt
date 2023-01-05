@@ -2,6 +2,7 @@ package com.devfalah.repositories
 
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
+import com.devfalah.repositories.mappers.toHomeEntity
 import com.devfalah.repositories.mappers.toUserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
@@ -174,18 +175,18 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun declineClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
         return remoteDataSource.declineClubRequest(
-                userId = userId,
-                memberId = memberId,
-                clubId = clubId
-            )
+            userId = userId,
+            memberId = memberId,
+            clubId = clubId
+        )
     }
 
     override suspend fun acceptClubRequest(userId: Int, memberId: Int, clubId: Int): Boolean {
         return remoteDataSource.acceptClubRequest(
-                userId = userId,
-                memberId = memberId,
-                clubId = clubId
-            )
+            userId = userId,
+            memberId = memberId,
+            clubId = clubId
+        )
     }
 
     override suspend fun deletePost(postId: Int) {
@@ -267,5 +268,22 @@ class ClubRepositoryImp @Inject constructor(
     override suspend fun deleteLocalPost(postId: Int) {
         return localDataSource.deletePostById(postId)
     }
+
+    override suspend fun addHomePosts(posts: List<Post>) {
+        localDataSource.insertHomePosts(posts = posts.toHomeEntity())
+    }
+
+    override suspend fun getHomePosts(): Flow<List<Post>> {
+        return localDataSource.getHomePosts().map { it.toEntity() }
+    }
+
+    override suspend fun addHomePost(post: Post) {
+        localDataSource.insertHomePost(post = post.toHomeEntity())
+    }
+
+    override suspend fun clearHomePosts() {
+        localDataSource.clearHomePosts()
+    }
+
 
 }

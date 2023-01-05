@@ -19,3 +19,18 @@ data class PostLocalDto(
     val publisherImageUrl: String,
     val isLiked: Boolean
 )
+
+@Entity(tableName = "HOME_TABLE")
+data class PostHomeDto(
+    @PrimaryKey(autoGenerate = false) val id: Int,
+    val privacy: Boolean,
+    val createdTime: Long,
+    val content: String,
+    val imageUrl: String,
+    val totalLikes: Int,
+    val totalComments: Int,
+    val publisher: String,
+    val publisherId: Int,
+    val publisherImageUrl: String,
+    val isLiked: Boolean
+)

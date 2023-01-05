@@ -1,5 +1,6 @@
 package com.devfalah.repositories.models
 
+import com.devfalah.repositories.models.post.PostDTO
 import com.google.gson.annotations.SerializedName
 
 data class FriendWallDTO(
