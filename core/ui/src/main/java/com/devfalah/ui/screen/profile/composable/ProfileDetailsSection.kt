@@ -1,5 +1,6 @@
 package com.devfalah.ui.screen.profile.composable
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,6 +30,7 @@ import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 @Composable
 fun ProfileDetailsSection(
     userDetails: UserDetailsUIState,
+    selectedImageUri: Uri?,
     modifier: Modifier = Modifier,
     onChangeProfileImage: () -> Unit,
     onSendRequestClick: () -> Unit
@@ -52,7 +54,7 @@ fun ProfileDetailsSection(
             }) {
             Image(
                 painter = rememberAsyncImagePainter(
-                    model = userDetails.profilePicture,
+                    model = selectedImageUri ?: userDetails.profilePicture,
                     error = painterResource(id = R.drawable.test_image)
                 ),
                 contentDescription = null,
@@ -141,7 +143,7 @@ fun ProfileDetailsSection(
             }
 
             ProfileImageWithIcon(
-                profilePicture = userDetails.profilePicture,
+                profilePicture = (selectedImageUri ?: userDetails.profilePicture).toString(),
                 onClickIcon = onClick,
                 painter = GetPainterProfileIcon(userDetails)
             )
