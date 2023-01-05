@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.image.ImageActivity
+import com.devfalah.ui.navigateToImageScreen
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
@@ -63,12 +63,7 @@ fun HomeScreen(
         onOpenLinkClick = { openBrowser(context, it) },
         onClickChat = { goToChat(context) },
         onRetry = viewModel::getData,
-        onImageClick = {
-            val intent = Intent(context, ImageActivity::class.java)
-            intent.putExtra("IMAGE_URL", it)
-            startActivity(context, intent, null)
-
-        }
+        onImageClick = { navigateToImageScreen(context, it) }
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
