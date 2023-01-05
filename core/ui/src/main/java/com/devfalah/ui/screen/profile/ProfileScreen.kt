@@ -90,6 +90,7 @@ fun ProfileScreen(
                 navController.navigateToProfile(it)
             }
         },
+        onClickBack = { navController.popBackStack() },
         onRetry = viewModel::getData,
         onClickFriends = { navController.navigateToFriends(it) },
         onOpenLinkClick = { openBrowser(context, it) },
@@ -132,7 +133,8 @@ fun ProfileContent(
     onRetry: () -> Unit,
     onClickFriends: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
-    onEditUserInformation: () -> Unit
+    onEditUserInformation: () -> Unit,
+    onClickBack: () -> Unit,
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -154,7 +156,8 @@ fun ProfileContent(
                         state.userDetails,
                         modifier = Modifier.nonRippleEffect { onEditUserInformation() },
                         onChangeProfileImage = onChangeProfileImage,
-                        onSendRequestClick = onClickAddFriend
+                        onSendRequestClick = onClickAddFriend,
+                        onClickBack = onClickBack
                     )
                 }
                 item(key = state.friends) {

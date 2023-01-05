@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
+import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightPrimaryBrandTransparentColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -31,7 +33,8 @@ fun ProfileDetailsSection(
     userDetails: UserDetailsUIState,
     modifier: Modifier = Modifier,
     onChangeProfileImage: () -> Unit,
-    onSendRequestClick: () -> Unit
+    onSendRequestClick: () -> Unit,
+    onClickBack: () -> Unit,
 ) {
 
     ConstraintLayout(
@@ -64,6 +67,14 @@ fun ProfileDetailsSection(
                     .fillMaxSize()
                     .background(LightPrimaryBrandTransparentColor)
             )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .clickable { onClickBack() },
+            ) {
+                Image(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
+            }
         }
 
         Text(
@@ -73,7 +84,7 @@ fun ProfileDetailsSection(
                     top.linkTo(imageCover.top)
                     start.linkTo(imageCover.start)
                 }
-                .padding(start = 24.dp, top = 16.dp),
+                .padding(start = 24.dp, top = 56.dp),
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
@@ -152,7 +163,7 @@ fun ProfileDetailsSection(
 
 @Composable
 private fun GetPainterProfileIcon(
-    userDetails: UserDetailsUIState
+    userDetails: UserDetailsUIState,
 ): Painter? {
     return if (userDetails.isMyProfile) {
         painterResource(id = R.drawable.ic_camera)
