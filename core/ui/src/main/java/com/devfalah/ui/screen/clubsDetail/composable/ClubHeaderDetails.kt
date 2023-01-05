@@ -6,59 +6,62 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
+import com.devfalah.ui.R
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 
+@OptIn(ExperimentalMotionApi::class)
 @Composable
 fun ClubHeaderDetails(
     state: ClubDetailsUiState,
     onBack: () -> Unit,
     maxLineContentExpand: Int = 2,
     onClickJoinRequestClub: () -> Unit,
-    onClickEditClub: () -> Unit
+    onClickEditClub: () -> Unit,
 ) {
     var popupController by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
-    ConstraintLayout(
+    val motionSceneContent = remember {
+        context.resources
+            .openRawResource(R.raw.motion_scene)
+            .readBytes()
+            .decodeToString()
+    }
+    MotionLayout(
+        motionScene = MotionScene(content = motionSceneContent),
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(MaterialTheme.colors.onBackground)
     ) {
-
-        val (backButton, textDescription, textName, cover, dropDownMenu) = createRefs()
-
+        val properties = motionProperties(id = "nameClub")
         BackButton(
             modifier = Modifier
+                .layoutId("backButton")
                 .wrapContentSize()
-                .nonRippleEffect { onBack() }
-                .padding(16.dp)
-                .constrainAs(backButton) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                },
+                .nonRippleEffect { onBack() },
             tint = WhiteColor
         )
 
         if (state.detailsUiState.isOwner) {
             DropDownOwner(
                 modifier = Modifier
-                    .padding(top = 16.dp, end = 16.dp)
-                    .constrainAs(dropDownMenu) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                    },
+                    .layoutId("dropDownMenu"),
                 onClickJoinRequestClub = onClickJoinRequestClub,
                 onClickEditClub = onClickEditClub
             )
@@ -68,16 +71,11 @@ fun ClubHeaderDetails(
             text = state.detailsUiState.name,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .constrainAs(textName) {
-                    top.linkTo(backButton.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-            textAlign = TextAlign.Center,
+                .layoutId("nameClub"),
             fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp,
+            fontSize = properties.value.fontSize("fontSize"),
             fontFamily = PlusJakartaSans,
+            textAlign = TextAlign.Center,
             color = WhiteColor,
             maxLines = 1
         )
@@ -85,13 +83,7 @@ fun ClubHeaderDetails(
         ReadMorePopup(
             text = state.detailsUiState.description.htmlText(),
             modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 24.dp)
-                .constrainAs(textDescription) {
-                    top.linkTo(textName.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
+                .layoutId("descriptionClub"),
             minimizedMaxLines = maxLineContentExpand,
             style = TextStyle(
                 textAlign = TextAlign.Center,
@@ -110,48 +102,20 @@ fun ClubHeaderDetails(
                 popupController = false
             }
         }
-
         Box(
             modifier = Modifier
-                .constrainAs(cover) {
-                    top.linkTo(textDescription.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .fillMaxWidth()
-                .height(124.dp),
-            contentAlignment = Alignment.TopCenter
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .wrapContentHeight()
-                    .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
-                    .background(MaterialTheme.colors.background),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Row {
-                    ClubCard(
-                        imageVector = com.devfalah.ui.R.drawable.ic_menu_language,
-                        text = state.detailsUiState.isClubPublic.toString()
-                    )
-
-                    ClubCard(
-                        imageVector = com.devfalah.ui.R.drawable.ic_people,
-                        text = state.membersCount.toString()
-                    )
-
-                    ClubCard(
-                        imageVector = com.devfalah.ui.R.drawable.ic_comment,
-                        text = state.postCount.toString()
-                    )
-
-                }
-
-            }
-        }
-
+                .layoutId("cover")
+                .fillMaxWidth(),
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .layoutId("shapeRound")
+                .background(MaterialTheme.colors.onBackground)
+                .shadow(
+                    shape = RoundedCornerShape(100.dp, 100.dp, 0.dp, 0.dp),
+                    elevation = 0.dp,
+                ),
+        )
     }
 }

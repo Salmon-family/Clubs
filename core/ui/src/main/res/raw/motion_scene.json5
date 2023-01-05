@@ -1,42 +1,93 @@
 {
   ConstraintSets: {
     start: {
-      clubColumn: {
-        width: 'spread',
-        height: 'spread',
-        top: ['parent', 'top', ],
-        left: ['parent', 'left', ],
-        right: ['parent', 'right', ],
-      },
       backButton: {
-        width: 'wrap',
-        height: 'wrap',
-        top: ['parent', 'top', ],
-        left: ['parent', 'left', ],
+        top: ['parent', 'top', 16],
+        start: ['parent', 'start', 16],
+      },
+      dropDownMenu: {
+        top: ['parent', 'top', 16],
+        end: ['parent', 'end', 16],
       },
       nameClub: {
-          width: 'spread',
-          height: 'spread',
-          top: ['backButton', 'top', ],
-          left: ['parent', 'left', ],
-          right: ['parent', 'right', ],
+          top: [ 'backButton', 'top', 16],
+          start: ['parent', 'start'],
+          end: ['parent', 'end'],
+          bottom: ['descriptionClub', 'bottom'],
+          custom: {
+            fontSize: 24,
+          }
       },
       descriptionClub: {
+          width: 'wrap',
+          height: 'wrap',
+          top: ['nameClub', 'bottom', 24],
+          start: ['parent', 'start', 16],
+          end: ['parent', 'end', 16],
+          bottom: ['cover', 'bottom', 16],
+      },
+      cover: {
           width: 'spread',
           height: 'spread',
-          top: ['nameClub', 'top', ],
-          left: ['parent', 'left', ],
-          right: ['parent', 'right', ],
+          top: ['descriptionClub', 'bottom'],
+          start: ['parent', 'start',],
+          end: ['parent', 'end',],
       },
+      shapeRound: {
+        width: 'spread',
+        height: 'spread',
+        top: ['cover', 'bottom'],
+        start: ['parent', 'start',],
+        end: ['parent', 'end',]
+      }
     },
-    end: {},
+    end: {
+      backButton: {
+        top: ['parent', 'top', 16],
+        start: ['parent', 'start', 16],
+      },
+      dropDownMenu: {
+        top: ['parent', 'top', 16],
+        end: ['parent', 'end', 16],
+      },
+      nameClub: {
+        top: [ 'parent', 'top', 14 ],
+        start: ['backButton', 'start', 32 ],
+        custom: {
+          fontSize: 14,
+        },
+      },
+      descriptionClub: {
+        width: 'wrap',
+        height: 'wrap',
+        visibility: 'gone',
+        top: ['nameClub', 'bottom', ],
+        start: ['parent', 'start', ],
+        end: ['parent', 'end', ],
+      },
+      cover: {
+        width: 'spread',
+        height: 56,
+        top: ['parent', 'top', ],
+        start: ['parent', 'start',],
+        end: ['parent', 'end',]
+      },
+      shapeRound: {
+        width: 'spread',
+        height: 'spread',
+        visibility: 'gone',
+        top: ['cover', 'bottom'],
+        start: ['parent', 'start',],
+        end: ['parent', 'end',]
+      }
+    },
   },
   Transitions: {
     default: {
       from: 'start',
       to: 'end',
       onSwipe: {
-        anchor: 'clubColumn',
+        anchor: 'lazyColumn',
         side: 'top',
         direction: 'up',
       },
