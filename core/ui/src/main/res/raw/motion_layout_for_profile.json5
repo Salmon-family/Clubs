@@ -1,0 +1,84 @@
+{
+  ConstraintSets: {
+    start: {
+      imageCover: {
+        width: 'spread',
+        height: 250,
+        top: ['parent', 'top'],
+        start: ['parent', 'start',],
+        end: ['parent', 'end',],
+      },
+      backButton: {
+        top: ['parent', 'top'],
+        start: ['parent', 'start'],
+      },
+      textTitle: {
+        width: 'wrap',
+        height: 'wrap',
+        top: ['imageCover', 'top'],
+        start: ['imageCover', 'start'],
+      },
+      textName: {
+        top: [ 'textTitle', 'bottom'],
+        start: ['textTitle', 'start'],
+        custom: {
+          fontSize: 30,
+        }
+      },
+      imageProfile: {
+        width: 'spread',
+        height: 170,
+        top: ['imageCover', 'bottom'],
+        start: ['imageCover', 'start'],
+        end: ['imageCover', 'end'],
+        bottom: ['imageCover', 'bottom'],
+      },
+    },
+    end: {
+      imageCover: {
+        width: 'spread',
+        height: 56,
+        top: ['parent', 'top'],
+        start: ['parent', 'start',],
+        end: ['parent', 'end',],
+      },
+      backButton: {
+        top: ['parent', 'top'],
+        start: ['parent', 'start'],
+      },
+      textTitle: {
+        width: 'wrap',
+        height: 'wrap',
+        visibility: 'gone',
+        top: ['imageCover', 'top', 16],
+        start: ['imageCover', 'start', 72],
+      },
+      textName: {
+        top: [ 'parent', 'top'],
+        start: ['imageProfile', 'start'],
+        custom: {
+          fontSize: 14,
+        }
+      },
+      imageProfile: {
+        width: 'spread',
+        height: 24,
+        top: ['parent', 'top', 16],
+        start: ['backButton', 'start', 56],
+        end: ['textName', 'end'],
+        bottom: ['imageCover', 'bottom'],
+      },
+    },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      onSwipe: {
+        anchor: 'listColumn',
+        side: 'top',
+        direction: 'up',
+      },
+    },
+  },
+},
+}

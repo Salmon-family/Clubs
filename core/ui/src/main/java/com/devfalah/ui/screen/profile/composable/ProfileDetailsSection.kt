@@ -8,26 +8,31 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightPrimaryBrandTransparentColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 
+@OptIn(ExperimentalMotionApi::class)
 @Composable
 fun ProfileDetailsSection(
     userDetails: UserDetailsUIState,
@@ -36,23 +41,28 @@ fun ProfileDetailsSection(
     onSendRequestClick: () -> Unit,
     onClickBack: () -> Unit,
 ) {
+    val context = LocalContext.current
 
-    ConstraintLayout(
+    val motionSceneContent = remember {
+        context.resources
+            .openRawResource(R.raw.motion_layout_for_profile)
+            .readBytes()
+            .decodeToString()
+    }
+
+    MotionLayout(
         modifier = modifier
-            .fillMaxWidth()
-            .background(LightPrimaryBrandColor)
+            .fillMaxSize()
+            .background(LightPrimaryBrandColor),
+        motionScene = MotionScene(motionSceneContent),
     ) {
 
-        val (imageCover, imageProfile, textTitle, textName, bioLayer) = createRefs()
+        val properties = motionProperties(id = "textName")
 
         Box(modifier = Modifier
+            .layoutId("imageCover")
             .fillMaxWidth()
-            .height(250.dp)
-            .constrainAs(imageCover) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }) {
+        ) {
             Image(
                 painter = rememberAsyncImagePainter(
                     model = userDetails.profilePicture,
@@ -67,23 +77,21 @@ fun ProfileDetailsSection(
                     .fillMaxSize()
                     .background(LightPrimaryBrandTransparentColor)
             )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .clickable { onClickBack() },
-            ) {
-                Image(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
-            }
+        }
+
+        Box(
+            modifier = Modifier
+                .layoutId("backButton")
+                .padding(16.dp)
+                .clickable { onClickBack() },
+        ) {
+            Image(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
         }
 
         Text(
             text = userDetails.title,
             modifier = Modifier
-                .constrainAs(textTitle) {
-                    top.linkTo(imageCover.top)
-                    start.linkTo(imageCover.start)
-                }
+                .layoutId("textTitle")
                 .padding(start = 24.dp, top = 56.dp),
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.Normal,
@@ -95,14 +103,11 @@ fun ProfileDetailsSection(
         Text(
             text = userDetails.name,
             modifier = Modifier
-                .constrainAs(textName) {
-                    top.linkTo(textTitle.bottom)
-                    start.linkTo(textTitle.start)
-                }
+                .layoutId("textName")
                 .padding(start = 24.dp),
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
+            fontSize = properties.value.fontSize("fontSize"),
             fontFamily = PlusJakartaSans,
             color = WhiteColor,
             maxLines = 2
@@ -110,14 +115,8 @@ fun ProfileDetailsSection(
 
         Box(
             modifier = Modifier
-                .constrainAs(imageProfile) {
-                    top.linkTo(imageCover.bottom)
-                    start.linkTo(imageCover.start)
-                    end.linkTo(imageCover.end)
-                    bottom.linkTo(imageCover.bottom)
-                }
-                .fillMaxWidth()
-                .height(170.dp),
+                .layoutId("imageProfile")
+                .fillMaxWidth(),
             contentAlignment = Alignment.TopCenter
         ) {
             Box(
@@ -157,7 +156,6 @@ fun ProfileDetailsSection(
                 painter = GetPainterProfileIcon(userDetails)
             )
         }
-
     }
 }
 

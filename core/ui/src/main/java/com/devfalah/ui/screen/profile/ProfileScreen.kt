@@ -7,23 +7,17 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
@@ -47,7 +41,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -143,7 +137,17 @@ fun ProfileContent(
         } else if (state.loading) {
             Loading()
         } else {
+            ProfileDetailsSection(
+                state.userDetails,
+                modifier = Modifier.nonRippleEffect { onEditUserInformation() },
+                onChangeProfileImage = onChangeProfileImage,
+                onSendRequestClick = onClickAddFriend,
+                onClickBack = onClickBack,
+            )
             ManualPager(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .layoutId("listColumn"),
                 onRefresh = onRefresh,
                 contentPadding = PaddingValues(bottom = 16.dp),
                 isLoading = state.isPagerLoading,
@@ -151,15 +155,6 @@ fun ProfileContent(
                 isEndOfPager = state.isEndOfPager
             ) {
 
-                item(key = state.userDetails.userID) {
-                    ProfileDetailsSection(
-                        state.userDetails,
-                        modifier = Modifier.nonRippleEffect { onEditUserInformation() },
-                        onChangeProfileImage = onChangeProfileImage,
-                        onSendRequestClick = onClickAddFriend,
-                        onClickBack = onClickBack
-                    )
-                }
                 item(key = state.friends) {
                     FriendsSection(
                         state.friends,
@@ -199,6 +194,7 @@ fun ProfileContent(
             }
         }
     }
+
 }
 
 private fun navigateToConversation(context: Context, friendId: Int) {
