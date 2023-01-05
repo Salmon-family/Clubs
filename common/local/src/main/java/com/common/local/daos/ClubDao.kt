@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.devfalah.repositories.models.PostHomeDto
 import com.devfalah.repositories.models.PostLocalDto
 import kotlinx.coroutines.flow.Flow
 
@@ -24,4 +25,16 @@ interface ClubDao {
 
     @Query("DELETE FROM club_table WHERE id == :postId")
     suspend fun deletePostById(postId: Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPosts(post: List<PostHomeDto>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPost(post: PostHomeDto)
+
+    @Query("SELECT * FROM HOME_TABLE ")
+    fun getHomePosts(): Flow<List<PostHomeDto>>
+
+    @Query("DELETE FROM HOME_TABLE")
+    fun clearHomePosts()
 }
