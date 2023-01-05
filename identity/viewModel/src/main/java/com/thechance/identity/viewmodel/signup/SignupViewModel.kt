@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
 import com.thechance.identity.usecases.AccountValidationUseCase
-import com.thechance.identity.usecases.GetUserIdUseCase
 import com.thechance.identity.usecases.SaveUserIdUseCase
 import com.thechance.identity.usecases.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(
     private val signupUseCase: SignupUseCase,
     private val accountValidationUseCase: AccountValidationUseCase,
-    private val getUserIdUseCase: GetUserIdUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase
 ) : ViewModel() {
 

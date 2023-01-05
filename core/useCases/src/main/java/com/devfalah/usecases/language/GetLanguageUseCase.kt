@@ -7,7 +7,8 @@ class GetLanguageUseCase @Inject constructor(
     private val repository: ClubRepository
 ) {
 
-    operator fun invoke(): String? {
-        return repository.getLanguage()
+    // should default device lang
+    suspend operator fun invoke(): String {
+        return repository.getLanguage() ?: "en"
     }
 }

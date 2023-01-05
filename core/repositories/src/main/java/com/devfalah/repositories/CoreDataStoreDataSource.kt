@@ -7,7 +7,7 @@ interface CoreDataStoreDataSource {
 
     suspend fun deleteUserId()
 
-    fun getLanguage(): String?
+    suspend fun getLanguage(): String?
 
     suspend fun saveLanguage(language: String)
 
