@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,8 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 fun ProfileImageWithIcon(
     profilePicture: String,
     onClickIcon: () -> Unit,
-    painter: Painter?
+    painter: Painter?,
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     Box {
         Image(
@@ -36,6 +38,7 @@ fun ProfileImageWithIcon(
                 .size(112.dp)
                 .clip(CircleShape)
                 .border(4.dp, MaterialTheme.colors.background, CircleShape),
+            contentScale = contentScale
         )
 
         painter?.let {

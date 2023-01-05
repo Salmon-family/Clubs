@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.profile
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -13,17 +14,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
@@ -52,9 +49,14 @@ fun ProfileScreen(
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
+
+    var selectedImageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
+            selectedImageUri = uri
             uri?.let {
                 viewModel.onClickChangeImage(
                     createFileFromContentUri(
@@ -68,6 +70,7 @@ fun ProfileScreen(
     )
     ProfileContent(
         state,
+        selectedImageUri = selectedImageUri,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
             navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
@@ -119,6 +122,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileContent(
     state: UserUIState,
+    selectedImageUri: Uri?,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -152,6 +156,7 @@ fun ProfileContent(
                 item(key = state.userDetails.userID) {
                     ProfileDetailsSection(
                         state.userDetails,
+                        selectedImageUri = selectedImageUri,
                         modifier = Modifier.nonRippleEffect { onEditUserInformation() },
                         onChangeProfileImage = onChangeProfileImage,
                         onSendRequestClick = onClickAddFriend
