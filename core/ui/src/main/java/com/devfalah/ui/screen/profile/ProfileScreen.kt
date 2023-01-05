@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.navigateToImageScreen
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
@@ -97,7 +97,8 @@ fun ProfileScreen(
             if (state.userDetails.isMyProfile) {
                 navController.navigateToEditUserInformation()
             }
-        }
+        },
+        onImageClick = { navigateToImageScreen(context, it) }
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -132,7 +133,8 @@ fun ProfileContent(
     onRetry: () -> Unit,
     onClickFriends: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
-    onEditUserInformation: () -> Unit
+    onEditUserInformation: () -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -191,7 +193,7 @@ fun ProfileContent(
                         onClickPostSetting = onClickPostSetting,
                         onClickProfile = onClickProfile,
                         onOpenLinkClick = onOpenLinkClick,
-                        onImageClick = {}
+                        onImageClick = onImageClick
                     )
                 }
             }

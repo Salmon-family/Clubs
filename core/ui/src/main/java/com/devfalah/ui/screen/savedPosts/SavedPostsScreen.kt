@@ -22,6 +22,7 @@ import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.PostItem
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.navigateToImageScreen
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.navigateToProfile
@@ -50,7 +51,8 @@ fun SavedPostsScreen(
         },
         onClickRemoveSavedPost = viewModel::onClickRemoveSavedPost,
         onClickProfile = { navController.navigateToProfile(it) },
-        onOpenLinkClick = { openBrowser(context, it) }
+        onOpenLinkClick = { openBrowser(context, it) },
+        onImageClick = { navigateToImageScreen(context, it) }
     )
 
     val color = MaterialTheme.colors.background
@@ -71,6 +73,7 @@ fun SavedPostsContent(
     onClickRemoveSavedPost: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
 
@@ -100,7 +103,7 @@ fun SavedPostsContent(
                         onClickProfile = onClickProfile,
                         onOpenLinkClick = onOpenLinkClick,
                         onClickPostSetting = { },
-                        onImageClick = {}
+                        onImageClick = onImageClick
                     )
                 }
             }

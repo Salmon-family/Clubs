@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.navigateToImageScreen
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.*
@@ -35,6 +36,7 @@ fun ClubsDetailsScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
+    val context = LocalContext.current
 
     ClubsDetailsContent(
         state = state,
@@ -69,7 +71,8 @@ fun ClubsDetailsScreen(
                 clubDescription = state.detailsUiState.description,
                 clubPrivacy = state.detailsUiState.isClubPublic
             )
-        }
+        },
+        onImageClick = { navigateToImageScreen(context, it) }
     )
 
     val color = MaterialTheme.colors.onBackground
@@ -96,7 +99,8 @@ private fun ClubsDetailsContent(
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
     onClickEditClub: () -> Unit,
-    onDeletePost: (PostUIState) -> Unit
+    onDeletePost: (PostUIState) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -199,7 +203,7 @@ private fun ClubsDetailsContent(
                             onClickPostSetting = onDeletePost,
                             onClickProfile = {},
                             onOpenLinkClick = {},
-                            onImageClick = {}
+                            onImageClick = onImageClick
                         )
                     }
                 }
