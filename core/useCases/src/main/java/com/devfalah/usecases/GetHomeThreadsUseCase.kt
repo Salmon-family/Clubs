@@ -3,6 +3,7 @@ package com.devfalah.usecases
 import com.devfalah.entities.Post
 import com.devfalah.usecases.repository.ClubRepository
 import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
+import com.devfalah.usecases.util.Constants.SCROLL_UP
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -30,8 +31,8 @@ class GetHomeThreadsUseCase @Inject constructor(
         return homePosts
     }
 
-    suspend fun loadData(): Boolean {
-        val page = if (postsCount == 0) {
+    suspend fun loadData(scrollDirection: Int): Boolean {
+        val page = if (scrollDirection == SCROLL_UP || postsCount == 0) {
             1
         } else {
             (postsCount / 10.0).roundToInt() + 1

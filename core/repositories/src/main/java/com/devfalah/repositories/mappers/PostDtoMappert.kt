@@ -5,7 +5,24 @@ import com.devfalah.repositories.models.post.WallPostDTO
 
 internal fun WallPostDTO.toEntity(groupId: Int = 0): Post? {
     return if (text == "null:data") {
-        null
+        Post(
+            id = post?.guid ?: 0,
+            privacy = post?.access == "3",
+            createdTime = post?.timeCreated ?: 0L,
+            content = "",
+            imageUrl = post?.profileImage?.substringBefore("?") ?: "",
+            totalLikes = post?.totalLikes ?: 0,
+            totalComments = post?.totalComments ?: 0,
+            publisher = postedUser?.fullName ?: "",
+            publisherId = postedUser?.guid ?: 0,
+            publisherImageUrl = postedUser?.icon?.large?.substringBefore("?") ?: "",
+            isLiked = post?.isLikedByUser ?: false,
+            isSaved = false,
+            posterGuid = "",
+            groupId = group?.guid ?: groupId,
+            groupName = group?.title ?: "",
+            isMyPost = false
+        )
     } else {
         Post(
             id = post?.guid ?: 0,

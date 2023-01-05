@@ -32,7 +32,7 @@ interface ClubDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPost(post: PostHomeDto)
 
-    @Query("SELECT * FROM HOME_TABLE ")
+    @Query("SELECT * FROM HOME_TABLE ORDER BY createdTime DESC ")
     fun getHomePosts(): Flow<List<PostHomeDto>>
 
     @Query("DELETE FROM HOME_TABLE")
