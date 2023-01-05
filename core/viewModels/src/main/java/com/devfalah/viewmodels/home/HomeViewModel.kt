@@ -34,8 +34,43 @@ class HomeViewModel @Inject constructor(
     fun getData() {
         _uiState.update { it.copy(error = "", isLoading = true) }
         viewModelScope.launch {
-            getHomeThreads()
-            swipeToRefresh()
+            getHomeThreads().collect { posts ->
+                _uiState.update { it.copy(posts = posts.toUIState()) }
+            }
+        }
+    }
+
+
+    fun swipeToRefresh() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
+            try {
+                val loadMore = getHomeThreads.loadData()
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        isEndOfPager = !loadMore,
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        pagerError = if (_uiState.value.posts.isNotEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        },
+                        error = if (_uiState.value.posts.isEmpty()) {
+                            t.message.toString()
+                        } else {
+                            ""
+                        }
+                    )
+                }
+            }
         }
     }
 
@@ -82,40 +117,6 @@ class HomeViewModel @Inject constructor(
                 }
             } catch (t: Throwable) {
                 t.message.toString()
-            }
-        }
-    }
-
-    fun swipeToRefresh() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
-            try {
-                val homePosts = getHomeThreads.loadData()
-                _uiState.update {
-                    it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        isEndOfPager = homePosts.isEmpty(),
-                        posts = it.posts + homePosts.toUIState()
-                    )
-                }
-            } catch (t: Throwable) {
-                _uiState.update {
-                    it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        pagerError = if (_uiState.value.posts.isNotEmpty()) {
-                            t.message.toString()
-                        } else {
-                            ""
-                        },
-                        error = if (_uiState.value.posts.isEmpty()) {
-                            t.message.toString()
-                        } else {
-                            ""
-                        }
-                    )
-                }
             }
         }
     }
