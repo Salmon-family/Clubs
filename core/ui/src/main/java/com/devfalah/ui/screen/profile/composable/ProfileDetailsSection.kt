@@ -90,12 +90,14 @@ fun ProfileDetailsSection(
                 modifier = Modifier.size(24.dp).clickable { onClickBackButton() },
                 tint = Color.White
             )
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.setting),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp).clickable { onClickEditProfile() },
-                tint = Color.White
-            )
+            if(userDetails.isMyProfile){
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.setting),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp).clickable { onClickEditProfile() },
+                    tint = Color.White
+                )
+            }
         }
 
         Text(
@@ -175,7 +177,7 @@ fun ProfileDetailsSection(
             ProfileImageWithIcon(
                 profilePicture = (selectedImageUri ?: userDetails.profilePicture).toString(),
                 onClickIcon = onClick,
-                painter = GetPainterProfileIcon(userDetails),
+                painter = getPainterProfileIcon(userDetails),
                 contentScale = ContentScale.Crop
             )
         }
@@ -185,7 +187,7 @@ fun ProfileDetailsSection(
 
 
 @Composable
-private fun GetPainterProfileIcon(
+private fun getPainterProfileIcon(
     userDetails: UserDetailsUIState
 ): Painter? {
     return if (userDetails.isMyProfile) {
