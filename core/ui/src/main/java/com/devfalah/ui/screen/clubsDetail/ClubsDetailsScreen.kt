@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
@@ -45,11 +44,8 @@ fun ClubsDetailsScreen(
     val systemUIController = rememberSystemUiController()
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
     LaunchedEffect(key1 = lifecycleState.value) {
-    when (lifecycleState.value) {
-        Lifecycle.Event.ON_RESUME -> {
+    if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
             Log.e("DEVFALAH", "ON_RESUME")
-        }
-        else -> {}
     }
 }
 
