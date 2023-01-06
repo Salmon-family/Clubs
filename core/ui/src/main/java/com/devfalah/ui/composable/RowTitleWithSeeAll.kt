@@ -49,6 +49,7 @@ fun RowTitleWithSeeAll(
             )
 
             Icon(
+                modifier = Modifier.flipWithLanguage(),
                 painter = painterResource(id = R.drawable.arrow),
                 contentDescription = null,
                 tint = MaterialTheme.colors.secondaryVariant

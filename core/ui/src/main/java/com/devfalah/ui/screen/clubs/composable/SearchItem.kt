@@ -23,7 +23,7 @@ fun SearchItem(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
-            .clickable { onSearchItemClick },
+            .clickable { onSearchItemClick() },
         shape = RoundedCornerShape(100),
     ){
         Row(modifier = Modifier
@@ -33,7 +33,7 @@ fun SearchItem(
         ) {
 
             Icon(
-                painter = painterResource(id = R.drawable.ic_search_outline),
+                painter = painterResource(id = R.drawable.search_icon),
                 contentDescription = "search icon",
                 tint = LightQuaternaryBlackColor,
                 modifier = Modifier.size(24.dp)
