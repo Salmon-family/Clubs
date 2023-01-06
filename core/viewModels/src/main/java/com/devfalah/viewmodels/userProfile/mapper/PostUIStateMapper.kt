@@ -1,10 +1,9 @@
 package com.devfalah.viewmodels.userProfile.mapper
 
 import com.devfalah.entities.Post
-import com.devfalah.viewmodels.R
 import com.devfalah.viewmodels.postDetails.mapper.toUIState
-import com.devfalah.viewmodels.util.ConvertDate
 import com.devfalah.viewmodels.userProfile.PostUIState
+import com.devfalah.viewmodels.util.ConvertDate
 
 fun List<Post>.toUIState() = map { it.toUIState() }
 
@@ -26,7 +25,8 @@ fun Post.toUIState(): PostUIState {
         createdDataValue = createdTime,
         groupId = groupId,
         groupName = groupName,
-        isFound = isFound
+        isFound = isFound,
+        isFromAlbum = isFromAlbum
     )
 }
 
@@ -48,7 +48,8 @@ fun PostUIState.toEntity(): Post {
         posterGuid = "",
         groupId = groupId,
         groupName = groupName,
-        isMyPost = isMyPost
+        isMyPost = isMyPost,
+        isFromAlbum = isFromAlbum
     )
 }
 

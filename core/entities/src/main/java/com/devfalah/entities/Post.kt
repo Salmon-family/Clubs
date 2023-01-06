@@ -18,4 +18,5 @@ data class Post(
     val groupName: String = "",
     val isMyPost: Boolean = false,
     val isFound: Boolean = true,
+    val isFromAlbum: Boolean = false
 )

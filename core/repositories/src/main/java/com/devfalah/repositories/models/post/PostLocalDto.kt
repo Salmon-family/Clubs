@@ -17,7 +17,8 @@ data class PostLocalDto(
     val publisher: String,
     val publisherId: Int,
     val publisherImageUrl: String,
-    val isLiked: Boolean
+    val isLiked: Boolean,
+    val isFromAlbum: Boolean
 )
 
 @Entity(tableName = "HOME_TABLE")
@@ -33,6 +34,7 @@ data class PostHomeDto(
     val publisherId: Int,
     val publisherImageUrl: String,
     val isLiked: Boolean,
+    val isFromAlbum: Boolean
 )
 
 data class PostHome(
@@ -47,5 +49,6 @@ data class PostHome(
     val publisherId: Int,
     val publisherImageUrl: String,
     val isLiked: Boolean,
-    val saved: Boolean
+    val isFromAlbum: Boolean,
+    val saved: Boolean,
 )

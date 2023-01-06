@@ -58,7 +58,9 @@ fun PostItem(
                 onOpenLinkClick = onOpenLinkClick
             )
 
-            PostBottomAction(state, onClickLike, onClickComment, onClickSave)
+            if (!state.isFromAlbum) {
+                PostBottomAction(state, onClickLike, onClickComment, onClickSave)
+            }
         }
     }
 }

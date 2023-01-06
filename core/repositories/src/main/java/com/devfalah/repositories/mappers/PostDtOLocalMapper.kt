@@ -17,7 +17,8 @@ internal fun Post.toEntity(): PostLocalDto {
         publisherImageUrl = publisherImageUrl,
         isLiked = isLiked,
         groupId = groupId,
-        groupName = groupName
+        groupName = groupName,
+        isFromAlbum= isFromAlbum
     )
 }
 
@@ -38,7 +39,8 @@ internal fun PostLocalDto.toEntity(): Post {
         isSaved = false,
         groupId = groupId,
         groupName = groupName,
-        isMyPost = false
+        isMyPost = false,
+        isFromAlbum = isFromAlbum
     )
 }
 

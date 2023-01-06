@@ -23,7 +23,8 @@ internal fun PostHomeDto.toEntity(): Post {
         posterGuid = "",
         groupId = 0,
         groupName = "",
-        isMyPost = false
+        isMyPost = false,
+        isFromAlbum = isFromAlbum
     )
 }
 
@@ -44,7 +45,8 @@ internal fun PostHome.toPostHomeEntity(): Post {
         groupId = 0,
         groupName = "",
         isMyPost = false,
-        isSaved = saved
+        isSaved = saved,
+        isFromAlbum = isFromAlbum
     )
 }
 
@@ -65,5 +67,6 @@ internal fun Post.toHomeEntity(): PostHomeDto {
         publisherId = publisherId,
         publisherImageUrl = publisherImageUrl,
         isLiked = isLiked,
+        isFromAlbum= isFromAlbum
     )
 }

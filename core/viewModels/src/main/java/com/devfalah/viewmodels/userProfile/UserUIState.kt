@@ -51,5 +51,6 @@ data class PostUIState(
     val groupId: Int = 0,
     val isFromClub: Boolean = false,
     val groupName: String = "",
-    val isFound: Boolean = true
+    val isFound: Boolean = true,
+    val isFromAlbum: Boolean = false
 )

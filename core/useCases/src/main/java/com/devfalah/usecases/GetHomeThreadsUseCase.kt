@@ -11,7 +11,6 @@ import kotlin.math.roundToInt
 class GetHomeThreadsUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
-    private val savedPosts: MutableList<Int> = mutableListOf()
     private var userId = -1
     private var postsCount = 0
 
@@ -40,11 +39,7 @@ class GetHomeThreadsUseCase @Inject constructor(
             userId = clubRepository.getUserId()
         }
         val homePosts = clubRepository.getUserHomePosts(userId, page).map { post ->
-            if (post.id in savedPosts) {
-                post.copy(isSaved = false, isMyPost = userId == post.publisherId)
-            } else {
-                post.copy(isMyPost = userId == post.publisherId)
-            }
+            post.copy(isMyPost = userId == post.publisherId)
         }
         clubRepository.addHomePosts(homePosts)
         return true

@@ -21,20 +21,15 @@ internal fun WallPostDTO.toEntity(groupId: Int = 0): Post? {
             posterGuid = "",
             groupId = group?.guid ?: groupId,
             groupName = group?.title ?: "",
-            isMyPost = false
+            isMyPost = false,
+            isFromAlbum = true
         )
     } else {
         Post(
             id = post?.guid ?: 0,
             privacy = post?.access == "3",
             createdTime = post?.timeCreated ?: 0L,
-            content = text?.let {
-                if (it != "false") {
-                    it
-                } else {
-                    ""
-                }
-            } ?: "",
+            content = text?.let { if (it != "false") { it } else { "" } } ?: "",
             imageUrl = image?.substringBefore("?") ?: "",
             totalLikes = post?.totalLikes ?: 0,
             totalComments = post?.totalComments ?: 0,
@@ -46,7 +41,8 @@ internal fun WallPostDTO.toEntity(groupId: Int = 0): Post? {
             posterGuid = "",
             groupId = group?.guid ?: groupId,
             groupName = group?.title ?: "",
-            isMyPost = false
+            isMyPost = false,
+            isFromAlbum = false
         )
     }
 }
