@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
@@ -61,7 +62,8 @@ fun HomeScreen(
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onClickChat = { goToChat(context) },
-        onRetry = viewModel::getData
+        onRetry = viewModel::getData,
+        onImageClick = { navigateToImageScreen(context, it) }
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
@@ -85,6 +87,7 @@ fun HomeContent(
     onDeletePost: (PostUIState) -> Unit,
     onClickChat: () -> Unit,
     onRetry: () -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
@@ -134,7 +137,8 @@ fun HomeContent(
                         onClickSave = onClickSave,
                         onClickProfile = onClickProfile,
                         onClickPostSetting = onDeletePost,
-                        onOpenLinkClick = onOpenLinkClick
+                        onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = onImageClick,
                     )
                 }
             }

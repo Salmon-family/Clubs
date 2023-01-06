@@ -41,6 +41,13 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name="com.devfalah.ui.image.ImageActivity"
+            android:theme="@style/Theme.SplashScreenAndroid"
+            android:exported="true">
+
+        </activity>
+
 
         <activity
             android:name="com.thechance.identity.ui.main.AuthenticationActivity"

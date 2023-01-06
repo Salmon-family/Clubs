@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
@@ -75,6 +76,7 @@ fun ClubsDetailsScreen(
         },
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
+        onImageClick = { navigateToImageScreen(context, it) }
     )
 
     val color = MaterialTheme.colors.onBackground
@@ -103,7 +105,8 @@ private fun ClubsDetailsContent(
     onClickEditClub: () -> Unit,
     onDeletePost: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -206,6 +209,7 @@ private fun ClubsDetailsContent(
                             onClickPostSetting = onDeletePost,
                             onClickProfile = onClickProfile,
                             onOpenLinkClick = onOpenLinkClick,
+                            onImageClick = onImageClick,
                         )
                     }
                 }

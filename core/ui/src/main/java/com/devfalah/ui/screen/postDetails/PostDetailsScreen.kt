@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postDetails.compose.CommentItem
@@ -54,7 +55,8 @@ fun PostDetailsScreen(
         onOpenLinkClick = { openBrowser(context, it) },
         onClickCommentLike = viewModel::onClickLikeComment,
         onClickPostDelete = { navController.navigateUp() },
-        onRetry = viewModel::getData
+        onRetry = viewModel::getData,
+        onImageClick = { navigateToImageScreen(context, it) }
     )
 
     val color = MaterialTheme.colors.background
@@ -81,7 +83,8 @@ fun PostDetailsContent(
     onClickCommentLike: (CommentUIState) -> Unit,
     onDeletePost: (PostUIState) -> Unit,
     onClickDeleteComment: (CommentUIState) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
 
@@ -115,7 +118,8 @@ fun PostDetailsContent(
                         onClickSave = onClickSave,
                         onClickProfile = onClickProfile,
                         onClickPostSetting = onDeletePost,
-                        onOpenLinkClick = onOpenLinkClick
+                        onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = onImageClick
                     )
                 }
 

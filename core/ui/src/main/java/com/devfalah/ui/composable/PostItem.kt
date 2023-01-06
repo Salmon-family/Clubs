@@ -28,6 +28,7 @@ fun PostItem(
     onClickPostSetting: (PostUIState) -> Unit,
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -55,7 +56,8 @@ fun PostItem(
                 post = state,
                 maxLineToExpand = maxLineContentExpand,
                 contentExpandable = isContentExpandable,
-                onOpenLinkClick = onOpenLinkClick
+                onOpenLinkClick = onOpenLinkClick,
+                onImageClick = onImageClick
             )
 
             PostBottomAction(state, onClickLike, onClickComment, onClickSave)

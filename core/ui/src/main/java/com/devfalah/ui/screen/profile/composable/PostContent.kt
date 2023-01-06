@@ -2,14 +2,20 @@ package com.devfalah.ui.screen.profile.composable
 
 import android.webkit.URLUtil
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -17,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.devfalah.ui.composable.ExpandableText
 import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.modifiers.nonRippleEffect
@@ -33,7 +40,8 @@ fun PostContent(
     post: PostUIState,
     contentExpandable: Boolean,
     maxLineToExpand: Int,
-    onOpenLinkClick: (String) -> Unit
+    onOpenLinkClick: (String) -> Unit,
+    onImageClick: (String) -> Unit,
 ) {
     if (URLUtil.isValidUrl(post.postContent)) {
         Text(
@@ -76,7 +84,8 @@ fun PostContent(
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(260.dp),
+                .height(260.dp)
+                .nonRippleEffect { onImageClick(post.postImage) },
             contentScale = ContentScale.Crop
         )
     }

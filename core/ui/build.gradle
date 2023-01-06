@@ -92,4 +92,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
 
+    //zoomable image
+    implementation 'com.github.Tlaster:Zoomable:0.6.2'
+
 }
