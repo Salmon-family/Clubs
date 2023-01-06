@@ -84,8 +84,18 @@ fun ProfileDetailsSection(
         },
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            MyIcon(R.drawable.ic_back_arrow, onClickBackButton)
-            MyIcon(R.drawable.setting, onClickEditProfile)
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_arrow),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp).clickable { onClickBackButton() },
+                tint = Color.White
+            )
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.setting),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp).clickable { onClickEditProfile() },
+                tint = Color.White
+            )
         }
 
         Text(
@@ -173,15 +183,6 @@ fun ProfileDetailsSection(
     }
 }
 
-@Composable
-fun MyIcon(icon: Int, onClick: () -> Unit) {
-    Icon(
-        imageVector = ImageVector.vectorResource(id = icon),
-        contentDescription = null,
-        modifier = Modifier.size(24.dp).clickable { onClick() },
-        tint = Color.White
-    )
-}
 
 @Composable
 private fun GetPainterProfileIcon(
