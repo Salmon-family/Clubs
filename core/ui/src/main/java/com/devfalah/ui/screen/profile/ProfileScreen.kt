@@ -24,8 +24,8 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.modifiers.nonRippleEffect
-import com.devfalah.ui.navigateToImageScreen
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation

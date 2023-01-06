@@ -71,9 +71,3 @@ fun NavController.showingBack(): Boolean {
         else -> true
     }
 }
-
-fun navigateToImageScreen(context: Context, imageUrl: String) {
-    val intent = Intent(context, ImageActivity::class.java)
-    intent.putExtra(Constants.IMAGE_URL_KEY, imageUrl)
-    ContextCompat.startActivity(context, intent, null)
-}
