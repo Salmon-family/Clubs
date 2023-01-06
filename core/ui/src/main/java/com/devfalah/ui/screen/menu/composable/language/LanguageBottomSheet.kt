@@ -1,10 +1,11 @@
 package com.devfalah.ui.screen.menu.composable.language
 
+import android.app.Activity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,10 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import com.devfalah.ui.R
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
@@ -68,6 +70,8 @@ private fun SegmentOfLanguage(
     modifier: Modifier = Modifier,
 ) {
     val index = remember { mutableStateOf(0) }
+    val context = LocalContext.current as Activity
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -86,7 +90,10 @@ private fun SegmentOfLanguage(
             )
             .clickable {
                 index.value = 0
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
                 onItemSelection(index.value)
+                context.finish()
+                context.startActivity(context.intent)
             }) {
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
@@ -105,7 +112,11 @@ private fun SegmentOfLanguage(
                 )
                 .clickable {
                     index.value = 1
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
                     onItemSelection(index.value)
+
+                    context.finish()
+                    context.startActivity(context.intent)
                 }) {
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
@@ -117,10 +128,6 @@ private fun SegmentOfLanguage(
     }
 
     LaunchedEffect(key1 = language) {
-        if (language == "en") {
-            index.value = 0
-        } else {
-            index.value = 1
-        }
+        index.value = if (language == "en") 0 else 1
     }
 }
