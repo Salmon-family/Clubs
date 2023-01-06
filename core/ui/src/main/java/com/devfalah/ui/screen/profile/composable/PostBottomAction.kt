@@ -12,13 +12,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.*
+import com.devfalah.ui.composable.HeightSpacer16
+import com.devfalah.ui.composable.WidthSpacer16
+import com.devfalah.ui.composable.WidthSpacer4
+import com.devfalah.ui.composable.WidthSpacer8
 import com.devfalah.ui.modifiers.nonRippleEffect
+import com.devfalah.ui.screen.clubCreation.showToastMessage
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -30,6 +35,8 @@ fun PostBottomAction(
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit
 ) {
+    val context = LocalContext.current
+
     HeightSpacer16()
 
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -87,7 +94,17 @@ fun PostBottomAction(
                         R.drawable.save_icon
                     }
                 ),
-                onClick = { onClickSave(post) }
+                onClick = {
+                    onClickSave(post)
+                    showToastMessage(
+                        context,
+                        if (post.isSaved) {
+                            context.getString(R.string.thread_has_been_saved)
+                        } else {
+                            context.getString(R.string.thread_has_been_unsaved)
+                        }
+                    )
+                }
             )
         }
         WidthSpacer16()
