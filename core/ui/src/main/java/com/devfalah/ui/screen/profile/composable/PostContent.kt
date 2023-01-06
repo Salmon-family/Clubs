@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -21,7 +22,6 @@ import com.devfalah.ui.composable.ExpandableText
 import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.userProfile.PostUIState
@@ -62,7 +62,8 @@ fun PostContent(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colors.secondaryVariant
+                color = MaterialTheme.colors.secondaryVariant,
+                textDirection = TextDirection.Content
             )
         )
     }
@@ -95,7 +96,6 @@ fun ShowWebView(
             .fillMaxWidth()
             .aspectRatio(16 / 9f),
         onCreated = {
-//            it.settings.javaScriptEnabled = true
             it.settings.loadWithOverviewMode = true
         }
     )
