@@ -3,17 +3,22 @@ package com.devfalah.ui.screen.profile.composable
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,7 +38,9 @@ fun ProfileDetailsSection(
     selectedImageUri: Uri?,
     modifier: Modifier = Modifier,
     onChangeProfileImage: () -> Unit,
-    onSendRequestClick: () -> Unit
+    onSendRequestClick: () -> Unit,
+    onClickBackButton: () -> Unit,
+    onClickEditProfile: () -> Unit,
 ) {
 
     ConstraintLayout(
@@ -42,7 +49,7 @@ fun ProfileDetailsSection(
             .background(LightPrimaryBrandColor)
     ) {
 
-        val (imageCover, imageProfile, textTitle, textName, bioLayer) = createRefs()
+        val (appBar, imageCover, imageProfile, textTitle, textName) = createRefs()
 
         Box(modifier = Modifier
             .fillMaxWidth()
@@ -68,14 +75,27 @@ fun ProfileDetailsSection(
             )
         }
 
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp)
+                .constrainAs(appBar){
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        },
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            MyIcon(R.drawable.ic_back_arrow, onClickBackButton)
+            MyIcon(R.drawable.setting, onClickEditProfile)
+        }
+
         Text(
             text = userDetails.title,
             modifier = Modifier
                 .constrainAs(textTitle) {
-                    top.linkTo(imageCover.top)
-                    start.linkTo(imageCover.start)
+                    top.linkTo(appBar.top)
+                    start.linkTo(parent.start)
                 }
-                .padding(start = 24.dp, top = 16.dp),
+                .padding(start = 24.dp, top = 56.dp),
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
@@ -151,6 +171,16 @@ fun ProfileDetailsSection(
         }
 
     }
+}
+
+@Composable
+fun MyIcon(icon: Int, onClick: () -> Unit) {
+    Icon(
+        imageVector = ImageVector.vectorResource(id = icon),
+        contentDescription = null,
+        modifier = Modifier.size(24.dp).clickable { onClick() },
+        tint = Color.White
+    )
 }
 
 @Composable
