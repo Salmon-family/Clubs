@@ -1,5 +1,6 @@
 package com.devfalah.ui.screen.clubsDetail
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
@@ -8,9 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
@@ -38,6 +42,22 @@ fun ClubsDetailsScreen(
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    when(lifecycleState.value){
+        Lifecycle.Event.ON_CREATE->{
+            Log.e("DEVFALAH","ON_CREATE")
+        }
+        Lifecycle.Event.ON_RESUME->{
+            Log.e("DEVFALAH","ON_RESUME")
+        }
+        Lifecycle.Event.ON_PAUSE->{
+            Log.e("DEVFALAH","ON_PAUSE")
+        }
+        Lifecycle.Event.ON_DESTROY->{
+            Log.e("DEVFALAH","ON_DESTROY")
+        }
+        else -> {}
+    }
 
     ClubsDetailsContent(
         state = state,
@@ -226,4 +246,19 @@ private fun ClubsDetailsContent(
             Toast.makeText(context, state.pagerError, Toast.LENGTH_LONG).show()
         }
     }
+}
+
+@Composable
+fun Lifecycle.observeAsState(): State<Lifecycle.Event> {
+    val state = remember { mutableStateOf(Lifecycle.Event.ON_ANY) }
+    DisposableEffect(this) {
+        val observer = LifecycleEventObserver { _, event ->
+            state.value = event
+        }
+        this@observeAsState.addObserver(observer)
+        onDispose {
+            this@observeAsState.removeObserver(observer)
+        }
+    }
+    return state
 }
