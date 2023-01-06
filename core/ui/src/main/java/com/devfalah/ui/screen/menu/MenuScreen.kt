@@ -5,21 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -38,10 +29,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.flipWithLanguage
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
-import com.devfalah.ui.screen.menu.composable.*
+import com.devfalah.ui.screen.menu.composable.AccountSection
+import com.devfalah.ui.screen.menu.composable.MenuItem
+import com.devfalah.ui.screen.menu.composable.PreferencesSection
+import com.devfalah.ui.screen.menu.composable.TopSection
 import com.devfalah.ui.screen.menu.composable.language.LanguageBottomSheet
 import com.devfalah.ui.screen.menu.composable.theme.ThemeBottomSheet
 import com.devfalah.ui.screen.profile.navigateToProfile
@@ -53,7 +48,6 @@ import com.devfalah.viewmodels.menu.MenuViewModel
 import com.devfalah.viewmodels.menu.UserUiState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
-import java.util.*
 
 @Composable
 fun MenuScreen(
@@ -146,19 +140,20 @@ fun MenuContent(
     ) {
         Column {
 
-        AppBar(
-            title = stringResource(id = R.string.menu),
-            showBackButton = false,
-            actions = {
-                IconButton(onClick = onClickLogOut) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
-                        contentDescription = "",
-                        tint = MaterialTheme.colors.primaryVariant
-                    )
+            AppBar(
+                title = stringResource(id = R.string.menu),
+                showBackButton = false,
+                actions = {
+                    IconButton(onClick = onClickLogOut) {
+                        Icon(
+                            modifier = Modifier.flipWithLanguage(),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
+                            contentDescription = "",
+                            tint = MaterialTheme.colors.primaryVariant
+                        )
+                    }
                 }
-            }
-        )
+            )
 
             LazyColumn(
                 modifier = Modifier
