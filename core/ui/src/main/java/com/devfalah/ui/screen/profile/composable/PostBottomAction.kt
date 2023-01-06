@@ -61,7 +61,7 @@ fun PostBottomAction(
             }.take(3)
         )
 
-        WidthSpacer24()
+        WidthSpacer16()
 
         PostActionIcon(
             painter = painterResource(id = R.drawable.ic_comment),
