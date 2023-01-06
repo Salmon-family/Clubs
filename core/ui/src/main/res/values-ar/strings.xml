@@ -119,5 +119,7 @@
     <string name="private_club_description">هذا نادي خاص</string>
     <string name="private_club_description2">ارسل طلب انضمام وانتظر.</string>
     <string name="deleted_post">عذرا، هذا المنشور تم حذفه من قبل الناشر.</string>
+    <string name="thread_has_been_saved">تمت إزالة المنشور من المحفوظات</string>
+    <string name="thread_has_been_unsaved">تم حفظ المنشور</string>
 
 </resources>
