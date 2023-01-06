@@ -50,7 +50,11 @@ class Notifier @Inject constructor() {
     private fun checkIfChatIsCurrentActivity(context: Context): Boolean {
         val activityManager: ActivityManager =
             context.applicationContext.getSystemService(FirebaseMessagingService.ACTIVITY_SERVICE) as ActivityManager
-        val currentActivity = activityManager.getRunningTasks(1)[0].topActivity?.className
+        val currentActivity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activityManager.appTasks[0].taskInfo.topActivity?.className
+        } else {
+            activityManager.getRunningTasks(1)[0].topActivity?.className
+        }
         return currentActivity == CHAT_ACTIVITY
     }
 
