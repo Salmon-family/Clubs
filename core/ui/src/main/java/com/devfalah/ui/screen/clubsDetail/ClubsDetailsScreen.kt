@@ -1,5 +1,6 @@
 package com.devfalah.ui.screen.clubsDetail
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
@@ -8,9 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
@@ -25,6 +28,7 @@ import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
+import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.clubDetails.isPostVisible
@@ -39,6 +43,12 @@ fun ClubsDetailsScreen(
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(key1 = lifecycleState.value) {
+    if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            Log.e("DEVFALAH", "ON_RESUME")
+    }
+}
 
     ClubsDetailsContent(
         state = state,
