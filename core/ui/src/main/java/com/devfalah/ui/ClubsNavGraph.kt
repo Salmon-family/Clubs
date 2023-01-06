@@ -1,13 +1,9 @@
 package com.devfalah.ui
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.runtime.Composable
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.devfalah.ui.image.ImageActivity
 import com.devfalah.ui.screen.accountSettings.accountSettingsRoute
 import com.devfalah.ui.screen.allSearchResultScreen.allSearchResultRoute
 import com.devfalah.ui.screen.clubCreation.clubCreationRoute
@@ -28,7 +24,6 @@ import com.devfalah.ui.screen.reportBug.reportBugRoute
 import com.devfalah.ui.screen.savedPosts.savedPostsRoute
 import com.devfalah.ui.screen.search.searchRoute
 import com.devfalah.ui.screen.userInformation.editUserInformationRoute
-import com.devfalah.ui.util.Constants
 
 
 @Composable
