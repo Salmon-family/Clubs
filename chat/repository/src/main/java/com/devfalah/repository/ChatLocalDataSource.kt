@@ -2,7 +2,6 @@ package com.devfalah.repository
 
 import com.devfalah.repository.models.MessageEntityLocalDTO
 import com.devfalah.repository.models.ChatLocalDto
-import com.devfalah.repository.models.FriendDTOLocal
 import kotlinx.coroutines.flow.Flow
 
 interface ChatLocalDataSource {
@@ -21,9 +20,4 @@ interface ChatLocalDataSource {
 
     suspend fun updateRecentMessage(id: Int, recentMessage: String)
 
-    fun getFriends(): Flow<List<FriendDTOLocal>>
-
-    fun getFriends(query: String): Flow<List<FriendDTOLocal>>
-
-    suspend fun insertFriends(friends: List<FriendDTOLocal>)
 }

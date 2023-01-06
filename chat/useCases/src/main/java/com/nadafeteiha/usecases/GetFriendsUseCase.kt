@@ -1,32 +1,18 @@
 package com.nadafeteiha.usecases
 
 import com.thechance.entities.Friend
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class GetFriendsUseCase @Inject constructor(
     private val chatRepository: ChatRepository,
+    private val getChatsUseCase: GetChatsUseCase,
 ) {
-    suspend operator fun invoke(): Flow<List<Friend>> {
-        return chatRepository.getFriends()
+    suspend operator fun invoke(): List<Friend> {
+        val friendsList = chatRepository.getAllFriends(chatRepository.getUserId())
+        val chatsList = getChatsUseCase().first().map { it.guid }
+
+        return friendsList.filterNot { chatsList.contains(it.id) }
     }
 
-    suspend fun getFriends(page: Int): Int {
-        val friends = chatRepository.getAllFriends(chatRepository.getUserId(), page)
-        chatRepository.insertFriends(friends.friends)
-        return friends.count
-    }
-
-    suspend fun loadingMoreFriends(
-        friendsCount: Int,
-        friendsCountLocally: Int,
-    ): Boolean {
-        return if (friendsCount > friendsCountLocally) {
-            val nextPage = friendsCountLocally / 10 + 1
-            getFriends(nextPage)
-            false
-        } else {
-            true
-        }
-    }
 }

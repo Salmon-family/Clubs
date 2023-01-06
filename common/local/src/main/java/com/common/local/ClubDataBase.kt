@@ -6,10 +6,9 @@ import com.common.local.daos.ChatDao
 import com.common.local.daos.ClubDao
 import com.devfalah.repositories.models.PostLocalDto
 import com.devfalah.repository.models.ChatLocalDto
-import com.devfalah.repository.models.FriendDTOLocal
 import com.devfalah.repository.models.MessageEntityLocalDTO
 
-@Database(entities = [PostLocalDto::class, MessageEntityLocalDTO::class, ChatLocalDto::class, FriendDTOLocal::class],
+@Database(entities = [PostLocalDto::class, MessageEntityLocalDTO::class, ChatLocalDto::class],
     version = 1)
 abstract class ClubDataBase : RoomDatabase() {
 

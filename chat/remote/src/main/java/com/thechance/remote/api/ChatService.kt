@@ -2,7 +2,7 @@ package com.thechance.remote.api
 
 import com.devfalah.repository.models.ChatDTO
 import com.devfalah.repository.models.ConversationDTO
-import com.devfalah.repository.models.FriendsDTO
+import com.devfalah.repository.models.FriendsResponse
 import com.devfalah.repository.models.UserDTO
 import com.thechance.remote.response.BaseResponse
 import retrofit2.Response
@@ -40,6 +40,5 @@ interface ChatService {
     @GET("user_friends")
     suspend fun getAllFriends(
         @Query("guid") userID: Int,
-        @Query("offset") page: Int = 1,
-    ): Response<BaseResponse<FriendsDTO>>
+    ): Response<BaseResponse<FriendsResponse>>
 }

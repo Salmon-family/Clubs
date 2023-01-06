@@ -12,6 +12,9 @@ data class FriendUiState(
 
 fun Friend.toUiState(): FriendUiState {
     return FriendUiState(
-        id, icon, name, title
+        id,
+        icon,
+        name,
+        title
     )
 }

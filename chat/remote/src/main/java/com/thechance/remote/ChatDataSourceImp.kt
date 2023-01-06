@@ -38,8 +38,8 @@ class ChatDataSourceImp @Inject constructor(
         return wrap { chatService.getUserDetails(userID) }
     }
 
-    override suspend fun getAllFriends(userID: Int, page: Int): FriendsDTO {
-        return wrap { chatService.getAllFriends(userID, page) }
+    override suspend fun getAllFriends(userID: Int): List<FriendDTO> {
+        return wrap { chatService.getAllFriends(userID) }.list ?: throw Throwable("empty list")
     }
 
     private suspend fun <T> wrap(

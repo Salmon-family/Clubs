@@ -5,9 +5,6 @@ data class FriendsUiState(
     val searchQuery: String = "",
     val isLoading: Boolean = false,
     val isFail: Boolean = false,
-    val friendsCount: Int = 0,
-    val isLoadingMore: Boolean = false,
-    val isLastPage: Boolean = false,
 )
 
 fun FriendsUiState.isEmpty() = friends.isEmpty()
