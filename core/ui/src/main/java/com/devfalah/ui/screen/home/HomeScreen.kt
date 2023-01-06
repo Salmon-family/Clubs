@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -35,6 +36,7 @@ import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -106,9 +108,15 @@ fun HomeContent(
             SwipeRefresh(
                 state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
                 onRefresh = updateHome,
-                indicatorAlignment = Alignment.Center,
+                indicatorAlignment = Alignment.TopCenter,
                 indicator = { state, refreshTrigger ->
-
+                    SwipeRefreshIndicator(
+                        state = state,
+                        refreshTriggerDistance = refreshTrigger,
+                        backgroundColor = MaterialTheme.colors.surface,
+                        contentColor = MaterialTheme.colors.primary,
+                        shape = CircleShape,
+                    )
                 },
                 content = {
                     ManualPager(
@@ -148,8 +156,6 @@ fun HomeContent(
 
             if (state.error.isNotBlank()) {
                 ErrorItem(onClickRetry = onRetry)
-            } else if (state.isLoading) {
-                Loading()
             }
         }
     }
