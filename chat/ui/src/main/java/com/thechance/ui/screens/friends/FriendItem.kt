@@ -47,7 +47,7 @@ fun FriendItem(
                 text = state.name,
                 textAlign = TextAlign.Start,
                 fontSize = 14.sp,
-                color = MaterialTheme.colors.primaryVariant,
+                color = MaterialTheme.colors.onPrimary,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1
             )
