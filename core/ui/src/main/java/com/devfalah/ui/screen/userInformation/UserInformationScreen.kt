@@ -80,6 +80,7 @@ fun UserInformationContent(
                 value = state.name,
                 onValueChange = onNameChange,
                 singleLine = true,
+                maxChar = 30
             )
             HeightSpacer16()
             CustomTextField(
