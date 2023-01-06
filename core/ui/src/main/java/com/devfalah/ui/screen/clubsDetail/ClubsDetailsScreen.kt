@@ -43,21 +43,14 @@ fun ClubsDetailsScreen(
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
-    when(lifecycleState.value){
-        Lifecycle.Event.ON_CREATE->{
-            Log.e("DEVFALAH","ON_CREATE")
-        }
-        Lifecycle.Event.ON_RESUME->{
-            Log.e("DEVFALAH","ON_RESUME")
-        }
-        Lifecycle.Event.ON_PAUSE->{
-            Log.e("DEVFALAH","ON_PAUSE")
-        }
-        Lifecycle.Event.ON_DESTROY->{
-            Log.e("DEVFALAH","ON_DESTROY")
+    LaunchedEffect(key1 = lifecycleState.value) {
+    when (lifecycleState.value) {
+        Lifecycle.Event.ON_RESUME -> {
+            Log.e("DEVFALAH", "ON_RESUME")
         }
         else -> {}
     }
+}
 
     ClubsDetailsContent(
         state = state,
