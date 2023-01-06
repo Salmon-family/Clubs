@@ -87,6 +87,7 @@ fun UserInformationContent(
                 hint = stringResource(R.string.title),
                 value = state.title,
                 onValueChange = onTitleChange,
+                maxChar = 30
             )
             HeightSpacer16()
 
