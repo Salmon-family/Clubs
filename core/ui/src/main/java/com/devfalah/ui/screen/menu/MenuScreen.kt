@@ -38,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.flipWithLanguage
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
@@ -146,19 +147,20 @@ fun MenuContent(
     ) {
         Column {
 
-        AppBar(
-            title = stringResource(id = R.string.menu),
-            showBackButton = false,
-            actions = {
-                IconButton(onClick = onClickLogOut) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
-                        contentDescription = "",
-                        tint = MaterialTheme.colors.primaryVariant
-                    )
+            AppBar(
+                title = stringResource(id = R.string.menu),
+                showBackButton = false,
+                actions = {
+                    IconButton(onClick = onClickLogOut) {
+                        Icon(
+                            modifier = Modifier.flipWithLanguage(),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
+                            contentDescription = "",
+                            tint = MaterialTheme.colors.primaryVariant
+                        )
+                    }
                 }
-            }
-        )
+            )
 
             LazyColumn(
                 modifier = Modifier

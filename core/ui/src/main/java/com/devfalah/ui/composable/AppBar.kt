@@ -49,6 +49,7 @@ fun AppBar(
             {
                 IconButton(onClick = onBackButton) {
                     Icon(
+                        modifier = Modifier.flipWithLanguage(),
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
                         contentDescription = null,
                         tint = MaterialTheme.colors.primaryVariant
@@ -62,4 +63,10 @@ fun AppBar(
         contentColor = contentColor,
         modifier = modifier.fillMaxWidth()
     )
+}
+
+
+fun Modifier.flipWithLanguage(): Modifier {
+    val isLayoutRtl = Locale.getDefault().layoutDirection == LayoutDirection.Rtl.ordinal
+    return if (isLayoutRtl) this.scale(scaleX = -1f, scaleY = 1f) else this
 }
