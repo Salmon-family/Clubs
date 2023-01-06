@@ -24,6 +24,7 @@ class CreateThreadUseCase @Inject constructor(
         } else {
             clubRepository.publishPostUserWall(userId, publisherWall, postContent, privacy)
         }
+        clubRepository.addHomePost(post)
         return post
     }
 

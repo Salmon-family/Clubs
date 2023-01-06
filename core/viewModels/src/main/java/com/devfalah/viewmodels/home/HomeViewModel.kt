@@ -57,7 +57,6 @@ class HomeViewModel @Inject constructor(
     private fun getHomeThreads(scrollDirection: Int) {
         viewModelScope.launch {
             try {
-                delay(3000)
                 val loadMore = getHomeThreads.loadData(scrollDirection)
                 _uiState.update {
                     it.copy(
