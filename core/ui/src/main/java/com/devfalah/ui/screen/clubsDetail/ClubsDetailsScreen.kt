@@ -19,9 +19,11 @@ import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.*
 import com.devfalah.ui.screen.editClub.navigateToEditClub
+import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.clubDetails.ClubDetailsUiState
 import com.devfalah.viewmodels.clubDetails.ClubDetailsViewModel
 import com.devfalah.viewmodels.clubDetails.isPostVisible
@@ -34,6 +36,7 @@ fun ClubsDetailsScreen(
     viewModel: ClubDetailsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
 
     ClubsDetailsContent(
@@ -69,7 +72,9 @@ fun ClubsDetailsScreen(
                 clubDescription = state.detailsUiState.description,
                 clubPrivacy = state.detailsUiState.isClubPublic
             )
-        }
+        },
+        onClickProfile = { navController.navigateToProfile(it) },
+        onOpenLinkClick = { openBrowser(context, it) },
     )
 
     val color = MaterialTheme.colors.onBackground
@@ -96,7 +101,9 @@ private fun ClubsDetailsContent(
     onRetry: () -> Unit,
     onClickJoinRequestClub: () -> Unit,
     onClickEditClub: () -> Unit,
-    onDeletePost: (PostUIState) -> Unit
+    onDeletePost: (PostUIState) -> Unit,
+    onClickProfile: (Int) -> Unit,
+    onOpenLinkClick: (String) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -197,8 +204,8 @@ private fun ClubsDetailsContent(
                             onClickComment = onClickComment,
                             onClickSave = onClickSave,
                             onClickPostSetting = onDeletePost,
-                            onClickProfile = {},
-                            onOpenLinkClick = {},
+                            onClickProfile = onClickProfile,
+                            onOpenLinkClick = onOpenLinkClick,
                         )
                     }
                 }
