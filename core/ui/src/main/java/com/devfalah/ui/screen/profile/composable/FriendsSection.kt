@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.profile.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +19,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.HeightSpacer8
-import com.devfalah.ui.theme.LightPrimaryBlackColor
-import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightTernaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.friends.FriendUIState
 
@@ -32,7 +30,9 @@ fun FriendsSection(
 ) {
     Column(modifier.fillMaxWidth()) {
         Row(
-            Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -53,24 +53,29 @@ fun FriendsSection(
 
         HeightSpacer8()
 
-        Row(
-            Modifier.fillMaxWidth(),
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             friends.take(4).forEach {
-                Friend(
-                    painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
-                    text = it.name,
-                )
+                item {
+                    Friend(
+                        painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
+                        text = it.name,
+                    )
+                }
             }
 
             if (friends.size > 4) {
-                Friend(
-                    painter = painterResource(id = R.drawable.ic_more),
-                    text = stringResource(R.string.more),
-                    textColor = MaterialTheme.colors.primaryVariant
-                )
+                item {
+                    Friend(
+                        painter = painterResource(id = R.drawable.ic_more),
+                        text = stringResource(R.string.more),
+                        textColor = MaterialTheme.colors.primaryVariant
+                    )
+                }
             }
         }
 

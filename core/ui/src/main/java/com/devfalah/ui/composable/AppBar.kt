@@ -50,7 +50,7 @@ fun AppBar(
                 IconButton(onClick = onBackButton) {
                     Icon(
                         modifier = Modifier.flipWithLanguage(),
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_arrow),
                         contentDescription = null,
                         tint = MaterialTheme.colors.primaryVariant
                     )
