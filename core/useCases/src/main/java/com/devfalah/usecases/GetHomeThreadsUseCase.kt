@@ -2,7 +2,6 @@ package com.devfalah.usecases
 
 import com.devfalah.entities.Post
 import com.devfalah.usecases.repository.ClubRepository
-import com.devfalah.usecases.util.Constants.HOME_GROUP_ID
 import com.devfalah.usecases.util.Constants.SCROLL_UP
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,11 +20,7 @@ class GetHomeThreadsUseCase @Inject constructor(
         val homePosts = clubRepository.getHomePosts().map {
             postsCount = it.size
             it.map { post ->
-                if (post.id in savedPosts) {
-                    post.copy(isSaved = true, isMyPost = userId == post.publisherId)
-                } else {
-                    post.copy(isMyPost = userId == post.publisherId)
-                }
+                post.copy(isMyPost = userId == post.publisherId)
             }
         }
         return homePosts
@@ -46,19 +41,13 @@ class GetHomeThreadsUseCase @Inject constructor(
         }
         val homePosts = clubRepository.getUserHomePosts(userId, page).map { post ->
             if (post.id in savedPosts) {
-                post.copy(isSaved = true, isMyPost = userId == post.publisherId)
+                post.copy(isSaved = false, isMyPost = userId == post.publisherId)
             } else {
                 post.copy(isMyPost = userId == post.publisherId)
             }
         }
         clubRepository.addHomePosts(homePosts)
         return true
-    }
-
-    private suspend fun getSavedPostsIds() {
-        return clubRepository.getSavedPostedIds(HOME_GROUP_ID).collect {
-            savedPosts.addAll(it)
-        }
     }
 
 }

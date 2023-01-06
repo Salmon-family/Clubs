@@ -1,7 +1,8 @@
 package com.devfalah.repositories
 
-import com.devfalah.repositories.models.PostHomeDto
-import com.devfalah.repositories.models.PostLocalDto
+import com.devfalah.repositories.models.post.PostHome
+import com.devfalah.repositories.models.post.PostHomeDto
+import com.devfalah.repositories.models.post.PostLocalDto
 import kotlinx.coroutines.flow.Flow
 
 interface CoreLocalDataSource {
@@ -19,11 +20,12 @@ interface CoreLocalDataSource {
     //region Home
     suspend fun insertHomePosts(posts: List<PostHomeDto>)
 
-    suspend fun getHomePosts(): Flow<List<PostHomeDto>>
+    suspend fun getHomePosts(): Flow<List<PostHome>>
 
     suspend fun insertHomePost(post: PostHomeDto)
 
     suspend fun clearHomePosts()
+
     //endregion
 
 }

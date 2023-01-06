@@ -3,6 +3,7 @@ package com.devfalah.repositories
 import com.devfalah.entities.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.repositories.mappers.toHomeEntity
+import com.devfalah.repositories.mappers.toPostHomeEntity
 import com.devfalah.repositories.mappers.toUserInfo
 import com.devfalah.usecases.repository.ClubRepository
 import kotlinx.coroutines.flow.Flow
@@ -274,7 +275,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getHomePosts(): Flow<List<Post>> {
-        return localDataSource.getHomePosts().map { it.toEntity() }
+        return localDataSource.getHomePosts().map { it.toPostHomeEntity() }
     }
 
     override suspend fun addHomePost(post: Post) {
@@ -284,6 +285,5 @@ class ClubRepositoryImp @Inject constructor(
     override suspend fun clearHomePosts() {
         localDataSource.clearHomePosts()
     }
-
 
 }

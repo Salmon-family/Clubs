@@ -1,4 +1,4 @@
-package com.devfalah.repositories.models
+package com.devfalah.repositories.models.post
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -32,5 +32,20 @@ data class PostHomeDto(
     val publisher: String,
     val publisherId: Int,
     val publisherImageUrl: String,
-    val isLiked: Boolean
+    val isLiked: Boolean,
+)
+
+data class PostHome(
+    val id: Int,
+    val privacy: Boolean,
+    val createdTime: Long,
+    val content: String,
+    val imageUrl: String,
+    val totalLikes: Int,
+    val totalComments: Int,
+    val publisher: String,
+    val publisherId: Int,
+    val publisherImageUrl: String,
+    val isLiked: Boolean,
+    val saved: Boolean
 )

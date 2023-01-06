@@ -3,8 +3,9 @@ package com.common.local.dataSource
 
 import com.common.local.daos.ClubDao
 import com.devfalah.repositories.CoreLocalDataSource
-import com.devfalah.repositories.models.PostHomeDto
-import com.devfalah.repositories.models.PostLocalDto
+import com.devfalah.repositories.models.post.PostHome
+import com.devfalah.repositories.models.post.PostHomeDto
+import com.devfalah.repositories.models.post.PostLocalDto
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -40,13 +41,11 @@ class CoreLocalDataSourceImp @Inject constructor(
         clubDao.insertPost(post)
     }
 
-    override suspend fun getHomePosts(): Flow<List<PostHomeDto>> {
+    override suspend fun getHomePosts(): Flow<List<PostHome>> {
         return clubDao.getHomePosts()
     }
 
     override suspend fun clearHomePosts() {
         clubDao.clearHomePosts()
     }
-
-
 }

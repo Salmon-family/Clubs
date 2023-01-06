@@ -4,8 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.common.local.daos.ChatDao
 import com.common.local.daos.ClubDao
-import com.devfalah.repositories.models.PostHomeDto
-import com.devfalah.repositories.models.PostLocalDto
+import com.devfalah.repositories.models.post.PostHomeDto
+import com.devfalah.repositories.models.post.PostLocalDto
 import com.devfalah.repository.models.ChatLocalDto
 import com.devfalah.repository.models.MessageEntityLocalDTO
 
