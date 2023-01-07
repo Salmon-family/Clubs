@@ -13,18 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.ExpandableText
+import com.devfalah.ui.composable.ExpandText
 import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightSecondaryGrayColor
-import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.util.getDataDescription
 import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.postDetails.CommentUIState
@@ -36,22 +33,10 @@ fun CommentBody(
     onClickLike: () -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        ExpandableText(
+
+        ExpandText(
             modifier = Modifier.fillMaxWidth(),
-            text = state.text.htmlText(),
-            minimizedMaxLines = 2,
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = PlusJakartaSans,
-                fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colors.secondaryVariant,
-                textAlign = if (state.isOwnerComment) {
-                    TextAlign.End
-                } else {
-                    TextAlign.Start
-                }
-            ),
-            isTextAlignToStart = state.isOwnerComment
+            text = state.text.htmlText()
         )
 
         HeightSpacer8()

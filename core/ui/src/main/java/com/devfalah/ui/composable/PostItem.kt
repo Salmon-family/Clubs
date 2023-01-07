@@ -29,6 +29,7 @@ fun PostItem(
     onClickProfile: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onImageClick: (String) -> Unit,
+    isPostDetails: Boolean = false
 ) {
     Card(
         modifier = modifier
@@ -57,7 +58,8 @@ fun PostItem(
                 maxLineToExpand = maxLineContentExpand,
                 contentExpandable = isContentExpandable,
                 onOpenLinkClick = onOpenLinkClick,
-                onImageClick = onImageClick
+                onImageClick = onImageClick,
+                isPostDetails = isPostDetails
             )
 
             if (!state.isFromAlbum) {
