@@ -10,4 +10,8 @@
     <string name="no_friends">لا يوجد أصدقاء</string>
     <string name="friends">الأصدقاء</string>
     <string name="new_chat">محادثة جديدة</string>
+    <string name="try_again">اعد المحاولة</string>
+    <string name="no_more_data">لا يوجد المزيد</string>
+    <string name="retry">اعادة المحاولة</string>
+    <string name="an_error_has_occurred">لقد حدث خطأ ما</string>
 </resources>

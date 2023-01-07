@@ -33,6 +33,6 @@ interface ChatRepository {
 
     fun getUserId(): Int
 
-    suspend fun getAllFriends(userID: Int): List<Friend>
+    suspend fun getAllFriends(userID: Int, page: Int): Friends
 
 }

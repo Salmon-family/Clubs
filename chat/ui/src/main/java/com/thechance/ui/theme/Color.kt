@@ -17,6 +17,7 @@ val WhiteColor = Color(0xFFFFFFFF)
 val LightBackgroundColor = Color(0xFFF6F6F7)
 val LightCardColor = Color(0xFFFFFFFF)
 val LightPrimaryTextColor = Color(0xDE04030A)
+val LightSecondaryBlackColor = Color(0x9904030A)
 
 
 //for Dark theme
@@ -26,4 +27,6 @@ val DarkOnBackgroundColor = Color(0xFFFFFFFF)
 val DarkCardColor = Color(0xFF1C1C1E)
 val DarkOnSurfaceColor = Color(0x3CFFFFFF)
 val DarkPrimaryTextColor = Color(0xDEFFFFFF)
+val DarkSecondaryWhiteColor = Color(0x99FFFFFF)
+
 

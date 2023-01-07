@@ -14,5 +14,5 @@ interface ChatRemoteDataSource {
 
     suspend fun getUserDetails(userID: Int): UserDTO
 
-    suspend fun getAllFriends(userID: Int): List<FriendDTO>
+    suspend fun getAllFriends(userID: Int, page: Int): FriendsResponse
 }

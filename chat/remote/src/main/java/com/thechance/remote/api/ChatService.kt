@@ -40,5 +40,6 @@ interface ChatService {
     @GET("user_friends")
     suspend fun getAllFriends(
         @Query("guid") userID: Int,
+        @Query("offset") page: Int,
     ): Response<BaseResponse<FriendsResponse>>
 }

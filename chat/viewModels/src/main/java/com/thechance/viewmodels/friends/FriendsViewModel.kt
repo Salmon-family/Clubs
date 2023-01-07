@@ -20,22 +20,38 @@ class FriendsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        _uiState.update { it.copy(isLoading = true) }
         getFriendsList()
     }
 
-    private fun getFriendsList() {
+    fun getFriendsList() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(isLoading = true, isFail = false) }
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = true,
+                        isFail = false,
+                        isPagerFail = false
+                    )
+                }
                 val friends = getFriends()
                 _uiState.update { friendsUiState ->
                     friendsUiState.copy(
-                        friends = friends.map { it.toUiState() },
-                        isLoading = false
+                        friends = (_uiState.value.friends + friends.friends.map { it.toUiState() }),
+                        isLoading = false,
+                        isPagerLoading = false,
+                        isPagerEnd = (friends.friends.isEmpty() || friends.friends.size < 9),
                     )
                 }
             } catch (throwable: Throwable) {
-                _uiState.update { it.copy(isLoading = false, isFail = true) }
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isPagerLoading = false,
+                        isFail = _uiState.value.friends.isEmpty(),
+                        isPagerFail = _uiState.value.friends.isNotEmpty()
+                    )
+                }
             }
 
 

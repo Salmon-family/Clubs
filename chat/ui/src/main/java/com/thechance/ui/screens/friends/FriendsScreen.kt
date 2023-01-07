@@ -2,24 +2,25 @@ package com.thechance.ui.screens.friends
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.thechance.ui.R
+import com.thechance.ui.composable.ErrorItem
 import com.thechance.ui.composable.Loading
+import com.thechance.ui.composable.ManualPager
 import com.thechance.ui.screens.conversation.navigateToConversation
 import com.thechance.viewmodels.friends.FriendsViewModel
 import com.thechance.viewmodels.friends.uistate.FriendsUiState
@@ -39,6 +40,8 @@ fun FriendsScreen(
             navController.navigateToConversation(it)
         },
         onClickBack = { navController.popBackStack() },
+        onRefresh = viewModel::getFriendsList,
+        onRetry = viewModel::getFriendsList
     )
 
     val color = MaterialTheme.colors.background
@@ -54,26 +57,25 @@ private fun FriendsContent(
     uiState: FriendsUiState,
     onClickFriend: (Int) -> Unit,
     onClickBack: () -> Unit,
+    onRefresh: () -> Unit,
+    onRetry: () -> Unit,
 ) {
-    val listState = rememberLazyListState()
-    Scaffold(
-        topBar = {
-            TopAppBarFriends(
-                onClickBack
-            )
-        }
-    ) {
+    Column {
+        TopAppBarFriends(onClickBack)
         if (uiState.isLoading) {
             Loading()
-        }
-        if (!uiState.isLoading && uiState.isEmpty()) {
+        } else if (uiState.isFail) {
+            ErrorItem(onClickRetry = onRetry)
+        } else if (uiState.isEmpty()) {
             EmptyState(modifier = Modifier.fillMaxSize())
         }
 
-        LazyColumn(
+        ManualPager(
+            onRefresh = onRefresh,
             contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            state = listState,
+            isLoading = uiState.isPagerLoading,
+            error = if (uiState.isPagerFail) stringResource(R.string.an_error_has_occurred) else "",
+            isEndOfPager = uiState.isPagerEnd,
         ) {
 
             items(

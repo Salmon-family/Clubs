@@ -82,7 +82,7 @@ dependencies {
     //web-view
     implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
 
-    implementation("com.airbnb.android:lottie-compose:4.0.0")
+    implementation("com.airbnb.android:lottie-compose:$lottie_version")
 
     // Splash Screen
     implementation "androidx.core:core-splashscreen:$splash_version"
