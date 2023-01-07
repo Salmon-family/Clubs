@@ -13,7 +13,6 @@ import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -39,7 +38,7 @@ class HomeViewModel @Inject constructor(
         _uiState.update { it.copy(error = "", isLoading = true) }
         viewModelScope.launch {
             getHomeThreads().collect { posts ->
-                _uiState.update { it.copy(posts = posts.toUIState()) }
+                _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
             }
         }
     }
