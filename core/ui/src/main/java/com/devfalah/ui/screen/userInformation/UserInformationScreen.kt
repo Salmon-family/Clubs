@@ -80,6 +80,7 @@ fun UserInformationContent(
                 value = state.name,
                 onValueChange = onNameChange,
                 singleLine = true,
+                maxChar = 30
             )
             HeightSpacer16()
             CustomTextField(
@@ -87,6 +88,7 @@ fun UserInformationContent(
                 hint = stringResource(R.string.title),
                 value = state.title,
                 onValueChange = onTitleChange,
+                maxChar = 30
             )
             HeightSpacer16()
 

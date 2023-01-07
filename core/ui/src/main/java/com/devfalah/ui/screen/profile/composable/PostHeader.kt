@@ -70,9 +70,8 @@ fun PostHeader(
                             .padding(top = 4.dp),
                         tint = MaterialTheme.colors.onSecondary
                     )
-                    WidthSpacer8()
                     Text(
-                        text = "${getPrivacyText(post.privacy)}  |  ",
+                        text = " ${getPrivacyText(post.privacy)}  |  ",
                         fontSize = 12.sp,
                         fontFamily = PlusJakartaSans,
                         fontWeight = FontWeight.Normal,

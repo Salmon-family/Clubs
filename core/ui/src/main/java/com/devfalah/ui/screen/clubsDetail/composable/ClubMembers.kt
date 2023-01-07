@@ -1,6 +1,7 @@
 package com.devfalah.ui.screen.clubsDetail.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +18,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.HeightSpacer8
-import com.devfalah.ui.composable.WidthSpacer12
 import com.devfalah.ui.theme.LightPrimaryBlackColor
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.clubDetails.MembersUIState
@@ -29,7 +29,9 @@ fun ClubMembers(
 ) {
     Column(modifier.fillMaxWidth()) {
         Row(
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -43,28 +45,30 @@ fun ClubMembers(
 
         HeightSpacer8()
 
-        Row(
+        LazyRow(
             modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             friends.take(4).forEach {
-                Members(
-                    modifier = Modifier.padding(8.dp),
-                    painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
-                    text = it.name,
-                    textColor = MaterialTheme.colors.primaryVariant
-                )
+                item {
+                    Members(
+                        painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
+                        text = it.name,
+                        textColor = MaterialTheme.colors.primaryVariant
+                    )
+                }
             }
 
-            WidthSpacer12()
-
             if (friends.size > 4) {
-                Members(
-                    modifier = Modifier.padding(top = 8.dp, end = 8.dp, bottom = 8.dp),
-                    painter = painterResource(id = R.drawable.ic_more),
-                    text = stringResource(R.string.more),
-                    textColor = MaterialTheme.colors.onSurface
-                )
+                item {
+                    Members(
+                        painter = painterResource(id = R.drawable.ic_more),
+                        text = stringResource(R.string.more),
+                        textColor = MaterialTheme.colors.primary
+                    )
+                }
             }
         }
 
