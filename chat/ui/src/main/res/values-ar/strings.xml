@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chats">المحادثات</string>
+    <string name="arrow_back">سهم الرجوع</string>
+    <string name="edit">اضافة</string>
+    <string name="search">بحث</string>
+    <string name="search_text">البحث عن صديق</string>
+    <string name="enter_your_message">أدخل رسالتك…</string>
+    <string name="no_chats">لاتوجد محادثات</string>
+    <string name="nothing_to_show">لا شيء للعرض</string>
+    <string name="empty_chat_description">ابدأ محادثة جديدة مع أحد أصدقائك لتعرضها هنا.</string>
+    <string name="no_friends">لا يوجد أصدقاء</string>
+    <string name="friends">الأصدقاء</string>
+    <string name="new_chat">محادثة جديدة</string>
+    <string name="try_again">اعد المحاولة</string>
+    <string name="no_more_data">لا يوجد المزيد</string>
+    <string name="retry">اعادة المحاولة</string>
+    <string name="an_error_has_occurred">لقد حدث خطأ ما</string>
+</resources>

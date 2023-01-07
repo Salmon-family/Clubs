@@ -8,7 +8,7 @@ data class GroupMembersResponse(
     @SerializedName("count")
     val count: Int?,
     @SerializedName("members")
-    val members: List<UserDTO?>?,
+    val members: List<UserDTO>?,
     @SerializedName("offset")
     val offset: Int?
 )

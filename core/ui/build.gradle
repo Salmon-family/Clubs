@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":core:viewModels"))
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -61,8 +62,37 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
     //hilt
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // Coil image
+    def coil_version = '2.2.2'
+    implementation "io.coil-kt:coil-compose:$coil_version"
+
+    def accompanist_version = "0.27.0"
+    // swipe
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
+
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
+    //web-view
+    implementation "com.google.accompanist:accompanist-webview:$accompanist_version"
+
+    implementation("com.airbnb.android:lottie-compose:$lottie_version")
+
+    // Splash Screen
+    implementation "androidx.core:core-splashscreen:$splash_version"
+    implementation "androidx.compose.ui:ui:1.3.2"
+    implementation "androidx.compose.material:material:1.3.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.3.2"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.activity:activity-compose:1.6.1'
+
+    //zoomable image
+    implementation 'com.github.Tlaster:Zoomable:0.6.2'
+
 }

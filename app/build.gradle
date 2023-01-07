@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
     id 'dagger.hilt.android.plugin'
+    id 'com.google.firebase.firebase-perf'
+    id 'com.google.firebase.crashlytics'
 }
 
 def localProperties = new Properties()
@@ -19,9 +21,10 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
-        buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
+        buildConfigField "String", "BASE_URL", "\"https://club.the-chance.org/api/v1.0/\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -36,8 +39,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -57,14 +60,35 @@ android {
 
 dependencies {
 
-    // core
+    //region core
     api(project(":core:ui"))
     api(project(":core:remote"))
     api(project(":core:repositories"))
     api(project(":core:useCases"))
     api(project(":core:viewModels"))
-    implementation("androidx.compose.runtime:runtime:$compose_ui_version")
-    //
+    api(project(":core:local"))
+    //endregion
+
+    //region chat
+    api(project(":chat:ui"))
+    api(project(":chat:viewModels"))
+    api(project(":chat:useCases"))
+    api(project(":chat:repository"))
+    api(project(":chat:remote"))
+    api(project(":chat:local"))
+    api(project(":common:firebase"))
+    //endregion
+
+    //region identity
+    api(project(":identity:ui"))
+    api(project(":identity:viewModel"))
+    api(project(":identity:useCases"))
+    api(project(":identity:repositories"))
+    api(project(":identity:remote"))
+    api(project(":identity:local"))
+    //endregion
+
+    implementation 'com.android.support:multidex:1.0.3'
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -73,6 +97,36 @@ dependencies {
 
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation project(path: ':common:local')
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    implementation("androidx.compose.runtime:runtime:$compose_ui_version")
+
+    // Coil image
+    implementation "io.coil-kt:coil-compose:$coil_version"
+
+    implementation "androidx.navigation:navigation-compose:2.6.0-alpha04"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+
+    // delay in interceptor
+    implementation 'com.github.pawel-schmidt:okhttp-delay-interceptor:0.0.1'
+
+    implementation "com.google.firebase:firebase-firestore-ktx:$firebase_version"
+
+    implementation "androidx.datastore:datastore-preferences:$data_store_version"
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+
+    implementation 'com.google.firebase:firebase-perf-ktx'
+
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 }

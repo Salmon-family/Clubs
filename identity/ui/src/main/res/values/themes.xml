@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <style name="Theme.SplashScreenAndroid" parent="android:Theme.Material.Light.NoActionBar">
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/brand_color</item>
+        <item name="android:windowBackground">@color/background_dialog</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
+</resources>

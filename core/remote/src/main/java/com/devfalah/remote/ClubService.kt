@@ -4,62 +4,42 @@ import com.devfalah.remote.response.*
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDetailsDTO
 import com.devfalah.repositories.models.group.GroupDTO
-import com.devfalah.repositories.models.message.ConversationDTO
-import com.devfalah.repositories.models.message.MessagesDTO
+import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationCountDTO
 import com.devfalah.repositories.models.notification.NotificationsDTO
+import com.devfalah.repositories.models.post.WallPostDTO
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ClubService {
 
-    /**
-     * User
-     * */
-
-    @POST("user_authenticate")
-    suspend fun login(
-        @Query("username") username: String,
-        @Query("password") password: String
-    ): Response<BaseResponse<UserDTO>>
-
     @FormUrlEncoded
     @POST("user_details")
     suspend fun getUserDetails(@Field("guid") userID: Int): Response<BaseResponse<UserDTO>>
 
-
     @FormUrlEncoded
     @POST("user_edit")
-    suspend fun editUser(
+    suspend fun editUserDetails(
         @Field("guid") userID: Int,
+        @Field("new_full_name") name: String,
+        @Field("new_job_title") title: String,
         @Field("new_email") email: String,
-        @Field("new_gender") gender: String,
-        @Field("new_first_name") firstName: String,
-        @Field("new_last_name") lastName: String,
         @Field("current_password") currentPassword: String,
-        @Field("new_password") newPassword: String = ""
+        @Field("new_password") newPassword: String = "",
     ): Response<BaseResponse<UserDTO>>
 
-    @FormUrlEncoded
-    @POST("user_add")
-    suspend fun addUser(
-        @Field("firstname") firstname: String,
-        @Field("lastname") lastname: String,
-        @Field("email") email: String,
-        @Field("reemail") reEmail: String,
-        @Field("gender") gender: String,
-        @Field("birthdate") birthdate: String,
-        @Field("username") username: String,
-        @Field("password") password: String
-    ): Response<BaseResponse<UserDTO>>
 
     /**
      * Friends
      * */
     @FormUrlEncoded
     @POST("user_friends")
-    suspend fun getUserFriends(@Field("guid") userID: Int)
-            : Response<BaseResponse<FriendsResponse>>
+    suspend fun getUserFriends(
+        @Field("guid") userID: Int,
+        @Field("offset") page: Int
+    ): Response<BaseResponse<FriendsDTO>>
 
     @FormUrlEncoded
     @POST("user_friend_requests")
@@ -71,15 +51,21 @@ interface ClubService {
     suspend fun isFriendWith(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
     @FormUrlEncoded
     @POST("user_remove_friend")
     suspend fun removeFriend(
         @Field("user_a") userID: Int,
         @Field("user_b") otherUserID: Int
-    ): Response<BaseResponse<CheckFriendshipDTO>>
+    ): Response<BaseResponse<FriendshipDTO>>
 
+    @FormUrlEncoded
+    @POST("user_add_friend")
+    suspend fun addFriendRequest(
+        @Field("user_a") userID: Int,
+        @Field("user_b") otherUserID: Int
+    ): Response<BaseResponse<FriendshipDTO>>
 
     /**
      * posts
@@ -89,7 +75,7 @@ interface ClubService {
     suspend fun addLike(
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
-        @Field("type") type: LikeType
+        @Field("type") type: String
     ): Response<BaseResponse<ReactionDTO>>
 
     @FormUrlEncoded
@@ -97,7 +83,7 @@ interface ClubService {
     suspend fun removeLike(
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
-        @Field("type") type: LikeType
+        @Field("type") type: String
     ): Response<BaseResponse<ReactionDTO>>
 
 
@@ -110,14 +96,15 @@ interface ClubService {
         @Field("uguid") userID: Int,
         @Field("subject_guid") postID: Int,
         @Field("comment") comment: String,
-        @Field("image_file") imageFile: Array<String>? = null,
-    ): Response<BaseResponse<CommentResponse>>
+        @Field("type") type: String = "post",
+        @Field("image_file") imageFile: Array<String>? = arrayOf(""),
+    ): Response<BaseResponse<AddedCommentDTO>>
 
     @FormUrlEncoded
     @POST("comment_delete")
     suspend fun deleteComment(
         @Field("guid") userID: Int,
-        @Field("id") commentID: Int
+        @Field("id") commentID: Int,
     ): Response<BaseResponse<Boolean>>
 
     @FormUrlEncoded
@@ -131,10 +118,10 @@ interface ClubService {
     @POST("comments_list")
     suspend fun getComments(
         @Field("uguid") userID: Int,
-        @Field("type") type: LikeType,
+        @Field("type") type: String,
         @Field("guid") postID: Int,
-        @Field("page_limit") page: Int? = null,
-        @Field("limit") limit: Int = 5
+        @Field("offset") page: Int = 1,
+        @Field("limit") limit: Int = 20
     ): Response<BaseResponse<CommentsResponse>>
 
     /**
@@ -149,11 +136,20 @@ interface ClubService {
     ): Response<BaseResponse<GroupMembersResponse>>
 
     @FormUrlEncoded
+    @POST("wall_list_group")
+    suspend fun getGroupWallList(
+        @Field("group_guid") groupID: Int,
+        @Field("guid") userID: Int,
+        @Field("offset") page: Int,
+    ): Response<BaseResponse<GroupWallDto>>
+
+    @FormUrlEncoded
     @POST("groups_add")
     suspend fun addGroups(
         @Field("guid") userID: Int,
         @Field("name") groupName: String,
-        @Field("privacy") groupPrivacy: Int
+        @Field("privacy") groupPrivacy: Int,
+        @Field("description") description: String,
     ): Response<BaseResponse<GroupDTO>>
 
     @FormUrlEncoded
@@ -162,14 +158,28 @@ interface ClubService {
         @Field("group_guid") groupID: Int,
         @Field("uguid") groupOwnerID: Int,
         @Field("groupname") groupName: String,
-        @Field("groupdesc") groupDescription: String? = null,
-        @Field("membership") groupPrivacy: Int? = null
+        @Field("membership") groupPrivacy: Int,
+        @Field("groupdesc") groupDescription: String,
     ): Response<BaseResponse<Boolean>>
 
     @GET("groups_user_memberof")
     suspend fun getAllUserGroups(
         @Query("guid") userID: Int
     ): Response<BaseResponse<GroupResponse>>
+
+    @GET("groups_request_decline")
+    suspend fun declineGroupsRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") memberId: Int,
+        @Query("uguid") userId: Int
+    ): Response<BaseResponse<Boolean>>
+
+    @GET("groups_request_accept")
+    suspend fun acceptGroupsRequest(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") memberId: Int,
+        @Query("uguid") userId: Int
+    ): Response<BaseResponse<Boolean>>
 
     @GET("groups_view")
     suspend fun getGroupDetails(
@@ -181,6 +191,18 @@ interface ClubService {
     suspend fun getMemberRequestsToGroup(
         @Query("group_guid") groupID: Int
     ): Response<BaseResponse<GroupRequestsResponse>>
+
+    @POST("groups_join")
+    suspend fun joinClub(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") userId: Int
+    ): Response<BaseResponse<GroupDTO>>
+
+    @POST("groups_unjoin")
+    suspend fun unJoinClub(
+        @Query("group_guid") clubId: Int,
+        @Query("guid") userId: Int
+    ): Response<BaseResponse<GroupDTO>>
 
     /**
      * notification
@@ -204,39 +226,6 @@ interface ClubService {
         @Field("notification_guid") notificationID: Int
     ): Response<BaseResponse<NotificationsDTO>>
 
-    /**
-     * message
-     * */
-
-    @GET("message_recent")
-    suspend fun getRecentMessages(
-        @Query("guid")userID:Int
-    ):Response<BaseResponse<ConversationDTO>>
-
-    @GET("message_list")
-    suspend fun getConversationWithFriend(
-        @Query("to") userID: Int,
-        @Query("guid") friendID: Int,
-        @Query("markallread") markAsRead: Int = 0,
-        @Query("offset") page: Int? = null
-    ): Response<BaseResponse<ConversationDTO>>
-
-
-    // 1 to mark as read , 0 if not.
-    @GET("message_new")
-    suspend fun getUnreadMessages(
-        @Query("to") userID: Int,
-        @Query("from") friendID: Int,
-        @Query("markallread") markAsRead: Int = 0
-    ): Response<BaseResponse<UnreadMessagesResponse>>
-
-    @FormUrlEncoded
-    @POST("message_add")
-    suspend fun sendMessage(
-        @Field("from") userID: Int,
-        @Field("to") friendID: Int,
-        @Field("message") message: String
-    ): Response<BaseResponse<MessagesDTO>>
 
     /**
      * Album
@@ -248,12 +237,6 @@ interface ClubService {
         @Query("uguid") albumGuid: Int
     ): Response<BaseResponse<AlbumsResponse>>
 
-
-    @GET("photos_list_profile_cover")
-    suspend fun getUserProfileAlbum(
-        @Query("guid") userId: Int,
-        @Query("type") userPictureType: UserPictureType
-    ): Response<BaseResponse<UserPicture>>
 
     @GET("photos_list")
     suspend fun getAllPhotosInAlbum(
@@ -322,19 +305,29 @@ interface ClubService {
         @Field("post_guid") postID: Int
     ): Response<BaseResponse<Boolean>>
 
+    @Multipart
+    @POST("wall_add")
+    suspend fun addPostWithImage(
+        @Part("poster_guid") userId: RequestBody,
+        @Part("owner_guid") friendOrGroupID: RequestBody,
+        @Part("type") type: RequestBody,
+        @Part("post") post: RequestBody,
+        @Part("privacy") privacy: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): Response<BaseResponse<WallPostDTO>>
+
     @FormUrlEncoded
     @POST("wall_add")
     suspend fun addPostOnWallFriendOrGroup(
         @Field("poster_guid") userId: Int,
         @Field("owner_guid") friendOrGroupID: Int,
-        @Field("type") type: PostType,
-        @Field("post") post: String?,
-        @Field("friends") taggedFriends: List<Int>,
-        @Field("location") location: String,
-        //3 for Friends only, 2 for public.
+        @Field("type") type: String,
+        @Field("post") post: String,
+        @Field("friends") taggedFriends: List<Int> = emptyList(),
+        @Field("location") location: String = "",
         @Field("privacy") privacy: Int = 2,
         @Field("ossn_photo") photo: String? = null
-    )
+    ): Response<BaseResponse<WallPostDTO>>
 
     @GET("wall_view")
     suspend fun getWallPost(
@@ -344,9 +337,30 @@ interface ClubService {
 
     @GET("wall_list_user")
     suspend fun getAllWallPosts(
-        @Query("guid") userID: Int,
+        @Query("guid") userId: Int,
         @Query("uguid") friendID: Int,
         @Query("offset") page: Int? = null,
         @Query("count") pageSize: Int? = null
-    ): Response<BaseResponse<FriendWallDTO>>
+    ): Response<BaseResponse<ProfilePostResponse>>
+
+    @GET("wall_list_home")
+    suspend fun getHomePosts(
+        @Query("guid") userID: Int,
+        @Query("offset") page: Int? = null,
+        @Query("count") pageSize: Int? = null
+    ): Response<BaseResponse<ProfilePostResponse>>
+
+    @Multipart
+    @POST("photos_profile_add")
+    suspend fun addProfilePicture(
+        @Part("guid") userId: RequestBody,
+        @Part file: MultipartBody.Part,
+    ): Response<BaseResponse<UserDTO>>
+
+    @GET("my_custom_end_point")
+    suspend fun getSearch(
+        @Query("guid") userID: Int,
+        @Query("keyword") keyword: String,
+    ): Response<BaseResponse<SearchResultDto>>
+
 }

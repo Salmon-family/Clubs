@@ -18,7 +18,7 @@ android {
         targetSdk 33
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
-        buildConfigField "String", "BASE_URL", "\"https://test.the-chance.org/api/v1.0/\""
+        buildConfigField "String", "BASE_URL", "\"https://club.the-chance.org/api/v1.0/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -30,8 +30,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -46,10 +46,12 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$gson_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+
 
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation 'androidx.paging:paging-common-ktx:3.1.1'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
 
 }

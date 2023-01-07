@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "Clubs"
@@ -22,3 +24,21 @@ include ':core:viewModels'
 include ':core:repositories'
 include ':core:repositories'
 include ':core:ui'
+include ':core:local'
+include ':chat:entities'
+include ':chat:remote'
+include ':chat:ui'
+include ':chat:useCases'
+include ':chat:viewModels'
+include ':identity:entities'
+include ':identity:remote'
+include ':identity:repositories'
+include ':identity:ui'
+include ':identity:useCases'
+include ':identity:viewModel'
+include ':chat:local'
+include ':chat:repository'
+include ':chat:firebase'
+include ':identity:local'
+include ':common:firebase'
+include ':common:local'
