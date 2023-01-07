@@ -24,6 +24,13 @@ class MyClubsViewModel @Inject constructor(
     }
 
     fun getData() {
+        getSpecialClub()
+        _uiState.update { it.copy(isLoading = true, error = "") }
+        getMyClubs()
+
+    }
+
+    private fun getSpecialClub() {
         viewModelScope.launch {
             val myLocalClubs = specialClubs.map {
                 SpecialClubsUIState(
@@ -33,14 +40,12 @@ class MyClubsViewModel @Inject constructor(
                 )
             }
             _uiState.update { it.copy(specialClubs = myLocalClubs) }
-            getMyClubs()
         }
     }
 
     private fun getMyClubs() {
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(isLoading = true, error = "") }
                 val myClubs = getUserClubs(specialClubs.map { it.key })
                 _uiState.update {
                     it.copy(
@@ -54,6 +59,11 @@ class MyClubsViewModel @Inject constructor(
             }
 
         }
+    }
+
+    fun refreshClub() {
+        getSpecialClub()
+        getMyClubs()
     }
 
 }

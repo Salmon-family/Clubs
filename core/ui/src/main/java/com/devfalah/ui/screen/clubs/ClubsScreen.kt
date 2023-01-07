@@ -46,7 +46,7 @@ fun ClubsScreen(
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
     LaunchedEffect(key1 = lifecycleState.value) {
         if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
-            viewModel.getData()
+            viewModel.refreshClub()
         }
     }
     ClubsContent(
