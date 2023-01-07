@@ -14,18 +14,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
-import com.devfalah.ui.composable.*
+import com.devfalah.ui.composable.AppBar
+import com.devfalah.ui.composable.ErrorItem
+import com.devfalah.ui.composable.Loading
+import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.EmptyNotificationsItem
 import com.devfalah.ui.screen.notification.composable.NotificationItem
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.notifications.NotificationState
 import com.devfalah.viewmodels.notifications.NotificationsUIState
 import com.devfalah.viewmodels.notifications.NotificationsViewModel
@@ -39,7 +45,12 @@ fun NotificationScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
-
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(key1 = lifecycleState.value) {
+        if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            viewModel.refreshNotification()
+        }
+    }
     NotificationContent(
         state = state,
         onClickTryAgain = viewModel::getUserNotifications,
