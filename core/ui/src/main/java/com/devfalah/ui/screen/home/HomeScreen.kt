@@ -125,7 +125,7 @@ fun HomeContent(
                     ManualPager(
                         onRefresh = onRefresh,
                         contentPadding = PaddingValues(vertical = 16.dp),
-                        isLoading = state.isPagerLoading,
+                        isLoading = state.isPagerLoading && !state.isLoading ,
                         error = state.pagerError,
                         isEndOfPager = state.isEndOfPager,
                     ) {

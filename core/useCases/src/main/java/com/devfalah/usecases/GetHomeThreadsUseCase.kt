@@ -15,6 +15,7 @@ class GetHomeThreadsUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
     private var userId = -1
+    private var currentPage = 0
 
     suspend operator fun invoke(): Flow<List<Post>> {
         userId = getUserId()
@@ -34,18 +35,27 @@ class GetHomeThreadsUseCase @Inject constructor(
             } else {
                 (postsCount / MAX_ITEMS_PER_PAGE) + 1
             }
-        return refreshData(page)
+        if (currentPage < page) {
+            currentPage = page
+        }
+        return refreshData()
     }
 
-    private suspend fun refreshData(page: Int): Boolean {
+    private suspend fun refreshData(): Boolean {
         if (userId == ERROR_USER) {
             userId = getUserId()
         }
-        val homePosts = clubRepository.getUserHomePosts(userId, page).map { post ->
+        val homePosts = clubRepository.getUserHomePosts(userId, currentPage).map { post ->
             post.copy(isMyPost = userId == post.publisherId)
         }
         clubRepository.addHomePosts(homePosts)
-        return true
+
+        return if (homePosts.isNotEmpty()) {
+            currentPage += 1
+            true
+        } else {
+            false
+        }
     }
 
 
