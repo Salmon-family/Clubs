@@ -153,7 +153,7 @@ class PostDetailsViewModel @Inject constructor(
 
     //need add loading on button like editProfile...
     fun onClickSendComment() {
-        val commentText = _uiState.value.commentText
+        val commentText = _uiState.value.commentText.trim()
         _uiState.update { it.copy(commentText = "", minorError = "") }
         viewModelScope.launch {
             try {

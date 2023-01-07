@@ -159,7 +159,7 @@ fun PostDetailsContent(
                 }
             }
             CommentOnThread(
-                isEnabled = state.commentText.isNotEmpty(),
+                isEnabled = state.commentText.trim().isNotEmpty(),
                 text = state.commentText,
                 onClickSendComment = onClickSendComment,
                 onValueChanged = onCommentValueChanged
