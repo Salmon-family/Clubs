@@ -1,7 +1,9 @@
 package com.thechance.ui.screens.chat
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -16,8 +18,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.thechance.ui.composable.FriendChat
@@ -28,6 +32,7 @@ import com.thechance.ui.screens.chat.composable.EmptyChatItem
 import com.thechance.ui.screens.conversation.navigateToConversation
 import com.thechance.ui.screens.friends.navigateToFriends
 import com.thechance.ui.theme.LightPrimaryBrandColor
+import com.thechance.ui.util.observeAsState
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
 import com.thechance.viewmodels.chats.uiStates.ChatsUiState
@@ -41,6 +46,12 @@ fun ChatsScreen(
     val state by viewModel.uiState.collectAsState()
     val activity = (LocalContext.current as? Activity)
     val systemUIController = rememberSystemUiController()
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(key1 = lifecycleState.value) {
+        if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            viewModel.refreshChats()
+        }
+    }
     ChatsContent(
         state = state,
         onValueChanged = viewModel::onSearchTextChange,
@@ -87,10 +98,13 @@ private fun ChatsContent(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             state = listState,
         ) {
-            item {
+            stickyHeader {
                 SearchTextField(
                     text = state.searchText,
-                    onValueChanged = onValueChanged
+                    onValueChanged = onValueChanged,
+                    modifier = Modifier
+                        .background(MaterialTheme.colors.background)
+                        .padding(bottom = 8.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }

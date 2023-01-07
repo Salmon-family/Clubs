@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.devfalah.ui.composable.flipWithLanguage
+import com.devfalah.ui.modifiers.flipWithLanguage
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor

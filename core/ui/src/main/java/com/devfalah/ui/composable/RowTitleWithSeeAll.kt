@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
+import com.devfalah.ui.modifiers.flipWithLanguage
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.PlusJakartaSans
 

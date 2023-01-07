@@ -28,6 +28,7 @@ import com.devfalah.ui.R
 import com.devfalah.ui.Screen
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
+import com.devfalah.ui.modifiers.flipWithLanguage
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection

@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
+import com.devfalah.ui.modifiers.flipWithLanguage
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.LightPrimaryBrandTransparentColor
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -76,25 +78,33 @@ fun ProfileDetailsSection(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
-                .constrainAs(appBar){
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .constrainAs(appBar) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_arrow),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp).clickable { onClickBackButton() },
+                modifier = Modifier
+                    .size(24.dp)
+                    .nonRippleEffect { onClickBackButton() }
+                    .flipWithLanguage(),
                 tint = Color.White
             )
+            Spacer(modifier = Modifier.weight(1f))
             if(userDetails.isMyProfile){
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.setting),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp).clickable { onClickEditProfile() },
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable { onClickEditProfile() },
                     tint = Color.White
                 )
             }

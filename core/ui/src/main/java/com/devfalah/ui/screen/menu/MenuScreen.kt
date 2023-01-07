@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.flipWithLanguage
 import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.modifiers.flipWithLanguage
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection

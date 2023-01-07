@@ -35,6 +35,7 @@ class ChatsViewModel @Inject constructor(
 
     private fun initChats() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
             refreshChats()
             getChats().filterNot { it.isEmpty() }.collect { chats ->
                 _uiState.update { chatsUiState ->
@@ -47,10 +48,9 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
-    private fun refreshChats() {
+    fun refreshChats() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _uiState.update { it.copy(isLoading = true) }
                 val count = getChats.getChats( 1)
                 _uiState.update { it.copy(chatsCount = count, isLoading = false) }
             } catch (e: Exception) {

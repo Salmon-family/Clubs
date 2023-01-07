@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.R
-import com.devfalah.ui.composable.flipWithLanguage
+import com.devfalah.ui.modifiers.flipWithLanguage
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.WhiteColor
