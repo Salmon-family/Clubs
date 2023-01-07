@@ -19,7 +19,11 @@ class GetHomeThreadsUseCase @Inject constructor(
 
     suspend operator fun invoke(): Flow<List<Post>> {
         userId = getUserId()
-        loadData(FIRST_TIME)
+        try {
+            loadData(FIRST_TIME)
+        } catch (t: Throwable) {
+            currentPage = 0
+        }
         return clubRepository.getHomePosts().map {
             it.map { post ->
                 post.copy(isMyPost = userId == post.publisherId)
