@@ -20,6 +20,7 @@ buildscript {
 
         splash_version = "1.0.0"
         data_store_version = "1.0.0"
+        lottie_version = "4.0.0"
     }
 
     dependencies {

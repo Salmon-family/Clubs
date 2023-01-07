@@ -15,6 +15,8 @@ private val DarkColorPalette = darkColors(
     surface = DarkCardColor,
     onSurface = DarkOnSurfaceColor,
     onSecondary = DarkDateTextColor,
+    onPrimary = DarkPrimaryTextColor,
+    secondaryVariant = DarkSecondaryWhiteColor
 )
 
 private val LightColorPalette = lightColors(
@@ -24,6 +26,8 @@ private val LightColorPalette = lightColors(
     background = LightBackgroundColor,
     surface = LightCardColor,
     onSecondary = LightDateTextColor,
+    onPrimary = LightPrimaryTextColor,
+    secondaryVariant = LightSecondaryBlackColor
 
 
     /* Other default colors to override

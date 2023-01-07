@@ -102,7 +102,8 @@ fun ProfileScreen(
                 navController.navigateToEditUserInformation()
             }
         },
-        onImageClick = { navigateToImageScreen(context, it) }
+        onImageClick = { navigateToImageScreen(context, it) },
+        onClickBackButton = { navController.popBackStack() },
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -140,6 +141,7 @@ fun ProfileContent(
     onOpenLinkClick: (String) -> Unit,
     onEditUserInformation: () -> Unit,
     onImageClick: (String) -> Unit,
+    onClickBackButton: () -> Unit,
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -160,9 +162,10 @@ fun ProfileContent(
                     ProfileDetailsSection(
                         state.userDetails,
                         selectedImageUri = selectedImageUri,
-                        modifier = Modifier.nonRippleEffect { onEditUserInformation() },
                         onChangeProfileImage = onChangeProfileImage,
-                        onSendRequestClick = onClickAddFriend
+                        onSendRequestClick = onClickAddFriend,
+                        onClickBackButton = onClickBackButton,
+                        onClickEditProfile = onEditUserInformation
                     )
                 }
                 item(key = state.friends) {

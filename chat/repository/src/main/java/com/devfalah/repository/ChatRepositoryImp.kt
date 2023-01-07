@@ -1,7 +1,6 @@
 package com.devfalah.repository
 
 import com.devfalah.repository.mappers.*
-import com.devfalah.repository.models.UserDTO
 import com.nadafeteiha.usecases.ChatRepository
 import com.thechance.entities.*
 import kotlinx.coroutines.flow.Flow
@@ -64,7 +63,11 @@ class ChatRepositoryImp @Inject constructor(
     }
 
     override fun getUserId(): Int {
-        return chatDataStoreDataSource.getUserId() ?:0
+        return chatDataStoreDataSource.getUserId() ?: 0
+    }
+
+    override suspend fun getAllFriends(userID: Int, page: Int): Friends {
+        return chatRemoteDataSource.getAllFriends(userID, page).toEntity()
     }
 
     override suspend fun getMessages(friendId: Int): Flow<List<Message>> {
