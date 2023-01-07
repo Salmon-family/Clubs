@@ -8,7 +8,8 @@ import com.devfalah.repositories.models.PostLocalDto
 import com.devfalah.repository.models.ChatLocalDto
 import com.devfalah.repository.models.MessageEntityLocalDTO
 
-@Database(entities = [PostLocalDto::class, MessageEntityLocalDTO::class, ChatLocalDto::class], version = 1)
+@Database(entities = [PostLocalDto::class, MessageEntityLocalDTO::class, ChatLocalDto::class],
+    version = 1)
 abstract class ClubDataBase : RoomDatabase() {
 
     abstract fun clubDao(): ClubDao

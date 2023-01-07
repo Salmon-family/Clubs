@@ -1,10 +1,7 @@
 package com.thechance.remote
 
 import com.devfalah.repository.ChatRemoteDataSource
-import com.devfalah.repository.models.ChatDTO
-import com.devfalah.repository.models.ConversationDTO
-import com.devfalah.repository.models.NotificationDto
-import com.devfalah.repository.models.UserDTO
+import com.devfalah.repository.models.*
 import com.thechance.remote.api.ChatService
 import com.thechance.remote.api.CloudMessagingService
 import com.thechance.remote.response.BaseResponse
@@ -41,6 +38,9 @@ class ChatDataSourceImp @Inject constructor(
         return wrap { chatService.getUserDetails(userID) }
     }
 
+    override suspend fun getAllFriends(userID: Int, page: Int): FriendsResponse {
+        return wrap { chatService.getAllFriends(userID, page) }
+    }
 
     private suspend fun <T> wrap(
         function: suspend () -> Response<BaseResponse<T>>,

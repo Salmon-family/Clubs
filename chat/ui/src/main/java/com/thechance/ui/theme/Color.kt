@@ -19,6 +19,8 @@ val LightCardColor = Color(0xFFFFFFFF)
 val LightDateTextColor = Color(0x6104030A)
 val LightSecondaryBrandColor = Color(0xFFE7E4F8)
 val LightTernaryBrandColor = Color(0x33E7E4F8)
+val LightPrimaryTextColor = Color(0xDE04030A)
+val LightSecondaryBlackColor = Color(0x9904030A)
 
 
 //for Dark theme
@@ -28,4 +30,7 @@ val DarkOnBackgroundColor = Color(0xFFFFFFFF)
 val DarkCardColor = Color(0xFF1C1C1E)
 val DarkOnSurfaceColor = Color(0x3CFFFFFF)
 val DarkDateTextColor = Color(0x61FFFFFF)
+val DarkPrimaryTextColor = Color(0xDEFFFFFF)
+val DarkSecondaryWhiteColor = Color(0x99FFFFFF)
+
 

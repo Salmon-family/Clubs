@@ -1,6 +1,5 @@
 package com.thechance.ui.screens.chat
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -27,6 +26,7 @@ import com.thechance.ui.composable.SearchTextField
 import com.thechance.ui.composable.TopBarChats
 import com.thechance.ui.screens.chat.composable.EmptyChatItem
 import com.thechance.ui.screens.conversation.navigateToConversation
+import com.thechance.ui.screens.friends.navigateToFriends
 import com.thechance.ui.theme.LightPrimaryBrandColor
 import com.thechance.viewmodels.chats.ChatsViewModel
 import com.thechance.viewmodels.chats.uiStates.ChatUiState
@@ -53,6 +53,9 @@ fun ChatsScreen(
             activity?.finish()
         },
         onLoadingMoreChats = viewModel::onLoadingMore,
+        onClickNewChat = {
+            navController.navigateToFriends()
+        }
     )
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
@@ -60,7 +63,6 @@ fun ChatsScreen(
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChatsContent(
@@ -69,9 +71,10 @@ private fun ChatsContent(
     onClickChat: (ChatUiState) -> Unit,
     onCLickBack: () -> Unit,
     onLoadingMoreChats: () -> Unit,
+    onClickNewChat: () -> Unit
 ) {
     val listState = rememberLazyListState()
-    Scaffold(topBar = { TopBarChats(onCLickBack) }) {
+    Scaffold(topBar = { TopBarChats(onCLickBack) }) { scaffoldPadding ->
         if (state.isLoading) {
             Loading()
         }
@@ -79,6 +82,7 @@ private fun ChatsContent(
             EmptyChatItem()
         }
         LazyColumn(
+            modifier = Modifier.padding(scaffoldPadding),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             state = listState,

@@ -1,9 +1,6 @@
 package com.devfalah.repository
 
-import com.devfalah.repository.models.ChatDTO
-import com.devfalah.repository.models.ConversationDTO
-import com.devfalah.repository.models.NotificationDto
-import com.devfalah.repository.models.UserDTO
+import com.devfalah.repository.models.*
 
 interface ChatRemoteDataSource {
 
@@ -17,4 +14,5 @@ interface ChatRemoteDataSource {
 
     suspend fun getUserDetails(userID: Int): UserDTO
 
+    suspend fun getAllFriends(userID: Int, page: Int): FriendsResponse
 }
