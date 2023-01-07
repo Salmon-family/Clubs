@@ -193,7 +193,7 @@ private fun ClubsDetailsContent(
                         ClubMembers(friends = state.members,
                             modifier = Modifier
                                 .nonRippleEffect { onClickMembers(state.detailsUiState.clubId) }
-                                .padding(horizontal = 16.dp))
+                        )
                     }
                 }
 
