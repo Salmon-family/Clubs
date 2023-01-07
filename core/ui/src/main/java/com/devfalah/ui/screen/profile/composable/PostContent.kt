@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +19,8 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import com.devfalah.ui.R
 import com.devfalah.ui.composable.ExpandableText
 import com.devfalah.ui.composable.HeightSpacer16
 import com.devfalah.ui.modifiers.nonRippleEffect
@@ -36,6 +39,7 @@ fun PostContent(
     onOpenLinkClick: (String) -> Unit,
     onImageClick: (String) -> Unit,
 ) {
+
     if (URLUtil.isValidUrl(post.postContent)) {
         Text(
             modifier = Modifier
@@ -53,7 +57,11 @@ fun PostContent(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 8.dp),
-            text = post.postContent.htmlText(),
+            text = if (post.isFromAlbum) {
+                stringResource(id = R.string.change_profile)
+            } else {
+                post.postContent.htmlText()
+            },
             minimizedMaxLines = if (contentExpandable) {
                 maxLineToExpand
             } else {
@@ -70,7 +78,7 @@ fun PostContent(
     }
 
     if (post.postImage.isNotBlank()) {
-        if (post.postContent.isNotEmpty()) {
+        if (post.postContent.isNotEmpty() || post.isFromAlbum) {
             HeightSpacer16()
         }
         Image(

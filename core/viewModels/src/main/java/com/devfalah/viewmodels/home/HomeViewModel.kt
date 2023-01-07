@@ -6,10 +6,13 @@ import com.devfalah.usecases.GetHomeThreadsUseCase
 import com.devfalah.usecases.posts.DeletePostUseCase
 import com.devfalah.usecases.posts.SetFavoritePostUseCase
 import com.devfalah.usecases.posts.SetPostLikeUseCase
+import com.devfalah.usecases.util.Constants.SCROLL_DOWN
+import com.devfalah.usecases.util.Constants.SCROLL_UP
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -34,8 +37,43 @@ class HomeViewModel @Inject constructor(
     fun getData() {
         _uiState.update { it.copy(error = "", isLoading = true) }
         viewModelScope.launch {
-            getHomeThreads()
-            swipeToRefresh()
+            getHomeThreads().collect { posts ->
+                _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
+            }
+        }
+    }
+
+
+    fun getMorePosts() {
+        _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
+        getHomeThreads(SCROLL_DOWN)
+    }
+
+    fun updateHome() {
+        _uiState.update { it.copy(isLoading = true, pagerError = "") }
+        getHomeThreads(SCROLL_UP)
+    }
+
+    private fun getHomeThreads(scrollDirection: Int) {
+        viewModelScope.launch {
+            try {
+                val loadMore = getHomeThreads.loadData(scrollDirection)
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        isEndOfPager = !loadMore,
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiState.update {
+                    it.copy(
+                        isPagerLoading = false,
+                        isLoading = false,
+                        pagerError = t.message.toString(),
+                    )
+                }
+            }
         }
     }
 
@@ -86,42 +124,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun swipeToRefresh() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
-            try {
-                val homePosts = getHomeThreads.loadData()
-                _uiState.update {
-                    it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        isEndOfPager = homePosts.isEmpty(),
-                        posts = it.posts + homePosts.toUIState()
-                    )
-                }
-            } catch (t: Throwable) {
-                _uiState.update {
-                    it.copy(
-                        isPagerLoading = false,
-                        isLoading = false,
-                        pagerError = if (_uiState.value.posts.isNotEmpty()) {
-                            t.message.toString()
-                        } else {
-                            ""
-                        },
-                        error = if (_uiState.value.posts.isEmpty()) {
-                            t.message.toString()
-                        } else {
-                            ""
-                        }
-                    )
-                }
-            }
-        }
-    }
-
     fun onDeletePost(post: PostUIState) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 if (deletePostUseCase(post.postId)) {
                     _uiState.update {
@@ -129,7 +133,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }

@@ -82,7 +82,6 @@ fun PostCreationScreen(
         if (state.isSuccess) {
             goBack(
                 state,
-                navToHome = { navController.navigateHome() },
                 navToClubDetails = { navController.navigateToClubDetails(groupId = state.clubId) },
                 navController = navController
             )
@@ -156,18 +155,19 @@ fun PostCreationContent(
 
 private fun goBack(
     state: PostCreationUIState,
-    navToHome: () -> Unit,
     navToClubDetails: (Int) -> Unit,
     navController: NavController
 ) {
     when (state.clubId) {
         HOME_CLUB_ID -> {
-            navToHome()
+            navController.navigateUp()
         }
         PROFILE_CLUB_ID -> {
             navController.navigateToProfile(-1)
         }
         else -> {
+            val s = "dlklknlk"
+            s.length
             navToClubDetails(state.clubId)
         }
     }

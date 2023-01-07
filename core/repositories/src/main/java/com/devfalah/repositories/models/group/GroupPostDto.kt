@@ -1,7 +1,7 @@
 package com.devfalah.repositories.models.group
 
 
-import com.devfalah.repositories.models.PostDTO
+import com.devfalah.repositories.models.post.PostDTO
 import com.devfalah.repositories.models.UserDTO
 import com.google.gson.annotations.SerializedName
 

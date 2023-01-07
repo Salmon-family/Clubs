@@ -1,4 +1,4 @@
-package com.devfalah.repositories.models
+package com.devfalah.repositories.models.post
 
 import com.google.gson.annotations.SerializedName
 

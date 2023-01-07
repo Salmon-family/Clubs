@@ -2,7 +2,7 @@ package com.devfalah.remote.response
 
 
 import com.devfalah.repositories.models.UserDTO
-import com.devfalah.repositories.models.WallPostDTO
+import com.devfalah.repositories.models.post.WallPostDTO
 import com.google.gson.annotations.SerializedName
 
 data class ProfilePostResponse(

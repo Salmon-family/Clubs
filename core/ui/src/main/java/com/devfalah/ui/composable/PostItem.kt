@@ -60,7 +60,9 @@ fun PostItem(
                 onImageClick = onImageClick
             )
 
-            PostBottomAction(state, onClickLike, onClickComment, onClickSave)
+            if (!state.isFromAlbum) {
+                PostBottomAction(state, onClickLike, onClickComment, onClickSave)
+            }
         }
     }
 }

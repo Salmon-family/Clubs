@@ -27,6 +27,7 @@ class PostDetailsViewModel @Inject constructor(
     val postLike: SetPostLikeUseCase,
     val deletePostUseCase: DeletePostUseCase,
     val publisherDetails: GetUserAccountDetailsUseCase,
+    val updatePost: UpdatePostUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -152,7 +153,7 @@ class PostDetailsViewModel @Inject constructor(
 
     //need add loading on button like editProfile...
     fun onClickSendComment() {
-        val commentText = _uiState.value.commentText
+        val commentText = _uiState.value.commentText.trim()
         _uiState.update { it.copy(commentText = "", minorError = "") }
         viewModelScope.launch {
             try {
@@ -215,4 +216,9 @@ class PostDetailsViewModel @Inject constructor(
     }
     //endregion
 
+    fun updateLocalPost() {
+       viewModelScope.launch {
+           updatePost(uiState.value.post.toEntity())
+       }
+    }
 }

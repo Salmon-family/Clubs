@@ -12,8 +12,6 @@ object Constants {
 
 
     const val FIRST_TIME = 0
-    const val SWIPE_UP = 1
-    const val SWIPE_DOWN = -1
 
     const val SEARCH_CLUB = 1
     const val SEARCH_USER = 2
