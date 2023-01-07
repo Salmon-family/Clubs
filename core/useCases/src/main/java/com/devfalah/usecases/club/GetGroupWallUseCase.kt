@@ -16,7 +16,11 @@ class GetGroupWallUseCase @Inject constructor(
         getSavedPostsIds(groupID)
     }
 
-    suspend fun loadMore(groupID: Int): List<GroupWallPost> {
+    suspend fun loadMore(groupID: Int, isRestart: Boolean): List<GroupWallPost> {
+        if (isRestart) {
+            page = 1
+            println("test page $page")
+        }
         val clubPosts = clubRepository.getGroupWallList(userID = userId, groupID = groupID, page)
         count = clubPosts.count
         return if (clubPosts.post.isNotEmpty()) {

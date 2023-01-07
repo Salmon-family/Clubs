@@ -58,18 +58,18 @@ class ClubDetailsViewModel @Inject constructor(
         swipeToRefresh()
     }
 
-    fun swipeToRefresh() {
+    fun swipeToRefresh(isRestart: Boolean = false) {
         viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
-                    val posts = getGroupWallUseCase.loadMore(args.groupId)
+                    val posts = getGroupWallUseCase.loadMore(args.groupId, isRestart)
                         .toUIState(args.groupId, uiState.value.detailsUiState.name)
                     _uiState.update {
                         it.copy(
                             isLoading = false,
                             isPagerLoading = false,
-                            posts = (it.posts + posts),
+                            posts =if (isRestart){posts}else{it.posts + posts},
                             isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
                         )
                     }
@@ -225,7 +225,6 @@ class ClubDetailsViewModel @Inject constructor(
             }
         }
     }
-
 
     private fun onFailure(throwable: Throwable) {
         _uiState.update {
