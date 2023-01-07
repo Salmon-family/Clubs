@@ -23,7 +23,7 @@
         <activity
             android:name="com.devfalah.ui.main.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.SplashScreenAndroid"
+            android:theme="@style/Splash"
             android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
@@ -37,13 +37,14 @@
 
         <activity
             android:name="com.thechance.ui.ChatActivity"
-            android:theme="@style/Theme.SplashScreenAndroid"
+            android:theme="@style/Theme.Clubs"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
         </activity>
 
         <activity
             android:name="com.devfalah.ui.image.ImageActivity"
-            android:theme="@style/Theme.SplashScreenAndroid"
+            android:theme="@style/Theme.Clubs"
             android:exported="true">
 
         </activity>
@@ -51,7 +52,7 @@
 
         <activity
             android:name="com.thechance.identity.ui.main.AuthenticationActivity"
-            android:theme="@style/Theme.SplashScreenAndroid"
+            android:theme="@style/Theme.Clubs"
             android:exported="true">
 
         </activity>
