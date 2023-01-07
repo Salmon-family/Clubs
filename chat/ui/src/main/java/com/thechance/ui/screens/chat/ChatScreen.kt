@@ -74,7 +74,7 @@ private fun ChatsContent(
     onClickNewChat: () -> Unit
 ) {
     val listState = rememberLazyListState()
-    Scaffold(topBar = { TopBarChats(onCLickBack) }) { scaffoldPadding ->
+    Scaffold(topBar = { TopBarChats(onCLickBack, onClickNewChat) }) { scaffoldPadding ->
         if (state.isLoading) {
             Loading()
         }
