@@ -290,4 +290,8 @@ class ClubRepositoryImp @Inject constructor(
         localDataSource.deleteHomePosts(postId)
     }
 
+    override suspend fun getTotalHomePost(): Int {
+       return localDataSource.getTotalHomePost()
+    }
+
 }

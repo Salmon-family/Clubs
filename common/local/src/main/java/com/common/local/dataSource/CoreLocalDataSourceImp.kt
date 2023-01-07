@@ -52,4 +52,9 @@ class CoreLocalDataSourceImp @Inject constructor(
     override suspend fun clearHomePosts() {
         clubDao.clearHomePosts()
     }
+
+    override suspend fun getTotalHomePost(): Int{
+        return clubDao.getTotalHomePost()
+    }
+
 }

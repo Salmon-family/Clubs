@@ -140,4 +140,5 @@ interface ClubRepository {
 
     suspend fun deleteHomePostById(postId: Int)
 
+    suspend fun getTotalHomePost(): Int
 }

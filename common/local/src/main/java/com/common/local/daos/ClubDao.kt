@@ -1,7 +1,6 @@
 package com.common.local.daos
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -34,22 +33,27 @@ interface ClubDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPost(post: PostHomeDto)
 
-    @Query("select *, \n" +
-            "        CASE\n" +
-            "          WHEN EXISTS (select *\n" +
-            "                       from CLUB_TABLE B\n" +
-            "                       where B.id = A.id)\n" +
-            "          THEN 1\n" +
-            "          ELSE 0\n" +
-            "        END as saved\n" +
-            "from HOME_TABLE A ORDER BY createdTime DESC")
+    @Query(
+        "select *, \n" +
+                "        CASE\n" +
+                "          WHEN EXISTS (select *\n" +
+                "                       from CLUB_TABLE B\n" +
+                "                       where B.id = A.id)\n" +
+                "          THEN 1\n" +
+                "          ELSE 0\n" +
+                "        END as saved\n" +
+                "from HOME_TABLE A ORDER BY createdTime DESC"
+    )
     fun getHomePosts(): Flow<List<PostHome>>
 
     @Query("DELETE FROM HOME_TABLE")
-    fun clearHomePosts()
+    suspend fun clearHomePosts()
 
 
     @Query("DELETE FROM HOME_TABLE WHERE id == :postId")
-    fun deleteHomePost(postId: Int)
+    suspend fun deleteHomePost(postId: Int)
+
+    @Query("SELECT COUNT(*) FROM HOME_TABLE")
+    suspend fun getTotalHomePost(): Int
 
 }
