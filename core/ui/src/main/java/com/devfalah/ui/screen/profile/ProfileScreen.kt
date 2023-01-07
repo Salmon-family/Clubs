@@ -174,7 +174,6 @@ fun ProfileContent(
                         totalFriends = state.totalFriends,
                         modifier = Modifier
                             .nonRippleEffect { onClickFriends(state.userDetails.userID) }
-                            .padding(horizontal = 16.dp)
                     )
                 }
                 if (state.userDetails.isMyProfile || state.userDetails.areFriends) {

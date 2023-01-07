@@ -100,6 +100,7 @@ fun HomeContent(
             actions = {
                 IconButton(onClick = onClickChat) {
                     Icon(
+                        modifier = Modifier.flipWithLanguage(),
                         imageVector = ImageVector.vectorResource(id = R.drawable.send),
                         contentDescription = "",
                         tint = MaterialTheme.colors.primaryVariant

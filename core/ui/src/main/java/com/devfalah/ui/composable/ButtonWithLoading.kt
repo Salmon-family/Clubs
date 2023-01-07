@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.theme.WhiteColor
 
 @Composable
@@ -51,10 +53,13 @@ fun ButtonWithLoading(
         } else {
             Text(
                 text = text,
-                fontSize = 14.sp,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.SemiBold,
-                color = if (isEnabled) WhiteColor else MaterialTheme.colors.onSecondary
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold,
+                    color = if (isEnabled) WhiteColor else MaterialTheme.colors.onSecondary ,
+                    fontFamily = PlusJakartaSans
+                )
             )
         }
     }
