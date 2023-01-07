@@ -9,7 +9,9 @@ class UpdatePostUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(post: Post) {
-        clubRepository.addHomePost(post)
+        if (post.groupId == 0 && post.groupName.isEmpty()) {
+            clubRepository.addHomePost(post)
+        }
     }
 
 }
