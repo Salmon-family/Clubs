@@ -1,7 +1,5 @@
 package com.thechance.ui.screens.friends
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,8 +48,6 @@ fun FriendsScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun FriendsContent(
     uiState: FriendsUiState,
@@ -85,7 +81,6 @@ private fun FriendsContent(
                 }
             ) { friend ->
                 FriendItem(
-                    modifier = Modifier.animateItemPlacement(),
                     state = friend,
                     onClickNewFriend = onClickFriend
                 )

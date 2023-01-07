@@ -40,7 +40,7 @@ fun TopBarChats(
         actions = {
             IconButton(onClick = onClickNewChat, modifier = Modifier.padding(top = 5.dp)) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.paper_airplane),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.add_new_chat),
                     contentDescription = stringResource(id = R.string.new_chat),
                     tint = MaterialTheme.colors.onBackground,
                 )

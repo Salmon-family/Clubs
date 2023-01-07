@@ -1,6 +1,5 @@
 package com.thechance.ui.screens.chat
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -67,7 +66,6 @@ fun ChatsScreen(
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChatsContent(
@@ -79,7 +77,7 @@ private fun ChatsContent(
     onClickNewChat: () -> Unit
 ) {
     val listState = rememberLazyListState()
-    Scaffold(topBar = {TopBarChats(onCLickBack, onClickNewChat)}) {
+    Scaffold(topBar = { TopBarChats(onCLickBack, onClickNewChat) }) { scaffoldPadding ->
         if (state.isLoading) {
             Loading()
         }
@@ -92,54 +90,55 @@ private fun ChatsContent(
             }
 
         }
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                state = listState,
-            ) {
-                item {
-                    SearchTextField(
-                        text = state.searchText,
-                        onValueChanged = onValueChanged
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn(
+            modifier = Modifier.padding(scaffoldPadding),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            state = listState,
+        ) {
+            item {
+                SearchTextField(
+                    text = state.searchText,
+                    onValueChanged = onValueChanged
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            items(
+                items = state.chats,
+                key = { chatUiState ->
+                    chatUiState.guid
                 }
-                items(
-                    items = state.chats,
-                    key = { chatUiState ->
-                        chatUiState.guid
-                    }
-                ) { chat ->
-                    FriendChat(
-                        chatUiState = chat,
-                        modifier = Modifier.animateItemPlacement(),
-                        onClick = onClickChat,
-                    )
-                }
-                item {
-                    if (state.isLoadingMore) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CircularProgressIndicator(
-                                color = LightPrimaryBrandColor,
-                            )
-                        }
+            ) { chat ->
+                FriendChat(
+                    chatUiState = chat,
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = onClickChat,
+                )
+            }
+            item {
+                if (state.isLoadingMore) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator(
+                            color = LightPrimaryBrandColor,
+                        )
                     }
                 }
             }
+        }
 
     }
 
 
-        LaunchedEffect(key1 = listState.isScrolledToTheEnd()) {
-            if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
-                onLoadingMoreChats()
-            }
+    LaunchedEffect(key1 = listState.isScrolledToTheEnd()) {
+        if (!state.isLoadingMore && !state.isLastPage && listState.isScrolledToTheEnd()) {
+            onLoadingMoreChats()
         }
+    }
 }
 
 fun LazyListState.isScrolledToTheEnd(): Boolean {
