@@ -123,4 +123,5 @@
     <string name="empty_friends_screen">This account has no friends.</string>
     <string name="empty_clubs_description">You haven\'t joined to any club yet.</string>
     <string name="empty_club_requests_description">All your new club requests will be shown here.</string>
+    <string name="change_profile">Look at my new profile picture!!</string>
 </resources>
