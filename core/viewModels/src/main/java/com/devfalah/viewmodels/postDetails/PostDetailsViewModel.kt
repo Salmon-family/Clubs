@@ -217,8 +217,8 @@ class PostDetailsViewModel @Inject constructor(
     //endregion
 
     fun updateLocalPost() {
-        viewModelScope.launch {
-            updatePost(uiState.value.post.toEntity())
-        }
+       viewModelScope.launch {
+           updatePost(uiState.value.post.toEntity())
+       }
     }
 }

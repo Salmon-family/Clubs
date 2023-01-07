@@ -10,12 +10,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
@@ -26,6 +28,7 @@ import com.devfalah.ui.screen.postDetails.compose.CommentItem
 import com.devfalah.ui.screen.postDetails.compose.CommentOnThread
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.postDetails.CommentUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsUIState
 import com.devfalah.viewmodels.postDetails.PostDetailsViewModel
@@ -40,7 +43,13 @@ fun PostDetailsScreen(
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
 
+    LaunchedEffect(key1 = lifecycleState.value) {
+        if (lifecycleState.value == Lifecycle.Event.ON_STOP) {
+            viewModel.updateLocalPost()
+        }
+    }
     PostDetailsContent(
         state = state,
         onClickBack = { navController.popBackStack() },
@@ -57,8 +66,8 @@ fun PostDetailsScreen(
         onClickPostDelete = { navController.navigateUp() },
         onRetry = viewModel::getData,
         onImageClick = { navigateToImageScreen(context, it) },
-        updateLocalPost = viewModel::updateLocalPost
-    )
+
+        )
 
     val color = MaterialTheme.colors.background
     LaunchedEffect(true) {
@@ -86,16 +95,12 @@ fun PostDetailsContent(
     onClickDeleteComment: (CommentUIState) -> Unit,
     onRetry: () -> Unit,
     onImageClick: (String) -> Unit,
-    updateLocalPost: () -> Unit
 ) {
     Column(Modifier.fillMaxSize()) {
 
         AppBar(
             title = stringResource(id = R.string.post_details),
-            onBackButton = {
-                updateLocalPost()
-                onClickBack()
-            }
+            onBackButton = onClickBack
         )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
