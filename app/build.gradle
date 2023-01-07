@@ -19,8 +19,8 @@ android {
         applicationId "com.thechance.clubs"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 1000001
+        versionName "1.0-alpha01"
         multiDexEnabled true
 
         buildConfigField "String", "API_KEY", localProperties['apiKey']
@@ -32,6 +32,12 @@ android {
         }
     }
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+    lintOptions {
+        disable "Instantiatable"
+    }
     buildTypes {
         release {
             minifyEnabled false
