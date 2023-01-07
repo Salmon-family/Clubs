@@ -27,10 +27,19 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File
     var fileName = ""
     fileUri.let { returnUri ->
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.contentResolver.query(returnUri, null, null, null)
+            context.contentResolver.query(returnUri,
+                null,
+                null,
+                null
+            )
         } else {
-            context.getContentResolver()
-                .query(returnUri, null, CallLog.Calls.NUMBER, null, CallLog.Calls.DATE)
+            context.contentResolver.query(
+                returnUri,
+                null,
+                CallLog.Calls.NUMBER,
+                null,
+                CallLog.Calls.DATE
+            )
         }
     }?.use { cursor ->
         val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
@@ -40,11 +49,11 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File
 
     val bos = ByteArrayOutputStream()
     resizedImage.compress(Bitmap.CompressFormat.JPEG, 100, bos)
-    val bitmapdata = bos.toByteArray()
+    val bitmapData = bos.toByteArray()
     val outputFile = File(context.cacheDir, fileName)
     outputFile.createNewFile()
     val fos = FileOutputStream(outputFile)
-    fos.write(bitmapdata)
+    fos.write(bitmapData)
     fos.flush()
     fos.close()
     return outputFile
@@ -56,7 +65,7 @@ private fun getResizedBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
     var aspRat = actualWidth / actualHeight
 
     return if (aspRat > 0) {
-        var height = maxSize * aspRat
+        val height = maxSize * aspRat
         Bitmap.createScaledBitmap(bitmap, maxSize, height, false)
     } else {
         aspRat = actualHeight / actualWidth
