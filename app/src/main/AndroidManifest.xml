@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission  android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name=".ClubsApplication"
@@ -37,6 +39,12 @@
             android:name="com.thechance.ui.ChatActivity"
             android:theme="@style/Theme.SplashScreenAndroid"
             android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.devfalah.ui.image.ImageActivity"
+            android:theme="@style/Theme.SplashScreenAndroid"
+            android:exported="true">
 
         </activity>
 
@@ -55,6 +63,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <!-- Set Default notification icon and color. -->
@@ -63,12 +72,15 @@
      See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_launcher_foreground" />
+            android:resource="@drawable/ic_logo" />
         <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/purple_200" />
+
+        <meta-data android:name="com.dieam.reactnativepushnotification.default_notification_channel_id" android:value="gravity_fcm_channel" />
+
 
         <!-- Add default noitification channel id-->
         <meta-data

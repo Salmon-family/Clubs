@@ -9,4 +9,11 @@
     <string name="no_chats">No Chats</string>
     <string name="nothing_to_show">Nothing to show</string>
     <string name="empty_chat_description">Start a conversation with a friend to show it here</string>
+    <string name="no_friends">No Friends</string>
+    <string name="friends">Friends</string>
+    <string name="new_chat">New Chat</string>
+    <string name="no_more_data">no more data</string>
+    <string name="try_again">try again</string>
+    <string name="an_error_has_occurred">an error has occurred</string>
+    <string name="retry">Retry</string>
 </resources>

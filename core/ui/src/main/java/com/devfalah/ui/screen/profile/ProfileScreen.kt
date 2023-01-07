@@ -2,6 +2,7 @@ package com.devfalah.ui.screen.profile
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -13,18 +14,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
+import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
@@ -52,9 +50,14 @@ fun ProfileScreen(
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val systemUIController = rememberSystemUiController()
+
+    var selectedImageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
+            selectedImageUri = uri
             uri?.let {
                 viewModel.onClickChangeImage(
                     createFileFromContentUri(
@@ -68,6 +71,7 @@ fun ProfileScreen(
     )
     ProfileContent(
         state,
+        selectedImageUri = selectedImageUri,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
             navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
@@ -97,7 +101,9 @@ fun ProfileScreen(
             if (state.userDetails.isMyProfile) {
                 navController.navigateToEditUserInformation()
             }
-        }
+        },
+        onImageClick = { navigateToImageScreen(context, it) },
+        onClickBackButton = { navController.popBackStack() },
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -119,6 +125,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileContent(
     state: UserUIState,
+    selectedImageUri: Uri?,
     onClickLike: (PostUIState) -> Unit,
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
@@ -132,7 +139,9 @@ fun ProfileContent(
     onRetry: () -> Unit,
     onClickFriends: (Int) -> Unit,
     onOpenLinkClick: (String) -> Unit,
-    onEditUserInformation: () -> Unit
+    onEditUserInformation: () -> Unit,
+    onImageClick: (String) -> Unit,
+    onClickBackButton: () -> Unit,
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -152,9 +161,11 @@ fun ProfileContent(
                 item(key = state.userDetails.userID) {
                     ProfileDetailsSection(
                         state.userDetails,
-                        modifier = Modifier.nonRippleEffect { onEditUserInformation() },
+                        selectedImageUri = selectedImageUri,
                         onChangeProfileImage = onChangeProfileImage,
-                        onSendRequestClick = onClickAddFriend
+                        onSendRequestClick = onClickAddFriend,
+                        onClickBackButton = onClickBackButton,
+                        onClickEditProfile = onEditUserInformation
                     )
                 }
                 item(key = state.friends) {
@@ -191,6 +202,7 @@ fun ProfileContent(
                         onClickPostSetting = onClickPostSetting,
                         onClickProfile = onClickProfile,
                         onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = onImageClick
                     )
                 }
             }
