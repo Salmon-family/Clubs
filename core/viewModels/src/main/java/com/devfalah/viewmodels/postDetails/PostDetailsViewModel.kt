@@ -27,6 +27,7 @@ class PostDetailsViewModel @Inject constructor(
     val postLike: SetPostLikeUseCase,
     val deletePostUseCase: DeletePostUseCase,
     val publisherDetails: GetUserAccountDetailsUseCase,
+    val updatePost: UpdatePostUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -215,4 +216,9 @@ class PostDetailsViewModel @Inject constructor(
     }
     //endregion
 
+    fun updateLocalPost() {
+        viewModelScope.launch {
+            updatePost(uiState.value.post.toEntity())
+        }
+    }
 }

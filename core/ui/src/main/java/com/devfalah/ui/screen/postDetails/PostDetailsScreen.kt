@@ -56,7 +56,8 @@ fun PostDetailsScreen(
         onClickCommentLike = viewModel::onClickLikeComment,
         onClickPostDelete = { navController.navigateUp() },
         onRetry = viewModel::getData,
-        onImageClick = { navigateToImageScreen(context, it) }
+        onImageClick = { navigateToImageScreen(context, it) },
+        updateLocalPost = viewModel::updateLocalPost
     )
 
     val color = MaterialTheme.colors.background
@@ -85,12 +86,16 @@ fun PostDetailsContent(
     onClickDeleteComment: (CommentUIState) -> Unit,
     onRetry: () -> Unit,
     onImageClick: (String) -> Unit,
+    updateLocalPost: () -> Unit
 ) {
     Column(Modifier.fillMaxSize()) {
 
         AppBar(
             title = stringResource(id = R.string.post_details),
-            onBackButton = onClickBack
+            onBackButton = {
+                updateLocalPost()
+                onClickBack()
+            }
         )
         if (state.error.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
