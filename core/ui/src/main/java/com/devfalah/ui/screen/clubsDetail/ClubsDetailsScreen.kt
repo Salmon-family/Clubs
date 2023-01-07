@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.clubsDetail
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
@@ -45,10 +44,10 @@ fun ClubsDetailsScreen(
     val systemUIController = rememberSystemUiController()
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
     LaunchedEffect(key1 = lifecycleState.value) {
-    if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
-            Log.e("DEVFALAH", "ON_RESUME")
+        if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            viewModel.refreshClub()
+        }
     }
-}
 
     ClubsDetailsContent(
         state = state,

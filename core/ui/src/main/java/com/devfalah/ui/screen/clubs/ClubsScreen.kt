@@ -14,12 +14,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
@@ -29,6 +31,7 @@ import com.devfalah.ui.screen.clubs.composable.SpecialClubItem
 import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
 import com.devfalah.ui.theme.AppTypography
 import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.myClubs.MyClubsUiState
 import com.devfalah.viewmodels.myClubs.MyClubsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -40,7 +43,12 @@ fun ClubsScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val systemUIController = rememberSystemUiController()
-
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(key1 = lifecycleState.value) {
+        if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            viewModel.refreshClub()
+        }
+    }
     ClubsContent(
         state = state,
         onClickCreateClub = { navController.navigate(CLUB_CREATION_ROUTE) },
