@@ -10,6 +10,7 @@ class DeletePostUseCase @Inject constructor(
     suspend operator fun invoke(postId: Int): Boolean {
         val isDeleted = clubRepository.deletePost(clubRepository.getUserId(), postId)
         if (isDeleted){
+            clubRepository.deleteHomePostById(postId)
             clubRepository.deleteLocalPost(postId)
         }
         return isDeleted

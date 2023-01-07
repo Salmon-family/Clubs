@@ -137,4 +137,7 @@ interface ClubRepository {
     suspend fun addHomePost(post: Post)
 
     suspend fun clearHomePosts()
+
+    suspend fun deleteHomePostById(postId: Int)
+
 }

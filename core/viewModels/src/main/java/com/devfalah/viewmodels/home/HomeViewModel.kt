@@ -12,6 +12,7 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -125,7 +126,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onDeletePost(post: PostUIState) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 if (deletePostUseCase(post.postId)) {
                     _uiState.update {
@@ -133,7 +134,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }

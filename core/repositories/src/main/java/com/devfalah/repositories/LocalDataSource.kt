@@ -26,6 +26,7 @@ interface CoreLocalDataSource {
 
     suspend fun clearHomePosts()
 
+    suspend fun deleteHomePosts(postId: Int)
     //endregion
 
 }

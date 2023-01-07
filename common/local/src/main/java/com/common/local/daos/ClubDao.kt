@@ -1,6 +1,7 @@
 package com.common.local.daos
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -46,4 +47,9 @@ interface ClubDao {
 
     @Query("DELETE FROM HOME_TABLE")
     fun clearHomePosts()
+
+
+    @Query("DELETE FROM HOME_TABLE WHERE id == :postId")
+    fun deleteHomePost(postId: Int)
+
 }

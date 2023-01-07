@@ -89,9 +89,7 @@ class ClubRepositoryImp @Inject constructor(
 
 
     override suspend fun getUserHomePosts(userID: Int, page: Int): List<Post> {
-        val x = remoteDataSource.getUserHomePosts(userID, page = page).toEntity()
-        println(x)
-        return x
+        return remoteDataSource.getUserHomePosts(userID, page = page).toEntity()
     }
 
     override suspend fun isPostSavedLocally(postId: Int): Boolean {
@@ -286,6 +284,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun clearHomePosts() {
         localDataSource.clearHomePosts()
+    }
+
+    override suspend fun deleteHomePostById(postId: Int) {
+        localDataSource.deleteHomePosts(postId)
     }
 
 }
