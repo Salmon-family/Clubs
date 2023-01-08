@@ -74,7 +74,7 @@ fun ProfileScreen(
         selectedImageUri = selectedImageUri,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
+            navController.navigateToPostDetails(id = it.postId)
         },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,

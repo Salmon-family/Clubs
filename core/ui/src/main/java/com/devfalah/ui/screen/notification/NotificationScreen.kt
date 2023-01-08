@@ -64,10 +64,7 @@ fun NotificationScreen(
             Constants.LIKE_POST,
             Constants.COMMENT_POST,
             Constants.LIKE_COMMENT_POST ->
-                navController.navigateToPostDetails(
-                    id = it.subjectId,
-                    publisherId = it.publisherId,
-                )
+                navController.navigateToPostDetails(id = it.subjectId)
         }
     }
 

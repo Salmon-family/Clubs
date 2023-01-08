@@ -56,7 +56,7 @@ fun HomeScreen(
         state = state,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
+            navController.navigateToPostDetails(id = it.postId)
         },
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(HOME_CLUB_ID) },
