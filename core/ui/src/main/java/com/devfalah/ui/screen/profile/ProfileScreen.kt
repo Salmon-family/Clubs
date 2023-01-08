@@ -23,7 +23,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
-import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
@@ -60,11 +59,7 @@ fun ProfileScreen(
             selectedImageUri = uri
             uri?.let {
                 viewModel.onClickChangeImage(
-                    createFileFromContentUri(
-                        it,
-                        context,
-                        MAX_IMAGE_PROFILE_SIZE
-                    )
+                    createFileFromContentUri(it, context, MAX_IMAGE_PROFILE_SIZE)
                 )
             }
         }
@@ -80,7 +75,10 @@ fun ProfileScreen(
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
-            navigateToConversation(context = context, state.userDetails.userID)
+            navigateToConversation(
+                context = context,
+                state.userDetails.userID
+            )
         },
         onChangeProfileImage = {
             singlePhotoPickerLauncher.launch(
@@ -95,7 +93,8 @@ fun ProfileScreen(
             }
         },
         onRetry = viewModel::getData,
-        onClickFriends = { navController.navigateToFriends(it) },
+        onClickFriend = { navController.navigateToProfile(it) },
+        onClickMoreFriends = { navController.navigateToFriends(state.userDetails.userID) },
         onOpenLinkClick = { openBrowser(context, it) },
         onEditUserInformation = {
             if (state.userDetails.isMyProfile) {
@@ -103,7 +102,7 @@ fun ProfileScreen(
             }
         },
         onImageClick = { navigateToImageScreen(context, it) },
-        onClickBackButton = { navController.popBackStack() },
+        onClickBackButton = { navController.navigateUp() },
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -137,7 +136,8 @@ fun ProfileContent(
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRetry: () -> Unit,
-    onClickFriends: (Int) -> Unit,
+    onClickFriend: (Int) -> Unit,
+    onClickMoreFriends: () -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onEditUserInformation: () -> Unit,
     onImageClick: (String) -> Unit,
@@ -172,8 +172,9 @@ fun ProfileContent(
                     FriendsSection(
                         state.friends,
                         totalFriends = state.totalFriends,
-                        modifier = Modifier
-                            .nonRippleEffect { onClickFriends(state.userDetails.userID) }
+                        modifier = Modifier,
+                        onClickMoreFriends = onClickMoreFriends,
+                        onClickFriend = onClickFriend,
                     )
                 }
                 if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
