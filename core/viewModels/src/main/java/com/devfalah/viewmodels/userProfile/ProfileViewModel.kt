@@ -41,14 +41,16 @@ class ProfileViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getData()
-    }
-
-    fun getData() {
         getUserDetails(args.ownerId)
         getProfilePost(args.ownerId)
         getUserFriends(args.ownerId)
-        swipeToRefresh()
+    }
+
+    fun retryGetProfileData() {
+        getUserDetails(args.ownerId)
+        getProfilePost(args.ownerId)
+        getUserFriends(args.ownerId)
+        getProfileThreads()
     }
 
     private fun getUserDetails(profileOwnerID: Int) {
@@ -170,25 +172,8 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun swipeToRefresh() {
-        viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(isPagerLoading = true, minorError = "") }
-                val posts = getProfilePostUseCase.loadMore(args.ownerId)
-                _uiState.update {
-                    it.copy(
-                        loading = false,
-                        posts = (it.posts + posts.toUIState()),
-                        isPagerLoading = false,
-                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
-                    )
-                }
-            } catch (t: Throwable) {
-                _uiState.update {
-                    it.copy(isPagerLoading = false, minorError = t.message.toString())
-                }
-            }
-        }
+    fun getProfileThreads() {
+        getThreads()
     }
 
     fun onClickPostSetting(post: PostUIState) {
@@ -207,4 +192,28 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun refreshProfileThreads() {
+        getThreads(isRefresh = true)
+    }
+
+    private fun getThreads(isRefresh: Boolean = false) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(isPagerLoading = true, minorError = "") }
+                val posts = getProfilePostUseCase.loadMore(args.ownerId, isRefresh)
+                _uiState.update {
+                    it.copy(
+                        loading = false,
+                        posts = if(isRefresh){posts.toUIState()}else{it.posts + posts.toUIState()},
+                        isPagerLoading = false,
+                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiState.update {
+                    it.copy(isPagerLoading = false, minorError = t.message.toString())
+                }
+            }
+        }
+    }
 }

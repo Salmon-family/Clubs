@@ -17,9 +17,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
@@ -32,6 +34,7 @@ import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.composable.ProfileDetailsSection
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.util.createFileFromContentUri
+import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
@@ -64,6 +67,13 @@ fun ProfileScreen(
             }
         }
     )
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(key1 = lifecycleState.value) {
+        if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            viewModel.refreshProfileThreads()
+        }
+    }
+
     ProfileContent(
         state,
         selectedImageUri = selectedImageUri,
@@ -85,14 +95,14 @@ fun ProfileScreen(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
         },
-        onRefresh = viewModel::swipeToRefresh,
+        onRefresh = viewModel::getProfileThreads,
         onCreatePost = { navController.navigateToPostCreation(PROFILE_CLUB_ID) },
         onClickProfile = {
             if (!state.userDetails.isMyProfile) {
                 navController.navigateToProfile(it)
             }
         },
-        onRetry = viewModel::getData,
+        onRetry = viewModel::retryGetProfileData,
         onClickFriend = { navController.navigateToProfile(it) },
         onClickMoreFriends = { navController.navigateToFriends(state.userDetails.userID) },
         onOpenLinkClick = { openBrowser(context, it) },
