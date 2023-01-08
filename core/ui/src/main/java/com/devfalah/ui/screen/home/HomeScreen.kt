@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -114,68 +117,61 @@ fun HomeContent(
                 }
             }
         )
-        Box {
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
-                onRefresh = updateHome,
-                indicatorAlignment = Alignment.TopCenter,
-                indicator = { state, refreshTrigger ->
-                    SwipeRefreshIndicator(
-                        state = state,
-                        refreshTriggerDistance = refreshTrigger,
-                        backgroundColor = MaterialTheme.colors.surface,
-                        contentColor = MaterialTheme.colors.primary,
-                        shape = CircleShape,
+
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
+            onRefresh = updateHome,
+            indicatorAlignment = Alignment.TopCenter,
+            indicator = { state, refreshTrigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = refreshTrigger,
+                    backgroundColor = MaterialTheme.colors.surface,
+                    contentColor = MaterialTheme.colors.primary,
+                    shape = CircleShape,
+                )
+            }) {
+            ManualPager(
+                onRefresh = onRefresh,
+                contentPadding = PaddingValues(vertical = 16.dp),
+                isLoading = state.isPagerLoading && !state.isLoading,
+                error = state.pagerError,
+                isEndOfPager = state.isEndOfPager,
+            ) {
+                item {
+                    PostCreatingSection(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        onCreatePost = onCreatePost,
+                        isMyProfile = true
                     )
-                },
-                content = {
-                    ManualPager(
-                        onRefresh = onRefresh,
-                        contentPadding = PaddingValues(vertical = 16.dp),
-                        isLoading = state.isPagerLoading && !state.isLoading,
-                        error = state.pagerError,
-                        isEndOfPager = state.isEndOfPager,
-                    ) {
-                        item {
-                            PostCreatingSection(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                onCreatePost = onCreatePost,
-                                isMyProfile = true
-                            )
-                        }
-
-                        items(state.posts) {
-                            if (state.error == NO_ERROR) {
-                                PostItem(
-                                    state = it,
-                                    isContentExpandable = true,
-                                    isClubPost = false,
-                                    showGroupName = false,
-                                    onClickLike = onClickLike,
-                                    onClickComment = onClickComment,
-                                    onClickSave = onClickSave,
-                                    onClickProfile = onClickProfile,
-                                    onClickPostSetting = onDeletePost,
-                                    onOpenLinkClick = onOpenLinkClick,
-                                    onImageClick = onImageClick,
-                                )
-                            }
-                        }
-                    }
-                }
-            )
-
-            if (state.error == HOME_ERROR) {
-                ErrorItem(onClickRetry = onRetry)
-            } else {
-                val msg = when (state.error) {
-                    DELETE_ERROR -> { stringResource(id = R.string.error_delete_thread) }
-                    LIKE_ERROR -> { stringResource(id = R.string.error_Like_thread) }
-                    else -> {""}
                 }
 
-                Toast.makeText(LocalContext.current, msg, Toast.LENGTH_LONG).show()
+                items(state.posts) {
+                    PostItem(
+                        state = it,
+                        isContentExpandable = true,
+                        isClubPost = false,
+                        showGroupName = false,
+                        onClickLike = onClickLike,
+                        onClickComment = onClickComment,
+                        onClickSave = onClickSave,
+                        onClickProfile = onClickProfile,
+                        onClickPostSetting = onDeletePost,
+                        onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = onImageClick,
+                    )
+                }
             }
+        }
+        if (state.error == HOME_ERROR) {
+            ErrorItem(onClickRetry = onRetry)
+        } else  if (state.error != NO_ERROR) {
+            val msg = when (state.error) {
+                DELETE_ERROR -> { stringResource(id = R.string.error_delete_thread) }
+                LIKE_ERROR -> { stringResource(id = R.string.error_Like_thread) }
+                else -> { "" }
+            }
+            Toast.makeText(LocalContext.current, msg, Toast.LENGTH_LONG).show()
         }
     }
 }

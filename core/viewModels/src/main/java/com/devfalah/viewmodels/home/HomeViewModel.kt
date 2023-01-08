@@ -52,12 +52,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getMorePosts() {
-        _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
+        _uiState.update { it.copy(isPagerLoading = true, error = NO_ERROR, pagerError = "") }
         getHomeThreads(SCROLL_DOWN)
     }
 
     fun updateHome() {
-        _uiState.update { it.copy(isLoading = true, pagerError = "") }
+        _uiState.update { it.copy(isLoading = true, error = NO_ERROR, pagerError = "") }
         getHomeThreads(SCROLL_UP)
     }
 
@@ -117,11 +117,8 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         posts = _uiState.value.posts
                             .map {
-                                if (it.postId == post.postId) {
-                                    it.copy(isSaved = !post.isSaved)
-                                } else {
-                                    it
-                                }
+                                if (it.postId == post.postId) { it.copy(isSaved = !post.isSaved) }
+                                else { it }
                             }
                     )
                 }
