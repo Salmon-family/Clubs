@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -37,6 +38,10 @@ import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.util.ErrorsType.DELETE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.HOME_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.LIKE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.NO_ERROR
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -127,7 +132,7 @@ fun HomeContent(
                     ManualPager(
                         onRefresh = onRefresh,
                         contentPadding = PaddingValues(vertical = 16.dp),
-                        isLoading = state.isPagerLoading && !state.isLoading ,
+                        isLoading = state.isPagerLoading && !state.isLoading,
                         error = state.pagerError,
                         isEndOfPager = state.isEndOfPager,
                     ) {
@@ -140,7 +145,7 @@ fun HomeContent(
                         }
 
                         items(state.posts) {
-                            if (state.error.isEmpty()) {
+                            if (state.error == NO_ERROR) {
                                 PostItem(
                                     state = it,
                                     isContentExpandable = true,
@@ -153,15 +158,23 @@ fun HomeContent(
                                     onClickPostSetting = onDeletePost,
                                     onOpenLinkClick = onOpenLinkClick,
                                     onImageClick = onImageClick,
-                                    )
+                                )
                             }
                         }
                     }
                 }
             )
 
-            if (state.error.isNotBlank()) {
+            if (state.error == HOME_ERROR) {
                 ErrorItem(onClickRetry = onRetry)
+            } else {
+                val msg = when (state.error) {
+                    DELETE_ERROR -> { stringResource(id = R.string.error_delete_thread) }
+                    LIKE_ERROR -> { stringResource(id = R.string.error_Like_thread) }
+                    else -> {""}
+                }
+
+                Toast.makeText(LocalContext.current, msg, Toast.LENGTH_LONG).show()
             }
         }
     }

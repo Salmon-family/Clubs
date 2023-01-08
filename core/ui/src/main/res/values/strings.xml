@@ -126,4 +126,8 @@
     <string name="change_profile">Look at my new profile picture!!</string>
     <string name="thread_has_been_saved">Thread has been unsaved</string>
     <string name="thread_has_been_unsaved">Thread has been saved</string>
+
+    <string name="error_delete_thread">Sorry, could not delete your thread!!</string>
+    <string name="error_Like_thread">Sorry, Error will Like thread!!</string>
+
 </resources>

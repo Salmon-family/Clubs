@@ -123,4 +123,8 @@
 
     <string name="thread_has_been_saved">تمت إزالة المنشور من المحفوظات</string>
     <string name="thread_has_been_unsaved">تم حفظ المنشور</string>
+
+    <string name="error_delete_thread">خطا خلال مسح المنشور</string>
+    <string name="error_Like_thread">خطا خلال الاعجاب بالمنشور</string>
+
 </resources>

@@ -11,6 +11,10 @@ import com.devfalah.usecases.util.Constants.SCROLL_UP
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
+import com.devfalah.viewmodels.util.ErrorsType.DELETE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.HOME_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.LIKE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.NO_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,14 +39,17 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getData() {
-        _uiState.update { it.copy(error = "", isLoading = true) }
-        viewModelScope.launch {
-            getHomeThreads().collect { posts ->
-                _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
+        _uiState.update { it.copy(error = NO_ERROR, isLoading = true) }
+        try {
+            viewModelScope.launch {
+                getHomeThreads().collect { posts ->
+                    _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
+                }
             }
+        } catch (t: Throwable) {
+            _uiState.update { it.copy(error = HOME_ERROR) }
         }
     }
-
 
     fun getMorePosts() {
         _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
@@ -97,7 +104,7 @@ class HomeViewModel @Inject constructor(
                     })
                 }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
+                _uiState.update { it.copy(error = LIKE_ERROR) }
             }
         }
     }
@@ -133,6 +140,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
+                _uiState.update { it.copy(error = DELETE_ERROR) }
             }
         }
     }
