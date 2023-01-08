@@ -10,7 +10,6 @@ import com.devfalah.viewmodels.userProfile.ProfileArgs
 
 const val PROFILE_SCREEN = "PROFILE_SCREEN"
 fun NavController.navigateToProfile(id: Int) {
-    popBackStack(Screen.Home.screen_route, false)
     navigate("${PROFILE_SCREEN}/${id}")
 }
 

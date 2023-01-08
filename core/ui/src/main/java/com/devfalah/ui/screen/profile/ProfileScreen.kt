@@ -102,7 +102,7 @@ fun ProfileScreen(
             }
         },
         onImageClick = { navigateToImageScreen(context, it) },
-        onClickBackButton = { navController.navigateUp() },
+        onClickBackButton = { navController.popBackStack() },
     )
 
     LaunchedEffect(key1 = state.minorError) {
