@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.friend.AddFriendUseCase
 import com.devfalah.usecases.friend.GetUserFriendsUseCase
+import com.devfalah.usecases.friend.RemoveFriendRequestUseCase
 import com.devfalah.usecases.posts.DeletePostUseCase
 import com.devfalah.usecases.posts.SetFavoritePostUseCase
 import com.devfalah.usecases.posts.SetPostLikeUseCase
@@ -33,6 +34,7 @@ class ProfileViewModel @Inject constructor(
     val favoritePostUseCase: SetFavoritePostUseCase,
     val changeProfileImageUseCase: ChangeProfileImageUseCase,
     val deletePostUseCase: DeletePostUseCase,
+    val removeFriendUseCase: RemoveFriendRequestUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -204,7 +206,11 @@ class ProfileViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         loading = false,
-                        posts = if(isRefresh){posts.toUIState()}else{it.posts + posts.toUIState()},
+                        posts = if (isRefresh) {
+                            posts.toUIState()
+                        } else {
+                            it.posts + posts.toUIState()
+                        },
                         isPagerLoading = false,
                         isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
                     )
@@ -213,6 +219,22 @@ class ProfileViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(isPagerLoading = false, minorError = t.message.toString())
                 }
+            }
+        }
+    }
+
+    fun onRemoveFriend() {
+        viewModelScope.launch {
+            try {
+                if (removeFriendUseCase(uiState.value.userDetails.userID)) {
+                    _uiState.update {
+                        it.copy(
+                            userDetails = it.userDetails.copy(areFriends = false, isRequestSend = false)
+                        )
+                    }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }

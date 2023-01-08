@@ -113,6 +113,7 @@ fun ProfileScreen(
         },
         onImageClick = { navigateToImageScreen(context, it) },
         onClickBackButton = { navController.popBackStack() },
+        onRemoveFriend = viewModel::onRemoveFriend
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -152,6 +153,7 @@ fun ProfileContent(
     onEditUserInformation: () -> Unit,
     onImageClick: (String) -> Unit,
     onClickBackButton: () -> Unit,
+    onRemoveFriend: () -> Unit,
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -175,7 +177,8 @@ fun ProfileContent(
                         onChangeProfileImage = onChangeProfileImage,
                         onSendRequestClick = onClickAddFriend,
                         onClickBackButton = onClickBackButton,
-                        onClickEditProfile = onEditUserInformation
+                        onClickEditProfile = onEditUserInformation,
+                        onRemoveFriend = onRemoveFriend
                     )
                 }
                 item(key = state.friends) {

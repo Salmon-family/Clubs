@@ -43,6 +43,7 @@ fun ProfileDetailsSection(
     onSendRequestClick: () -> Unit,
     onClickBackButton: () -> Unit,
     onClickEditProfile: () -> Unit,
+    onRemoveFriend: () -> Unit
 ) {
 
     ConstraintLayout(
@@ -98,7 +99,7 @@ fun ProfileDetailsSection(
                 tint = Color.White
             )
             Spacer(modifier = Modifier.weight(1f))
-            if(userDetails.isMyProfile){
+            if (userDetails.isMyProfile) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.setting),
                     contentDescription = null,
@@ -178,11 +179,11 @@ fun ProfileDetailsSection(
 
             val onClick = if (userDetails.isMyProfile) {
                 onChangeProfileImage
+            } else if (userDetails.areFriends) {
+                onRemoveFriend
             } else if (!userDetails.isRequestSend) {
                 onSendRequestClick
-            } else {
-                {}
-            }
+            } else { {} }
 
             ProfileImageWithIcon(
                 profilePicture = (selectedImageUri ?: userDetails.profilePicture).toString(),
@@ -206,6 +207,8 @@ private fun getPainterProfileIcon(
         painterResource(id = R.drawable.ic_requsted_add_user)
     } else if (!userDetails.areFriends) {
         painterResource(id = R.drawable.ic_add_user)
+    } else if (userDetails.areFriends) {
+        painterResource(id = R.drawable.delete_user)
     } else {
         null
     }
