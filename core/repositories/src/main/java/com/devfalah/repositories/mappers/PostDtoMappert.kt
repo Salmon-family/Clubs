@@ -3,7 +3,7 @@ package com.devfalah.repositories.mappers
 import com.devfalah.entities.Post
 import com.devfalah.repositories.models.post.WallPostDTO
 
-internal fun WallPostDTO.toEntity(groupId: Int = 0): Post? {
+internal fun WallPostDTO.toEntity(groupId: Int = 0): Post {
     return Post(
         id = post?.guid ?: 0,
         privacy = post?.access == "3",
