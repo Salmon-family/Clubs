@@ -20,7 +20,7 @@ import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
-import com.devfalah.ui.screen.clubsDetail.composable.LeaveClubDialog
+import com.devfalah.ui.screen.clubsDetail.composable.LeaveDialog
 import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
 import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.editClub.navigateToEditClub
@@ -234,11 +234,12 @@ private fun ClubsDetailsContent(
     }
 
     if (popupController) {
-        LeaveClubDialog(
+        LeaveDialog(
+            title = stringResource(id = R.string.leave_club_title),
+            message = stringResource(id = R.string.are_you_sure),
             onDeclineClub = onUnJoinClubs,
             onPopupDismiss = { popupController = false }
         )
-
     }
 
     LaunchedEffect(key1 = state.pagerError) {

@@ -12,10 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -34,6 +31,7 @@ import com.devfalah.ui.composable.AppBar
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.modifiers.flipWithLanguage
 import com.devfalah.ui.screen.accountSettings.ACCOUNT_SETTINGS_SCREEN
+import com.devfalah.ui.screen.clubsDetail.composable.LeaveDialog
 import com.devfalah.ui.screen.friendrequest.FRIEND_REQUEST_SCREEN
 import com.devfalah.ui.screen.menu.composable.AccountSection
 import com.devfalah.ui.screen.menu.composable.MenuItem
@@ -96,14 +94,13 @@ fun MenuContent(
     onClickReportBug: () -> Unit,
     onClickLogOut: () -> Unit,
 ) {
-
+    var popupController by remember { mutableStateOf(false) }
     Column {
-
         AppBar(
             title = stringResource(id = R.string.menu),
             showBackButton = false,
             actions = {
-                IconButton(onClick = onClickLogOut) {
+                IconButton(onClick = { popupController = true }) {
                     Icon(
                         modifier = Modifier.flipWithLanguage(),
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
@@ -157,6 +154,14 @@ fun MenuContent(
                     )
                 )
             }
+        }
+        if (popupController) {
+            LeaveDialog(
+                title = stringResource(id = R.string.logout),
+                message = stringResource(id = R.string.logout_msg),
+                onDeclineClub = onClickLogOut,
+                onPopupDismiss = { popupController = false }
+            )
         }
     }
 }
