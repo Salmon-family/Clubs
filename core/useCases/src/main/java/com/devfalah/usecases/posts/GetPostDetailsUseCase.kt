@@ -17,6 +17,7 @@ class GetPostDetailsUseCase @Inject constructor(
         } catch (throwable: Throwable) {
             if (throwable.message.toString().contains("NotFound", true)) {
                 clubRepository.deleteLocalPost(postId)
+                clubRepository.deleteHomePostById(postId)
                 Post(isFound = false)
             } else {
                 throw throwable
