@@ -13,6 +13,8 @@ import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -77,29 +79,36 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private var likeJob: Job? = null
+
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
+        val updatedPost = post.copy(
+            isLikedByUser = !post.isLikedByUser,
+            totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
+        )
+        _uiState.update {
+            it.copy(posts = uiState.value.posts.map {
+                if (it.postId == post.postId) {
+                    updatedPost
+                } else {
+                    it
+                }
+            })
+        }
+
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = likeUseCase(
+                delay(1500)
+                likeUseCase(
                     postID = post.postId,
                     isLiked = post.isLikedByUser
                 )
-                val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
-                )
-                _uiState.update {
-                    it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) {
-                            updatedPost
-                        } else {
-                            it
-                        }
-                    })
-                }
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
+                //_uiState.update { it.copy(error = t.message.toString()) }
             }
         }
+
     }
 
     fun onClickSave(post: PostUIState) {
