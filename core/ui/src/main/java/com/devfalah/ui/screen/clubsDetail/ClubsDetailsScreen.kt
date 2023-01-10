@@ -17,14 +17,17 @@ import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
-import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.clubMembers.navigateToMembers
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
-import com.devfalah.ui.screen.clubsDetail.composable.*
+import com.devfalah.ui.screen.clubsDetail.composable.ClubHeaderDetails
+import com.devfalah.ui.screen.clubsDetail.composable.LeaveDialog
+import com.devfalah.ui.screen.clubsDetail.composable.OutlineButton
+import com.devfalah.ui.screen.clubsDetail.composable.PrivateClubsBox
 import com.devfalah.ui.screen.editClub.navigateToEditClub
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
+import com.devfalah.ui.screen.profile.composable.FriendsSection
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.util.observeAsState
@@ -55,13 +58,13 @@ fun ClubsDetailsScreen(
         onRefresh = viewModel::swipeToRefresh,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
+            navController.navigateToPostDetails(id = it.postId)
         },
         onClickSave = viewModel::onClickSave,
         onAddPost = { navController.navigateToPostCreation(state.detailsUiState.clubId) },
         onClickMembers = {
             navController.navigateToMembers(
-                clubId = it,
+                clubId = state.detailsUiState.clubId,
                 ownerId = state.detailsUiState.ownerId
             )
         },
@@ -83,6 +86,7 @@ fun ClubsDetailsScreen(
                 clubPrivacy = state.detailsUiState.isClubPublic
             )
         },
+        onClickMember = { navController.navigateToProfile(it) },
         onClickProfile = { navController.navigateToProfile(it) },
         onOpenLinkClick = { openBrowser(context, it) },
         onImageClick = { navigateToImageScreen(context, it) }
@@ -106,7 +110,8 @@ private fun ClubsDetailsContent(
     onClickComment: (PostUIState) -> Unit,
     onClickSave: (PostUIState) -> Unit,
     onAddPost: () -> Unit,
-    onClickMembers: (Int) -> Unit,
+    onClickMembers: () -> Unit,
+    onClickMember: (Int) -> Unit,
     onJoinClub: () -> Unit,
     onUnJoinClubs: () -> Unit,
     onRetry: () -> Unit,
@@ -189,9 +194,11 @@ private fun ClubsDetailsContent(
 
                 if (state.isPostVisible()) {
                     item {
-                        ClubMembers(friends = state.members,
-                            modifier = Modifier
-                                .nonRippleEffect { onClickMembers(state.detailsUiState.clubId) }
+                        FriendsSection(
+                            friends = state.members,
+                            onClickMoreFriends = onClickMembers,
+                            onClickFriend = onClickMember,
+                            totalFriends = -1
                         )
                     }
                 }
@@ -227,11 +234,12 @@ private fun ClubsDetailsContent(
     }
 
     if (popupController) {
-        LeaveClubDialog(
+        LeaveDialog(
+            title = stringResource(id = R.string.leave_club_title),
+            message = stringResource(id = R.string.are_you_sure),
             onDeclineClub = onUnJoinClubs,
             onPopupDismiss = { popupController = false }
         )
-
     }
 
     LaunchedEffect(key1 = state.pagerError) {

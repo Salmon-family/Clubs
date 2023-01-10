@@ -1,11 +1,12 @@
 package com.devfalah.viewmodels.clubDetails
 
+import com.devfalah.viewmodels.friends.FriendUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 
 
 data class ClubDetailsUiState(
     val detailsUiState: DetailsUIState = DetailsUIState(),
-    val members: List<MembersUIState> = emptyList(),
+    val members: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
     val validateUserState: Boolean = false,
     val membersCount: Int = 0,

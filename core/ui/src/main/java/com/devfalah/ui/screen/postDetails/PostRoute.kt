@@ -10,16 +10,15 @@ import com.devfalah.viewmodels.postDetails.PostDetailsArgs
 
 const val POST_DETAILS_SCREEN = "postDetailsScreenWithId"
 
-fun NavController.navigateToPostDetails(id: Int, publisherId: Int) {
-    navigate("${POST_DETAILS_SCREEN}/${id}/${publisherId}")
+fun NavController.navigateToPostDetails(id: Int) {
+    navigate("${POST_DETAILS_SCREEN}/${id}")
 }
 
 fun NavGraphBuilder.postDetailsRoute(navController: NavController) {
     composable(
-        route = "${POST_DETAILS_SCREEN}/{${PostDetailsArgs.POST_ID}}/{${PostDetailsArgs.PUBLISHER_ID}}",
+        route = "${POST_DETAILS_SCREEN}/{${PostDetailsArgs.POST_ID}}",
         arguments = listOf(
             navArgument(PostDetailsArgs.POST_ID) { NavType.IntType },
-            navArgument(PostDetailsArgs.PUBLISHER_ID) { NavType.IntType }
         )
     ) {
         PostDetailsScreen(navController)

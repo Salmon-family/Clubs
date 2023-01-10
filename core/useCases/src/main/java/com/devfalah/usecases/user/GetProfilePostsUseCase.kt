@@ -20,16 +20,18 @@ class GetProfilePostsUseCase @Inject constructor(
     suspend operator fun invoke(profileUserID: Int): List<Post> {
         getSavedPostsIds()
 
-        val profileId = if (profileUserID == -1) { userId }
-        else { profileUserID }
+        val profileId = if (profileUserID == -1) {
+            userId
+        } else {
+            profileUserID
+        }
 
         return clubRepository.getProfilePostsPager(profileId, profileUserID, page = page)
     }
 
-    suspend fun loadMore(profileUserID: Int): List<Post> {
-        val profileId = if (profileUserID == -1) {userId }
-        else { profileUserID }
-
+    suspend fun loadMore(profileUserID: Int, isRestart: Boolean): List<Post> {
+        val profileId = if (profileUserID == -1) { userId } else { profileUserID }
+        page = getPageNumber(isRestart)
         val posts = clubRepository.getProfilePostsPager(userId, profileId, page = page)
         return if (posts.isNotEmpty()) {
             page += 1
@@ -51,4 +53,12 @@ class GetProfilePostsUseCase @Inject constructor(
         }
     }
 
+
+    private fun getPageNumber(isRestart: Boolean): Int {
+        return if (isRestart) {
+            1
+        } else {
+            page
+        }
+    }
 }

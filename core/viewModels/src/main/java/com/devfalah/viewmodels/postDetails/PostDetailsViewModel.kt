@@ -71,7 +71,7 @@ class PostDetailsViewModel @Inject constructor(
                 val post = getPostDetailsUseCase(postId)
                 _uiState.update { it.copy(post = post.toUIState(), isLoading = false) }
                 if (uiState.value.post.isFound) {
-                    getPublisherDetails(args.publisherId)
+                    getPublisherDetails(post.publisherId)
                     getPostComments()
                 }
             } catch (t: Throwable) {
@@ -217,8 +217,8 @@ class PostDetailsViewModel @Inject constructor(
     //endregion
 
     fun updateLocalPost() {
-       viewModelScope.launch {
-           updatePost(uiState.value.post.toEntity())
-       }
+        viewModelScope.launch {
+            updatePost(uiState.value.post.toEntity())
+        }
     }
 }
