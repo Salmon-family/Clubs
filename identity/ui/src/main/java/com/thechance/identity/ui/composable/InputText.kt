@@ -11,7 +11,10 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.theme.InputText
 import com.thechance.identity.ui.theme.Typography
@@ -37,6 +40,9 @@ fun InputText(
             textColor = MaterialTheme.colors.primaryVariant
         ),
         singleLine = true,
+        textStyle = TextStyle(
+            textDirection = TextDirection.Content
+        ),
         placeholder = {
             Text(
                 text = placeHolder,

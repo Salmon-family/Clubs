@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.PlusJakartaSans
@@ -70,6 +71,12 @@ fun CustomTextField(
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
                 textColor = MaterialTheme.colors.primaryVariant
+            ),
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                fontFamily = PlusJakartaSans,
+                fontWeight = FontWeight.Normal,
+                textDirection = TextDirection.Content
             ),
             placeholder = {
                 hint?.let {

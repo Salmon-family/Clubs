@@ -13,9 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.thechance.identity.ui.R
 import com.thechance.identity.ui.theme.InputText
@@ -63,6 +65,9 @@ fun PasswordInputText(
             textColor = MaterialTheme.colors.primaryVariant
         ),
         singleLine = true,
+        textStyle = TextStyle(
+            textDirection = TextDirection.Content
+        ),
         placeholder = {
             Text(
                 text = placeHolder,

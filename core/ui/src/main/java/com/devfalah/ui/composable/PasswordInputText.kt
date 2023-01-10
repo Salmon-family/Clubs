@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
@@ -54,7 +55,8 @@ fun PasswordInputText(
                 fontSize = 14.sp,
                 fontFamily = PlusJakartaSans,
                 fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colors.primaryVariant
+                color = MaterialTheme.colors.primaryVariant,
+                textDirection = TextDirection.Content
             ),
             shape = RoundedCornerShape(size = 100.dp),
             visualTransformation = if (passwordVisible) {
