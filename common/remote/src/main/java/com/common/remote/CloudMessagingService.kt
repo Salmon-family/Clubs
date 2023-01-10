@@ -11,8 +11,9 @@ interface FirebaseCloudMessagingService {
 
     companion object {
         const val BASE_URL = "https://fcm.googleapis.com"
-        private const val CONTENT_TYPE =  "application/json"
-        private const val key = BuildConfig.FIREBASE_API_KEY
+        private const val CONTENT_TYPE =   "application/json"
+        private const val
+                key = BuildConfig.FIREBASE_API_KEY
     }
 
     @POST("fcm/send")
