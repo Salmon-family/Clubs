@@ -1,16 +1,18 @@
 package com.devfalah.ui.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.ui.util.htmlText
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomTextField(
     title: String,
@@ -35,6 +38,8 @@ fun CustomTextField(
     shape: Shape = RoundedCornerShape(100.dp),
     maxLines: Int = 1
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column {
         Row {
             Text(
@@ -95,7 +100,10 @@ fun CustomTextField(
             shape = if (value.length > 35) RoundedCornerShape(20.dp) else shape,
             singleLine = singleLine,
             visualTransformation = visualTransformation,
-            maxLines = maxLines
+            maxLines = maxLines,
+            keyboardActions = KeyboardActions(
+                onDone = { keyboardController?.hide() }
+            )
         )
     }
 }
