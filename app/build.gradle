@@ -34,9 +34,7 @@ android {
 
     lint {
         baseline = file("lint-baseline.xml")
-    }
-    lintOptions {
-        disable "Instantiatable"
+        disable 'Instantiatable'
     }
     buildTypes {
         release {

@@ -24,7 +24,7 @@ data class ClubDetailsUiState(
 data class DetailsUIState(
     val clubId: Int = 0,
     val ownerId: Int = 0,
-    val isOwner: Boolean = false,
+    val isOwner: Boolean = true,
     val name: String = "",
     val description: String = "",
     val isOwnerOfClub: Boolean = false,

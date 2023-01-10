@@ -1,5 +1,6 @@
 package com.devfalah.ui.screen.profile.composable
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,6 +39,8 @@ fun PostHeader(
     onClickProfile: (Int) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
 
     Row(modifier = Modifier.fillMaxWidth()) {
         WidthSpacer16()
@@ -124,6 +128,11 @@ fun PostHeader(
                     onClick = {
                         expanded = false
                         onClickPostSetting(post)
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.delete_msg),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 ) {
                     Text(

@@ -133,4 +133,6 @@
     <string name="error_delete_thread">Sorry, could not delete your thread!!</string>
     <string name="error_Like_thread">Sorry, Error in Like a thread!!</string>
 
+    <string name="delete_msg">The post has been deleted</string>
+
 </resources>

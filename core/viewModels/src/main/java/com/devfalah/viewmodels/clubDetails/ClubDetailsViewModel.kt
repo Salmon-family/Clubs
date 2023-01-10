@@ -9,7 +9,6 @@ import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.BaseViewModel
 import com.devfalah.viewmodels.clubDetails.mapper.toClubDetailsUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
-import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
@@ -54,6 +53,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun getDetailsOfClubs() {
+        _uiState.update { it.copy(isLoading = true, error = "") }
         getClubDetails()
         getMembers()
         swipeToRefresh()

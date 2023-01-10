@@ -129,5 +129,6 @@
 
     <string name="error_delete_thread">خطا خلال مسح المنشور</string>
     <string name="error_Like_thread">خطا خلال الاعجاب بالمنشور</string>
+    <string name="delete_msg">تم حذف البوست</string>
 
 </resources>
