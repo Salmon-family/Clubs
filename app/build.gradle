@@ -83,6 +83,7 @@ dependencies {
     api(project(":chat:remote"))
     api(project(":chat:local"))
     api(project(":common:firebase"))
+    api(project(":common:remote"))
     //endregion
 
     //region identity

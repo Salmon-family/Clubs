@@ -13,6 +13,7 @@ data class User(
     val language: String = "",
     val isMyProfile: Boolean = false,
     val isFriend: Boolean = false,
-    val isRequestExists: Boolean = false
+    val isRequestExists: Boolean = false,
+    val token : String = ""
 )
 
