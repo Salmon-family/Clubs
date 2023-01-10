@@ -11,6 +11,8 @@ import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -21,7 +23,7 @@ import javax.inject.Inject
 class PostDetailsViewModel @Inject constructor(
     val getPostCommentsUseCase: GetPostCommentsUseCase,
     val getPostDetailsUseCase: GetPostDetailsUseCase,
-    val mangeComment: ManageCommentUseCase,
+    val manageComment: ManageCommentUseCase,
     val commentLike: SetCommentLikeUseCase,
     val favoritePostUseCase: SetFavoritePostUseCase,
     val postLike: SetPostLikeUseCase,
@@ -34,6 +36,8 @@ class PostDetailsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PostDetailsUIState())
     val uiState = _uiState.asStateFlow()
     private val args = PostDetailsArgs(savedStateHandle)
+
+    private var likeJob: Job? = null
 
     init {
         getData()
@@ -81,19 +85,22 @@ class PostDetailsViewModel @Inject constructor(
     }
 
     fun onClickLikePost(post: PostUIState) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(error = "") }
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = postLike(args.postId, post.isLikedByUser)
                 _uiState.update {
                     it.copy(
+                        error = "",
                         post = post.copy(
-                            isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                            isLikedByUser = !post.isLikedByUser,
+                            totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                         )
                     )
                 }
+                delay(1000)
+                postLike(args.postId, post.isLikedByUser)
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
+                //_uiState.update { it.copy(error = t.message.toString()) }
             }
         }
     }
@@ -157,7 +164,7 @@ class PostDetailsViewModel @Inject constructor(
         _uiState.update { it.copy(commentText = "", minorError = "") }
         viewModelScope.launch {
             try {
-                val comment = mangeComment.addComment(args.postId, commentText)
+                val comment = manageComment.addComment(args.postId, commentText)
                 _uiState.update {
                     it.copy(
                         commentText = "",
@@ -200,7 +207,7 @@ class PostDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(minorError = "") }
             try {
-                val isDeleted = mangeComment.deleteComment(commentId = comment.id)
+                val isDeleted = manageComment.deleteComment(commentId = comment.id)
                 if (isDeleted) {
                     _uiState.update {
                         it.copy(

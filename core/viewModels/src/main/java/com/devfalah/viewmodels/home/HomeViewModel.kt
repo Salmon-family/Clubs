@@ -32,6 +32,8 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
 
+    private var likeJob: Job? = null
+
     init {
         getData()
     }
@@ -79,27 +81,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private var likeJob: Job? = null
 
     fun onClickLike(post: PostUIState) {
-        val updatedPost = post.copy(
-            isLikedByUser = !post.isLikedByUser,
-            totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
-        )
-        _uiState.update {
-            it.copy(posts = uiState.value.posts.map {
-                if (it.postId == post.postId) {
-                    updatedPost
-                } else {
-                    it
-                }
-            })
-        }
-
         likeJob?.cancel()
         likeJob = viewModelScope.launch {
             try {
-                delay(1500)
+                val updatedPost = post.copy(
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
+                )
+                _uiState.update {
+                    it.copy(posts = uiState.value.posts.map {
+                        if (it.postId == post.postId) {
+                            updatedPost
+                        } else {
+                            it
+                        }
+                    })
+                }
+                delay(1000)
                 likeUseCase(
                     postID = post.postId,
                     isLiked = post.isLikedByUser

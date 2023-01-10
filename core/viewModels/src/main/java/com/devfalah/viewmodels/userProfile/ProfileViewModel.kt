@@ -16,6 +16,8 @@ import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -39,6 +41,8 @@ class ProfileViewModel @Inject constructor(
     private val args = ProfileArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
+
+    private var likeJob: Job? = null
 
     init {
         getData()
@@ -93,14 +97,12 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = likeUseCase(
-                    postID = post.postId,
-                    isLiked = post.isLikedByUser
-                )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
@@ -111,8 +113,13 @@ class ProfileViewModel @Inject constructor(
                         }
                     })
                 }
+                delay(1000)
+                likeUseCase(
+                    postID = post.postId,
+                    isLiked = post.isLikedByUser
+                )
             } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                //_uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }
