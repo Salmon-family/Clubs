@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,62 +24,50 @@ import com.devfalah.viewmodels.postDetails.CommentUIState
 fun CommentHeader(
     modifier: Modifier = Modifier,
     state: CommentUIState,
-    onClickDeleteComment: (CommentUIState) -> Unit
+    onClickDeleteComment: (CommentUIState) -> Unit,
+    onClickProfile: (Int) -> Unit
 ) {
+
+    fun Modifier.flipIfNotOwner() =
+        this.scale(scaleX = if (state.isOwnerComment) 1f else -1f, scaleY = 1f)
+
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .flipIfNotOwner(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (state.isOwnerComment) {
 
-            CommentSetting(
-                modifier = Modifier.weight(1f),
-                state = state,
-                onClickDeleteComment = onClickDeleteComment
-            )
+        if (state.isOwnerComment) CommentSetting(
+            modifier = Modifier.weight(1f),
+            state = state,
+            onClickDeleteComment = onClickDeleteComment
+        )
 
-            Text(
-                modifier = modifier,
-                text = state.userName,
-                textAlign = TextAlign.End,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.secondaryVariant,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1
-            )
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .flipIfNotOwner(),
+            text = state.userName,
+            textAlign = if (state.isOwnerComment) TextAlign.End else TextAlign.Start,
+            fontSize = 14.sp,
+            color = MaterialTheme.colors.secondaryVariant,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1
+        )
 
-            WidthSpacer8()
+        WidthSpacer8()
 
-            CircleImage(
-                painter = rememberAsyncImagePainter(
-                    model = state.userPictureUrl,
-                    error = rememberAsyncImagePainter(model = R.drawable.test_image)
-                ),
-                size = 32
-            )
-
-        } else {
-
-            CircleImage(
-                painter = rememberAsyncImagePainter(
-                    model = state.userPictureUrl,
-                    error = rememberAsyncImagePainter(model = R.drawable.test_image)
-                ),
-                size = 32
-            )
-
-            WidthSpacer8()
-
-            Text(
-                text = state.userName,
-                textAlign = TextAlign.Start,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.secondaryVariant,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1
-            )
-        }
-
+        CircleImage(
+            modifier = Modifier
+                .nonRippleEffect { onClickProfile(state.userId) }
+                .flipIfNotOwner(),
+            painter = rememberAsyncImagePainter(
+                model = state.userPictureUrl,
+                error = rememberAsyncImagePainter(model = R.drawable.test_image)
+            ),
+            size = 32
+        )
     }
 }
 
