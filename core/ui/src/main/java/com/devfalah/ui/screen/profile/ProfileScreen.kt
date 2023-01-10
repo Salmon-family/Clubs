@@ -17,13 +17,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
-import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
@@ -33,6 +34,7 @@ import com.devfalah.ui.screen.profile.composable.PostCreatingSection
 import com.devfalah.ui.screen.profile.composable.ProfileDetailsSection
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.util.createFileFromContentUri
+import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
 import com.devfalah.viewmodels.userProfile.UserUIState
@@ -60,42 +62,49 @@ fun ProfileScreen(
             selectedImageUri = uri
             uri?.let {
                 viewModel.onClickChangeImage(
-                    createFileFromContentUri(
-                        it,
-                        context,
-                        MAX_IMAGE_PROFILE_SIZE
-                    )
+                    createFileFromContentUri(it, context, MAX_IMAGE_PROFILE_SIZE)
                 )
             }
         }
     )
+    val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
+    LaunchedEffect(key1 = lifecycleState.value) {
+        if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
+            viewModel.refreshProfileThreads()
+        }
+    }
+
     ProfileContent(
         state,
         selectedImageUri = selectedImageUri,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
+            navController.navigateToPostDetails(id = it.postId)
         },
         onClickSave = viewModel::onClickSave,
         onClickAddFriend = viewModel::onClickAddFriend,
         onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
-            navigateToConversation(context = context, state.userDetails.userID)
+            navigateToConversation(
+                context = context,
+                state.userDetails.userID
+            )
         },
         onChangeProfileImage = {
             singlePhotoPickerLauncher.launch(
                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
             )
         },
-        onRefresh = viewModel::swipeToRefresh,
+        onRefresh = viewModel::getProfileThreads,
         onCreatePost = { navController.navigateToPostCreation(PROFILE_CLUB_ID) },
         onClickProfile = {
             if (!state.userDetails.isMyProfile) {
                 navController.navigateToProfile(it)
             }
         },
-        onRetry = viewModel::getData,
-        onClickFriends = { navController.navigateToFriends(it) },
+        onRetry = viewModel::retryGetProfileData,
+        onClickFriend = { navController.navigateToProfile(it) },
+        onClickMoreFriends = { navController.navigateToFriends(state.userDetails.userID) },
         onOpenLinkClick = { openBrowser(context, it) },
         onEditUserInformation = {
             if (state.userDetails.isMyProfile) {
@@ -104,6 +113,7 @@ fun ProfileScreen(
         },
         onImageClick = { navigateToImageScreen(context, it) },
         onClickBackButton = { navController.popBackStack() },
+        onRemoveFriend = viewModel::onRemoveFriend
     )
 
     LaunchedEffect(key1 = state.minorError) {
@@ -137,11 +147,13 @@ fun ProfileContent(
     onCreatePost: () -> Unit,
     onClickProfile: (Int) -> Unit,
     onRetry: () -> Unit,
-    onClickFriends: (Int) -> Unit,
+    onClickFriend: (Int) -> Unit,
+    onClickMoreFriends: () -> Unit,
     onOpenLinkClick: (String) -> Unit,
     onEditUserInformation: () -> Unit,
     onImageClick: (String) -> Unit,
     onClickBackButton: () -> Unit,
+    onRemoveFriend: () -> Unit,
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -165,15 +177,17 @@ fun ProfileContent(
                         onChangeProfileImage = onChangeProfileImage,
                         onSendRequestClick = onClickAddFriend,
                         onClickBackButton = onClickBackButton,
-                        onClickEditProfile = onEditUserInformation
+                        onClickEditProfile = onEditUserInformation,
+                        onRemoveFriend = onRemoveFriend
                     )
                 }
                 item(key = state.friends) {
                     FriendsSection(
                         state.friends,
                         totalFriends = state.totalFriends,
-                        modifier = Modifier
-                            .nonRippleEffect { onClickFriends(state.userDetails.userID) }
+                        modifier = Modifier,
+                        onClickMoreFriends = onClickMoreFriends,
+                        onClickFriend = onClickFriend,
                     )
                 }
                 if (state.userDetails.isMyProfile || state.userDetails.areFriends) {

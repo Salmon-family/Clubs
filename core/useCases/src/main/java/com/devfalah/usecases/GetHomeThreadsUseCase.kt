@@ -15,14 +15,18 @@ class GetHomeThreadsUseCase @Inject constructor(
     private val clubRepository: ClubRepository
 ) {
     private var userId = -1
-    private var currentPage = 0
+    private var currentPage = 1
 
     suspend operator fun invoke(): Flow<List<Post>> {
         userId = getUserId()
         try {
             loadData(FIRST_TIME)
         } catch (t: Throwable) {
-            currentPage = 0
+            if (clubRepository.getTotalHomePost() == 0) {
+                throw t
+            } else {
+                currentPage = 1
+            }
         }
         return clubRepository.getHomePosts().map {
             it.map { post ->

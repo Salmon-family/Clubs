@@ -25,16 +25,11 @@ import com.devfalah.ui.composable.PostContent
 import com.devfalah.ui.composable.SegmentControlsWithIcon
 import com.devfalah.ui.composable.setStatusBarColor
 import com.devfalah.ui.screen.clubCreation.showToastMessage
-import com.devfalah.ui.screen.clubsDetail.navigateToClubDetails
-import com.devfalah.ui.screen.home.navigateHome
-import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.viewmodels.postCreation.PostCreationUIState
 import com.devfalah.viewmodels.postCreation.PostCreationViewModel
 import com.devfalah.viewmodels.postCreation.isEnabled
-import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
 import com.devfalah.viewmodels.util.Constants.MAX_IMAGE_POST_SIZE
-import com.devfalah.viewmodels.util.Constants.PROFILE_CLUB_ID
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -80,11 +75,7 @@ fun PostCreationScreen(
 
     LaunchedEffect(key1 = state.isSuccess, key2 = state.error.isNotEmpty()) {
         if (state.isSuccess) {
-            goBack(
-                state,
-                navToClubDetails = { navController.navigateToClubDetails(groupId = state.clubId) },
-                navController = navController
-            )
+            navController.navigateUp()
         } else if (state.error.isNotBlank()) {
             showToastMessage(context, state.error)
         }
@@ -152,24 +143,3 @@ fun PostCreationContent(
         }
     }
 }
-
-private fun goBack(
-    state: PostCreationUIState,
-    navToClubDetails: (Int) -> Unit,
-    navController: NavController
-) {
-    when (state.clubId) {
-        HOME_CLUB_ID -> {
-            navController.navigateUp()
-        }
-        PROFILE_CLUB_ID -> {
-            navController.navigateToProfile(-1)
-        }
-        else -> {
-            val s = "dlklknlk"
-            s.length
-            navToClubDetails(state.clubId)
-        }
-    }
-}
-

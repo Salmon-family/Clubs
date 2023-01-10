@@ -10,6 +10,7 @@ import com.devfalah.viewmodels.BaseViewModel
 import com.devfalah.viewmodels.clubDetails.mapper.toClubDetailsUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
+import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
@@ -130,7 +131,7 @@ class ClubDetailsViewModel @Inject constructor(
                     val members = getClubMembersUseCase(
                         uiState.value.detailsUiState.ownerId,
                         args.groupId
-                    ).toUserUIState()
+                    ).toFriendsUIState()
                     _uiState.update { it.copy(membersCount = members.size, members = members) }
                 },
                 onFailure = ::onFailure
