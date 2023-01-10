@@ -27,8 +27,6 @@ import com.google.accompanist.web.rememberWebViewState
 @Composable
 fun PostContent(
     post: PostUIState,
-    contentExpandable: Boolean,
-    maxLineToExpand: Int,
     onOpenLinkClick: (String) -> Unit,
     onImageClick: (String) -> Unit,
     isPostDetails: Boolean = false
@@ -69,7 +67,7 @@ fun PostContent(
                 .fillMaxWidth()
                 .height(260.dp)
                 .nonRippleEffect { onImageClick(post.postImage) },
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillWidth
         )
     }
 }
