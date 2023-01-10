@@ -94,13 +94,14 @@ fun MenuContent(
     onClickReportBug: () -> Unit,
     onClickLogOut: () -> Unit,
 ) {
-    var popupController by remember { mutableStateOf(false) }
+    var logoutController by remember { mutableStateOf(false) }
+    
     Column {
         AppBar(
             title = stringResource(id = R.string.menu),
             showBackButton = false,
             actions = {
-                IconButton(onClick = { popupController = true }) {
+                IconButton(onClick = { logoutController = true }) {
                     Icon(
                         modifier = Modifier.flipWithLanguage(),
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_logout),
@@ -155,12 +156,12 @@ fun MenuContent(
                 )
             }
         }
-        if (popupController) {
+        if (logoutController) {
             LeaveDialog(
                 title = stringResource(id = R.string.logout),
                 message = stringResource(id = R.string.logout_msg),
                 onDeclineClub = onClickLogOut,
-                onPopupDismiss = { popupController = false }
+                onPopupDismiss = { logoutController = false }
             )
         }
     }
