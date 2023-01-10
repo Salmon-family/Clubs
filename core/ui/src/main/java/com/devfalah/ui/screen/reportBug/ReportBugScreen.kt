@@ -81,25 +81,29 @@ fun MenuContent(
                 ButtonWithLoading(
                     modifier = Modifier.fillMaxWidth(),
                     text = stringResource(R.string.send),
-                    onClick = {
-                        onClickSend()
-                        reportDialogController = true
-                    },
-                    isLoading = false
+                    onClick = onClickSend,
+                    isLoading = false,
+                    isEnabled= state.bugMessage.isNotEmpty()
                 )
             }
 
         }
 
         LaunchedEffect(key1 = state.isSuccessful) {
-            if (state.isSuccessful) onClickBack()
+            if (state.isSuccessful) {
+                reportDialogController = true
+            }
         }
+
 
         if (reportDialogController) {
             BasicDialog(
                 title = stringResource(id = R.string.report_bugs),
                 message = stringResource(id = R.string.report_msg),
-                onPopupDismiss = { reportDialogController = false }
+                onPopupDismiss = {
+                    reportDialogController = false
+                    if (state.isSuccessful) onClickBack()
+                }
             )
         }
 
