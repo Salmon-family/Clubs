@@ -1,6 +1,7 @@
 package com.devfalah.repositories
 
 import com.devfalah.entities.*
+import com.devfalah.repositories.mappers.*
 import com.devfalah.repositories.mappers.toEntity
 import com.devfalah.repositories.mappers.toHomeEntity
 import com.devfalah.repositories.mappers.toPostHomeEntity
@@ -15,7 +16,8 @@ class ClubRepositoryImp @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: CoreLocalDataSource,
     private val coreDataStoreDataSource: CoreDataStoreDataSource,
-    private val coreFireStoreDataSource: CoreFireStoreDataSource
+    private val coreFireStoreDataSource: CoreFireStoreDataSource,
+    private val firebaseCloudMessagingDataSource: FirebaseCloudMessagingDataSource,
 ) : ClubRepository {
 
     override suspend fun removeFriendRequest(userID: Int, friendRequestID: Int): Boolean {
@@ -198,7 +200,7 @@ class ClubRepositoryImp @Inject constructor(
         userId: Int, publishOnId: Int, postContent: String, privacy: Int
     ): Post {
         return remoteDataSource.publishPostUserWall(userId, publishOnId, postContent, privacy)
-            .toEntity() ?: throw Throwable("null data")
+            .toEntity()
     }
 
     override suspend fun publishPostWithImage(
@@ -206,7 +208,7 @@ class ClubRepositoryImp @Inject constructor(
     ): Post {
         return remoteDataSource.publishPostWithImage(
             userId, publishOnId, postContent, privacy, imageFile
-        ).toEntity() ?: throw Throwable("null data")
+        ).toEntity()
     }
 
     override suspend fun getPostComments(postId: Int, userId: Int, page: Int): List<Comment> {
@@ -215,7 +217,7 @@ class ClubRepositoryImp @Inject constructor(
     }
 
     override suspend fun getPostByID(postId: Int, userID: Int): Post {
-        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity() ?: Post()
+        return remoteDataSource.getPostByID(postId = postId, userID = userID).toEntity()
     }
 
 
@@ -292,6 +294,10 @@ class ClubRepositoryImp @Inject constructor(
 
     override suspend fun getTotalHomePost(): Int {
        return localDataSource.getTotalHomePost()
+    }
+
+    override suspend fun pushNotification(notificationRequestBody: NotificationRequest): Boolean {
+        return firebaseCloudMessagingDataSource.pushNotification(notificationRequestBody.toDto())
     }
 
 }

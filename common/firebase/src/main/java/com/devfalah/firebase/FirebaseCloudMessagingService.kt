@@ -1,6 +1,7 @@
 package com.devfalah.firebase
 
 
+import android.util.Log
 import com.devfalah.repository.models.NotificationDataModel
 import com.devfalah.repository.models.NotificationKeys
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -18,6 +19,7 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
     lateinit var notificationService: Notifier
 
     override fun onMessageReceived(message: RemoteMessage) {
+        Log.e("DEVFALAH","WORK")
         message.data.let { data ->
             if (data.isNotEmpty()) {
                 val id = (data[NotificationKeys.ID_KEY]?.toInt() ?: 0)
