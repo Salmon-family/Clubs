@@ -2,6 +2,7 @@ package com.devfalah.remote
 
 
 import com.devfalah.remote.response.BaseResponse
+import com.devfalah.repositories.models.GroupMembersDTO
 import com.devfalah.remote.util.Constants.IMAGE_FILE
 import com.devfalah.remote.util.Constants.POST_IMAGE_DESCRIPTION
 import com.devfalah.remote.util.Constants.PROFILE_IMAGE_DESCRIPTION
@@ -11,6 +12,9 @@ import com.devfalah.remote.util.PostType
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
+import com.devfalah.repositories.models.friends.FriendDTO
+import com.devfalah.repositories.models.friends.FriendsDTO
+import com.devfalah.repositories.models.friends.FriendshipDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationsDTO
@@ -175,12 +179,8 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Error")
     }
 
-    override suspend fun getGroupMembers(groupID: Int, page: Int): List<UserDTO> {
-        return try {
-            wrap { apiService.getGroupMembers(groupID, page = page) }.members ?: emptyList()
-        } catch (t: Throwable) {
-            emptyList()
-        }
+    override suspend fun getGroupMembers(groupID: Int, page: Int): GroupMembersDTO {
+        return wrap { apiService.getGroupMembers(groupID, page = page) }
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto {
@@ -318,7 +318,7 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {
         return try {
-          wrap { apiService.getWallPost(userID = userID, postID = postId) }
+            wrap { apiService.getWallPost(userID = userID, postID = postId) }
         } catch (t: Throwable) {
             throw Throwable("NotFound")
         }

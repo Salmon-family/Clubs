@@ -1,6 +1,6 @@
 package com.devfalah.usecases.friend
 
-import com.devfalah.entities.Friends
+import com.devfalah.entities.Members
 import com.devfalah.usecases.repository.ClubRepository
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ class GetUserFriendsUseCase @Inject constructor(
 ) {
     private var page = 1
 
-    suspend operator fun invoke(profileUserID: Int): Friends {
+    suspend operator fun invoke(profileUserID: Int): Members {
         val userId = authRepository.getUserId()
         val profileId = if (profileUserID == -1) {
             userId

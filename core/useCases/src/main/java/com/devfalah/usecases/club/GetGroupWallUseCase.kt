@@ -9,7 +9,7 @@ class GetGroupWallUseCase @Inject constructor(
 ) {
     private var page = 1
     private var count = 0
-    private lateinit var savedPosts: List<Int>
+    private val savedPosts = mutableListOf<Int>()
     private val userId: Int = clubRepository.getUserId()
 
     suspend operator fun invoke(groupID: Int) {
@@ -19,7 +19,6 @@ class GetGroupWallUseCase @Inject constructor(
     suspend fun loadMore(groupID: Int, isRestart: Boolean): List<GroupWallPost> {
         if (isRestart) {
             page = 1
-            println("test page $page")
         }
         val clubPosts = clubRepository.getGroupWallList(userID = userId, groupID = groupID, page)
         count = clubPosts.count
@@ -29,7 +28,8 @@ class GetGroupWallUseCase @Inject constructor(
                 if (clubPost.post.id in savedPosts) {
                     clubPost.copy(
                         post = clubPost.post.copy(
-                            isSaved = true, isMyPost = userId == clubPost.post.publisherId
+                            isSaved = true,
+                            isMyPost = userId == clubPost.post.publisherId
                         )
                     )
                 } else {
@@ -47,7 +47,7 @@ class GetGroupWallUseCase @Inject constructor(
 
     private suspend fun getSavedPostsIds(groupID: Int) {
         return clubRepository.getSavedPostedIds(groupID).collect {
-            savedPosts = it
+            savedPosts.addAll(it)
         }
     }
 }

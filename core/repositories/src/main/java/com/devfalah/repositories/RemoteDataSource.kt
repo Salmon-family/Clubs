@@ -2,6 +2,9 @@ package com.devfalah.repositories
 
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
+import com.devfalah.repositories.models.friends.FriendDTO
+import com.devfalah.repositories.models.friends.FriendsDTO
+import com.devfalah.repositories.models.friends.FriendshipDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationsDTO
@@ -62,7 +65,7 @@ interface RemoteDataSource {
 
     suspend fun editUserInformation(user: UserInfo): UserDTO
 
-    suspend fun getGroupMembers(groupID: Int, page: Int): List<UserDTO>
+    suspend fun getGroupMembers(groupID: Int, page: Int): GroupMembersDTO
 
     suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto
 
