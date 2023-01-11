@@ -139,7 +139,7 @@ fun MyClubsScreen(
             ErrorItem(onClickRetry = onRetry)
         } else if (state.isLoading) {
             Loading()
-        } else if (state.myClubs.isEmpty()) {
+        } else if (state.myClubs.isEmpty() && state.mySpecialClubs.isEmpty()) {
             EmptyClubsItem()
         } else {
             LazyColumn(
@@ -186,13 +186,16 @@ fun MyClubsScreen(
                         }
                     }
                 }
-                item {
-                    Text(
-                        text = stringResource(R.string.my_clubs),
-                        style = AppTypography.subtitle1,
-                        color = MaterialTheme.colors.primaryVariant,
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
+
+                if(state.myClubs.isNotEmpty()) {
+                    item {
+                        Text(
+                            text = stringResource(R.string.my_clubs),
+                            style = AppTypography.subtitle1,
+                            color = MaterialTheme.colors.primaryVariant,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
                 }
 
                 items(state.myClubs) {

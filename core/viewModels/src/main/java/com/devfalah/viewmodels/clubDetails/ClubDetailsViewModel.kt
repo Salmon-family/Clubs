@@ -16,6 +16,7 @@ import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -40,6 +41,8 @@ class ClubDetailsViewModel @Inject constructor(
     private val args = ClubDetailsArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(ClubDetailsUiState())
     val uiState = _uiState.asStateFlow()
+
+    private var likeJob: Job? = null
 
     init {
         viewModelScope.launch {
@@ -140,21 +143,23 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             makeRequest(
                 onSuccess = {
-                    val totalLikes = likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
                     val updatedPost = post.copy(
-                        isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                        isLikedByUser = !post.isLikedByUser,
+                        totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                     )
                     _uiState.update {
                         it.copy(posts = _uiState.value.posts.map { postUiState ->
                             if (postUiState.postId == post.postId) updatedPost else postUiState
                         })
                     }
+                    delay(1000)
+                    likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
                 },
-                onFailure = ::onFailure
+                onFailure = {}
             )
         }
     }

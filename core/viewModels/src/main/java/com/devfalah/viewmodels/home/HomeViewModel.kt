@@ -17,6 +17,8 @@ import com.devfalah.viewmodels.util.ErrorsType.LIKE_ERROR
 import com.devfalah.viewmodels.util.ErrorsType.NO_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -33,6 +35,8 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
+
+    private var likeJob: Job? = null
 
     init {
         getData()
@@ -85,14 +89,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = likeUseCase(
-                    postID = post.postId,
-                    isLiked = post.isLikedByUser
-                )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
@@ -103,10 +105,16 @@ class HomeViewModel @Inject constructor(
                         }
                     })
                 }
+                delay(1000)
+                likeUseCase(
+                    postID = post.postId,
+                    isLiked = post.isLikedByUser
+                )
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = LIKE_ERROR) }
             }
         }
+
     }
 
     fun onClickSave(post: PostUIState) {

@@ -39,6 +39,7 @@ fun ClubsScreen(
     viewModel: ClubsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_ROUTE, inclusive = false)
     BackPressHandler(onBackPressed = { onBack() })
@@ -48,8 +49,14 @@ fun ClubsScreen(
         onSelectedChanged = viewModel::onChangeSelectedClub,
         onClickBack = { navController.popBackStack(route = ON_BOARDING_PAGER_ROUTE, inclusive = false) },
         onClickContinue = viewModel::onJoin,
-        navController = navController
     )
+
+    LaunchedEffect(key1 = state.isLoading) {
+        if (state.isSuccess) {
+            navController.navigateToAccountActivation()
+            Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
 
 @Composable
@@ -58,9 +65,7 @@ fun ClubsContent(
     onClickBack: () -> Unit,
     onSelectedChanged: (ClubUIState) -> Unit,
     onClickContinue: () -> Unit,
-    navController: NavController
 ) {
-    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -106,7 +111,7 @@ fun ClubsContent(
 
             AuthButton(
                 onClick = onClickContinue,
-                isEnabled = state.selectedClubs.size in 1..4,
+                isEnabled = state.selectedClubs.size in 1..3,
                 text = stringResource(id = R.string.continue_label),
                 buttonModifier = Modifier
                     .fillMaxWidth()
@@ -119,10 +124,5 @@ fun ClubsContent(
         }
     }
 
-    LaunchedEffect(key1 = state.isLoading) {
-        if (state.isSuccess) {
-            navController.navigateToAccountActivation()
-            Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
-        }
-    }
+
 }
