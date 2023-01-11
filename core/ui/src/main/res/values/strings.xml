@@ -133,4 +133,7 @@
     <string name="error_delete_thread">Sorry, could not delete your thread!!</string>
     <string name="error_Like_thread">Sorry, Error in Like a thread!!</string>
 
+    <string name="report">Report Bug</string>
+    <string name="report_msg">Thank you for your feedback. </string>
+
 </resources>
