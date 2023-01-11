@@ -46,9 +46,9 @@ class ClubCreationViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             try {
-                val club = createClub(
-                    groupName = _uiState.value.name,
-                    description = _uiState.value.description,
+                createClub(
+                    groupName = _uiState.value.name.trim(),
+                    description = _uiState.value.description.trim(),
                     groupPrivacy = _uiState.value.privacy.value
                 )
                 _uiState.update { it.copy(isLoading = false, isSuccessful = true) }
