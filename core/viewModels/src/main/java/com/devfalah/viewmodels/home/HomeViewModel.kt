@@ -16,13 +16,10 @@ import com.devfalah.viewmodels.util.ErrorsType.HOME_ERROR
 import com.devfalah.viewmodels.util.ErrorsType.LIKE_ERROR
 import com.devfalah.viewmodels.util.ErrorsType.NO_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -97,13 +94,16 @@ class HomeViewModel @Inject constructor(
                     totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                 )
                 _uiState.update {
-                    it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) {
-                            updatedPost
-                        } else {
-                            it
-                        }
-                    })
+                    it.copy(
+                        posts = uiState.value.posts.map {
+                            if (it.postId == post.postId) {
+                                updatedPost
+                            } else {
+                                it
+                            }
+                        },
+                        error = NO_ERROR
+                    )
                 }
                 delay(1000)
                 likeUseCase(
@@ -111,7 +111,9 @@ class HomeViewModel @Inject constructor(
                     isLiked = post.isLikedByUser
                 )
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = LIKE_ERROR) }
+                if (t !is CancellationException) {
+                    _uiState.update { it.copy(error = LIKE_ERROR) }
+                }
             }
         }
 
