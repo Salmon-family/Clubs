@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.clubDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.club.*
@@ -88,6 +87,7 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             makeRequest(
                 onSuccess = {
+                    _uiState.update { it.copy(error = "") }
                     val clubDetails = getClubDetailsUseCase(groupID = args.groupId)
                     _uiState.update {
                         it.copy(
