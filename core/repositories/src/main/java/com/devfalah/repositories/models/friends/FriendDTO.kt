@@ -1,10 +1,10 @@
-package com.devfalah.repositories.models.group
+package com.devfalah.repositories.models.friends
 
 
 import com.devfalah.repositories.models.IconDto
 import com.google.gson.annotations.SerializedName
 
-data class GroupRequestDTO(
+data class FriendDTO(
     @SerializedName("birthdate")
     val birthdate: String?,
     @SerializedName("cover_url")
@@ -26,5 +26,7 @@ data class GroupRequestDTO(
     @SerializedName("last_name")
     val lastName: String?,
     @SerializedName("username")
-    val username: String?
+    val username: String?,
+    @SerializedName("job_title")
+    val jobTitle: String?
 )
