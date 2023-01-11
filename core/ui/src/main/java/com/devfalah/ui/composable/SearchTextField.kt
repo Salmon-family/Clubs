@@ -9,6 +9,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devfalah.ui.R
@@ -30,6 +33,12 @@ fun SearchTextField(
             disabledIndicatorColor = Color.Transparent,
             textColor = MaterialTheme.colors.primaryVariant
         ),
+        textStyle = TextStyle(
+            fontSize = 14.sp,
+            fontFamily = PlusJakartaSans,
+            fontWeight = FontWeight.Normal,
+            textDirection = TextDirection.Content
+        ),
         value = text,
         shape = RoundedCornerShape(100.dp),
         singleLine = true,
@@ -37,9 +46,13 @@ fun SearchTextField(
         placeholder = {
             Text(
                 text = stringResource(R.string.search),
-                fontSize = 14.sp,
-                fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.onSecondary
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = PlusJakartaSans,
+                    color = MaterialTheme.colors.onSecondary,
+                    fontWeight = FontWeight.Normal,
+                    textDirection = TextDirection.Content
+                )
             )
         },
         leadingIcon = {
