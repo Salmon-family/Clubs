@@ -14,6 +14,15 @@
         top: ['parent', 'top', 0],
         start: ['parent', 'start', 0],
       },
+      imageBox: {
+        width:'spread',
+        height: 360,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+        custom: {
+          background: '#B36C56D6'
+        }
+      },
       appBar: {
         width:'spread',
         height: 70,
@@ -67,6 +76,15 @@
         top: ['parent', 'top', 0],
         start: ['parent', 'start', 0],
       },
+      imageBox: {
+        width:'spread',
+        height: 60,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+        custom: {
+          background: '#FF6C56D6'
+        }
+      },
       appBar: {
         width:'spread',
         height: 70,
@@ -115,12 +133,9 @@
       from: 'start',
       to: 'end',
       onSwipe: {
-        maxVelocity: 4.2,
-        maxAccel: 3,
         anchor: 'scrollItems',
         sider: 'bottom',
         direction: 'down',
-        mode: 'velocity'
       }
     }
   }

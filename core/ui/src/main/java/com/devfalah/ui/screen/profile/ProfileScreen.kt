@@ -214,12 +214,14 @@ fun ProfileContent(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(LightPrimaryBrandTransparentColor)
-                    )
                 }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(motionProperties("imageBox").value.color("background"))
+                        .layoutId("imageBox")
+                )
 
                 Row(
                     modifier = Modifier
@@ -342,7 +344,7 @@ fun ProfileContent(
                         FriendsSection(
                             state.friends,
                             totalFriends = state.totalFriends,
-                            modifier = Modifier,
+                            modifier = Modifier.layoutId("scrollItems"),
                             onClickMoreFriends = onClickMoreFriends,
                             onClickFriend = onClickFriend,
                         )
@@ -350,7 +352,9 @@ fun ProfileContent(
                     if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
                         item("profileDetails") {
                             PostCreatingSection(
-                                modifier = Modifier.padding(horizontal = 16.dp),
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .layoutId("scrollItems"),
                                 onCreatePost = if (state.userDetails.isMyProfile) {
                                     onCreatePost
                                 } else {
@@ -362,6 +366,7 @@ fun ProfileContent(
                     }
                     items(state.posts) {
                         PostItem(
+                            modifier = Modifier.layoutId("scrollItems"),
                             state = it,
                             isContentExpandable = true,
                             isClubPost = false,
