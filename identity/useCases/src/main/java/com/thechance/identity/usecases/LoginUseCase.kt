@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val identityRepository: IdentityRepository,
-    private val getTokenUseCase: GetTokenUseCase,
     private val saveUserId: SaveUserIdUseCase,
     private val clearDataBase: ClearDataBaseUseCase,
 ) {
@@ -21,13 +20,14 @@ class LoginUseCase @Inject constructor(
     }
 
     private suspend fun updateFcmToken(user: User, password: String){
+        val fcmToken = identityRepository.getToken()
         val updatedUser = UserData(
             userId = user.guid,
             newEmail = user.email,
             newGender = user.gender,
             currentPassword = password,
             newFullName = user.fullName,
-            newFcmToken = identityRepository.getToken(),
+            newFcmToken = fcmToken,
             newJobTitle = user.jobTitle
         )
         identityRepository.updateFcmToken(updatedUser)

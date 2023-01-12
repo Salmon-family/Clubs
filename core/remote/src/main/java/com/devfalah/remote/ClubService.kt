@@ -3,6 +3,8 @@ package com.devfalah.remote
 import com.devfalah.remote.response.*
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDetailsDTO
+import com.devfalah.repositories.models.friends.FriendsDTO
+import com.devfalah.repositories.models.friends.FriendshipDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationCountDTO
@@ -133,7 +135,7 @@ interface ClubService {
     suspend fun getGroupMembers(
         @Field("group_guid") groupID: Int,
         @Field("offset") page: Int? = null
-    ): Response<BaseResponse<GroupMembersResponse>>
+    ): Response<BaseResponse<GroupMembersDTO>>
 
     @FormUrlEncoded
     @POST("wall_list_group")

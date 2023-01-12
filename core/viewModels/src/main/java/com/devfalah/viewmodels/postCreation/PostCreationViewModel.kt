@@ -63,7 +63,7 @@ class PostCreationViewModel @Inject constructor(
             try {
                 createThreadUseCase(
                     clubId = args.clubId,
-                    postContent = uiState.value.postContent,
+                    postContent = uiState.value.postContent.trim(),
                     privacy = uiState.value.privacy,
                     imageFile = uiState.value.imageFile
                 )

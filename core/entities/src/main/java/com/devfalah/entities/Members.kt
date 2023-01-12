@@ -1,8 +1,8 @@
 package com.devfalah.entities
 
-data class Friends(
+data class Members(
     val friends: List<User>,
     val total: Int,
     val page: Int,
-    val isMyFriends: Boolean
+    val isMyFriends: Boolean = false
 )

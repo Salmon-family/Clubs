@@ -55,7 +55,7 @@ fun ClubsDetailsScreen(
     ClubsDetailsContent(
         state = state,
         onBack = { navController.popBackStack() },
-        onRefresh = viewModel::swipeToRefresh,
+        onRefresh = viewModel::getClubThreads,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
             navController.navigateToPostDetails(id = it.postId)

@@ -16,5 +16,5 @@ data class PostCreationUIState(
 )
 
 fun PostCreationUIState.isEnabled(): Boolean {
-    return !isLoading && (postContent.isNotEmpty() || imageFile != null)
+    return !isLoading && (postContent.trim().isNotEmpty() || imageFile != null)
 }

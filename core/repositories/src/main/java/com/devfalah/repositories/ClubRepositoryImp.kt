@@ -32,7 +32,7 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getUserFriendRequests(userID = userID).toEntity()
     }
 
-    override suspend fun getUserFriends(userID: Int, page: Int): Friends {
+    override suspend fun getUserFriends(userID: Int, page: Int): Members {
         return remoteDataSource.getUserFriends(userID, page).toEntity()
     }
 
@@ -135,7 +135,7 @@ class ClubRepositoryImp @Inject constructor(
         return remoteDataSource.getGroupDetails(userID, groupID).toEntity()
     }
 
-    override suspend fun getGroupMembers(groupID: Int, page: Int): List<User> {
+    override suspend fun getGroupMembers(groupID: Int, page: Int): Members{
         return remoteDataSource.getGroupMembers(groupID, page).toEntity()
     }
 
