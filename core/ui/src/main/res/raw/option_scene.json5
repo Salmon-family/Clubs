@@ -1,0 +1,127 @@
+{
+  ConstraintSets: {
+    start: {
+      scrollItems: {
+        height: 'spread',
+        end: ['firstBox', 'end'],
+        start: ['firstBox', 'start'],
+        top: ['firstBox', 'bottom', 0],
+        bottom: ['parent', 'bottom', 0]
+      },
+      firstBox: {
+        width:'spread',
+        height: 360,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+      },
+      appBar: {
+        width:'spread',
+        height: 70,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0]
+      },
+      textTitle: {
+        top: ['appBar', 'top', 4],
+        start: ['parent', 'start', 16]
+      },
+      textName: {
+        top: ['textTitle', 'bottom', 4],
+        start: ['parent', 'start', 16],
+        custom: {
+          fontSize: 30,
+          fontWeight: 600
+        }
+      },
+      boxProfile: {
+        width:'spread',
+        height: 170,
+        start: ['parent', 'start', 0],
+        bottom: ['firstBox', 'bottom', 0]
+      },
+      imageProfile: {
+        width:112,
+        height: 112,
+        start: ['parent', 'start', 0],
+        end: ['parent', 'end', 0],
+        bottom: ['boxProfile', 'bottom', 50],
+        top: ['boxProfile', 'top', 0],
+      },
+      imagePicker: {
+        width:40,
+        height: 40,
+        end: ['imageProfile', 'end'],
+        bottom: ['imageProfile', 'bottom'],
+      },
+    },
+    end: {
+      scrollItems: {
+        height: 'spread',
+        end: ['firstBox', 'end'],
+        start: ['firstBox', 'start'],
+        top: ['firstBox', 'bottom', 0],
+        bottom: ['parent', 'bottom', 0],
+      },
+      firstBox: {
+        width:'spread',
+        height: 60,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+      },
+      appBar: {
+        width:'spread',
+        height: 70,
+        top: ['parent', 'top', 0],
+        start: ['parent', 'start', 0],
+      },
+      textTitle: {
+        width: 0,
+        height: 0,
+        bottom: ['textName', 'bottom', 4],
+        start: ['parent', 'start', 16]
+      },
+      textName: {
+        top: ['imageProfile', 'top', 0],
+        bottom: ['imageProfile', 'bottom', 0],
+        start: ['imageProfile', 'start', 24],
+        custom: {
+          fontSize: 14,
+          fontWeight: 400
+        }
+      },
+      boxProfile: {
+        width:'spread',
+        height: 0,
+        start: ['parent', 'start', 0],
+        bottom: ['firstBox', 'bottom', 0]
+      },
+      imageProfile: {
+        width:40,
+        height: 40,
+        start: ['appBar', 'start', 48],
+        top: ['appBar', 'top', 8]
+      },
+      imagePicker: {
+        width:40,
+        height: 40,
+        end: ['imageProfile', 'end'],
+        bottom: ['imageProfile', 'bottom'],
+        alpha:0.0
+      },
+    }
+  },
+  Transitions: {
+    default:{
+      staggered: 0.4,
+      from: 'start',
+      to: 'end',
+      onSwipe: {
+        maxVelocity: 4.2,
+        maxAccel: 3,
+        anchor: 'scrollItems',
+        sider: 'bottom',
+        direction: 'down',
+        mode: 'velocity'
+      }
+    }
+  }
+}

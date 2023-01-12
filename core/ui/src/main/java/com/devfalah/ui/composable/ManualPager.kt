@@ -40,8 +40,7 @@ fun ManualPager(
 
     LazyColumn(
         modifier = modifier
-            .background(backgroundColor)
-            .fillMaxSize(),
+            .background(backgroundColor),
         state = scrollState,
         contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(16.dp)

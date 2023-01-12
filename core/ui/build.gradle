@@ -95,4 +95,7 @@ dependencies {
     //zoomable image
     implementation 'com.github.Tlaster:Zoomable:0.6.2'
 
+    //constraint
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha05"
+
 }

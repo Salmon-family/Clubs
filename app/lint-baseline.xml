@@ -1,0 +1,1225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="5" by="lint Dolphin | 2021.3.1 Patch 1">
+
+    <issue
+        id="GradleCompatible"
+        message="The compileSdkVersion (32) should not be lower than the targetSdkVersion (33)">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:windowLightStatusBar` requires API level 23 (current min is 21)">
+        <location
+            file="src/main/res/values-night/themes.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="`android:windowLightStatusBar` requires API level 23 (current min is 21)">
+        <location
+            file="src/main/res/values/themes.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details.">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="SimpleDateFormat"
+        message="To get local formatting use `getDateInstance()`, `getDateTimeInstance()`, or `getTimeInstance()`, or use `new SimpleDateFormat(String template, Locale locale)` with for example `Locale.US` for ASCII dates.">
+        <location
+            file="src/main/java/com/devfalah/repositories/ConvertDate.kt"
+            line="33"/>
+    </issue>
+
+    <issue
+        id="SimpleDateFormat"
+        message="To get local formatting use `getDateInstance()`, `getDateTimeInstance()`, or `getTimeInstance()`, or use `new SimpleDateFormat(String template, Locale locale)` with for example `Locale.US` for ASCII dates.">
+        <location
+            file="src/main/java/com/devfalah/viewmodels/util/ConvertDate.kt"
+            line="39"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_fire.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_fire.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_fire.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_fire.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_movie.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_movie.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_notebook.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `fillType` is only used in API level 24 and higher (current min is 21)">
+        <location
+            file="src/main/res/drawable/ic_fill_notebook.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="AppBundleLocaleChanges"
+        message="Found dynamic locale changes, but did not find corresponding Play Core library calls for downloading languages and splitting by language is not disabled in the `bundle` configuration">
+        <location
+            file="../core/ui/src/main/java/com/devfalah/ui/util/Language.kt"
+            line="16"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="VectorRaster"
+        message="Limit vector icons sizes to 200×200 to keep icon drawing fast; see https://developer.android.com/studio/write/vector-asset-studio#when for more">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-test-junit4 than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-test-junit4 than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-test-junit4 than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-test-manifest than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-test-manifest than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-test-manifest than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-tooling than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-tooling than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-tooling than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-tooling-preview than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-tooling-preview than 1.3.1 is available: 1.3.2">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.7.0 is available: 1.9.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.7.0 is available: 1.9.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.5.1">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.5.1">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.5.1">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.ext:junit than 1.1.4 is available: 1.1.5">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.ext:junit than 1.1.4 is available: 1.1.5">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.ext:junit than 1.1.4 is available: 1.1.5">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.accompanist:accompanist-flowlayout than 0.13.0 is available: 0.28.0">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.accompanist:accompanist-pager than 0.13.0 is available: 0.25.1">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.squareup.okhttp3:logging-interceptor than 3.0.1 is available: 5.0.0-alpha.3">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.squareup.okhttp3:logging-interceptor than 4.10.0 is available: 5.0.0-alpha.3">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="ComposableModifierFactory"
+        message="Modifier factory functions should not be marked as @Composable, and should use composed instead">
+        <location
+            file="src/main/java/com/devfalah/ui/modifiers/RippleEffect.kt"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be named modifier">
+        <location
+            file="src/main/java/com/thechance/identity/ui/composable/AuthButton.kt"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter">
+        <location
+            file="src/main/java/com/thechance/identity/ui/composable/AuthButton.kt"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Optional Modifier parameter should have a default value of `Modifier`">
+        <location
+            file="src/main/java/com/thechance/identity/ui/composable/AuthButton.kt"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter">
+        <location
+            file="src/main/java/com/thechance/ui/composable/PhotoFriendChat.kt"
+            line="19"/>
+    </issue>
+
+    <issue
+        id="UnspecifiedImmutableFlag"
+        message="Missing `PendingIntent` mutability flag">
+        <location
+            file="src/main/java/com/devfalah/firebase/Notifier.kt"
+            line="35"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; SDK_INT is always >= 31">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="21"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1061 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="216"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1054 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="226"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (982 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="236"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1060 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="258"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (828 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="266"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1053 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="270"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (982 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="282"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (833 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="286"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (831 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="318"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (833 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="342"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1062 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="366"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (826 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="386"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (827 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/background_chat_screen.xml"
+            line="396"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1065 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="438"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (826 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="462"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (827 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable-night/background_chat_screen.xml"
+            line="474"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2323 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_ball.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2323 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_ball.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1687 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_clubs_filled.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (945 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_comment.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1082 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_fill_diagram.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1082 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_fill_diagram.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (893 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_fill_gamepad.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (893 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_fill_gamepad.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1629 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_friends.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2392 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_hat.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2392 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_hat.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1923 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_launcher_foreground.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1923 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_logo.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1923 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_logo.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1923 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_logo.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1923 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_logo_foreground.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2207 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_notebook.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2207 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_notebook.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (890 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/ic_notification.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1702 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.">
+        <location
+            file="src/main/res/drawable/star.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.art_icon` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/art_icon.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.background` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/drawable/background.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_500` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/values/colors.xml"
+            line="4"/>
+        <location
+            file="../identity/ui/src/main/res/values/colors.xml"
+            line="4"/>
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_700` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/values/colors.xml"
+            line="5"/>
+        <location
+            file="../identity/ui/src/main/res/values/colors.xml"
+            line="5"/>
+        <location
+            file="src/main/res/values/colors.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_200` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/values/colors.xml"
+            line="6"/>
+        <location
+            file="../identity/ui/src/main/res/values/colors.xml"
+            line="6"/>
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_700` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/values/colors.xml"
+            line="7"/>
+        <location
+            file="../identity/ui/src/main/res/values/colors.xml"
+            line="7"/>
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.white` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_back` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_back.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_close` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/drawable/ic_close.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_color` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_color.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_friend_request_filled` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_friend_request_filled.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/drawable/ic_launcher_background.xml"
+            line="2"/>
+        <location
+            file="../identity/ui/src/main/res/drawable/ic_launcher_background.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/drawable-v24/ic_launcher_foreground.xml"
+            line="1"/>
+        <location
+            file="../identity/ui/src/main/res/drawable-v24/ic_launcher_foreground.xml"
+            line="1"/>
+        <location
+            file="src/main/res/drawable/ic_launcher_foreground.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_line` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_line.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_location` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_location.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_logout` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_logout.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_menu_blocked` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_menu_blocked.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_menu_two_tone` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_menu_two_tone.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_photo` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_photo.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_search_filled` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_search_filled.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_search_outline` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_search_outline.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_tag` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/ic_tag.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.loading` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/raw/loading.json"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.no_data` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/raw/no_data.json"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.raw.option_scene` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/raw/option_scene.json5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.arrow_back` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/values/strings.xml"
+            line="4"/>
+        <location
+            file="../chat/ui/src/main/res/values-ar/strings.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.photo` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="5"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.tag` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="6"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.location` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="7"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.color` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="8"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.no_chats` appears to be unused">
+        <location
+            file="../chat/ui/src/main/res/values/strings.xml"
+            line="9"/>
+        <location
+            file="../chat/ui/src/main/res/values-ar/strings.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.register` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/strings.xml"
+            line="9"/>
+        <location
+            file="../identity/ui/src/main/res/values-ar/strings.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.footer_first_text` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/strings.xml"
+            line="10"/>
+        <location
+            file="../identity/ui/src/main/res/values-ar/strings.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.footer_second_text` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/strings.xml"
+            line="11"/>
+        <location
+            file="../identity/ui/src/main/res/values-ar/strings.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.user_name_question` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/strings.xml"
+            line="13"/>
+        <location
+            file="../identity/ui/src/main/res/values-ar/strings.xml"
+            line="14"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.accept` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="14"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.email_label` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/strings.xml"
+            line="14"/>
+        <location
+            file="../identity/ui/src/main/res/values-ar/strings.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.pick_user_name` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/strings.xml"
+            line="29"/>
+        <location
+            file="../identity/ui/src/main/res/values-ar/strings.xml"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.loading` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="31"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="26"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.blocked_people` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="43"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="37"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.public_text` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="57"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="51"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.bio` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="68"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="62"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.user_update_successfully` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="73"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="67"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.hours` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="94"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="88"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.bug_report_error_message` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="108"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="97"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.report` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/values/strings.xml"
+            line="136"/>
+        <location
+            file="../core/ui/src/main/res/values-ar/strings.xml"
+            line="133"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.test_profile` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/test_profile.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.test_profile_cover` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/test_profile_cover.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.Theme_SplashScreenAndroid` appears to be unused">
+        <location
+            file="../identity/ui/src/main/res/values/themes.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.user_image` appears to be unused">
+        <location
+            file="../core/ui/src/main/res/drawable/user_image.png"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?">
+        <location
+            file="src/main/res/values-ar/strings.xml"
+            line="42"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Action Bar icons should use a single gray color (`#333333` for light themes (with 60%/30% opacity for enabled/disabled), and `#FFFFFF` with opacity 80%/30% for dark themes">
+        <location
+            file="src/main/res/drawable/ic_menu_avatar.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/ic_menu_avatar.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/ic_menu_avatar.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/pc_first_man.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/pc_first_man.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/pc_second_man.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/pc_second_man.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/pc_third_man.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/pc_third_man.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/test_image.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/test_image.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/test_profile.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/test_profile.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/test_profile_cover.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/test_profile_cover.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/user_image.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/user_image.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/welcome.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/welcome.png"/>
+    </issue>
+
+</issues>

@@ -8,35 +8,63 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
+import com.devfalah.ui.modifiers.flipWithLanguage
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.screen.friends.navigateToFriends
 import com.devfalah.ui.screen.home.openBrowser
 import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.FriendsSection
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
-import com.devfalah.ui.screen.profile.composable.ProfileDetailsSection
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
+import com.devfalah.ui.theme.LightPrimaryBrandColor
+import com.devfalah.ui.theme.LightPrimaryBrandTransparentColor
+import com.devfalah.ui.theme.PlusJakartaSans
+import com.devfalah.ui.theme.WhiteColor
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.ui.util.observeAsState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.ProfileViewModel
+import com.devfalah.viewmodels.userProfile.UserDetailsUIState
 import com.devfalah.viewmodels.userProfile.UserUIState
 import com.devfalah.viewmodels.util.ChatNavigation.FRIEND_ID
 import com.devfalah.viewmodels.util.ChatNavigation.PACKAGE_CHAT_NAME
@@ -46,8 +74,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ProfileScreen(
-    navController: NavController,
-    viewModel: ProfileViewModel = hiltViewModel()
+    navController: NavController, viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -56,17 +83,16 @@ fun ProfileScreen(
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
-    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri ->
-            selectedImageUri = uri
-            uri?.let {
-                viewModel.onClickChangeImage(
-                    createFileFromContentUri(it, context, MAX_IMAGE_PROFILE_SIZE)
-                )
-            }
-        }
-    )
+    val singlePhotoPickerLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri ->
+                selectedImageUri = uri
+                uri?.let {
+                    viewModel.onClickChangeImage(
+                        createFileFromContentUri(it, context, MAX_IMAGE_PROFILE_SIZE)
+                    )
+                }
+            })
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
     LaunchedEffect(key1 = lifecycleState.value) {
         if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
@@ -86,8 +112,7 @@ fun ProfileScreen(
         onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
             navigateToConversation(
-                context = context,
-                state.userDetails.userID
+                context = context, state.userDetails.userID
             )
         },
         onChangeProfileImage = {
@@ -132,6 +157,7 @@ fun ProfileScreen(
 
 }
 
+@OptIn(ExperimentalMotionApi::class)
 @Composable
 fun ProfileContent(
     state: UserUIState,
@@ -156,67 +182,199 @@ fun ProfileContent(
     onRemoveFriend: () -> Unit,
 ) {
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    val context = LocalContext.current
+    val motionScene = remember {
+        context.resources.openRawResource(R.raw.option_scene).readBytes().decodeToString()
+    }
+
+    Box() {
         if (state.majorError.isNotBlank()) {
             ErrorItem(onClickRetry = onRetry)
         } else if (state.loading) {
             Loading()
         } else {
-            ManualPager(
-                onRefresh = onRefresh,
-                contentPadding = PaddingValues(bottom = 16.dp),
-                isLoading = state.isPagerLoading,
-                error = state.minorError,
-                isEndOfPager = state.isEndOfPager
+
+            MotionLayout(
+                motionScene = MotionScene(
+                    content = motionScene
+                ), modifier = Modifier.fillMaxSize()
             ) {
 
-                item(key = state.userDetails.userID) {
-                    ProfileDetailsSection(
-                        state.userDetails,
-                        selectedImageUri = selectedImageUri,
-                        onChangeProfileImage = onChangeProfileImage,
-                        onSendRequestClick = onClickAddFriend,
-                        onClickBackButton = onClickBackButton,
-                        onClickEditProfile = onEditUserInformation,
-                        onRemoveFriend = onRemoveFriend
+                Box(
+                    modifier = Modifier
+                        .background(LightPrimaryBrandColor)
+                        .layoutId("firstBox")
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(
+                            model = selectedImageUri ?: state.userDetails.profilePicture,
+                            error = painterResource(id = R.drawable.test_image)
+                        ),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(LightPrimaryBrandTransparentColor)
                     )
                 }
-                item(key = state.friends) {
-                    FriendsSection(
-                        state.friends,
-                        totalFriends = state.totalFriends,
-                        modifier = Modifier,
-                        onClickMoreFriends = onClickMoreFriends,
-                        onClickFriend = onClickFriend,
-                    )
-                }
-                if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
-                    item("profileDetails") {
-                        PostCreatingSection(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            onCreatePost = if (state.userDetails.isMyProfile) {
-                                onCreatePost
-                            } else {
-                                onClickSendMessage
-                            },
-                            isMyProfile = state.userDetails.isMyProfile
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .layoutId("appBar"),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_arrow),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .nonRippleEffect { onClickBackButton() }
+                            .flipWithLanguage(),
+                        tint = Color.White)
+                    Spacer(modifier = Modifier.weight(1f))
+                    if (state.userDetails.isMyProfile) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.setting),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clickable {
+                                    onEditUserInformation()
+                                },
+                            tint = Color.White
                         )
                     }
                 }
-                items(state.posts) {
-                    PostItem(
-                        state = it,
-                        isContentExpandable = true,
-                        isClubPost = false,
-                        showGroupName = false,
-                        onClickLike = onClickLike,
-                        onClickComment = onClickComment,
-                        onClickSave = onClickSave,
-                        onClickPostSetting = onClickPostSetting,
-                        onClickProfile = onClickProfile,
-                        onOpenLinkClick = onOpenLinkClick,
-                        onImageClick = onImageClick
+
+                Text(
+                    text = state.userDetails.title,
+                    modifier = Modifier
+                        .padding(start = 24.dp, top = 56.dp)
+                        .layoutId("textTitle"),
+                    textAlign = TextAlign.Start,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    fontFamily = PlusJakartaSans,
+                    color = WhiteColor,
+                    maxLines = 1
+                )
+                Text(
+                    text = state.userDetails.name,
+                    modifier = Modifier
+                        .padding(start = 24.dp)
+                        .layoutId("textName"),
+                    textAlign = TextAlign.Start,
+                    fontWeight = FontWeight(motionInt("textName", "fontWeight")),
+                    fontSize = motionFontSize("textName", "fontSize"),
+                    fontFamily = PlusJakartaSans,
+                    color = WhiteColor,
+                    maxLines = 2
+                )
+
+                Box(
+                    modifier = Modifier.layoutId("boxProfile"),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .height(120.dp)
+                            .clip(RoundedCornerShape(50.dp, 50.dp, 0.dp, 0.dp))
+                            .background(MaterialTheme.colors.background),
                     )
+                }
+
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = (selectedImageUri ?: state.userDetails.profilePicture).toString()
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .layoutId("imageProfile")
+                        .border(4.dp, MaterialTheme.colors.background, CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+
+                val onClick = if (state.userDetails.isMyProfile) {
+                    onChangeProfileImage
+                } else if (state.userDetails.areFriends) {
+                    onRemoveFriend
+                } else if (!state.userDetails.isRequestSend) {
+                    onClickAddFriend
+                } else {
+                    {}
+                }
+                getPainterProfileIcon(state.userDetails)?.let {
+                    Box(modifier = Modifier
+                        .nonRippleEffect {
+                            onClick()
+                        }
+                        .clip(CircleShape)
+                        .layoutId("imagePicker")
+                        .background(MaterialTheme.colors.surface)
+                        .border(4.dp, MaterialTheme.colors.background, CircleShape),
+                        contentAlignment = Alignment.Center) {
+                        getPainterProfileIcon(state.userDetails)?.let { painter ->
+                            Icon(
+                                tint = LightPrimaryBrandColor,
+                                painter = painter,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                }
+
+                ManualPager(
+                    modifier = Modifier.layoutId("scrollItems"),
+                    onRefresh = onRefresh,
+                    contentPadding = PaddingValues(bottom = 16.dp),
+                    isLoading = state.isPagerLoading,
+                    error = state.minorError,
+                    isEndOfPager = state.isEndOfPager
+                ) {
+                    item(key = state.friends) {
+                        FriendsSection(
+                            state.friends,
+                            totalFriends = state.totalFriends,
+                            modifier = Modifier,
+                            onClickMoreFriends = onClickMoreFriends,
+                            onClickFriend = onClickFriend,
+                        )
+                    }
+                    if (state.userDetails.isMyProfile || state.userDetails.areFriends) {
+                        item("profileDetails") {
+                            PostCreatingSection(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                onCreatePost = if (state.userDetails.isMyProfile) {
+                                    onCreatePost
+                                } else {
+                                    onClickSendMessage
+                                },
+                                isMyProfile = state.userDetails.isMyProfile
+                            )
+                        }
+                    }
+                    items(state.posts) {
+                        PostItem(
+                            state = it,
+                            isContentExpandable = true,
+                            isClubPost = false,
+                            showGroupName = false,
+                            onClickLike = onClickLike,
+                            onClickComment = onClickComment,
+                            onClickSave = onClickSave,
+                            onClickPostSetting = onClickPostSetting,
+                            onClickProfile = onClickProfile,
+                            onOpenLinkClick = onOpenLinkClick,
+                            onImageClick = onImageClick
+                        )
+                    }
                 }
             }
         }
@@ -230,5 +388,22 @@ private fun navigateToConversation(context: Context, friendId: Int) {
         startActivity(context, intent, Bundle())
     } catch (e: ClassNotFoundException) {
         e.printStackTrace()
+    }
+}
+
+@Composable
+private fun getPainterProfileIcon(
+    userDetails: UserDetailsUIState
+): Painter? {
+    return if (userDetails.isMyProfile) {
+        painterResource(id = R.drawable.ic_camera)
+    } else if (userDetails.isRequestSend) {
+        painterResource(id = R.drawable.ic_requsted_add_user)
+    } else if (!userDetails.areFriends) {
+        painterResource(id = R.drawable.ic_add_user)
+    } else if (userDetails.areFriends) {
+        painterResource(id = R.drawable.delete_user)
+    } else {
+        null
     }
 }
