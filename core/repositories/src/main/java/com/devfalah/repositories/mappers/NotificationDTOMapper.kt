@@ -12,6 +12,8 @@ internal fun NotificationsDTO.toEntity(): Notification {
         "group:joinrequest" -> NotificationType.REQUEST_GROUP
         "comments:post" -> NotificationType.COMMENT_POST
         "like:annotation:comments:post" -> NotificationType.LIKE_COMMENT_POST
+        "comments:post:group:wall" -> NotificationType.COMMENT_POST
+        "like:post:group:wall" -> NotificationType.LIKE_POST
         else -> null
     }
 

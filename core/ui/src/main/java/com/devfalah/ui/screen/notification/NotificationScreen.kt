@@ -2,7 +2,6 @@ package com.devfalah.ui.screen.notification
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
@@ -22,10 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.Screen
-import com.devfalah.ui.composable.AppBar
-import com.devfalah.ui.composable.ErrorItem
-import com.devfalah.ui.composable.Loading
-import com.devfalah.ui.composable.setStatusBarColor
+import com.devfalah.ui.composable.*
 import com.devfalah.ui.screen.clubRequests.navigateToClubRequests
 import com.devfalah.ui.screen.notification.composable.EmptyNotificationsItem
 import com.devfalah.ui.screen.notification.composable.NotificationItem
@@ -54,7 +50,8 @@ fun NotificationScreen(
     NotificationContent(
         state = state,
         onClickTryAgain = viewModel::getUserNotifications,
-        onRetry = viewModel::getUserNotifications
+        onRetry = viewModel::getUserNotifications,
+        onRefresh = viewModel::refreshNotification,
     ) {
         viewModel.markNotificationAsViewed(it)
 
@@ -63,7 +60,7 @@ fun NotificationScreen(
                 navController.navigateToClubRequests(it.subjectId, it.id)
             Constants.LIKE_POST,
             Constants.COMMENT_POST,
-            Constants.LIKE_COMMENT_POST ->
+            Constants.LIKE_COMMENT_POST, ->
                 navController.navigateToPostDetails(id = it.subjectId)
         }
     }
@@ -82,6 +79,7 @@ fun NotificationContent(
     state: NotificationsUIState,
     onClickTryAgain: () -> Unit,
     onRetry: () -> Unit,
+    onRefresh: () -> Unit,
     onNotificationClick: (NotificationState) -> Unit,
 ) {
     Column {
@@ -97,21 +95,28 @@ fun NotificationContent(
         } else if (state.notifications.isEmpty()) {
             EmptyNotificationsItem()
         }
-
-        LazyColumn(
+        ManualPager(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colors.background),
+            onRefresh = onRefresh,
+            isLoading = state.isPagerLoading,
+            error = state.error,
+            isEndOfPager = state.isEndOfPager,
             contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-
         ) {
-            item {
-                NotificationsStatusItem(state = state, onClickTryAgain = onClickTryAgain)
+            item(key = "notifications") {
+                NotificationsStatusItem(
+                    state = state,
+                    onClickTryAgain = onClickTryAgain
+                )
             }
 
             items(state.notifications) {
-                NotificationItem(notification = it, onNotificationClick)
+                NotificationItem(
+                    notification = it,
+                    onNotificationClick
+                )
             }
         }
     }

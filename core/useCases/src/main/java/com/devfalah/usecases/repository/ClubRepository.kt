@@ -14,7 +14,7 @@ interface ClubRepository {
 
     suspend fun getUserFriends(userID: Int, page: Int): Members
 
-    suspend fun getNotifications(userID: Int): List<Notification>
+    suspend fun getNotifications(userID: Int, page: Int): List<Notification>
 
     suspend fun getUserAccountDetails(userID: Int): User
 
