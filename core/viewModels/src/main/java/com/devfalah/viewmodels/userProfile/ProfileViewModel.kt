@@ -146,7 +146,7 @@ class ProfileViewModel @Inject constructor(
     fun onClickAddFriend() {
         viewModelScope.launch {
             try {
-                val success = addFriendUseCase(args.ownerId)
+                val success = addFriendUseCase(args.ownerId, _uiState.value.userDetails.token)
                 if (success) {
                     _uiState.update {
                         it.copy(

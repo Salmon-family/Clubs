@@ -2,6 +2,7 @@ package com.devfalah.firebase
 
 
 import android.util.Log
+import com.devfalah.repositories.CoreNotificationKeys
 import com.devfalah.repository.models.NotificationDataModel
 import com.devfalah.repository.models.NotificationKeys
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -26,6 +27,8 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 val friendId = (data[NotificationKeys.FRIEND_ID_KEY]?.toInt() ?: 0)
                 val title = data[NotificationKeys.TITLE].toString()
                 val description = data[NotificationKeys.DESCRIPTION].toString()
+                val clickAction = data[CoreNotificationKeys.CLICK_ACTION].toString()
+                Log.e("testNotification","clickAction: $clickAction")
                 notificationService.showNotification(applicationContext,
                     friendId,
                     title,

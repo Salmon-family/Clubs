@@ -2,7 +2,7 @@ package com.devfalah.repositories
 
 import com.google.gson.annotations.SerializedName
 
-object NotificationKeys{
+object CoreNotificationKeys{
     const val ID_KEY = "id"
     const val FRIEND_ID_KEY = "friendId"
     const val TITLE = "title"
@@ -18,14 +18,14 @@ data class NotificationRequestBody(
 
 
 data class NotificationDataModel(
-    @SerializedName(NotificationKeys.ID_KEY)
+    @SerializedName(CoreNotificationKeys.ID_KEY)
     val id: Int = 0,
-    @SerializedName(NotificationKeys.FRIEND_ID_KEY)
+    @SerializedName(CoreNotificationKeys.FRIEND_ID_KEY)
     val friendId: Int = 0,
-    @SerializedName(NotificationKeys.TITLE)
+    @SerializedName(CoreNotificationKeys.TITLE)
     val title: String = "",
-    @SerializedName(NotificationKeys.DESCRIPTION)
+    @SerializedName(CoreNotificationKeys.DESCRIPTION)
     val description: String = "",
-    @SerializedName(NotificationKeys.CLICK_ACTION)
+    @SerializedName(CoreNotificationKeys.CLICK_ACTION)
     val clickAction: String = "",
 )
