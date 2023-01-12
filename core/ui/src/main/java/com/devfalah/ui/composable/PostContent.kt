@@ -46,11 +46,14 @@ fun PostContent(
     ) {
 
         item {
-            fun Modifier.fillParentSizeWhenNoImage() =
-                if (image == null) this.fillParentMaxSize() else this.fillMaxSize()
+
 
             TextField(
-                modifier = modifier.fillParentSizeWhenNoImage(),
+                modifier = if (image == null) {
+                    Modifier.fillParentMaxSize()
+                } else {
+                    Modifier.fillMaxSize()
+                },
                 value = value,
                 onValueChange = { onValueChange(it) },
                 colors = TextFieldDefaults.textFieldColors(
