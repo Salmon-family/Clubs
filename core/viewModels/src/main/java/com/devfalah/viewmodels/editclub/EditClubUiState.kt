@@ -11,4 +11,4 @@ data class EditClubUiState(
     val isSuccessful: Boolean = false
 )
 
-fun EditClubUiState.isCreateClubButtonEnabled() = clubName.isNotEmpty() && clubDescription.isNotEmpty()
+fun EditClubUiState.isCreateClubButtonEnabled() = clubName.trim().isNotEmpty() && clubDescription.trim().isNotEmpty()
