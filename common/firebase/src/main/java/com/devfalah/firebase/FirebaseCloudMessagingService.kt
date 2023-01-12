@@ -41,12 +41,14 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        newToken = token
+        GlobalScope.launch {
+            newToken.emit(token)
+        }
     }
 
     companion object {
         val events = MutableSharedFlow<NotificationDataModel>()
-        var newToken: String = ""
+        var newToken = MutableSharedFlow<String>()
     }
 
 }
