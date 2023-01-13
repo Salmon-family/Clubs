@@ -18,6 +18,7 @@ class SendMessageUseCase @Inject constructor(
                 to = fcmToken,
                 body = message.message,
                 title = name,
+                clickAction = "newMessage"
             )
         )
         chatRepository.insertMessage(message)

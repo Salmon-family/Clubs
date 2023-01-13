@@ -8,6 +8,7 @@ import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -16,35 +17,65 @@ import kotlin.random.Random
 
 class Notifier @Inject constructor() {
 
-    fun showNotification(context: Context, friedId: Int, title: String, description: String) {
+    fun sendFriendRequestNotification(context: Context, name: String) {
+        val title = context.getString(R.string.friend_request)
+        val description = context.getString(R.string.sent_you_friend_request, name)
+        showNotification(context, title, description)
+    }
+
+    fun sendNewMessageNotification(
+        context: Context,
+        friedId: Int,
+        title: String,
+        description: String
+    ) {
         if (!checkIfChatIsCurrentActivity(context)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val importance = NotificationManager.IMPORTANCE_DEFAULT
-                val mChannel =
-                    NotificationChannel(CHANNEL_ID, title, importance)
-                mChannel.description = description
-                val notificationManager =
-                    getSystemService(context,
-                        NotificationManager::class.java) as NotificationManager
-                notificationManager.createNotificationChannel(mChannel)
-            }
-            val intent = Intent(context, Class.forName(CHAT_ACTIVITY))
-            intent.putExtra(FRIEND_ID, friedId)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            val pendingIntent =
-                PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT)
-            val notification = NotificationCompat.Builder(context,
-                CHANNEL_ID)
-                .setContentTitle(title)
-                .setContentText(description)
-                .setSmallIcon(R.drawable.ic_logo)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .build()
-            val manager =
-                getSystemService(context, NotificationManager::class.java) as NotificationManager
-            manager.notify(Random.nextInt(), notification)
+            val pendingIntent = getChatActivityIntent(context, friedId)
+            showNotification(context, title, description, pendingIntent)
         }
+    }
+
+    private fun showNotification(
+        context: Context,
+        title: String,
+        description: String,
+        pendingIntent: PendingIntent? = null
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(context, title, description)
+        }
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setContentTitle(title)
+            .setContentText(description)
+            .setSmallIcon(R.drawable.ic_logo)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            .build()
+        val manager =
+            getSystemService(context, NotificationManager::class.java) as NotificationManager
+        manager.notify(Random.nextInt(), notification)
+
+    }
+
+
+    private fun getChatActivityIntent(context: Context, friedId: Int): PendingIntent {
+        val intent = Intent(context, Class.forName(CHAT_ACTIVITY))
+        intent.putExtra(FRIEND_ID, friedId)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        return PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(context: Context, title: String, description: String) {
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val mChannel = NotificationChannel(CHANNEL_ID, title, importance)
+        mChannel.description = description
+        val notificationManager =
+            getSystemService(
+                context,
+                NotificationManager::class.java
+            ) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
     }
 
     private fun checkIfChatIsCurrentActivity(context: Context): Boolean {

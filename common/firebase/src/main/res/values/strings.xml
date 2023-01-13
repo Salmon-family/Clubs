@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="friend_request">Friend Request</string>
+    <string name="sent_you_friend_request">%1$s sent you a friend request</string>
+</resources>

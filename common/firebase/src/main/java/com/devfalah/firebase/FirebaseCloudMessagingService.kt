@@ -20,7 +20,6 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
     lateinit var notificationService: Notifier
 
     override fun onMessageReceived(message: RemoteMessage) {
-        Log.e("DEVFALAH","WORK")
         message.data.let { data ->
             if (data.isNotEmpty()) {
                 val id = (data[NotificationKeys.ID_KEY]?.toInt() ?: 0)
@@ -28,18 +27,20 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 val title = data[NotificationKeys.TITLE].toString()
                 val description = data[NotificationKeys.DESCRIPTION].toString()
                 val clickAction = data[CoreNotificationKeys.CLICK_ACTION].toString()
-                Log.e("testNotification","clickAction: $clickAction")
-                notificationService.showNotification(applicationContext,
-                    friendId,
-                    title,
-                    description)
+                Log.e("testNotification", "clickAction: $clickAction")
+
+                sendNotification(
+                    clickAction = clickAction,
+                    title = title,
+                    description = description,
+                    friendId = friendId
+                )
+
+
                 GlobalScope.launch {
-                    events.emit(
-                        NotificationDataModel(
-                            id = id,
-                            friendId = friendId,
-                        )
-                    )
+                    if (clickAction == "newMessage") {
+                        events.emit(NotificationDataModel(id = id, friendId = friendId))
+                    }
                 }
             }
         }
@@ -47,6 +48,26 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         newToken = token
+    }
+
+    private fun sendNotification(
+        clickAction: String,
+        title: String,
+        description: String,
+        friendId: Int
+    ) {
+        when (clickAction) {
+            "friendRequest" -> notificationService.sendFriendRequestNotification(this, description)
+
+            "newMessage" -> notificationService.sendNewMessageNotification(
+                this,
+                friendId,
+                title,
+                description
+            )
+
+
+        }
     }
 
     companion object {
