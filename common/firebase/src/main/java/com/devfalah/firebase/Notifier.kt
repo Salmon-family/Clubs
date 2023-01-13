@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
@@ -62,7 +63,12 @@ class Notifier @Inject constructor() {
         val intent = Intent(context, Class.forName(CHAT_ACTIVITY))
         intent.putExtra(FRIEND_ID, friedId)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        return PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT or FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT)
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
