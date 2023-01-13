@@ -1,9 +1,10 @@
 package com.thechance.identity.viewmodel.login
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.AccountValidationUseCase
 import com.thechance.identity.usecases.LoginUseCase
+import com.thechance.identity.viewmodel.base.BaseViewModel
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val accountValidationUseCase: AccountValidationUseCase,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUIState())
     val uiState = _uiState.asStateFlow()
@@ -27,7 +28,13 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun onLoading() {
-        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                isSuccess = false,
+                errorTypeValue = ErrorMessageType.NO_ERROR.value
+            )
+        }
     }
 
     private fun makeLoginRequest() {
@@ -43,13 +50,19 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun onSuccess() {
-        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
+        _uiState.update {
+            it.copy(
+                isSuccess = true,
+                errorTypeValue = ErrorMessageType.NO_ERROR.value,
+                isLoading = false
+            )
+        }
     }
 
     private fun onError(errorMessage: Throwable) {
         _uiState.update {
             it.copy(
-                errorMessage = errorMessage.message.toString(),
+                errorTypeValue = getErrorTypeValue(errorMessage),
                 isSuccess = false,
                 isLoading = false
             )

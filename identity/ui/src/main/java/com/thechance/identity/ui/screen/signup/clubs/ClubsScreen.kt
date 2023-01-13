@@ -24,14 +24,15 @@ import com.thechance.identity.ui.composable.Error
 import com.thechance.identity.ui.composable.Loading
 import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_ROUTE
+import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.screen.signup.composable.clubs.ClubItem
 import com.thechance.identity.ui.screen.signup.composable.clubs.ClubsTitle
-import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.viewmodel.clubs.ClubUIState
 import com.thechance.identity.viewmodel.clubs.ClubsUIState
 import com.thechance.identity.viewmodel.clubs.ClubsViewModel
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 
 @Composable
 fun ClubsScreen(
@@ -102,9 +103,9 @@ fun ClubsContent(
                 }
             }
 
-            if (state.errorMessage.isNotEmpty()) {
+            if (state.errorTypeValue != ErrorMessageType.NO_ERROR.value) {
                 Error(
-                    errorMessage = state.errorMessage,
+                    errorMessage = stringResource(id = R.string.unknown_error_message),
                     modifier = Modifier.fillMaxWidth()
                 )
             }

@@ -26,6 +26,7 @@ import com.thechance.identity.ui.spacer.SpacerVertical8
 import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.signup.SignupViewModel
 import com.thechance.identity.viewmodel.signup.UserUIState
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 
 @Composable
 fun SignupBirthdateAndGenderScreen(
@@ -125,9 +126,12 @@ private fun SignupBirthdateAndGanderContent(
                 text = stringResource(id = R.string.create_account_label),
             )
 
-            if (state.errorMessage.isNotEmpty()) {
+            if (state.errorTypeValue != ErrorMessageType.NO_ERROR.value) {
                 Error(
-                    errorMessage = state.errorMessage,
+                    errorMessage = when (state.errorTypeValue) {
+                        ErrorMessageType.INVALID_USERNAME.value -> stringResource(R.string.invalid_username_message)
+                        else -> stringResource(id = R.string.unknown_error_message)
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }

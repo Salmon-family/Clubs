@@ -43,4 +43,9 @@
     <string name="job_title">Job Title</string>
     <string name="job_hint">android developer</string>
     <string name="note_email">Note: only Gmail,Yahoo, and Hotmail are allowed </string>
+    <string name="wrong_password_message">You entered a wrong password.</string>
+    <string name="user_not_exist_message">There is no account with this username.</string>
+    <string name="not_validated_message">Your account isn\'t validated, please check your email to confirm.</string>
+    <string name="unknown_error_message">An error occurred, try again later.</string>
+    <string name="invalid_username_message">You entered an invalid username, try another one.</string>
 </resources>

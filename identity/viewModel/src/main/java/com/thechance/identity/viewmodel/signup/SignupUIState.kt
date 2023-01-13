@@ -12,7 +12,7 @@ data class UserUIState(
     val password: String = "",
     val confirmPassword: String = "",
     val jobTitle: String = "",
-    val errorMessage: String = "",
+    val errorTypeValue: Int = 0,
     val isSuccess: Boolean = false,
     val isLoading: Boolean = false
 )

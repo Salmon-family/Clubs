@@ -1,10 +1,11 @@
 package com.thechance.identity.viewmodel.clubs
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.usecases.GetClubsUseCaase
 import com.thechance.identity.usecases.JoinClubUseCase
+import com.thechance.identity.viewmodel.base.BaseViewModel
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class ClubsViewModel @Inject constructor(
     private val getClubsUseCase: GetClubsUseCaase,
     private val joinClubUseCase: JoinClubUseCase,
-) : ViewModel() {
+) : BaseViewModel() {
     private val _uiState = MutableStateFlow(ClubsUIState())
     val uiState = _uiState.asStateFlow()
 
@@ -60,17 +61,29 @@ class ClubsViewModel @Inject constructor(
     }
 
     private fun onLoading() {
-        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                isSuccess = false,
+                errorTypeValue = ErrorMessageType.NO_ERROR.value
+            )
+        }
     }
 
     private fun onSuccess() {
-        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
+        _uiState.update {
+            it.copy(
+                isSuccess = true,
+                errorTypeValue = ErrorMessageType.NO_ERROR.value,
+                isLoading = false
+            )
+        }
     }
 
     private fun onError(errorMessage: Throwable) {
         _uiState.update {
             it.copy(
-                errorMessage = errorMessage.message.toString(),
+                errorTypeValue = getErrorTypeValue(errorMessage),
                 isSuccess = false,
                 isLoading = false
             )
