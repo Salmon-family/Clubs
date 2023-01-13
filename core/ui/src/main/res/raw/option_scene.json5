@@ -2,7 +2,8 @@
   ConstraintSets: {
     start: {
       scrollItems: {
-        height: 'spread',
+        height: 'preferWrap',
+        width: 'spread',
         end: ['firstBox', 'end'],
         start: ['firstBox', 'start'],
         top: ['firstBox', 'bottom', 0],
@@ -10,13 +11,13 @@
       },
       firstBox: {
         width:'spread',
-        height: 360,
+        height: 280,
         top: ['parent', 'top', 0],
         start: ['parent', 'start', 0],
       },
       imageBox: {
         width:'spread',
-        height: 360,
+        height: 280,
         top: ['parent', 'top', 0],
         start: ['parent', 'start', 0],
         custom: {
@@ -52,8 +53,8 @@
         height: 112,
         start: ['parent', 'start', 0],
         end: ['parent', 'end', 0],
-        bottom: ['boxProfile', 'bottom', 50],
-        top: ['boxProfile', 'top', 0],
+        bottom: ['boxProfile', 'bottom', 0],
+        top: ['boxProfile', 'top', 32],
       },
       imagePicker: {
         width:40,
@@ -65,6 +66,7 @@
     end: {
       scrollItems: {
         height: 'spread',
+        width: 'spread',
         end: ['firstBox', 'end'],
         start: ['firstBox', 'start'],
         top: ['firstBox', 'bottom', 0],
@@ -127,16 +129,4 @@
       },
     }
   },
-  Transitions: {
-    default:{
-      staggered: 0.4,
-      from: 'start',
-      to: 'end',
-      onSwipe: {
-        anchor: 'scrollItems',
-        sider: 'bottom',
-        direction: 'down',
-      }
-    }
-  }
 }
