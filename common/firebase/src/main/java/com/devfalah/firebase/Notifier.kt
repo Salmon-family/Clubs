@@ -82,7 +82,7 @@ class Notifier @Inject constructor() {
         val activityManager: ActivityManager =
             context.applicationContext.getSystemService(FirebaseMessagingService.ACTIVITY_SERVICE) as ActivityManager
         val currentActivity = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            activityManager.appTasks[0].taskInfo.topActivity?.className
+            activityManager.appTasks.getOrNull(0)?.taskInfo?.topActivity?.className
         } else {
             activityManager.getRunningTasks(1)[0].topActivity?.className
         }
