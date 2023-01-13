@@ -154,7 +154,6 @@ private fun ClubsDetailsContent(
 
                     if (!state.detailsUiState.isOwner) {
                         item {
-
                             if (state.isMember) {
                                 OutlineButton(
                                     modifier = Modifier
