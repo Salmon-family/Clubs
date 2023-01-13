@@ -104,11 +104,11 @@ fun LogInPasswordContent(
                     .padding(horizontal = 8.dp)
             )
 
-            if (state.errorTypeValue != ErrorMessageType.NO_ERROR.value) Error(
-                errorMessage = when (state.errorTypeValue) {
-                    ErrorMessageType.WRONG_PASSWORD.value -> stringResource(R.string.wrong_password_message)
-                    ErrorMessageType.NOT_EXIST.value -> stringResource(R.string.user_not_exist_message)
-                    ErrorMessageType.NOT_VALIDATED.value -> stringResource(R.string.not_validated_message)
+            if (state.errorType != ErrorMessageType.NO_ERROR) Error(
+                errorMessage = when (state.errorType) {
+                    ErrorMessageType.WRONG_PASSWORD -> stringResource(R.string.wrong_password_message)
+                    ErrorMessageType.NOT_EXIST -> stringResource(R.string.user_not_exist_message)
+                    ErrorMessageType.NOT_VALIDATED -> stringResource(R.string.not_validated_message)
                     else -> stringResource(R.string.unknown_error_message)
                 },
                 modifier = Modifier.fillMaxWidth()

@@ -103,7 +103,7 @@ fun ClubsContent(
                 }
             }
 
-            if (state.errorTypeValue != ErrorMessageType.NO_ERROR.value) {
+            if (state.errorType != ErrorMessageType.NO_ERROR) {
                 Error(
                     errorMessage = stringResource(id = R.string.unknown_error_message),
                     modifier = Modifier.fillMaxWidth()

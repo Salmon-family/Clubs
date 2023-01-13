@@ -32,7 +32,7 @@ class LoginViewModel @Inject constructor(
             it.copy(
                 isLoading = true,
                 isSuccess = false,
-                errorTypeValue = ErrorMessageType.NO_ERROR.value
+                errorType = ErrorMessageType.NO_ERROR,
             )
         }
     }
@@ -53,7 +53,7 @@ class LoginViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 isSuccess = true,
-                errorTypeValue = ErrorMessageType.NO_ERROR.value,
+                errorType = ErrorMessageType.NO_ERROR,
                 isLoading = false
             )
         }
@@ -62,7 +62,7 @@ class LoginViewModel @Inject constructor(
     private fun onError(errorMessage: Throwable) {
         _uiState.update {
             it.copy(
-                errorTypeValue = getErrorTypeValue(errorMessage),
+                errorType = getErrorTypeValue(errorMessage),
                 isSuccess = false,
                 isLoading = false
             )

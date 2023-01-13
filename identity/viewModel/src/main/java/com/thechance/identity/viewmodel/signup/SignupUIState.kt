@@ -1,5 +1,7 @@
 package com.thechance.identity.viewmodel.signup
 
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
+
 
 data class UserUIState(
     val birthdate: String = "11/11/2001",
@@ -12,7 +14,7 @@ data class UserUIState(
     val password: String = "",
     val confirmPassword: String = "",
     val jobTitle: String = "",
-    val errorTypeValue: Int = 0,
+    val errorType: ErrorMessageType = ErrorMessageType.NO_ERROR,
     val isSuccess: Boolean = false,
     val isLoading: Boolean = false
 )
