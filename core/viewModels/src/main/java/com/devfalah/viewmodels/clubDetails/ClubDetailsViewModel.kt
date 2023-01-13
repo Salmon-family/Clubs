@@ -94,6 +94,7 @@ class ClubDetailsViewModel @Inject constructor(
                             detailsUiState = clubDetails.toClubDetailsUIState(),
                             requestExists = clubDetails.requestExists,
                             isMember = clubDetails.isMember,
+                            isVisibility = true,
                             isLoading = false,
                             isSuccessful = true
                         )

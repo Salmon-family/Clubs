@@ -150,45 +150,48 @@ private fun ClubsDetailsContent(
                     )
                 }
 
-                if (!state.detailsUiState.isOwner) {
-                    item {
+                if (state.isVisibility){
 
-                        if (state.isMember) {
-                            OutlineButton(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp),
-                                onClick = {
-                                    popupController = true
-                                }
-                            )
-                        } else {
-                            RoundButton(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                text = stringResource(
-                                    id = if (state.requestExists) {
-                                        R.string.request_to_join
-                                    } else {
-                                        R.string.join_club
+                    if (!state.detailsUiState.isOwner) {
+                        item {
+
+                            if (state.isMember) {
+                                OutlineButton(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp),
+                                    onClick = {
+                                        popupController = true
                                     }
-                                ),
-                                onButtonClick = if (state.requestExists) {
-                                    { popupController = true }
-                                } else {
-                                    onJoinClub
-                                },
-                            )
+                                )
+                            } else {
+                                RoundButton(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    text = stringResource(
+                                        id = if (state.requestExists) {
+                                            R.string.request_to_join
+                                        } else {
+                                            R.string.join_club
+                                        }
+                                    ),
+                                    onButtonClick = if (state.requestExists) {
+                                        { popupController = true }
+                                    } else {
+                                        onJoinClub
+                                    },
+                                )
+                            }
                         }
                     }
-                }
 
-                if (state.isMember) {
-                    item {
-                        PostCreatingSection(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            onCreatePost = onAddPost,
-                            isMyProfile = true
-                        )
+                    if (state.isMember) {
+                        item {
+                            PostCreatingSection(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                onCreatePost = onAddPost,
+                                isMyProfile = true
+                            )
+                        }
                     }
                 }
 

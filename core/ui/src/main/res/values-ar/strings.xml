@@ -133,4 +133,6 @@
     <string name="report">الإبلاغ عن خطأ</string>
     <string name="report_msg">شكرا لملاحظتك وسوف يتم العمل عليها. </string>
 
+    <string name="delete_msg">تم حذف المنشور</string>
+
 </resources>

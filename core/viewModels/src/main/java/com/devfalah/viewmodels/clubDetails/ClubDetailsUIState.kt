@@ -11,6 +11,7 @@ data class ClubDetailsUiState(
     val validateUserState: Boolean = false,
     val membersCount: Int = 0,
     val postCount: Int = 0,
+    val isVisibility: Boolean = false,
     val isMember: Boolean = true,
     val requestExists: Boolean = false,
     val isEndOfPager: Boolean = false,

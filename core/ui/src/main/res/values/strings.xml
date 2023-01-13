@@ -136,4 +136,6 @@
     <string name="report">Report Bug</string>
     <string name="report_msg">Thank you for your feedback. </string>
 
+    <string name="delete_msg">This post has been deleted</string>
+
 </resources>
