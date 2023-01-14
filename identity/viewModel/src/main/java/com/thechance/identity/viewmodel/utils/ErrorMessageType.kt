@@ -6,5 +6,7 @@ enum class ErrorMessageType {
     NOT_EXIST,
     NOT_VALIDATED,
     INVALID_USERNAME,
+    USERNAME_INUSE,
+    EMAIL_INUSE,
     UNKNOWN_ERROR
 }

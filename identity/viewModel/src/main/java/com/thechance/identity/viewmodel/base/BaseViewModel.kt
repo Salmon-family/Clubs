@@ -12,6 +12,8 @@ abstract class BaseViewModel : ViewModel() {
             "No such a user exists" -> ErrorMessageType.NOT_EXIST
             "User not validated" -> ErrorMessageType.NOT_VALIDATED
             "username:error" -> ErrorMessageType.INVALID_USERNAME
+            "username:inuse" -> ErrorMessageType.USERNAME_INUSE
+            "email:inuse" -> ErrorMessageType.EMAIL_INUSE
             else -> ErrorMessageType.UNKNOWN_ERROR
         }
     }

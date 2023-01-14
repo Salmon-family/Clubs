@@ -48,4 +48,6 @@
     <string name="not_validated_message">Your account isn\'t validated, please check your email to confirm.</string>
     <string name="unknown_error_message">An error occurred, try again later.</string>
     <string name="invalid_username_message">You entered an invalid username, try another one.</string>
+    <string name="username_inuse_error_message">You entered a used username</string>
+    <string name="email_inuse_error_message">You entered a used email.</string>
 </resources>

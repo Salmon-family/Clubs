@@ -49,4 +49,6 @@
     <string name="not_validated_message">لم يتمّ التأكّد من صحّة الحساب بعد، يرجى تأكيد الحساب من البريد الإلكترونيّ.</string>
     <string name="unknown_error_message">حصل خطأ، ترجى إعادة المحاولة.</string>
     <string name="invalid_username_message">اسم المستخدم الّي أدخته غير صالح, جرّب اسمًا آخر.</string>
+    <string name="username_inuse_error_message">اسم المستخدم الّذي أدخلته مستعمل.</string>
+    <string name="email_inuse_error_message">البريد الإلكتروني الّذي أدخلته مستعمل.</string>
 </resources>

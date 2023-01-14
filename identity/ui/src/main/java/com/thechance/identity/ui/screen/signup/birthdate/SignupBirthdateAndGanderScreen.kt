@@ -130,6 +130,8 @@ private fun SignupBirthdateAndGanderContent(
                 Error(
                     errorMessage = when (state.errorType) {
                         ErrorMessageType.INVALID_USERNAME -> stringResource(R.string.invalid_username_message)
+                        ErrorMessageType.USERNAME_INUSE -> stringResource(R.string.username_inuse_error_message)
+                        ErrorMessageType.EMAIL_INUSE -> stringResource(R.string.email_inuse_error_message)
                         else -> stringResource(id = R.string.unknown_error_message)
                     },
                     modifier = Modifier.fillMaxWidth()
