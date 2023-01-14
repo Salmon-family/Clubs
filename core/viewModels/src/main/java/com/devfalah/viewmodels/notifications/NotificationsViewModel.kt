@@ -33,10 +33,9 @@ class NotificationsViewModel @Inject constructor(
     }
 
     private fun getNotificationDetails() {
-        _uiState.update { it.copy(isPagerLoading = true, error = "") }
+        _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
         viewModelScope.launch {
             try {
-                if (!_uiState.value.isEndOfPager) {
                     val notifications = getNotifications()
                     _uiState.update {
                         it.copy(
@@ -46,10 +45,14 @@ class NotificationsViewModel @Inject constructor(
                             isPagerLoading = false
                         )
                     }
-                }
+
             } catch (t: Throwable) {
                 _uiState.update {
-                    it.copy(isPagerLoading = false, isLoading = false, error = t.message.toString())
+                    it.copy(isPagerLoading = false,
+                        isLoading = false,
+                        pagerError = if (_uiState.value.notifications.isNotEmpty()) "connection error" else "",
+                        error = if (_uiState.value.notifications.isEmpty()) "connection error" else ""
+                    )
                 }
             }
         }

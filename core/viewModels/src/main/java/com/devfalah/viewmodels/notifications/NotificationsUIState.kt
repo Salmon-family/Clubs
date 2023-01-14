@@ -8,7 +8,8 @@ data class NotificationsUIState(
     val isLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
     val isPagerLoading: Boolean = false,
-    val error: String = ""
+    val error: String = "",
+    val pagerError: String = "",
 )
 
 data class NotificationState(

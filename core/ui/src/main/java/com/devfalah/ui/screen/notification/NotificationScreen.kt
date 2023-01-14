@@ -87,11 +87,10 @@ fun NotificationContent(
             title = stringResource(id = Screen.Notification.title),
             showBackButton = false,
         )
-
-        if (state.error.isNotBlank()) {
-            ErrorItem(onClickRetry = onRetry)
-        } else if (state.isLoading) {
+        if (state.isLoading) {
             Loading()
+        } else if (state.error.isNotBlank()) {
+            ErrorItem(onClickRetry = onRetry)
         } else if (state.notifications.isEmpty()) {
             EmptyNotificationsItem()
         }
@@ -101,7 +100,7 @@ fun NotificationContent(
                 .background(color = MaterialTheme.colors.background),
             onRefresh = onRefresh,
             isLoading = state.isPagerLoading,
-            error = state.error,
+            error = state.pagerError,
             isEndOfPager = state.isEndOfPager,
             contentPadding = PaddingValues(16.dp),
         ) {

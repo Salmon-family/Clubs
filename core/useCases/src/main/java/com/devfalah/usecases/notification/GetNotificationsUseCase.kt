@@ -9,7 +9,7 @@ class GetNotificationsUseCase @Inject constructor(
 ) {
 
     private var page = 1
-    private var userId = clubRepository.getUserId()
+    private val userId = clubRepository.getUserId()
 
     suspend operator fun invoke(): List<Notification> {
         val notifications = clubRepository.getNotifications(userId, page)
