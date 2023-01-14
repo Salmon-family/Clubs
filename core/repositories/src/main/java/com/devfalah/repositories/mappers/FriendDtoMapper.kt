@@ -1,7 +1,7 @@
 package com.devfalah.repositories.mappers
 
 import com.devfalah.entities.User
-import com.devfalah.repositories.models.FriendDTO
+import com.devfalah.repositories.models.friends.FriendDTO
 
 internal fun FriendDTO.toEntity(): User {
     return User(

@@ -55,8 +55,6 @@ fun PostItem(
 
             PostContent(
                 post = state,
-                maxLineToExpand = maxLineContentExpand,
-                contentExpandable = isContentExpandable,
                 onOpenLinkClick = onOpenLinkClick,
                 onImageClick = onImageClick,
                 isPostDetails = isPostDetails

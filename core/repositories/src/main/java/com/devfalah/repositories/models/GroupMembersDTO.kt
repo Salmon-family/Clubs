@@ -1,14 +1,16 @@
-package com.devfalah.remote.response
+package com.devfalah.repositories.models
 
 
-import com.devfalah.repositories.models.UserDTO
 import com.google.gson.annotations.SerializedName
 
-data class GroupMembersResponse(
+data class GroupMembersDTO(
     @SerializedName("count")
-    val count: Int?,
+    val total: Int?,
     @SerializedName("members")
     val members: List<UserDTO>?,
     @SerializedName("offset")
     val offset: Int?
+
+
+
 )
