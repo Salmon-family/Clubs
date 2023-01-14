@@ -36,10 +36,6 @@ class AccountSettingsViewModel @Inject constructor(
     }
 
 
-    fun onEmailChange(text: String) {
-        _uiState.update { it.copy(email = text) }
-    }
-
     fun onNewPasswordChange(text: String) {
         _uiState.update { it.copy(newPassword = text) }
     }

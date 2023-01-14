@@ -33,7 +33,6 @@ fun AccountSettingsScreen(
     AccountSettingsContent(
         state = state,
         onClickBack = { navController.popBackStack() },
-        onEmailChange = viewModel::onEmailChange,
         onNewPasswordChange = viewModel::onNewPasswordChange,
         onCurrentPasswordChange = viewModel::onCurrentPasswordChange,
         onClickEdit = viewModel::onClickEdit
@@ -53,7 +52,6 @@ fun AccountSettingsScreen(
 fun AccountSettingsContent(
     state: AccountSettingsUiState,
     onClickBack: () -> Unit,
-    onEmailChange: (String) -> Unit,
     onNewPasswordChange: (String) -> Unit,
     onCurrentPasswordChange: (String) -> Unit,
     onClickEdit: () -> Unit
@@ -61,7 +59,7 @@ fun AccountSettingsContent(
     Scaffold(
         topBar = {
             AppBar(
-                title = stringResource(id = R.string.account_settings),
+                title = stringResource(id = R.string.change_password),
                 onBackButton = onClickBack
             )
         }
@@ -73,13 +71,6 @@ fun AccountSettingsContent(
                 .padding(vertical = 16.dp, horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            CustomTextField(
-                title = stringResource(R.string.email),
-                value = state.email,
-                onValueChange = onEmailChange,
-                singleLine = true,
-            )
-
             PasswordInputText(
                 title = stringResource(R.string.new_password),
                 password = state.newPassword,
@@ -127,7 +118,6 @@ fun AccountSettingsContent(
 fun PreviewMenu() {
     AccountSettingsContent(
         state = AccountSettingsUiState(),
-        onEmailChange = {},
         onNewPasswordChange = {},
         onCurrentPasswordChange = {},
         onClickEdit = {},
