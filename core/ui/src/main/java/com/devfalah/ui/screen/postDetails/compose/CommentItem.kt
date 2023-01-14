@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.devfalah.ui.composable.HeightSpacer8
-import com.devfalah.ui.theme.LightCardBackgroundColor
 import com.devfalah.viewmodels.postDetails.CommentUIState
 
 @Composable
@@ -20,7 +19,8 @@ fun CommentItem(
     modifier: Modifier = Modifier,
     state: CommentUIState,
     onClickLike: () -> Unit,
-    onClickDeleteComment: (CommentUIState) -> Unit
+    onClickDeleteComment: (CommentUIState) -> Unit,
+    onClickProfile: (Int) -> Unit
 ) {
     val itemModifier = if (state.isOwnerComment) {
         modifier.padding(start = 30.dp)
@@ -39,8 +39,12 @@ fun CommentItem(
             shape = RoundedCornerShape(20.dp),
             elevation = 0.dp,
         ) {
-            Column(modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                CommentHeader(state = state, onClickDeleteComment = onClickDeleteComment)
+            Column(modifier.padding(16.dp)) {
+                CommentHeader(
+                    state = state,
+                    onClickDeleteComment = onClickDeleteComment,
+                    onClickProfile = onClickProfile
+                )
                 HeightSpacer8()
                 CommentBody(
                     state = state,

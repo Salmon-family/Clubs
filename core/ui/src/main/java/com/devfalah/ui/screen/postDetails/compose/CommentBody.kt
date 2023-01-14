@@ -21,7 +21,6 @@ import com.devfalah.ui.composable.HeightSpacer8
 import com.devfalah.ui.composable.WidthSpacer4
 import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.LightPrimaryBrandColor
-import com.devfalah.ui.theme.LightSecondaryGrayColor
 import com.devfalah.ui.util.getDataDescription
 import com.devfalah.ui.util.htmlText
 import com.devfalah.viewmodels.postDetails.CommentUIState
@@ -89,7 +88,7 @@ fun LikeCommentIcon(
             Text(
                 text = "$totalLikes",
                 fontSize = 12.sp,
-                color = LightSecondaryGrayColor,
+                color = MaterialTheme.colors.secondaryVariant,
                 fontWeight = FontWeight.Normal
             )
             WidthSpacer4()
