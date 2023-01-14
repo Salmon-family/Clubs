@@ -94,8 +94,6 @@ dependencies {
     api(project(":identity:local"))
     //endregion
 
-    implementation 'com.android.support:multidex:1.0.3'
-
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$gson_version"
