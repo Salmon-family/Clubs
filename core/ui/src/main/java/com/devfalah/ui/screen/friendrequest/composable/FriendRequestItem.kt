@@ -31,7 +31,7 @@ import com.devfalah.viewmodels.friendRequest.UserState
 @Composable
 fun FriendRequestItem(
     userState: UserState,
-    onAcceptButtonClick: (Int) -> Unit,
+    onAcceptButtonClick: (Int, String) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     onClickOpenProfile: (Int) -> Unit
@@ -87,7 +87,7 @@ fun FriendRequestItem(
 
         UserIconButton(
             userState = userState,
-            onButtonClick = { onAcceptButtonClick(userState.userID) },
+            onButtonClick = { onAcceptButtonClick(userState.userID, userState.token) },
             iconsSize = 32.dp,
             painter = painterResource(id = R.drawable.ic_accept_filled)
         )
@@ -100,8 +100,8 @@ fun FriendRequestItem(
 fun PreviewFoo() {
     FriendRequestItem(
         userState = UserState(1, "Mustafa Ahmed", "Android Developer"),
-        onAcceptButtonClick = {},
+        onAcceptButtonClick = { _, _ -> },
         onDeleteButtonClick = {},
-        onClickOpenProfile = { 6 }
+        onClickOpenProfile = {}
     )
 }

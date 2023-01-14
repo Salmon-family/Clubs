@@ -25,6 +25,13 @@ class Notifier @Inject constructor() {
         showNotification(context, title, description, pendingIntent)
     }
 
+    fun sendAcceptFriendRequestNotification(context: Context, name: String) {
+        val title = context.getString(R.string.accepted_friend_request)
+        val description = context.getString(R.string.accept_your_friend_request, name)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+    }
+
     fun sendNewMessageNotification(
         context: Context,
         friedId: Int,

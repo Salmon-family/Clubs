@@ -41,7 +41,7 @@ fun ClubRequestsScreen(
     ClubRequestsContent(
         state = state,
         onBackClick = { navController.popBackStack() },
-        onAcceptButtonClick = viewModel::acceptRequest,
+        onAcceptButtonClick = { _,_ -> },
         onDeleteButtonClick = viewModel::declineRequest,
         onRetry = viewModel::getData,
         onClickOpenProfile = { navController.navigateToProfile(it) }
@@ -61,7 +61,7 @@ fun ClubRequestsScreen(
 fun ClubRequestsContent(
     state: ClubRequestsUIState,
     onBackClick: () -> Unit,
-    onAcceptButtonClick: (Int) -> Unit,
+    onAcceptButtonClick: (Int, String) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
     onRetry: () -> Unit

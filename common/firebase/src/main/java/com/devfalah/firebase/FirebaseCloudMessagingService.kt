@@ -66,6 +66,8 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 description
             )
 
+            "acceptFriendRequest" -> notificationService.sendAcceptFriendRequestNotification(this, description)
+
 
         }
     }

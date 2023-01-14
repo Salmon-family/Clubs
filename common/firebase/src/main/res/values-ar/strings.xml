@@ -2,4 +2,6 @@
 <resources>
     <string name="friend_request">طلب صداقة</string>
     <string name="sent_you_friend_request">%1$s ارسل لك طلب صداقة</string>
+    <string name="accept_your_friend_request">%1$s وافق على طلب صداقتك</string>
+    <string name="accepted_friend_request">تم قبول طلب الصداقة</string>
 </resources>

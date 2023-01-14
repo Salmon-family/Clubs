@@ -10,10 +10,10 @@ data class FriendDTO(
     val coverUrl: String?,
     @SerializedName("email")
     val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
+    @SerializedName("fcm_token")
+    val fcmToken: String?,
     @SerializedName("fullname")
-    val fullname: String?,
+    val fullName: String?,
     @SerializedName("gender")
     val gender: String?,
     @SerializedName("guid")
@@ -22,8 +22,6 @@ data class FriendDTO(
     val icon: IconDto?,
     @SerializedName("language")
     val language: String?,
-    @SerializedName("last_name")
-    val lastName: String?,
     @SerializedName("username")
     val username: String?,
     @SerializedName("job_title")

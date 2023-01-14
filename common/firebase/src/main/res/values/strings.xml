@@ -2,4 +2,6 @@
 <resources>
     <string name="friend_request">Friend Request</string>
     <string name="sent_you_friend_request">%1$s sent you a friend request</string>
+    <string name="accept_your_friend_request">%1$s accept your friend request</string>
+    <string name="accepted_friend_request">Accepted friend request</string>
 </resources>
