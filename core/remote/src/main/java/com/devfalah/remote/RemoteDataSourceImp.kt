@@ -320,7 +320,11 @@ class RemoteDataSourceImp @Inject constructor(
         return try {
             wrap { apiService.getWallPost(userID = userID, postID = postId) }
         } catch (t: Throwable) {
-            throw Throwable("NotFound")
+           if (t.message.toString().contains("host")){
+               throw t
+           }else{
+               throw Throwable("NotFound")
+           }
         }
     }
 
