@@ -32,6 +32,21 @@ class Notifier @Inject constructor() {
         showNotification(context, title, description, pendingIntent)
     }
 
+    fun sendAcceptJoinClubRequestNotification(context: Context, clubName: String) {
+        val title = context.getString(R.string.accepted_join_club_request)
+        val description = context.getString(R.string.your_join_club_request_has_been_accepted, clubName)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+    }
+
+    fun sendJoinClubRequestNotification(context: Context, userName: String, clubName: String) {
+        val title = context.getString(R.string.join_club_request)
+        val description = context.getString(R.string.requested_to_join_club, userName, clubName)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+
+    }
+
     fun sendNewMessageNotification(
         context: Context,
         friedId: Int,

@@ -9,13 +9,11 @@ import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.BaseViewModel
 import com.devfalah.viewmodels.clubDetails.mapper.toClubDetailsUIState
 import com.devfalah.viewmodels.clubDetails.mapper.toUIState
-import com.devfalah.viewmodels.clubDetails.mapper.toUserUIState
 import com.devfalah.viewmodels.friends.toFriendsUIState
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -35,7 +33,6 @@ class ClubDetailsViewModel @Inject constructor(
     private val declineUseCase: GetClubDeclineUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-    var gettingDetailsClubsJob: Job? = null
 
     private val args = ClubDetailsArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(ClubDetailsUiState())
@@ -112,8 +109,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     private fun getPostCount() {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     val postCount = getGroupWallUseCase.getPostsCount()
@@ -125,7 +121,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     private fun getMembers() {
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     val members = getClubMembersUseCase(
@@ -140,8 +136,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     val totalLikes = likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
@@ -160,8 +155,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun onClickSave(post: PostUIState) {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     favoritePostUseCase(post.toEntity())
@@ -181,11 +175,13 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun joinClubs() {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
-                    joinClubUseCase(clubId = args.groupId)
+                    joinClubUseCase(
+                        clubId = args.groupId,
+                        ownerId = _uiState.value.detailsUiState.ownerId
+                    )
                     _uiState.update { it.copy(requestExists = true) }
                 },
                 onFailure = ::onFailure
@@ -194,8 +190,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun unJoinClubs() {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     unJoinClubUseCase(clubId = args.groupId)
@@ -207,8 +202,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun declineRequestOfClub() {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     declineUseCase(

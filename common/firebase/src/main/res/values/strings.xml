@@ -4,4 +4,8 @@
     <string name="sent_you_friend_request">%1$s sent you a friend request</string>
     <string name="accept_your_friend_request">%1$s accept your friend request</string>
     <string name="accepted_friend_request">Accepted friend request</string>
+    <string name="accepted_join_club_request">accepted join club request</string>
+    <string name="your_join_club_request_has_been_accepted">your request to join %1$s has been accepted</string>
+    <string name="join_club_request">Join club request</string>
+    <string name="requested_to_join_club">%1$s requested to join %2$s</string>
 </resources>

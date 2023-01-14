@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.clubRequests
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +40,7 @@ fun ClubRequestsScreen(
     ClubRequestsContent(
         state = state,
         onBackClick = { navController.popBackStack() },
-        onAcceptButtonClick = { _,_ -> },
+        onAcceptButtonClick = viewModel::acceptRequest,
         onDeleteButtonClick = viewModel::declineRequest,
         onRetry = viewModel::getData,
         onClickOpenProfile = { navController.navigateToProfile(it) }
@@ -55,7 +54,6 @@ fun ClubRequestsScreen(
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalFoundationApi
 @Composable
 fun ClubRequestsContent(

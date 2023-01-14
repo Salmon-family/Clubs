@@ -68,6 +68,10 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
 
             "acceptFriendRequest" -> notificationService.sendAcceptFriendRequestNotification(this, description)
 
+            "acceptJoinClubRequest" -> notificationService.sendAcceptJoinClubRequestNotification(this, description)
+
+            "joinClubRequest" -> notificationService.sendJoinClubRequestNotification(this, userName = description, clubName = title)
+
 
         }
     }

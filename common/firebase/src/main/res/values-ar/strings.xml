@@ -4,4 +4,8 @@
     <string name="sent_you_friend_request">%1$s ارسل لك طلب صداقة</string>
     <string name="accept_your_friend_request">%1$s وافق على طلب صداقتك</string>
     <string name="accepted_friend_request">تم قبول طلب الصداقة</string>
+    <string name="accepted_join_club_request">تم قبول طلب الانظمام للنادي</string>
+    <string name="your_join_club_request_has_been_accepted">تم قبول طلب انظمامك الى %1$s</string>
+    <string name="join_club_request">طلب انظمام الى النادي</string>
+    <string name="requested_to_join_club">%2$s طلب الانظمام الى %1$s</string>
 </resources>
