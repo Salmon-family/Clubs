@@ -28,13 +28,10 @@ fun CommentHeader(
     onClickProfile: (Int) -> Unit
 ) {
 
-    fun Modifier.flipIfNotOwner() =
-        this.scale(scaleX = if (state.isOwnerComment) 1f else -1f, scaleY = 1f)
-
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .flipIfNotOwner(),
+            .flipIfNotOwner(state.isOwnerComment),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -47,7 +44,7 @@ fun CommentHeader(
         Text(
             modifier = Modifier
                 .weight(1f)
-                .flipIfNotOwner(),
+                .flipIfNotOwner(state.isOwnerComment),
             text = state.userName,
             textAlign = if (state.isOwnerComment) TextAlign.End else TextAlign.Start,
             fontSize = 14.sp,
@@ -61,7 +58,7 @@ fun CommentHeader(
         CircleImage(
             modifier = Modifier
                 .nonRippleEffect { onClickProfile(state.userId) }
-                .flipIfNotOwner(),
+                .flipIfNotOwner(state.isOwnerComment),
             painter = rememberAsyncImagePainter(
                 model = state.userPictureUrl,
                 error = rememberAsyncImagePainter(model = R.drawable.test_image)
@@ -117,3 +114,6 @@ fun CommentSetting(
         }
     }
 }
+
+private fun Modifier.flipIfNotOwner(isOwner: Boolean) =
+    this.scale(scaleX = if (isOwner) 1f else -1f, scaleY = 1f)
