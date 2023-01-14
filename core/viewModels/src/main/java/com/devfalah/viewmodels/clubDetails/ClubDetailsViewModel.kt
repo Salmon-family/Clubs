@@ -31,7 +31,7 @@ class ClubDetailsViewModel @Inject constructor(
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
-    val deletePostUseCase: DeletePostUseCase,
+    private val deletePostUseCase: DeletePostUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -184,21 +184,6 @@ class ClubDetailsViewModel @Inject constructor(
                 onSuccess = {
                     unJoinClubUseCase(clubId = args.groupId)
                     _uiState.update { it.copy(requestExists = false) }
-                },
-                onFailure = ::onFailure
-            )
-        }
-    }
-
-    fun declineRequestOfClub() {
-        viewModelScope.launch {
-            makeRequest(
-                onSuccess = {
-                    declineUseCase(
-                        clubId = args.groupId,
-                        ownerId = _uiState.value.detailsUiState.ownerId
-                    )
-                    _uiState.update { it.copy(isMember = false, requestExists = false) }
                 },
                 onFailure = ::onFailure
             )
