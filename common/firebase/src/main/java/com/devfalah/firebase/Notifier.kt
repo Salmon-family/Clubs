@@ -47,6 +47,20 @@ class Notifier @Inject constructor() {
 
     }
 
+    fun sendLikePostNotification(context: Context, userName: String) {
+        val title = context.getString(R.string.like_post_title)
+        val description = context.getString(R.string.liked_post_body, userName)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+    }
+
+    fun sendLikeGroupPostNotification(context: Context, userName: String, clubName: String) {
+        val title = context.getString(R.string.like_post_title)
+        val description = context.getString(R.string.liked_group_post, userName, clubName)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+    }
+
     fun sendNewMessageNotification(
         context: Context,
         friedId: Int,

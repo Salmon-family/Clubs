@@ -136,7 +136,12 @@ class ClubDetailsViewModel @Inject constructor(
                         })
                     }
                     delay(1000)
-                    likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
+                    likeUseCase(
+                        postID = post.postId,
+                        isLiked = post.isLikedByUser,
+                        publisherId = post.publisherId,
+                        clubName = post.groupName,
+                    )
                 },
                 onFailure = {}
             )

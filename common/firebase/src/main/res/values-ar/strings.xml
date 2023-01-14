@@ -7,5 +7,8 @@
     <string name="accepted_join_club_request">تم قبول طلب الانظمام للنادي</string>
     <string name="your_join_club_request_has_been_accepted">تم قبول طلب انظمامك الى %1$s</string>
     <string name="join_club_request">طلب انظمام الى النادي</string>
-    <string name="requested_to_join_club">%2$s طلب الانظمام الى %1$s</string>
+    <string name="requested_to_join_club">%1$s طلب الانظمام الى %2$s</string>
+    <string name="like_post_title">الاعجاب بمنشور</string>
+    <string name="liked_post_body">%1$s اعجب بمنشورك</string>
+    <string name="liked_group_post">%1$s اعجب بمنشورك في %2$s</string>
 </resources>

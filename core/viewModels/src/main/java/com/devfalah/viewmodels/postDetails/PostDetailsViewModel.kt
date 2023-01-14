@@ -98,7 +98,7 @@ class PostDetailsViewModel @Inject constructor(
                     )
                 }
                 delay(1000)
-                postLike(args.postId, post.isLikedByUser)
+                postLike(args.postId, post.isLikedByUser, post.publisherId, post.groupName)
             } catch (t: Throwable) {
                 //_uiState.update { it.copy(error = t.message.toString()) }
             }

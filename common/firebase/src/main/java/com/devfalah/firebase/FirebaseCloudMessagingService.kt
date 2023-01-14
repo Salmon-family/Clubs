@@ -66,11 +66,29 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 description
             )
 
-            "acceptFriendRequest" -> notificationService.sendAcceptFriendRequestNotification(this, description)
+            "acceptFriendRequest" -> notificationService.sendAcceptFriendRequestNotification(
+                this,
+                description
+            )
 
-            "acceptJoinClubRequest" -> notificationService.sendAcceptJoinClubRequestNotification(this, description)
+            "acceptJoinClubRequest" -> notificationService.sendAcceptJoinClubRequestNotification(
+                this,
+                description
+            )
 
-            "joinClubRequest" -> notificationService.sendJoinClubRequestNotification(this, userName = description, clubName = title)
+            "joinClubRequest" -> notificationService.sendJoinClubRequestNotification(
+                this,
+                userName = description,
+                clubName = title
+            )
+
+            "likePost" -> notificationService.sendLikePostNotification(this, description)
+
+            "likeGroupPost" -> notificationService.sendLikeGroupPostNotification(
+                this,
+                description,
+                title
+            )
 
 
         }
