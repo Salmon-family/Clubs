@@ -21,7 +21,8 @@ class Notifier @Inject constructor() {
     fun sendFriendRequestNotification(context: Context, name: String) {
         val title = context.getString(R.string.friend_request)
         val description = context.getString(R.string.sent_you_friend_request, name)
-        showNotification(context, title, description)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
     }
 
     fun sendNewMessageNotification(
@@ -56,6 +57,16 @@ class Notifier @Inject constructor() {
             getSystemService(context, NotificationManager::class.java) as NotificationManager
         manager.notify(Random.nextInt(), notification)
 
+    }
+
+    private fun getCoreActivityIntent(context: Context): PendingIntent {
+        val intent = Intent(context, Class.forName(CORE_ACTIVITY))
+        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT or FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(context, 0, intent, FLAG_ONE_SHOT)
+        }
     }
 
 
@@ -99,6 +110,7 @@ class Notifier @Inject constructor() {
     companion object {
         const val CHANNEL_ID = "gravity_fcm_channel"
         const val CHAT_ACTIVITY = "com.thechance.ui.ChatActivity"
+        const val CORE_ACTIVITY = "com.devfalah.ui.main.MainActivity"
         const val FRIEND_ID = "FRIEND_ID"
     }
 }
