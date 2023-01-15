@@ -99,9 +99,10 @@ class Notifier @Inject constructor() {
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(description)
-            .setSmallIcon(R.drawable.ic_logo)
+            .setSmallIcon(R.drawable.notification_icon)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
+            .setStyle(NotificationCompat.BigTextStyle())
             .build()
         val manager =
             getSystemService(context, NotificationManager::class.java) as NotificationManager
