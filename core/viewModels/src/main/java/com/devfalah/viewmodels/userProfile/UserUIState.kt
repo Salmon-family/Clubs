@@ -25,6 +25,7 @@ data class UserDetailsUIState(
     val areFriends: Boolean = false,
     val isMyProfile: Boolean = false,
     val isRequestSend: Boolean = false,
+    val token: String = ""
 )
 
 data class AlbumUIState(

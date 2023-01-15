@@ -190,9 +190,8 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): GroupDTO {
-        return wrap {
-            apiService.joinClub(clubId, userId)
-        }
+        return wrap { apiService.joinClub(clubId, userId) }.group
+            ?: throw Throwable("Error")
     }
 
     override suspend fun unJoinClub(clubId: Int, userId: Int): GroupDTO {

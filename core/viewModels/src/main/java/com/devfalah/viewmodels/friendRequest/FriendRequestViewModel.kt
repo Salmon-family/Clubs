@@ -61,11 +61,11 @@ class FriendRequestViewModel @Inject constructor(
         }
     }
 
-    fun acceptFriendRequest(friendRequestId: Int) {
+    fun acceptFriendRequest(friendRequestId: Int, friendToken: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(minorError = "") }
             try {
-                if (addFriendRequestUseCase(friendRequestId = friendRequestId)) {
+                if (addFriendRequestUseCase(friendRequestId = friendRequestId, friendToken = friendToken)) {
                     updateFriendRequestList(friendRequestId)
                 }
             } catch (t: Throwable) {

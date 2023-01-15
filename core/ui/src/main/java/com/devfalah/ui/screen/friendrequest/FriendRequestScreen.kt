@@ -54,13 +54,12 @@ fun FriendRequestScreen(
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalFoundationApi
 @Composable
 fun FriendRequestsContent(
     state: FriendRequestUiState,
     onClickBack: () -> Unit,
-    onAcceptButtonClick: (Int) -> Unit,
+    onAcceptButtonClick: (Int, String) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
     onRetry: () -> Unit,
