@@ -7,6 +7,7 @@ data class HomeUIState(
     val isLoading: Boolean = false,
     val isPagerLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
+    val isPostDeleted: Boolean = false,
     val error: Int = -1,
     val pagerError: String = "",
 )

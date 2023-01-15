@@ -9,6 +9,7 @@ data class ClubDetailsUiState(
     val members: List<FriendUIState> = emptyList(),
     val posts: List<PostUIState> = emptyList(),
     val validateUserState: Boolean = false,
+    val isPostDeleted: Boolean = false,
     val membersCount: Int = 0,
     val postCount: Int = 0,
     val isVisibility: Boolean = false,

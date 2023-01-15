@@ -44,7 +44,13 @@ class HomeViewModel @Inject constructor(
         try {
             viewModelScope.launch {
                 getHomeThreads().collect { posts ->
-                    _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
+                    _uiState.update {
+                        it.copy(
+                            posts = posts.toUIState(),
+                            isLoading = false,
+                            isPostDeleted = false
+                        )
+                    }
                 }
             }
         } catch (t: Throwable) {
@@ -128,8 +134,11 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         posts = _uiState.value.posts
                             .map {
-                                if (it.postId == post.postId) { it.copy(isSaved = !post.isSaved) }
-                                else { it }
+                                if (it.postId == post.postId) {
+                                    it.copy(isSaved = !post.isSaved)
+                                } else {
+                                    it
+                                }
                             }
                     )
                 }
@@ -144,7 +153,10 @@ class HomeViewModel @Inject constructor(
             try {
                 if (deletePostUseCase(post.postId)) {
                     _uiState.update {
-                        it.copy(posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                        it.copy(
+                            posts = _uiState.value.posts.filterNot { it.postId == post.postId },
+                            isPostDeleted = true
+                        )
                     }
                 }
             } catch (t: Throwable) {

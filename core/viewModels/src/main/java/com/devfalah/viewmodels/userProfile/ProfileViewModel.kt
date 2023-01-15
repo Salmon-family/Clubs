@@ -65,7 +65,11 @@ class ProfileViewModel @Inject constructor(
             try {
                 val userDetails = getUserAccountDetails(profileOwnerId = profileOwnerID)
                 _uiState.update {
-                    it.copy(loading = false, userDetails = userDetails.toUIState())
+                    it.copy(
+                        loading = false,
+                        userDetails = userDetails.toUIState(),
+                        isPostDeleted = false
+                    )
                 }
             } catch (t: Throwable) {
                 _uiState.update { it.copy(loading = false, majorError = t.message.toString()) }
@@ -193,7 +197,9 @@ class ProfileViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             loading = false,
-                            posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                            posts = _uiState.value.posts.filterNot { it.postId == post.postId },
+                            isPostDeleted = true
+                        )
                     }
                 }
             } catch (t: Throwable) {

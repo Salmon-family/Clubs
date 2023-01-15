@@ -235,6 +235,12 @@ private fun ClubsDetailsContent(
         }
     }
 
+    if (state.isPostDeleted) {
+        LaunchedEffect(key1 = true) {
+            Toast.makeText(context, R.string.delete_msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     if (popupController) {
         LeaveDialog(
             title = stringResource(id = R.string.leave_club_title),

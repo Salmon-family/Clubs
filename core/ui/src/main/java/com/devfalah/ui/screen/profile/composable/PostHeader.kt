@@ -128,11 +128,6 @@ fun PostHeader(
                     onClick = {
                         expanded = false
                         onClickPostSetting(post)
-                        Toast.makeText(
-                            context.applicationContext,
-                            R.string.delete_msg,
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 ) {
                     Text(

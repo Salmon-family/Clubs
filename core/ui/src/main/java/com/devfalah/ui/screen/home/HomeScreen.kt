@@ -102,6 +102,8 @@ fun HomeContent(
     onRetry: () -> Unit,
     onImageClick: (String) -> Unit,
 ) {
+    val context = LocalContext.current
+
     Column(modifier = Modifier.fillMaxSize()) {
         AppBar(
             title = stringResource(id = Screen.Home.title),
@@ -165,15 +167,28 @@ fun HomeContent(
         }
         if (state.error == HOME_ERROR) {
             ErrorItem(onClickRetry = onRetry)
-        } else  if (state.error != NO_ERROR) {
+        } else if (state.error != NO_ERROR) {
             val msg = when (state.error) {
-                DELETE_ERROR -> { stringResource(id = R.string.error_delete_thread) }
-                LIKE_ERROR -> { stringResource(id = R.string.error_Like_thread) }
-                else -> { "" }
+                DELETE_ERROR -> {
+                    stringResource(id = R.string.error_delete_thread)
+                }
+                LIKE_ERROR -> {
+                    stringResource(id = R.string.error_Like_thread)
+                }
+                else -> {
+                    ""
+                }
             }
-            Toast.makeText(LocalContext.current, msg, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
         }
     }
+
+    if (state.isPostDeleted) {
+        LaunchedEffect(key1 = true) {
+            Toast.makeText(context, R.string.delete_msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
 
 

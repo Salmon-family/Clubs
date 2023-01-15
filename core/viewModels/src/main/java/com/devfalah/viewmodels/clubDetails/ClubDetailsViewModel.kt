@@ -44,8 +44,7 @@ class ClubDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             makeRequest(
-                onSuccess = { getGroupWallUseCase(args.groupId) },
-                onFailure = ::onFailure
+                onSuccess = { getGroupWallUseCase(args.groupId) }, onFailure = ::onFailure
             )
         }
     }
@@ -66,13 +65,16 @@ class ClubDetailsViewModel @Inject constructor(
                         it.copy(
                             isLoading = false,
                             isPagerLoading = false,
-                            posts = if (isRestart) { posts } else { it.posts + posts },
+                            posts = if (isRestart) {
+                                posts
+                            } else {
+                                it.posts + posts
+                            },
                             isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM),
                             postCount = getGroupWallUseCase.getPostsCount()
                         )
                     }
-                },
-                onFailure = ::onFailure
+                }, onFailure = ::onFailure
             )
         }
     }
@@ -92,6 +94,7 @@ class ClubDetailsViewModel @Inject constructor(
                         it.copy(
                             detailsUiState = clubDetails.toClubDetailsUIState(),
                             requestExists = clubDetails.requestExists,
+                            isPostDeleted = false,
                             isMember = clubDetails.isMember,
                             isVisibility = true,
                             isLoading = false,
@@ -99,8 +102,7 @@ class ClubDetailsViewModel @Inject constructor(
                         )
                     }
                     getMembers()
-                },
-                onFailure = ::onFailure
+                }, onFailure = ::onFailure
             )
         }
     }
@@ -109,15 +111,15 @@ class ClubDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             makeRequest(
                 onSuccess = {
-                    val members = getClubMembersUseCase(uiState.value.detailsUiState.ownerId, args.groupId)
+                    val members =
+                        getClubMembersUseCase(uiState.value.detailsUiState.ownerId, args.groupId)
                     _uiState.update {
                         it.copy(
                             membersCount = getClubMembersUseCase.getTotalMembers(),
                             members = members.toFriendsUIState()
                         )
                     }
-                },
-                onFailure = ::onFailure
+                }, onFailure = ::onFailure
             )
         }
     }
@@ -125,27 +127,24 @@ class ClubDetailsViewModel @Inject constructor(
     fun onClickLike(post: PostUIState) {
         likeJob?.cancel()
         likeJob = viewModelScope.launch {
-            makeRequest(
-                onSuccess = {
-                    val updatedPost = post.copy(
-                        isLikedByUser = !post.isLikedByUser,
-                        totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
-                    )
-                    _uiState.update {
-                        it.copy(posts = _uiState.value.posts.map { postUiState ->
-                            if (postUiState.postId == post.postId) updatedPost else postUiState
-                        })
-                    }
-                    delay(1000)
-                    likeUseCase(
-                        postID = post.postId,
-                        isLiked = post.isLikedByUser,
-                        publisherId = post.publisherId,
-                        clubName = post.groupName,
-                    )
-                },
-                onFailure = {}
-            )
+            makeRequest(onSuccess = {
+                val updatedPost = post.copy(
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
+                )
+                _uiState.update {
+                    it.copy(posts = _uiState.value.posts.map { postUiState ->
+                        if (postUiState.postId == post.postId) updatedPost else postUiState
+                    })
+                }
+                delay(1000)
+                likeUseCase(
+                    postID = post.postId,
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId,
+                    clubName = post.groupName,
+                )
+            }, onFailure = {})
         }
     }
 
@@ -163,8 +162,7 @@ class ClubDetailsViewModel @Inject constructor(
                             }
                         })
                     }
-                },
-                onFailure = ::onFailure
+                }, onFailure = ::onFailure
             )
         }
     }
@@ -174,12 +172,10 @@ class ClubDetailsViewModel @Inject constructor(
             makeRequest(
                 onSuccess = {
                     joinClubUseCase(
-                        clubId = args.groupId,
-                        ownerId = _uiState.value.detailsUiState.ownerId
+                        clubId = args.groupId, ownerId = _uiState.value.detailsUiState.ownerId
                     )
                     _uiState.update { it.copy(requestExists = true) }
-                },
-                onFailure = ::onFailure
+                }, onFailure = ::onFailure
             )
         }
     }
@@ -190,8 +186,7 @@ class ClubDetailsViewModel @Inject constructor(
                 onSuccess = {
                     unJoinClubUseCase(clubId = args.groupId)
                     _uiState.update { it.copy(requestExists = false) }
-                },
-                onFailure = ::onFailure
+                }, onFailure = ::onFailure
             )
         }
     }
@@ -201,7 +196,10 @@ class ClubDetailsViewModel @Inject constructor(
             try {
                 if (deletePostUseCase(post.postId)) {
                     _uiState.update {
-                        it.copy(posts = _uiState.value.posts.filterNot { it.postId == post.postId })
+                        it.copy(
+                            posts = _uiState.value.posts.filterNot { it.postId == post.postId },
+                            isPostDeleted = true
+                        )
                     }
                 }
             } catch (t: Throwable) {

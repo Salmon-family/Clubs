@@ -11,6 +11,7 @@ data class UserUIState(
     val loading: Boolean = false,
     val isPagerLoading: Boolean = false,
     val isEndOfPager: Boolean = false,
+    val isPostDeleted: Boolean = false,
     val majorError: String = "",
     val minorError: String = "",
 )

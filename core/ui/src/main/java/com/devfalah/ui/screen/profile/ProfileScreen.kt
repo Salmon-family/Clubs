@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
 import com.devfalah.ui.image.navigateToImageScreen
 import com.devfalah.ui.screen.friends.navigateToFriends
@@ -219,6 +220,13 @@ fun ProfileContent(
                     )
                 }
             }
+        }
+    }
+
+    val context = LocalContext.current
+    if (state.isPostDeleted) {
+        LaunchedEffect(key1 = true) {
+            Toast.makeText(context, R.string.delete_msg, Toast.LENGTH_SHORT).show()
         }
     }
 }
