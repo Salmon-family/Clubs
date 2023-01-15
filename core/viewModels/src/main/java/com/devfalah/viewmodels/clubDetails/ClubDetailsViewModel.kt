@@ -42,6 +42,7 @@ class ClubDetailsViewModel @Inject constructor(
     private var likeJob: Job? = null
 
     init {
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             makeRequest(
                 onSuccess = { getGroupWallUseCase(args.groupId) },
@@ -93,7 +94,6 @@ class ClubDetailsViewModel @Inject constructor(
                             detailsUiState = clubDetails.toClubDetailsUIState(),
                             requestExists = clubDetails.requestExists,
                             isMember = clubDetails.isMember,
-                            isLoading = false,
                             isSuccessful = true
                         )
                     }
