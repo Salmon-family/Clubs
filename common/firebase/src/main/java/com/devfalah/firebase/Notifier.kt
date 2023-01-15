@@ -61,6 +61,20 @@ class Notifier @Inject constructor() {
         showNotification(context, title, description, pendingIntent)
     }
 
+    fun sendCommentPostNotification(context: Context, userName: String) {
+        val title = context.getString(R.string.comment_on_post)
+        val description = context.getString(R.string.commented_on_your_post_body, userName)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+    }
+
+    fun sendCommentClubPostNotification(context: Context, clubName: String, userName: String) {
+        val title = context.getString(R.string.comment_on_post)
+        val description = context.getString(R.string.commented_on_your_group_post, userName, clubName)
+        val pendingIntent = getCoreActivityIntent(context)
+        showNotification(context, title, description, pendingIntent)
+    }
+
     fun sendNewMessageNotification(
         context: Context,
         friedId: Int,

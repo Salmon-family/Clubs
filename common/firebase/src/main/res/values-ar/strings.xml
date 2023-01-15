@@ -11,4 +11,7 @@
     <string name="like_post_title">الاعجاب بمنشور</string>
     <string name="liked_post_body">%1$s اعجب بمنشورك</string>
     <string name="liked_group_post">%1$s اعجب بمنشورك في %2$s</string>
+    <string name="comment_on_post">تعليق على منشور</string>
+    <string name="commented_on_your_post_body">%1$s أضاف تعليق على منشورك</string>
+    <string name="commented_on_your_group_post">%1$s أضاف تعليق على منشورك في %2$s</string>
 </resources>

@@ -90,6 +90,14 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 title
             )
 
+            "addPostComment" -> notificationService.sendCommentPostNotification(this, description)
+
+            "addClubPostComment" -> notificationService.sendCommentClubPostNotification(
+                this,
+                title,
+                description
+            )
+
 
         }
     }

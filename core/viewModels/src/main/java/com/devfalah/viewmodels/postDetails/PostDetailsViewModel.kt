@@ -164,7 +164,12 @@ class PostDetailsViewModel @Inject constructor(
         _uiState.update { it.copy(commentText = "", minorError = "") }
         viewModelScope.launch {
             try {
-                val comment = manageComment.addComment(args.postId, commentText)
+                val comment = manageComment.addComment(
+                    args.postId,
+                    commentText,
+                    _uiState.value.post.publisherId,
+                    _uiState.value.post.groupName
+                )
                 _uiState.update {
                     it.copy(
                         commentText = "",

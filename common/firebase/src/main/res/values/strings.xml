@@ -11,4 +11,7 @@
     <string name="like_post_title">Like post</string>
     <string name="liked_post_body">%1$s liked your post</string>
     <string name="liked_group_post">%1$s liked your post in %2$s</string>
+    <string name="comment_on_post">Comment on post</string>
+    <string name="commented_on_your_post_body">%1$s commented on your post</string>
+    <string name="commented_on_your_group_post">%1$s commented on your post in %2$s</string>
 </resources>
