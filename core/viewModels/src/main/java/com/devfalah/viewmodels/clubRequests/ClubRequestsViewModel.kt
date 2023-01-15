@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClubRequestsViewModel @Inject constructor(
     val getClubRequestsUseCase: GetClubRequestsUseCase,
-    private val mangeClubRequestsUseCase: ManageClubRequestsUseCase,
+    private val manageClubRequestsUseCase: ManageClubRequestsUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -40,12 +40,11 @@ class ClubRequestsViewModel @Inject constructor(
         }
     }
 
-    fun acceptRequest(memberId: Int) {
+    fun acceptRequest(memberId: Int, memberToken: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
             try {
-                if (mangeClubRequestsUseCase.acceptRequest(clubId = args.clubID,
-                        memberId = memberId, ownerId = args.ownerId)) {
+                if (manageClubRequestsUseCase.acceptRequest(clubId = args.clubID,
+                        memberId = memberId, ownerId = args.ownerId, memberToken = memberToken)) {
                     _uiState.update {
                         it.copy(
                             users = _uiState.value.users.filterNot { it.userID == memberId },
@@ -63,9 +62,8 @@ class ClubRequestsViewModel @Inject constructor(
 
     fun declineRequest(memberId: Int) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
             try {
-                if (mangeClubRequestsUseCase.declineRequest(clubId = args.clubID,
+                if (manageClubRequestsUseCase.declineRequest(clubId = args.clubID,
                         memberId = memberId, ownerId = args.ownerId)) {
                     _uiState.update {
                         it.copy(

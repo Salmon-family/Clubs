@@ -31,10 +31,9 @@ class ClubDetailsViewModel @Inject constructor(
     private val favoritePostUseCase: SetFavoritePostUseCase,
     private val joinClubUseCase: JoinClubUseCase,
     private val unJoinClubUseCase: UnJoinClubUseCase,
-    val deletePostUseCase: DeletePostUseCase,
+    private val deletePostUseCase: DeletePostUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-    var gettingDetailsClubsJob: Job? = null
 
     private val args = ClubDetailsArgs(savedStateHandle)
     private val _uiState = MutableStateFlow(ClubDetailsUiState())
@@ -107,7 +106,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     private fun getMembers() {
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     val members = getClubMembersUseCase(uiState.value.detailsUiState.ownerId, args.groupId)
@@ -138,7 +137,12 @@ class ClubDetailsViewModel @Inject constructor(
                         })
                     }
                     delay(1000)
-                    likeUseCase(postID = post.postId, isLiked = post.isLikedByUser)
+                    likeUseCase(
+                        postID = post.postId,
+                        isLiked = post.isLikedByUser,
+                        publisherId = post.publisherId,
+                        clubName = post.groupName,
+                    )
                 },
                 onFailure = {}
             )
@@ -146,8 +150,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun onClickSave(post: PostUIState) {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     favoritePostUseCase(post.toEntity())
@@ -167,11 +170,13 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun joinClubs() {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
-                    joinClubUseCase(clubId = args.groupId)
+                    joinClubUseCase(
+                        clubId = args.groupId,
+                        ownerId = _uiState.value.detailsUiState.ownerId
+                    )
                     _uiState.update { it.copy(requestExists = true) }
                 },
                 onFailure = ::onFailure
@@ -180,8 +185,7 @@ class ClubDetailsViewModel @Inject constructor(
     }
 
     fun unJoinClubs() {
-        gettingDetailsClubsJob?.cancel()
-        gettingDetailsClubsJob = viewModelScope.launch {
+        viewModelScope.launch {
             makeRequest(
                 onSuccess = {
                     unJoinClubUseCase(clubId = args.groupId)

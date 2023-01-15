@@ -1,11 +1,12 @@
 package com.thechance.identity.viewmodel.signup
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thechance.identity.entities.UserData
 import com.thechance.identity.usecases.AccountValidationUseCase
 import com.thechance.identity.usecases.SaveUserIdUseCase
 import com.thechance.identity.usecases.SignupUseCase
+import com.thechance.identity.viewmodel.base.BaseViewModel
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,7 @@ class SignupViewModel @Inject constructor(
     private val signupUseCase: SignupUseCase,
     private val accountValidationUseCase: AccountValidationUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
@@ -30,7 +31,13 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun onLoading() {
-        _uiState.update { it.copy(isLoading = true, isSuccess = false, errorMessage = "") }
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                isSuccess = false,
+                errorType = ErrorMessageType.NO_ERROR
+            )
+        }
     }
 
     private fun makeSignupRequest() {
@@ -58,13 +65,19 @@ class SignupViewModel @Inject constructor(
     }
 
     private fun onSuccess() {
-        _uiState.update { it.copy(isSuccess = true, errorMessage = "", isLoading = false) }
+        _uiState.update {
+            it.copy(
+                isSuccess = true,
+                errorType = ErrorMessageType.NO_ERROR,
+                isLoading = false
+            )
+        }
     }
 
     private fun onError(errorMessage: Throwable) {
         _uiState.update {
             it.copy(
-                errorMessage = errorMessage.message.toString(),
+                errorType = getErrorTypeValue(errorMessage),
                 isSuccess = false,
                 isLoading = false
             )

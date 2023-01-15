@@ -6,4 +6,5 @@ data class Notification (
     val to: String,
     val title: String,
     val body: String,
+    val clickAction: String,
 )

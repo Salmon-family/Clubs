@@ -43,7 +43,8 @@ class GetHomeThreadsUseCase @Inject constructor(
             } else {
                 (postsCount / MAX_ITEMS_PER_PAGE) + 1
             }
-        if (currentPage < page) {
+
+        if (currentPage < page || scrollDirection == SCROLL_UP) {
             currentPage = page
         }
         return refreshData()

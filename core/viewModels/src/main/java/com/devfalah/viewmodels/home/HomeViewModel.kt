@@ -108,7 +108,8 @@ class HomeViewModel @Inject constructor(
                 delay(1000)
                 likeUseCase(
                     postID = post.postId,
-                    isLiked = post.isLikedByUser
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId,
                 )
             } catch (t: Throwable) {
                 if (t !is CancellationException) {

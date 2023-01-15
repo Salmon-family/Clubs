@@ -3,6 +3,7 @@ package com.thechance.clubs.di
 import com.common.local.dataSource.ChatLocalDataSourceImp
 import com.common.local.dataSource.CoreLocalDataSourceImp
 import com.common.local.dataSource.IdentityLocalDataSourceImp
+import com.common.remote.FirebaseCloudMessagingDataSourceImp
 import com.devfalah.firebase.ChatFirebaseDataSourceImp
 import com.devfalah.firebase.CoreFireStoreDataSourceImpl
 import com.devfalah.firebase.IdentityFirebaseDataSourceImp
@@ -10,6 +11,7 @@ import com.devfalah.local.ChatDataStoreDataSourceImp
 import com.devfalah.remote.RemoteDataSourceImp
 import com.devfalah.repositories.CoreLocalDataSource
 import com.devfalah.repositories.CoreFireStoreDataSource
+import com.devfalah.repositories.FirebaseCloudMessagingDataSource
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repository.ChatDataStoreDataSource
 import com.devfalah.repository.ChatFirebaseDataSource
@@ -80,5 +82,10 @@ abstract class DataSourceModule {
     abstract fun bindIdentityLocalDataSource(
         identityLocalDataSourceImp: IdentityLocalDataSourceImp,
     ): IdentityLocalDataSource
+
+    @Binds
+    abstract fun bindFirebaseCloudMessagingDataSource(
+        firebaseCloudMessagingDataSource: FirebaseCloudMessagingDataSourceImp,
+    ): FirebaseCloudMessagingDataSource
 
 }

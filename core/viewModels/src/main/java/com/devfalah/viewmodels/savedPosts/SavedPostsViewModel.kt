@@ -55,7 +55,9 @@ class SavedPostsViewModel @Inject constructor(
                 delay(1000)
                 likeUseCase(
                     postID = post.postId,
-                    isLiked = post.isLikedByUser
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId,
+                    clubName = post.groupName,
                 )
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }

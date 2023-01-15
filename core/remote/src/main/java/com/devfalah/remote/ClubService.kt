@@ -198,7 +198,7 @@ interface ClubService {
     suspend fun joinClub(
         @Query("group_guid") clubId: Int,
         @Query("guid") userId: Int
-    ): Response<BaseResponse<GroupDTO>>
+    ): Response<BaseResponse<GroupDetailResponse>>
 
     @POST("groups_unjoin")
     suspend fun unJoinClub(

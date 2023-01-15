@@ -155,7 +155,8 @@ fun PostDetailsContent(
                         modifier = Modifier.fillMaxWidth(),
                         state = it,
                         onClickLike = { onClickCommentLike(it) },
-                        onClickDeleteComment = onClickDeleteComment
+                        onClickDeleteComment = onClickDeleteComment,
+                        onClickProfile = onClickProfile
                     )
                 }
             }
