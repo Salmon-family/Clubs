@@ -40,23 +40,27 @@ fun FriendsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.friends),
+                text = stringResource(
+                    if (totalFriends == -1) {
+                        R.string.clubs_member
+                    } else {
+                        R.string.friends
+                    }
+                ),
                 fontFamily = PlusJakartaSans,
                 color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp
             )
-            val title = if (totalFriends == -1) {
-                stringResource(R.string.clubs_member)
-            } else {
-                "$totalFriends ${stringResource(id = R.string.friends)}"
+
+            if (totalFriends > -1) {
+                Text(
+                    text = "$totalFriends ${stringResource(id = R.string.friends)}",
+                    fontFamily = PlusJakartaSans,
+                    color = MaterialTheme.colors.secondaryVariant,
+                    fontSize = 12.sp
+                )
             }
-            Text(
-                text = title,
-                fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.secondaryVariant,
-                fontSize = 12.sp
-            )
         }
 
         HeightSpacer8()

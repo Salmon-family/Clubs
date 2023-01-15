@@ -122,7 +122,7 @@ class RemoteDataSourceImp @Inject constructor(
         val requestBody = file.asRequestBody("$IMAGE_FILE/${extension}".toMediaTypeOrNull())
         val part =
             MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
-        val id = RequestBody.create(TYPE.toMediaTypeOrNull(), userID.toString())
+        val id = userID.toString().toRequestBody(TYPE.toMediaTypeOrNull())
         return apiService.addProfilePicture(userId = id, file = part).body()?.payload
             ?: throw Throwable("Error")
     }

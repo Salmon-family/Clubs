@@ -206,7 +206,6 @@ fun ProfileContent(
                 items(state.posts) {
                     PostItem(
                         state = it,
-                        isContentExpandable = true,
                         isClubPost = false,
                         showGroupName = false,
                         onClickLike = onClickLike,
