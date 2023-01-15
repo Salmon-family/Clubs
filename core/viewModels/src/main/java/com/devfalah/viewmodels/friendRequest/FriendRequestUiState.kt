@@ -14,7 +14,8 @@ data class UserState(
     val userID: Int = 0,
     val name: String = "",
     val title: String = "",
-    val profileImage: String = ""
+    val profileImage: String = "",
+    val token: String = ""
 )
 
 fun User.toUserUIState(): UserState {
@@ -22,7 +23,8 @@ fun User.toUserUIState(): UserState {
         userID = id,
         name = name,
         title = title,
-        profileImage = profileUrl
+        profileImage = profileUrl,
+        token = token
     )
 }
 

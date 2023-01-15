@@ -19,7 +19,7 @@ fun AccountSection(
         sectionTitle = stringResource(R.string.account_section),
     ) {
         MenuItem(
-            text = stringResource(R.string.account_settings),
+            text = stringResource(R.string.change_password),
             painter = painterResource(R.drawable.ic_menu_settings),
             onClickItem = onClickAccountSettings
         )

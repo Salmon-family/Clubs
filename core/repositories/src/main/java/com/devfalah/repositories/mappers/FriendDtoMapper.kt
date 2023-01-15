@@ -8,7 +8,7 @@ internal fun FriendDTO.toEntity(): User {
         birthdate = this.birthdate ?: "",
         coverUrl = this.coverUrl ?: "",
         email = this.email ?: "",
-        name = this.fullname ?: "",
+        name = this.fullName ?: "",
         title = this.jobTitle ?: "",
         username = this.username ?: "",
         gender = this.gender ?: "",
@@ -17,7 +17,8 @@ internal fun FriendDTO.toEntity(): User {
         profileUrl = this.icon?.large ?: "",
         isFriend = false,
         isRequestExists = false,
-        isMyProfile = false
+        isMyProfile = false,
+        token = fcmToken ?: "",
     )
 }
 

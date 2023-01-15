@@ -39,10 +39,16 @@
     <string name="your_label">الخاص بك</string>
     <string name="navigate_to_signup">ليس لديك حساب ؟</string>
     <string name="navigate_to_login">هل لديك حساب ؟</string>
-    <string name="success_message">تم...</string>
+    <string name="success_message">تم…</string>
     <string name="not_exist_email">ليس لديك برنامج ايميل</string>
     <string name="job_title">عنوان المهنة</string>
     <string name="job_hint">مبرمج اندرويد</string>
     <string name="note_email">ملحوظه: مسموح فقط بالتالي Gmail,Yahoo, Hotmail</string>
-
+    <string name="wrong_password_message">الرمز الّذي أدخلته خطأ.</string>
+    <string name="user_not_exist_message">لا يوجد حساب يحمل اسم المستخدم الّذي أدخلت.</string>
+    <string name="not_validated_message">لم يتمّ التأكّد من صحّة الحساب بعد، يرجى تأكيد الحساب من البريد الإلكترونيّ.</string>
+    <string name="unknown_error_message">حصل خطأ، ترجى إعادة المحاولة.</string>
+    <string name="invalid_username_message">اسم المستخدم الّي أدخته غير صالح, جرّب اسمًا آخر.</string>
+    <string name="username_inuse_error_message">اسم المستخدم الّذي أدخلته مستعمل.</string>
+    <string name="email_inuse_error_message">البريد الإلكتروني الّذي أدخلته مستعمل.</string>
 </resources>

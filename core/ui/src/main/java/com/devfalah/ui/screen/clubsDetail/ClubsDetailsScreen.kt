@@ -217,7 +217,6 @@ private fun ClubsDetailsContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isContentExpandable = true,
                             isClubPost = true,
                             onClickLike = onClickLike,
                             onClickComment = onClickComment,

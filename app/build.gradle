@@ -83,6 +83,7 @@ dependencies {
     api(project(":chat:remote"))
     api(project(":chat:local"))
     api(project(":common:firebase"))
+    api(project(":common:remote"))
     //endregion
 
     //region identity
@@ -93,8 +94,6 @@ dependencies {
     api(project(":identity:remote"))
     api(project(":identity:local"))
     //endregion
-
-    implementation 'com.android.support:multidex:1.0.3'
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

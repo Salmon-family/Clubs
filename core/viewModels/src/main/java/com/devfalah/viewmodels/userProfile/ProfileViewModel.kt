@@ -120,7 +120,8 @@ class ProfileViewModel @Inject constructor(
                 delay(1000)
                 likeUseCase(
                     postID = post.postId,
-                    isLiked = post.isLikedByUser
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId
                 )
             } catch (t: Throwable) {
                 //_uiState.update { it.copy(minorError = t.message.toString()) }
@@ -153,7 +154,7 @@ class ProfileViewModel @Inject constructor(
     fun onClickAddFriend() {
         viewModelScope.launch {
             try {
-                val success = addFriendUseCase(args.ownerId)
+                val success = addFriendUseCase(args.ownerId, _uiState.value.userDetails.token)
                 if (success) {
                     _uiState.update {
                         it.copy(

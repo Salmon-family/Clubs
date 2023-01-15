@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.notification.GetNotificationsUseCase
 import com.devfalah.usecases.notification.MarkNotificationAsViewedUseCase
+import com.devfalah.viewmodels.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,18 +33,27 @@ class NotificationsViewModel @Inject constructor(
     }
 
     private fun getNotificationDetails() {
+        _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
         viewModelScope.launch {
             try {
-                val notifications = getNotifications()
+                    val notifications = getNotifications()
+                    _uiState.update {
+                        it.copy(
+                            notifications = (it.notifications + notifications.toUIState()),
+                            isEndOfPager = (notifications.isEmpty() || notifications.size < Constants.MAX_PAGE_ITEM),
+                            isLoading = false,
+                            isPagerLoading = false
+                        )
+                    }
+
+            } catch (t: Throwable) {
                 _uiState.update {
-                    it.copy(
-                        notifications = notifications.toUIState(),
+                    it.copy(isPagerLoading = false,
                         isLoading = false,
-                        error = ""
+                        pagerError = if (_uiState.value.notifications.isNotEmpty()) "connection error" else "",
+                        error = if (_uiState.value.notifications.isEmpty()) "connection error" else ""
                     )
                 }
-            } catch (t: Throwable) {
-                _uiState.update { it.copy(isLoading = false, error = t.message.toString()) }
             }
         }
     }

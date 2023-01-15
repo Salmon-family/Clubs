@@ -31,6 +31,7 @@ import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.FriendsSection
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
+import com.devfalah.ui.screen.profile.composable.ProfileDetailsSection
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.ui.util.observeAsState
@@ -45,7 +46,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ProfileScreen(
-    navController: NavController, viewModel: ProfileViewModel = hiltViewModel()
+    navController: NavController,
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -54,16 +56,17 @@ fun ProfileScreen(
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
     }
-    val singlePhotoPickerLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
-            onResult = { uri ->
-                selectedImageUri = uri
-                uri?.let {
-                    viewModel.onClickChangeImage(
-                        createFileFromContentUri(it, context, MAX_IMAGE_PROFILE_SIZE)
-                    )
-                }
-            })
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            selectedImageUri = uri
+            uri?.let {
+                viewModel.onClickChangeImage(
+                    createFileFromContentUri(it, context, MAX_IMAGE_PROFILE_SIZE)
+                )
+            }
+        }
+    )
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState()
     LaunchedEffect(key1 = lifecycleState.value) {
         if (lifecycleState.value == Lifecycle.Event.ON_RESUME) {
@@ -83,7 +86,8 @@ fun ProfileScreen(
         onClickPostSetting = viewModel::onClickPostSetting,
         onClickSendMessage = {
             navigateToConversation(
-                context = context, state.userDetails.userID
+                context = context,
+                state.userDetails.userID
             )
         },
         onChangeProfileImage = {

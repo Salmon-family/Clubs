@@ -79,9 +79,9 @@ fun getDataDescription(type: Int, value: String): String {
         }
         HOUR_AGO -> {
             if (number == 1) {
-                stringResource(id = R.string.one_day)
+                stringResource(id = R.string.hour)
             } else {
-                stringResource(id = R.string.hour, value)
+                stringResource(id = R.string.hours, value)
             }
         }
         DAY_AGO -> {

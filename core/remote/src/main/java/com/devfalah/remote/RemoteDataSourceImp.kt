@@ -52,8 +52,8 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getUserFriends(userID, page) }
     }
 
-    override suspend fun getNotifications(userID: Int): List<NotificationsDTO> {
-        return wrap { apiService.getNotifications(userID) }.list ?: throw Throwable("Mapping Error")
+    override suspend fun getNotifications(userID: Int, page: Int): List<NotificationsDTO> {
+        return wrap { apiService.getNotifications(userID, page = page) }.list ?: throw Throwable("Mapping Error")
     }
 
     override suspend fun getUserAccountDetails(userID: Int): UserDTO {
@@ -122,7 +122,7 @@ class RemoteDataSourceImp @Inject constructor(
         val requestBody = file.asRequestBody("$IMAGE_FILE/${extension}".toMediaTypeOrNull())
         val part =
             MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
-        val id = RequestBody.create(TYPE.toMediaTypeOrNull(), userID.toString())
+        val id = userID.toString().toRequestBody(TYPE.toMediaTypeOrNull())
         return apiService.addProfilePicture(userId = id, file = part).body()?.payload
             ?: throw Throwable("Error")
     }
@@ -190,9 +190,8 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): GroupDTO {
-        return wrap {
-            apiService.joinClub(clubId, userId)
-        }
+        return wrap { apiService.joinClub(clubId, userId) }.group
+            ?: throw Throwable("Error")
     }
 
     override suspend fun unJoinClub(clubId: Int, userId: Int): GroupDTO {
@@ -320,7 +319,11 @@ class RemoteDataSourceImp @Inject constructor(
         return try {
             wrap { apiService.getWallPost(userID = userID, postID = postId) }
         } catch (t: Throwable) {
-            throw Throwable("NotFound")
+           if (t.message.toString().contains("host")){
+               throw t
+           }else{
+               throw Throwable("NotFound")
+           }
         }
     }
 
