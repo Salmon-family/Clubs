@@ -17,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.*
-import com.devfalah.ui.screen.profile.navigateToProfile
 import com.devfalah.viewmodels.userInformation.UserInformationUIState
 import com.devfalah.viewmodels.userInformation.UserInformationViewModel
 import com.devfalah.viewmodels.userInformation.isUpdateInformationButtonEnabled
@@ -39,7 +38,6 @@ fun UserInformationScreen(
         onTitleChange = viewModel::onTitleChange,
         onPasswordChange = viewModel::onPasswordTextChange,
         onClickSave = viewModel::onClickSave,
-        navigateToProfile = { navController.navigateToProfile(state.id) }
     )
 
     val color = MaterialTheme.colors.background
@@ -61,7 +59,6 @@ fun UserInformationContent(
     onTitleChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onClickSave: () -> Unit,
-    navigateToProfile: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -111,7 +108,7 @@ fun UserInformationContent(
 
         LaunchedEffect(key1 = state.isSuccessful) {
             if (state.isSuccessful) {
-                navigateToProfile()
+                onClickBack()
             }
         }
     }
