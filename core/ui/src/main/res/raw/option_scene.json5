@@ -62,6 +62,34 @@
         end: ['imageProfile', 'end'],
         bottom: ['imageProfile', 'bottom'],
       },
+      backClubButton: {
+        width:'wrap',
+        height: 'wrap',
+        top: ['parent', 'top', 16],
+        start: ['parent', 'start', 16]
+      },
+      clubDropDown: {
+        width:'wrap',
+        height: 'wrap',
+        top: ['parent', 'top', 16],
+        end: ['parent', 'end', 16]
+      },
+      clubName: {
+        width: 'wrap',
+        top: ['backClubButton', 'bottom', 16],
+        start: ['parent', 'start', 16],
+        end: ['parent', 'end', 16],
+        custom: {
+          fontSize: 20,
+          fontWeight: 600
+        }
+      },
+      clubDescription: {
+        top: ['clubName', 'bottom', 16],
+        start: ['parent', 'start', 16],
+        end: ['parent', 'end', 16],
+        bottom: ['parent', 'bottom', 4],
+      },
     },
     end: {
       scrollItems: {
@@ -126,6 +154,32 @@
         end: ['imageProfile', 'end'],
         bottom: ['imageProfile', 'bottom'],
         alpha:0.0
+      },
+      backClubButton: {
+        width:'wrap',
+        height: 'wrap',
+        top: ['parent', 'top', 16],
+        start: ['parent', 'start', 16]
+      },
+      clubDropDown: {
+        width:'wrap',
+        height: 'wrap',
+        top: ['parent', 'top', 16],
+        end: ['parent', 'end', 16]
+      },
+      clubName: {
+        width: 'wrap',
+        top: ['backClubButton', 'top'],
+        bottom: ['backClubButton', 'bottom'],
+        start: ['backClubButton', 'end', 16],
+        custom: {
+          fontSize: 14,
+          fontWeight: 400
+        }
+      },
+      clubDescription: {
+        height: 0,
+        width: 0,
       },
     }
   },

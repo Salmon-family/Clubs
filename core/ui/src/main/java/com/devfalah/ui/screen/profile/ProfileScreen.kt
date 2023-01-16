@@ -31,7 +31,6 @@ import com.devfalah.ui.screen.postCreation.navigateToPostCreation
 import com.devfalah.ui.screen.postDetails.navigateToPostDetails
 import com.devfalah.ui.screen.profile.composable.FriendsSection
 import com.devfalah.ui.screen.profile.composable.PostCreatingSection
-import com.devfalah.ui.screen.profile.composable.ProfileDetailsSection
 import com.devfalah.ui.screen.userInformation.navigateToEditUserInformation
 import com.devfalah.ui.util.createFileFromContentUri
 import com.devfalah.ui.util.observeAsState
@@ -167,7 +166,7 @@ fun ProfileContent(
 
             Scaffold(
                 topBar = {
-                    MotionAppBar(
+                    ProfileAppBar(
                         state = state,
                         lazyScrollState = lazyScrollState,
                         selectedImageUri = selectedImageUri,
@@ -222,7 +221,6 @@ fun ProfileContent(
                     items(state.posts) {
                         PostItem(
                             state = it,
-                            isContentExpandable = true,
                             isClubPost = false,
                             showGroupName = false,
                             onClickLike = onClickLike,

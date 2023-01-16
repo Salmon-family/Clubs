@@ -50,7 +50,7 @@ import com.devfalah.viewmodels.userProfile.UserUIState
 @SuppressLint("FrequentlyChangedStateReadInComposition")
 @OptIn(ExperimentalMotionApi::class)
 @Composable
-fun MotionAppBar(
+fun ProfileAppBar(
     state: UserUIState,
     lazyScrollState: LazyListState,
     selectedImageUri: Uri?,
@@ -66,11 +66,11 @@ fun MotionAppBar(
         context.resources.openRawResource(R.raw.option_scene).readBytes().decodeToString()
     }
     val progress by animateFloatAsState(
-        targetValue = if (lazyScrollState.firstVisibleItemIndex == 0) 0f else 1f,
+        targetValue = if (lazyScrollState.firstVisibleItemScrollOffset == 0) 0f else 1f,
         tween(500)
     )
     val motionHeight by animateDpAsState(
-        targetValue = if (lazyScrollState.firstVisibleItemIndex == 0) 280.dp else 60.dp,
+        targetValue = if (lazyScrollState.firstVisibleItemScrollOffset == 0) 280.dp else 60.dp,
         tween(500)
     )
 
