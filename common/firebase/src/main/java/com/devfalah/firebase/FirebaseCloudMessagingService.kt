@@ -1,7 +1,6 @@
 package com.devfalah.firebase
 
 
-import android.util.Log
 import com.devfalah.repositories.CoreNotificationKeys
 import com.devfalah.repository.models.NotificationDataModel
 import com.devfalah.repository.models.NotificationKeys
@@ -27,7 +26,6 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 val title = data[NotificationKeys.TITLE].toString()
                 val description = data[NotificationKeys.DESCRIPTION].toString()
                 val clickAction = data[CoreNotificationKeys.CLICK_ACTION].toString()
-                Log.e("testNotification", "clickAction: $clickAction")
 
                 sendNotification(
                     clickAction = clickAction,
