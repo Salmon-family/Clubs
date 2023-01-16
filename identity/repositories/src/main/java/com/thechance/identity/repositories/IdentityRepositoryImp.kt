@@ -55,8 +55,8 @@ class IdentityRepositoryImp @Inject constructor(
 
     override suspend fun getToken(): String {
         val oldToken = localIdentityDataSource.getToken()
-        val token = identityFirebaseDataSource.getToken()
         return oldToken.ifEmpty {
+            val token = identityFirebaseDataSource.getToken()
             localIdentityDataSource.saveToken(token)
             token
         }
