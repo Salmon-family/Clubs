@@ -11,17 +11,17 @@
       },
       firstBox: {
         width:'spread',
-        height: 280,
+        height: 300,
         top: ['parent', 'top', 0],
         start: ['parent', 'start', 0],
       },
       imageBox: {
         width:'spread',
-        height: 280,
+        height: 300,
         top: ['parent', 'top', 0],
         start: ['parent', 'start', 0],
         custom: {
-          background: '#B36C56D6'
+          background: '#B36C56D6',
         }
       },
       appBar: {
@@ -31,14 +31,16 @@
         start: ['parent', 'start', 0]
       },
       textTitle: {
-        top: ['appBar', 'top', 4],
-        start: ['parent', 'start', 16]
+        top: ['appBar', 'top', 56],
+        start: ['parent', 'start', 18]
       },
       textName: {
-        top: ['textTitle', 'bottom', 4],
-        start: ['parent', 'start', 16],
+        width: 'wrap',
+        top: ['textTitle', 'bottom', 18],
+        start: ['parent', 'start', 18],
+        bottom: ['boxProfile', 'top', 16],
         custom: {
-          fontSize: 30,
+          fontSize: 28,
           fontWeight: 600
         }
       },
@@ -54,7 +56,7 @@
         start: ['parent', 'start', 0],
         end: ['parent', 'end', 0],
         bottom: ['boxProfile', 'bottom', 0],
-        top: ['boxProfile', 'top', 32],
+        top: ['boxProfile', 'top', 50],
       },
       imagePicker: {
         width:40,
@@ -130,7 +132,7 @@
       textName: {
         top: ['imageProfile', 'top', 0],
         bottom: ['imageProfile', 'bottom', 0],
-        start: ['imageProfile', 'start', 24],
+        start: ['imageProfile', 'start', 50],
         custom: {
           fontSize: 14,
           fontWeight: 400

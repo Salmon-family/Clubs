@@ -138,11 +138,10 @@ fun ProfileAppBar(
             Text(
                 text = state.userDetails.title,
                 modifier = Modifier
-                    .padding(start = 24.dp, top = 56.dp)
                     .layoutId("textTitle"),
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 fontFamily = PlusJakartaSans,
                 color = WhiteColor,
                 maxLines = 1
@@ -150,7 +149,6 @@ fun ProfileAppBar(
             Text(
                 text = state.userDetails.name,
                 modifier = Modifier
-                    .padding(start = 24.dp)
                     .layoutId("textName"),
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight(motionInt("textName", "fontWeight")),
@@ -182,7 +180,7 @@ fun ProfileAppBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .layoutId("imageProfile")
-                    .border(4.dp, MaterialTheme.colors.background, CircleShape),
+                    .border(2.dp, MaterialTheme.colors.background, CircleShape),
                 contentScale = ContentScale.Crop
             )
 

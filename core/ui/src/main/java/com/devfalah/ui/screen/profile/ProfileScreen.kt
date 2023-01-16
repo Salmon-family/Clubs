@@ -232,6 +232,15 @@ fun ProfileContent(
                             onImageClick = onImageClick
                         )
                     }
+
+                    item {
+                        Spacer(
+                            Modifier
+                                .height(100.dp)
+                                .background(MaterialTheme.colors.background)
+                                .fillMaxWidth()
+                        )
+                    }
                 }
             }
         }
