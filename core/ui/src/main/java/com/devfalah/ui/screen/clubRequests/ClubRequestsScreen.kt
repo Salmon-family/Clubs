@@ -1,6 +1,5 @@
 package com.devfalah.ui.screen.clubRequests
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -55,13 +54,12 @@ fun ClubRequestsScreen(
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalFoundationApi
 @Composable
 fun ClubRequestsContent(
     state: ClubRequestsUIState,
     onBackClick: () -> Unit,
-    onAcceptButtonClick: (Int) -> Unit,
+    onAcceptButtonClick: (Int, String) -> Unit,
     onDeleteButtonClick: (Int) -> Unit,
     onClickOpenProfile: (Int) -> Unit,
     onRetry: () -> Unit

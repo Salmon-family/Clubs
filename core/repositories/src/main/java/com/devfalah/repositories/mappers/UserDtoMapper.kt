@@ -18,7 +18,8 @@ internal fun UserDTO.toEntity(): User {
         profileUrl = this.icon?.large ?: "",
         isFriend = false,
         isMyProfile = false,
-        isRequestExists = false
+        isRequestExists = false,
+        token = this.fcmToken?:"",
     )
 }
 

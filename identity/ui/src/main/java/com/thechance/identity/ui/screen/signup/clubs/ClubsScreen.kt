@@ -24,14 +24,15 @@ import com.thechance.identity.ui.composable.Error
 import com.thechance.identity.ui.composable.Loading
 import com.thechance.identity.ui.screen.activation.navigateToAccountActivation
 import com.thechance.identity.ui.screen.onboarding.pager.ON_BOARDING_PAGER_ROUTE
+import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.screen.signup.composable.clubs.ClubItem
 import com.thechance.identity.ui.screen.signup.composable.clubs.ClubsTitle
-import com.thechance.identity.ui.screen.signup.composable.BackPressHandler
 import com.thechance.identity.ui.spacer.SpacerVertical24
 import com.thechance.identity.ui.theme.LightPrimaryBrandColor
 import com.thechance.identity.viewmodel.clubs.ClubUIState
 import com.thechance.identity.viewmodel.clubs.ClubsUIState
 import com.thechance.identity.viewmodel.clubs.ClubsViewModel
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 
 @Composable
 fun ClubsScreen(
@@ -39,6 +40,7 @@ fun ClubsScreen(
     viewModel: ClubsViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     fun onBack() = navController.popBackStack(route = ON_BOARDING_PAGER_ROUTE, inclusive = false)
     BackPressHandler(onBackPressed = { onBack() })
@@ -48,8 +50,14 @@ fun ClubsScreen(
         onSelectedChanged = viewModel::onChangeSelectedClub,
         onClickBack = { navController.popBackStack(route = ON_BOARDING_PAGER_ROUTE, inclusive = false) },
         onClickContinue = viewModel::onJoin,
-        navController = navController
     )
+
+    LaunchedEffect(key1 = state.isLoading) {
+        if (state.isSuccess) {
+            navController.navigateToAccountActivation()
+            Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
 
 @Composable
@@ -58,9 +66,7 @@ fun ClubsContent(
     onClickBack: () -> Unit,
     onSelectedChanged: (ClubUIState) -> Unit,
     onClickContinue: () -> Unit,
-    navController: NavController
 ) {
-    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -97,16 +103,16 @@ fun ClubsContent(
                 }
             }
 
-            if (state.errorMessage.isNotEmpty()) {
+            if (state.errorType != ErrorMessageType.NO_ERROR) {
                 Error(
-                    errorMessage = state.errorMessage,
+                    errorMessage = stringResource(id = R.string.unknown_error_message),
                     modifier = Modifier.fillMaxWidth()
                 )
             }
 
             AuthButton(
                 onClick = onClickContinue,
-                isEnabled = state.selectedClubs.size in 1..4,
+                isEnabled = state.selectedClubs.size in 1..3,
                 text = stringResource(id = R.string.continue_label),
                 buttonModifier = Modifier
                     .fillMaxWidth()
@@ -119,10 +125,5 @@ fun ClubsContent(
         }
     }
 
-    LaunchedEffect(key1 = state.isLoading) {
-        if (state.isSuccess) {
-            navController.navigateToAccountActivation()
-            Toast.makeText(context, R.string.success_message, Toast.LENGTH_SHORT).show()
-        }
-    }
+
 }

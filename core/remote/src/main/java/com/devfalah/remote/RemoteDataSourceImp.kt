@@ -2,6 +2,7 @@ package com.devfalah.remote
 
 
 import com.devfalah.remote.response.BaseResponse
+import com.devfalah.repositories.models.GroupMembersDTO
 import com.devfalah.remote.util.Constants.IMAGE_FILE
 import com.devfalah.remote.util.Constants.POST_IMAGE_DESCRIPTION
 import com.devfalah.remote.util.Constants.PROFILE_IMAGE_DESCRIPTION
@@ -11,6 +12,9 @@ import com.devfalah.remote.util.PostType
 import com.devfalah.repositories.RemoteDataSource
 import com.devfalah.repositories.models.*
 import com.devfalah.repositories.models.album.AlbumDTO
+import com.devfalah.repositories.models.friends.FriendDTO
+import com.devfalah.repositories.models.friends.FriendsDTO
+import com.devfalah.repositories.models.friends.FriendshipDTO
 import com.devfalah.repositories.models.group.GroupDTO
 import com.devfalah.repositories.models.group.GroupWallDto
 import com.devfalah.repositories.models.notification.NotificationsDTO
@@ -48,8 +52,8 @@ class RemoteDataSourceImp @Inject constructor(
         return wrap { apiService.getUserFriends(userID, page) }
     }
 
-    override suspend fun getNotifications(userID: Int): List<NotificationsDTO> {
-        return wrap { apiService.getNotifications(userID) }.list ?: throw Throwable("Mapping Error")
+    override suspend fun getNotifications(userID: Int, page: Int): List<NotificationsDTO> {
+        return wrap { apiService.getNotifications(userID, page = page) }.list ?: throw Throwable("Mapping Error")
     }
 
     override suspend fun getUserAccountDetails(userID: Int): UserDTO {
@@ -118,7 +122,7 @@ class RemoteDataSourceImp @Inject constructor(
         val requestBody = file.asRequestBody("$IMAGE_FILE/${extension}".toMediaTypeOrNull())
         val part =
             MultipartBody.Part.createFormData(PROFILE_IMAGE_DESCRIPTION, file.name, requestBody)
-        val id = RequestBody.create(TYPE.toMediaTypeOrNull(), userID.toString())
+        val id = userID.toString().toRequestBody(TYPE.toMediaTypeOrNull())
         return apiService.addProfilePicture(userId = id, file = part).body()?.payload
             ?: throw Throwable("Error")
     }
@@ -175,12 +179,8 @@ class RemoteDataSourceImp @Inject constructor(
             ?: throw Throwable("Error")
     }
 
-    override suspend fun getGroupMembers(groupID: Int, page: Int): List<UserDTO> {
-        return try {
-            wrap { apiService.getGroupMembers(groupID, page = page) }.members ?: emptyList()
-        } catch (t: Throwable) {
-            emptyList()
-        }
+    override suspend fun getGroupMembers(groupID: Int, page: Int): GroupMembersDTO {
+        return wrap { apiService.getGroupMembers(groupID, page = page) }
     }
 
     override suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWallDto {
@@ -190,9 +190,8 @@ class RemoteDataSourceImp @Inject constructor(
     }
 
     override suspend fun joinClub(clubId: Int, userId: Int): GroupDTO {
-        return wrap {
-            apiService.joinClub(clubId, userId)
-        }
+        return wrap { apiService.joinClub(clubId, userId) }.group
+            ?: throw Throwable("Error")
     }
 
     override suspend fun unJoinClub(clubId: Int, userId: Int): GroupDTO {
@@ -318,9 +317,13 @@ class RemoteDataSourceImp @Inject constructor(
 
     override suspend fun getPostByID(postId: Int, userID: Int): WallPostDTO {
         return try {
-          wrap { apiService.getWallPost(userID = userID, postID = postId) }
+            wrap { apiService.getWallPost(userID = userID, postID = postId) }
         } catch (t: Throwable) {
-            throw Throwable("NotFound")
+           if (t.message.toString().contains("host")){
+               throw t
+           }else{
+               throw Throwable("NotFound")
+           }
         }
     }
 

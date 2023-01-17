@@ -12,9 +12,9 @@ interface ClubRepository {
 
     suspend fun getUserFriendRequests(userID: Int): List<User>
 
-    suspend fun getUserFriends(userID: Int, page: Int): Friends
+    suspend fun getUserFriends(userID: Int, page: Int): Members
 
-    suspend fun getNotifications(userID: Int): List<Notification>
+    suspend fun getNotifications(userID: Int, page: Int): List<Notification>
 
     suspend fun getUserAccountDetails(userID: Int): User
 
@@ -62,7 +62,7 @@ interface ClubRepository {
 
     suspend fun getGroupDetails(userID: Int, groupID: Int): Club
 
-    suspend fun getGroupMembers(groupID: Int, page: Int): List<User>
+    suspend fun getGroupMembers(groupID: Int, page: Int): Members
 
     suspend fun getGroupWallList(userID: Int, groupID: Int, page: Int): GroupWall
 
@@ -141,4 +141,6 @@ interface ClubRepository {
     suspend fun deleteHomePostById(postId: Int)
 
     suspend fun getTotalHomePost(): Int
+
+    suspend fun pushNotification(notificationRequestBody: NotificationRequest): Boolean
 }

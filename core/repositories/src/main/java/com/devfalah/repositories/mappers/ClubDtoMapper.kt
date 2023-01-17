@@ -44,7 +44,7 @@ internal fun GroupPostDto.toEntity(): GroupWallPost {
             publisher = user.fullName ?: "",
             imageUrl = image?.substringBefore("?") ?: ""
         ),
-        text = text ?: "",
+        text = text?.let { if (it != "false") { it } else { "" } } ?: "",
         user = user.toEntity(),
     )
 }
@@ -54,7 +54,7 @@ internal fun PostDTO.toEntity(): Post {
         id = guid ?: 0,
         privacy = access == "1",
         createdTime = timeCreated ?: 0L,
-        content = description ?: "",
+        content = description?.let { if (it != "false") { it } else { "" } } ?: "" ,
         imageUrl = "",
         totalLikes = totalLikes ?: 0,
         totalComments = totalComments ?: 0,

@@ -25,7 +25,7 @@ import com.thechance.identity.ui.theme.Typography
 import com.thechance.identity.viewmodel.login.LoginUIState
 import com.thechance.identity.viewmodel.login.LoginViewModel
 import com.thechance.identity.viewmodel.login.isEnabled
-import com.thechance.identity.viewmodel.login.isEnabledChangePassword
+import com.thechance.identity.viewmodel.utils.ErrorMessageType
 
 @Composable
 fun LogInPasswordScreen(
@@ -104,12 +104,15 @@ fun LogInPasswordContent(
                     .padding(horizontal = 8.dp)
             )
 
-            if (state.errorMessage.isNotEmpty()) {
-                Error(
-                    errorMessage = state.errorMessage,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            if (state.errorType != ErrorMessageType.NO_ERROR) Error(
+                errorMessage = when (state.errorType) {
+                    ErrorMessageType.WRONG_PASSWORD -> stringResource(R.string.wrong_password_message)
+                    ErrorMessageType.NOT_EXIST -> stringResource(R.string.user_not_exist_message)
+                    ErrorMessageType.NOT_VALIDATED -> stringResource(R.string.not_validated_message)
+                    else -> stringResource(R.string.unknown_error_message)
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
 
             NavigateToAnotherScreen(
                 hintText = R.string.navigate_to_signup,

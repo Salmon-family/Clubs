@@ -4,7 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.compose.foundation.layout.*
+import android.widget.Toast
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -37,6 +41,10 @@ import com.devfalah.viewmodels.home.HomeUIState
 import com.devfalah.viewmodels.home.HomeViewModel
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.util.Constants.HOME_CLUB_ID
+import com.devfalah.viewmodels.util.ErrorsType.DELETE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.HOME_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.LIKE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.NO_ERROR
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -56,7 +64,7 @@ fun HomeScreen(
         state = state,
         onClickLike = viewModel::onClickLike,
         onClickComment = {
-            navController.navigateToPostDetails(id = it.postId, publisherId = it.publisherId)
+            navController.navigateToPostDetails(id = it.postId)
         },
         onClickSave = viewModel::onClickSave,
         onCreatePost = { navController.navigateToPostCreation(HOME_CLUB_ID) },
@@ -109,60 +117,60 @@ fun HomeContent(
                 }
             }
         )
-        Box {
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
-                onRefresh = updateHome,
-                indicatorAlignment = Alignment.TopCenter,
-                indicator = { state, refreshTrigger ->
-                    SwipeRefreshIndicator(
-                        state = state,
-                        refreshTriggerDistance = refreshTrigger,
-                        backgroundColor = MaterialTheme.colors.surface,
-                        contentColor = MaterialTheme.colors.primary,
-                        shape = CircleShape,
+
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
+            onRefresh = updateHome,
+            indicatorAlignment = Alignment.TopCenter,
+            indicator = { state, refreshTrigger ->
+                SwipeRefreshIndicator(
+                    state = state,
+                    refreshTriggerDistance = refreshTrigger,
+                    backgroundColor = MaterialTheme.colors.surface,
+                    contentColor = MaterialTheme.colors.primary,
+                    shape = CircleShape,
+                )
+            }) {
+            ManualPager(
+                onRefresh = onRefresh,
+                contentPadding = PaddingValues(vertical = 16.dp),
+                isLoading = state.isPagerLoading && !state.isLoading,
+                error = state.pagerError,
+                isEndOfPager = state.isEndOfPager,
+            ) {
+                item {
+                    PostCreatingSection(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        onCreatePost = onCreatePost,
+                        isMyProfile = true
                     )
-                },
-                content = {
-                    ManualPager(
-                        onRefresh = onRefresh,
-                        contentPadding = PaddingValues(vertical = 16.dp),
-                        isLoading = state.isPagerLoading && !state.isLoading ,
-                        error = state.pagerError,
-                        isEndOfPager = state.isEndOfPager,
-                    ) {
-                        item {
-                            PostCreatingSection(
-                                modifier = Modifier.padding(horizontal = 16.dp),
-                                onCreatePost = onCreatePost,
-                                isMyProfile = true
-                            )
-                        }
-
-                        items(state.posts) {
-                            if (state.error.isEmpty()) {
-                                PostItem(
-                                    state = it,
-                                    isContentExpandable = true,
-                                    isClubPost = false,
-                                    showGroupName = false,
-                                    onClickLike = onClickLike,
-                                    onClickComment = onClickComment,
-                                    onClickSave = onClickSave,
-                                    onClickProfile = onClickProfile,
-                                    onClickPostSetting = onDeletePost,
-                                    onOpenLinkClick = onOpenLinkClick,
-                                    onImageClick = onImageClick,
-                                    )
-                            }
-                        }
-                    }
                 }
-            )
 
-            if (state.error.isNotBlank()) {
-                ErrorItem(onClickRetry = onRetry)
+                items(state.posts) {
+                    PostItem(
+                        state = it,
+                        isClubPost = false,
+                        showGroupName = false,
+                        onClickLike = onClickLike,
+                        onClickComment = onClickComment,
+                        onClickSave = onClickSave,
+                        onClickProfile = onClickProfile,
+                        onClickPostSetting = onDeletePost,
+                        onOpenLinkClick = onOpenLinkClick,
+                        onImageClick = onImageClick,
+                    )
+                }
             }
+        }
+        if (state.error == HOME_ERROR) {
+            ErrorItem(onClickRetry = onRetry)
+        } else  if (state.error != NO_ERROR) {
+            val msg = when (state.error) {
+                DELETE_ERROR -> { stringResource(id = R.string.error_delete_thread) }
+                LIKE_ERROR -> { stringResource(id = R.string.error_Like_thread) }
+                else -> { "" }
+            }
+            Toast.makeText(LocalContext.current, msg, Toast.LENGTH_LONG).show()
         }
     }
 }

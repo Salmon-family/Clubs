@@ -26,7 +26,9 @@ import com.devfalah.ui.theme.LightPrimaryBrandColor
 import com.devfalah.ui.theme.PlusJakartaSans
 
 @Composable
-fun LeaveClubDialog(
+fun LeaveDialog(
+    title: String,
+    message: String,
     onDeclineClub: () -> Unit,
     onPopupDismiss: () -> Unit
 ) {
@@ -61,7 +63,7 @@ fun LeaveClubDialog(
 
                     WidthSpacer16()
                     Text(
-                        text = stringResource(id = R.string.leave_club_title),
+                        text = title,
                         modifier = Modifier
                             .nonRippleEffect {
                                 onPopupDismiss()
@@ -75,7 +77,7 @@ fun LeaveClubDialog(
                 }
                 HeightSpacer16()
                 Text(
-                    text = stringResource(id = R.string.are_you_sure),
+                    text = message,
                     modifier = Modifier.padding(horizontal = 4.dp),
                     textAlign = TextAlign.Start,
                     fontWeight = FontWeight.SemiBold,

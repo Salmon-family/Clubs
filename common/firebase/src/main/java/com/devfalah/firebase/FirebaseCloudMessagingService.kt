@@ -1,6 +1,7 @@
 package com.devfalah.firebase
 
 
+import com.devfalah.repositories.CoreNotificationKeys
 import com.devfalah.repository.models.NotificationDataModel
 import com.devfalah.repository.models.NotificationKeys
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -24,29 +25,86 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
                 val friendId = (data[NotificationKeys.FRIEND_ID_KEY]?.toInt() ?: 0)
                 val title = data[NotificationKeys.TITLE].toString()
                 val description = data[NotificationKeys.DESCRIPTION].toString()
-                notificationService.showNotification(applicationContext,
-                    friendId,
-                    title,
-                    description)
+                val clickAction = data[CoreNotificationKeys.CLICK_ACTION].toString()
+
+                sendNotification(
+                    clickAction = clickAction,
+                    title = title,
+                    description = description,
+                    friendId = friendId
+                )
+
+
                 GlobalScope.launch {
-                    events.emit(
-                        NotificationDataModel(
-                            id = id,
-                            friendId = friendId,
-                        )
-                    )
+                    if (clickAction == "newMessage") {
+                        events.emit(NotificationDataModel(id = id, friendId = friendId))
+                    }
                 }
             }
         }
     }
 
     override fun onNewToken(token: String) {
-        newToken = token
+        GlobalScope.launch {
+            newToken.emit(token)
+        }
+    }
+
+    private fun sendNotification(
+        clickAction: String,
+        title: String,
+        description: String,
+        friendId: Int
+    ) {
+        when (clickAction) {
+            "friendRequest" -> notificationService.sendFriendRequestNotification(this, description)
+
+            "newMessage" -> notificationService.sendNewMessageNotification(
+                this,
+                friendId,
+                title,
+                description
+            )
+
+            "acceptFriendRequest" -> notificationService.sendAcceptFriendRequestNotification(
+                this,
+                description
+            )
+
+            "acceptJoinClubRequest" -> notificationService.sendAcceptJoinClubRequestNotification(
+                this,
+                description
+            )
+
+            "joinClubRequest" -> notificationService.sendJoinClubRequestNotification(
+                this,
+                userName = description,
+                clubName = title
+            )
+
+            "likePost" -> notificationService.sendLikePostNotification(this, description)
+
+            "likeGroupPost" -> notificationService.sendLikeGroupPostNotification(
+                this,
+                description,
+                title
+            )
+
+            "addPostComment" -> notificationService.sendCommentPostNotification(this, description)
+
+            "addClubPostComment" -> notificationService.sendCommentClubPostNotification(
+                this,
+                title,
+                description
+            )
+
+
+        }
     }
 
     companion object {
         val events = MutableSharedFlow<NotificationDataModel>()
-        var newToken: String = ""
+        var newToken = MutableSharedFlow<String>()
     }
 
 }

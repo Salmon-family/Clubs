@@ -45,3 +45,10 @@ object ChatNavigation {
     const val FRIEND_ID = "FRIEND_ID"
     const val USER_ID = "USER_ID"
 }
+
+object ErrorsType {
+    const val NO_ERROR = -1
+    const val LIKE_ERROR = 102
+    const val DELETE_ERROR = 101
+    const val HOME_ERROR = 100
+}

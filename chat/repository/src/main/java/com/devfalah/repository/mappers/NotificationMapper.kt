@@ -11,6 +11,7 @@ fun Notification.toDto(): NotificationDto {
             friendId = this.friendId,
             title = this.title,
             description = this.body,
+            clickAction = clickAction
         ),
         to = this.to,
     )

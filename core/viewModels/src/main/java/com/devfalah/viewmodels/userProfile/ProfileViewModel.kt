@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devfalah.usecases.friend.AddFriendUseCase
 import com.devfalah.usecases.friend.GetUserFriendsUseCase
+import com.devfalah.usecases.friend.RemoveFriendRequestUseCase
 import com.devfalah.usecases.posts.DeletePostUseCase
 import com.devfalah.usecases.posts.SetFavoritePostUseCase
 import com.devfalah.usecases.posts.SetPostLikeUseCase
@@ -16,6 +17,8 @@ import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
 import com.devfalah.viewmodels.util.Constants.MAX_PAGE_ITEM
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -33,6 +36,7 @@ class ProfileViewModel @Inject constructor(
     val favoritePostUseCase: SetFavoritePostUseCase,
     val changeProfileImageUseCase: ChangeProfileImageUseCase,
     val deletePostUseCase: DeletePostUseCase,
+    val removeFriendUseCase: RemoveFriendRequestUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -40,15 +44,19 @@ class ProfileViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UserUIState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        getData()
-    }
+    private var likeJob: Job? = null
 
-    fun getData() {
+    init {
         getUserDetails(args.ownerId)
         getProfilePost(args.ownerId)
         getUserFriends(args.ownerId)
-        swipeToRefresh()
+    }
+
+    fun retryGetProfileData() {
+        getUserDetails(args.ownerId)
+        getProfilePost(args.ownerId)
+        getUserFriends(args.ownerId)
+        getProfileThreads()
     }
 
     private fun getUserDetails(profileOwnerID: Int) {
@@ -93,14 +101,12 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = likeUseCase(
-                    postID = post.postId,
-                    isLiked = post.isLikedByUser
-                )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
@@ -111,8 +117,14 @@ class ProfileViewModel @Inject constructor(
                         }
                     })
                 }
+                delay(1000)
+                likeUseCase(
+                    postID = post.postId,
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId
+                )
             } catch (t: Throwable) {
-                _uiState.update { it.copy(minorError = t.message.toString()) }
+                //_uiState.update { it.copy(minorError = t.message.toString()) }
             }
         }
     }
@@ -142,7 +154,7 @@ class ProfileViewModel @Inject constructor(
     fun onClickAddFriend() {
         viewModelScope.launch {
             try {
-                val success = addFriendUseCase(args.ownerId)
+                val success = addFriendUseCase(args.ownerId, _uiState.value.userDetails.token)
                 if (success) {
                     _uiState.update {
                         it.copy(
@@ -170,25 +182,8 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun swipeToRefresh() {
-        viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(isPagerLoading = true, minorError = "") }
-                val posts = getProfilePostUseCase.loadMore(args.ownerId)
-                _uiState.update {
-                    it.copy(
-                        loading = false,
-                        posts = (it.posts + posts.toUIState()),
-                        isPagerLoading = false,
-                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
-                    )
-                }
-            } catch (t: Throwable) {
-                _uiState.update {
-                    it.copy(isPagerLoading = false, minorError = t.message.toString())
-                }
-            }
-        }
+    fun getProfileThreads() {
+        getThreads()
     }
 
     fun onClickPostSetting(post: PostUIState) {
@@ -207,4 +202,48 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun refreshProfileThreads() {
+        getThreads(isRefresh = true)
+    }
+
+    private fun getThreads(isRefresh: Boolean = false) {
+        viewModelScope.launch {
+            try {
+                _uiState.update { it.copy(isPagerLoading = true, minorError = "") }
+                val posts = getProfilePostUseCase.loadMore(args.ownerId, isRefresh)
+                _uiState.update {
+                    it.copy(
+                        loading = false,
+                        posts = if (isRefresh) {
+                            posts.toUIState()
+                        } else {
+                            it.posts + posts.toUIState()
+                        },
+                        isPagerLoading = false,
+                        isEndOfPager = (posts.isEmpty() || posts.size < MAX_PAGE_ITEM)
+                    )
+                }
+            } catch (t: Throwable) {
+                _uiState.update {
+                    it.copy(isPagerLoading = false, minorError = t.message.toString())
+                }
+            }
+        }
+    }
+
+    fun onRemoveFriend() {
+        viewModelScope.launch {
+            try {
+                if (removeFriendUseCase(uiState.value.userDetails.userID)) {
+                    _uiState.update {
+                        it.copy(
+                            userDetails = it.userDetails.copy(areFriends = false, isRequestSend = false)
+                        )
+                    }
+                }
+            } catch (t: Throwable) {
+                _uiState.update { it.copy(minorError = t.message.toString()) }
+            }
+        }
+    }
 }

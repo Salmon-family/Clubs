@@ -120,7 +120,6 @@ fun PostDetailsContent(
                 item("PostDetails") {
                     PostItem(
                         state = state.post,
-                        isContentExpandable = true,
                         isClubPost = state.post.groupName.isNotEmpty(),
                         showGroupName = state.post.groupName.isNotEmpty(),
                         onClickLike = onClickLike,
@@ -155,7 +154,8 @@ fun PostDetailsContent(
                         modifier = Modifier.fillMaxWidth(),
                         state = it,
                         onClickLike = { onClickCommentLike(it) },
-                        onClickDeleteComment = onClickDeleteComment
+                        onClickDeleteComment = onClickDeleteComment,
+                        onClickProfile = onClickProfile
                     )
                 }
             }

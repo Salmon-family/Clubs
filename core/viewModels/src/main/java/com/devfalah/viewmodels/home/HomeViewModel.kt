@@ -11,12 +11,15 @@ import com.devfalah.usecases.util.Constants.SCROLL_UP
 import com.devfalah.viewmodels.userProfile.PostUIState
 import com.devfalah.viewmodels.userProfile.mapper.toEntity
 import com.devfalah.viewmodels.userProfile.mapper.toUIState
+import com.devfalah.viewmodels.util.ErrorsType.DELETE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.HOME_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.LIKE_ERROR
+import com.devfalah.viewmodels.util.ErrorsType.NO_ERROR
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,27 +33,32 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState = _uiState.asStateFlow()
 
+    private var likeJob: Job? = null
+
     init {
         getData()
     }
 
     fun getData() {
-        _uiState.update { it.copy(error = "", isLoading = true) }
-        viewModelScope.launch {
-            getHomeThreads().collect { posts ->
-                _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
+        _uiState.update { it.copy(error = NO_ERROR, isLoading = true) }
+        try {
+            viewModelScope.launch {
+                getHomeThreads().collect { posts ->
+                    _uiState.update { it.copy(posts = posts.toUIState(), isLoading = false) }
+                }
             }
+        } catch (t: Throwable) {
+            _uiState.update { it.copy(error = HOME_ERROR) }
         }
     }
 
-
     fun getMorePosts() {
-        _uiState.update { it.copy(isPagerLoading = true, pagerError = "") }
+        _uiState.update { it.copy(isPagerLoading = true, error = NO_ERROR, pagerError = "") }
         getHomeThreads(SCROLL_DOWN)
     }
 
     fun updateHome() {
-        _uiState.update { it.copy(isLoading = true, pagerError = "") }
+        _uiState.update { it.copy(isLoading = true, error = NO_ERROR, pagerError = "") }
         getHomeThreads(SCROLL_UP)
     }
 
@@ -78,28 +86,38 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = likeUseCase(
-                    postID = post.postId,
-                    isLiked = post.isLikedByUser
-                )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                 )
                 _uiState.update {
-                    it.copy(posts = uiState.value.posts.map {
-                        if (it.postId == post.postId) {
-                            updatedPost
-                        } else {
-                            it
-                        }
-                    })
+                    it.copy(
+                        posts = uiState.value.posts.map {
+                            if (it.postId == post.postId) {
+                                updatedPost
+                            } else {
+                                it
+                            }
+                        },
+                        error = NO_ERROR
+                    )
                 }
+                delay(1000)
+                likeUseCase(
+                    postID = post.postId,
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId,
+                )
             } catch (t: Throwable) {
-                _uiState.update { it.copy(error = t.message.toString()) }
+                if (t !is CancellationException) {
+                    _uiState.update { it.copy(error = LIKE_ERROR) }
+                }
             }
         }
+
     }
 
     fun onClickSave(post: PostUIState) {
@@ -110,11 +128,8 @@ class HomeViewModel @Inject constructor(
                     it.copy(
                         posts = _uiState.value.posts
                             .map {
-                                if (it.postId == post.postId) {
-                                    it.copy(isSaved = !post.isSaved)
-                                } else {
-                                    it
-                                }
+                                if (it.postId == post.postId) { it.copy(isSaved = !post.isSaved) }
+                                else { it }
                             }
                     )
                 }
@@ -133,6 +148,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             } catch (t: Throwable) {
+                _uiState.update { it.copy(error = DELETE_ERROR) }
             }
         }
     }

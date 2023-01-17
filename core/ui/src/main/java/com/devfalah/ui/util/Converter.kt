@@ -17,6 +17,7 @@ import com.devfalah.viewmodels.util.DateConverterConstants.MINUTES_AGO
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.math.max
 
 
 fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File {
@@ -60,18 +61,8 @@ fun createFileFromContentUri(fileUri: Uri, context: Context, maxSize: Int): File
 }
 
 private fun getResizedBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
-    val actualWidth = bitmap.width
-    val actualHeight = bitmap.height
-    var aspRat = actualWidth / actualHeight
-
-    return if (aspRat > 0) {
-        val height = maxSize * aspRat
-        Bitmap.createScaledBitmap(bitmap, maxSize, height, false)
-    } else {
-        aspRat = actualHeight / actualWidth
-        val width = maxSize * aspRat
-        Bitmap.createScaledBitmap(bitmap, maxSize, width, false)
-    }
+    val nh = (bitmap.height * (maxSize.toDouble() / bitmap.width)).toInt()
+    return Bitmap.createScaledBitmap(bitmap, maxSize, nh, true)
 }
 
 @Composable
@@ -88,9 +79,9 @@ fun getDataDescription(type: Int, value: String): String {
         }
         HOUR_AGO -> {
             if (number == 1) {
-                stringResource(id = R.string.one_day)
+                stringResource(id = R.string.hour)
             } else {
-                stringResource(id = R.string.hour, value)
+                stringResource(id = R.string.hours, value)
             }
         }
         DAY_AGO -> {

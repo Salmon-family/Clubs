@@ -123,4 +123,14 @@
 
     <string name="thread_has_been_saved">تمت إزالة المنشور من المحفوظات</string>
     <string name="thread_has_been_unsaved">تم حفظ المنشور</string>
+
+    <string name="logout">تسجيل الخروج</string>
+    <string name="logout_msg">هل أنت متاكد من رغبتك في المغادرة؟</string>
+
+    <string name="error_delete_thread">خطا خلال مسح المنشور</string>
+    <string name="error_Like_thread">خطا خلال الاعجاب بالمنشور</string>
+
+    <string name="report">الإبلاغ عن خطأ</string>
+    <string name="report_msg">شكرا لملاحظتك وسوف يتم العمل عليها. </string>
+
 </resources>

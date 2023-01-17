@@ -126,4 +126,15 @@
     <string name="change_profile">Look at my new profile picture!!</string>
     <string name="thread_has_been_saved">Thread has been unsaved</string>
     <string name="thread_has_been_unsaved">Thread has been saved</string>
+
+    <string name="logout">Logout</string>
+    <string name="logout_msg">Are you sure to leave?</string>
+
+    <string name="error_delete_thread">Sorry, could not delete your thread!!</string>
+    <string name="error_Like_thread">Sorry, Error in Like a thread!!</string>
+
+    <string name="report">Report Bug</string>
+    <string name="report_msg">Thank you for your feedback. </string>
+    <string name="change_password">Change Password</string>
+
 </resources>

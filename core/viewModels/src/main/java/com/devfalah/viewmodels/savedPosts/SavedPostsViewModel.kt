@@ -7,6 +7,8 @@ import com.devfalah.usecases.posts.SetFavoritePostUseCase
 import com.devfalah.usecases.posts.SetPostLikeUseCase
 import com.devfalah.viewmodels.userProfile.PostUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,6 +25,8 @@ class SavedPostsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SavedPostUIState())
     val uiState = _uiState.asStateFlow()
 
+    private var likeJob: Job? = null
+
     init {
         viewModelScope.launch {
             savedPosts().collect { posts ->
@@ -32,14 +36,12 @@ class SavedPostsViewModel @Inject constructor(
     }
 
     fun onClickLike(post: PostUIState) {
-        viewModelScope.launch {
+        likeJob?.cancel()
+        likeJob = viewModelScope.launch {
             try {
-                val totalLikes = likeUseCase(
-                    postID = post.postId,
-                    isLiked = post.isLikedByUser
-                )
                 val updatedPost = post.copy(
-                    isLikedByUser = !post.isLikedByUser, totalLikes = totalLikes
+                    isLikedByUser = !post.isLikedByUser,
+                    totalLikes = if (post.isLikedByUser) post.totalLikes - 1 else post.totalLikes + 1
                 )
                 _uiState.update {
                     it.copy(posts = uiState.value.posts.map {
@@ -50,6 +52,13 @@ class SavedPostsViewModel @Inject constructor(
                         }
                     })
                 }
+                delay(1000)
+                likeUseCase(
+                    postID = post.postId,
+                    isLiked = post.isLikedByUser,
+                    publisherId = post.publisherId,
+                    clubName = post.groupName,
+                )
             } catch (t: Throwable) {
                 _uiState.update { it.copy(error = t.message.toString()) }
             }

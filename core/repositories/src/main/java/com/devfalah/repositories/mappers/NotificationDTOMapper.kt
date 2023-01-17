@@ -1,7 +1,10 @@
 package com.devfalah.repositories.mappers
 
 import com.devfalah.entities.Notification
+import com.devfalah.entities.NotificationRequest
 import com.devfalah.repositories.ConvertDate
+import com.devfalah.repositories.NotificationDataModel
+import com.devfalah.repositories.NotificationRequestBody
 import com.devfalah.repositories.NotificationType
 import com.devfalah.repositories.models.notification.NotificationsDTO
 
@@ -12,6 +15,8 @@ internal fun NotificationsDTO.toEntity(): Notification {
         "group:joinrequest" -> NotificationType.REQUEST_GROUP
         "comments:post" -> NotificationType.COMMENT_POST
         "like:annotation:comments:post" -> NotificationType.LIKE_COMMENT_POST
+        "comments:post:group:wall" -> NotificationType.COMMENT_POST
+        "like:post:group:wall" -> NotificationType.LIKE_POST
         else -> null
     }
 
@@ -32,3 +37,17 @@ internal fun NotificationsDTO.toEntity(): Notification {
 }
 
 internal fun List<NotificationsDTO>.toEntity():List<Notification> = map { it.toEntity() }
+
+
+fun NotificationRequest.toDto(): NotificationRequestBody {
+    return NotificationRequestBody(
+        data = NotificationDataModel(
+            id = this.id,
+            friendId = this.friendId,
+            title = this.title,
+            description = this.body,
+            clickAction = this.clickAction,
+            ),
+        to = this.to,
+    )
+}

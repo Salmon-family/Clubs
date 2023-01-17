@@ -6,6 +6,7 @@ object NotificationKeys{
     const val FRIEND_ID_KEY = "friendId"
     const val TITLE = "title"
     const val DESCRIPTION = "description"
+    const val CLICK_ACTION = "click_action"
 }
 
 data class NotificationDto(
@@ -24,4 +25,6 @@ data class NotificationDataModel(
     val title: String = "",
     @SerializedName(NotificationKeys.DESCRIPTION)
     val description: String = "",
+    @SerializedName(NotificationKeys.CLICK_ACTION)
+    val clickAction: String = "",
     )

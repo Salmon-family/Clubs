@@ -1,5 +1,6 @@
 package com.thechance.clubs.di
 
+import com.common.remote.FirebaseCloudMessagingService
 import com.devfalah.remote.AuthInterceptor
 import com.devfalah.remote.ClubService
 import com.devfalah.remote.DdosInterceptor
@@ -41,6 +42,14 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideFirebaseCloudMessagingService(
+        @RetrofitFirebaseCloudMessagingService retrofit: Retrofit,
+    ): FirebaseCloudMessagingService {
+        return retrofit.create(FirebaseCloudMessagingService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideIdentityService(
         @RetrofitClubService retrofit: Retrofit,
     ): IdentityService {
@@ -63,6 +72,18 @@ object NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(CloudMessagingService.BASE_URL)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+    }
+
+    @RetrofitFirebaseCloudMessagingService
+    @Singleton
+    @Provides
+    fun provideRetrofitFirebaseCloudMessagingService(
+        gsonConverterFactory: GsonConverterFactory,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(FirebaseCloudMessagingService.BASE_URL)
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
@@ -109,6 +130,10 @@ object NetworkModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class RetrofitCloudMessagingService
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class RetrofitFirebaseCloudMessagingService
 
     @Singleton
     @Provides

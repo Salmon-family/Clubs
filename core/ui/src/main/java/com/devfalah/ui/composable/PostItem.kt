@@ -18,8 +18,6 @@ import com.devfalah.viewmodels.userProfile.PostUIState
 fun PostItem(
     modifier: Modifier = Modifier,
     state: PostUIState,
-    maxLineContentExpand: Int = 2,
-    isContentExpandable: Boolean,
     isClubPost: Boolean,
     showGroupName: Boolean = false,
     onClickLike: (PostUIState) -> Unit,
@@ -55,8 +53,6 @@ fun PostItem(
 
             PostContent(
                 post = state,
-                maxLineToExpand = maxLineContentExpand,
-                contentExpandable = isContentExpandable,
                 onOpenLinkClick = onOpenLinkClick,
                 onImageClick = onImageClick,
                 isPostDetails = isPostDetails

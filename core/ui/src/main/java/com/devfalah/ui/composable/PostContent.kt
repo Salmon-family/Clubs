@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,17 +39,21 @@ fun PostContent(
 ) {
     LazyColumn(
         modifier = modifier
+            .fillMaxSize()
             .clip(shape = RoundedCornerShape(20.dp))
-            .background(MaterialTheme.colors.surface)
-            .fillMaxSize(),
+            .background(MaterialTheme.colors.surface),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
         item {
+
+
             TextField(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
+                modifier = if (image == null) {
+                    Modifier.fillParentMaxSize()
+                } else {
+                    Modifier.fillMaxSize()
+                },
                 value = value,
                 onValueChange = { onValueChange(it) },
                 colors = TextFieldDefaults.textFieldColors(
@@ -59,10 +64,10 @@ fun PostContent(
                     textColor = MaterialTheme.colors.primaryVariant
                 ),
                 textStyle = TextStyle(
-                    color = MaterialTheme.colors.primaryVariant,
                     fontWeight = FontWeight.Normal,
                     fontFamily = PlusJakartaSans,
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    textDirection = TextDirection.Content
                 ),
                 placeholder = {
                     hint?.let {
@@ -89,7 +94,7 @@ fun PostContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1.5f)
-                        .padding(16.dp)
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                 ) {
                     Image(
                         modifier = Modifier

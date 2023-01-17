@@ -19,6 +19,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.devfalah.ui.R
 import com.devfalah.ui.composable.CircleImage
 import com.devfalah.ui.composable.HeightSpacer8
+import com.devfalah.ui.modifiers.nonRippleEffect
 import com.devfalah.ui.theme.PlusJakartaSans
 import com.devfalah.viewmodels.friends.FriendUIState
 
@@ -26,6 +27,8 @@ import com.devfalah.viewmodels.friends.FriendUIState
 fun FriendsSection(
     friends: List<FriendUIState>,
     totalFriends: Int,
+    onClickMoreFriends: () -> Unit,
+    onClickFriend: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier.fillMaxWidth()) {
@@ -37,18 +40,27 @@ fun FriendsSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.friends),
+                text = stringResource(
+                    if (totalFriends == -1) {
+                        R.string.clubs_member
+                    } else {
+                        R.string.friends
+                    }
+                ),
                 fontFamily = PlusJakartaSans,
                 color = MaterialTheme.colors.primaryVariant,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp
             )
-            Text(
-                text = "$totalFriends ${stringResource(id = R.string.friends)}",
-                fontFamily = PlusJakartaSans,
-                color = MaterialTheme.colors.secondaryVariant,
-                fontSize = 12.sp
-            )
+
+            if (totalFriends > -1) {
+                Text(
+                    text = "$totalFriends ${stringResource(id = R.string.friends)}",
+                    fontFamily = PlusJakartaSans,
+                    color = MaterialTheme.colors.secondaryVariant,
+                    fontSize = 12.sp
+                )
+            }
         }
 
         HeightSpacer8()
@@ -62,6 +74,7 @@ fun FriendsSection(
             friends.take(4).forEach {
                 item {
                     Friend(
+                        modifier = Modifier.nonRippleEffect { onClickFriend(it.id) },
                         painter = rememberAsyncImagePainter(model = it.profilePictureUrl),
                         text = it.name,
                     )
@@ -71,6 +84,7 @@ fun FriendsSection(
             if (friends.size > 4) {
                 item {
                     Friend(
+                        modifier = Modifier.nonRippleEffect { onClickMoreFriends() },
                         painter = painterResource(id = R.drawable.ic_more),
                         text = stringResource(R.string.more),
                         textColor = MaterialTheme.colors.primaryVariant

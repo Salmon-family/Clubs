@@ -1,6 +1,5 @@
 package com.devfalah.viewmodels.editclub
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -39,7 +38,6 @@ class EditClubViewModel @Inject constructor(
         }
     }
 
-
     fun onChangedClubName(clubName: String) {
         _uiState.update { it.copy(clubName = clubName) }
     }
@@ -61,17 +59,14 @@ class EditClubViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             try {
-                Log.i("EditClubViewModel", "onClickEditClub: ${uiState.value.clubId}")
-                val editedClub = editClub(
+                editClub(
                     args.clubId,
-                    _uiState.value.clubName,
-                    _uiState.value.clubDescription,
+                    _uiState.value.clubName.trim(),
+                    _uiState.value.clubDescription.trim(),
                     _uiState.value.privacy.value
                 )
                 _uiState.update { it.copy(isLoading = false, isSuccessful = true) }
-                Log.i("EditClubViewModel", "onClickEditClub: ${uiState.value.isSuccessful}")
             } catch (e: Throwable) {
-                Log.i("Edit Error", "onClickEditClub: ${e.message}")
                 _uiState.update { it.copy(isLoading = false, isSuccessful = false) }
             }
         }
