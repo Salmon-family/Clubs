@@ -20,8 +20,7 @@ Add your API key for opensource-socialnetwork in local.properties file and firba
 - firebaseKey=YOUR_FIRBASE_KEY
 
 ## Download apk
-
-TODO: APK...
+download APK from [here](https://github.com/NadaFeteiha/Clubs/releases/tag/v1.0.0).
 
 ## :notebook: Resources 
 - [Jetpack Compose course](https://www.youtube.com/playlist?list=PLEPx7DrqAqKC0PExagiPH64tzH6cAd5Rc)
