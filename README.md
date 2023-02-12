@@ -1,6 +1,7 @@
 <h1 align="center">Clubs Android Application</h1>
-
-The Clubs App is a cutting-edge social platform that brings people with similar interests together. Designed using the latest Android technologies, including Kotlin, Jetpack Compose, Clean Architecture, Room, and Firebase, this app offers an easy and intuitive experience for its users.
+<p align="center">  
+The Clubs App is a cutting-edge social platform that brings people with similar interests together. Built using the latest Android technologies. With the Clubs App, you can join groups based on your interests, providing a platform for people to come together, share ideas, and collaborate on projects. Whether you're a hobbyist or a professional, this app is the ideal way to connect with others who share your passions and interests.
+</p>
 
 ![Alt text](https://github.com/NadaFeteiha/Clubs/blob/master/screens/Frame%201.png?raw=true)
 
