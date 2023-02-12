@@ -4,6 +4,8 @@ The Clubs App is a cutting-edge social platform that brings people with similar 
 
 ![Alt text](https://github.com/NadaFeteiha/Clubs/blob/master/screens/Frame%201.png?raw=true)
 
+<img src="https://github.com/NadaFeteiha/Clubs/blob/master/screens/1674490052587.gif" align="right" width="320"/>
+
 
 ## :rocket: Tech stack
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
