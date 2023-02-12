@@ -2,7 +2,8 @@
 
 The Clubs App is a cutting-edge social platform that brings people with similar interests together. Designed using the latest Android technologies, including Kotlin, Jetpack Compose, Clean Architecture, Room, and Firebase, this app offers an easy and intuitive experience for its users.
 
- TODO: ScreenShots...
+![Alt text](https://github.com/NadaFeteiha/Clubs/blob/master/screens/Frame%201.png?raw=true)
+
 
 ## :rocket: Tech stack
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
