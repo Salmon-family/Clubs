@@ -1,6 +1,6 @@
 <h1 align="center">Clubs Android Application</h1>
 
- TODO: Description...
+The Clubs App is a cutting-edge social platform that brings people with similar interests together. Designed using the latest Android technologies, including Kotlin, Jetpack Compose, Clean Architecture, Room, and Firebase, this app offers an easy and intuitive experience for its users.
 
  TODO: ScreenShots...
 
